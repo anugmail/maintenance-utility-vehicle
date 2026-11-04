@@ -71,20 +71,10 @@ export const HIST_COLS = [
   { head: "ทะเบียน", width: 160, Style: "Lead text" as const, SortIcon: "Swap" as const }, { head: "วันที่ทำ", width: 120 }, { head: "งานที่ทำ" },
   { head: "อะไหล่ที่ใช้", width: 220 }, { head: "ผลน้ำมัน", width: 110, Style: "Badge" as const }, { head: "ผู้ทำ", width: 150 }, { head: "การยอมรับ", width: 190, Style: "Badge" as const },
 ];
-const STAFF = ["นายวิชัย ทองดี", "นางสาวกนกวรรณ ใจมั่น", "นายสมชาย พูลสุข"];
-/* HIST — 4 แถวตัวอย่าง (จอแบ่งหน้าเป็น 12 รายการตามจำนวนรถ) */
-export const HIST_ROWS = ["82-6789 ขอนแก่น", "82-1145 ขอนแก่น", "80-5738 น่าน", "81-2210 เชียงใหม่"].map((plate, i) => [
-  plate, "0" + (4 + i) + "/11/2569", "เปลี่ยนน้ำมันไฮโดรลิก · ไส้กรอง", "30 ลิตร · 5 ชิ้น",
-  { pills: [i === 2 ? ["ไม่ผ่าน", "Error"] : ["ผ่าน", "Success"]] as [string, PillColor][] }, STAFF[i % 3], { pills: [i < 3 ? ACC.ok : ACC.wait] },
-]);
-export const PROGRESS_DONE = 10;   // N.1 "บำรุงรักษาแล้ว 10 / 12 คัน"
+/* แถวประวัติ ความคืบหน้า และสรุปรายงาน อ่านจากงานรายคันจริง — lib/mock/history.ts (BACKLOG ข้อ 6 · แทน HIST_ROWS PROGRESS_DONE reportSummary คงที่) */
 export const SENT_AT = "12/11/2569", HEAD_AT = "13/11/2569", CLOSED_AT = "14/11/2569";
 export const HEAD_REVIEWER = "นายประเสริฐ มั่นคง";
 export const HQ_OTHER = { id: "Z6900011", mr: "MR Z6900011", plan: "บำรุงรักษารถกระเช้า ภาค 1 ปีงบประมาณ 2569", sender: "นางสาวกนกวรรณ ใจมั่น", cars: "10 คัน", sentAt: "28/06/2569" };
 /* สถานะในรายการของหัวหน้า (HST) จากสถานะแผน */
 export const headStatusOf = (p: Plan, c: CloseoutState): "wait" | "ok" | "back" =>
   c.head === "back" && p.status === "active" ? "back" : p.status === "passed" || p.status === "closed" ? "ok" : "wait";
-export const reportSummary = (p: Plan): [string, string][] => [
-  ["รถตามแผน", p.cars + " คัน"], ["บำรุงรักษาแล้ว", p.cars + " คัน"], ["ทำไม่ได้", "0 คัน"], ["ใบเดินทาง", "2 ใบ"],
-  ["อะไหล่ที่ใช้", "5 รายการ · คืนคลัง 1 รายการ"], ["ผลน้ำมันไฮโดรลิก", "ผ่าน 11 · ไม่ผ่าน 1"], ["หน่วยงานยอมรับผล", p.cars + " / " + p.cars + " คัน"], ["ช่วงดำเนินการ", "03/11/2569 – 12/11/2569"],
-];

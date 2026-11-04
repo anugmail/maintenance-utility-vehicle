@@ -6,6 +6,7 @@
    ตีกลับ → แผนกลับไป กบค. (S15 ส่งใหม่) → กลับรายการ (จอผลตีกลับ/toast ยังไม่ออกแบบ) · อนุมัติ → ประวัติผ่านแล้ว + toast → S17 */
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
+import { planHistory } from "@/lib/mock/history";
 import { AppFrame } from "@/components/shell/AppFrame";
 import { VehicleAndReporterInfo } from "@/components/maintain-d/VehicleAndReporterInfo";
 import { ConfirmDialog } from "@/components/patterns/ConfirmDialog";
@@ -16,7 +17,7 @@ import { PageHeader } from "@/components/vms/PageHeader";
 import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionLabel } from "@/components/vms/SectionLabel";
-import { HEAD_AT, HIST_COLS, HIST_ROWS, HQ_OTHER, HST, SENT_AT, closeoutOf, headStatusOf, mrOf, planKv, planOf, putCloseout, setPlanStatus } from "@/lib/mock/closeout";
+import { HEAD_AT, HIST_COLS, HQ_OTHER, HST, SENT_AT, closeoutOf, headStatusOf, mrOf, planKv, planOf, putCloseout, setPlanStatus } from "@/lib/mock/closeout";
 import { notify, useMock, useRole } from "@/lib/mock/store";
 import { CREATOR, badgeOf } from "@/lib/mock/trips";
 import { BtnRow, Content, DataTable, MENU_HOME, Section, useBack } from "../../quarter/_shared/ui";
@@ -35,7 +36,8 @@ function HeadHistory() {
   if (!plan) return null;
   const other = id === HQ_OTHER.id;
   const st = other ? "ok" : headStatusOf(plan, c);
-  const total = plan.cars;
+  const hist = planHistory(mock, plan);   // งานรายคันจริงของแผน (BACKLOG ข้อ 6)
+  const total = hist.total;
   const sender = other ? HQ_OTHER.sender + " (กบค.) · " + HQ_OTHER.sentAt : CREATOR + " · " + (c.sentAt ?? SENT_AT);
   const approve = () => {
     setAsk("");
@@ -55,10 +57,10 @@ function HeadHistory() {
         crumbs={[{ Text: MENU_HOME, href: "/" }, { Text: "ประวัติรอตรวจสอบ", href: "/head-review/" }, { Text: mrOf(id) }]} />
       <Content>
         <VehicleAndReporterInfo Title="รายละเอียดแผน" pairs={planKv(plan)} />
-        <DisplayBox Title="ความคืบหน้ารายคัน" pairs={[["บำรุงรักษาแล้ว", total + " / " + total + " คัน"], ["ทำไม่ได้", "0 คัน"], ["หน่วยงานยอมรับแล้ว", total + " คัน"], ["ผู้ส่ง", sender]]} />
+        <DisplayBox Title="ความคืบหน้ารายคัน" pairs={[["บำรุงรักษาแล้ว", hist.done + " / " + total + " คัน"], ["ทำไม่ได้", hist.cannot + " คัน"], ["หน่วยงานยอมรับแล้ว", hist.accepted + " คัน"], ["ผู้ส่ง", sender]]} />
         <Section>
-          <SectionLabel Title={"ประวัติงานบำรุงรักษาทั้งหมด (" + total + ")"} />
-          <DataTable columns={HIST_COLS} rows={HIST_ROWS} pagination={total} perPage={total} />
+          <SectionLabel Title={"ประวัติงานบำรุงรักษาทั้งหมด (" + hist.rows.length + ")"} />
+          <DataTable columns={HIST_COLS} rows={hist.rows} pagination={hist.rows.length} perPage={Math.max(1, hist.rows.length)} />
         </Section>
         {st === "ok" && <Alert Color="Success" Text={"อนุมัติประวัติแล้ว" + (other ? "" : " " + (c.headAt ?? HEAD_AT)) + " — บันทึกเป็นประวัติทางการ"} SupportingText="กบค. ออกรายงานผลและปิดงานได้" />}
         {st === "wait" && plan.status === "hist" && head && (

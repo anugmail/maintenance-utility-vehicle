@@ -17,8 +17,9 @@ import { PageHeader } from "@/components/vms/PageHeader";
 import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionLabel } from "@/components/vms/SectionLabel";
-import { HIST_COLS, HIST_ROWS, PROGRESS_DONE, SENT_AT, closeoutOf, mrOf, planKv, planOf, putCloseout, setPlanStatus } from "@/lib/mock/closeout";
+import { HIST_COLS, SENT_AT, closeoutOf, mrOf, planKv, planOf, putCloseout, setPlanStatus } from "@/lib/mock/closeout";
 import { PST } from "@/lib/mock/data";
+import { planHistory } from "@/lib/mock/history";
 import { useSeed } from "@/lib/mock/seedB";
 import { notify, useMock, useRole } from "@/lib/mock/store";
 import { badgeOf } from "@/lib/mock/trips";
@@ -36,7 +37,9 @@ function History() {
   const [confirm, setConfirm] = useState(false);
   const back = useBack(planDetailHref(id));
   if (!plan) return null;
-  const total = plan.cars;
+  /* แถวประวัติ + ความคืบหน้า จากงานรายคันจริงของแผน (lib/mock/history.ts · BACKLOG ข้อ 6) */
+  const h = planHistory(mock, plan);
+  const total = h.total;
   const sent = plan.status === "hist" || plan.status === "passed" || plan.status === "closed";
   const done = !!c.accepted || sent;
   const send = () => {
@@ -45,9 +48,7 @@ function History() {
     putCloseout(id, { sentAt: SENT_AT, head: undefined, headReason: undefined });
     notify("ส่งประวัติงานบำรุงรักษาให้หัวหน้าตรวจสอบแล้ว");
   };
-  const progress: [string, string][] = done
-    ? [["บำรุงรักษาแล้ว", total + " / " + total + " คัน"], ["ทำไม่ได้", "0 คัน"], ["รอทำ", "0 คัน"], ["หน่วยงานยอมรับแล้ว", total + " คัน"]]
-    : [["บำรุงรักษาแล้ว", PROGRESS_DONE + " / " + total + " คัน"], ["ทำไม่ได้", "0 คัน"], ["รอทำ", total - PROGRESS_DONE + " คัน"], ["หน่วยงานยอมรับแล้ว", PROGRESS_DONE - 1 + " คัน"]];
+  const progress: [string, string][] = [["บำรุงรักษาแล้ว", h.done + " / " + total + " คัน"], ["ทำไม่ได้", h.cannot + " คัน"], ["รอทำ", h.todo + " คัน"], ["หน่วยงานยอมรับแล้ว", h.accepted + " คัน"]];
   return (
     <>
       <PageHeader Title={"หมายเลขแผน " + mrOf(id)} Badge={badgeOf(PST[plan.status])} onBack={back}
@@ -56,12 +57,12 @@ function History() {
         <VehicleAndReporterInfo Title="รายละเอียดแผน" pairs={planKv(plan)} />
         <Section>
           <DisplayBox Title="ความคืบหน้ารายคัน" pairs={progress} />
-          {!done && <Alert Color="Warning" Text={"ยังบำรุงรักษาไม่ครบทุกคันตามแผน (เหลือ " + (total - PROGRESS_DONE) + " คัน)"}
+          {!done && h.todo > 0 && <Alert Color="Warning" Text={"ยังบำรุงรักษาไม่ครบทุกคันตามแผน (เหลือ " + h.todo + " คัน)"}
             SupportingText="ครบแล้วจึงบันทึกและส่งประวัติให้หัวหน้า กบค. ตรวจสอบได้" />}
         </Section>
         <Section>
-          <SectionLabel Title={done ? "ประวัติงานบำรุงรักษาทั้งหมด (" + total + ")" : "ประวัติงานบำรุงรักษา (" + HIST_ROWS.length + ")"} />
-          <DataTable columns={HIST_COLS} rows={HIST_ROWS} pagination={done ? total : undefined} perPage={total} />
+          <SectionLabel Title={done ? "ประวัติงานบำรุงรักษาทั้งหมด (" + total + ")" : "ประวัติงานบำรุงรักษา (" + h.rows.length + ")"} />
+          <DataTable columns={HIST_COLS} rows={h.rows} pagination={done ? h.rows.length : undefined} perPage={Math.max(1, h.rows.length)} />
         </Section>
         {sent && <Alert Color="Info" Text={"ส่งประวัติให้หัวหน้า กบค. ตรวจสอบแล้ว " + (c.sentAt ?? SENT_AT)} SupportingText="แก้ไขไม่ได้จนกว่าหัวหน้าจะตีกลับ" />}
         <BtnRow>

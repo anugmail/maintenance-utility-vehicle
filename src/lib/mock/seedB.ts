@@ -3,6 +3,7 @@
    ไม่ใช่ฟีเจอร์ของระบบ (มีเฉพาะต้นแบบ · ไม่มีอะไรแสดงบนจอ) */
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import { ACCEPT_SAMPLES } from "./acceptance";
 import { setPlanStatus, type CloseoutState } from "./closeout";
 import { setMock, setRole, type Role } from "./store";
 import { DEFAULT_NOTIS, DEFAULT_TRIPS, TRIP_1, TRIP_OTHER, TRIP_V, approvalNotis, type Trip } from "./trips";
@@ -17,9 +18,10 @@ const SEEDS: Record<string, { role: Role; run: () => void }> = {
   S9: { role: "กบค.", run: () => setMock((s) => ({ ...s, trips: [approved(TRIP_1), { ...TRIP_OTHER }], jobs: undefined })) },
   S7: { role: "ผู้อนุมัติ", run: () => setMock((s) => ({ ...s, trips: [{ ...TRIP_1 }, { ...TRIP_V }, { ...TRIP_OTHER }], jobs: undefined })) },
   S8: { role: "กรย.", run: () => setMock((s) => ({ ...s, trips: [approved(TRIP_1), { ...TRIP_OTHER }], jobs: undefined, notis: [...approvalNotis(approved(TRIP_1)), ...DEFAULT_NOTIS()] })) },
-  S15: { role: "กบค.", run: () => { setPlanStatus("Z7000001", "active"); closeout({ accepted: true }); } },
-  S16: { role: "หัวหน้า กบค.", run: () => { setPlanStatus("Z7000001", "hist"); closeout({ accepted: true, sentAt: "12/11/2569" }); } },
-  S17: { role: "กบค.", run: () => { setPlanStatus("Z7000001", "passed"); closeout({ accepted: true, sentAt: "12/11/2569", head: "ok", headAt: "13/11/2569" }); } },
+  /* S15–S17: ประวัติอ่านจากงานรายคันจริง (history.ts) ⇒ ใส่งานชุด S14 ของ acceptance.ts ก่อน (แผนเดินทาง T1 3 คันเสร็จสิ้น หน่วยงานยอมรับครบ) */
+  S15: { role: "กบค.", run: () => { ACCEPT_SAMPLES.S14.apply(); setPlanStatus("Z7000001", "active"); closeout({ accepted: true }); } },
+  S16: { role: "หัวหน้า กบค.", run: () => { ACCEPT_SAMPLES.S14.apply(); setPlanStatus("Z7000001", "hist"); closeout({ accepted: true, sentAt: "12/11/2569" }); } },
+  S17: { role: "กบค.", run: () => { ACCEPT_SAMPLES.S14.apply(); setPlanStatus("Z7000001", "passed"); closeout({ accepted: true, sentAt: "12/11/2569", head: "ok", headAt: "13/11/2569" }); } },
 };
 
 export function useSeed() {

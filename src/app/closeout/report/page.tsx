@@ -14,7 +14,8 @@ import { Alert } from "@/components/vms/Alert";
 import { PageHeader } from "@/components/vms/PageHeader";
 import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
-import { CLOSED_AT, HEAD_AT, HEAD_REVIEWER, closeoutOf, mrOf, planKv, planOf, putCloseout, reportSummary, setPlanStatus } from "@/lib/mock/closeout";
+import { CLOSED_AT, HEAD_AT, HEAD_REVIEWER, closeoutOf, mrOf, planKv, planOf, putCloseout, setPlanStatus } from "@/lib/mock/closeout";
+import { planHistory, reportSummary } from "@/lib/mock/history";
 import { PST } from "@/lib/mock/data";
 import { useSeed } from "@/lib/mock/seedB";
 import { notify, useMock, useRole } from "@/lib/mock/store";
@@ -49,7 +50,7 @@ function Report() {
         Actions={<SecondaryButton Text="ดาวน์โหลดรายงาน" LeadingIconSwap="cloud_upload-24-300-round" Size={mob ? "lg" : "md"} />} />
       <Content>
         <VehicleAndReporterInfo Title="รายละเอียดแผน" pairs={[...planKv(plan), ["หัวหน้า กบค. ตรวจประวัติ", "ผ่าน · " + (c.headAt ?? HEAD_AT)], ["ผู้ตรวจ", HEAD_REVIEWER]]} />
-        <DisplayBox Title="สรุปรายงานผลการบำรุงรักษา" pairs={reportSummary(plan)} />
+        <DisplayBox Title="สรุปรายงานผลการบำรุงรักษา" pairs={reportSummary(planHistory(mock, plan))} />
         {closed && <Alert Color="Success" Text={"ปิดงานแล้ว " + (c.closedAt ?? CLOSED_AT)} SupportingText="ไปขั้นคำนวณต้นทุนได้" />}
         <BtnRow>
           <SecondaryButton Text="ย้อนกลับ" Size="lg" onClick={back} />
