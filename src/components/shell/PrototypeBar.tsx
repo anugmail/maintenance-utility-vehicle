@@ -17,7 +17,7 @@ export function PrototypeBar() {
   const [open, setOpen] = useState(false);
   return (
     <div data-proto-bar className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-gray-200 bg-gray-50 px-4 py-1">
-      <Link href="/" className="inline-flex items-center gap-1 text-xs font-semibold text-brand-900"><Ms name="home-20-300-round" size={16} />ต้นแบบบำรุงรักษาตามวาระ</Link>
+      <Link href="/scenarios/" className="inline-flex items-center gap-1 text-xs font-semibold text-brand-900"><Ms name="home-20-300-round" size={16} />ต้นแบบบำรุงรักษาตามวาระ</Link>
       <span className="text-xs text-gray-600">บทบาท</span>
       <InputDropdown Label={false} LabelText="บทบาท" Text={role} open={open} onOpenChange={setOpen} className="w-52">
         <DropdownList>

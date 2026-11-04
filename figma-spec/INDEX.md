@@ -61,3 +61,6 @@
 | Bottom sheet footer | Bottom sheets (1180:2) | 1 |
 | _Breadcrumbs item / Link | ✅ Breadcrumbs (2:7) | 3 |
 | Horizontal scrollbar | Scrollbar (2230:14068) | 3 |
+| Nav item | ✅Sidebar navigation (2:2) | 5 |
+| Nav list item | ✅Sidebar navigation (2:2) | 5 |
+| Pill color | ✅ Badge (2:13) | 7 |

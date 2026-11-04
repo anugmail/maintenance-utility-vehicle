@@ -1,0 +1,433 @@
+{
+ "component": "Nav list item",
+ "page": "✅Sidebar navigation",
+ "node": "2:2",
+ "props": {
+  "Text#11:0": {
+   "type": "TEXT",
+   "defaultValue": "Text"
+  },
+  "Badge#11:15": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "State": {
+   "type": "VARIANT",
+   "defaultValue": "Default",
+   "variantOptions": [
+    "Default",
+    "Hover",
+    "Active",
+    "Focused",
+    "Disabled"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "name": "State=Default",
+   "type": "COMPONENT",
+   "w": 248,
+   "h": 40,
+   "pl": 40,
+   "pr": 16,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 8,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "sw": 1,
+   "variant": {
+    "State": "Default"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 164,
+     "h": 21,
+     "fill": [
+      "#000000"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null
+     },
+     "text": "Text"
+    },
+    {
+     "name": "Pill color",
+     "type": "INSTANCE",
+     "w": 24,
+     "h": 24,
+     "pl": 8,
+     "pr": 8,
+     "pt": 4,
+     "pb": 4,
+     "r": 9999,
+     "dir": "VERTICAL",
+     "align": "CENTER",
+     "fill": [
+      "#A80689"
+     ],
+     "sw": 1,
+     "variant": {
+      "Text#695:3": "1",
+      "Color": "Brand"
+     },
+     "component": "Pill color [Color=Brand]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 8,
+       "h": 18,
+       "fill": [
+        "#FFFFFF"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 12,
+        "lh": null
+       },
+       "text": "1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Hover",
+   "type": "COMPONENT",
+   "w": 248,
+   "h": 40,
+   "pl": 40,
+   "pr": 16,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 8,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#EAECF0"
+   ],
+   "sw": 1,
+   "variant": {
+    "State": "Hover"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 164,
+     "h": 21,
+     "fill": [
+      "#000000"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null
+     },
+     "text": "Text"
+    },
+    {
+     "name": "Pill color",
+     "type": "INSTANCE",
+     "w": 24,
+     "h": 24,
+     "pl": 8,
+     "pr": 8,
+     "pt": 4,
+     "pb": 4,
+     "r": 9999,
+     "dir": "VERTICAL",
+     "align": "CENTER",
+     "fill": [
+      "#A80689"
+     ],
+     "sw": 1,
+     "variant": {
+      "Text#695:3": "1",
+      "Color": "Brand"
+     },
+     "component": "Pill color [Color=Brand]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 8,
+       "h": 18,
+       "fill": [
+        "#FFFFFF"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 12,
+        "lh": null
+       },
+       "text": "1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Active",
+   "type": "COMPONENT",
+   "w": 248,
+   "h": 40,
+   "pl": 40,
+   "pr": 16,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 8,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#EAECF0"
+   ],
+   "sw": 1,
+   "variant": {
+    "State": "Active"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 164,
+     "h": 21,
+     "fill": [
+      "#A80689"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null
+     },
+     "text": "Text"
+    },
+    {
+     "name": "Pill color",
+     "type": "INSTANCE",
+     "w": 24,
+     "h": 24,
+     "pl": 8,
+     "pr": 8,
+     "pt": 4,
+     "pb": 4,
+     "r": 9999,
+     "dir": "VERTICAL",
+     "align": "CENTER",
+     "fill": [
+      "#A80689"
+     ],
+     "sw": 1,
+     "variant": {
+      "Text#695:3": "1",
+      "Color": "Brand"
+     },
+     "component": "Pill color [Color=Brand]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 8,
+       "h": 18,
+       "fill": [
+        "#FFFFFF"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 12,
+        "lh": null
+       },
+       "text": "1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Focused",
+   "type": "COMPONENT",
+   "w": 248,
+   "h": 40,
+   "pl": 40,
+   "pr": 16,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 8,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#F9FAFB"
+   ],
+   "sw": 1,
+   "variant": {
+    "State": "Focused"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 164,
+     "h": 21,
+     "fill": [
+      "#000000"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null
+     },
+     "text": "Text"
+    },
+    {
+     "name": "Pill color",
+     "type": "INSTANCE",
+     "w": 24,
+     "h": 24,
+     "pl": 8,
+     "pr": 8,
+     "pt": 4,
+     "pb": 4,
+     "r": 9999,
+     "dir": "VERTICAL",
+     "align": "CENTER",
+     "fill": [
+      "#A80689"
+     ],
+     "sw": 1,
+     "variant": {
+      "Text#695:3": "1",
+      "Color": "Brand"
+     },
+     "component": "Pill color [Color=Brand]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 8,
+       "h": 18,
+       "fill": [
+        "#FFFFFF"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 12,
+        "lh": null
+       },
+       "text": "1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Disabled",
+   "type": "COMPONENT",
+   "w": 248,
+   "h": 40,
+   "pl": 40,
+   "pr": 16,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 8,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "sw": 1,
+   "variant": {
+    "State": "Disabled"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 164,
+     "h": 21,
+     "fill": [
+      "#98A2B3"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null
+     },
+     "text": "Text"
+    },
+    {
+     "name": "Pill color",
+     "type": "INSTANCE",
+     "w": 24,
+     "h": 24,
+     "pl": 8,
+     "pr": 8,
+     "pt": 4,
+     "pb": 4,
+     "r": 9999,
+     "dir": "VERTICAL",
+     "align": "CENTER",
+     "fill": [
+      "#F2F4F7"
+     ],
+     "sw": 1,
+     "variant": {
+      "Text#695:3": "1",
+      "Color": "Disabled"
+     },
+     "component": "Pill color [Color=Disabled]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 8,
+       "h": 18,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 12,
+        "lh": null
+       },
+       "text": "1"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

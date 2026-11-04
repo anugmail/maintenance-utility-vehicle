@@ -28,6 +28,9 @@ import { Modal } from "@/components/vms/Modal";
 import { ModalFooter } from "@/components/vms/ModalFooter";
 import { ModalHeader } from "@/components/vms/ModalHeader";
 import { NavButton } from "@/components/vms/NavButton";
+import { NavItem } from "@/components/vms/NavItem";
+import { NavListItem } from "@/components/vms/NavListItem";
+import { PillColor as PillColorBadge } from "@/components/vms/PillColor";
 import { Notification, type NotificationType } from "@/components/vms/Notification";
 import { PageHeader } from "@/components/vms/PageHeader";
 import { PillOutline, type PillColor } from "@/components/vms/PillOutline";
@@ -118,6 +121,9 @@ export default function Kit() {
 
       <Block name="Pill outline" node="Badge (2:13)">
         {(["Brand", "Gray", "Info", "Success", "Warning", "Error", "Disabled"] as PillColor[]).map((c) => <V key={c} label={`Color=${c}`}><PillOutline Text="รออนุมัติ" Color={c} /></V>)}
+      </Block>
+      <Block name="Pill color" node="Badge (2:13)">
+        {(["Brand", "Gray", "Info", "Success", "Warning", "Error", "Disabled"] as PillColor[]).map((c) => <V key={c} label={`Color=${c}`}><PillColorBadge Text="1" Color={c} /></V>)}
       </Block>
       <Block name="Badge outline" node="Badge (2:13)">
         {(["Brand", "Gray", "Disabled", "Success", "Error"] as BadgeOutlineColor[]).map((c) => <V key={c} label={`Color=${c}`}><BadgeOutline Text="ในแผน 6 คัน" Color={c} /></V>)}
@@ -297,13 +303,22 @@ export default function Kit() {
         {(["Active", "Default", "Disabled", "Focused", "Hover"] as const).map((st) => <V key={st} label={`State=${st}`}><NavButton IconSwap="home-24-300-round" Text="หน้าแรก" State={st} /></V>)}
         <V label="Indicator=true"><NavButton IconSwap="notifications-24-300-round" Text="การแจ้งเตือน" Indicator /></V>
       </Block>
+      <Block name="Nav item" node="Sidebar navigation (2:2)">
+        {(["Default", "Hover", "Active", "Focused", "Disabled"] as const).map((st) => <V key={st} label={`State=${st}`}><div className="w-[248px]"><NavItem Text="งานซ่อมและบำรุงรักษา" LeadingIconSwap="build" TrailingIcon State={st} /></div></V>)}
+        <V label="Badge · Show Description"><div className="w-[248px]"><NavItem Text="นายสมคิด จงจองหอ" LeadingIconSwap="id_card-24-300-round" Badge ShowDescription SupportingText="ผู้ใช้งานทั่วไป" /></div></V>
+      </Block>
+      <Block name="Nav list item" node="Sidebar navigation (2:2)">
+        {(["Default", "Hover", "Active", "Focused", "Disabled"] as const).map((st) => <V key={st} label={`State=${st}`}><div className="w-[248px]"><NavListItem Text="บำรุงรักษาตามวาระ" State={st} /></div></V>)}
+        <V label="Badge"><div className="w-[248px]"><NavListItem Text="งานซ่อม" Badge /></div></V>
+      </Block>
       <Block name="Header navigation" node="Header navigation (2:4)">
         <V label="Breakpoint=Desktop" wide><HeaderNavigation Breakpoint="Desktop" /></V>
         <V label="Breakpoint=Tablet" wide><HeaderNavigation Breakpoint="Tablet" bell /></V>
         <V label="Breakpoint=Mobile"><div className="w-[402px] max-w-full"><HeaderNavigation Breakpoint="Mobile" /></div></V>
       </Block>
       <Block name="Sidebar navigation" node="Sidebar navigation (2:2)">
-        <V label="State=Collapsed"><div className="flex h-[480px] rounded-md border border-gray-200"><SidebarNavigation /></div></V>
+        <V label="State=Collapsed"><div className="flex h-[960px] rounded-md border border-gray-200"><SidebarNavigation /></div></V>
+        <V label="State=Expanded (เมนูตามหน้า Sidebar Navigation ของ UI Release#2)"><div className="flex h-[960px] rounded-md border border-gray-200"><SidebarNavigation State="Expanded" /></div></V>
       </Block>
 
       <Modal open={modal === "confirm"} onClose={() => setModal("")} Type="Centered image"

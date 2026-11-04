@@ -19,11 +19,18 @@
 8. **ภาษา:** ข้อความบนจอเป็นภาษาไทยตามจอ Figma ตรงตัว · ไม่มีอีโมจิ
 9. **แยกจากงานซ่อม:** รีโปนี้เป็นของบำรุงรักษาตามวาระเท่านั้น ไม่ลิงก์หรือใช้โค้ดร่วมกับ Maintenance-Request-Form (งานซ่อม)
 
+10. **URL และเมนูแบบระบบจริง** (เจ้าของงาน 4 พ.ย. 2569 _"ทางเข้าหน้า เป็น url = maintenance-utility-vehicle เป็นเมนูจาก sidebar กด แล้ว expand ออกมา … แก้ url ให้เหมือนของจริงไปเลย"_)
+    - รากเว็บ `/` = หน้ารายการแผน (S1) · ฟอร์มสร้างแผน `/new/` · หน้าถัดไปของงานบำรุงรักษาวางใต้รากนี้ (ไม่ขึ้นต้นด้วย `/plans/`)
+    - ของต้นแบบเท่านั้น: `/scenarios/` (รายการ scenario — ลิงก์ "ต้นแบบบำรุงรักษาตามวาระ" ในแถบต้นแบบ) · `/kit/` · `/soon/`
+    - ที่อยู่เดิม `/plans/` `/plans/new/` เหลือเป็นหน้าพาไปที่อยู่ใหม่ (`shell/MovedTo.tsx`) ห้ามลิงก์ไปที่อยู่เดิมอีก
+    - Sidebar navigation ใช้เมนูจริงตามหน้า "Sidebar Navigation" (277:230639) ของ UI Release#2 · งานนี้อยู่ที่ "งานซ่อมและบำรุงรักษา > บำรุงรักษาตามวาระ" (Active) · เมนูอื่นแสดงแต่ไม่พาไปไหน
+11. **มือถือ — บรรทัดรองของตาราง** (`{ text, sub }`) ลง Supporting text ของ Mobile table item เสมอ ห้ามต่อท้าย Text ด้วย " · " (เจ้าของงาน 4 พ.ย. 2569)
+
 ## ตรวจก่อนบอกว่าเสร็จ
 
 ```bash
 npm run typecheck
-NEXT_PUBLIC_BASE_PATH=/maintainance-yearly npm run build     # ต้องผ่าน · ได้ out/
+NEXT_PUBLIC_BASE_PATH=/maintenance-utility-vehicle npm run build     # ต้องผ่าน · ได้ out/
 grep -rnE '#[0-9a-fA-F]{3,8}\b' src --include='*.tsx'        # ต้องว่าง (สีต้องมาจาก token)
 ```
 
@@ -36,6 +43,6 @@ grep -rnE '#[0-9a-fA-F]{3,8}\b' src --include='*.tsx'        # ต้องว�
 | `figma-spec/` | สเปก component จากไฟล์ Figma (สร้างด้วยสคริปต์) · `components.json` รายชื่อที่ใช้ · `COMPOSED.md` ส่วนที่ต้องประกอบเอง |
 | `src/components/vms/` | component ตามไลบรารี ชื่อเดียวกับ Figma |
 | `src/components/shell/` | กรอบหน้า (Header navigation + Sidebar navigation) และแถบต้นแบบ (สลับบทบาท) |
-| `src/app/` | หน้าตาม scenario |
+| `src/app/` | หน้าตาม scenario (`page.tsx` = รายการแผน · `new/` ฟอร์มสร้างแผน · `scenarios/` `kit/` `soon/` ของต้นแบบ · `plans/` ที่อยู่เดิมที่พาไปที่ใหม่) |
 | `src/lib/mock/` | ข้อมูลจำลอง |
 | `scripts/` | `sync-tokens.mjs` · `figma-spec.mjs` |

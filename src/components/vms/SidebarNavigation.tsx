@@ -1,37 +1,111 @@
 "use client";
 /* Figma: "Sidebar navigation" — ไฟล์ (Component) VMS Plus หน้า Sidebar navigation (node 2:2) · สเปก figma-spec/Sidebar navigation.json
-   variant: State = Collapsed (ที่จอใช้ ตาม shell() ใน core.js) | Expanded (ยังไม่ทำ)
-   ค่า Collapsed: กว้าง 80 · ขอบใน 12/16 · ช่องไฟ 20 · พื้น white · เส้นขวา gray-200 · PEA logo 32 · Menu = Nav button ช่องไฟ 8 · Footer menu ชิดล่าง ช่องไฟ 8
-   ไอคอนเมนู: ไลบรารีเป็นไอคอนตั้งต้น (crop_free) → ใช้ชุดของ Sidebar ในหน้าจอ UI Release#2 (home · car_rental · traffic_jam · database / light_mode · lock · id_card)
-   Nav button ตัวแรกเป็น Active ตาม shell() */
+   เมนูจริงตามหน้า "Sidebar Navigation" (277:230639) ของไฟล์ (UI) VMS Plus – Release#2 (component "Sidebar" + "Nav menu") — ข้อความ ลำดับ ไอคอน ตรงตามนั้น
+   variant: State = Collapsed | Expanded
+   Collapsed: กว้าง 80 · ขอบใน 12/16 · ช่องไฟ 20 · พื้น white · เส้นขวา gray-200 · PEA logo 32 · Menu = Nav button ช่องไฟ 8 · Footer menu ชิดล่าง ช่องไฟ 8
+   Expanded: กว้าง 280 · ขอบใน 12/16 · ช่องไฟ 20 · Logo wrap สูง 40 ขอบในข้าง 4 (Brand logo + Tertiary button ไอคอน keyboard_tab)
+             Menu = Nav item ช่องไฟ 8 · กลุ่มที่มีเมนูย่อย = Nav item (ลูกศร keyboard_arrow_down / เปิดแล้ว keyboard_arrow_up) + sub items (Nav list item ช่องไฟ 4) ห่างหัวกลุ่ม 4
+             Footer menu = Nav item ช่องไฟ 8 (แถวผู้ใช้: Avatar + Show Description + ไอคอน logout)
+   เมนูย่อย "บำรุงรักษาตามวาระ" ใต้ "งานซ่อมและบำรุงรักษา" เพิ่มตามเจ้าของงาน 4 พ.ย. 2569 (ทางเข้าหน้ารายการแผน = รากเว็บ) — ดู figma-spec/COMPOSED.md
+   เมนูอื่นแสดงให้เห็นแต่ไม่พาไปไหน (ต้นแบบมีเฉพาะงานบำรุงรักษาตามวาระ)
+   Avatar: สีไม่มี token ใช้ gray-200 (COMPOSED.md ข.) · Brand logo ใช้ pea-logo.svg (COMPOSED.md ค.) */
+import { useState } from "react";
 import { asset } from "@/lib/basePath";
 import { cx } from "@/lib/cx";
 import { NavButton } from "./NavButton";
+import { NavItem } from "./NavItem";
+import { NavListItem } from "./NavListItem";
+import { TertiaryButton } from "./TertiaryButton";
 
-export interface SideItem { IconSwap: string; Text: string; href?: string; active?: boolean }
+export interface SideLink { Text: string; href?: string }
+export interface SideGroup { IconSwap: string; Text: string; items?: SideLink[]; href?: string }
+export interface SideFooter { IconSwap: string; Text: string; SupportingText?: string; TrailingIconSwap?: string; avatar?: boolean }
 
-export const SIDEBAR_MENU: SideItem[] = [
-  { IconSwap: "home-24-300-round", Text: "หน้าแรก" },
-  { IconSwap: "car_rental-24-300-round", Text: "ยานพาหนะ" },
-  { IconSwap: "traffic_jam-24-300-round", Text: "การเดินทาง" },
-  { IconSwap: "database-24-300-round", Text: "ข้อมูลหลัก" },
+export const MT_LABEL = "บำรุงรักษาตามวาระ";
+
+export const SIDEBAR_MENU: SideGroup[] = [
+  { IconSwap: "home-24-300-round", Text: "หน้าหลัก" },
+  { IconSwap: "car_rental-24-300-round", Text: "ระบบจองยานพาหนะ", items: [{ Text: "คำขอใช้ยานพาหนะ" }, { Text: "อนุมัติคำขอ" }] },
+  { IconSwap: "traffic_jam-24-300-round", Text: "จัดการคำขอใช้ยานพาหนะ", items: [{ Text: "ตรวจสอบและจัดการคำขอ" }, { Text: "อนุมัติใช้ยานพาหนะ" }] },
+  { IconSwap: "database-24-300-round", Text: "ข้อมูลพนักงานและยานพาหนะ", items: [{ Text: "ผู้ดูแลยานพาหนะ" }, { Text: "ข้อมูลพนักงานขับรถ" }, { Text: "ข้อมูลยานพาหนะ" }, { Text: "กลุ่มยานพาหนะ" }, { Text: "บริหารสัญญา" }] },
+  { IconSwap: "ev_station", Text: "การอัดประจุไฟฟ้า", items: [{ Text: "สถานีอัดประจุไฟฟ้า" }, { Text: "อัตราค่าไฟฟ้า" }, { Text: "ค่าใช้จ่ายอัดประจุยานพาหนะ" }, { Text: "บันทึกการอัดประจุ Wall Charger" }, { Text: "ต้นทุนและค่าใช้จ่ายในการอัดประจุ" }] },
+  { IconSwap: "build", Text: "งานซ่อมและบำรุงรักษา", items: [{ Text: "ภาพรวมการซ่อมบำรุง" }, { Text: "ตารางบำรุงรักษา" }, { Text: "นัดหมายบำรุงรักษา" }, { Text: "งานซ่อม" }, { Text: "รถทดแทน" }, { Text: MT_LABEL, href: "/" }] },
+  { IconSwap: "e911_emergency", Text: "จัดการเหตุการณ์", items: [{ Text: "จัดการเหตุรถเสีย" }, { Text: "จัดการเหตุอุบัติเหตุ" }] },
+  { IconSwap: "news", Text: "รายงาน" },
 ];
-export const SIDEBAR_FOOTER: SideItem[] = [
-  { IconSwap: "light_mode-24-300-round", Text: "ธีม" },
-  { IconSwap: "lock-24-300-round", Text: "สิทธิ์" },
-  { IconSwap: "id_card-24-300-round", Text: "ผู้ใช้" },
+export const SIDEBAR_FOOTER: SideFooter[] = [
+  { IconSwap: "light_mode-24-300-round", Text: "โหมดสว่าง" },
+  { IconSwap: "lock-24-300-round", Text: "ล็อกหน้าจอ" },
+  { IconSwap: "id_card-24-300-round", Text: "ใบอนุญาตขับขี่" },
+  { IconSwap: "", Text: "นายสมคิด จงจองหอ", SupportingText: "ผู้ใช้งานทั่วไป", TrailingIconSwap: "logout-24-300-round", avatar: true },
 ];
 
-export function SidebarNavigation({ State = "Collapsed", menu = SIDEBAR_MENU, footer = SIDEBAR_FOOTER, activeIndex = 0, className }: { State?: "Collapsed"; menu?: SideItem[]; footer?: SideItem[]; activeIndex?: number; className?: string }) {
+/* กลุ่มที่เปิดอยู่ จำไว้ข้ามหน้า (กรอบหน้าสร้างใหม่ทุกหน้า) — ตั้งต้นเปิดกลุ่มที่มีเมนูที่กำลังใช้ */
+let openMemo: string[] | null = null;
+
+const Avatar = () => <span aria-hidden="true" className="size-6 shrink-0 rounded-pill bg-gray-200" />;
+
+export interface SidebarNavigationProps {
+  State?: "Collapsed" | "Expanded";
+  menu?: SideGroup[];
+  footer?: SideFooter[];
+  /** ข้อความของเมนู (หรือเมนูย่อย) ที่เป็น Active */
+  active?: string;
+  /** Tertiary button ของ Logo wrap (Expanded) · กดโลโก้/ปุ่มใดใน Collapsed = ขอขยาย */
+  onToggle?: () => void;
+  toggleLabel?: string;
+  className?: string;
+}
+
+export function SidebarNavigation({ State = "Collapsed", menu = SIDEBAR_MENU, footer = SIDEBAR_FOOTER, active = MT_LABEL, onToggle, toggleLabel = "ย่อเมนู", className }: SidebarNavigationProps) {
+  const holds = (g: SideGroup) => g.Text === active || !!g.items?.some((s) => s.Text === active);
+  const [open, setOpen] = useState<string[]>(() => openMemo ?? menu.filter((g) => g.items && holds(g)).map((g) => g.Text));
+  const flip = (t: string) => setOpen((o) => { const n = o.includes(t) ? o.filter((x) => x !== t) : [...o, t]; openMemo = n; return n; });
+
+  if (State === "Collapsed") {
+    return (
+      <nav aria-label="เมนูหลัก" data-state="Collapsed" className={cx("flex w-20 shrink-0 flex-col items-center gap-5 border-r border-gray-200 bg-white px-4 py-3", className)}>
+        <button type="button" aria-label="ขยายเมนู" onClick={onToggle} className="inline-flex size-10 shrink-0 cursor-pointer items-center justify-center">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={asset("/pea-logo.svg")} alt="PEA" width={32} height={32} />
+        </button>
+        <div className="flex flex-col gap-2">
+          {menu.map((g) => <NavButton key={g.Text} IconSwap={g.IconSwap} Text={g.Text} State={holds(g) ? "Active" : "Default"} onClick={onToggle} />)}
+        </div>
+        <div className="mt-auto flex flex-col gap-2">
+          {footer.map((f) => <NavButton key={f.Text} IconSwap={f.avatar ? <Avatar /> : f.IconSwap} Text={f.Text} onClick={onToggle} />)}
+        </div>
+      </nav>
+    );
+  }
   return (
-    <nav aria-label="เมนูหลัก" data-state={State} className={cx("flex w-20 shrink-0 flex-col items-center gap-5 border-r border-gray-200 bg-white px-4 py-3", className)}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={asset("/pea-logo.svg")} alt="PEA" width={32} height={32} />
+    <nav aria-label="เมนูหลัก" data-state="Expanded" className={cx("flex w-70 shrink-0 flex-col gap-5 border-r border-gray-200 bg-white px-4 py-3", className)}>
+      <div className="flex h-10 shrink-0 items-center justify-between px-1">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={asset("/pea-logo.svg")} alt="PEA" width={32} height={32} />
+        {onToggle && <TertiaryButton LeadingIconSwap="keyboard_tab-24-300-round" ButtonText={false} aria-label={toggleLabel} title={toggleLabel} onClick={onToggle} />}
+      </div>
       <div className="flex flex-col gap-2">
-        {menu.map((m, i) => <NavButton key={m.Text} IconSwap={m.IconSwap} Text={m.Text} href={m.href} State={i === activeIndex ? "Active" : "Default"} />)}
+        {menu.map((g) => {
+          if (!g.items) return <NavItem key={g.Text} Text={g.Text} LeadingIconSwap={g.IconSwap} href={g.href} State={g.Text === active ? "Active" : "Default"} />;
+          const on = open.includes(g.Text);
+          return (
+            <div key={g.Text} className="flex flex-col gap-1">
+              <NavItem Text={g.Text} LeadingIconSwap={g.IconSwap} TrailingIcon TrailingIconSwap={on ? "keyboard_arrow_up-20-outline-300-round" : "keyboard_arrow_down-20-400-round"} expanded={on} onClick={() => flip(g.Text)} />
+              {on && (
+                <div className="flex flex-col gap-1">
+                  {g.items.map((s) => <NavListItem key={s.Text} Text={s.Text} href={s.href} State={s.Text === active ? "Active" : "Default"} />)}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
       <div className="mt-auto flex flex-col gap-2">
-        {footer.map((m) => <NavButton key={m.Text} IconSwap={m.IconSwap} Text={m.Text} href={m.href} />)}
+        {footer.map((f) => (
+          <NavItem key={f.Text} Text={f.Text} LeadingIconSwap={f.avatar ? <Avatar /> : f.IconSwap} ShowDescription={!!f.SupportingText} SupportingText={f.SupportingText}
+            TrailingIcon={!!f.TrailingIconSwap} TrailingIconSwap={f.TrailingIconSwap} />
+        ))}
       </div>
     </nav>
   );

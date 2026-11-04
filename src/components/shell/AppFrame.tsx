@@ -1,27 +1,65 @@
 "use client";
-/* กรอบหน้าแบบจอ Figma (shell() ใน core.js):
-   Desktop (≥ 768): Sidebar navigation State=Collapsed ซ้าย + Header navigation Breakpoint=Tablet + Page ขอบใน 32 ช่องไฟ 32
-   Mobile (402 · < 768): ไม่มี Sidebar · Header navigation Breakpoint=Mobile + Page ขอบใน 16 ช่องไฟ 24
+/* กรอบหน้าแบบจอ Figma (shell() ใน core.js) + เมนูแบบระบบจริง (เจ้าของงาน 4 พ.ย. 2569 "เป็นเมนูจาก sidebar กด แล้ว expand ออกมา")
+   Desktop (≥ 768): Sidebar navigation ซ้าย ตั้งต้น State=Collapsed (80)
+     · ชี้เมาส์ที่ Sidebar = State=Expanded (280) ลอยทับเนื้อหา · เลื่อนเมาส์ออก = กลับ Collapsed
+     · กดโลโก้หรือปุ่มใน Collapsed / กดปุ่ม keyboard_tab ใน Logo wrap / กดปุ่ม menu ของ Header navigation = ค้าง Expanded ไว้ (ลอยทับเหมือนกัน ไม่ดันเนื้อหา
+       ⇒ เนื้อหาวางตามจอ Figma ที่ Sidebar กว้าง 80 เสมอ) · ย่อด้วยปุ่ม keyboard_tab อีกครั้ง · คลิกนอก Sidebar · Esc
+     · Sidebar ติดขอบบนตอนเลื่อนหน้า (สูงเท่าจอ เลื่อนในตัวเองเมื่อเมนูยาวกว่าจอ)
+     Header navigation Breakpoint=Tablet + Page ขอบใน 32 ช่องไฟ 32
+   Mobile (402 · < 768): ไม่มี Sidebar · ปุ่ม menu ของ Header navigation Breakpoint=Mobile เปิด Sidebar navigation State=Expanded จากซ้าย ทับ Background overlay (ประกอบ — ดู figma-spec/COMPOSED.md)
+     Page ขอบใน 16 ช่องไฟ 24
    บนสุดมีแถบต้นแบบ (PrototypeBar) · toast ผ่าน ToastHost */
-import type { ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { BackgroundOverlay } from "@/components/vms/BackgroundOverlay";
 import { HeaderNavigation } from "@/components/vms/HeaderNavigation";
 import { SidebarNavigation } from "@/components/vms/SidebarNavigation";
 import { useBreakpoint } from "@/lib/useBreakpoint";
+import { useOutside } from "@/lib/useOutside";
 import { PrototypeBar } from "./PrototypeBar";
 import { ToastHost } from "./ToastHost";
 
 export function AppFrame({ children, bell }: { children: ReactNode; bell?: boolean }) {
   const mob = useBreakpoint() === "Mobile";
+  const [pinned, setPinnedState] = useState(false);
+  const [hover, setHover] = useState(false);
+  const [drawer, setDrawer] = useState(false);
+  const side = useRef<HTMLDivElement>(null);
+  const setPinned = (v: boolean) => { setPinnedState(v); if (!v) setHover(false); };
+  const [unpin] = useState(() => () => { setPinnedState(false); setHover(false); });
+  useOutside(side, pinned, unpin);
+
+  useEffect(() => {
+    if (!drawer && !pinned) return;
+    const k = (e: KeyboardEvent) => { if (e.key === "Escape") { setDrawer(false); unpin(); } };
+    document.addEventListener("keydown", k);
+    return () => document.removeEventListener("keydown", k);
+  }, [drawer, pinned, unpin]);
+  useEffect(() => { if (!mob) setDrawer(false); }, [mob]);
+
+  const expanded = pinned || hover;
   return (
     <div className="flex min-h-screen flex-col bg-white">
       <PrototypeBar />
       <div className="flex flex-1">
-        {!mob && <SidebarNavigation />}
+        {!mob && (
+          <div ref={side} className="relative z-30 w-20 shrink-0" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+            <SidebarNavigation State={expanded ? "Expanded" : "Collapsed"} onToggle={() => setPinned(!pinned)} toggleLabel={pinned ? "ย่อเมนู" : "ค้างเมนูไว้"}
+              className="sticky top-0 h-screen overflow-y-auto" />
+          </div>
+        )}
         <div className="flex min-w-0 flex-1 flex-col">
-          <HeaderNavigation Breakpoint={mob ? "Mobile" : "Tablet"} bell={bell} />
+          <HeaderNavigation Breakpoint={mob ? "Mobile" : "Tablet"} bell={bell} onMenu={() => (mob ? setDrawer(true) : setPinned(true))} />
           <main className={mob ? "flex flex-col gap-6 p-4" : "flex flex-col gap-8 p-8"}>{children}</main>
         </div>
       </div>
+      {mob && drawer && (
+        <>
+          <BackgroundOverlay onClick={() => setDrawer(false)} />
+          <div role="dialog" aria-modal="true" aria-label="เมนูหลัก" className="fixed inset-y-0 left-0 z-50 flex max-w-full">
+            <SidebarNavigation State="Expanded" onToggle={() => setDrawer(false)} toggleLabel="ปิดเมนู" className="h-dvh overflow-y-auto" />
+          </div>
+        </>
+      )}
       <ToastHost />
     </div>
   );

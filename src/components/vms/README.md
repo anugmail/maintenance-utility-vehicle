@@ -43,7 +43,7 @@ import { Table, type TableColumn } from "@/components/vms/Table";
 | `SortIcon` | Sort icon · Table 2:14 | `Icon` (Down/Up/Swap) |
 | `TableHeader` | Table header · Table headers 2096:36080 | `Breakpoint` `query` `Placeholder` `onQuery` `onFilter` `FilterText` `Filters[]` `onRemoveFilter` |
 | `TablePagination` / `ButtonGroupsPaginationItem` | Table pagination · Pagination 2:15 | `Breakpoint` `total` `page` `perPage` `onPage` · item: `Type` `State` `Number` |
-| `MobileTable` (+ `MobileCards`) / `MobileTableItem` | Mobile table (+ item) · Table 2:14 | `MobileCards` = แปลง columns/rows ของ `Table` เป็นการ์ด (ตาม mobileCards() ใน core.js) · item: `Style` `Header` `Text` `SupportingText` `Pill` `Actions` |
+| `MobileTable` (+ `MobileCards`) / `MobileTableItem` | Mobile table (+ item) · Table 2:14 | `MobileCards` = แปลง columns/rows ของ `Table` เป็นการ์ด (ตาม mobileCards() ใน core.js · ช่อง `{text, sub}` → Text + Supporting text) · item: `Style` `Header` `Text` `SupportingText` `Pill` `Actions` |
 | `EmptyStateDataEmpty` | Empty state/Data empty · Table 2:14 | `Text` `SupportingText` `Actions` |
 | `Breadcrumbs` | Breadcrumbs · 2:7 | `links[{Text, href}]` |
 | `PageHeader` | Page header · 1983:21158 | `Breakpoint` `Title` `Badge` ([ข้อความ, สี Badge outline]) `SupportingText` `onBack` `crumbs` `Actions` |
@@ -56,12 +56,15 @@ import { Table, type TableColumn } from "@/components/vms/Table";
 | `BottomSheet` | **ประกอบ** (ดู `figma-spec/COMPOSED.md`) | `open` `onClose` `Title` `children` `Footer` `flush` |
 | `Alert` | Alert · Alerts 2:11 | `Color` `Text` `SupportingText` `LeadingIcon` `onClose` |
 | `Notification` | Notification · Notifications 1873:44383 | `Type` `Breakpoint` `Text` `SupportingText` `onClose` `floating` · ใช้ผ่าน `notify()` ใน `lib/mock/store` |
-| `NavButton` | Nav button · Sidebar navigation 2:2 | `IconSwap` `State` `Indicator` `Text` `href` `onClick` |
+| `NavButton` | Nav button · Sidebar navigation 2:2 | `IconSwap` (ชื่อไอคอน หรือ element เช่น Avatar) `State` `Indicator` `Text` `href` `onClick` |
+| `NavItem` | Nav item · Sidebar navigation 2:2 | `Text` `State` (Default/Hover/Active/Focused/Disabled) `LeadingIcon` `LeadingIconSwap` `TrailingIcon` `TrailingIconSwap` `Badge` `BadgeText` `ShowDescription` `SupportingText` `href` `onClick` `expanded` |
+| `NavListItem` | Nav list item · Sidebar navigation 2:2 (เมนูย่อย) | `Text` `State` `Badge` `BadgeText` `href` `onClick` |
+| `PillColor` | Pill color · Badge 2:13 | `Text` `Color` (Brand/Gray/Info/Success/Warning/Error/Disabled) |
 | `HeaderNavigation` | Header navigation · 2:4 | `Breakpoint` (Desktop/Tablet/Mobile) `bell` `onMenu` |
-| `SidebarNavigation` | Sidebar navigation · 2:2 | `State` (Collapsed) `menu` `footer` `activeIndex` |
+| `SidebarNavigation` | Sidebar navigation · 2:2 (เมนูจริงจากหน้า Sidebar Navigation 277:230639 ของ UI Release#2) | `State` (Collapsed/Expanded) `menu` (กลุ่ม + เมนูย่อย) `footer` `active` (ข้อความเมนูที่ Active · ตั้งต้น "บำรุงรักษาตามวาระ") `onToggle` `toggleLabel` |
 | `Ms` | (ไม่ใช่ component ไลบรารี) ไอคอน Material Symbols Rounded | `name` `size` (12/16/20/24) |
 
-กรอบหน้า + แถบต้นแบบอยู่ `src/components/shell/` (`AppFrame` · `PrototypeBar` · `ToastHost`)
+กรอบหน้า + แถบต้นแบบอยู่ `src/components/shell/` (`AppFrame` — Sidebar ย่อ/ขยาย + เมนูมือถือ · `PrototypeBar` · `ToastHost` · `MovedTo` หน้าพาจากที่อยู่เดิม)
 
 ชุดประกอบที่ใช้ซ้ำ (จาก core.js) อยู่ `src/components/patterns/`:
 - `ConfirmDialog` — `spec={{ title, sub, cancel, ok, danger }}` `onOk` `onCancel` (desktop Modal · มือถือ Bottom sheet)

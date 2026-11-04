@@ -3,7 +3,7 @@
 export interface Scenario { id: string; name: string; phase: string; role: string; href?: string }
 
 export const SCENARIOS: Scenario[] = [
-  { id: "S1", name: "กบค. สร้างแผนบำรุงรักษาประจำปี และจัดรถลงไตรมาส", phase: "เตรียมดำเนินการ", role: "กบค.", href: "/plans/" },
+  { id: "S1", name: "กบค. สร้างแผนบำรุงรักษาประจำปี และจัดรถลงไตรมาส", phase: "เตรียมดำเนินการ", role: "กบค.", href: "/" },
   { id: "S2", name: "ผู้อนุมัติ ตรวจสอบและอนุมัติแผนบำรุงรักษา", phase: "เตรียมดำเนินการ", role: "ผู้อนุมัติ" },
   { id: "S19", name: "กบค. แก้ไขแผนบำรุงรักษา แล้วส่งอนุมัติใหม่", phase: "เตรียมดำเนินการ", role: "กบค." },
   { id: "S20", name: "กบค. ลบแผนบำรุงรักษาที่ยังไม่อนุมัติ", phase: "เตรียมดำเนินการ", role: "กบค." },
