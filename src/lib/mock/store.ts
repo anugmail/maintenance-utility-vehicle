@@ -4,6 +4,8 @@
 import { useSyncExternalStore } from "react";
 import { PLANS, type Plan } from "./data";
 import type { Draft } from "./plan";
+import type { Noti, Trip } from "./trips";
+import type { CloseoutState, QuarterState } from "./closeout";
 
 export const KEY = "mt-next-v1";
 export const ROLE_KEY = "mt-next-v1:role";
@@ -15,6 +17,15 @@ export interface MockState {
   draft?: Draft | null;
   /** แถบต้นแบบ: จำลองบันทึกไม่สำเร็จ (จอ "บันทึกไม่สำเร็จ" ของ S1) */
   failSave?: boolean;
+  /* batch B (S4 S6 S9 S7 S8 S15 S16 S17) — ไม่มีค่า = ค่าตั้งต้นใน trips.ts / closeout.ts */
+  /** แผนเดินทางทุกใบ (S6 S9 สร้าง · S7 อนุมัติ/ส่งกลับ) */
+  trips?: Trip[];
+  /** แจ้งเตือนในแอปของ กรย. / หน่วยงานเจ้าของรถ (S8) */
+  notis?: Noti[];
+  /** ผลเบิก/จองอะไหล่รายไตรมาส (S4) คีย์ "<แผน>-<ไตรมาส>" */
+  quarter?: Record<string, QuarterState>;
+  /** ประวัติ · หัวหน้าตรวจ · ปิดงาน (S15 S16 S17) คีย์ = รหัสแผน */
+  closeout?: Record<string, CloseoutState>;
 }
 
 const initial = (): MockState => ({ v: 1, plans: PLANS.map((p) => ({ ...p })) });

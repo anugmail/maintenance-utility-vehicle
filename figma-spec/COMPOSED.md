@@ -98,3 +98,18 @@
 | ชำรุด / ผิดรุ่น ใน ReceiptChecklist | Checkbox กดได้เมื่อเลือก "มี" (เลือก "ไม่มี" ล้างค่า) — ไฟล์ไม่ได้บอกพฤติกรรม |
 | Date picker วันนอกเดือน | แสดงเป็น Day State=Disabled ตามไลบรารี (ทั้งต้นและท้ายเดือน) · สัปดาห์เริ่มวันจันทร์ (Mo) ตามไลบรารี |
 | File upload ปุ่มในแถวไฟล์ | In progress = close (ยกเลิก) · Error = restart_alt (ลองใหม่) + close · Completed = download + delete ตาม _File upload item base |
+
+## ฉ. batch B — S4 S6 S9 S7 S8 S15 S16 S17 (4 พ.ย. 2569)
+
+| จุด | ประกอบจาก / ที่ทำ | เหตุผล |
+|---|---|---|
+| ตารางติ๊กเลือกรถใน popup เพิ่มรถเข้าแผนเดินทาง (`app/quarter/_shared/TripCarPicker`) | Table header cell (Checkbox ที่หัวคอลัมน์แรก · Unselected/Indeterminate/Selected) + Table cell Style=Lead checkbox วางเป็นตารางเอง · มือถือ List with checkbox (หัว "ทะเบียน") | `Table` ของต้นแบบรับช่องติ๊กในแถวไม่ได้ · ตาม tripCarModal() ใน screens.js (Select vehicles ของ UI Release#2) |
+| ช่องค้นหาใน popup เพิ่มรถ | Text input ไม่มีป้าย ไอคอน search กว้าง 320 (ส่วนค้นหาของ Table header) | screens.js ซ่อน Actions (ปุ่มตัวกรอง) ของ Table header แต่ component `TableHeader` แสดงปุ่มตัวกรองเสมอ |
+| ช่องค้นหาผู้รับจ้าง / พนักงาน กบค. ซ่อม | Input dropdown (property Cursor พิมพ์ค้นได้) + Dropdown list (ชื่อ + Supporting text ประเภทรถ) · ไม่พบ = ไม่แสดงรายการ | จอ "ค้นไม่พบ" ยังไม่ออกแบบ |
+| Date picker ในฟอร์มแผนเดินทาง | Date picker Type=Dual ลอยใต้ช่องวันที่เริ่ม (desktop) · มือถือพิมพ์ วว/ดด/ปปปป ในช่อง | screens.js ไม่วาด date picker บนมือถือ · "เลือกก่อนวันนี้ไม่ได้" ยังไม่บังคับ (component ไม่มีวันต่ำสุด) |
+| กดกระดิ่ง (S8) | หน้า `/trips-view/*` ดักคลิกปุ่ม aria-label "การแจ้งเตือน" ใน Header navigation แล้วเปิด patterns/NotificationPanel | AppFrame / HeaderNavigation ยังไม่มี prop กดกระดิ่ง — **รอ lead เพิ่ม `onBell` แล้วเปลี่ยนมาใช้** |
+| สรุปเบิก/จอง (S4 desktop) | SummaryRequestedParts ของไฟล์ Maintain-D: กลุ่ม "เบิกจากคลัง Smart Inventory (3 รายการ)" หัวย่อย เบิกที่ Smart Inventory / เบิกที่คลังสำรอง · กลุ่ม "คงเหลือไม่พอ — รอจัดซื้อ ผพจ. (2 รายการ)" หัวย่อย จัดซื้ออะไหล่เพิ่มโดย Smart Inventory / ผพจ. · ยอดรวม 24,800 บาท | screens.js ตั้งแค่หัวกลุ่มและยอดรวม แถวในกลุ่มเป็นค่าตั้งต้นของ component — แถวในกลุ่มจัดตามคลัง/ผู้จัดซื้อ (รอเคาะ) |
+| เปิด scenario จาก `/scenarios/` (`lib/mock/seedB.ts`) | ลิงก์ส่ง `?seed=S4…S17` ⇒ ตั้งข้อมูลจำลอง + บทบาทให้อยู่จุดเริ่มของ scenario แล้วลบออกจาก URL | ไม่มีบนจอ (ของต้นแบบ) |
+| state ที่ไม่มีทางกดถึงในจอ | S4 `?sim=down` Smart Inventory ขัดข้อง (C.5) · `?sim=empty` ไม่มีอะไหล่ (C.6) · รอจัดซื้อ → เบิกแล้ว (C.3 → C.4) จำลองว่าของเข้าคลังเมื่อกลับมาเปิดหน้าใหม่ | จอไม่ได้วาดปุ่มลองใหม่/ช่วงรอของเข้าคลัง |
+
+ข้อความที่จอไม่ได้ระบุ (batch B): ไม่มีข้อความใหม่ — S16 ตีกลับไม่มี toast/จอผล (กลับหน้ารายการ แถวเป็น "ตีกลับ" ตาม HST.back) · ปุ่ม "ตีกลับ" ใน popup กดไม่ได้จนกว่าจะพิมพ์เหตุผล (ข้อความ error ยังไม่มี) · "ลบข้อความแจ้งเตือนทั้งหมด" ลบแจ้งเตือนของบทบาทนั้น · "ดาวน์โหลดรายงาน" ยังไม่ทำอะไร (Q25)
