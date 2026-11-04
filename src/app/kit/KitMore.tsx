@@ -1,5 +1,5 @@
 "use client";
-/* หน้า /kit/ ส่วนเพิ่ม 4 พ.ย. 2569 — component ที่ scenario ที่เหลือ (S2–S23) ต้องใช้ · ไลบรารี (Component) VMS Plus + ไฟล์ Maintain-D + pattern ที่ประกอบ (COMPOSED.md)
+/* หน้า /kit/ ส่วนเพิ่ม 4 พ.ย. 2569 — component ที่ scenario ที่เหลือ (S2–S24 · S11 S23 ตัดออก) ต้องใช้ · ไลบรารี (Component) VMS Plus + ไฟล์ Maintain-D + pattern ที่ประกอบ (COMPOSED.md)
    ข้อความตัวอย่างจาก maintainance-yearly-specs/S*.md (ค่าจาก screens.js) */
 import { useState } from "react";
 import { HandoverSignature, type SignerSlot } from "@/components/maintain-d/HandoverSignature";

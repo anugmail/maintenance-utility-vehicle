@@ -41,7 +41,7 @@ export function planHistory(m: MockState, plan: Plan): PlanHistory {
     const date = (j.status === "cannot" ? j.cannot?.at : j.closedAt)?.slice(0, 10) ?? "-";
     const r = j.oilResult, oil = j.status === "done" && oilSampled(j.close?.oilChoice ?? j.oilChoice) && r && r.sel >= 0 ? [OIL_PILL[r.sel]] : [];
     const by = (j.status === "cannot" ? j.cannot?.by : j.recordedBy) ?? "-";
-    return [c?.plate ?? id, date, workText(j), j.status === "cannot" ? "-" : usedSummary(j), { pills: oil }, by.replace(/ \((กบค\.|ผู้รับจ้าง)\)$/, ""), { pills: [j.acceptedAt ? ACC.ok : ACC.wait] }];
+    return [c?.plate ?? id, date, workText(j), j.status === "cannot" ? "-" : usedSummary(j), { pills: oil }, by.replace(/ \((กบค\.|ผู้รับจ้าง)\)$/, "") /* "(ผู้รับจ้าง)" = งานเก่าในที่เก็บก่อนตัด S23 */, { pills: [j.acceptedAt ? ACC.ok : ACC.wait] }];
   });
   const done = fin.filter((x) => x.j.status === "done");
   const parts = new Set<string>(), back = new Set<string>();

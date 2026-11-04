@@ -4,7 +4,8 @@
    → ReceiptChecklist "รายการเอกสารรับรถ" (13 รายการ · ไฟล์ Maintain-D) → HandoverSignature "ลงนามการรับมอบรถ" (ผู้ส่งมอบ หน่วยงานเจ้าของรถ · ผู้รับมอบ กบค.)
    → Section header "ภาพก่อนเริ่มงาน" + File upload 2 ช่อง ("รูปรถ + ทะเบียน" · "อะไหล่ใหม่") → ปุ่ม "ย้อนกลับ" · "ยืนยันรับรถและเริ่มงาน" (กดได้เมื่อลงนามครบทั้งสองฝั่ง)
    "เซ็นลงนาม" → Modal Signature "ลงนามการรับมอบรถ" (วาดลายเซ็นได้จริง) · ยืนยัน → อยู่ระหว่างบำรุงรักษา + toast "เริ่มงานบำรุงรักษาแล้ว"
-   ค่าที่กรอกเก็บเป็นร่างในข้อมูลจำลอง (ออกจากหน้าแล้วกลับมาไม่หาย) */
+   ค่าที่กรอกเก็บเป็นร่างในข้อมูลจำลอง (ออกจากหน้าแล้วกลับมาไม่หาย)
+   แผนจ้างดำเนินการใช้หน้าเดียวกัน กบค. เป็นผู้รับมอบ (ใบจ้างไม่มีพนักงานในใบ ⇒ ตัวเลือก = พนักงาน กบค. ทั้งหมด staffOf · COMPOSED.md) */
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { HandoverSignature } from "@/components/maintain-d/HandoverSignature";
@@ -17,7 +18,7 @@ import { PageHeader } from "@/components/vms/PageHeader";
 import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionHeader } from "@/components/vms/SectionHeader";
-import { BEFORE, emptyReceive, patchJob, PEOPLE, SIGN_DATE, startJob, tripLoc, tripPhone, type ReceiveForm } from "@/lib/mock/jobs";
+import { BEFORE, emptyReceive, patchJob, PEOPLE, SIGN_DATE, staffOf, startJob, tripLoc, tripPhone, type ReceiveForm } from "@/lib/mock/jobs";
 import { notify } from "@/lib/mock/store";
 import { ButtonRow, useCrumbs, jobHref, Section, toUpload, useBack, useTripCar } from "../../_lib/ui";
 
@@ -30,16 +31,16 @@ export function ReceivePage() {
   const crumbs = useCrumbs();
   const router = useRouter();
   const back = useBack();
-  const { trip, car, job, actor, vendor } = useTripCar();
+  const { trip, car, job, actor } = useTripCar();
   const [sign, setSign] = useState(-1);
   if (!trip || !car || !job) return <EmptyStateSearchNotFound />;
   const f: ReceiveForm = job.receive ?? emptyReceive();
   const put = (fn: (f: ReceiveForm) => ReceiveForm) => patchJob(trip.id, car.id, (j) => ({ ...j, receive: fn(j.receive ?? emptyReceive()) }));
-  const options = [[PEOPLE.ownerSigner], trip.staff.length ? trip.staff : [PEOPLE.vendor.replace(/ \(.*\)$/, "")]];
+  const options = [[PEOPLE.ownerSigner], staffOf(trip)];
   const signed = f.signers.every((x) => !!x.sig);
   const confirm = () => {
     if (!signed || !actor) return;
-    startJob(trip, car.id, vendor);
+    startJob(trip, car.id);
     notify("เริ่มงานบำรุงรักษาแล้ว");
     router.push(jobHref(trip, car.id));
   };

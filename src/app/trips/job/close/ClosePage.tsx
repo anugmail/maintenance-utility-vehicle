@@ -5,7 +5,8 @@
    · ผลการบำรุงรักษา (เลขไมล์ · ชั่วโมงเครื่องจักร บังคับ) · น้ำมันไฮโดรลิก (Radio text card 3 ใบ + ผลการทดสอบ (ถ้ามี) เมื่อมีเก็บตัวอย่าง)
    · (เฉพาะรถเครน/รถกระเช้า 4 พ.ย. 2569) Safety Inspection: File upload "เอกสาร Safety Inspection" (ถ้ามี) ไม่บังคับ — safetyDocs() ใน screens.js
    · InspectionChecklist "ตรวจสภาพรถปิดงาน" (24) + HandoverSignature "ลงนามการส่งคืนรถ" · บันทึกตรวจสอบเอกสารปิดงาน (มี/ไม่มี/ไม่ต้องใช้ + "อัพโหลดเอกสาร")
-   → "ย้อนกลับ" · "ปิดงาน" (กดได้เมื่อลงนามส่งคืนรถครบ — Condition ของ userflow) → ตรวจเอง เสร็จสิ้น / จ้าง ดำเนินการบำรุงรักษาแล้ว → หน้ารายละเอียดแผนเดินทาง + toast "บันทึกงานบำรุงรักษาสำเร็จ"
+   → "ย้อนกลับ" · "ปิดงาน" (กดได้เมื่อลงนามส่งคืนรถครบ — Condition ของ userflow) → "เสร็จสิ้น" ทันที → หน้ารายละเอียดแผนเดินทาง + toast "บันทึกงานบำรุงรักษาสำเร็จ"
+   แผนจ้างดำเนินการใช้หน้าเดียวกัน กบค. กรอกตามที่ผู้รับจ้างทำจริง (4 พ.ย. 2569 ตัด S23 S11 · ไม่มีส่งตรวจงาน) · ใบจ้างไม่มีพนักงานในใบ ⇒ ตัวเลือกพนักงาน = พนักงาน กบค. ทั้งหมด (staffOf · COMPOSED.md)
    ช่องในตารางอะไหล่เป็นข้อความตามจอ Figma (Table cell ไม่มีช่องกรอก) — กดแถวเปิด popup แก้ไขอะไหล่ (โครง partEditModal ของ screens.js) · "เพิ่มรายการ" = popup "เพิ่มอะไหล่ที่ใช้จริง" (partAddModal) */
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
@@ -27,7 +28,7 @@ import { TertiaryButton } from "@/components/vms/TertiaryButton";
 import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
 import {
-  carOf, closeJob, JOB_TIMES, closeRows, costSummary, emptyClose, nf, oilSampled, ownerCostCenter, patchJob, PEOPLE, personSum, safetyOn, tripDays, tripLoc, tripPhone,
+  carOf, closeJob, JOB_TIMES, closeRows, costSummary, emptyClose, nf, oilSampled, ownerCostCenter, patchJob, PEOPLE, personSum, safetyOn, staffOf, tripDays, tripLoc, tripPhone,
   type ClosePartRow, type CloseForm, type CostRow, type DocSel,
 } from "@/lib/mock/jobs";
 import { notify } from "@/lib/mock/store";
@@ -48,7 +49,7 @@ export function ClosePage() {
   const router = useRouter();
   const back = useBack();
   const mob = useBreakpoint() === "Mobile";
-  const { trip, car, job, actor, vendor } = useTripCar();
+  const { trip, car, job, actor } = useTripCar();
   const [errors, setErrors] = useState(false);
   const [sign, setSign] = useState(-1);
   const [edit, setEdit] = useState<number | null>(null);
@@ -69,7 +70,7 @@ export function ClosePage() {
   const toggle = (k: string) => (v: boolean) => { setOpen(v ? k : ""); setQuery(""); };
   const loc = tripLoc(trip, car);
   const start = job.startedAt ?? "";
-  const staffOptions = trip.staff.length ? trip.staff : [PEOPLE.vendor.replace(/ \(.*\)$/, "")];
+  const staffOptions = staffOf(trip);
   const centers = [...new Set(trip.carIds.map((id) => ownerCostCenter(carOf(id)!)))];
   const days = Array.from({ length: tripDays(trip) }, (_, i) => i + 1);
   const E = (m: string, v: string) => (errors && !v.trim() ? m : undefined);
@@ -77,7 +78,7 @@ export function ClosePage() {
   const submit = () => {
     if (!actor || !signed) return;
     if (!f.km.trim() || !f.hours.trim()) { setErrors(true); result.current?.scrollIntoView({ behavior: "smooth", block: "center" }); return; }
-    closeJob(trip, car.id, f, vendor);
+    closeJob(trip, car.id, f);
     notify("บันทึกงานบำรุงรักษาสำเร็จ");
     router.push(tripHref(trip));
   };

@@ -1,13 +1,12 @@
 "use client";
 /* ข้อมูลจำลองการยอมรับผล (S13 รายคัน · S14 ทั้งแผน) — ค่าชุดเดียวกับปลั๊กอิน Figma (screens.js: ACC · ACC_COLS · ACC_PLAN · accRows · carResult · planEvidence)
    ชื่อค่าคงที่ยกตรงจาก maintainance-yearly-specs/mock-data.ts (ACCEPT_STATUS · PLAN_ACCEPT_STATUS · EVIDENCE_BADGE · ACCEPTANCE_* · FEEDBACK_SAMPLE)
-   รายการรอตรวจสอบ (S13) สร้างจากงานรายคันจริง (jobs.ts): รถในแผนเดินทางที่อนุมัติแล้วที่สถานะ "เสร็จสิ้น" (S10 ปิดงาน · S11 อนุมัติงานผู้รับจ้าง) หรือ "บำรุงรักษาไม่ได้"
+   รายการรอตรวจสอบ (S13) สร้างจากงานรายคันจริง (jobs.ts): รถในแผนเดินทางที่อนุมัติแล้วที่สถานะ "เสร็จสิ้น" (S10 ปิดงาน ทั้งตรวจเองและแผนจ้างที่ กบค. ปิดแทนผู้รับจ้าง) หรือ "บำรุงรักษาไม่ได้"
    ยอมรับรายคัน = job.acceptedAt (ล้างไปพร้อมงานเมื่อเปิดชุดตัวอย่างใหม่) · ยอมรับทั้งแผน (S14) = closeout.accepted ของแผน (markPlanAccepted → S15 ส่งประวัติได้)
    คะแนน/ข้อเสนอแนะเก็บใน MockState.feedback คีย์ = รหัสแผน (module augmentation ไม่แก้ store.ts) */
 import type { PillColor } from "@/components/vms/PillOutline";
 import { closeoutOf, markPlanAccepted, putCloseout, setPlanStatus } from "./closeout";
-import { hireRows } from "./hire";
-import { SEED_TRIPS, applyJobs, carOf, closedSample, getJob, jobKey, jobsOf, type Job, type JobTrip, type TripCar } from "./jobs";
+import { SEED_TRIPS, applyJobs, carOf, closedSample, getJob, jobKey, jobsOf, workItems, type Job, type JobTrip, type TripCar } from "./jobs";
 import { setMock, type MockState } from "./store";
 import { TRIP_OTHER } from "./trips";
 
@@ -50,7 +49,7 @@ export function accRows(m: MockState): AccRow[] {
 export const accRecord = (m: MockState, tripId: string | null, carId: string | null) => accRows(m).find((r) => r.trip.id === tripId && r.car.id === carId);
 export const accCarHref = (r: AccRow) => "/acceptance/car/?trip=" + r.trip.id + "&car=" + r.car.id;
 /** รายการงานและอะไหล่ที่ใช้จริง: แถวปิดงาน (ใช้จริง) · บำรุงรักษาไม่ได้ = จำนวนที่ใช้ไปแล้ว */
-export const workRows = (j: Job) => hireRows(j);
+export const workRows = (j: Job) => workItems(j);
 
 /* ---------- ทั้งแผน (S14) ---------- */
 export interface PlanAcc { planId: string; mr: string; rows: AccRow[]; ready: boolean; done: boolean; range: string; by: string }
@@ -84,7 +83,7 @@ function acceptSample(all: boolean) {
   applyJobs(() => ({
     trips: { T1 },
     jobs: Object.fromEntries(ACCEPTANCE_CARS.map((r) => {
-      const j = closedSample(T1, r.carId, false, "done");
+      const j = closedSample(T1, r.carId);
       return [jobKey("T1", r.carId), { ...j, closedAt: r.date + " 11:15 น.", recordedBy: r.by, ...(all ? { acceptedAt: ACCEPT_DATES.car } : {}) }];
     })),
   }), [{ ...TRIP_OTHER }]);

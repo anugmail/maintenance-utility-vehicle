@@ -2,10 +2,11 @@
 /* ชิ้นประกอบหน้าของโฟลว์งานรายคัน (/trips/*) — ไม่ใช่ component ใหม่ จัดวางชิ้นไลบรารีตามตัวช่วยของ core.js / screens.js เท่านั้น
    ButtonRow = btnRow() · Grid = row() (มือถือเรียงลง · Spacer = ครึ่งแถว) · Section = col('Section', …, 16) · KvBox = kv()
    DataTable = tbl() + mobileCards() (+ กดแถวเปิดรายการ) · CannotPopup = cannotModal() · OilBlock = jobOil() + oilResult()
-   PartEditModal = partEditModal() (+ ช่อง "จำนวนอะไหล่เก่า" "หมายเหตุ" ของหน้าปิดงาน) · PartAddModal = partAddModal() · BeforePhotos = photoFiles() (ผู้รับจ้างแก้ภาพก่อนเริ่มงาน)
-   ใช้ร่วมทั้งแผนตรวจเอง (S10 S12) และแผนจ้าง (S23 S11) — ชิ้นเดียวทั้งโฟลว์ ไม่ทำซ้ำรายหน้า */
+   PartEditModal = partEditModal() (+ ช่อง "จำนวนอะไหล่เก่า" "หมายเหตุ" ของหน้าปิดงาน) · PartAddModal = partAddModal()
+   ใช้ร่วมทั้งแผนที่ กบค. ดำเนินการเอง และแผนจ้างดำเนินการ (S10 S12 · กบค. ปิดงานแทนผู้รับจ้าง จอ I.22 I.23) — ชิ้นเดียวทั้งโฟลว์ ไม่ทำซ้ำรายหน้า
+   4 พ.ย. 2569 ตัด S23 S11 ⇒ ไม่มีบทบาทผู้รับจ้างในโฟลว์นี้ (Breadcrumbs แบบไม่มีลิงก์ของผู้รับจ้าง · ภาพก่อนเริ่มงานแบบแก้ไขได้ photoFiles() เอาออก) */
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { DisplayBox } from "@/components/patterns/DisplayBox";
 import { DropdownList } from "@/components/vms/DropdownList";
 import { DropdownListItem } from "@/components/vms/DropdownListItem";
@@ -24,8 +25,7 @@ import { Table, type TableColumn, type TableValue } from "@/components/vms/Table
 import { TextArea } from "@/components/vms/TextArea";
 import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
-import type { NewPart } from "@/lib/mock/hire";
-import { carOf, getJob, getTrip, OIL_JOB_OPTS, OIL_RESULT_OPTS, oilSampled, patchJob, retRows, useJobs, type OilChoice, type OilSel, type PlanPart, type TripCar, type JobTrip } from "@/lib/mock/jobs";
+import { carOf, getJob, getTrip, OIL_JOB_OPTS, OIL_RESULT_OPTS, oilSampled, retRows, useJobs, type NewPart, type OilChoice, type OilSel, type PlanPart, type TripCar, type JobTrip } from "@/lib/mock/jobs";
 import { useRole } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 
@@ -37,19 +37,15 @@ export const badgeOf = ([t, c]: readonly [string, PillColor]): [string, BadgeOut
 export const tripHref = (t: JobTrip) => "/trips/detail/?trip=" + t.id;
 export const jobHref = (t: JobTrip, carId: string, sub = "") => "/trips/job/" + sub + "?trip=" + t.id + "&car=" + carId;
 /* Breadcrumbs ตาม pageHead(): ชื่อเมนู + ระดับกลาง + หน้าปัจจุบัน (ไลบรารีมี 3 ช่องลิงก์ — ช่องที่ 4 ของหน้ารับรถ/ปิดงานไม่แสดงตามจอ Figma)
-   "แผน MR …" → หน้ารายละเอียดแผน /detail/ · "แผนเดินทาง ไตรมาส n" → หน้าแผนเดินทางของไตรมาส /quarter/trips/
-   ผู้รับจ้างไม่มีหน้ารายละเอียดแผน/รายการแผนเดินทาง (Q48) ⇒ สองช่องนี้เป็นข้อความเฉย ๆ */
+   "แผน MR …" → หน้ารายละเอียดแผน /detail/ · "แผนเดินทาง ไตรมาส n" → หน้าแผนเดินทางของไตรมาส /quarter/trips/ (แผนจ้างก็เหมือนกัน) */
 export const planHref = (t: JobTrip) => "/detail/?id=" + t.planId;
 export const quarterTripsHref = (t: JobTrip) => "/quarter/trips/?id=" + t.planId + "&q=" + t.q;
-export const tripCrumbs = (t: JobTrip, vendor = false): Crumb[] => [{ Text: MENU_NAME, href: "/" }, { Text: "แผน " + t.planMr, href: vendor ? undefined : planHref(t) },
-  { Text: "แผนเดินทาง " + t.quarter, href: vendor ? undefined : quarterTripsHref(t) }, { Text: t.name }];
-export const jobCrumbs = (t: JobTrip, last: string, vendor = false): Crumb[] => [{ Text: MENU_NAME, href: "/" }, { Text: "แผนเดินทาง " + t.quarter, href: vendor ? undefined : quarterTripsHref(t) },
+export const tripCrumbs = (t: JobTrip): Crumb[] => [{ Text: MENU_NAME, href: "/" }, { Text: "แผน " + t.planMr, href: planHref(t) },
+  { Text: "แผนเดินทาง " + t.quarter, href: quarterTripsHref(t) }, { Text: t.name }];
+export const jobCrumbs = (t: JobTrip, last: string): Crumb[] => [{ Text: MENU_NAME, href: "/" }, { Text: "แผนเดินทาง " + t.quarter, href: quarterTripsHref(t) },
   { Text: t.name, href: tripHref(t) }, { Text: last }];
-/** Breadcrumbs ตามบทบาทที่เปิดอยู่ (เรียกบนสุดของ component) */
-export function useCrumbs() {
-  const vendor = useRole() === "ผู้รับจ้าง";
-  return { trip: (t: JobTrip) => tripCrumbs(t, vendor), job: (t: JobTrip, last: string) => jobCrumbs(t, last, vendor) };
-}
+/** Breadcrumbs ของหน้าแผนเดินทาง / งานรายคัน (ทุกบทบาทชุดเดียวกัน) */
+export const useCrumbs = () => ({ trip: tripCrumbs, job: jobCrumbs });
 
 /* อ่าน ?trip=&car= + บทบาท */
 export function useTripCar() {
@@ -60,10 +56,9 @@ export function useTripCar() {
   const carId = sp.get("car") ?? "";
   const car = trip && trip.carIds.includes(carId) ? carOf(carId) : undefined;
   const job = trip && car ? getJob(s, trip.id, car.id) : undefined;
-  const vendor = role === "ผู้รับจ้าง";
-  /* ทำงานในหน้างานได้: กบค. กับแผนตรวจเอง · ผู้รับจ้างกับแผนจ้าง */
-  const actor = !!trip && ((trip.mode === "self" && role === "กบค.") || (trip.mode === "hire" && vendor));
-  return { s, sp, role, trip, car, job, vendor, actor, kbk: role === "กบค." };
+  /* ทำงานในหน้างานได้: กบค. ทั้งแผนตรวจเอง และแผนจ้าง (กบค. บันทึกแทนผู้รับจ้าง 4 พ.ย. 2569) · บทบาทอื่นดูอย่างเดียว */
+  const kbk = role === "กบค.";
+  return { s, sp, role, trip, car, job, actor: !!trip && kbk, kbk };
 }
 
 export function useBack() {
@@ -206,32 +201,4 @@ export function PartAddModal({ open, onAdd, onCancel }: { open: boolean; onAdd: 
       </Grid>
     </PopupModal>
   );
-}
-
-/* ---------- ภาพก่อนเริ่มงาน แก้ไขได้ (ผู้รับจ้าง · photoFiles()) — File upload: แถบความคืบหน้าเดินทีละ 20% ทุก 0.7 วิ (จำลอง) ครบแล้วเข้ารายการภาพของงาน
-   ไฟล์ที่ไม่ใช่ JPG/PNG = State Error · สูงสุด 10 ภาพ ---------- */
-interface Uploading extends UploadFile { id: number; progress: number }
-export function BeforePhotos({ trip, car, photos }: { trip: JobTrip; car: TripCar; photos: UploadFile[] }) {
-  const [ups, setUps] = useState<Uploading[]>([]);
-  const active = ups.some((u) => !u.err);
-  useEffect(() => {
-    if (!active) return;
-    const t = setInterval(() => setUps((us) => us.map((u) => (u.err ? u : { ...u, progress: Math.min(100, u.progress + 20) }))), 700);
-    return () => clearInterval(t);
-  }, [active]);
-  useEffect(() => {
-    const done = ups.filter((u) => !u.err && u.progress >= 100);
-    if (!done.length) return;
-    patchJob(trip.id, car.id, (j) => ({ ...j, photos: [...(j.photos ?? []), ...done.map((u) => ({ name: u.name, size: u.size, bar: true }))].slice(0, 10) }));
-    setUps((us) => us.filter((u) => !done.some((d) => d.id === u.id)));
-  }, [ups, trip.id, car.id]);
-  const onFiles = (fs: File[]) => {
-    const room = 10 - photos.length - ups.length;
-    setUps((us) => [...us, ...fs.slice(0, Math.max(0, room)).map((f, i) => ({ ...toUpload(f), bar: false, id: Date.now() + i, progress: 0, err: !/\.(jpe?g|png)$/i.test(f.name) }))]);
-  };
-  const onDelete = (i: number) => {
-    if (i < photos.length) patchJob(trip.id, car.id, (j) => ({ ...j, photos: (j.photos ?? []).filter((_, k) => k !== i) }));
-    else { const u = ups[i - photos.length]; setUps((us) => us.filter((x) => x.id !== u?.id)); }
-  };
-  return <FileUpload LabelText="ภาพก่อนเริ่มงาน" hint="JPG, PNG · สูงสุด 10 ภาพ" bar accept="image/jpeg,image/png" files={[...photos, ...ups]} onFiles={onFiles} onDelete={onDelete} onDownload={() => {}} />;
 }

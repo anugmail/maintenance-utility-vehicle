@@ -61,7 +61,8 @@ export function setMock(fn: (s: MockState) => MockState) { state = fn(load()); s
 export function resetMock() { state = initial(); save(); }
 
 /* ---------- บทบาท (แถบต้นแบบ) ---------- */
-export const ROLES = ["กบค.", "ผู้อนุมัติ", "กบค. คลัง", "กรย.", "หน่วยงานเจ้าของรถ", "ผู้รับจ้าง", "หัวหน้า กบค."] as const;
+/* ผู้รับจ้าง เอาออก 4 พ.ย. 2569 พร้อม S23 (ใช้กับ S23 อย่างเดียว · userflow: ผู้รับจ้างยังไม่มีหน้าในระบบ Q13) — บทบาทเก่าในที่เก็บ = กลับเป็น กบค. (loadRole) */
+export const ROLES = ["กบค.", "ผู้อนุมัติ", "กบค. คลัง", "กรย.", "หน่วยงานเจ้าของรถ", "หัวหน้า กบค."] as const;
 export type Role = (typeof ROLES)[number];
 
 let role: Role | null = null;
