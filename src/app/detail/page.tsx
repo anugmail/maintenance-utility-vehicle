@@ -7,7 +7,7 @@
    ลบแผน → ยืนยันการลบแผน (S20 S.5) → กลับหน้ารายการ + toast "ลบแผนบำรุงรักษาสำเร็จ" · แก้ไข → /edit/ (S19)
    ทางไปขั้นถัดไป (เจ้าของงาน 4 พ.ย. 2569 · ประกอบจากชิ้นไลบรารี — figma-spec/COMPOSED.md หัวข้อ ช.) เฉพาะ กบค.:
      แท็บไตรมาสที่กำลังทำ (plan.nowQ) ของแผนอนุมัติแล้ว/ดำเนินการ: Section label "รถในแผน" Secondary action "ความคืบหน้าอะไหล่" (S4) · Primary action "แผนเดินทาง" (S6)
-     ปุ่มหัว: ดำเนินการ + รถทุกคันในแผนเดินทางเสร็จสิ้น/บำรุงรักษาไม่ได้ → "ส่งประวัติ" (S15) · ประวัติผ่านแล้ว/ปิดงานแล้ว → "รายงานผลการบำรุงรักษา" (S17) */
+     ปุ่มหัว: ดำเนินการ + หน่วยงานยอมรับผลทั้งแผนแล้ว (S14 · closeout.accepted · เงื่อนไข S15) → "ส่งประวัติ" (S15) · ประวัติผ่านแล้ว/ปิดงานแล้ว → "รายงานผลการบำรุงรักษา" (S17) */
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";
@@ -19,7 +19,7 @@ import { SecondaryDangerButton } from "@/components/vms/SecondaryDangerButton";
 import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { TertiaryBrandButton } from "@/components/vms/TertiaryBrandButton";
 import { TertiaryButton } from "@/components/vms/TertiaryButton";
-import { planCarsFinished } from "@/lib/mock/acceptance";
+import { closeoutOf } from "@/lib/mock/closeout";
 import { PST } from "@/lib/mock/data";
 import { DELETE_CONFIRM, badgeOf, deletePlan, findPlan, planId, startEdit, useHydrated } from "@/lib/mock/planFlow";
 import { useMock, useRole } from "@/lib/mock/store";
@@ -46,7 +46,7 @@ function Detail() {
   const size = mob ? "lg" : "md";
   const id = planId(plan);
   const nowQ = Number(plan.nowQ.replace(/\D/g, "")) || 1;
-  const canSend = kbk && st === "active" && planCarsFinished(mock, id);
+  const canSend = kbk && st === "active" && !!closeoutOf(mock, id).accepted;
   const canReport = kbk && (st === "passed" || st === "closed");
   const actions = canEdit ? <>
     {canDelete && <SecondaryDangerButton Text="ลบแผน" LeadingIconSwap="delete-24-300-round" Size={size} onClick={() => setDel(true)} />}

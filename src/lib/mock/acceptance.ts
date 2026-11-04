@@ -67,13 +67,6 @@ export function planAcc(m: MockState, planId: string): PlanAcc {
 }
 /** แผนที่มีรถถึงขั้นยอมรับผล */
 export const accPlans = (m: MockState) => [...new Set(accRows(m).map((r) => r.trip.planId))].map((id) => planAcc(m, id));
-/** รถทุกคันในแผนเดินทางที่อนุมัติแล้วของแผน เสร็จสิ้น/บำรุงรักษาไม่ได้ (หรือหน่วยงานยอมรับทั้งแผนแล้ว) — ปุ่ม "ส่งประวัติ" ในหน้ารายละเอียดแผน */
-export function planCarsFinished(m: MockState, planId: string) {
-  if (closeoutOf(m, planId).accepted) return true;
-  const s = jobsOf(m), trips = Object.values(s.trips).filter((t) => t.planId === planId);
-  return trips.length > 0 && trips.every((t) => t.carIds.every((c) => { const st = getJob(s, t.id, c).status; return st === "done" || st === "cannot"; }));
-}
-
 /* ---------- เขียน ---------- */
 export const feedbackOf = (m: MockState, planId: string): Feedback => m.feedback?.[planId] ?? { score: null, comment: "" };
 export function writeFeedback(planId: string, patch: Partial<Feedback>) {
