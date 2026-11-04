@@ -34,6 +34,10 @@
 | ช่องเลือกชื่อใน `HandoverSignature` | Input dropdown + Dropdown list | ไฟล์ Maintain-D วาดเป็น Text input + ลูกศร keyboard_arrow_down · S10 spec ระบุ Input dropdown → ใช้ Input dropdown ของไลบรารี (หน้าตาเดียวกัน) |
 | ช่องวาดลายเซ็นใน `ModalSignature` | Container ของ Text area (สูง 249) + canvas วาดด้วยเมาส์/นิ้ว + Tertiary button close (ล้าง) | ไฟล์ Maintain-D แสดงภาพลายเซ็นในกรอบ Text area — ต้นแบบให้วาดได้จริง (ผลเป็นภาพ data URL ในข้อมูลจำลอง) |
 | แบตเตอรี่ใน `ReceiptChecklist` มือถือ | Text input ยี่ห้อ + จำนวน + หน่วย ใต้ชื่อรายการในการ์ด | ไฟล์มีช่องนี้เฉพาะตาราง desktop · การ์ดมือถือของไฟล์ไม่ได้แสดงช่องแบตเตอรี่ |
+| S10 หน้างานรายคัน "บำรุงรักษาไม่ได้" ของแผนตรวจเอง (`src/app/trips/job/CannotView.tsx`) | VehicleAndReporterInfo × 3 (ข้อมูลยานพาหนะ · การนัดหมาย · บำรุงรักษาไม่ได้) + Section label "อะไหล่ส่งคืน (n)" + Table RET_COLS | screens.js ไม่ได้วางจอนี้ (S10 Condition "ไม่มีปุ่ม ดูอย่างเดียว") → ยกโครงคันที่แจ้งบำรุงรักษาไม่ได้ของ `hireJob()` (S23/S11) · **รอเคาะ** |
+| S10 หน้าปิดงาน: แก้ไขแถว "รายการสภาพวัสดุอะไหล่" | กดแถว Table → popup (PopupModal) โครง `partEditModal()` ของ S23 (รายการงาน · จำนวนตามแผน · จำนวนที่ใช้จริง · จำนวนที่คืน) + ช่อง "จำนวนอะไหล่เก่า" "หมายเหตุ" (ชื่อหัวคอลัมน์ตาราง) | Table cell ของไลบรารีไม่มีช่องกรอก (จอ Figma เป็นข้อความ) แต่ userflow ให้แก้จำนวนที่ใช้/อะไหล่เก่า/หมายเหตุได้ · ปุ่ม "เพิ่มรายการ" ใช้ popup "เพิ่มอะไหล่ที่ใช้จริง" (`partAddModal()`) · **รอเคาะ** |
+| ปุ่ม "เพิ่มรายการ" ของรายการเอกสารรับรถ / ตรวจสภาพรถปิดงาน / บันทึกตรวจสอบเอกสารปิดงาน · ปุ่ม "อัพโหลดเอกสาร" | ปุ่มของ component (ยังไม่ทำงาน · อัพโหลดเอกสารเปิดเลือกไฟล์แล้วเก็บชื่อไฟล์ ไม่แสดงรายการ) | จอ Figma ไม่ได้บอกว่ารายการที่เพิ่มเองตั้งชื่ออย่างไร และไม่มีจอแสดงไฟล์เอกสาร (S10 ยังไม่เคาะ) |
+| `?sample=` ของหน้า `/trips/detail/` (ลิงก์ S10 S12 ในหน้า `/scenarios/`) | — (ข้อมูลจำลองอย่างเดียว) | ใส่สถานะงานชุด JOB_SETS ของ screens.js (`T1_start` `T1_afterClose` `T1_afterCannot` `TV_start` `TV_vendor` `TV_kbk`) ให้เปิดดูจอตามลำดับได้ทันที · ระบบจริงไม่มี |
 | `src/app/kit/KitBlocks.tsx` `KitMore.tsx` | Section label เป็นหัวแต่ละชุด | หน้า /kit/ ของต้นแบบ (แยกไฟล์ให้หน้า kit ไม่ยาวเกิน) |
 
 ## ข. ค่าที่ไลบรารีมีแต่ไม่มี token (ไม่ได้ hardcode — ใช้ค่าใกล้เคียงแทน · รอเคาะ)
@@ -120,3 +124,17 @@
 | state ที่ไม่มีทางกดถึงในจอ | S4 `?sim=down` Smart Inventory ขัดข้อง (C.5) · `?sim=empty` ไม่มีอะไหล่ (C.6) · รอจัดซื้อ → เบิกแล้ว (C.3 → C.4) จำลองว่าของเข้าคลังเมื่อกลับมาเปิดหน้าใหม่ | จอไม่ได้วาดปุ่มลองใหม่/ช่วงรอของเข้าคลัง |
 
 ข้อความที่จอไม่ได้ระบุ (batch B): ไม่มีข้อความใหม่ — S16 ตีกลับไม่มี toast/จอผล (กลับหน้ารายการ แถวเป็น "ตีกลับ" ตาม HST.back) · ปุ่ม "ตีกลับ" ใน popup กดไม่ได้จนกว่าจะพิมพ์เหตุผล (ข้อความ error ยังไม่มี) · "ลบข้อความแจ้งเตือนทั้งหมด" ลบแจ้งเตือนของบทบาทนั้น · "ดาวน์โหลดรายงาน" ยังไม่ทำอะไร (Q25)
+
+## ฉ. ชุด C (S10 S12 S23 S11 S13 S14 — งานรายคัน แผนจ้างดำเนินการ ตรวจรับ ยอมรับผล)
+
+รวมชุด C1 (S10 S12) กับ C2 (S23 S11 S13 S14) เป็นชุดเดียว: หน้ารายละเอียดแผนเดินทาง `/trips/detail/` และหน้างานรายคัน `/trips/job/` ใช้ทั้งแผนตรวจเอง (T1) และแผนจ้าง (TV) · ชิ้นประกอบอยู่ที่ `src/app/trips/_lib/ui.tsx` ที่เดียว
+
+| ส่วน | ประกอบจาก | เหตุผล |
+|---|---|---|
+| `src/app/trips/_lib/ui.tsx` `ButtonRow` | แถวปุ่ม Secondary + Primary (ชิดซ้าย–ขวา · ปุ่มเดียวชิดขวา · มือถือแบ่งเท่ากัน) | btnRow() ของ core.js ไม่มี component แถวปุ่มในไลบรารี (แบบเดียวกับท้ายฟอร์ม `/new/`) · หน้ายอมรับผล `/acceptance/*` ใช้ตัวเดียวกัน |
+| `src/app/acceptance/_lib/ui.tsx` `DocList` | Input label + _File upload item base (Download action อย่างเดียว ไม่มีแถบ) | carResult() (S13) ต้องการไฟล์ดาวน์โหลดได้อย่างเดียว — File upload `readonly` ของไลบรารีซ่อนทั้งดาวน์โหลดและลบ |
+| `src/app/trips/job/HireView.tsx` (หน้างานรายคันของแผนจ้างหลังปิดงาน/แจ้งไม่ได้) | Page header + Alert + VehicleAndReporterInfo + File upload / IncidentPhotoGallery + Section label + Table + Radio text card + Text area | hireJob() ของ screens.js · JobView เลือกตามสถานะ (ดำเนินการบำรุงรักษาแล้ว แจ้งบำรุงรักษาไม่ได้ รอตรวจรับ ส่งกลับแก้ไข) |
+| `PartEditModal` · `PartAddModal` · `CannotPopup` ใน `src/app/trips/_lib/ui.tsx` (ใช้ทั้งหน้างานรายคัน หน้าปิดงาน และแผนจ้าง) | `patterns/PopupModal` + Text input / Input dropdown / Text area + Section header + Table | partEditModal · partAddModal · cannotModal ของ screens.js · หน้าปิดงานเปิด PartEditModal แบบ `extra` (+ จำนวนอะไหล่เก่า หมายเหตุ) · ไม่มีข้อความ error ของ popup อะไหล่ในสเปก ⇒ ปุ่มหลัก Disabled จนกรอกครบ / ใช้จริงเกินแผน (**รอเคาะข้อความ error**) |
+| `BeforePhotos` ใน `src/app/trips/_lib/ui.tsx` — อัปโหลดภาพก่อนเริ่มงาน (ผู้รับจ้าง) | File upload (รายการไฟล์ + ปุ่มลบ) · แถบความคืบหน้าเดินทีละ 20% ทุก 0.7 วิ (จำลอง) · ไฟล์ที่ไม่ใช่ JPG/PNG = State Error | photoFiles() ของ screens.js · ต้นแบบไม่มีเซิร์ฟเวอร์อัปโหลดจริง |
+| ผู้รับจ้างแก้อะไหล่ระหว่าง/หลังบำรุงรักษา | เก็บเป็นร่างของหน้าปิดงาน (`job.close.parts`) หรือจำนวนที่ใช้ของคันที่แจ้งไม่ได้ (`job.cannot.used`) — `src/lib/mock/hire.ts` | ข้อมูลชุดเดียวกับหน้าปิดงาน: แก้ที่หน้างานแล้วหน้าปิดงาน/หน้ารายละเอียดเห็นค่าเดียวกัน |
+| `?sample=S23` `S11` (= `TV_vendor` `TV_kbk`) · `S13` `S14` | (ไม่มี component) — `src/lib/useSample.ts` | ของต้นแบบ: ลิงก์จาก `/scenarios/` ใส่ข้อมูลตั้งต้นของ scenario + สลับบทบาท แล้วเอา sample ออกจาก URL |
