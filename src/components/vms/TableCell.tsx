@@ -4,7 +4,7 @@
    property: Text · Supporting · Supporting text · View · Edit · Print · Delete (ปุ่มไอคอนของ Action icons)
    ค่า: สูง 56 · ขอบใน 8/16 · ช่องไฟ 12 (Badge 8 · Action icons/Multiple badges 4) · พื้น white / gray-50 (Alternating fills=True) · เส้นล่าง gray-200
         Text 14 Regular black · Lead text 14 Medium · Supporting text 12 Regular gray-600 · Action icons = Tertiary button ไอคอนอย่างเดียว 40 */
-import type { ReactNode } from "react";
+import type { MouseEvent, ReactNode } from "react";
 import { cx } from "@/lib/cx";
 import { Checkbox } from "./Checkbox";
 import { PillOutline, type PillColor } from "./PillOutline";
@@ -12,7 +12,7 @@ import { TertiaryButton } from "./TertiaryButton";
 
 export type TableCellStyle = "Text" | "Lead text" | "Badge" | "Action icons" | "Multiple badges" | "Lead checkbox";
 
-export interface CellAction { IconSwap: string; label: string; onClick?: () => void }
+export interface CellAction { IconSwap: string; label: string; onClick?: (e: MouseEvent<HTMLButtonElement>) => void }
 
 export interface TableCellProps {
   Style?: TableCellStyle;

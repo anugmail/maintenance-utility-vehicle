@@ -12,6 +12,10 @@
 | หน้า `/kit/` | ทุก component + Section label เป็นหัวแต่ละชุด | ให้เจ้าของงานเทียบกับไฟล์ Component |
 | หน้า `/soon/` | Page header + Empty state/Data empty | ที่พักของ scenario ที่ยังไม่ทำ |
 | `MobileCards` (ใน `MobileTable.tsx`) | Mobile table + Mobile table item | แปลงตารางเป็นการ์ดตาม `mobileCards()` ใน core.js |
+| `patterns/ConfirmDialog` | Modal (Centered image / Destructive centered image with input) + Modal header Center + Modal footer · มือถือ Bottom sheet + Modal header + Bottom sheet footer | popup ยืนยันตาม `confirm()` ใน core.js ใช้ซ้ำทุก scenario |
+| `patterns/RowMenu` | Dropdown menu ลอยใต้ปุ่ม "…" · มือถือ Bottom sheet + Dropdown menu | เมนูท้ายแถวตาม `menuAt()` / `planMenu()` ใน core.js |
+| ช่อง "จำลองบันทึกไม่สำเร็จ" ในแถบต้นแบบ | Checkbox | ให้เปิดดูจอ "บันทึกไม่สำเร็จ" ของ S1 ได้ (ระบบจริงไม่มี) |
+| ปุ่ม "ใส่อะไหล่ตัวอย่าง (ข้อมูลจำลอง)" ในหน้า `/soon/?s=S21` | Primary button | S21 ยังไม่ทำ — ใส่อะไหล่ CAR_PICK ของ screens.js ให้รถในฟอร์มสร้างแผน เพื่อให้เห็นจออะไหล่ในไตรมาส + ยืนยันเอาอะไหล่ออกของ S1 · เอาออกเมื่อทำ S21 |
 
 ## ข. ค่าที่ไลบรารีมีแต่ไม่มี token (ไม่ได้ hardcode — ใช้ค่าใกล้เคียงแทน · รอเคาะ)
 
@@ -33,7 +37,17 @@
 | ไอคอนเมนูใน Sidebar navigation | ไลบรารีเป็นไอคอนตั้งต้น (crop_free) → ใช้ชุดของ Sidebar ในหน้าจอ UI Release#2 (home · car_rental · traffic_jam · database / light_mode · lock · id_card) |
 | ชื่อไอคอนที่ฟอนต์ Material Symbols ไม่มี | `warning_circle` → `error` · `cancel_circle` → `cancel` (ใน `Ms.tsx`) |
 
-## ง. ที่ variant ไม่ได้บอก
+## ง. ข้อความที่จอ Figma ไม่ได้ระบุ (รอเคาะ)
+
+| จุด | ที่ใช้ |
+|---|---|
+| S1 ยืนยันเอา **ภาค** / **ประเภทรถ** ออก | จอ Figma มีแค่ "ยืนยันการเอาเขตออก" → ใช้รูปเดียวกัน "ยืนยันการเอาภาคออก" / "ยืนยันการเอาประเภทรถออก" + "รถของ {ค่า} ที่จัดไว้ {n} คัน จะถูกเอาออกจากทุกไตรมาส" (Condition: "ถามยืนยันแบบเดียวกับเขต") |
+| S1 toast บันทึกไม่สำเร็จ | จอ Figma เขียน "general error" → ใช้ข้อความนี้ตรงตัว |
+| S1 ค้นทะเบียนไม่เจอในรายการเลือกรถ | "ไม่พบทะเบียนที่ค้นหา" (จอ Figma ไม่มี state นี้) |
+| S1 ภาค/ประเภทรถในตารางรายการ เมื่อเลือกหลายค่า | ต่อด้วย ", " |
+| S1 ปุ่ม "ตัวกรอง" | ยังไม่มีจอแผงตัวกรองใน S1 → ปุ่มยังไม่ทำงาน |
+
+## จ. ที่ variant ไม่ได้บอก
 
 | จุด | ที่ทำ |
 |---|---|

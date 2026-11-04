@@ -6,7 +6,7 @@ import Link from "next/link";
 import { cx } from "@/lib/cx";
 import { Ms } from "./Ms";
 
-export interface Crumb { Text: string; href?: string }
+export interface Crumb { Text: string; href?: string; /** กดแล้วถามก่อนออก (ฟอร์มที่แก้ค้าง) แทนการไปทันที */ onClick?: () => void }
 
 export function Breadcrumbs({ links, homeHref = "/", className }: { links: Crumb[]; homeHref?: string; className?: string }) {
   return (
@@ -17,9 +17,11 @@ export function Breadcrumbs({ links, homeHref = "/", className }: { links: Crumb
         return (
           <span key={i} className="flex items-center gap-1">
             <Ms name="keyboard_arrow_right-20-300-round" size={20} className="text-gray-300" />
-            {cur || !l.href
+            {cur || (!l.href && !l.onClick)
               ? <span aria-current={cur ? "page" : undefined} className={cx("p-1 text-xs", cur ? "text-brand-900" : "text-gray-600")}>{l.Text}</span>
-              : <Link href={l.href} className="p-1 text-xs text-gray-600 hover:text-gray-700">{l.Text}</Link>}
+              : l.onClick
+                ? <button type="button" onClick={l.onClick} className="cursor-pointer p-1 text-xs text-gray-600 hover:text-gray-700">{l.Text}</button>
+                : <Link href={l.href ?? "/"} className="p-1 text-xs text-gray-600 hover:text-gray-700">{l.Text}</Link>}
           </span>
         );
       })}

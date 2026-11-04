@@ -62,3 +62,9 @@ import { Table, type TableColumn } from "@/components/vms/Table";
 | `Ms` | (ไม่ใช่ component ไลบรารี) ไอคอน Material Symbols Rounded | `name` `size` (12/16/20/24) |
 
 กรอบหน้า + แถบต้นแบบอยู่ `src/components/shell/` (`AppFrame` · `PrototypeBar` · `ToastHost`)
+
+ชุดประกอบที่ใช้ซ้ำ (จาก core.js) อยู่ `src/components/patterns/`:
+- `ConfirmDialog` — `spec={{ title, sub, cancel, ok, danger }}` `onOk` `onCancel` (desktop Modal · มือถือ Bottom sheet)
+- `RowMenu` + `anchorOf(el)` — เมนู "…" ท้ายแถว `anchor` `items` `onClose` (desktop Dropdown menu ลอย · มือถือ Bottom sheet)
+
+ข้อมูลจำลอง `src/lib/mock/` — `data.ts` (ค่าชุด screens.js) · `plan.ts` (ตัวช่วยแผน) · `store.ts` (`useMock` `setMock` `resetMock` `useRole` `notify`)

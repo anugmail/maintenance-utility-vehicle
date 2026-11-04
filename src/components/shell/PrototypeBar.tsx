@@ -1,6 +1,6 @@
 "use client";
 /* แถบต้นแบบบนสุด (ไม่ใช่หน้าจอของระบบ — มีเฉพาะต้นแบบ) · สลับบทบาท + ล้างข้อมูลจำลอง (CLAUDE.md ข้อ 5 และ 7)
-   ประกอบจากชิ้นไลบรารี: Input dropdown + Dropdown list (บทบาท) · Tertiary button (ล้างข้อมูลจำลอง) · Tertiary brand button (ไปหน้ารายการ scenario) — บันทึกใน figma-spec/COMPOSED.md */
+   ประกอบจากชิ้นไลบรารี: Input dropdown + Dropdown list (บทบาท) · Tertiary button (ล้างข้อมูลจำลอง) · Checkbox (จำลองบันทึกไม่สำเร็จ — ให้เห็นจอ "บันทึกไม่สำเร็จ") · Tertiary brand button (ไปหน้ารายการ scenario) — บันทึกใน figma-spec/COMPOSED.md */
 import Link from "next/link";
 import { useState } from "react";
 import { DropdownList } from "@/components/vms/DropdownList";
@@ -8,10 +8,12 @@ import { DropdownListItem } from "@/components/vms/DropdownListItem";
 import { InputDropdown } from "@/components/vms/InputDropdown";
 import { Ms } from "@/components/vms/Ms";
 import { TertiaryButton } from "@/components/vms/TertiaryButton";
-import { notify, resetMock, ROLES, setRole, useRole } from "@/lib/mock/store";
+import { Checkbox } from "@/components/vms/Checkbox";
+import { notify, resetMock, ROLES, setMock, setRole, useMock, useRole } from "@/lib/mock/store";
 
 export function PrototypeBar() {
   const role = useRole();
+  const fail = !!useMock().failSave;
   const [open, setOpen] = useState(false);
   return (
     <div data-proto-bar className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-gray-200 bg-gray-50 px-4 py-1">
@@ -22,7 +24,11 @@ export function PrototypeBar() {
           {ROLES.map((r) => <DropdownListItem key={r} Text={r} State={r === role ? "Selected" : "Default"} onClick={() => { setRole(r); setOpen(false); }} />)}
         </DropdownList>
       </InputDropdown>
-      <TertiaryButton Text="ล้างข้อมูลจำลอง" LeadingIconSwap="restart_alt-24-300-round" className="ml-auto" onClick={() => { resetMock(); notify("ล้างข้อมูลจำลองแล้ว"); }} />
+      <label className="ml-auto flex items-center gap-2 text-xs text-gray-600">
+        <Checkbox Type={fail ? "Selected" : "Unselected"} label="จำลองบันทึกไม่สำเร็จ" onChange={(v) => setMock((s) => ({ ...s, failSave: v }))} />
+        จำลองบันทึกไม่สำเร็จ
+      </label>
+      <TertiaryButton Text="ล้างข้อมูลจำลอง" LeadingIconSwap="restart_alt-24-300-round" onClick={() => { resetMock(); notify("ล้างข้อมูลจำลองแล้ว"); }} />
     </div>
   );
 }

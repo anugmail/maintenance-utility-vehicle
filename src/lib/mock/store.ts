@@ -3,11 +3,19 @@
    อ่านด้วย useMock() · เขียนด้วย setMock() · ล้างด้วย resetMock() */
 import { useSyncExternalStore } from "react";
 import { PLANS, type Plan } from "./data";
+import type { Draft } from "./plan";
 
 export const KEY = "mt-next-v1";
 export const ROLE_KEY = "mt-next-v1:role";
 
-export interface MockState { v: 1; plans: Plan[] }
+export interface MockState {
+  v: 1;
+  plans: Plan[];
+  /** ฟอร์มสร้างแผนที่กรอกค้างไว้ (ไปหน้า S21 แล้วกลับมาไม่หาย) */
+  draft?: Draft | null;
+  /** แถบต้นแบบ: จำลองบันทึกไม่สำเร็จ (จอ "บันทึกไม่สำเร็จ" ของ S1) */
+  failSave?: boolean;
+}
 
 const initial = (): MockState => ({ v: 1, plans: PLANS.map((p) => ({ ...p })) });
 

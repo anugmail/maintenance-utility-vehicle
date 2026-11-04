@@ -6,6 +6,7 @@
 import type { ReactNode } from "react";
 import { cx } from "@/lib/cx";
 import { MobileTableItem } from "./MobileTableItem";
+import type { CellAction } from "./TableCell";
 import type { TableColumn, TableValue } from "./Table";
 
 export function MobileTable({ AlternatingFills, children, className }: { AlternatingFills?: boolean; children: ReactNode; className?: string }) {
@@ -25,7 +26,7 @@ export function MobileCards({ columns, rows, rowKey }: { columns: TableColumn[];
           else if (c.head && v && typeof v === "object" && "pills" in v) v.pills.forEach((p) => data.push({ head: c.head, v: { pills: [p] } }));
           else if (c.head) data.push({ head: c.head, v });
         });
-        const a = acts as { actions: { IconSwap: string; label: string; onClick?: () => void }[] } | null;
+        const a = acts as { actions: CellAction[] } | null;
         return (
           <MobileTable key={rowKey ? rowKey(r, ri) : ri}>
             {data.map(({ head, v }, i) => {
