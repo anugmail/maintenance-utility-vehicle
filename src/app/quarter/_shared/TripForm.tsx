@@ -27,7 +27,7 @@ import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
 import { mrOf } from "@/lib/mock/closeout";
 import { notify, useMock, useRole } from "@/lib/mock/store";
-import { CREATOR, SENT_AT, STAFF, VENDORS, quarterCars, carOf, locCell, nextTripId, phoneCell, putTrip, quarterTrips, tripsOf, type Trip, type TripCar } from "@/lib/mock/trips";
+import { CREATOR, SENT_AT, STAFF, VENDORS, qEditOf, quarterCars, carOf, locCell, nextTripId, phoneCell, putTrip, quarterTrips, tripsOf, type Trip, type TripCar } from "@/lib/mock/trips";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useOutside } from "@/lib/useOutside";
 import { TripCarEditModal, type CarOverrides } from "./TripCarEditModal";
@@ -202,7 +202,8 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
         </BtnRow>
       </Content>
       <TripCarPicker open={picker} pool={pool} used={used} nowQ={nowQ} onCancel={() => setPicker(false)}
-        onAdd={(ids) => { put({ carIds: [...v.carIds, ...ids] }); setPicker(false); }} />
+        onAdd={(ids) => { const e = qEditOf(mock, planId, q), pick = (o: Record<string, string>) => Object.fromEntries(ids.filter((x) => o[x]).map((x) => [x, o[x]]));
+          put({ carIds: [...v.carIds, ...ids], phones: { ...v.phones, ...pick(e.phones) }, locs: { ...v.locs, ...pick(e.locs) } }); setPicker(false); }} />
       <TripCarEditModal car={editCar} trip={over} onCancel={() => setEditCar(null)} onSave={(o) => { put(o); setEditCar(null); }} />
     </>
   );

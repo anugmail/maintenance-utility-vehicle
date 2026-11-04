@@ -3,7 +3,7 @@
    BtnRow = btnRow() (desktop ปุ่มแรกซ้าย ปุ่มท้ายขวา · ปุ่มเดียวชิดขวา · มือถือเต็มแถวแบ่งเท่ากัน ช่องไฟ 16)
    DataTable = tbl() (desktop Table · มือถือ Mobile table ผ่าน MobileCards) · Section = col('Section', …, 16) */
 import { useRouter } from "next/navigation";
-import { Children, type ReactNode } from "react";
+import { Children, useState, type ReactNode } from "react";
 import { MobileCards } from "@/components/vms/MobileTable";
 import { Table, type TableColumn, type TableValue } from "@/components/vms/Table";
 import { TablePagination } from "@/components/vms/TablePagination";
@@ -41,6 +41,17 @@ export function DataTable({ columns, rows, pagination, perPage = 10, rowKey }: {
   const pg = pagination != null ? <TablePagination total={pagination} perPage={perPage} /> : undefined;
   if (mob) return <div className="flex flex-col gap-5"><MobileCards columns={columns} rows={rows} rowKey={rowKey} />{pg}</div>;
   return <Table columns={columns} rows={rows} rowKey={rowKey} Pagination={pg} />;
+}
+
+/* ตารางที่แบ่งหน้า (หน้าละ perPage · Table pagination กดเปลี่ยนหน้าได้) — รถในไตรมาสเกิน 10 คัน (E.1 · Table ของไลบรารี 10 แถว R8) */
+export function PagedTable({ columns, rows, perPage = 10, rowKey }: { columns: TableColumn[]; rows: TableValue[][]; perPage?: number; rowKey?: (r: TableValue[], i: number) => string }) {
+  const mob = useBreakpoint() === "Mobile";
+  const [page, setPage] = useState(1);
+  const last = Math.max(1, Math.ceil(rows.length / perPage)), p = Math.min(page, last);
+  const shown = rows.slice((p - 1) * perPage, p * perPage);
+  const pg = rows.length > perPage ? <TablePagination total={rows.length} page={p} perPage={perPage} onPage={setPage} /> : undefined;
+  if (mob) return <div className="flex flex-col gap-5"><MobileCards columns={columns} rows={shown} rowKey={rowKey} />{pg}</div>;
+  return <Table columns={columns} rows={shown} rowKey={rowKey} Pagination={pg} />;
 }
 
 /* TRIP_VIEW_COLS — รถในแผนเดินทาง ดูอย่างเดียว (S7 S8 · สถานที่ + บรรทัดรอง · ไม่มีเบอร์ติดต่อ) */
