@@ -3,6 +3,7 @@
    Section header ทุกส่วน: ข้อมูลเอกสาร · บันทึกข้อตกลงลูกค้า (kv อ่านอย่างเดียว) · รายการสภาพวัสดุอะไหล่ (Table 8 คอลัมน์ + "เพิ่มรายการ")
    · ค่าใช้จ่ายของรถคันนี้ (บาท) (แถวละคน: Input dropdown พนักงาน · เบี้ยเลี้ยง/วัน · ที่พัก/วัน · Input dropdown จำนวนวัน · รวม · ปุ่มลบ + "เพิ่มพนักงาน" · ค่าเดินทาง · สรุป · ศูนย์ต้นทุน)
    · ผลการบำรุงรักษา (เลขไมล์ · ชั่วโมงเครื่องจักร บังคับ) · น้ำมันไฮโดรลิก (Radio text card 3 ใบ + ผลการทดสอบ (ถ้ามี) เมื่อมีเก็บตัวอย่าง)
+   · (เฉพาะรถเครน/รถกระเช้า 4 พ.ย. 2569) Safety Inspection: File upload "เอกสาร Safety Inspection" (ถ้ามี) ไม่บังคับ — safetyDocs() ใน screens.js
    · InspectionChecklist "ตรวจสภาพรถปิดงาน" (24) + HandoverSignature "ลงนามการส่งคืนรถ" · บันทึกตรวจสอบเอกสารปิดงาน (มี/ไม่มี/ไม่ต้องใช้ + "อัพโหลดเอกสาร")
    → "ย้อนกลับ" · "ปิดงาน" (กดได้เมื่อลงนามส่งคืนรถครบ — Condition ของ userflow) → ตรวจเอง เสร็จสิ้น / จ้าง ดำเนินการบำรุงรักษาแล้ว → หน้ารายละเอียดแผนเดินทาง + toast "บันทึกงานบำรุงรักษาสำเร็จ"
    ช่องในตารางอะไหล่เป็นข้อความตามจอ Figma (Table cell ไม่มีช่องกรอก) — กดแถวเปิด popup แก้ไขอะไหล่ (โครง partEditModal ของ screens.js) · "เพิ่มรายการ" = popup "เพิ่มอะไหล่ที่ใช้จริง" (partAddModal) */
@@ -12,6 +13,7 @@ import { HandoverSignature } from "@/components/maintain-d/HandoverSignature";
 import { InspectionChecklist } from "@/components/maintain-d/InspectionChecklist";
 import { ModalSignature } from "@/components/maintain-d/ModalSignature";
 import { DropdownList } from "@/components/vms/DropdownList";
+import { FileUpload } from "@/components/vms/FileUpload";
 import { DropdownListItem } from "@/components/vms/DropdownListItem";
 import { EmptyStateSearchNotFound } from "@/components/vms/EmptyStateSearchNotFound";
 import { HorizontalRadioGroups } from "@/components/vms/HorizontalRadioGroups";
@@ -25,7 +27,7 @@ import { TertiaryButton } from "@/components/vms/TertiaryButton";
 import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
 import {
-  carOf, closeJob, JOB_TIMES, closeRows, costSummary, emptyClose, nf, oilSampled, ownerCostCenter, patchJob, PEOPLE, personSum, tripDays, tripLoc, tripPhone,
+  carOf, closeJob, JOB_TIMES, closeRows, costSummary, emptyClose, nf, oilSampled, ownerCostCenter, patchJob, PEOPLE, personSum, safetyOn, tripDays, tripLoc, tripPhone,
   type ClosePartRow, type CloseForm, type CostRow, type DocSel,
 } from "@/lib/mock/jobs";
 import { notify } from "@/lib/mock/store";
@@ -175,6 +177,15 @@ export function ClosePage() {
             onDelete={(i) => put((x) => ({ ...x, oilFiles: x.oilFiles.filter((_, k) => k !== i) }))} />
         )}
       </Section>
+      {safetyOn(car) && (
+        /* ตาม "File upload" + "Section header" ของไฟล์ Component + จอ S10 "ปิดงาน — แนบเอกสาร Safety Inspection (ถ้ามี)" (ลอกบล็อก M ของ Overhaul) */
+        <Section>
+          <SectionHeader Title="Safety Inspection" />
+          <FileUpload LabelText="เอกสาร Safety Inspection" Optional files={f.safetyFiles ?? []} hint="PDF, PNG, or JPG (สูงสุด 10 ไฟล์)" bar accept=".pdf,.jpg,.jpeg,.png"
+            onFiles={(fs) => put((x) => ({ ...x, safetyFiles: [...(x.safetyFiles ?? []), ...fs.map(toUpload)].slice(0, 10) }))}
+            onDelete={(i) => put((x) => ({ ...x, safetyFiles: (x.safetyFiles ?? []).filter((_, k) => k !== i) }))} />
+        </Section>
+      )}
       <InspectionChecklist Title="ตรวจสภาพรถปิดงาน" items={f.inspect}
         onChange={(i, p) => put((x) => ({ ...x, inspect: x.inspect.map((it, k) => (k === i ? { ...it, ...p } : it)) }))} />
       <HandoverSignature Title="ลงนามการส่งคืนรถ"

@@ -61,6 +61,10 @@ export const JOB_TIMES = {
   hire: { start: "17/11/2569 09:10 น.", end: "17/11/2569 13:25 น.", sent: "17/11/2569 16:40 น.", sentCannot: "18/11/2569 08:50 น.", reported: "18/11/2569 08:35 น." },
 };
 export const SIGN_DATE = "04/11/2569";
+/* Safety Inspection (JO 7.3.3) — แสดงเฉพาะรถประเภทนี้ (SAFETY_TYPES ใน screens.js) · เวลาบันทึกตามจอ "บันทึกเอกสาร Safety Inspection สำเร็จ" */
+export const SAFETY_TYPES = ["รถเครน", "รถกระเช้า"];
+export const SAFETY_SAVED = "12/11/2569 09:30 น.";
+export const safetyOn = (c: { type: string }) => SAFETY_TYPES.includes(c.type);
 export const ODOMETER = { self: ["182,400 กม.", "6,120 ชม."], hire: ["176,050 กม.", "5,840 ชม."] } as const;
 export const JOB_TEXT = {
   cannotSelf: "รถติดภารกิจซ่อมสายส่งฉุกเฉิน ไม่อยู่ที่จุดนัดในวันเดินทาง",   // JOB_CANNOT
@@ -156,8 +160,12 @@ export interface CloseForm {
   km: string; hours: string;
   oilChoice: OilChoice; oilSel: OilSel; oilFiles: UploadFile[];
   inspect: InspectionItem[]; signers: [Signer, Signer]; docs: CloseDoc[];
+  /** เอกสาร Safety Inspection (ถ้ามี) — เฉพาะรถเครน/รถกระเช้า (4 พ.ย. 2569 · JO 7.3.3) · ฟอร์มเก่าในที่เก็บไม่มีฟิลด์นี้ */
+  safetyFiles?: UploadFile[];
 }
 export interface OilResult { sel: OilSel; files: UploadFile[]; sampledAt: string; sampledBy: string; savedAt?: string; savedBy?: string }
+/** Safety Inspection ของงานรายคัน — แนบตอนปิดงาน (ถ้ามี) หรือเพิ่มภายหลังที่หน้างานรายคันที่เสร็จสิ้น (safetyDocs() ใน screens.js) */
+export interface SafetyDocs { files: UploadFile[]; savedAt?: string; savedBy?: string }
 export interface CannotInfo { reason: string; /** จำนวนที่ใช้ต่อแถวอะไหล่ตามแผน (ยังไม่เริ่ม = 0 ทั้งหมด) */ used: number[]; by: string; at: string; /** แจ้งตอนอยู่ระหว่างบำรุงรักษา */ whileDoing: boolean }
 
 export interface Job {
@@ -174,6 +182,7 @@ export interface Job {
   closedAt?: string; recordedBy?: string; kmAfter?: string; hoursAfter?: string;
   cannot?: CannotInfo;
   oilResult?: OilResult;
+  safety?: SafetyDocs;
   /* ---- แผนจ้าง (S23 S11 — batch C2) ---- */
   sentAt?: string; sentBy?: string;
   returnReason?: string; returnedAt?: string;
@@ -309,6 +318,7 @@ export function closeJob(t: JobTrip, carId: string, f: CloseForm, vendor: boolea
     ...j, status: t.mode === "hire" ? "worked" : "done", close: f, closedAt: at, recordedBy: by, cannot: undefined,
     kmAfter: f.km + " กม.", hoursAfter: f.hours + " ชม.", oilChoice: f.oilChoice,
     oilResult: oilSampled(f.oilChoice) ? { sel: f.oilSel, files: f.oilFiles, sampledAt: at.slice(0, 10), sampledBy: by, ...(f.oilSel >= 0 ? { savedAt: at, savedBy: by } : {}) } : undefined,
+    safety: { files: f.safetyFiles ?? [] },   // ไม่บังคับ — ปิดงานได้แม้ยังไม่แนบ
   }));
 }
 /** S10 บำรุงรักษาไม่ได้ → ตรวจเอง "บำรุงรักษาไม่ได้" · จ้าง "แจ้งบำรุงรักษาไม่ได้" */
@@ -318,6 +328,10 @@ export function cannotJob(t: JobTrip, carId: string, reason: string, used: numbe
 /** S12 บันทึกผลการทดสอบ (แก้ได้ภายหลัง) */
 export function saveOilResult(t: JobTrip, carId: string, sel: OilSel, files: UploadFile[], by = PEOPLE.kbk) {
   patchJob(t.id, carId, (j) => ({ ...j, oilResult: { sampledAt: j.closedAt?.slice(0, 10) ?? "", sampledBy: j.recordedBy ?? by, ...j.oilResult, sel, files, savedAt: JOB_TIMES.self.resultSaved, savedBy: by } }));
+}
+/** S10 บันทึกเอกสาร Safety Inspection ภายหลัง (หน้างานรายคันที่เสร็จสิ้น · แก้ได้อีก) */
+export function saveSafetyDocs(t: JobTrip, carId: string, files: UploadFile[], by = PEOPLE.kbk) {
+  patchJob(t.id, carId, (j) => ({ ...j, safety: { files, savedAt: SAFETY_SAVED, savedBy: by } }));
 }
 /** S10 เมนูแก้ไข — เบอร์ติดต่อและสถานที่ของรถในแผนเดินทาง (ค่าว่าง/เท่าค่าเริ่ม = ใช้ค่าเริ่ม) */
 export function editTripCar(t: JobTrip, c: TripCar, phone: string, loc: string) {
