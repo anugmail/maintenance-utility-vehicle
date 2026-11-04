@@ -98,3 +98,15 @@
 | ชำรุด / ผิดรุ่น ใน ReceiptChecklist | Checkbox กดได้เมื่อเลือก "มี" (เลือก "ไม่มี" ล้างค่า) — ไฟล์ไม่ได้บอกพฤติกรรม |
 | Date picker วันนอกเดือน | แสดงเป็น Day State=Disabled ตามไลบรารี (ทั้งต้นและท้ายเดือน) · สัปดาห์เริ่มวันจันทร์ (Mo) ตามไลบรารี |
 | File upload ปุ่มในแถวไฟล์ | In progress = close (ยกเลิก) · Error = restart_alt (ลองใหม่) + close · Completed = download + delete ตาม _File upload item base |
+
+## ฉ. ชุด C2 — S23 S11 S13 S14 (แผนจ้างดำเนินการ · ตรวจรับ · ยอมรับผล)
+
+| ส่วน | ประกอบจาก | เหตุผล |
+|---|---|---|
+| `src/app/_c2/ui.tsx` `BtnRow` | แถวปุ่ม Secondary + Primary (ชิดซ้าย–ขวา · มือถือแบ่งเท่ากัน) | btnRow() ของ core.js ไม่มี component แถวปุ่มในไลบรารี (แบบเดียวกับท้ายฟอร์ม `/new/`) |
+| `src/app/_c2/ui.tsx` `MobileRows` | Mobile table + Mobile table item ต่อการ์ด | หน้ารายละเอียดแผนเดินทาง: ป้ายที่สอง (ผลตรวจน้ำมัน) ต้องเป็นแถวแยกหัว "ผลตรวจน้ำมัน" ตาม S10 spec — `MobileCards` ใช้หัวคอลัมน์เดิมกับทุกป้าย |
+| `src/app/_c2/ui.tsx` `DocList` | Input label + _File upload item base (Download action อย่างเดียว ไม่มีแถบ) | carResult() (S13) ต้องการไฟล์ดาวน์โหลดได้อย่างเดียว — File upload `readonly` ของไลบรารีซ่อนทั้งดาวน์โหลดและลบ |
+| `src/app/trips/hire/job/popups.tsx` `Row` | แถว row() ของ core.js (desktop ช่องไฟ 24 กว้างเท่ากัน · มือถือเรียงลง 16) | popup แก้ไขอะไหล่ / เพิ่มอะไหล่ |
+| popup แก้ไขอะไหล่ · เพิ่มอะไหล่ที่ใช้จริง · บำรุงรักษาไม่ได้ (แผนจ้าง) | `patterns/PopupModal` + Text input / Input dropdown / Text area + Section header + Table | partEditModal · partAddModal · cannotModal ของ screens.js · ไม่มีข้อความ error ของ popup อะไหล่ในสเปก ⇒ ปุ่มหลัก Disabled จนกรอกครบ (**รอเคาะข้อความ error**) |
+| อัปโหลดภาพก่อนเริ่มงาน (ผู้รับจ้าง) | File upload (รายการไฟล์ + ปุ่มลบ) · แถบความคืบหน้าเดินทีละ 20% ทุก 0.7 วิ (จำลอง) · ไฟล์ที่ไม่ใช่ JPG/PNG = State Error | photoFiles() ของ screens.js · ต้นแบบไม่มีเซิร์ฟเวอร์อัปโหลดจริง |
+| `?sample=S23` `S11` `S13` `S14` | (ไม่มี component) | ของต้นแบบ: ลิงก์จาก `/scenarios/` ใส่ข้อมูลตั้งต้นของ scenario + สลับบทบาท แล้วเอา sample ออกจาก URL |
