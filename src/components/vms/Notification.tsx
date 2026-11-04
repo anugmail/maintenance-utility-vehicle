@@ -4,6 +4,8 @@
    variant: Type = Default | Success | Warning | Error | Info · Breakpoint = Desktop (กล่องกว้าง 400 · ขอบนอกบน/ขวา 24) | Mobile (กว้างเต็มลบขอบ 16)
    property: Text · Supporting text · Actions
    ค่า: ขอบใน 16 · ช่องไฟ 16 · รัศมี 12 · พื้น gray-950 · ขอบ 1 gray-dark-600 · ไอคอนทึบ 24 (Success/Default check_circle success-600 · Warning warning_circle warning-600 · Error cancel_circle error-500 · Info info info-600)
+        เงา effect DROP_SHADOW y12 blur16 spread-4 (gray-900 ทึบ 8%) = token --shadow-lg (shadow-lg-lib)
+        กรอบนอก (520×240) มีพื้น gradient ดำ 10% → 0% แต่ดัมป์ไม่บอกทิศ → ยังไม่ทำ (COMPOSED.md ข.)
         หัวข้อ 16 SemiBold gray-dark-50 · Supporting 14 gray-dark-300 · ปุ่มปิด Tertiary button gray-dark-300 */
 import { cx } from "@/lib/cx";
 import { useBreakpoint, type Breakpoint } from "@/lib/useBreakpoint";
@@ -34,7 +36,7 @@ export function Notification({ Type = "Success", Breakpoint: bp, Text, Supportin
   const [icon, ic] = ICON[Type];
   return (
     <div role="status" aria-live="polite" className={cx(floating && "fixed z-[60] animate-fade-in", floating && (mob ? "inset-x-4 bottom-4" : "right-6 bottom-6"), mob ? "" : "w-[400px] max-w-full")}>
-      <div className="flex gap-4 rounded-lg border border-gray-dark-600 bg-gray-950 p-4">
+      <div className="flex gap-4 rounded-lg border border-gray-dark-600 bg-gray-950 p-4 shadow-lg-lib">
         <div className="flex min-w-0 flex-1 gap-2 pr-8">
           <Ms name={icon} size={24} className={ic} />
           <div className="flex min-w-0 flex-col gap-2">

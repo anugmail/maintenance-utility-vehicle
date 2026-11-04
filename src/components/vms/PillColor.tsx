@@ -4,7 +4,10 @@
         พื้น/ตัวอักษร: Brand brand-900/white · Gray gray-200/gray-600 · Info info-600/white · Success success-600/white · Warning warning-600/white · Error error-500/white · Disabled gray-100/gray-400
    ใช้เป็นป้ายตัวเลขใน Nav item / Nav list item (property Badge) */
 import { cx } from "@/lib/cx";
-import type { PillColor as PillColorName } from "./PillOutline";
+import type { PillColor as PillOutlineColor } from "./PillOutline";
+
+/* Pill color ไม่มี variant Purple (มีเฉพาะ Pill outline) */
+export type PillColorName = Exclude<PillOutlineColor, "Purple">;
 
 const COLOR: Record<PillColorName, string> = {
   Brand: "bg-brand-900 text-white",

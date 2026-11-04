@@ -1,5 +1,7 @@
 {
  "component": "Notification",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
  "page": "✅ Notifications",
  "node": "1873:44383",
  "props": {
@@ -35,18 +37,72 @@
    ]
   }
  },
+ "set": {
+  "name": "Notification",
+  "type": "COMPONENT_SET",
+  "w": 1363,
+  "h": 1536,
+  "sizing": [
+   "FIXED",
+   "FIXED"
+  ],
+  "pl": 46,
+  "pr": 46,
+  "pt": 70,
+  "pb": 70,
+  "gap": 102,
+  "r": 5,
+  "justify": "MIN",
+  "align": "MIN",
+  "fill": [
+   "#0C111D"
+  ],
+  "stroke": [
+   "#9747FF"
+  ],
+  "sw": 1,
+  "strokeAlign": "INSIDE",
+  "vars": {
+   "fills": "Color/surface/primary"
+  }
+ },
  "variants": [
   {
    "name": "Type=Default, Breakpoint=Desktop",
    "type": "COMPONENT",
    "w": 520,
    "h": 240,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
    "pr": 24,
    "pt": 24,
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "MIN",
    "align": "MAX",
+   "paint": [
+    {
+     "gradient": "GRADIENT_LINEAR",
+     "stops": [
+      [
+       "#0000001A",
+       0
+      ],
+      [
+       "#00000000",
+       0.95
+      ]
+     ]
+    }
+   ],
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "paddingTop": "Spacing/600",
+    "paddingRight": "Spacing/600"
+   },
    "variant": {
     "Type": "Default",
     "Breakpoint": "Desktop"
@@ -57,6 +113,10 @@
      "type": "FRAME",
      "w": 400,
      "h": 175,
+     "sizing": [
+      "FIXED",
+      "HUG"
+     ],
      "pl": 16,
      "pr": 16,
      "pt": 16,
@@ -64,6 +124,7 @@
      "gap": 16,
      "r": 12,
      "dir": "HORIZONTAL",
+     "justify": "MIN",
      "align": "MIN",
      "fill": [
       "#0C111D"
@@ -72,27 +133,69 @@
       "#61646C"
      ],
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "effects": [
+      {
+       "type": "DROP_SHADOW",
+       "color": "#10182814",
+       "x": 0,
+       "y": 12,
+       "blur": 16,
+       "spread": -4
+      }
+     ],
+     "vars": {
+      "itemSpacing": "Spacing/400",
+      "paddingLeft": "Spacing/400",
+      "paddingTop": "Spacing/400",
+      "paddingRight": "Spacing/400",
+      "paddingBottom": "Spacing/400",
+      "topLeftRadius": "Radius/300",
+      "topRightRadius": "Radius/300",
+      "bottomLeftRadius": "Radius/300",
+      "bottomRightRadius": "Radius/300",
+      "fills": "Color/surface/primary",
+      "strokes": "Color/border/primary",
+      "effects": "Color/effect/shadow-8"
+     },
      "kids": [
       {
        "name": "Content",
        "type": "FRAME",
        "w": 368,
        "h": 143,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "pr": 32,
        "gap": 8,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/200",
+        "paddingRight": "Spacing/800"
+       },
        "kids": [
         {
          "name": "check_circle-20-300-round-fill",
          "type": "INSTANCE",
+         "visible": false,
          "w": 24,
          "h": 24,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "check_circle-20-300-round-fill",
          "kids": [
           {
@@ -100,22 +203,35 @@
            "type": "RECTANGLE",
            "w": 24,
            "h": 24,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 18,
            "h": 18,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#17B26A"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/icon/success"
+           }
           }
          ]
         },
@@ -124,33 +240,60 @@
          "type": "FRAME",
          "w": 336,
          "h": 143,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
          "gap": 8,
          "r": 0,
          "dir": "VERTICAL",
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/200"
+         },
          "kids": [
           {
            "name": "Text and supporting text",
            "type": "FRAME",
            "w": 336,
            "h": 95,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "VERTICAL",
+           "justify": "MIN",
            "align": "MIN",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           },
           {
            "name": "Actions",
            "type": "FRAME",
            "w": 122,
            "h": 40,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "HORIZONTAL",
+           "justify": "MIN",
            "align": "MIN",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           }
          ]
         }
@@ -161,6 +304,10 @@
        "type": "INSTANCE",
        "w": 40,
        "h": 40,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "pl": 8,
        "pr": 8,
        "pt": 8,
@@ -168,8 +315,21 @@
        "gap": 4,
        "r": 8,
        "dir": "HORIZONTAL",
+       "justify": "CENTER",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100",
+        "paddingLeft": "Spacing/200",
+        "paddingTop": "Spacing/200",
+        "paddingRight": "Spacing/200",
+        "paddingBottom": "Spacing/200",
+        "topLeftRadius": "Radius/200",
+        "topRightRadius": "Radius/200",
+        "bottomLeftRadius": "Radius/200",
+        "bottomRightRadius": "Radius/200"
+       },
        "variant": {
         "Leading icon swap#133:10": "1084:414",
         "Trailing icon#105:4": false,
@@ -187,9 +347,15 @@
          "type": "INSTANCE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "close-24-300-round",
          "kids": [
           {
@@ -197,50 +363,85 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 11,
            "h": 11,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#CECFD2"
            ],
-           "sw": 0.02500000037252903
+           "sw": 0.02500000037252903,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
           }
          ]
         },
         {
          "name": "Text",
          "type": "TEXT",
+         "visible": false,
          "w": 47,
          "h": 21,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "fill": [
           "#CECFD2"
          ],
          "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/tertiary/text",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
          "font": {
           "fam": "IBM Plex Sans Thai",
           "style": "SemiBold",
           "size": 14,
-          "lh": null
+          "lh": null,
+          "ls": -0.20000000298023224
          },
          "text": "Button"
         },
         {
          "name": "crop_free-20-400-round",
          "type": "INSTANCE",
+         "visible": false,
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "crop_free-20-400-round",
          "kids": [
           {
@@ -248,22 +449,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 14,
            "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#CECFD2"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
           }
          ]
         }
@@ -274,6 +488,10 @@
        "type": "INSTANCE",
        "w": 40,
        "h": 40,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "pl": 8,
        "pr": 8,
        "pt": 8,
@@ -281,8 +499,21 @@
        "gap": 4,
        "r": 8,
        "dir": "HORIZONTAL",
+       "justify": "CENTER",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100",
+        "paddingLeft": "Spacing/200",
+        "paddingTop": "Spacing/200",
+        "paddingRight": "Spacing/200",
+        "paddingBottom": "Spacing/200",
+        "topLeftRadius": "Radius/200",
+        "topRightRadius": "Radius/200",
+        "bottomLeftRadius": "Radius/200",
+        "bottomRightRadius": "Radius/200"
+       },
        "variant": {
         "Leading icon swap#133:10": "1084:414",
         "Trailing icon#105:4": false,
@@ -300,9 +531,15 @@
          "type": "INSTANCE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "close-24-300-round",
          "kids": [
           {
@@ -310,50 +547,85 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 11,
            "h": 11,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#CECFD2"
            ],
-           "sw": 0.02500000037252903
+           "sw": 0.02500000037252903,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
           }
          ]
         },
         {
          "name": "Text",
          "type": "TEXT",
+         "visible": false,
          "w": 47,
          "h": 21,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "fill": [
           "#CECFD2"
          ],
          "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/tertiary/text",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
          "font": {
           "fam": "IBM Plex Sans Thai",
           "style": "SemiBold",
           "size": 14,
-          "lh": null
+          "lh": null,
+          "ls": -0.20000000298023224
          },
          "text": "Button"
         },
         {
          "name": "crop_free-20-400-round",
          "type": "INSTANCE",
+         "visible": false,
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "crop_free-20-400-round",
          "kids": [
           {
@@ -361,22 +633,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 14,
            "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#CECFD2"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
           }
          ]
         }
@@ -391,13 +676,39 @@
    "type": "COMPONENT",
    "w": 360,
    "h": 260,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
    "pl": 16,
    "pr": 16,
    "pb": 16,
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "MAX",
    "align": "CENTER",
+   "paint": [
+    {
+     "gradient": "GRADIENT_LINEAR",
+     "stops": [
+      [
+       "#0000001A",
+       0
+      ],
+      [
+       "#00000000",
+       0.95
+      ]
+     ]
+    }
+   ],
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "paddingLeft": "Spacing/400",
+    "paddingRight": "Spacing/400",
+    "paddingBottom": "Spacing/400"
+   },
    "variant": {
     "Type": "Default",
     "Breakpoint": "Mobile"
@@ -408,6 +719,10 @@
      "type": "FRAME",
      "w": 328,
      "h": 175,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
      "pl": 16,
      "pr": 16,
      "pt": 16,
@@ -415,6 +730,7 @@
      "gap": 16,
      "r": 12,
      "dir": "HORIZONTAL",
+     "justify": "CENTER",
      "align": "MAX",
      "fill": [
       "#0C111D"
@@ -423,27 +739,69 @@
       "#61646C"
      ],
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "effects": [
+      {
+       "type": "DROP_SHADOW",
+       "color": "#10182814",
+       "x": 0,
+       "y": 12,
+       "blur": 16,
+       "spread": -4
+      }
+     ],
+     "vars": {
+      "itemSpacing": "Spacing/400",
+      "paddingLeft": "Spacing/400",
+      "paddingTop": "Spacing/400",
+      "paddingRight": "Spacing/400",
+      "paddingBottom": "Spacing/400",
+      "topLeftRadius": "Radius/300",
+      "topRightRadius": "Radius/300",
+      "bottomLeftRadius": "Radius/300",
+      "bottomRightRadius": "Radius/300",
+      "fills": "Color/surface/primary",
+      "strokes": "Color/border/primary",
+      "effects": "Color/effect/shadow-8"
+     },
      "kids": [
       {
        "name": "Content",
        "type": "FRAME",
        "w": 296,
        "h": 143,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "pr": 32,
        "gap": 8,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/200",
+        "paddingRight": "Spacing/800"
+       },
        "kids": [
         {
          "name": "check_circle-20-300-round-fill",
          "type": "INSTANCE",
+         "visible": false,
          "w": 24,
          "h": 24,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "check_circle-20-300-round-fill",
          "kids": [
           {
@@ -451,22 +809,35 @@
            "type": "RECTANGLE",
            "w": 24,
            "h": 24,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 18,
            "h": 18,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#17B26A"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/icon/success"
+           }
           }
          ]
         },
@@ -475,33 +846,60 @@
          "type": "FRAME",
          "w": 264,
          "h": 143,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
          "gap": 8,
          "r": 0,
          "dir": "VERTICAL",
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/200"
+         },
          "kids": [
           {
            "name": "Text and supporting text",
            "type": "FRAME",
            "w": 264,
            "h": 95,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "VERTICAL",
+           "justify": "MIN",
            "align": "MIN",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           },
           {
            "name": "Actions",
            "type": "FRAME",
            "w": 122,
            "h": 40,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "HORIZONTAL",
+           "justify": "MIN",
            "align": "MIN",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           }
          ]
         }
@@ -512,6 +910,10 @@
        "type": "INSTANCE",
        "w": 40,
        "h": 40,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "pl": 8,
        "pr": 8,
        "pt": 8,
@@ -519,8 +921,21 @@
        "gap": 4,
        "r": 8,
        "dir": "HORIZONTAL",
+       "justify": "CENTER",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100",
+        "paddingLeft": "Spacing/200",
+        "paddingTop": "Spacing/200",
+        "paddingRight": "Spacing/200",
+        "paddingBottom": "Spacing/200",
+        "topLeftRadius": "Radius/200",
+        "topRightRadius": "Radius/200",
+        "bottomLeftRadius": "Radius/200",
+        "bottomRightRadius": "Radius/200"
+       },
        "variant": {
         "Leading icon swap#133:10": "1084:414",
         "Trailing icon#105:4": false,
@@ -538,9 +953,15 @@
          "type": "INSTANCE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "close-24-300-round",
          "kids": [
           {
@@ -548,50 +969,85 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 11,
            "h": 11,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#CECFD2"
            ],
-           "sw": 0.02500000037252903
+           "sw": 0.02500000037252903,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
           }
          ]
         },
         {
          "name": "Text",
          "type": "TEXT",
+         "visible": false,
          "w": 47,
          "h": 21,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "fill": [
           "#CECFD2"
          ],
          "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/tertiary/text",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
          "font": {
           "fam": "IBM Plex Sans Thai",
           "style": "SemiBold",
           "size": 14,
-          "lh": null
+          "lh": null,
+          "ls": -0.20000000298023224
          },
          "text": "Button"
         },
         {
          "name": "crop_free-20-400-round",
          "type": "INSTANCE",
+         "visible": false,
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "crop_free-20-400-round",
          "kids": [
           {
@@ -599,22 +1055,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 14,
            "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#CECFD2"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
           }
          ]
         }
@@ -629,12 +1098,37 @@
    "type": "COMPONENT",
    "w": 520,
    "h": 240,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
    "pr": 24,
    "pt": 24,
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "MIN",
    "align": "MAX",
+   "paint": [
+    {
+     "gradient": "GRADIENT_LINEAR",
+     "stops": [
+      [
+       "#0000001A",
+       0
+      ],
+      [
+       "#00000000",
+       0.95
+      ]
+     ]
+    }
+   ],
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "paddingTop": "Spacing/600",
+    "paddingRight": "Spacing/600"
+   },
    "variant": {
     "Type": "Success",
     "Breakpoint": "Desktop"
@@ -645,6 +1139,10 @@
      "type": "FRAME",
      "w": 400,
      "h": 175,
+     "sizing": [
+      "FIXED",
+      "HUG"
+     ],
      "pl": 16,
      "pr": 16,
      "pt": 16,
@@ -652,6 +1150,7 @@
      "gap": 16,
      "r": 12,
      "dir": "HORIZONTAL",
+     "justify": "MIN",
      "align": "MIN",
      "fill": [
       "#0C111D"
@@ -660,27 +1159,68 @@
       "#61646C"
      ],
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "effects": [
+      {
+       "type": "DROP_SHADOW",
+       "color": "#10182814",
+       "x": 0,
+       "y": 12,
+       "blur": 16,
+       "spread": -4
+      }
+     ],
+     "vars": {
+      "itemSpacing": "Spacing/400",
+      "paddingLeft": "Spacing/400",
+      "paddingTop": "Spacing/400",
+      "paddingRight": "Spacing/400",
+      "paddingBottom": "Spacing/400",
+      "topLeftRadius": "Radius/300",
+      "topRightRadius": "Radius/300",
+      "bottomLeftRadius": "Radius/300",
+      "bottomRightRadius": "Radius/300",
+      "fills": "Color/surface/primary",
+      "strokes": "Color/border/primary",
+      "effects": "Color/effect/shadow-8"
+     },
      "kids": [
       {
        "name": "Content",
        "type": "FRAME",
        "w": 368,
        "h": 143,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "pr": 32,
        "gap": 8,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/200",
+        "paddingRight": "Spacing/800"
+       },
        "kids": [
         {
          "name": "check_circle-20-300-round-fill",
          "type": "INSTANCE",
          "w": 24,
          "h": 24,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "check_circle-20-300-round-fill",
          "kids": [
           {
@@ -688,22 +1228,35 @@
            "type": "RECTANGLE",
            "w": 24,
            "h": 24,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 18,
            "h": 18,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#17B26A"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/icon/success"
+           }
           }
          ]
         },
@@ -712,33 +1265,60 @@
          "type": "FRAME",
          "w": 304,
          "h": 143,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
          "gap": 8,
          "r": 0,
          "dir": "VERTICAL",
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/200"
+         },
          "kids": [
           {
            "name": "Text and supporting text",
            "type": "FRAME",
            "w": 304,
            "h": 95,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "VERTICAL",
+           "justify": "MIN",
            "align": "MIN",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           },
           {
            "name": "Actions",
            "type": "FRAME",
            "w": 122,
            "h": 40,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "HORIZONTAL",
+           "justify": "MIN",
            "align": "MIN",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           }
          ]
         }
@@ -749,6 +1329,10 @@
        "type": "INSTANCE",
        "w": 40,
        "h": 40,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "pl": 8,
        "pr": 8,
        "pt": 8,
@@ -756,8 +1340,21 @@
        "gap": 4,
        "r": 8,
        "dir": "HORIZONTAL",
+       "justify": "CENTER",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100",
+        "paddingLeft": "Spacing/200",
+        "paddingTop": "Spacing/200",
+        "paddingRight": "Spacing/200",
+        "paddingBottom": "Spacing/200",
+        "topLeftRadius": "Radius/200",
+        "topRightRadius": "Radius/200",
+        "bottomLeftRadius": "Radius/200",
+        "bottomRightRadius": "Radius/200"
+       },
        "variant": {
         "Leading icon swap#133:10": "1084:414",
         "Trailing icon#105:4": false,
@@ -775,9 +1372,15 @@
          "type": "INSTANCE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "close-24-300-round",
          "kids": [
           {
@@ -785,50 +1388,85 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 11,
            "h": 11,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#CECFD2"
            ],
-           "sw": 0.02500000037252903
+           "sw": 0.02500000037252903,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
           }
          ]
         },
         {
          "name": "Text",
          "type": "TEXT",
+         "visible": false,
          "w": 47,
          "h": 21,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "fill": [
           "#CECFD2"
          ],
          "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/tertiary/text",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
          "font": {
           "fam": "IBM Plex Sans Thai",
           "style": "SemiBold",
           "size": 14,
-          "lh": null
+          "lh": null,
+          "ls": -0.20000000298023224
          },
          "text": "Button"
         },
         {
          "name": "crop_free-20-400-round",
          "type": "INSTANCE",
+         "visible": false,
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "crop_free-20-400-round",
          "kids": [
           {
@@ -836,22 +1474,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 14,
            "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#CECFD2"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
           }
          ]
         }
@@ -866,13 +1517,39 @@
    "type": "COMPONENT",
    "w": 360,
    "h": 260,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
    "pl": 16,
    "pr": 16,
    "pb": 16,
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "MAX",
    "align": "CENTER",
+   "paint": [
+    {
+     "gradient": "GRADIENT_LINEAR",
+     "stops": [
+      [
+       "#0000001A",
+       0
+      ],
+      [
+       "#00000000",
+       0.95
+      ]
+     ]
+    }
+   ],
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "paddingLeft": "Spacing/400",
+    "paddingRight": "Spacing/400",
+    "paddingBottom": "Spacing/400"
+   },
    "variant": {
     "Type": "Success",
     "Breakpoint": "Mobile"
@@ -883,6 +1560,10 @@
      "type": "FRAME",
      "w": 328,
      "h": 175,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
      "pl": 16,
      "pr": 16,
      "pt": 16,
@@ -890,6 +1571,7 @@
      "gap": 16,
      "r": 12,
      "dir": "HORIZONTAL",
+     "justify": "CENTER",
      "align": "MAX",
      "fill": [
       "#0C111D"
@@ -898,27 +1580,68 @@
       "#61646C"
      ],
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "effects": [
+      {
+       "type": "DROP_SHADOW",
+       "color": "#10182814",
+       "x": 0,
+       "y": 12,
+       "blur": 16,
+       "spread": -4
+      }
+     ],
+     "vars": {
+      "itemSpacing": "Spacing/400",
+      "paddingLeft": "Spacing/400",
+      "paddingTop": "Spacing/400",
+      "paddingRight": "Spacing/400",
+      "paddingBottom": "Spacing/400",
+      "topLeftRadius": "Radius/300",
+      "topRightRadius": "Radius/300",
+      "bottomLeftRadius": "Radius/300",
+      "bottomRightRadius": "Radius/300",
+      "fills": "Color/surface/primary",
+      "strokes": "Color/border/primary",
+      "effects": "Color/effect/shadow-8"
+     },
      "kids": [
       {
        "name": "Content",
        "type": "FRAME",
        "w": 296,
        "h": 143,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "pr": 32,
        "gap": 8,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/200",
+        "paddingRight": "Spacing/800"
+       },
        "kids": [
         {
          "name": "check_circle-20-300-round-fill",
          "type": "INSTANCE",
          "w": 24,
          "h": 24,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "check_circle-20-300-round-fill",
          "kids": [
           {
@@ -926,22 +1649,35 @@
            "type": "RECTANGLE",
            "w": 24,
            "h": 24,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 18,
            "h": 18,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#17B26A"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/icon/success"
+           }
           }
          ]
         },
@@ -950,33 +1686,60 @@
          "type": "FRAME",
          "w": 232,
          "h": 143,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
          "gap": 8,
          "r": 0,
          "dir": "VERTICAL",
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/200"
+         },
          "kids": [
           {
            "name": "Text and supporting text",
            "type": "FRAME",
            "w": 232,
            "h": 95,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "VERTICAL",
+           "justify": "MIN",
            "align": "MIN",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           },
           {
            "name": "Actions",
            "type": "FRAME",
            "w": 122,
            "h": 40,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "HORIZONTAL",
+           "justify": "MIN",
            "align": "MIN",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           }
          ]
         }
@@ -987,6 +1750,10 @@
        "type": "INSTANCE",
        "w": 40,
        "h": 40,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "pl": 8,
        "pr": 8,
        "pt": 8,
@@ -994,8 +1761,21 @@
        "gap": 4,
        "r": 8,
        "dir": "HORIZONTAL",
+       "justify": "CENTER",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100",
+        "paddingLeft": "Spacing/200",
+        "paddingTop": "Spacing/200",
+        "paddingRight": "Spacing/200",
+        "paddingBottom": "Spacing/200",
+        "topLeftRadius": "Radius/200",
+        "topRightRadius": "Radius/200",
+        "bottomLeftRadius": "Radius/200",
+        "bottomRightRadius": "Radius/200"
+       },
        "variant": {
         "Leading icon swap#133:10": "1084:414",
         "Trailing icon#105:4": false,
@@ -1013,9 +1793,15 @@
          "type": "INSTANCE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "close-24-300-round",
          "kids": [
           {
@@ -1023,50 +1809,85 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 11,
            "h": 11,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#CECFD2"
            ],
-           "sw": 0.02500000037252903
+           "sw": 0.02500000037252903,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
           }
          ]
         },
         {
          "name": "Text",
          "type": "TEXT",
+         "visible": false,
          "w": 47,
          "h": 21,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "fill": [
           "#CECFD2"
          ],
          "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/tertiary/text",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
          "font": {
           "fam": "IBM Plex Sans Thai",
           "style": "SemiBold",
           "size": 14,
-          "lh": null
+          "lh": null,
+          "ls": -0.20000000298023224
          },
          "text": "Button"
         },
         {
          "name": "crop_free-20-400-round",
          "type": "INSTANCE",
+         "visible": false,
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "crop_free-20-400-round",
          "kids": [
           {
@@ -1074,22 +1895,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 14,
            "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#CECFD2"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
           }
          ]
         }
@@ -1104,12 +1938,37 @@
    "type": "COMPONENT",
    "w": 520,
    "h": 240,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
    "pr": 24,
    "pt": 24,
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "MIN",
    "align": "MAX",
+   "paint": [
+    {
+     "gradient": "GRADIENT_LINEAR",
+     "stops": [
+      [
+       "#0000001A",
+       0
+      ],
+      [
+       "#00000000",
+       0.95
+      ]
+     ]
+    }
+   ],
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "paddingTop": "Spacing/600",
+    "paddingRight": "Spacing/600"
+   },
    "variant": {
     "Type": "Warning",
     "Breakpoint": "Desktop"
@@ -1120,6 +1979,10 @@
      "type": "FRAME",
      "w": 400,
      "h": 175,
+     "sizing": [
+      "FIXED",
+      "HUG"
+     ],
      "pl": 16,
      "pr": 16,
      "pt": 16,
@@ -1127,6 +1990,7 @@
      "gap": 16,
      "r": 12,
      "dir": "HORIZONTAL",
+     "justify": "MIN",
      "align": "MIN",
      "fill": [
       "#0C111D"
@@ -1135,27 +1999,68 @@
       "#61646C"
      ],
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "effects": [
+      {
+       "type": "DROP_SHADOW",
+       "color": "#10182814",
+       "x": 0,
+       "y": 12,
+       "blur": 16,
+       "spread": -4
+      }
+     ],
+     "vars": {
+      "itemSpacing": "Spacing/400",
+      "paddingLeft": "Spacing/400",
+      "paddingTop": "Spacing/400",
+      "paddingRight": "Spacing/400",
+      "paddingBottom": "Spacing/400",
+      "topLeftRadius": "Radius/300",
+      "topRightRadius": "Radius/300",
+      "bottomLeftRadius": "Radius/300",
+      "bottomRightRadius": "Radius/300",
+      "fills": "Color/surface/primary",
+      "strokes": "Color/border/primary",
+      "effects": "Color/effect/shadow-8"
+     },
      "kids": [
       {
        "name": "Content",
        "type": "FRAME",
        "w": 368,
        "h": 143,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "pr": 32,
        "gap": 8,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/200",
+        "paddingRight": "Spacing/800"
+       },
        "kids": [
         {
          "name": "warning_circle-20-300-round-fill",
          "type": "INSTANCE",
          "w": 24,
          "h": 24,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "warning_circle-20-300-round-fill",
          "kids": [
           {
@@ -1163,22 +2068,35 @@
            "type": "RECTANGLE",
            "w": 24,
            "h": 24,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 19,
            "h": 16,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#F79009"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/icon/warning"
+           }
           }
          ]
         },
@@ -1187,33 +2105,60 @@
          "type": "FRAME",
          "w": 304,
          "h": 143,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
          "gap": 8,
          "r": 0,
          "dir": "VERTICAL",
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/200"
+         },
          "kids": [
           {
            "name": "Text and supporting text",
            "type": "FRAME",
            "w": 304,
            "h": 95,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "VERTICAL",
+           "justify": "MIN",
            "align": "MIN",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           },
           {
            "name": "Actions",
            "type": "FRAME",
            "w": 122,
            "h": 40,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "HORIZONTAL",
+           "justify": "MIN",
            "align": "MIN",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           }
          ]
         }
@@ -1224,6 +2169,10 @@
        "type": "INSTANCE",
        "w": 40,
        "h": 40,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "pl": 8,
        "pr": 8,
        "pt": 8,
@@ -1231,8 +2180,21 @@
        "gap": 4,
        "r": 8,
        "dir": "HORIZONTAL",
+       "justify": "CENTER",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100",
+        "paddingLeft": "Spacing/200",
+        "paddingTop": "Spacing/200",
+        "paddingRight": "Spacing/200",
+        "paddingBottom": "Spacing/200",
+        "topLeftRadius": "Radius/200",
+        "topRightRadius": "Radius/200",
+        "bottomLeftRadius": "Radius/200",
+        "bottomRightRadius": "Radius/200"
+       },
        "variant": {
         "Leading icon swap#133:10": "1084:414",
         "Trailing icon#105:4": false,
@@ -1250,9 +2212,15 @@
          "type": "INSTANCE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "close-24-300-round",
          "kids": [
           {
@@ -1260,50 +2228,85 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 11,
            "h": 11,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#CECFD2"
            ],
-           "sw": 0.02500000037252903
+           "sw": 0.02500000037252903,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
           }
          ]
         },
         {
          "name": "Text",
          "type": "TEXT",
+         "visible": false,
          "w": 47,
          "h": 21,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "fill": [
           "#CECFD2"
          ],
          "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/tertiary/text",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
          "font": {
           "fam": "IBM Plex Sans Thai",
           "style": "SemiBold",
           "size": 14,
-          "lh": null
+          "lh": null,
+          "ls": -0.20000000298023224
          },
          "text": "Button"
         },
         {
          "name": "crop_free-20-400-round",
          "type": "INSTANCE",
+         "visible": false,
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "crop_free-20-400-round",
          "kids": [
           {
@@ -1311,22 +2314,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 14,
            "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#CECFD2"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
           }
          ]
         }
@@ -1341,13 +2357,39 @@
    "type": "COMPONENT",
    "w": 360,
    "h": 260,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
    "pl": 16,
    "pr": 16,
    "pb": 16,
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "MAX",
    "align": "CENTER",
+   "paint": [
+    {
+     "gradient": "GRADIENT_LINEAR",
+     "stops": [
+      [
+       "#0000001A",
+       0
+      ],
+      [
+       "#00000000",
+       0.95
+      ]
+     ]
+    }
+   ],
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "paddingLeft": "Spacing/400",
+    "paddingRight": "Spacing/400",
+    "paddingBottom": "Spacing/400"
+   },
    "variant": {
     "Type": "Warning",
     "Breakpoint": "Mobile"
@@ -1358,6 +2400,10 @@
      "type": "FRAME",
      "w": 328,
      "h": 175,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
      "pl": 16,
      "pr": 16,
      "pt": 16,
@@ -1365,6 +2411,7 @@
      "gap": 16,
      "r": 12,
      "dir": "HORIZONTAL",
+     "justify": "CENTER",
      "align": "MAX",
      "fill": [
       "#0C111D"
@@ -1373,27 +2420,68 @@
       "#61646C"
      ],
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "effects": [
+      {
+       "type": "DROP_SHADOW",
+       "color": "#10182814",
+       "x": 0,
+       "y": 12,
+       "blur": 16,
+       "spread": -4
+      }
+     ],
+     "vars": {
+      "itemSpacing": "Spacing/400",
+      "paddingLeft": "Spacing/400",
+      "paddingTop": "Spacing/400",
+      "paddingRight": "Spacing/400",
+      "paddingBottom": "Spacing/400",
+      "topLeftRadius": "Radius/300",
+      "topRightRadius": "Radius/300",
+      "bottomLeftRadius": "Radius/300",
+      "bottomRightRadius": "Radius/300",
+      "fills": "Color/surface/primary",
+      "strokes": "Color/border/primary",
+      "effects": "Color/effect/shadow-8"
+     },
      "kids": [
       {
        "name": "Content",
        "type": "FRAME",
        "w": 296,
        "h": 143,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "pr": 32,
        "gap": 8,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/200",
+        "paddingRight": "Spacing/800"
+       },
        "kids": [
         {
          "name": "warning_circle-20-300-round-fill",
          "type": "INSTANCE",
          "w": 24,
          "h": 24,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "warning_circle-20-300-round-fill",
          "kids": [
           {
@@ -1401,22 +2489,35 @@
            "type": "RECTANGLE",
            "w": 24,
            "h": 24,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 19,
            "h": 16,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#F79009"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/icon/warning"
+           }
           }
          ]
         },
@@ -1425,33 +2526,60 @@
          "type": "FRAME",
          "w": 232,
          "h": 143,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
          "gap": 8,
          "r": 0,
          "dir": "VERTICAL",
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/200"
+         },
          "kids": [
           {
            "name": "Text and supporting text",
            "type": "FRAME",
            "w": 232,
            "h": 95,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "VERTICAL",
+           "justify": "MIN",
            "align": "MIN",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           },
           {
            "name": "Actions",
            "type": "FRAME",
            "w": 122,
            "h": 40,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "HORIZONTAL",
+           "justify": "MIN",
            "align": "MIN",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           }
          ]
         }
@@ -1462,6 +2590,10 @@
        "type": "INSTANCE",
        "w": 40,
        "h": 40,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "pl": 8,
        "pr": 8,
        "pt": 8,
@@ -1469,8 +2601,21 @@
        "gap": 4,
        "r": 8,
        "dir": "HORIZONTAL",
+       "justify": "CENTER",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100",
+        "paddingLeft": "Spacing/200",
+        "paddingTop": "Spacing/200",
+        "paddingRight": "Spacing/200",
+        "paddingBottom": "Spacing/200",
+        "topLeftRadius": "Radius/200",
+        "topRightRadius": "Radius/200",
+        "bottomLeftRadius": "Radius/200",
+        "bottomRightRadius": "Radius/200"
+       },
        "variant": {
         "Leading icon swap#133:10": "1084:414",
         "Trailing icon#105:4": false,
@@ -1488,9 +2633,15 @@
          "type": "INSTANCE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "close-24-300-round",
          "kids": [
           {
@@ -1498,50 +2649,85 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 11,
            "h": 11,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#CECFD2"
            ],
-           "sw": 0.02500000037252903
+           "sw": 0.02500000037252903,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
           }
          ]
         },
         {
          "name": "Text",
          "type": "TEXT",
+         "visible": false,
          "w": 47,
          "h": 21,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "fill": [
           "#CECFD2"
          ],
          "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/tertiary/text",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
          "font": {
           "fam": "IBM Plex Sans Thai",
           "style": "SemiBold",
           "size": 14,
-          "lh": null
+          "lh": null,
+          "ls": -0.20000000298023224
          },
          "text": "Button"
         },
         {
          "name": "crop_free-20-400-round",
          "type": "INSTANCE",
+         "visible": false,
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "crop_free-20-400-round",
          "kids": [
           {
@@ -1549,22 +2735,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 14,
            "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#CECFD2"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
           }
          ]
         }
@@ -1579,12 +2778,37 @@
    "type": "COMPONENT",
    "w": 520,
    "h": 240,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
    "pr": 24,
    "pt": 24,
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "MIN",
    "align": "MAX",
+   "paint": [
+    {
+     "gradient": "GRADIENT_LINEAR",
+     "stops": [
+      [
+       "#0000001A",
+       0
+      ],
+      [
+       "#00000000",
+       0.95
+      ]
+     ]
+    }
+   ],
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "paddingTop": "Spacing/600",
+    "paddingRight": "Spacing/600"
+   },
    "variant": {
     "Type": "Error",
     "Breakpoint": "Desktop"
@@ -1595,6 +2819,10 @@
      "type": "FRAME",
      "w": 400,
      "h": 175,
+     "sizing": [
+      "FIXED",
+      "HUG"
+     ],
      "pl": 16,
      "pr": 16,
      "pt": 16,
@@ -1602,6 +2830,7 @@
      "gap": 16,
      "r": 12,
      "dir": "HORIZONTAL",
+     "justify": "MIN",
      "align": "MIN",
      "fill": [
       "#0C111D"
@@ -1610,27 +2839,68 @@
       "#61646C"
      ],
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "effects": [
+      {
+       "type": "DROP_SHADOW",
+       "color": "#10182814",
+       "x": 0,
+       "y": 12,
+       "blur": 16,
+       "spread": -4
+      }
+     ],
+     "vars": {
+      "itemSpacing": "Spacing/400",
+      "paddingLeft": "Spacing/400",
+      "paddingTop": "Spacing/400",
+      "paddingRight": "Spacing/400",
+      "paddingBottom": "Spacing/400",
+      "topLeftRadius": "Radius/300",
+      "topRightRadius": "Radius/300",
+      "bottomLeftRadius": "Radius/300",
+      "bottomRightRadius": "Radius/300",
+      "fills": "Color/surface/primary",
+      "strokes": "Color/border/primary",
+      "effects": "Color/effect/shadow-8"
+     },
      "kids": [
       {
        "name": "Content",
        "type": "FRAME",
        "w": 368,
        "h": 143,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "pr": 32,
        "gap": 8,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/200",
+        "paddingRight": "Spacing/800"
+       },
        "kids": [
         {
          "name": "cancel_circle-20-300-round-fill",
          "type": "INSTANCE",
          "w": 24,
          "h": 24,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "cancel_circle-20-300-round-fill",
          "kids": [
           {
@@ -1638,22 +2908,35 @@
            "type": "RECTANGLE",
            "w": 24,
            "h": 24,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 18,
            "h": 18,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#F04438"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/icon/error"
+           }
           }
          ]
         },
@@ -1662,33 +2945,60 @@
          "type": "FRAME",
          "w": 304,
          "h": 143,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
          "gap": 8,
          "r": 0,
          "dir": "VERTICAL",
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/200"
+         },
          "kids": [
           {
            "name": "Text and supporting text",
            "type": "FRAME",
            "w": 304,
            "h": 95,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "VERTICAL",
+           "justify": "MIN",
            "align": "MIN",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           },
           {
            "name": "Actions",
            "type": "FRAME",
            "w": 122,
            "h": 40,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "HORIZONTAL",
+           "justify": "MIN",
            "align": "MIN",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           }
          ]
         }
@@ -1699,6 +3009,10 @@
        "type": "INSTANCE",
        "w": 40,
        "h": 40,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "pl": 8,
        "pr": 8,
        "pt": 8,
@@ -1706,8 +3020,21 @@
        "gap": 4,
        "r": 8,
        "dir": "HORIZONTAL",
+       "justify": "CENTER",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100",
+        "paddingLeft": "Spacing/200",
+        "paddingTop": "Spacing/200",
+        "paddingRight": "Spacing/200",
+        "paddingBottom": "Spacing/200",
+        "topLeftRadius": "Radius/200",
+        "topRightRadius": "Radius/200",
+        "bottomLeftRadius": "Radius/200",
+        "bottomRightRadius": "Radius/200"
+       },
        "variant": {
         "Leading icon swap#133:10": "1084:414",
         "Trailing icon#105:4": false,
@@ -1725,9 +3052,15 @@
          "type": "INSTANCE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "close-24-300-round",
          "kids": [
           {
@@ -1735,50 +3068,85 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 11,
            "h": 11,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#CECFD2"
            ],
-           "sw": 0.02500000037252903
+           "sw": 0.02500000037252903,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
           }
          ]
         },
         {
          "name": "Text",
          "type": "TEXT",
+         "visible": false,
          "w": 47,
          "h": 21,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "fill": [
           "#CECFD2"
          ],
          "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/tertiary/text",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
          "font": {
           "fam": "IBM Plex Sans Thai",
           "style": "SemiBold",
           "size": 14,
-          "lh": null
+          "lh": null,
+          "ls": -0.20000000298023224
          },
          "text": "Button"
         },
         {
          "name": "crop_free-20-400-round",
          "type": "INSTANCE",
+         "visible": false,
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "crop_free-20-400-round",
          "kids": [
           {
@@ -1786,22 +3154,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 14,
            "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#CECFD2"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
           }
          ]
         }
@@ -1816,13 +3197,39 @@
    "type": "COMPONENT",
    "w": 360,
    "h": 260,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
    "pl": 16,
    "pr": 16,
    "pb": 16,
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "MAX",
    "align": "CENTER",
+   "paint": [
+    {
+     "gradient": "GRADIENT_LINEAR",
+     "stops": [
+      [
+       "#0000001A",
+       0
+      ],
+      [
+       "#00000000",
+       0.95
+      ]
+     ]
+    }
+   ],
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "paddingLeft": "Spacing/400",
+    "paddingRight": "Spacing/400",
+    "paddingBottom": "Spacing/400"
+   },
    "variant": {
     "Type": "Error",
     "Breakpoint": "Mobile"
@@ -1833,6 +3240,10 @@
      "type": "FRAME",
      "w": 328,
      "h": 175,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
      "pl": 16,
      "pr": 16,
      "pt": 16,
@@ -1840,6 +3251,7 @@
      "gap": 16,
      "r": 12,
      "dir": "HORIZONTAL",
+     "justify": "CENTER",
      "align": "MAX",
      "fill": [
       "#0C111D"
@@ -1848,27 +3260,68 @@
       "#61646C"
      ],
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "effects": [
+      {
+       "type": "DROP_SHADOW",
+       "color": "#10182814",
+       "x": 0,
+       "y": 12,
+       "blur": 16,
+       "spread": -4
+      }
+     ],
+     "vars": {
+      "itemSpacing": "Spacing/400",
+      "paddingLeft": "Spacing/400",
+      "paddingTop": "Spacing/400",
+      "paddingRight": "Spacing/400",
+      "paddingBottom": "Spacing/400",
+      "topLeftRadius": "Radius/300",
+      "topRightRadius": "Radius/300",
+      "bottomLeftRadius": "Radius/300",
+      "bottomRightRadius": "Radius/300",
+      "fills": "Color/surface/primary",
+      "strokes": "Color/border/primary",
+      "effects": "Color/effect/shadow-8"
+     },
      "kids": [
       {
        "name": "Content",
        "type": "FRAME",
        "w": 296,
        "h": 143,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "pr": 32,
        "gap": 8,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/200",
+        "paddingRight": "Spacing/800"
+       },
        "kids": [
         {
          "name": "cancel_circle-20-300-round-fill",
          "type": "INSTANCE",
          "w": 24,
          "h": 24,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "cancel_circle-20-300-round-fill",
          "kids": [
           {
@@ -1876,22 +3329,35 @@
            "type": "RECTANGLE",
            "w": 24,
            "h": 24,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 18,
            "h": 18,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#F04438"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/icon/error"
+           }
           }
          ]
         },
@@ -1900,33 +3366,60 @@
          "type": "FRAME",
          "w": 232,
          "h": 143,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
          "gap": 8,
          "r": 0,
          "dir": "VERTICAL",
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/200"
+         },
          "kids": [
           {
            "name": "Text and supporting text",
            "type": "FRAME",
            "w": 232,
            "h": 95,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "VERTICAL",
+           "justify": "MIN",
            "align": "MIN",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           },
           {
            "name": "Actions",
            "type": "FRAME",
            "w": 122,
            "h": 40,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "HORIZONTAL",
+           "justify": "MIN",
            "align": "MIN",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           }
          ]
         }
@@ -1937,6 +3430,10 @@
        "type": "INSTANCE",
        "w": 40,
        "h": 40,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "pl": 8,
        "pr": 8,
        "pt": 8,
@@ -1944,8 +3441,21 @@
        "gap": 4,
        "r": 8,
        "dir": "HORIZONTAL",
+       "justify": "CENTER",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100",
+        "paddingLeft": "Spacing/200",
+        "paddingTop": "Spacing/200",
+        "paddingRight": "Spacing/200",
+        "paddingBottom": "Spacing/200",
+        "topLeftRadius": "Radius/200",
+        "topRightRadius": "Radius/200",
+        "bottomLeftRadius": "Radius/200",
+        "bottomRightRadius": "Radius/200"
+       },
        "variant": {
         "Leading icon swap#133:10": "1084:414",
         "Trailing icon#105:4": false,
@@ -1963,9 +3473,15 @@
          "type": "INSTANCE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "close-24-300-round",
          "kids": [
           {
@@ -1973,50 +3489,85 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 11,
            "h": 11,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#CECFD2"
            ],
-           "sw": 0.02500000037252903
+           "sw": 0.02500000037252903,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
           }
          ]
         },
         {
          "name": "Text",
          "type": "TEXT",
+         "visible": false,
          "w": 47,
          "h": 21,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "fill": [
           "#CECFD2"
          ],
          "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/tertiary/text",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
          "font": {
           "fam": "IBM Plex Sans Thai",
           "style": "SemiBold",
           "size": 14,
-          "lh": null
+          "lh": null,
+          "ls": -0.20000000298023224
          },
          "text": "Button"
         },
         {
          "name": "crop_free-20-400-round",
          "type": "INSTANCE",
+         "visible": false,
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "crop_free-20-400-round",
          "kids": [
           {
@@ -2024,22 +3575,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 14,
            "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#CECFD2"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
           }
          ]
         }
@@ -2054,12 +3618,37 @@
    "type": "COMPONENT",
    "w": 520,
    "h": 240,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
    "pr": 24,
    "pt": 24,
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "MIN",
    "align": "MAX",
+   "paint": [
+    {
+     "gradient": "GRADIENT_LINEAR",
+     "stops": [
+      [
+       "#0000001A",
+       0
+      ],
+      [
+       "#00000000",
+       0.95
+      ]
+     ]
+    }
+   ],
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "paddingTop": "Spacing/600",
+    "paddingRight": "Spacing/600"
+   },
    "variant": {
     "Type": "Info",
     "Breakpoint": "Desktop"
@@ -2070,6 +3659,10 @@
      "type": "FRAME",
      "w": 400,
      "h": 175,
+     "sizing": [
+      "FIXED",
+      "HUG"
+     ],
      "pl": 16,
      "pr": 16,
      "pt": 16,
@@ -2077,6 +3670,7 @@
      "gap": 16,
      "r": 12,
      "dir": "HORIZONTAL",
+     "justify": "MIN",
      "align": "MIN",
      "fill": [
       "#0C111D"
@@ -2085,27 +3679,68 @@
       "#61646C"
      ],
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "effects": [
+      {
+       "type": "DROP_SHADOW",
+       "color": "#10182814",
+       "x": 0,
+       "y": 12,
+       "blur": 16,
+       "spread": -4
+      }
+     ],
+     "vars": {
+      "itemSpacing": "Spacing/400",
+      "paddingLeft": "Spacing/400",
+      "paddingTop": "Spacing/400",
+      "paddingRight": "Spacing/400",
+      "paddingBottom": "Spacing/400",
+      "topLeftRadius": "Radius/300",
+      "topRightRadius": "Radius/300",
+      "bottomLeftRadius": "Radius/300",
+      "bottomRightRadius": "Radius/300",
+      "fills": "Color/surface/primary",
+      "strokes": "Color/border/primary",
+      "effects": "Color/effect/shadow-8"
+     },
      "kids": [
       {
        "name": "Content",
        "type": "FRAME",
        "w": 368,
        "h": 143,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "pr": 32,
        "gap": 8,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/200",
+        "paddingRight": "Spacing/800"
+       },
        "kids": [
         {
          "name": "info-20-300-round-fill",
          "type": "INSTANCE",
          "w": 24,
          "h": 24,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "info-20-300-round-fill",
          "kids": [
           {
@@ -2113,22 +3748,35 @@
            "type": "RECTANGLE",
            "w": 24,
            "h": 24,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 18,
            "h": 18,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#6172F3"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/icon/info"
+           }
           }
          ]
         },
@@ -2137,33 +3785,60 @@
          "type": "FRAME",
          "w": 304,
          "h": 143,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
          "gap": 8,
          "r": 0,
          "dir": "VERTICAL",
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/200"
+         },
          "kids": [
           {
            "name": "Text and supporting text",
            "type": "FRAME",
            "w": 304,
            "h": 95,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "VERTICAL",
+           "justify": "MIN",
            "align": "MIN",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           },
           {
            "name": "Actions",
            "type": "FRAME",
            "w": 122,
            "h": 40,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "HORIZONTAL",
+           "justify": "MIN",
            "align": "MIN",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           }
          ]
         }
@@ -2174,6 +3849,10 @@
        "type": "INSTANCE",
        "w": 40,
        "h": 40,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "pl": 8,
        "pr": 8,
        "pt": 8,
@@ -2181,8 +3860,21 @@
        "gap": 4,
        "r": 8,
        "dir": "HORIZONTAL",
+       "justify": "CENTER",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100",
+        "paddingLeft": "Spacing/200",
+        "paddingTop": "Spacing/200",
+        "paddingRight": "Spacing/200",
+        "paddingBottom": "Spacing/200",
+        "topLeftRadius": "Radius/200",
+        "topRightRadius": "Radius/200",
+        "bottomLeftRadius": "Radius/200",
+        "bottomRightRadius": "Radius/200"
+       },
        "variant": {
         "Leading icon swap#133:10": "1084:414",
         "Trailing icon#105:4": false,
@@ -2200,9 +3892,15 @@
          "type": "INSTANCE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "close-24-300-round",
          "kids": [
           {
@@ -2210,50 +3908,85 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 11,
            "h": 11,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#CECFD2"
            ],
-           "sw": 0.02500000037252903
+           "sw": 0.02500000037252903,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
           }
          ]
         },
         {
          "name": "Text",
          "type": "TEXT",
+         "visible": false,
          "w": 47,
          "h": 21,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "fill": [
           "#CECFD2"
          ],
          "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/tertiary/text",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
          "font": {
           "fam": "IBM Plex Sans Thai",
           "style": "SemiBold",
           "size": 14,
-          "lh": null
+          "lh": null,
+          "ls": -0.20000000298023224
          },
          "text": "Button"
         },
         {
          "name": "crop_free-20-400-round",
          "type": "INSTANCE",
+         "visible": false,
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "crop_free-20-400-round",
          "kids": [
           {
@@ -2261,22 +3994,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 14,
            "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#CECFD2"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
           }
          ]
         }
@@ -2291,13 +4037,39 @@
    "type": "COMPONENT",
    "w": 360,
    "h": 260,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
    "pl": 16,
    "pr": 16,
    "pb": 16,
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "MAX",
    "align": "CENTER",
+   "paint": [
+    {
+     "gradient": "GRADIENT_LINEAR",
+     "stops": [
+      [
+       "#0000001A",
+       0
+      ],
+      [
+       "#00000000",
+       0.95
+      ]
+     ]
+    }
+   ],
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "paddingLeft": "Spacing/400",
+    "paddingRight": "Spacing/400",
+    "paddingBottom": "Spacing/400"
+   },
    "variant": {
     "Type": "Info",
     "Breakpoint": "Mobile"
@@ -2308,6 +4080,10 @@
      "type": "FRAME",
      "w": 328,
      "h": 175,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
      "pl": 16,
      "pr": 16,
      "pt": 16,
@@ -2315,6 +4091,7 @@
      "gap": 16,
      "r": 12,
      "dir": "HORIZONTAL",
+     "justify": "CENTER",
      "align": "MAX",
      "fill": [
       "#0C111D"
@@ -2323,27 +4100,68 @@
       "#61646C"
      ],
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "effects": [
+      {
+       "type": "DROP_SHADOW",
+       "color": "#10182814",
+       "x": 0,
+       "y": 12,
+       "blur": 16,
+       "spread": -4
+      }
+     ],
+     "vars": {
+      "itemSpacing": "Spacing/400",
+      "paddingLeft": "Spacing/400",
+      "paddingTop": "Spacing/400",
+      "paddingRight": "Spacing/400",
+      "paddingBottom": "Spacing/400",
+      "topLeftRadius": "Radius/300",
+      "topRightRadius": "Radius/300",
+      "bottomLeftRadius": "Radius/300",
+      "bottomRightRadius": "Radius/300",
+      "fills": "Color/surface/primary",
+      "strokes": "Color/border/primary",
+      "effects": "Color/effect/shadow-8"
+     },
      "kids": [
       {
        "name": "Content",
        "type": "FRAME",
        "w": 296,
        "h": 143,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "pr": 32,
        "gap": 8,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/200",
+        "paddingRight": "Spacing/800"
+       },
        "kids": [
         {
          "name": "info-20-300-round-fill",
          "type": "INSTANCE",
          "w": 24,
          "h": 24,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "info-20-300-round-fill",
          "kids": [
           {
@@ -2351,22 +4169,35 @@
            "type": "RECTANGLE",
            "w": 24,
            "h": 24,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 18,
            "h": 18,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#6172F3"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/icon/info"
+           }
           }
          ]
         },
@@ -2375,33 +4206,60 @@
          "type": "FRAME",
          "w": 232,
          "h": 143,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
          "gap": 8,
          "r": 0,
          "dir": "VERTICAL",
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/200"
+         },
          "kids": [
           {
            "name": "Text and supporting text",
            "type": "FRAME",
            "w": 232,
            "h": 95,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "VERTICAL",
+           "justify": "MIN",
            "align": "MIN",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           },
           {
            "name": "Actions",
            "type": "FRAME",
            "w": 122,
            "h": 40,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "HORIZONTAL",
+           "justify": "MIN",
            "align": "MIN",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           }
          ]
         }
@@ -2412,6 +4270,10 @@
        "type": "INSTANCE",
        "w": 40,
        "h": 40,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "pl": 8,
        "pr": 8,
        "pt": 8,
@@ -2419,8 +4281,21 @@
        "gap": 4,
        "r": 8,
        "dir": "HORIZONTAL",
+       "justify": "CENTER",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100",
+        "paddingLeft": "Spacing/200",
+        "paddingTop": "Spacing/200",
+        "paddingRight": "Spacing/200",
+        "paddingBottom": "Spacing/200",
+        "topLeftRadius": "Radius/200",
+        "topRightRadius": "Radius/200",
+        "bottomLeftRadius": "Radius/200",
+        "bottomRightRadius": "Radius/200"
+       },
        "variant": {
         "Leading icon swap#133:10": "1084:414",
         "Trailing icon#105:4": false,
@@ -2438,9 +4313,15 @@
          "type": "INSTANCE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "close-24-300-round",
          "kids": [
           {
@@ -2448,50 +4329,85 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 11,
            "h": 11,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#CECFD2"
            ],
-           "sw": 0.02500000037252903
+           "sw": 0.02500000037252903,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
           }
          ]
         },
         {
          "name": "Text",
          "type": "TEXT",
+         "visible": false,
          "w": 47,
          "h": 21,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "fill": [
           "#CECFD2"
          ],
          "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/tertiary/text",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
          "font": {
           "fam": "IBM Plex Sans Thai",
           "style": "SemiBold",
           "size": 14,
-          "lh": null
+          "lh": null,
+          "ls": -0.20000000298023224
          },
          "text": "Button"
         },
         {
          "name": "crop_free-20-400-round",
          "type": "INSTANCE",
+         "visible": false,
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "crop_free-20-400-round",
          "kids": [
           {
@@ -2499,22 +4415,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 14,
            "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#CECFD2"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
           }
          ]
         }

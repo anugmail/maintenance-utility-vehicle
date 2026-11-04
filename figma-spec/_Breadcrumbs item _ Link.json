@@ -1,5 +1,7 @@
 {
  "component": "_Breadcrumbs item / Link",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
  "page": "✅ Breadcrumbs",
  "node": "2:7",
  "props": {
@@ -24,20 +26,62 @@
    ]
   }
  },
+ "set": {
+  "name": "_Breadcrumbs item / Link",
+  "type": "COMPONENT_SET",
+  "w": 198,
+  "h": 104,
+  "sizing": [
+   "FIXED",
+   "FIXED"
+  ],
+  "pl": 16,
+  "pr": 16,
+  "pt": 16,
+  "pb": 16,
+  "gap": 16,
+  "r": 5,
+  "justify": "CENTER",
+  "align": "MIN",
+  "fill": [
+   "#FFFFFF"
+  ],
+  "stroke": [
+   "#9747FF"
+  ],
+  "sw": 1,
+  "strokeAlign": "INSIDE",
+  "vars": {
+   "fills": "Color/background/default"
+  }
+ },
  "variants": [
   {
    "name": "Current=False, State=Default",
    "type": "COMPONENT",
    "w": 30,
    "h": 26,
+   "sizing": [
+    "HUG",
+    "HUG"
+   ],
    "pl": 4,
    "pr": 4,
    "pt": 4,
    "pb": 4,
    "r": 0,
    "dir": "HORIZONTAL",
+   "justify": "CENTER",
    "align": "CENTER",
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/none",
+    "paddingLeft": "Spacing/100",
+    "paddingTop": "Spacing/100",
+    "paddingRight": "Spacing/100",
+    "paddingBottom": "Spacing/100"
+   },
    "variant": {
     "Current": "False",
     "State": "Default"
@@ -48,15 +92,29 @@
      "type": "TEXT",
      "w": 22,
      "h": 18,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
      "fill": [
       "#475467"
      ],
      "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/component/button/tertiary/text",
+      "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+      "fontSize": "IBM/Helper-text/02/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+      "fontWeight": "IBM/Helper-text/02/font-weight"
+     },
      "font": {
       "fam": "IBM Plex Sans Thai",
       "style": "Regular",
       "size": 12,
-      "lh": null
+      "lh": null,
+      "ls": -0.20000000298023224
      },
      "text": "Link"
     }
@@ -67,14 +125,27 @@
    "type": "COMPONENT",
    "w": 30,
    "h": 26,
+   "sizing": [
+    "HUG",
+    "HUG"
+   ],
    "pl": 4,
    "pr": 4,
    "pt": 4,
    "pb": 4,
    "r": 0,
    "dir": "HORIZONTAL",
+   "justify": "CENTER",
    "align": "CENTER",
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/none",
+    "paddingLeft": "Spacing/100",
+    "paddingTop": "Spacing/100",
+    "paddingRight": "Spacing/100",
+    "paddingBottom": "Spacing/100"
+   },
    "variant": {
     "Current": "False",
     "State": "Hover"
@@ -85,15 +156,29 @@
      "type": "TEXT",
      "w": 22,
      "h": 18,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
      "fill": [
       "#344054"
      ],
      "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/component/button/tertiary/text-hover",
+      "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+      "fontSize": "IBM/Helper-text/02/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+      "fontWeight": "IBM/Helper-text/02/font-weight"
+     },
      "font": {
       "fam": "IBM Plex Sans Thai",
       "style": "Regular",
       "size": 12,
-      "lh": null
+      "lh": null,
+      "ls": -0.20000000298023224
      },
      "text": "Link"
     }
@@ -104,14 +189,27 @@
    "type": "COMPONENT",
    "w": 30,
    "h": 26,
+   "sizing": [
+    "HUG",
+    "HUG"
+   ],
    "pl": 4,
    "pr": 4,
    "pt": 4,
    "pb": 4,
    "r": 0,
    "dir": "HORIZONTAL",
+   "justify": "CENTER",
    "align": "CENTER",
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/none",
+    "paddingLeft": "Spacing/100",
+    "paddingTop": "Spacing/100",
+    "paddingRight": "Spacing/100",
+    "paddingBottom": "Spacing/100"
+   },
    "variant": {
     "Current": "True",
     "State": "Default"
@@ -122,15 +220,29 @@
      "type": "TEXT",
      "w": 22,
      "h": 18,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
      "fill": [
       "#A80689"
      ],
      "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/component/button/tertiary-brand/text",
+      "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+      "fontSize": "IBM/Helper-text/02/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+      "fontWeight": "IBM/Helper-text/02/font-weight"
+     },
      "font": {
       "fam": "IBM Plex Sans Thai",
       "style": "Regular",
       "size": 12,
-      "lh": null
+      "lh": null,
+      "ls": -0.20000000298023224
      },
      "text": "Link"
     }

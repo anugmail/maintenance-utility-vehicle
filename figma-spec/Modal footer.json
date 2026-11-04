@@ -1,5 +1,7 @@
 {
  "component": "Modal footer",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
  "page": "✅ Modals",
  "node": "2:16",
  "props": {
@@ -33,12 +35,46 @@
    ]
   }
  },
+ "set": {
+  "name": "Modal footer",
+  "type": "COMPONENT_SET",
+  "w": 600,
+  "h": 459,
+  "sizing": [
+   "FIXED",
+   "HUG"
+  ],
+  "pl": 20,
+  "pr": 20,
+  "pt": 20,
+  "pb": 20,
+  "gap": 20,
+  "r": 5,
+  "dir": "VERTICAL",
+  "justify": "CENTER",
+  "align": "MIN",
+  "fill": [
+   "#FFFFFF"
+  ],
+  "stroke": [
+   "#9747FF"
+  ],
+  "sw": 1,
+  "strokeAlign": "INSIDE",
+  "vars": {
+   "fills": "Color/surface/primary"
+  }
+ },
  "variants": [
   {
    "name": "Alignment=Horizontal fill",
    "type": "COMPONENT",
    "w": 560,
    "h": 109,
+   "sizing": [
+    "FILL",
+    "HUG"
+   ],
    "pb": 24,
    "r": [
     0,
@@ -47,10 +83,24 @@
     12
    ],
    "dir": "VERTICAL",
+   "justify": "CENTER",
    "align": "MAX",
    "fill": [
     "#FFFFFF"
    ],
+   "sws": [
+    1,
+    0,
+    0,
+    0
+   ],
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "paddingBottom": "Spacing/600",
+    "bottomLeftRadius": "Radius/300",
+    "bottomRightRadius": "Radius/300",
+    "fills": "Color/surface/primary"
+   },
    "variant": {
     "Alignment": "Horizontal fill"
    },
@@ -60,33 +110,57 @@
      "type": "FRAME",
      "w": 560,
      "h": 24,
+     "sizing": [
+      "FILL",
+      "FIXED"
+     ],
      "r": 0,
      "dir": "VERTICAL",
+     "justify": "MIN",
      "align": "MIN",
-     "sw": 1
+     "sw": 1,
+     "strokeAlign": "INSIDE"
     },
     {
      "name": "Divider",
      "type": "FRAME",
      "w": 560,
      "h": 21,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
      "pb": 20,
      "gap": 8,
      "r": 0,
      "dir": "VERTICAL",
+     "justify": "MIN",
      "align": "MIN",
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "paddingBottom": "Spacing/500"
+     },
      "kids": [
       {
        "name": "Content divider",
        "type": "INSTANCE",
        "w": 560,
        "h": 1,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "gap": 4,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "CENTER",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100"
+       },
        "variant": {
         "Text#2631:0": "หรือ",
         "Type": "Default"
@@ -98,11 +172,19 @@
          "type": "VECTOR",
          "w": 560,
          "h": 1,
+         "sizing": [
+          "FILL",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#D0D5DD"
          ],
-         "sw": 1
+         "sw": 1,
+         "strokeAlign": "CENTER",
+         "vars": {
+          "fills": "Color/icon/tertiary"
+         }
         }
        ]
       }
@@ -113,19 +195,34 @@
      "type": "FRAME",
      "w": 560,
      "h": 40,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
      "pl": 24,
      "pr": 24,
      "gap": 12,
      "r": 0,
      "dir": "HORIZONTAL",
+     "justify": "MIN",
      "align": "CENTER",
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/300",
+      "paddingLeft": "Spacing/600",
+      "paddingRight": "Spacing/600"
+     },
      "kids": [
       {
        "name": "Secondary button",
        "type": "INSTANCE",
        "w": 250,
        "h": 40,
+       "sizing": [
+        "FILL",
+        "FIXED"
+       ],
        "pl": 12,
        "pr": 12,
        "pt": 8,
@@ -133,6 +230,7 @@
        "gap": 4,
        "r": 8,
        "dir": "HORIZONTAL",
+       "justify": "CENTER",
        "align": "CENTER",
        "fill": [
         "#FFFFFF"
@@ -141,6 +239,20 @@
         "#D0D5DD"
        ],
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100",
+        "paddingLeft": "Spacing/300",
+        "paddingTop": "Spacing/200",
+        "paddingRight": "Spacing/300",
+        "paddingBottom": "Spacing/200",
+        "topLeftRadius": "Radius/200",
+        "topRightRadius": "Radius/200",
+        "bottomLeftRadius": "Radius/200",
+        "bottomRightRadius": "Radius/200",
+        "fills": "Color/component/button/secondary/surface",
+        "strokes": "Color/border/primary"
+       },
        "variant": {
         "Leading icon swap#133:10": "133:3719",
         "Button text#1246:27": true,
@@ -156,11 +268,18 @@
         {
          "name": "crop_free-20-400-round",
          "type": "INSTANCE",
+         "visible": false,
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "crop_free-20-400-round",
          "kids": [
           {
@@ -168,22 +287,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 14,
            "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#475467"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/secondary/icon"
+           }
           }
          ]
         },
@@ -192,26 +324,48 @@
          "type": "TEXT",
          "w": 226,
          "h": 21,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
          "fill": [
           "#475467"
          ],
          "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/secondary/text",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
          "font": {
           "fam": "IBM Plex Sans Thai",
           "style": "SemiBold",
           "size": 14,
-          "lh": null
+          "lh": null,
+          "ls": -0.20000000298023224,
+          "align": "CENTER"
          },
          "text": "Button"
         },
         {
          "name": "crop_free-20-400-round",
          "type": "INSTANCE",
+         "visible": false,
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "crop_free-20-400-round",
          "kids": [
           {
@@ -219,22 +373,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 14,
            "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#475467"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/secondary/icon"
+           }
           }
          ]
         }
@@ -245,6 +412,10 @@
        "type": "INSTANCE",
        "w": 250,
        "h": 40,
+       "sizing": [
+        "FILL",
+        "FIXED"
+       ],
        "pl": 12,
        "pr": 12,
        "pt": 8,
@@ -252,18 +423,32 @@
        "gap": 4,
        "r": 8,
        "dir": "HORIZONTAL",
+       "justify": "CENTER",
        "align": "CENTER",
        "fill": [
         "#A80689"
        ],
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100",
+        "paddingLeft": "Spacing/300",
+        "paddingTop": "Spacing/200",
+        "paddingRight": "Spacing/300",
+        "paddingBottom": "Spacing/200",
+        "topLeftRadius": "Radius/200",
+        "topRightRadius": "Radius/200",
+        "bottomLeftRadius": "Radius/200",
+        "bottomRightRadius": "Radius/200",
+        "fills": "Color/component/button/primary/surface"
+       },
        "variant": {
         "Leading icon swap#133:10": "133:3719",
         "Trailing icon#105:4": false,
         "Trailing icon swap#133:12": "133:3719",
         "Leading icon#105:2": false,
         "Button text#1246:11": true,
-        "Text#105:0": "Button",
+        "Text#105:0": "1Button",
         "State": "Default",
         "Size": "md"
        },
@@ -272,11 +457,18 @@
         {
          "name": "crop_free-20-400-round",
          "type": "INSTANCE",
+         "visible": false,
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "crop_free-20-400-round",
          "kids": [
           {
@@ -284,50 +476,84 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 14,
            "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#FFFFFF"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/primary/icon"
+           }
           }
          ]
         },
         {
          "name": "Text",
          "type": "TEXT",
-         "w": 43,
+         "w": 52,
          "h": 21,
+         "sizing": [
+          "HUG",
+          "HUG"
+         ],
          "fill": [
           "#FFFFFF"
          ],
          "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/primary/text",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
          "font": {
           "fam": "IBM Plex Sans Thai",
           "style": "SemiBold",
           "size": 14,
-          "lh": null
+          "lh": null,
+          "ls": -0.20000000298023224
          },
-         "text": "Button"
+         "text": "1Button"
         },
         {
          "name": "crop_free-20-400-round",
          "type": "INSTANCE",
+         "visible": false,
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "crop_free-20-400-round",
          "kids": [
           {
@@ -335,22 +561,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 14,
            "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#FFFFFF"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/primary/icon"
+           }
           }
          ]
         }
@@ -365,6 +604,10 @@
    "type": "COMPONENT",
    "w": 560,
    "h": 109,
+   "sizing": [
+    "FILL",
+    "HUG"
+   ],
    "pb": 24,
    "r": [
     0,
@@ -373,10 +616,24 @@
     12
    ],
    "dir": "VERTICAL",
+   "justify": "CENTER",
    "align": "MAX",
    "fill": [
     "#FFFFFF"
    ],
+   "sws": [
+    1,
+    0,
+    0,
+    0
+   ],
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "paddingBottom": "Spacing/600",
+    "bottomLeftRadius": "Radius/300",
+    "bottomRightRadius": "Radius/300",
+    "fills": "Color/surface/primary"
+   },
    "variant": {
     "Alignment": "Horizontal right"
    },
@@ -386,33 +643,57 @@
      "type": "FRAME",
      "w": 560,
      "h": 24,
+     "sizing": [
+      "FILL",
+      "FIXED"
+     ],
      "r": 0,
      "dir": "VERTICAL",
+     "justify": "MIN",
      "align": "MIN",
-     "sw": 1
+     "sw": 1,
+     "strokeAlign": "INSIDE"
     },
     {
      "name": "Divider",
      "type": "FRAME",
      "w": 560,
      "h": 21,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
      "pb": 20,
      "gap": 8,
      "r": 0,
      "dir": "VERTICAL",
+     "justify": "MIN",
      "align": "MIN",
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "paddingBottom": "Spacing/500"
+     },
      "kids": [
       {
        "name": "Content divider",
        "type": "INSTANCE",
        "w": 560,
        "h": 1,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "gap": 4,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "CENTER",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100"
+       },
        "variant": {
         "Text#2631:0": "หรือ",
         "Type": "Default"
@@ -424,11 +705,19 @@
          "type": "VECTOR",
          "w": 560,
          "h": 1,
+         "sizing": [
+          "FILL",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#D0D5DD"
          ],
-         "sw": 1
+         "sw": 1,
+         "strokeAlign": "CENTER",
+         "vars": {
+          "fills": "Color/icon/tertiary"
+         }
         }
        ]
       }
@@ -439,19 +728,34 @@
      "type": "FRAME",
      "w": 560,
      "h": 40,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
      "pl": 24,
      "pr": 24,
      "gap": 12,
      "r": 0,
      "dir": "HORIZONTAL",
+     "justify": "MAX",
      "align": "CENTER",
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/300",
+      "paddingLeft": "Spacing/600",
+      "paddingRight": "Spacing/600"
+     },
      "kids": [
       {
        "name": "Tertiary brand button",
        "type": "INSTANCE",
        "w": 59,
        "h": 40,
+       "sizing": [
+        "HUG",
+        "FIXED"
+       ],
        "pl": 8,
        "pr": 8,
        "pt": 8,
@@ -459,8 +763,21 @@
        "gap": 4,
        "r": 8,
        "dir": "HORIZONTAL",
+       "justify": "CENTER",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100",
+        "paddingLeft": "Spacing/200",
+        "paddingTop": "Spacing/200",
+        "paddingRight": "Spacing/200",
+        "paddingBottom": "Spacing/200",
+        "topLeftRadius": "Radius/200",
+        "topRightRadius": "Radius/200",
+        "bottomLeftRadius": "Radius/200",
+        "bottomRightRadius": "Radius/200"
+       },
        "variant": {
         "Leading icon swap#133:10": "133:3719",
         "Button text#1153:12": true,
@@ -475,11 +792,18 @@
         {
          "name": "crop_free-20-400-round",
          "type": "INSTANCE",
+         "visible": false,
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "crop_free-20-400-round",
          "kids": [
           {
@@ -487,22 +811,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 14,
            "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#A80689"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/icon/brand"
+           }
           }
          ]
         },
@@ -511,26 +848,47 @@
          "type": "TEXT",
          "w": 43,
          "h": 21,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
          "fill": [
           "#A80689"
          ],
          "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/brand",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
          "font": {
           "fam": "IBM Plex Sans Thai",
           "style": "SemiBold",
           "size": 14,
-          "lh": null
+          "lh": null,
+          "ls": -0.20000000298023224
          },
          "text": "Button"
         },
         {
          "name": "crop_free-20-400-round",
          "type": "INSTANCE",
+         "visible": false,
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "crop_free-20-400-round",
          "kids": [
           {
@@ -538,22 +896,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 14,
            "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#A80689"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/icon/brand"
+           }
           }
          ]
         }
@@ -564,17 +935,30 @@
        "type": "FRAME",
        "w": 441,
        "h": 40,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "gap": 12,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "MAX",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/300"
+       },
        "kids": [
         {
          "name": "Secondary button",
          "type": "INSTANCE",
          "w": 100,
          "h": 40,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "pl": 12,
          "pr": 12,
          "pt": 8,
@@ -582,6 +966,7 @@
          "gap": 4,
          "r": 8,
          "dir": "HORIZONTAL",
+         "justify": "CENTER",
          "align": "CENTER",
          "fill": [
           "#FFFFFF"
@@ -590,6 +975,20 @@
           "#D0D5DD"
          ],
          "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/100",
+          "paddingLeft": "Spacing/300",
+          "paddingTop": "Spacing/200",
+          "paddingRight": "Spacing/300",
+          "paddingBottom": "Spacing/200",
+          "topLeftRadius": "Radius/200",
+          "topRightRadius": "Radius/200",
+          "bottomLeftRadius": "Radius/200",
+          "bottomRightRadius": "Radius/200",
+          "fills": "Color/component/button/secondary/surface",
+          "strokes": "Color/border/primary"
+         },
          "variant": {
           "Leading icon swap#133:10": "133:3719",
           "Button text#1246:27": true,
@@ -605,11 +1004,18 @@
           {
            "name": "crop_free-20-400-round",
            "type": "INSTANCE",
+           "visible": false,
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
+           "justify": "MIN",
            "align": "MIN",
            "sw": 1,
+           "strokeAlign": "INSIDE",
            "component": "crop_free-20-400-round"
           },
           {
@@ -617,26 +1023,48 @@
            "type": "TEXT",
            "w": 76,
            "h": 21,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
            "fill": [
             "#475467"
            ],
            "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/component/button/secondary/text",
+            "letterSpacing": "IBM/Label/03/letter-spacing",
+            "fontSize": "IBM/Label/03/font-size",
+            "fontFamily": "IBM/Label/03/font-family",
+            "paragraphSpacing": "IBM/Label/03/letter-spacing",
+            "fontWeight": "IBM/Label/03/font-weight"
+           },
            "font": {
             "fam": "IBM Plex Sans Thai",
             "style": "SemiBold",
             "size": 14,
-            "lh": null
+            "lh": null,
+            "ls": -0.20000000298023224,
+            "align": "CENTER"
            },
            "text": "Button"
           },
           {
            "name": "crop_free-20-400-round",
            "type": "INSTANCE",
+           "visible": false,
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
+           "justify": "MIN",
            "align": "MIN",
            "sw": 1,
+           "strokeAlign": "INSIDE",
            "component": "crop_free-20-400-round"
           }
          ]
@@ -646,6 +1074,10 @@
          "type": "INSTANCE",
          "w": 100,
          "h": 40,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "pl": 12,
          "pr": 12,
          "pt": 8,
@@ -653,18 +1085,32 @@
          "gap": 4,
          "r": 8,
          "dir": "HORIZONTAL",
+         "justify": "CENTER",
          "align": "CENTER",
          "fill": [
           "#A80689"
          ],
          "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/100",
+          "paddingLeft": "Spacing/300",
+          "paddingTop": "Spacing/200",
+          "paddingRight": "Spacing/300",
+          "paddingBottom": "Spacing/200",
+          "topLeftRadius": "Radius/200",
+          "topRightRadius": "Radius/200",
+          "bottomLeftRadius": "Radius/200",
+          "bottomRightRadius": "Radius/200",
+          "fills": "Color/component/button/primary/surface"
+         },
          "variant": {
           "Leading icon swap#133:10": "133:3719",
           "Trailing icon#105:4": false,
           "Trailing icon swap#133:12": "133:3719",
           "Leading icon#105:2": false,
           "Button text#1246:11": true,
-          "Text#105:0": "Button",
+          "Text#105:0": "1Button",
           "State": "Default",
           "Size": "md"
          },
@@ -673,38 +1119,66 @@
           {
            "name": "crop_free-20-400-round",
            "type": "INSTANCE",
+           "visible": false,
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
+           "justify": "MIN",
            "align": "MIN",
            "sw": 1,
+           "strokeAlign": "INSIDE",
            "component": "crop_free-20-400-round"
           },
           {
            "name": "Text",
            "type": "TEXT",
-           "w": 43,
+           "w": 52,
            "h": 21,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
            "fill": [
             "#FFFFFF"
            ],
            "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/component/button/primary/text",
+            "letterSpacing": "IBM/Label/03/letter-spacing",
+            "fontSize": "IBM/Label/03/font-size",
+            "fontFamily": "IBM/Label/03/font-family",
+            "paragraphSpacing": "IBM/Label/03/letter-spacing",
+            "fontWeight": "IBM/Label/03/font-weight"
+           },
            "font": {
             "fam": "IBM Plex Sans Thai",
             "style": "SemiBold",
             "size": 14,
-            "lh": null
+            "lh": null,
+            "ls": -0.20000000298023224
            },
-           "text": "Button"
+           "text": "1Button"
           },
           {
            "name": "crop_free-20-400-round",
            "type": "INSTANCE",
+           "visible": false,
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
+           "justify": "MIN",
            "align": "MIN",
            "sw": 1,
+           "strokeAlign": "INSIDE",
            "component": "crop_free-20-400-round"
           }
          ]
@@ -720,6 +1194,10 @@
    "type": "COMPONENT",
    "w": 560,
    "h": 161,
+   "sizing": [
+    "FILL",
+    "HUG"
+   ],
    "pb": 24,
    "r": [
     0,
@@ -728,10 +1206,24 @@
     12
    ],
    "dir": "VERTICAL",
+   "justify": "CENTER",
    "align": "MAX",
    "fill": [
     "#FFFFFF"
    ],
+   "sws": [
+    1,
+    0,
+    0,
+    0
+   ],
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "paddingBottom": "Spacing/600",
+    "bottomLeftRadius": "Radius/300",
+    "bottomRightRadius": "Radius/300",
+    "fills": "Color/surface/primary"
+   },
    "variant": {
     "Alignment": "Vertical fill"
    },
@@ -741,33 +1233,57 @@
      "type": "FRAME",
      "w": 560,
      "h": 24,
+     "sizing": [
+      "FILL",
+      "FIXED"
+     ],
      "r": 0,
      "dir": "VERTICAL",
+     "justify": "MIN",
      "align": "MIN",
-     "sw": 1
+     "sw": 1,
+     "strokeAlign": "INSIDE"
     },
     {
      "name": "Divider",
      "type": "FRAME",
      "w": 560,
      "h": 21,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
      "pb": 20,
      "gap": 8,
      "r": 0,
      "dir": "VERTICAL",
+     "justify": "MIN",
      "align": "MIN",
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "paddingBottom": "Spacing/500"
+     },
      "kids": [
       {
        "name": "Content divider",
        "type": "INSTANCE",
        "w": 560,
        "h": 1,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "gap": 4,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "CENTER",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100"
+       },
        "variant": {
         "Text#2631:0": "หรือ",
         "Type": "Default"
@@ -779,11 +1295,19 @@
          "type": "VECTOR",
          "w": 560,
          "h": 1,
+         "sizing": [
+          "FILL",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#D0D5DD"
          ],
-         "sw": 1
+         "sw": 1,
+         "strokeAlign": "CENTER",
+         "vars": {
+          "fills": "Color/icon/tertiary"
+         }
         }
        ]
       }
@@ -794,19 +1318,34 @@
      "type": "FRAME",
      "w": 560,
      "h": 92,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
      "pl": 24,
      "pr": 24,
      "gap": 12,
      "r": 0,
      "dir": "VERTICAL",
+     "justify": "MIN",
      "align": "MIN",
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/300",
+      "paddingLeft": "Spacing/600",
+      "paddingRight": "Spacing/600"
+     },
      "kids": [
       {
        "name": "Primary button",
        "type": "INSTANCE",
        "w": 512,
        "h": 40,
+       "sizing": [
+        "FILL",
+        "FIXED"
+       ],
        "pl": 12,
        "pr": 12,
        "pt": 8,
@@ -814,18 +1353,32 @@
        "gap": 4,
        "r": 8,
        "dir": "HORIZONTAL",
+       "justify": "CENTER",
        "align": "CENTER",
        "fill": [
         "#A80689"
        ],
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100",
+        "paddingLeft": "Spacing/300",
+        "paddingTop": "Spacing/200",
+        "paddingRight": "Spacing/300",
+        "paddingBottom": "Spacing/200",
+        "topLeftRadius": "Radius/200",
+        "topRightRadius": "Radius/200",
+        "bottomLeftRadius": "Radius/200",
+        "bottomRightRadius": "Radius/200",
+        "fills": "Color/component/button/primary/surface"
+       },
        "variant": {
         "Leading icon swap#133:10": "133:3719",
         "Trailing icon#105:4": false,
         "Trailing icon swap#133:12": "133:3719",
         "Leading icon#105:2": false,
         "Button text#1246:11": true,
-        "Text#105:0": "Button",
+        "Text#105:0": "1Button",
         "State": "Default",
         "Size": "md"
        },
@@ -834,11 +1387,18 @@
         {
          "name": "crop_free-20-400-round",
          "type": "INSTANCE",
+         "visible": false,
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "crop_free-20-400-round",
          "kids": [
           {
@@ -846,50 +1406,84 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 14,
            "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#FFFFFF"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/primary/icon"
+           }
           }
          ]
         },
         {
          "name": "Text",
          "type": "TEXT",
-         "w": 43,
+         "w": 52,
          "h": 21,
+         "sizing": [
+          "HUG",
+          "HUG"
+         ],
          "fill": [
           "#FFFFFF"
          ],
          "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/primary/text",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
          "font": {
           "fam": "IBM Plex Sans Thai",
           "style": "SemiBold",
           "size": 14,
-          "lh": null
+          "lh": null,
+          "ls": -0.20000000298023224
          },
-         "text": "Button"
+         "text": "1Button"
         },
         {
          "name": "crop_free-20-400-round",
          "type": "INSTANCE",
+         "visible": false,
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "crop_free-20-400-round",
          "kids": [
           {
@@ -897,22 +1491,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 14,
            "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#FFFFFF"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/primary/icon"
+           }
           }
          ]
         }
@@ -923,6 +1530,10 @@
        "type": "INSTANCE",
        "w": 512,
        "h": 40,
+       "sizing": [
+        "FILL",
+        "FIXED"
+       ],
        "pl": 12,
        "pr": 12,
        "pt": 8,
@@ -930,6 +1541,7 @@
        "gap": 4,
        "r": 8,
        "dir": "HORIZONTAL",
+       "justify": "CENTER",
        "align": "CENTER",
        "fill": [
         "#FFFFFF"
@@ -938,6 +1550,20 @@
         "#D0D5DD"
        ],
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100",
+        "paddingLeft": "Spacing/300",
+        "paddingTop": "Spacing/200",
+        "paddingRight": "Spacing/300",
+        "paddingBottom": "Spacing/200",
+        "topLeftRadius": "Radius/200",
+        "topRightRadius": "Radius/200",
+        "bottomLeftRadius": "Radius/200",
+        "bottomRightRadius": "Radius/200",
+        "fills": "Color/component/button/secondary/surface",
+        "strokes": "Color/border/primary"
+       },
        "variant": {
         "Leading icon swap#133:10": "133:3719",
         "Button text#1246:27": true,
@@ -953,11 +1579,18 @@
         {
          "name": "crop_free-20-400-round",
          "type": "INSTANCE",
+         "visible": false,
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "crop_free-20-400-round",
          "kids": [
           {
@@ -965,22 +1598,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 14,
            "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#475467"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/secondary/icon"
+           }
           }
          ]
         },
@@ -989,26 +1635,48 @@
          "type": "TEXT",
          "w": 488,
          "h": 21,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
          "fill": [
           "#475467"
          ],
          "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/secondary/text",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
          "font": {
           "fam": "IBM Plex Sans Thai",
           "style": "SemiBold",
           "size": 14,
-          "lh": null
+          "lh": null,
+          "ls": -0.20000000298023224,
+          "align": "CENTER"
          },
          "text": "Button"
         },
         {
          "name": "crop_free-20-400-round",
          "type": "INSTANCE",
+         "visible": false,
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "crop_free-20-400-round",
          "kids": [
           {
@@ -1016,22 +1684,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 14,
            "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#475467"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/secondary/icon"
+           }
           }
          ]
         }

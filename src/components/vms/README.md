@@ -27,10 +27,10 @@ import { Table, type TableColumn } from "@/components/vms/Table";
 | `PrimaryButton` `SecondaryButton` `PrimaryDangerButton` `SecondaryDangerButton` | Primary/Secondary (danger) button · Button 2:5 | `Text` `State` (Default/Hover/Focused/Disabled) `Size` (md/lg) `LeadingIconSwap` `TrailingIconSwap` `ButtonText` + ปุ่ม HTML |
 | `TertiaryButton` | Tertiary button · Button 2:5 | เหมือนบน ไม่มี `Size` (md) · `ButtonText={false}` = ปุ่มไอคอน (ส่ง `aria-label`) |
 | `TertiaryBrandButton` `TertiaryDangerButton` | Tertiary brand/danger button · Button 2:5 | `Text` `State` `LeadingIconSwap` |
-| `PillOutline` | Pill outline · Badge 2:13 | `Text` `Color` (Brand/Gray/Info/Success/Warning/Error/Disabled) |
+| `PillOutline` | Pill outline · Badge 2:13 | `Text` `Color` (Brand/Gray/Info/Success/Warning/Error/Disabled/Purple) |
 | `BadgeOutline` | Badge outline · Badge 2:13 | `Text` `Color` (Brand/Gray/Disabled/Success/Error) |
 | `BadgeOutlineWithRemoveIcon` | Badge outline with remove icon · Badge 2:13 | `Text` `Color` (Brand/Gray/Disabled) `onRemove` |
-| `FeaturedIcon` | Featured icon · 2861:54686 | `Color` `Size` (md/sm) `IconSwap` |
+| `FeaturedIcon` | Featured icon · 2861:54686 | `Color` (รวม Purple) `Size` (md/sm) `IconSwap` |
 | `InputLabel` | Input label · Inputs 2:6 | `LabelText` `Optional` `InfoIcon` `Button` |
 | `TextInput` | Text input · Inputs 2:6 | `State` (10 ค่า) `Size` `Label` `LabelText` `Optional` `Text` `Placeholder` `LeadingIconSwap` `TrailingIconSwap` `HelperText` `onChange(v)` |
 | `InputDropdown` | Input dropdown · Dropdowns 2:8 | `State` `Size` `LabelText` `Text` `Placeholder` `SupportingText` `HelperText` `open` `onOpenChange` · children = `DropdownList` |

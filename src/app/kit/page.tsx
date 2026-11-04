@@ -30,7 +30,7 @@ import { ModalHeader } from "@/components/vms/ModalHeader";
 import { NavButton } from "@/components/vms/NavButton";
 import { NavItem } from "@/components/vms/NavItem";
 import { NavListItem } from "@/components/vms/NavListItem";
-import { PillColor as PillColorBadge } from "@/components/vms/PillColor";
+import { PillColor as PillColorBadge, type PillColorName } from "@/components/vms/PillColor";
 import { Notification, type NotificationType } from "@/components/vms/Notification";
 import { PageHeader } from "@/components/vms/PageHeader";
 import { PillOutline, type PillColor } from "@/components/vms/PillOutline";
@@ -120,10 +120,10 @@ export default function Kit() {
       </Block>
 
       <Block name="Pill outline" node="Badge (2:13)">
-        {(["Brand", "Gray", "Info", "Success", "Warning", "Error", "Disabled"] as PillColor[]).map((c) => <V key={c} label={`Color=${c}`}><PillOutline Text="รออนุมัติ" Color={c} /></V>)}
+        {(["Brand", "Gray", "Info", "Success", "Warning", "Error", "Disabled", "Purple"] as PillColor[]).map((c) => <V key={c} label={`Color=${c}`}><PillOutline Text="รออนุมัติ" Color={c} /></V>)}
       </Block>
       <Block name="Pill color" node="Badge (2:13)">
-        {(["Brand", "Gray", "Info", "Success", "Warning", "Error", "Disabled"] as PillColor[]).map((c) => <V key={c} label={`Color=${c}`}><PillColorBadge Text="1" Color={c} /></V>)}
+        {(["Brand", "Gray", "Info", "Success", "Warning", "Error", "Disabled"] as PillColorName[]).map((c) => <V key={c} label={`Color=${c}`}><PillColorBadge Text="1" Color={c} /></V>)}
       </Block>
       <Block name="Badge outline" node="Badge (2:13)">
         {(["Brand", "Gray", "Disabled", "Success", "Error"] as BadgeOutlineColor[]).map((c) => <V key={c} label={`Color=${c}`}><BadgeOutline Text="ในแผน 6 คัน" Color={c} /></V>)}
@@ -132,7 +132,7 @@ export default function Kit() {
         {(["Brand", "Gray", "Disabled"] as const).map((c) => <V key={c} label={`Color=${c}`}><BadgeOutlineWithRemoveIcon Text="กฟฉ.1" Color={c} onRemove={() => undefined} /></V>)}
       </Block>
       <Block name="Featured icon" node="Featured icon (2861:54686)">
-        {(["md", "sm"] as const).flatMap((sz) => (["Brand", "Gray", "Info", "Success", "Warning", "Error", "Disabled"] as FeaturedIconColor[]).map((c) => <V key={c + sz} label={`Color=${c}, Size=${sz}`}><FeaturedIcon Color={c} Size={sz} /></V>))}
+        {(["md", "sm"] as const).flatMap((sz) => (["Brand", "Gray", "Info", "Success", "Warning", "Error", "Disabled", "Purple"] as FeaturedIconColor[]).map((c) => <V key={c + sz} label={`Color=${c}, Size=${sz}`}><FeaturedIcon Color={c} Size={sz} /></V>))}
       </Block>
 
       <Block name="Input label" node="Inputs (2:6)">

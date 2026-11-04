@@ -1,5 +1,7 @@
 {
  "component": "Horizontal scrollbar",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
  "page": "Scrollbar",
  "node": "2230:14068",
  "props": {
@@ -13,20 +15,62 @@
    ]
   }
  },
+ "set": {
+  "name": "Horizontal scrollbar",
+  "type": "COMPONENT_SET",
+  "w": 1208,
+  "h": 128,
+  "sizing": [
+   "FIXED",
+   "HUG"
+  ],
+  "pl": 20,
+  "pr": 20,
+  "pt": 20,
+  "pb": 20,
+  "gap": 20,
+  "r": 5,
+  "dir": "VERTICAL",
+  "justify": "MIN",
+  "align": "MIN",
+  "fill": [
+   "#FFFFFF"
+  ],
+  "stroke": [
+   "#9747FF"
+  ],
+  "sw": 1,
+  "strokeAlign": "INSIDE",
+  "vars": {
+   "fills": "Color/background/default"
+  }
+ },
  "variants": [
   {
    "name": "Length=25%",
    "type": "COMPONENT",
    "w": 1168,
    "h": 16,
+   "sizing": [
+    "FILL",
+    "FIXED"
+   ],
    "pl": 4,
    "pr": 4,
    "pt": 4,
    "pb": 4,
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "MIN",
    "align": "MIN",
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "paddingLeft": "Spacing/100",
+    "paddingTop": "Spacing/100",
+    "paddingRight": "Spacing/100",
+    "paddingBottom": "Spacing/100"
+   },
    "variant": {
     "Length": "25%"
    },
@@ -36,20 +80,38 @@
      "type": "FRAME",
      "w": 1160,
      "h": 8,
+     "sizing": [
+      "FILL",
+      "FILL"
+     ],
      "r": 0,
+     "justify": "MIN",
      "align": "MIN",
      "sw": 1,
+     "strokeAlign": "INSIDE",
      "kids": [
       {
        "name": "Thumb",
        "type": "RECTANGLE",
        "w": 292,
        "h": 8,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 9999,
        "fill": [
         "#EAECF0"
        ],
-       "sw": 1
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "radius-full",
+        "topRightRadius": "radius-full",
+        "bottomLeftRadius": "radius-full",
+        "bottomRightRadius": "radius-full",
+        "fills": "Color/component/scrollbar/thumb"
+       }
       }
      ]
     }
@@ -60,14 +122,26 @@
    "type": "COMPONENT",
    "w": 1168,
    "h": 16,
+   "sizing": [
+    "FILL",
+    "FIXED"
+   ],
    "pl": 4,
    "pr": 4,
    "pt": 4,
    "pb": 4,
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "MIN",
    "align": "MIN",
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "paddingLeft": "Spacing/100",
+    "paddingTop": "Spacing/100",
+    "paddingRight": "Spacing/100",
+    "paddingBottom": "Spacing/100"
+   },
    "variant": {
     "Length": "50%"
    },
@@ -77,20 +151,38 @@
      "type": "FRAME",
      "w": 1160,
      "h": 8,
+     "sizing": [
+      "FILL",
+      "FILL"
+     ],
      "r": 0,
+     "justify": "MIN",
      "align": "MIN",
      "sw": 1,
+     "strokeAlign": "INSIDE",
      "kids": [
       {
        "name": "Thumb",
        "type": "RECTANGLE",
        "w": 584,
        "h": 8,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 9999,
        "fill": [
         "#EAECF0"
        ],
-       "sw": 1
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "radius-full",
+        "topRightRadius": "radius-full",
+        "bottomLeftRadius": "radius-full",
+        "bottomRightRadius": "radius-full",
+        "fills": "Color/component/scrollbar/thumb"
+       }
       }
      ]
     }
@@ -101,14 +193,26 @@
    "type": "COMPONENT",
    "w": 1168,
    "h": 16,
+   "sizing": [
+    "FILL",
+    "FIXED"
+   ],
    "pl": 4,
    "pr": 4,
    "pt": 4,
    "pb": 4,
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "MIN",
    "align": "MIN",
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "paddingLeft": "Spacing/100",
+    "paddingTop": "Spacing/100",
+    "paddingRight": "Spacing/100",
+    "paddingBottom": "Spacing/100"
+   },
    "variant": {
     "Length": "75%"
    },
@@ -118,20 +222,38 @@
      "type": "FRAME",
      "w": 1160,
      "h": 8,
+     "sizing": [
+      "FILL",
+      "FILL"
+     ],
      "r": 0,
+     "justify": "MIN",
      "align": "MIN",
      "sw": 1,
+     "strokeAlign": "INSIDE",
      "kids": [
       {
        "name": "Thumb",
        "type": "RECTANGLE",
        "w": 876,
        "h": 8,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 9999,
        "fill": [
         "#EAECF0"
        ],
-       "sw": 1
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "radius-full",
+        "topRightRadius": "radius-full",
+        "bottomLeftRadius": "radius-full",
+        "bottomRightRadius": "radius-full",
+        "fills": "Color/component/scrollbar/thumb"
+       }
       }
      ]
     }

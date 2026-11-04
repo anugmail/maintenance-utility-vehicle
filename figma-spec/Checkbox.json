@@ -1,5 +1,7 @@
 {
  "component": "Checkbox",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
  "page": "✅ Checkbox",
  "node": "2:18",
  "props": {
@@ -23,14 +25,43 @@
    ]
   }
  },
+ "set": {
+  "name": "Checkbox",
+  "type": "COMPONENT_SET",
+  "w": 208,
+  "h": 248,
+  "sizing": [
+   "FIXED",
+   "FIXED"
+  ],
+  "r": 5,
+  "justify": "MIN",
+  "align": "MIN",
+  "fill": [
+   "#FFFFFF"
+  ],
+  "stroke": [
+   "#9747FF"
+  ],
+  "sw": 1,
+  "strokeAlign": "INSIDE",
+  "vars": {
+   "fills": "Color/background/default"
+  }
+ },
  "variants": [
   {
    "name": "State=Default, Type=Unselected",
    "type": "COMPONENT",
    "w": 20,
    "h": 20,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "CENTER",
    "align": "CENTER",
    "variant": {
     "State": "Default",
@@ -42,11 +73,23 @@
      "type": "RECTANGLE",
      "w": 20,
      "h": 20,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "r": 4,
      "stroke": [
       "#D0D5DD"
      ],
-     "sw": 2
+     "sw": 2,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/100",
+      "topRightRadius": "Radius/100",
+      "bottomLeftRadius": "Radius/100",
+      "bottomRightRadius": "Radius/100",
+      "strokes": "Color/border/primary"
+     }
     }
    ]
   },
@@ -55,8 +98,13 @@
    "type": "COMPONENT",
    "w": 20,
    "h": 20,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "CENTER",
    "align": "CENTER",
    "variant": {
     "State": "Hover",
@@ -68,11 +116,34 @@
      "type": "RECTANGLE",
      "w": 20,
      "h": 20,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "r": 4,
      "stroke": [
       "#D0D5DD"
      ],
-     "sw": 2
+     "sw": 2,
+     "strokeAlign": "INSIDE",
+     "effects": [
+      {
+       "type": "DROP_SHADOW",
+       "color": "#6670851F",
+       "x": 0,
+       "y": 0,
+       "blur": 0,
+       "spread": 4
+      }
+     ],
+     "vars": {
+      "topLeftRadius": "Radius/100",
+      "topRightRadius": "Radius/100",
+      "bottomLeftRadius": "Radius/100",
+      "bottomRightRadius": "Radius/100",
+      "strokes": "Color/border/primary",
+      "effects": "Color/effect/focus-gray"
+     }
     }
    ]
   },
@@ -81,8 +152,13 @@
    "type": "COMPONENT",
    "w": 20,
    "h": 20,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "CENTER",
    "align": "CENTER",
    "variant": {
     "State": "Focused",
@@ -94,11 +170,34 @@
      "type": "RECTANGLE",
      "w": 20,
      "h": 20,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "r": 4,
      "stroke": [
       "#D0D5DD"
      ],
-     "sw": 2
+     "sw": 2,
+     "strokeAlign": "INSIDE",
+     "effects": [
+      {
+       "type": "DROP_SHADOW",
+       "color": "#6670851F",
+       "x": 0,
+       "y": 0,
+       "blur": 0,
+       "spread": 4
+      }
+     ],
+     "vars": {
+      "topLeftRadius": "Radius/100",
+      "topRightRadius": "Radius/100",
+      "bottomLeftRadius": "Radius/100",
+      "bottomRightRadius": "Radius/100",
+      "strokes": "Color/border/primary",
+      "effects": "Color/effect/focus-gray"
+     }
     }
    ]
   },
@@ -107,8 +206,13 @@
    "type": "COMPONENT",
    "w": 20,
    "h": 20,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "CENTER",
    "align": "CENTER",
    "variant": {
     "State": "Default",
@@ -120,26 +224,48 @@
      "type": "GROUP",
      "w": 20,
      "h": 20,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "kids": [
       {
        "name": "Surface",
        "type": "RECTANGLE",
        "w": 20,
        "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 4,
        "fill": [
         "#A80689"
        ],
-       "sw": 2
+       "sw": 2,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/100",
+        "topRightRadius": "Radius/100",
+        "bottomLeftRadius": "Radius/100",
+        "bottomRightRadius": "Radius/100",
+        "fills": "Color/component/selection/surface"
+       }
       },
       {
        "name": "check-20-400-round",
        "type": "INSTANCE",
        "w": 20,
        "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 0,
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
        "component": "check-20-400-round",
        "kids": [
         {
@@ -147,22 +273,35 @@
          "type": "RECTANGLE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#D9D9D9"
          ],
-         "sw": 1
+         "sw": 1,
+         "strokeAlign": "INSIDE"
         },
         {
          "name": "Vector",
          "type": "VECTOR",
          "w": 11,
          "h": 8,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#FFFFFF"
          ],
-         "sw": 0.02083333395421505
+         "sw": 0.02083333395421505,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "fills": "Color/icon/primary-on-brand"
+         }
         }
        ]
       }
@@ -175,8 +314,13 @@
    "type": "COMPONENT",
    "w": 20,
    "h": 20,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "CENTER",
    "align": "CENTER",
    "variant": {
     "State": "Hover",
@@ -188,26 +332,59 @@
      "type": "GROUP",
      "w": 20,
      "h": 20,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "kids": [
       {
        "name": "Surface",
        "type": "RECTANGLE",
        "w": 20,
        "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 4,
        "fill": [
         "#A80689"
        ],
-       "sw": 2
+       "sw": 2,
+       "strokeAlign": "INSIDE",
+       "effects": [
+        {
+         "type": "DROP_SHADOW",
+         "color": "#A806891F",
+         "x": 0,
+         "y": 0,
+         "blur": 0,
+         "spread": 4
+        }
+       ],
+       "vars": {
+        "topLeftRadius": "Radius/100",
+        "topRightRadius": "Radius/100",
+        "bottomLeftRadius": "Radius/100",
+        "bottomRightRadius": "Radius/100",
+        "fills": "Color/component/selection/surface",
+        "effects": "Color/effect/focus-brand"
+       }
       },
       {
        "name": "check-20-400-round",
        "type": "INSTANCE",
        "w": 20,
        "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 0,
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
        "component": "check-20-400-round",
        "kids": [
         {
@@ -215,22 +392,35 @@
          "type": "RECTANGLE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#D9D9D9"
          ],
-         "sw": 1
+         "sw": 1,
+         "strokeAlign": "INSIDE"
         },
         {
          "name": "Vector",
          "type": "VECTOR",
          "w": 11,
          "h": 8,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#FFFFFF"
          ],
-         "sw": 0.02083333395421505
+         "sw": 0.02083333395421505,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "fills": "Color/icon/primary-on-brand"
+         }
         }
        ]
       }
@@ -243,8 +433,13 @@
    "type": "COMPONENT",
    "w": 20,
    "h": 20,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "CENTER",
    "align": "CENTER",
    "variant": {
     "State": "Focused",
@@ -256,26 +451,59 @@
      "type": "GROUP",
      "w": 20,
      "h": 20,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "kids": [
       {
        "name": "Surface",
        "type": "RECTANGLE",
        "w": 20,
        "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 4,
        "fill": [
         "#A80689"
        ],
-       "sw": 2
+       "sw": 2,
+       "strokeAlign": "INSIDE",
+       "effects": [
+        {
+         "type": "DROP_SHADOW",
+         "color": "#A806891F",
+         "x": 0,
+         "y": 0,
+         "blur": 0,
+         "spread": 4
+        }
+       ],
+       "vars": {
+        "topLeftRadius": "Radius/100",
+        "topRightRadius": "Radius/100",
+        "bottomLeftRadius": "Radius/100",
+        "bottomRightRadius": "Radius/100",
+        "fills": "Color/component/selection/surface",
+        "effects": "Color/effect/focus-brand"
+       }
       },
       {
        "name": "check-20-400-round",
        "type": "INSTANCE",
        "w": 20,
        "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 0,
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
        "component": "check-20-400-round",
        "kids": [
         {
@@ -283,22 +511,35 @@
          "type": "RECTANGLE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#D9D9D9"
          ],
-         "sw": 1
+         "sw": 1,
+         "strokeAlign": "INSIDE"
         },
         {
          "name": "Vector",
          "type": "VECTOR",
          "w": 11,
          "h": 8,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#FFFFFF"
          ],
-         "sw": 0.02083333395421505
+         "sw": 0.02083333395421505,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "fills": "Color/icon/primary-on-brand"
+         }
         }
        ]
       }
@@ -311,8 +552,13 @@
    "type": "COMPONENT",
    "w": 20,
    "h": 20,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "CENTER",
    "align": "CENTER",
    "variant": {
     "State": "Default",
@@ -324,26 +570,48 @@
      "type": "GROUP",
      "w": 20,
      "h": 20,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "kids": [
       {
        "name": "Surface",
        "type": "RECTANGLE",
        "w": 20,
        "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 4,
        "fill": [
         "#A80689"
        ],
-       "sw": 2
+       "sw": 2,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/100",
+        "topRightRadius": "Radius/100",
+        "bottomLeftRadius": "Radius/100",
+        "bottomRightRadius": "Radius/100",
+        "fills": "Color/component/selection/surface"
+       }
       },
       {
        "name": "check_indeterminate_small-20-400-round",
        "type": "INSTANCE",
        "w": 20,
        "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 0,
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
        "component": "check_indeterminate_small-20-400-round",
        "kids": [
         {
@@ -351,22 +619,35 @@
          "type": "RECTANGLE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#D9D9D9"
          ],
-         "sw": 1
+         "sw": 1,
+         "strokeAlign": "INSIDE"
         },
         {
          "name": "Vector",
          "type": "VECTOR",
          "w": 8,
          "h": 2,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#FFFFFF"
          ],
-         "sw": 0.02083333395421505
+         "sw": 0.02083333395421505,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "fills": "Color/icon/primary-on-brand"
+         }
         }
        ]
       }
@@ -379,8 +660,13 @@
    "type": "COMPONENT",
    "w": 20,
    "h": 20,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "CENTER",
    "align": "CENTER",
    "variant": {
     "State": "Hover",
@@ -392,26 +678,59 @@
      "type": "GROUP",
      "w": 20,
      "h": 20,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "kids": [
       {
        "name": "Surface",
        "type": "RECTANGLE",
        "w": 20,
        "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 4,
        "fill": [
         "#A80689"
        ],
-       "sw": 2
+       "sw": 2,
+       "strokeAlign": "INSIDE",
+       "effects": [
+        {
+         "type": "DROP_SHADOW",
+         "color": "#A806891F",
+         "x": 0,
+         "y": 0,
+         "blur": 0,
+         "spread": 4
+        }
+       ],
+       "vars": {
+        "topLeftRadius": "Radius/100",
+        "topRightRadius": "Radius/100",
+        "bottomLeftRadius": "Radius/100",
+        "bottomRightRadius": "Radius/100",
+        "fills": "Color/component/selection/surface",
+        "effects": "Color/effect/focus-brand"
+       }
       },
       {
        "name": "check_indeterminate_small-20-400-round",
        "type": "INSTANCE",
        "w": 20,
        "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 0,
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
        "component": "check_indeterminate_small-20-400-round",
        "kids": [
         {
@@ -419,22 +738,35 @@
          "type": "RECTANGLE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#D9D9D9"
          ],
-         "sw": 1
+         "sw": 1,
+         "strokeAlign": "INSIDE"
         },
         {
          "name": "Vector",
          "type": "VECTOR",
          "w": 8,
          "h": 2,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#FFFFFF"
          ],
-         "sw": 0.02083333395421505
+         "sw": 0.02083333395421505,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "fills": "Color/icon/primary-on-brand"
+         }
         }
        ]
       }
@@ -447,8 +779,13 @@
    "type": "COMPONENT",
    "w": 20,
    "h": 20,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "CENTER",
    "align": "CENTER",
    "variant": {
     "State": "Focused",
@@ -460,26 +797,59 @@
      "type": "GROUP",
      "w": 20,
      "h": 20,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "kids": [
       {
        "name": "Surface",
        "type": "RECTANGLE",
        "w": 20,
        "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 4,
        "fill": [
         "#A80689"
        ],
-       "sw": 2
+       "sw": 2,
+       "strokeAlign": "INSIDE",
+       "effects": [
+        {
+         "type": "DROP_SHADOW",
+         "color": "#A806891F",
+         "x": 0,
+         "y": 0,
+         "blur": 0,
+         "spread": 4
+        }
+       ],
+       "vars": {
+        "topLeftRadius": "Radius/100",
+        "topRightRadius": "Radius/100",
+        "bottomLeftRadius": "Radius/100",
+        "bottomRightRadius": "Radius/100",
+        "fills": "Color/component/selection/surface",
+        "effects": "Color/effect/focus-brand"
+       }
       },
       {
        "name": "check_indeterminate_small-20-400-round",
        "type": "INSTANCE",
        "w": 20,
        "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 0,
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
        "component": "check_indeterminate_small-20-400-round",
        "kids": [
         {
@@ -487,22 +857,35 @@
          "type": "RECTANGLE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#D9D9D9"
          ],
-         "sw": 1
+         "sw": 1,
+         "strokeAlign": "INSIDE"
         },
         {
          "name": "Vector",
          "type": "VECTOR",
          "w": 8,
          "h": 2,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#FFFFFF"
          ],
-         "sw": 0.02083333395421505
+         "sw": 0.02083333395421505,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "fills": "Color/icon/primary-on-brand"
+         }
         }
        ]
       }
@@ -515,8 +898,13 @@
    "type": "COMPONENT",
    "w": 20,
    "h": 20,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "CENTER",
    "align": "CENTER",
    "variant": {
     "State": "Disabled",
@@ -528,12 +916,20 @@
      "type": "GROUP",
      "w": 20,
      "h": 20,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "kids": [
       {
        "name": "Surface",
        "type": "RECTANGLE",
        "w": 20,
        "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 4,
        "fill": [
         "#EAECF0"
@@ -541,16 +937,31 @@
        "stroke": [
         "#D0D5DD"
        ],
-       "sw": 2
+       "sw": 2,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/100",
+        "topRightRadius": "Radius/100",
+        "bottomLeftRadius": "Radius/100",
+        "bottomRightRadius": "Radius/100",
+        "fills": "Color/component/selection/surface-disabled",
+        "strokes": "Color/border/primary"
+       }
       },
       {
        "name": "check-20-400-round",
        "type": "INSTANCE",
        "w": 20,
        "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 0,
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
        "component": "check-20-400-round",
        "kids": [
         {
@@ -558,22 +969,35 @@
          "type": "RECTANGLE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#D9D9D9"
          ],
-         "sw": 1
+         "sw": 1,
+         "strokeAlign": "INSIDE"
         },
         {
          "name": "Vector",
          "type": "VECTOR",
          "w": 11,
          "h": 8,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#D0D5DD"
          ],
-         "sw": 0.02083333395421505
+         "sw": 0.02083333395421505,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "fills": "Color/component/selection/icon-disabled"
+         }
         }
        ]
       }
@@ -586,8 +1010,13 @@
    "type": "COMPONENT",
    "w": 20,
    "h": 20,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "CENTER",
    "align": "CENTER",
    "variant": {
     "State": "Disabled",
@@ -599,6 +1028,10 @@
      "type": "RECTANGLE",
      "w": 20,
      "h": 20,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "r": 4,
      "fill": [
       "#EAECF0"
@@ -606,7 +1039,16 @@
      "stroke": [
       "#D0D5DD"
      ],
-     "sw": 2
+     "sw": 2,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/100",
+      "topRightRadius": "Radius/100",
+      "bottomLeftRadius": "Radius/100",
+      "bottomRightRadius": "Radius/100",
+      "fills": "Color/component/selection/surface-disabled",
+      "strokes": "Color/border/primary"
+     }
     }
    ]
   },
@@ -615,8 +1057,13 @@
    "type": "COMPONENT",
    "w": 20,
    "h": 20,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "CENTER",
    "align": "CENTER",
    "variant": {
     "State": "Disabled",
@@ -628,12 +1075,20 @@
      "type": "GROUP",
      "w": 20,
      "h": 20,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "kids": [
       {
        "name": "Surface",
        "type": "RECTANGLE",
        "w": 20,
        "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 4,
        "fill": [
         "#EAECF0"
@@ -641,16 +1096,31 @@
        "stroke": [
         "#D0D5DD"
        ],
-       "sw": 2
+       "sw": 2,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/100",
+        "topRightRadius": "Radius/100",
+        "bottomLeftRadius": "Radius/100",
+        "bottomRightRadius": "Radius/100",
+        "fills": "Color/component/selection/surface-disabled",
+        "strokes": "Color/border/primary"
+       }
       },
       {
        "name": "check_indeterminate_small-20-400-round",
        "type": "INSTANCE",
        "w": 20,
        "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 0,
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
        "component": "check_indeterminate_small-20-400-round",
        "kids": [
         {
@@ -658,22 +1128,35 @@
          "type": "RECTANGLE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#D9D9D9"
          ],
-         "sw": 1
+         "sw": 1,
+         "strokeAlign": "INSIDE"
         },
         {
          "name": "Vector",
          "type": "VECTOR",
          "w": 8,
          "h": 2,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#D0D5DD"
          ],
-         "sw": 0.02083333395421505
+         "sw": 0.02083333395421505,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "fills": "Color/component/selection/icon-disabled"
+         }
         }
        ]
       }

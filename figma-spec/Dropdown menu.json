@@ -1,5 +1,7 @@
 {
  "component": "Dropdown menu",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
  "page": "✅ Dropdowns",
  "node": "2:8",
  "props": {},
@@ -9,8 +11,13 @@
    "type": "COMPONENT",
    "w": 240,
    "h": 410,
+   "sizing": [
+    "FIXED",
+    "HUG"
+   ],
    "r": 8,
    "dir": "VERTICAL",
+   "justify": "MIN",
    "align": "MIN",
    "fill": [
     "#FFFFFF"
@@ -19,12 +26,36 @@
     "#EAECF0"
    ],
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "effects": [
+    {
+     "type": "DROP_SHADOW",
+     "color": "#10182814",
+     "x": 0,
+     "y": 12,
+     "blur": 16,
+     "spread": -4
+    }
+   ],
+   "vars": {
+    "topLeftRadius": "Radius/200",
+    "topRightRadius": "Radius/200",
+    "bottomLeftRadius": "Radius/200",
+    "bottomRightRadius": "Radius/200",
+    "fills": "Color/surface/primary",
+    "strokes": "Color/border/secondary",
+    "effects": "Color/effect/shadow-8"
+   },
    "kids": [
     {
      "name": "_Dropdown menu header",
      "type": "INSTANCE",
      "w": 240,
      "h": 64,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
      "pl": 16,
      "pr": 16,
      "pt": 12,
@@ -32,10 +63,26 @@
      "gap": 12,
      "r": 0,
      "dir": "HORIZONTAL",
+     "justify": "MIN",
      "align": "CENTER",
      "stroke": [
       "#EAECF0"
      ],
+     "sws": [
+      0,
+      0,
+      1,
+      0
+     ],
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/300",
+      "paddingLeft": "Spacing/400",
+      "paddingTop": "Spacing/300",
+      "paddingRight": "Spacing/400",
+      "paddingBottom": "Spacing/300",
+      "strokes": "Color/border/secondary"
+     },
      "variant": {
       "Supporting text#2993:23": "Description",
       "Text#2993:20": "Header",
@@ -48,9 +95,21 @@
        "type": "INSTANCE",
        "w": 40,
        "h": 40,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 0,
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/none",
+        "topRightRadius": "Radius/none",
+        "bottomLeftRadius": "Radius/none",
+        "bottomRightRadius": "Radius/none"
+       },
        "variant": {
         "Size": "lg"
        },
@@ -61,11 +120,20 @@
          "type": "ELLIPSE",
          "w": 40,
          "h": 40,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#DCD3FF"
          ],
-         "sw": 1
+         "paint": [
+          "#DCD3FF",
+          "image"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE"
         }
        ]
       },
@@ -74,25 +142,45 @@
        "type": "FRAME",
        "w": 156,
        "h": 40,
+       "sizing": [
+        "FILL",
+        "FILL"
+       ],
        "r": 0,
        "dir": "VERTICAL",
+       "justify": "CENTER",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
        "kids": [
         {
          "name": "Text",
          "type": "TEXT",
          "w": 156,
          "h": 21,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
          "fill": [
           "#000000"
          ],
          "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/primary",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
          "font": {
           "fam": "IBM Plex Sans Thai",
           "style": "SemiBold",
           "size": 14,
-          "lh": null
+          "lh": null,
+          "ls": -0.20000000298023224
          },
          "text": "Header"
         },
@@ -101,15 +189,29 @@
          "type": "TEXT",
          "w": 156,
          "h": 18,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
          "fill": [
           "#475467"
          ],
          "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/secondary",
+          "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+          "fontSize": "IBM/Helper-text/02/font-size",
+          "fontFamily": "IBM/font-family",
+          "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+          "fontWeight": "IBM/Helper-text/02/font-weight"
+         },
          "font": {
           "fam": "IBM Plex Sans Thai",
           "style": "Regular",
           "size": 12,
-          "lh": null
+          "lh": null,
+          "ls": -0.20000000298023224
          },
          "text": "Description"
         }
@@ -122,24 +224,44 @@
      "type": "FRAME",
      "w": 240,
      "h": 346,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
      "pt": 4,
      "pb": 4,
      "r": 0,
      "dir": "VERTICAL",
+     "justify": "MIN",
      "align": "MIN",
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "paddingTop": "Spacing/100",
+      "paddingBottom": "Spacing/100"
+     },
      "kids": [
       {
        "name": "_Dropdown menu item",
        "type": "INSTANCE",
        "w": 240,
        "h": 40,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "pl": 4,
        "pr": 4,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "MIN",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "paddingLeft": "Spacing/100",
+        "paddingRight": "Spacing/100"
+       },
        "variant": {
         "Instance swap#3010:10": "1387:259",
         "Badge#3010:0": true,
@@ -159,40 +281,79 @@
          "type": "FRAME",
          "w": 232,
          "h": 40,
+         "sizing": [
+          "FILL",
+          "FILL"
+         ],
          "pl": 12,
          "pr": 12,
          "pt": 8,
          "pb": 8,
          "r": 8,
          "dir": "HORIZONTAL",
+         "justify": "MIN",
          "align": "CENTER",
          "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "paddingLeft": "Spacing/300",
+          "paddingTop": "Spacing/200",
+          "paddingRight": "Spacing/300",
+          "paddingBottom": "Spacing/200",
+          "topLeftRadius": "Radius/200",
+          "topRightRadius": "Radius/200",
+          "bottomLeftRadius": "Radius/200",
+          "bottomRightRadius": "Radius/200"
+         },
          "kids": [
           {
            "name": "Icon and text",
            "type": "FRAME",
            "w": 195,
            "h": 24,
+           "sizing": [
+            "FILL",
+            "FIXED"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "HORIZONTAL",
+           "justify": "MIN",
            "align": "CENTER",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           },
           {
            "name": "Shortcut",
            "type": "TEXT",
            "w": 13,
            "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
            "fill": [
             "#98A2B3"
            ],
            "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/placeholder",
+            "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontSize": "IBM/Helper-text/02/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontWeight": "IBM/Helper-text/02/font-weight"
+           },
            "font": {
             "fam": "IBM Plex Sans Thai",
             "style": "Regular",
             "size": 12,
-            "lh": null
+            "lh": null,
+            "ls": -0.20000000298023224
            },
            "text": "⌘C"
           }
@@ -205,12 +366,22 @@
        "type": "INSTANCE",
        "w": 240,
        "h": 40,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "pl": 4,
        "pr": 4,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "MIN",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "paddingLeft": "Spacing/100",
+        "paddingRight": "Spacing/100"
+       },
        "variant": {
         "Instance swap#3010:10": "1387:259",
         "Badge#3010:0": true,
@@ -230,40 +401,79 @@
          "type": "FRAME",
          "w": 232,
          "h": 40,
+         "sizing": [
+          "FILL",
+          "FILL"
+         ],
          "pl": 12,
          "pr": 12,
          "pt": 8,
          "pb": 8,
          "r": 8,
          "dir": "HORIZONTAL",
+         "justify": "MIN",
          "align": "CENTER",
          "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "paddingLeft": "Spacing/300",
+          "paddingTop": "Spacing/200",
+          "paddingRight": "Spacing/300",
+          "paddingBottom": "Spacing/200",
+          "topLeftRadius": "Radius/200",
+          "topRightRadius": "Radius/200",
+          "bottomLeftRadius": "Radius/200",
+          "bottomRightRadius": "Radius/200"
+         },
          "kids": [
           {
            "name": "Icon and text",
            "type": "FRAME",
            "w": 195,
            "h": 24,
+           "sizing": [
+            "FILL",
+            "FIXED"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "HORIZONTAL",
+           "justify": "MIN",
            "align": "CENTER",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           },
           {
            "name": "Shortcut",
            "type": "TEXT",
            "w": 13,
            "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
            "fill": [
             "#98A2B3"
            ],
            "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/placeholder",
+            "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontSize": "IBM/Helper-text/02/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontWeight": "IBM/Helper-text/02/font-weight"
+           },
            "font": {
             "fam": "IBM Plex Sans Thai",
             "style": "Regular",
             "size": 12,
-            "lh": null
+            "lh": null,
+            "ls": -0.20000000298023224
            },
            "text": "⌘C"
           }
@@ -276,12 +486,22 @@
        "type": "INSTANCE",
        "w": 240,
        "h": 40,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "pl": 4,
        "pr": 4,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "MIN",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "paddingLeft": "Spacing/100",
+        "paddingRight": "Spacing/100"
+       },
        "variant": {
         "Instance swap#3010:10": "1387:259",
         "Badge#3010:0": true,
@@ -301,40 +521,79 @@
          "type": "FRAME",
          "w": 232,
          "h": 40,
+         "sizing": [
+          "FILL",
+          "FILL"
+         ],
          "pl": 12,
          "pr": 12,
          "pt": 8,
          "pb": 8,
          "r": 8,
          "dir": "HORIZONTAL",
+         "justify": "MIN",
          "align": "CENTER",
          "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "paddingLeft": "Spacing/300",
+          "paddingTop": "Spacing/200",
+          "paddingRight": "Spacing/300",
+          "paddingBottom": "Spacing/200",
+          "topLeftRadius": "Radius/200",
+          "topRightRadius": "Radius/200",
+          "bottomLeftRadius": "Radius/200",
+          "bottomRightRadius": "Radius/200"
+         },
          "kids": [
           {
            "name": "Icon and text",
            "type": "FRAME",
            "w": 195,
            "h": 24,
+           "sizing": [
+            "FILL",
+            "FIXED"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "HORIZONTAL",
+           "justify": "MIN",
            "align": "CENTER",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           },
           {
            "name": "Shortcut",
            "type": "TEXT",
            "w": 13,
            "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
            "fill": [
             "#98A2B3"
            ],
            "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/placeholder",
+            "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontSize": "IBM/Helper-text/02/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontWeight": "IBM/Helper-text/02/font-weight"
+           },
            "font": {
             "fam": "IBM Plex Sans Thai",
             "style": "Regular",
             "size": 12,
-            "lh": null
+            "lh": null,
+            "ls": -0.20000000298023224
            },
            "text": "⌘C"
           }
@@ -347,12 +606,22 @@
        "type": "INSTANCE",
        "w": 240,
        "h": 9,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "pt": 4,
        "pb": 4,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "MIN",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "paddingTop": "Spacing/100",
+        "paddingBottom": "Spacing/100"
+       },
        "variant": {
         "Badge#3010:0": true,
         "Supporting text#2993:5": "⌘C",
@@ -372,11 +641,19 @@
          "type": "VECTOR",
          "w": 240,
          "h": 1,
+         "sizing": [
+          "FILL",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#EAECF0"
          ],
-         "sw": 1
+         "sw": 1,
+         "strokeAlign": "CENTER",
+         "vars": {
+          "fills": "Color/border/secondary"
+         }
         }
        ]
       },
@@ -385,12 +662,22 @@
        "type": "INSTANCE",
        "w": 240,
        "h": 40,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "pl": 4,
        "pr": 4,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "MIN",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "paddingLeft": "Spacing/100",
+        "paddingRight": "Spacing/100"
+       },
        "variant": {
         "Instance swap#3010:10": "1387:259",
         "Badge#3010:0": true,
@@ -410,40 +697,79 @@
          "type": "FRAME",
          "w": 232,
          "h": 40,
+         "sizing": [
+          "FILL",
+          "FILL"
+         ],
          "pl": 12,
          "pr": 12,
          "pt": 8,
          "pb": 8,
          "r": 8,
          "dir": "HORIZONTAL",
+         "justify": "MIN",
          "align": "CENTER",
          "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "paddingLeft": "Spacing/300",
+          "paddingTop": "Spacing/200",
+          "paddingRight": "Spacing/300",
+          "paddingBottom": "Spacing/200",
+          "topLeftRadius": "Radius/200",
+          "topRightRadius": "Radius/200",
+          "bottomLeftRadius": "Radius/200",
+          "bottomRightRadius": "Radius/200"
+         },
          "kids": [
           {
            "name": "Icon and text",
            "type": "FRAME",
            "w": 195,
            "h": 24,
+           "sizing": [
+            "FILL",
+            "FIXED"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "HORIZONTAL",
+           "justify": "MIN",
            "align": "CENTER",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           },
           {
            "name": "Shortcut",
            "type": "TEXT",
            "w": 13,
            "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
            "fill": [
             "#98A2B3"
            ],
            "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/placeholder",
+            "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontSize": "IBM/Helper-text/02/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontWeight": "IBM/Helper-text/02/font-weight"
+           },
            "font": {
             "fam": "IBM Plex Sans Thai",
             "style": "Regular",
             "size": 12,
-            "lh": null
+            "lh": null,
+            "ls": -0.20000000298023224
            },
            "text": "⌘C"
           }
@@ -456,12 +782,22 @@
        "type": "INSTANCE",
        "w": 240,
        "h": 40,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "pl": 4,
        "pr": 4,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "MIN",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "paddingLeft": "Spacing/100",
+        "paddingRight": "Spacing/100"
+       },
        "variant": {
         "Instance swap#3010:10": "1387:259",
         "Badge#3010:0": true,
@@ -481,40 +817,79 @@
          "type": "FRAME",
          "w": 232,
          "h": 40,
+         "sizing": [
+          "FILL",
+          "FILL"
+         ],
          "pl": 12,
          "pr": 12,
          "pt": 8,
          "pb": 8,
          "r": 8,
          "dir": "HORIZONTAL",
+         "justify": "MIN",
          "align": "CENTER",
          "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "paddingLeft": "Spacing/300",
+          "paddingTop": "Spacing/200",
+          "paddingRight": "Spacing/300",
+          "paddingBottom": "Spacing/200",
+          "topLeftRadius": "Radius/200",
+          "topRightRadius": "Radius/200",
+          "bottomLeftRadius": "Radius/200",
+          "bottomRightRadius": "Radius/200"
+         },
          "kids": [
           {
            "name": "Icon and text",
            "type": "FRAME",
            "w": 195,
            "h": 24,
+           "sizing": [
+            "FILL",
+            "FIXED"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "HORIZONTAL",
+           "justify": "MIN",
            "align": "CENTER",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           },
           {
            "name": "Shortcut",
            "type": "TEXT",
            "w": 13,
            "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
            "fill": [
             "#98A2B3"
            ],
            "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/placeholder",
+            "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontSize": "IBM/Helper-text/02/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontWeight": "IBM/Helper-text/02/font-weight"
+           },
            "font": {
             "fam": "IBM Plex Sans Thai",
             "style": "Regular",
             "size": 12,
-            "lh": null
+            "lh": null,
+            "ls": -0.20000000298023224
            },
            "text": "⌘C"
           }
@@ -527,12 +902,22 @@
        "type": "INSTANCE",
        "w": 240,
        "h": 40,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "pl": 4,
        "pr": 4,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "MIN",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "paddingLeft": "Spacing/100",
+        "paddingRight": "Spacing/100"
+       },
        "variant": {
         "Instance swap#3010:10": "1387:259",
         "Badge#3010:0": true,
@@ -552,40 +937,79 @@
          "type": "FRAME",
          "w": 232,
          "h": 40,
+         "sizing": [
+          "FILL",
+          "FILL"
+         ],
          "pl": 12,
          "pr": 12,
          "pt": 8,
          "pb": 8,
          "r": 8,
          "dir": "HORIZONTAL",
+         "justify": "MIN",
          "align": "CENTER",
          "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "paddingLeft": "Spacing/300",
+          "paddingTop": "Spacing/200",
+          "paddingRight": "Spacing/300",
+          "paddingBottom": "Spacing/200",
+          "topLeftRadius": "Radius/200",
+          "topRightRadius": "Radius/200",
+          "bottomLeftRadius": "Radius/200",
+          "bottomRightRadius": "Radius/200"
+         },
          "kids": [
           {
            "name": "Icon and text",
            "type": "FRAME",
            "w": 195,
            "h": 24,
+           "sizing": [
+            "FILL",
+            "FIXED"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "HORIZONTAL",
+           "justify": "MIN",
            "align": "CENTER",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           },
           {
            "name": "Shortcut",
            "type": "TEXT",
            "w": 13,
            "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
            "fill": [
             "#98A2B3"
            ],
            "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/placeholder",
+            "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontSize": "IBM/Helper-text/02/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontWeight": "IBM/Helper-text/02/font-weight"
+           },
            "font": {
             "fam": "IBM Plex Sans Thai",
             "style": "Regular",
             "size": 12,
-            "lh": null
+            "lh": null,
+            "ls": -0.20000000298023224
            },
            "text": "⌘C"
           }
@@ -598,12 +1022,22 @@
        "type": "INSTANCE",
        "w": 240,
        "h": 40,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "pl": 4,
        "pr": 4,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "MIN",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "paddingLeft": "Spacing/100",
+        "paddingRight": "Spacing/100"
+       },
        "variant": {
         "Instance swap#3010:10": "1387:259",
         "Badge#3010:0": true,
@@ -623,40 +1057,79 @@
          "type": "FRAME",
          "w": 232,
          "h": 40,
+         "sizing": [
+          "FILL",
+          "FILL"
+         ],
          "pl": 12,
          "pr": 12,
          "pt": 8,
          "pb": 8,
          "r": 8,
          "dir": "HORIZONTAL",
+         "justify": "MIN",
          "align": "CENTER",
          "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "paddingLeft": "Spacing/300",
+          "paddingTop": "Spacing/200",
+          "paddingRight": "Spacing/300",
+          "paddingBottom": "Spacing/200",
+          "topLeftRadius": "Radius/200",
+          "topRightRadius": "Radius/200",
+          "bottomLeftRadius": "Radius/200",
+          "bottomRightRadius": "Radius/200"
+         },
          "kids": [
           {
            "name": "Icon and text",
            "type": "FRAME",
            "w": 195,
            "h": 24,
+           "sizing": [
+            "FILL",
+            "FIXED"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "HORIZONTAL",
+           "justify": "MIN",
            "align": "CENTER",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           },
           {
            "name": "Shortcut",
            "type": "TEXT",
            "w": 13,
            "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
            "fill": [
             "#98A2B3"
            ],
            "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/placeholder",
+            "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontSize": "IBM/Helper-text/02/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontWeight": "IBM/Helper-text/02/font-weight"
+           },
            "font": {
             "fam": "IBM Plex Sans Thai",
             "style": "Regular",
             "size": 12,
-            "lh": null
+            "lh": null,
+            "ls": -0.20000000298023224
            },
            "text": "⌘C"
           }
@@ -669,12 +1142,22 @@
        "type": "INSTANCE",
        "w": 240,
        "h": 9,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "pt": 4,
        "pb": 4,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "MIN",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "paddingTop": "Spacing/100",
+        "paddingBottom": "Spacing/100"
+       },
        "variant": {
         "Badge#3010:0": true,
         "Supporting text#2993:5": "⌘C",
@@ -694,11 +1177,19 @@
          "type": "VECTOR",
          "w": 240,
          "h": 1,
+         "sizing": [
+          "FILL",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#EAECF0"
          ],
-         "sw": 1
+         "sw": 1,
+         "strokeAlign": "CENTER",
+         "vars": {
+          "fills": "Color/border/secondary"
+         }
         }
        ]
       },
@@ -707,12 +1198,22 @@
        "type": "INSTANCE",
        "w": 240,
        "h": 40,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
        "pl": 4,
        "pr": 4,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "MIN",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "paddingLeft": "Spacing/100",
+        "paddingRight": "Spacing/100"
+       },
        "variant": {
         "Instance swap#3010:10": "1387:259",
         "Badge#3010:0": true,
@@ -732,40 +1233,79 @@
          "type": "FRAME",
          "w": 232,
          "h": 40,
+         "sizing": [
+          "FILL",
+          "FILL"
+         ],
          "pl": 12,
          "pr": 12,
          "pt": 8,
          "pb": 8,
          "r": 8,
          "dir": "HORIZONTAL",
+         "justify": "MIN",
          "align": "CENTER",
          "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "paddingLeft": "Spacing/300",
+          "paddingTop": "Spacing/200",
+          "paddingRight": "Spacing/300",
+          "paddingBottom": "Spacing/200",
+          "topLeftRadius": "Radius/200",
+          "topRightRadius": "Radius/200",
+          "bottomLeftRadius": "Radius/200",
+          "bottomRightRadius": "Radius/200"
+         },
          "kids": [
           {
            "name": "Icon and text",
            "type": "FRAME",
            "w": 195,
            "h": 24,
+           "sizing": [
+            "FILL",
+            "FIXED"
+           ],
            "gap": 8,
            "r": 0,
            "dir": "HORIZONTAL",
+           "justify": "MIN",
            "align": "CENTER",
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           }
           },
           {
            "name": "Shortcut",
            "type": "TEXT",
            "w": 13,
            "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
            "fill": [
             "#98A2B3"
            ],
            "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/placeholder",
+            "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontSize": "IBM/Helper-text/02/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontWeight": "IBM/Helper-text/02/font-weight"
+           },
            "font": {
             "fam": "IBM Plex Sans Thai",
             "style": "Regular",
             "size": 12,
-            "lh": null
+            "lh": null,
+            "ls": -0.20000000298023224
            },
            "text": "⌘C"
           }

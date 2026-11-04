@@ -1,5 +1,7 @@
 {
  "component": "Breadcrumbs",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
  "page": "✅ Breadcrumbs",
  "node": "2:7",
  "props": {},
@@ -9,20 +11,35 @@
    "type": "COMPONENT",
    "w": 300,
    "h": 26,
+   "sizing": [
+    "HUG",
+    "HUG"
+   ],
    "gap": 4,
    "r": 0,
    "dir": "HORIZONTAL",
+   "justify": "MIN",
    "align": "CENTER",
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/100"
+   },
    "kids": [
     {
      "name": "_Breadcrumbs item / Home",
      "type": "INSTANCE",
      "w": 20,
      "h": 20,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "r": 0,
+     "justify": "MIN",
      "align": "MIN",
      "sw": 1,
+     "strokeAlign": "INSIDE",
      "variant": {
       "State": "Default"
      },
@@ -33,9 +50,15 @@
        "type": "INSTANCE",
        "w": 20,
        "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 0,
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
        "component": "home-20-300-round",
        "kids": [
         {
@@ -43,22 +66,35 @@
          "type": "RECTANGLE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#D9D9D9"
          ],
-         "sw": 1
+         "sw": 1,
+         "strokeAlign": "INSIDE"
         },
         {
          "name": "Vector",
          "type": "VECTOR",
          "w": 11,
          "h": 13,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
          "fill": [
           "#475467"
          ],
-         "sw": 0.02083333395421505
+         "sw": 0.02083333395421505,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "fills": "Color/component/button/tertiary/icon"
+         }
         }
        ]
       }
@@ -69,20 +105,35 @@
      "type": "FRAME",
      "w": 54,
      "h": 26,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
      "gap": 4,
      "r": 0,
      "dir": "HORIZONTAL",
+     "justify": "MIN",
      "align": "CENTER",
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/100"
+     },
      "kids": [
       {
        "name": "_Breadcrumbs item / Separator",
        "type": "INSTANCE",
        "w": 20,
        "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 0,
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
        "component": "_Breadcrumbs item / Separator",
        "kids": [
         {
@@ -90,9 +141,15 @@
          "type": "INSTANCE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "keyboard_arrow_right-20-300-round",
          "kids": [
           {
@@ -100,22 +157,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 5,
            "h": 9,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D0D5DD"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/icon/tertiary"
+           }
           }
          ]
         }
@@ -126,14 +196,27 @@
        "type": "INSTANCE",
        "w": 30,
        "h": 26,
+       "sizing": [
+        "HUG",
+        "HUG"
+       ],
        "pl": 4,
        "pr": 4,
        "pt": 4,
        "pb": 4,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "CENTER",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/none",
+        "paddingLeft": "Spacing/100",
+        "paddingTop": "Spacing/100",
+        "paddingRight": "Spacing/100",
+        "paddingBottom": "Spacing/100"
+       },
        "variant": {
         "Text#2065:2": "Link",
         "Current": "False",
@@ -146,15 +229,29 @@
          "type": "TEXT",
          "w": 22,
          "h": 18,
+         "sizing": [
+          "HUG",
+          "HUG"
+         ],
          "fill": [
           "#475467"
          ],
          "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/tertiary/text",
+          "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+          "fontSize": "IBM/Helper-text/02/font-size",
+          "fontFamily": "IBM/font-family",
+          "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+          "fontWeight": "IBM/Helper-text/02/font-weight"
+         },
          "font": {
           "fam": "IBM Plex Sans Thai",
           "style": "Regular",
           "size": 12,
-          "lh": null
+          "lh": null,
+          "ls": -0.20000000298023224
          },
          "text": "Link"
         }
@@ -167,20 +264,35 @@
      "type": "FRAME",
      "w": 54,
      "h": 26,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
      "gap": 4,
      "r": 0,
      "dir": "HORIZONTAL",
+     "justify": "MIN",
      "align": "CENTER",
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/100"
+     },
      "kids": [
       {
        "name": "_Breadcrumbs item / Separator",
        "type": "INSTANCE",
        "w": 20,
        "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 0,
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
        "component": "_Breadcrumbs item / Separator",
        "kids": [
         {
@@ -188,9 +300,15 @@
          "type": "INSTANCE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "keyboard_arrow_right-20-300-round",
          "kids": [
           {
@@ -198,22 +316,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 5,
            "h": 9,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D0D5DD"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/icon/tertiary"
+           }
           }
          ]
         }
@@ -224,14 +355,27 @@
        "type": "INSTANCE",
        "w": 30,
        "h": 26,
+       "sizing": [
+        "HUG",
+        "HUG"
+       ],
        "pl": 4,
        "pr": 4,
        "pt": 4,
        "pb": 4,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "CENTER",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/none",
+        "paddingLeft": "Spacing/100",
+        "paddingTop": "Spacing/100",
+        "paddingRight": "Spacing/100",
+        "paddingBottom": "Spacing/100"
+       },
        "variant": {
         "Text#2065:2": "Link",
         "Current": "False",
@@ -244,15 +388,29 @@
          "type": "TEXT",
          "w": 22,
          "h": 18,
+         "sizing": [
+          "HUG",
+          "HUG"
+         ],
          "fill": [
           "#475467"
          ],
          "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/tertiary/text",
+          "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+          "fontSize": "IBM/Helper-text/02/font-size",
+          "fontFamily": "IBM/font-family",
+          "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+          "fontWeight": "IBM/Helper-text/02/font-weight"
+         },
          "font": {
           "fam": "IBM Plex Sans Thai",
           "style": "Regular",
           "size": 12,
-          "lh": null
+          "lh": null,
+          "ls": -0.20000000298023224
          },
          "text": "Link"
         }
@@ -265,20 +423,35 @@
      "type": "FRAME",
      "w": 54,
      "h": 26,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
      "gap": 4,
      "r": 0,
      "dir": "HORIZONTAL",
+     "justify": "MIN",
      "align": "CENTER",
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/100"
+     },
      "kids": [
       {
        "name": "_Breadcrumbs item / Separator",
        "type": "INSTANCE",
        "w": 20,
        "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 0,
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
        "component": "_Breadcrumbs item / Separator",
        "kids": [
         {
@@ -286,9 +459,15 @@
          "type": "INSTANCE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "keyboard_arrow_right-20-300-round",
          "kids": [
           {
@@ -296,22 +475,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 5,
            "h": 9,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D0D5DD"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/icon/tertiary"
+           }
           }
          ]
         }
@@ -322,14 +514,27 @@
        "type": "INSTANCE",
        "w": 30,
        "h": 26,
+       "sizing": [
+        "HUG",
+        "HUG"
+       ],
        "pl": 4,
        "pr": 4,
        "pt": 4,
        "pb": 4,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "CENTER",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/none",
+        "paddingLeft": "Spacing/100",
+        "paddingTop": "Spacing/100",
+        "paddingRight": "Spacing/100",
+        "paddingBottom": "Spacing/100"
+       },
        "variant": {
         "Text#2065:2": "Link",
         "Current": "False",
@@ -342,15 +547,29 @@
          "type": "TEXT",
          "w": 22,
          "h": 18,
+         "sizing": [
+          "HUG",
+          "HUG"
+         ],
          "fill": [
           "#475467"
          ],
          "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/tertiary/text",
+          "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+          "fontSize": "IBM/Helper-text/02/font-size",
+          "fontFamily": "IBM/font-family",
+          "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+          "fontWeight": "IBM/Helper-text/02/font-weight"
+         },
          "font": {
           "fam": "IBM Plex Sans Thai",
           "style": "Regular",
           "size": 12,
-          "lh": null
+          "lh": null,
+          "ls": -0.20000000298023224
          },
          "text": "Link"
         }
@@ -363,20 +582,35 @@
      "type": "FRAME",
      "w": 44,
      "h": 20,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
      "gap": 4,
      "r": 0,
      "dir": "HORIZONTAL",
+     "justify": "MIN",
      "align": "CENTER",
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/100"
+     },
      "kids": [
       {
        "name": "_Breadcrumbs item / Separator",
        "type": "INSTANCE",
        "w": 20,
        "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 0,
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
        "component": "_Breadcrumbs item / Separator",
        "kids": [
         {
@@ -384,9 +618,15 @@
          "type": "INSTANCE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "keyboard_arrow_right-20-300-round",
          "kids": [
           {
@@ -394,22 +634,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 5,
            "h": 9,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D0D5DD"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/icon/tertiary"
+           }
           }
          ]
         }
@@ -420,11 +673,20 @@
        "type": "INSTANCE",
        "w": 20,
        "h": 20,
+       "sizing": [
+        "HUG",
+        "HUG"
+       ],
        "gap": 4,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "MIN",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100"
+       },
        "variant": {
         "State": "Default"
        },
@@ -435,9 +697,15 @@
          "type": "INSTANCE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "more_horiz-20-400-round",
          "kids": [
           {
@@ -445,22 +713,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 12,
            "h": 3,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#475467"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
           }
          ]
         }
@@ -473,20 +754,35 @@
      "type": "FRAME",
      "w": 54,
      "h": 26,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
      "gap": 4,
      "r": 0,
      "dir": "HORIZONTAL",
+     "justify": "MIN",
      "align": "CENTER",
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/100"
+     },
      "kids": [
       {
        "name": "_Breadcrumbs item / Separator",
        "type": "INSTANCE",
        "w": 20,
        "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 0,
+       "justify": "MIN",
        "align": "MIN",
        "sw": 1,
+       "strokeAlign": "INSIDE",
        "component": "_Breadcrumbs item / Separator",
        "kids": [
         {
@@ -494,9 +790,15 @@
          "type": "INSTANCE",
          "w": 20,
          "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
          "r": 0,
+         "justify": "MIN",
          "align": "MIN",
          "sw": 1,
+         "strokeAlign": "INSIDE",
          "component": "keyboard_arrow_right-20-300-round",
          "kids": [
           {
@@ -504,22 +806,35 @@
            "type": "RECTANGLE",
            "w": 20,
            "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D9D9D9"
            ],
-           "sw": 1
+           "sw": 1,
+           "strokeAlign": "INSIDE"
           },
           {
            "name": "Vector",
            "type": "VECTOR",
            "w": 5,
            "h": 9,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
            "r": 0,
            "fill": [
             "#D0D5DD"
            ],
-           "sw": 0.02083333395421505
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/icon/tertiary"
+           }
           }
          ]
         }
@@ -530,14 +845,27 @@
        "type": "INSTANCE",
        "w": 30,
        "h": 26,
+       "sizing": [
+        "HUG",
+        "HUG"
+       ],
        "pl": 4,
        "pr": 4,
        "pt": 4,
        "pb": 4,
        "r": 0,
        "dir": "HORIZONTAL",
+       "justify": "CENTER",
        "align": "CENTER",
        "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/none",
+        "paddingLeft": "Spacing/100",
+        "paddingTop": "Spacing/100",
+        "paddingRight": "Spacing/100",
+        "paddingBottom": "Spacing/100"
+       },
        "variant": {
         "Text#2065:2": "Link",
         "Current": "True",
@@ -550,15 +878,29 @@
          "type": "TEXT",
          "w": 22,
          "h": 18,
+         "sizing": [
+          "HUG",
+          "HUG"
+         ],
          "fill": [
           "#A80689"
          ],
          "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/tertiary-brand/text",
+          "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+          "fontSize": "IBM/Helper-text/02/font-size",
+          "fontFamily": "IBM/font-family",
+          "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+          "fontWeight": "IBM/Helper-text/02/font-weight"
+         },
          "font": {
           "fam": "IBM Plex Sans Thai",
           "style": "Regular",
           "size": 12,
-          "lh": null
+          "lh": null,
+          "ls": -0.20000000298023224
          },
          "text": "Link"
         }

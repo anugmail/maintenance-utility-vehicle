@@ -5,7 +5,7 @@
         Desktop: ขอบใน 12/32 · ขวา Nav button (search · light_mode · notifications) + Avatar 36
         Tablet: ขอบใน 12/16 · ซ้าย Brand logo + Nav button menu · ขวาเหมือน Desktop
         Mobile: ขอบใน 12/16 · Brand logo 40 · ปุ่ม Menu (Icon button วงกลม ขอบ gray-300 ไอคอน 20 gray-600) · Search (Text input) · Nav button notifications + menu
-   Brand logo / Avatar: ดู COMPOSED.md (โลโก้จากภาพส่งออกหน้าจอ · avatar สีไม่มี token ใช้ gray-200) */
+   Brand logo / Avatar: ดู COMPOSED.md (โลโก้จากภาพส่งออกหน้าจอ · avatar พื้นม่วงอ่อน + ภาพ (ไม่ผูก Variable · ไม่มี token ตรง) → purple-200 ใกล้สุด) */
 import { asset } from "@/lib/basePath";
 import { cx } from "@/lib/cx";
 import { Ms } from "./Ms";
@@ -30,7 +30,7 @@ export function HeaderNavigation({ Breakpoint = "Tablet", bell, onMenu, classNam
       {Breakpoint !== "Mobile" && <NavButton IconSwap="search-24-300-round" Text="ค้นหา" />}
       {Breakpoint !== "Mobile" && <NavButton IconSwap="light_mode-24-300-round" Text="ธีม" />}
       <NavButton IconSwap="notifications-24-300-round" Text="การแจ้งเตือน" Indicator={bell} />
-      {Breakpoint === "Mobile" ? <NavButton IconSwap="menu-24-300-round" Text="เมนู" onClick={onMenu} /> : <span aria-hidden="true" className="size-9 shrink-0 rounded-pill bg-gray-200" />}
+      {Breakpoint === "Mobile" ? <NavButton IconSwap="menu-24-300-round" Text="เมนู" onClick={onMenu} /> : <span aria-hidden="true" className="size-9 shrink-0 rounded-pill bg-purple-200" />}
     </div>
   );
   if (Breakpoint === "Mobile") {

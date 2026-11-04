@@ -2,13 +2,13 @@
 /* Figma: "Sidebar navigation" — ไฟล์ (Component) VMS Plus หน้า Sidebar navigation (node 2:2) · สเปก figma-spec/Sidebar navigation.json
    เมนูจริงตามหน้า "Sidebar Navigation" (277:230639) ของไฟล์ (UI) VMS Plus – Release#2 (component "Sidebar" + "Nav menu") — ข้อความ ลำดับ ไอคอน ตรงตามนั้น
    variant: State = Collapsed | Expanded
-   Collapsed: กว้าง 80 · ขอบใน 12/16 · ช่องไฟ 20 · พื้น white · เส้นขวา gray-200 · PEA logo 32 · Menu = Nav button ช่องไฟ 8 · Footer menu ชิดล่าง ช่องไฟ 8
-   Expanded: กว้าง 280 · ขอบใน 12/16 · ช่องไฟ 20 · Logo wrap สูง 40 ขอบในข้าง 4 (Brand logo + Tertiary button ไอคอน keyboard_tab)
+   Collapsed: กว้าง 80 · ขอบใน 12/16 · ช่องไฟ 20 · พื้น white · เส้นขวา/ล่าง/ซ้าย 1 gray-200 · PEA logo 32 · Menu = Nav button ช่องไฟ 8 · Footer menu ชิดล่าง ช่องไฟ 8
+   Expanded: กว้าง 280 · ขอบใน 12/16 · ช่องไฟ 20 · เส้นขวา 1 gray-200 · Logo wrap สูง 40 ขอบในข้าง 4 (Brand logo + Tertiary button ไอคอน keyboard_tab)
              Menu = Nav item ช่องไฟ 8 · กลุ่มที่มีเมนูย่อย = Nav item (ลูกศร keyboard_arrow_down / เปิดแล้ว keyboard_arrow_up) + sub items (Nav list item ช่องไฟ 4) ห่างหัวกลุ่ม 4
              Footer menu = Nav item ช่องไฟ 8 (แถวผู้ใช้: Avatar + Show Description + ไอคอน logout)
    เมนูย่อย "บำรุงรักษาตามวาระ" ใต้ "งานซ่อมและบำรุงรักษา" เพิ่มตามเจ้าของงาน 4 พ.ย. 2569 (ทางเข้าหน้ารายการแผน = รากเว็บ) — ดู figma-spec/COMPOSED.md
    เมนูอื่นแสดงให้เห็นแต่ไม่พาไปไหน (ต้นแบบมีเฉพาะงานบำรุงรักษาตามวาระ)
-   Avatar: สีไม่มี token ใช้ gray-200 (COMPOSED.md ข.) · Brand logo ใช้ pea-logo.svg (COMPOSED.md ค.) */
+   Avatar: พื้นม่วงอ่อน + ภาพ ไม่ผูก Variable ไม่มี token ตรง → purple-200 ใกล้สุด (COMPOSED.md ข.) · เส้นขอบตาม sws: Collapsed ขวา/ล่าง/ซ้าย 1 · Expanded ขวา 1 (Color/border/secondary = gray-200) · Brand logo ใช้ pea-logo.svg (COMPOSED.md ค.) */
 import { useState } from "react";
 import { asset } from "@/lib/basePath";
 import { cx } from "@/lib/cx";
@@ -43,7 +43,7 @@ export const SIDEBAR_FOOTER: SideFooter[] = [
 /* กลุ่มที่เปิดอยู่ จำไว้ข้ามหน้า (กรอบหน้าสร้างใหม่ทุกหน้า) — ตั้งต้นเปิดกลุ่มที่มีเมนูที่กำลังใช้ */
 let openMemo: string[] | null = null;
 
-const Avatar = () => <span aria-hidden="true" className="size-6 shrink-0 rounded-pill bg-gray-200" />;
+const Avatar = () => <span aria-hidden="true" className="size-6 shrink-0 rounded-pill bg-purple-200" />;
 
 export interface SidebarNavigationProps {
   State?: "Collapsed" | "Expanded";
@@ -64,7 +64,7 @@ export function SidebarNavigation({ State = "Collapsed", menu = SIDEBAR_MENU, fo
 
   if (State === "Collapsed") {
     return (
-      <nav aria-label="เมนูหลัก" data-state="Collapsed" className={cx("flex w-20 shrink-0 flex-col items-center gap-5 border-r border-gray-200 bg-white px-4 py-3", className)}>
+      <nav aria-label="เมนูหลัก" data-state="Collapsed" className={cx("flex w-20 shrink-0 flex-col items-center gap-5 border-r border-b border-l border-gray-200 bg-white px-4 py-3", className)}>
         <button type="button" aria-label="ขยายเมนู" onClick={onToggle} className="inline-flex size-10 shrink-0 cursor-pointer items-center justify-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={asset("/pea-logo.svg")} alt="PEA" width={32} height={32} />

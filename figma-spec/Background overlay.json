@@ -1,5 +1,7 @@
 {
  "component": "Background overlay",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
  "page": "✅ Background overlay",
  "node": "2428:4927",
  "props": {},
@@ -9,20 +11,37 @@
    "type": "COMPONENT",
    "w": 1440,
    "h": 1024,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
    "r": 0,
+   "justify": "MIN",
    "align": "MIN",
    "sw": 1,
+   "strokeAlign": "INSIDE",
    "kids": [
     {
      "name": "Background overlay",
      "type": "RECTANGLE",
      "w": 1440,
      "h": 1024,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "r": 0,
      "fill": [
       "#000000"
      ],
-     "sw": 1
+     "paint": [
+      "#00000066"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/background/overlay"
+     }
     }
    ]
   }

@@ -2,7 +2,7 @@
 /* Figma: "Table cell" — ไฟล์ (Component) VMS Plus หน้า Table (node 2:14) · สเปก figma-spec/Table cell.json
    variant: Style = Text | Lead text | Badge | Action icons | Multiple badges | Lead checkbox (ที่ต้นแบบใช้) · Alternating fills = False | True
    property: Text · Supporting · Supporting text · View · Edit · Print · Delete (ปุ่มไอคอนของ Action icons)
-   ค่า: สูง 56 · ขอบใน 8/16 · ช่องไฟ 12 (Badge 8 · Action icons/Multiple badges 4) · พื้น white / gray-50 (Alternating fills=True) · เส้นล่าง gray-200
+   ค่า: สูง 56 · ขอบใน 8/16 · ช่องไฟ 12 (Badge 8 · Action icons/Multiple badges 4) · พื้น white / gray-50 (Alternating fills=True) · เส้นล่าง 1 (sws [0,0,1,0]) Color/border/secondary = gray-200
         Text 14 Regular black · Lead text 14 Medium · Supporting text 12 Regular gray-600 · Action icons = Tertiary button ไอคอนอย่างเดียว 40 */
 import type { MouseEvent, ReactNode } from "react";
 import { cx } from "@/lib/cx";

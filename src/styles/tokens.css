@@ -4,7 +4,7 @@
    ที่มาของค่า (อัปเดต 3 ก.ย. 2569 — ยึดไลบรารีชุดใหม่ที่เจ้าของงานเคาะ 1 ก.ย. 2569):
      ✔ = ยืนยันว่ามีใช้จริงในไลบรารี "(Component) VMS Plus" (VmOC07pKEsDkHZagOgcSU2)
          — คำว่า "ไลบรารีใหม่" ในคอมเมนต์รายบรรทัดหมายถึงไฟล์นี้ · ตรวจซ้ำด้วย verify-tokens.js
-     = วัดจากระบบจริง vmsplus-dev (runtime เหนือ Figma — เจ้าของงานเคาะ 14 ส.ค. 2569)
+     ✅ = วัดจากระบบจริง vmsplus-dev (runtime เหนือ Figma — เจ้าของงานเคาะ 14 ส.ค. 2569)
      ⚠ = ไม่พบทั้งในไลบรารีและ runtime — เป็นค่าที่เราใส่เอง
    (ไฟล์เก่า EXT_PEA_VMS_v1.0.2_Component เลิกใช้แล้ว 1 ก.ย. 2569)
    แก้สีที่ไฟล์นี้ไฟล์เดียว — ห้าม hardcode สีในหน้าจอ
@@ -24,33 +24,33 @@
                               ตั้งเลข 925 คาบไว้ระหว่าง 900 กับ 950 เพื่อไม่ชนสเกลจริง (เดิม --brand-700) */
   --brand-900:#A80689;     /* ✔ component/button/primary-bg — สีหลัก              (เดิม --brand-600) */
   --brand-800:#CF07AA;     /* ✔ ไลบรารีใช้ 841 ครั้ง · gradient header + hover ปุ่ม   (เดิม --brand-500) */
-  --brand-700:#F712CC;     /* สเกลแอปจริง — ไลบรารี Figma ไม่มี · ต้นแบบยังไม่ได้ใช้ */
-  --brand-600:#F835D3;     /* สเกลแอปจริง — ไลบรารี Figma ไม่มี · ต้นแบบยังไม่ได้ใช้ */
-  --brand-500:#FA6BDF;     /* สเกลแอปจริง — ไลบรารี Figma ไม่มี · ต้นแบบยังไม่ได้ใช้ */
-  --brand-400:#FB8EE7;     /* สเกลแอปจริง — ไลบรารี Figma ไม่มี · ต้นแบบยังไม่ได้ใช้ */
-  --brand-300:#FDBAF0;     /* สเกลแอปจริง — ไลบรารี Figma ไม่มี · ต้นแบบยังไม่ได้ใช้ */
+  --brand-700:#F712CC;     /* ✅ สเกลแอปจริง — ไลบรารี Figma ไม่มี · ต้นแบบยังไม่ได้ใช้ */
+  --brand-600:#F835D3;     /* ✅ สเกลแอปจริง — ไลบรารี Figma ไม่มี · ต้นแบบยังไม่ได้ใช้ */
+  --brand-500:#FA6BDF;     /* ✅ สเกลแอปจริง — ไลบรารี Figma ไม่มี · ต้นแบบยังไม่ได้ใช้ */
+  --brand-400:#FB8EE7;     /* ✅ สเกลแอปจริง — ไลบรารี Figma ไม่มี · ต้นแบบยังไม่ได้ใช้ */
+  --brand-300:#FDBAF0;     /* ✅ สเกลแอปจริง — ไลบรารี Figma ไม่มี · ต้นแบบยังไม่ได้ใช้ */
   --brand-200:#FED8F6;     /* ✔ ขอบ Pill outline (Color=Brand) · ใช้ 265 ครั้ง   (เดิม --brand-100/200 ซ้ำค่า ยุบเหลือตัวเดียว) */
   --brand-100:#FEEBFB;     /* ✔ โทนรองของแบรนด์ (19 ครั้ง)                     (เดิม --brand-50) */
   --brand-50:#FFF5FD;      /* ✔ พื้น Pill outline (Color=Brand) · Featured icon · 350 ครั้ง (เดิม --brand-25) */
-  --brand-25:#FFFAFE;      /* สเกลแอปจริง — ไลบรารี Figma ไม่มี (เดิมเราใช้ชื่อนี้กับ #FFF5FD) */
+  --brand-25:#FFFAFE;      /* ✅ สเกลแอปจริง — ไลบรารี Figma ไม่มี (เดิมเราใช้ชื่อนี้กับ #FFF5FD) */
   --brand-accent:#F5A623;  /* ⚠ ไม่พบในไลบรารี — ส้มในโลโก้ M(D) คนละแหล่ง ใช้เฉพาะโลโก้ */
 
   /* ---------- Gray (Untitled UI v1 — ramp ที่ "ระบบจริง" ใช้) ----------
      🔴 14 ส.ค. 2569 เจ้าของงานเคาะ: ยึด runtime จริงเหนือ Figma library
      หลังพบว่าสองแหล่งขัดกันทั้งแถบ — Figma = v2 (#717680/#D5D7DA/…) · ระบบจริง = v1
-     ทุกค่าที่กำกับ วัดจาก vmsplus-dev (ดู .vms-runtime/palette.json)
+     ทุกค่าที่กำกับ ✅ วัดจาก vmsplus-dev (ดู .vms-runtime/palette.json)
      v0.12 เคยย้ายไป v2 ตาม Figma — v0.13 ย้อนกลับมา v1 ตามของจริง           */
   --gray-950:#0C111D;       /* ✔ ไลบรารีใหม่ — Container · Table cell (397 ครั้ง) */
   --gray-900:#161B26;       /* ✔ ไลบรารีใหม่ — ตัวอักษร Secondary button · Table cell (157 ครั้ง) */
   --gray-800:#1F242F;       /* ✔ ไลบรารีใหม่ — Featured icon · swatch (94 ครั้ง) */
-  --gray-700:#344054;      /* runtime — ตัวอักษร pill "ยกเลิก" */
-  --gray-600:#475467;      /* runtime — ตัวอักษรปุ่มรอง · ไอคอน topbar (370 ครั้ง) */
-  --gray-500:#667085;      /* runtime — ไอคอน sidebar · แท็บที่ไม่ได้เลือก (210 ครั้ง) */
-  --gray-400:#98A2B3;      /* runtime — ตัวอักษร disabled */
-  --gray-300:#D0D5DD;      /* runtime — ขอบ input/ปุ่มรอง/pagination (222 ครั้ง) */
-  --gray-200:#EAECF0;      /* runtime — เส้นใต้แถวตาราง · ขอบ sidebar (495 ครั้ง) */
-  --gray-100:#F2F4F7;      /* runtime — พื้นหัวตาราง · พื้นปุ่ม disabled (98 ครั้ง) */
-  --gray-50:#F9FAFB;       /* runtime — พื้น form-card-body (276 ครั้ง) */
+  --gray-700:#344054;      /* ✅ runtime — ตัวอักษร pill "ยกเลิก" */
+  --gray-600:#475467;      /* ✅ runtime — ตัวอักษรปุ่มรอง · ไอคอน topbar (370 ครั้ง) */
+  --gray-500:#667085;      /* ✅ runtime — ไอคอน sidebar · แท็บที่ไม่ได้เลือก (210 ครั้ง) */
+  --gray-400:#98A2B3;      /* ✅ runtime — ตัวอักษร disabled */
+  --gray-300:#D0D5DD;      /* ✅ runtime — ขอบ input/ปุ่มรอง/pagination (222 ครั้ง) */
+  --gray-200:#EAECF0;      /* ✅ runtime — เส้นใต้แถวตาราง · ขอบ sidebar (495 ครั้ง) */
+  --gray-100:#F2F4F7;      /* ✅ runtime — พื้นหัวตาราง · พื้นปุ่ม disabled (98 ครั้ง) */
+  --gray-50:#F9FAFB;       /* ✅ runtime — พื้น form-card-body (276 ครั้ง) */
   --gray-25:#FEFEFE;        /* ✔ ไลบรารีใหม่ (194 ครั้ง — อยู่ใน swatch เป็นหลัก) */
   /* 🆕 v0.70 (18 ต.ค. 2569) gray โหมดมืด — ใช้เฉพาะ `Notification` (ไฟล์ Component หน้า Notifications 1873-44383)
      กล่องพื้น gray-950 · ขอบ #61646C · หัวข้อ #F5F5F6 · ข้อความรอง/ไอคอนปิด #CECFD2 */
@@ -60,7 +60,7 @@
 
   /* ---------- Semantic palette ---------- */
   --success-700:#067647;    /* ✔ ไลบรารีใหม่ — ตัวอักษรสถานะสำเร็จ (24 ครั้ง) */
-  --success-600:#17B26A;   /* runtime — badge-indicator badge-success · ตรงกับ Figma พอดี */
+  --success-600:#17B26A;   /* ✅ runtime — badge-indicator badge-success · ตรงกับ Figma พอดี */
   --success-500:#079455;   /* ✔ node 3:16 Progress steps + 3:12 Metrics — ไม่พบใน runtime แต่ไม่ขัดกัน */
   --success-200:#ABEFC6;    /* ✔ ไลบรารีใหม่ — Pill outline Color=Success (32 ครั้ง) */
   --success-100:#DCFAE6;    /* ⚠ ไลบรารีใหม่ไม่มีโทนนี้ — ของเราเอง (ไม่ได้ใช้ในโปรเจกต์) */
@@ -77,21 +77,27 @@
   --error-300:#FDA29B;     /* ✔ เส้นขอบช่องกรอก state error (104 ครั้ง) */
   --error-200:#FECDCA;     /* ✔ ยืนยันจากไลบรารี ใช้ 66 ครั้ง */
   --error-50:#FEF3F2;      /* ✔ ยืนยันจากไลบรารี ใช้ 118 ครั้ง */
-  --info-700:#3538CD;      /* runtime — ตัวอักษร badge info ("บันทึกการเดินทาง") */
-  --info-600:#6172F3;      /* runtime — จุดสถานะสีน้ำเงินในตาราง · ตรงกับ Figma พอดี */
+  --info-700:#3538CD;      /* ✅ runtime — ตัวอักษร badge info ("บันทึกการเดินทาง") */
+  --info-600:#6172F3;      /* ✅ runtime — จุดสถานะสีน้ำเงินในตาราง · ตรงกับ Figma พอดี */
   --info-200:#C7D7FE;      /* ✔ ยืนยันจากไลบรารี ใช้ 72 ครั้ง */
   --info-100:#EEF4FF;       /* ✔ ไลบรารีใหม่ — Pill outline Color=Info · Featured icon (51 ครั้ง) */
   --info-50:#EEF4FF;       /* ✔ ยืนยันจากไลบรารี ใช้ 72 ครั้ง · พื้นอ่อนของ info */
   --info-25:#F5F8FF;       /* ⚠ ไม่พบในไลบรารี */
 
-  /* ---------- Badge (วัดจาก runtime — pill outline) ทั้งบล็อก ----------
+  /* ---------- Purple (v0.73 · 4 พ.ย. 2569) — Pill outline / Featured icon Color=Purple
+     ✔ Variable ของไลบรารี Color/component/utility/purple/50 · 200 · 700 (ดัมป์ปลั๊กอินรุ่นที่เก็บชื่อ Variable 4 พ.ย. 2569) */
+  --purple-700:#6927DA;    /* ✔ Color/component/utility/purple/700 — ตัวอักษร Pill outline Purple */
+  --purple-200:#DDD6FE;    /* ✔ Color/component/utility/purple/200 — ขอบ */
+  --purple-50:#F5F3FF;     /* ✔ Color/component/utility/purple/50 — พื้น */
+
+  /* ---------- Badge (วัดจาก runtime — pill outline) ✅ ทั้งบล็อก ----------
      ระบบจริงใช้ ramp แบรนด์อ่อนคนละชุดกับ Figma สำหรับ badge โดยเฉพาะ
      (Figma: พื้น #FDEEFC ขอบ #F8BFF4 · runtime: พื้น #FFF5FD ขอบ #FED8F6)  */
-  --badge-brand-bg:#FFF5FD;        /* runtime — พื้น badge แบรนด์ (ชิปนับบนแท็บ) */
-  --badge-brand-border:#FED8F6;    /* runtime — ขอบ badge แบรนด์ */
+  --badge-brand-bg:#FFF5FD;        /* ✅ runtime — พื้น badge แบรนด์ (ชิปนับบนแท็บ) */
+  --badge-brand-border:#FED8F6;    /* ✅ runtime — ขอบ badge แบรนด์ */
   --badge-neutral-text:var(--gray-700);
   --badge-neutral-bg:var(--gray-25);
-  --badge-neutral-border:#E4E7EC;  /* runtime — ขอบ pill "ยกเลิก" · ขอบล่าง topbar (ไม่ตรง gray-200) */
+  --badge-neutral-border:#E4E7EC;  /* ✅ runtime — ขอบ pill "ยกเลิก" · ขอบล่าง topbar (ไม่ตรง gray-200) */
 
   /* ---------- Secondary (น้ำเงิน การ์ดรอง) ---------- */
   --secondary-700:#15409A; /* ⚠ ไม่พบในไลบรารี */
@@ -130,7 +136,7 @@
   --r-sm:8px;              /* alias เดิม = rounded-md */
   --r-md:12px;             /* ~ การ์ดย่อย, รายการ */
   --r-lg:16px;             /* ~ การ์ดหลัก, tile */
-  --r-pill:9999px;         /* runtime — ค่าที่ระบบจริงใช้จริง (เดิมเราใส่ 99px ซึ่งกลมเท่ากันแต่ไม่ตรงตัวเลข) */
+  --r-pill:9999px;         /* ✅ runtime — ค่าที่ระบบจริงใช้จริง (เดิมเราใส่ 99px ซึ่งกลมเท่ากันแต่ไม่ตรงตัวเลข) */
 
   /* ---------- Typography ---------- */
   /* ฟอนต์ไลบรารีจริงคือ Google Sans (✔) — เราคง IBM Plex Sans Thai
@@ -157,18 +163,18 @@
 
   /* หมายเหตุ hex ในคอมเมนต์ท้ายบรรทัดอัปเดตตาม gray ramp v1 แล้ว (v0.13) */
   --color-bg-primary:#FFFFFF;                       /* ✔ */
-  --color-bg-primary-hover:var(--gray-50);          /* #F9FAFB */
-  --color-bg-disabled:var(--gray-100);              /* #F2F4F7 — พื้นปุ่ม disabled ของจริง */
+  --color-bg-primary-hover:var(--gray-50);          /* ✅ #F9FAFB */
+  --color-bg-disabled:var(--gray-100);              /* ✅ #F2F4F7 — พื้นปุ่ม disabled ของจริง */
 
-  --color-border-primary:var(--gray-300);           /* #D0D5DD */
-  --color-border-disabled-subtle:var(--gray-200);   /* #EAECF0 */
+  --color-border-primary:var(--gray-300);           /* ✅ #D0D5DD */
+  --color-border-disabled-subtle:var(--gray-200);   /* ✅ #EAECF0 */
 
-  --color-text-primary:#000000;                     /* runtime — ระบบจริงใช้ดำสนิท ไม่ใช่ gray-900 */
-  --color-text-secondary:var(--gray-700);           /* #344054 */
+  --color-text-primary:#000000;                     /* ✅ runtime — ระบบจริงใช้ดำสนิท ไม่ใช่ gray-900 */
+  --color-text-secondary:var(--gray-700);           /* ✅ #344054 */
   --color-text-secondary-hover:var(--gray-800);     /* ✔ #252B37 (ไลบรารี · runtime ไม่มีของเทียบ) */
-  --color-text-tertiary:var(--gray-600);            /* #475467 */
-  --color-text-tertiary-hover:var(--gray-700);      /* #344054 */
-  --color-fg-disabled:var(--gray-400);              /* #98A2B3 */
+  --color-text-tertiary:var(--gray-600);            /* ✅ #475467 */
+  --color-text-tertiary-hover:var(--gray-700);      /* ✅ #344054 */
+  --color-fg-disabled:var(--gray-400);              /* ✅ #98A2B3 */
 
 
   /* ══════════ ชั้น 3 · COMPONENT (ชื่อตามไลบรารีจริง) ══════════ */
@@ -180,14 +186,14 @@
   --btn-primary-border-hover:var(--brand-800);      /* ✔ ไลบรารีใหม่ */
   --btn-primary-text:#FFFFFF;                       /* ✔ */
 
-  /* ปุ่ม — Secondary / Tertiary / Disabled (วัดจาก vmsplus-dev) */
+  /* ปุ่ม — Secondary / Tertiary / Disabled (✅ วัดจาก vmsplus-dev) */
   --btn-secondary-text:var(--gray-600);             /* ✔ ไลบรารีใหม่ #475467 */
-  --btn-secondary-border:var(--gray-300);           /* #D0D5DD */
-  --btn-tertiary-text:var(--gray-600);              /* #475467 */
-  --btn-tertiary-brand-text:var(--brand-900);       /* #A80689 — ปุ่ม "แก้ไข" ในโมดัล */
-  --btn-tertiary-danger-text:var(--error-600);      /* #D92D20 — ปุ่ม "ยกเลิกคำขอ" */
-  --btn-disabled-bg:var(--gray-100);                /* #F2F4F7 */
-  --btn-disabled-text:var(--gray-400);              /* #98A2B3 */
+  --btn-secondary-border:var(--gray-300);           /* ✅ #D0D5DD */
+  --btn-tertiary-text:var(--gray-600);              /* ✅ #475467 */
+  --btn-tertiary-brand-text:var(--brand-900);       /* ✅ #A80689 — ปุ่ม "แก้ไข" ในโมดัล */
+  --btn-tertiary-danger-text:var(--error-600);      /* ✅ #D92D20 — ปุ่ม "ยกเลิกคำขอ" */
+  --btn-disabled-bg:var(--gray-100);                /* ✅ #F2F4F7 */
+  --btn-disabled-text:var(--gray-400);              /* ✅ #98A2B3 */
 
   /* ปุ่ม — Destructive */
   --btn-destructive-bg:var(--error-600);            /* ✔ #D92D20 */
@@ -218,6 +224,8 @@
   --shadow-xs:0 1px 2px rgba(10,13,18,.05);  /* ✔ เงาช่องกรอก/ตารางตามไลบรารี (#0A0D12 5%) */
   --shadow-app:0 0 40px rgba(16,24,40,.12);
   --shadow-pop:0 4px 14px rgba(16,24,40,.25);
+  --shadow-lg:0 12px 16px -4px rgba(16,24,40,.08);   /* ✔ v0.73 ไลบรารี Dropdown menu · Dropdown list · Notification (DROP_SHADOW #10182814 y12 blur16 spread-4) */
+  --overlay:rgba(0,0,0,.4);   /* ✔ v0.73 ไลบรารี Background overlay (#000000 40% · Variable Color/background/overlay) */
   --shadow-card:0 1px 2px rgba(16,24,40,.06),0 10px 30px rgba(16,24,40,.07);  /* การ์ดหน้าวิเคราะห์ */
   --grad-header:linear-gradient(135deg,var(--brand-900),var(--brand-800));
 }

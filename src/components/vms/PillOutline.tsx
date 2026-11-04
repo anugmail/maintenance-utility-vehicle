@@ -1,10 +1,10 @@
 /* Figma: "Pill outline" — ไฟล์ (Component) VMS Plus หน้า Badge (node 2:13) · สเปก figma-spec/Pill outline.json
-   variant: Color = Brand | Gray | Info | Success | Warning | Error | Disabled (Purple ไม่มี token — ดู figma-spec/COMPOSED.md)
+   variant: Color = Brand | Gray | Info | Success | Warning | Error | Disabled | Purple (purple-50 / purple-200 / purple-700 ตาม Variable Color/component/utility/purple/*)
    property: Text
    ค่า: สูง 24 · ขอบใน 4/8 · รัศมี 9999 · ขอบ 1 · ตัวอักษร 12 SemiBold */
 import { cx } from "@/lib/cx";
 
-export type PillColor = "Brand" | "Gray" | "Info" | "Success" | "Warning" | "Error" | "Disabled";
+export type PillColor = "Brand" | "Gray" | "Info" | "Success" | "Warning" | "Error" | "Disabled" | "Purple";
 
 const COLOR: Record<PillColor, string> = {
   Brand: "bg-brand-50 border-brand-200 text-brand-900",
@@ -14,6 +14,7 @@ const COLOR: Record<PillColor, string> = {
   Warning: "bg-warning-50 border-warning-200 text-warning-700",
   Error: "bg-error-50 border-error-200 text-error-700",
   Disabled: "bg-gray-100 border-gray-300 text-gray-400",
+  Purple: "bg-purple-50 border-purple-200 text-purple-700",
 };
 
 export function PillOutline({ Text, Color = "Brand", className }: { Text: string; Color?: PillColor; className?: string }) {

@@ -1,0 +1,2016 @@
+{
+ "component": "IncidentPhotoGallery",
+ "source": "Maintain-D",
+ "page": "รายละเอียดงานซ่อม",
+ "node": "175:79986",
+ "props": {},
+ "variants": [
+  {
+   "name": "IncidentPhotoGallery",
+   "type": "COMPONENT",
+   "w": 746,
+   "h": 204,
+   "sizing": [
+    "FIXED",
+    "HUG"
+   ],
+   "gap": 8,
+   "r": 0,
+   "dir": "VERTICAL",
+   "justify": "MIN",
+   "align": "MIN",
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/200"
+   },
+   "kids": [
+    {
+     "name": "Section label",
+     "type": "INSTANCE",
+     "w": 746,
+     "h": 40,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
+     "r": 0,
+     "dir": "VERTICAL",
+     "justify": "CENTER",
+     "align": "MIN",
+     "sws": [
+      1,
+      0,
+      0,
+      0
+     ],
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/none",
+      "paddingLeft": "Spacing/none",
+      "paddingTop": "Spacing/none",
+      "paddingRight": "Spacing/none",
+      "paddingBottom": "Spacing/none"
+     },
+     "variant": {
+      "Secondary action#2299:6": true,
+      "Primary action#2299:3": true,
+      "Instance swap#3409:8": "1:5820",
+      "Supporting text#2299:0": "Supporting text",
+      "Info icon#2298:0": false,
+      "Actions#1985:4": false,
+      "More actions#2004:6": true,
+      "Supporting#1985:3": false,
+      "Title#1985:6": "รูปภาพเหตุการณ์",
+      "Breakpoint": "Desktop"
+     },
+     "component": "Section label [Breakpoint=Desktop]",
+     "kids": [
+      {
+       "name": "Content",
+       "type": "FRAME",
+       "w": 746,
+       "h": 24,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
+       "gap": 12,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "justify": "SPACE_BETWEEN",
+       "align": "CENTER",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "kids": [
+        {
+         "name": "Label and supporting text",
+         "type": "FRAME",
+         "w": 746,
+         "h": 24,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "gap": 4,
+         "r": 0,
+         "dir": "VERTICAL",
+         "justify": "MIN",
+         "align": "MIN",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/100"
+         },
+         "kids": [
+          {
+           "name": "Label",
+           "type": "FRAME",
+           "w": 746,
+           "h": 24,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "MIN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/100"
+           },
+           "kids": [
+            {
+             "name": "Text",
+             "type": "TEXT",
+             "w": 117,
+             "h": 24,
+             "sizing": [
+              "HUG",
+              "HUG"
+             ],
+             "fill": [
+              "#000000"
+             ],
+             "sw": 1,
+             "strokeAlign": "OUTSIDE",
+             "vars": {
+              "fills": "Color/text/primary",
+              "letterSpacing": "IBM/Title/02/letter-spacing",
+              "fontSize": "IBM/Title/02/font-size",
+              "fontFamily": "IBM/font-family",
+              "paragraphSpacing": "IBM/Title/02/font-size",
+              "fontWeight": "IBM/Title/02/font-weight"
+             },
+             "font": {
+              "fam": "IBM Plex Sans Thai",
+              "style": "SemiBold",
+              "size": 16,
+              "lh": null
+             },
+             "text": "รูปภาพเหตุการณ์"
+            },
+            {
+             "name": "info-24-300-round",
+             "type": "INSTANCE",
+             "visible": false,
+             "w": 24,
+             "h": 24,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "component": "info-24-300-round",
+             "kids": [
+              {
+               "name": "Bounding box",
+               "type": "RECTANGLE",
+               "w": 24,
+               "h": 24,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D9D9D9"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE"
+              },
+              {
+               "name": "Vector",
+               "type": "VECTOR",
+               "w": 19,
+               "h": 19,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D0D5DD"
+               ],
+               "sw": 0.02500000037252903,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/icon/tertiary"
+               }
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "name": "Supporting text",
+           "type": "TEXT",
+           "visible": false,
+           "w": 415,
+           "h": 18,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/secondary",
+            "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontSize": "IBM/Helper-text/02/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontWeight": "IBM/Helper-text/02/font-weight"
+           },
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null,
+            "ls": -0.20000000298023224
+           },
+           "text": "Supporting text"
+          }
+         ]
+        },
+        {
+         "name": "Actions",
+         "type": "FRAME",
+         "visible": false,
+         "w": 158,
+         "h": 40,
+         "sizing": [
+          "HUG",
+          "HUG"
+         ],
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "MIN",
+         "align": "MIN",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "kids": [
+          {
+           "name": "Tertiary button",
+           "type": "INSTANCE",
+           "w": 59,
+           "h": 40,
+           "sizing": [
+            "HUG",
+            "FIXED"
+           ],
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "justify": "CENTER",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/100",
+            "paddingLeft": "Spacing/200",
+            "paddingTop": "Spacing/200",
+            "paddingRight": "Spacing/200",
+            "paddingBottom": "Spacing/200",
+            "topLeftRadius": "Radius/200",
+            "topRightRadius": "Radius/200",
+            "bottomLeftRadius": "Radius/200",
+            "bottomRightRadius": "Radius/200"
+           },
+           "variant": {
+            "Leading icon swap#133:10": "1:3546",
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "1:3546",
+            "Leading icon#105:2": false,
+            "Button text#1153:0": false,
+            "Text#105:0": "Button",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Tertiary button [State=Default, Size=md]",
+           "kids": [
+            {
+             "name": "crop_free-20-400-round",
+             "type": "INSTANCE",
+             "visible": false,
+             "w": 20,
+             "h": 20,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "component": "crop_free-20-400-round",
+             "kids": [
+              {
+               "name": "Bounding box",
+               "type": "RECTANGLE",
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D9D9D9"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE"
+              },
+              {
+               "name": "Vector",
+               "type": "VECTOR",
+               "w": 14,
+               "h": 14,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#475467"
+               ],
+               "sw": 0.02083333395421505,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/component/button/tertiary/icon"
+               }
+              }
+             ]
+            },
+            {
+             "name": "Text",
+             "type": "TEXT",
+             "visible": false,
+             "w": 43,
+             "h": 21,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "fill": [
+              "#475467"
+             ],
+             "sw": 1,
+             "strokeAlign": "OUTSIDE",
+             "vars": {
+              "fills": "Color/component/button/tertiary/text",
+              "letterSpacing": "IBM/Label/03/letter-spacing",
+              "fontSize": "IBM/Label/03/font-size",
+              "fontFamily": "IBM/Label/03/font-family",
+              "paragraphSpacing": "IBM/Label/03/letter-spacing",
+              "fontWeight": "IBM/Label/03/font-weight"
+             },
+             "font": {
+              "fam": "IBM Plex Sans Thai",
+              "style": "SemiBold",
+              "size": 14,
+              "lh": null,
+              "ls": -0.20000000298023224
+             },
+             "text": "Button"
+            },
+            {
+             "name": "crop_free-20-400-round",
+             "type": "INSTANCE",
+             "visible": false,
+             "w": 20,
+             "h": 20,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "component": "crop_free-20-400-round",
+             "kids": [
+              {
+               "name": "Bounding box",
+               "type": "RECTANGLE",
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D9D9D9"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE"
+              },
+              {
+               "name": "Vector",
+               "type": "VECTOR",
+               "w": 14,
+               "h": 14,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#475467"
+               ],
+               "sw": 0.02083333395421505,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/component/button/tertiary/icon"
+               }
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "name": "Tertiary brand button",
+           "type": "INSTANCE",
+           "w": 59,
+           "h": 40,
+           "sizing": [
+            "HUG",
+            "FIXED"
+           ],
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "justify": "CENTER",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/100",
+            "paddingLeft": "Spacing/200",
+            "paddingTop": "Spacing/200",
+            "paddingRight": "Spacing/200",
+            "paddingBottom": "Spacing/200",
+            "topLeftRadius": "Radius/200",
+            "topRightRadius": "Radius/200",
+            "bottomLeftRadius": "Radius/200",
+            "bottomRightRadius": "Radius/200"
+           },
+           "variant": {
+            "Leading icon swap#133:10": "1:3546",
+            "Button text#1153:12": false,
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "1:3546",
+            "Leading icon#105:2": false,
+            "Text#105:0": "Button",
+            "State": "Default"
+           },
+           "component": "Tertiary brand button [State=Default]",
+           "kids": [
+            {
+             "name": "crop_free-20-400-round",
+             "type": "INSTANCE",
+             "visible": false,
+             "w": 20,
+             "h": 20,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "component": "crop_free-20-400-round",
+             "kids": [
+              {
+               "name": "Bounding box",
+               "type": "RECTANGLE",
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D9D9D9"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE"
+              },
+              {
+               "name": "Vector",
+               "type": "VECTOR",
+               "w": 14,
+               "h": 14,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#A80689"
+               ],
+               "sw": 0.02083333395421505,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/icon/brand"
+               }
+              }
+             ]
+            },
+            {
+             "name": "Text",
+             "type": "TEXT",
+             "visible": false,
+             "w": 43,
+             "h": 21,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "fill": [
+              "#A80689"
+             ],
+             "sw": 1,
+             "strokeAlign": "OUTSIDE",
+             "vars": {
+              "fills": "Color/text/brand",
+              "letterSpacing": "IBM/Label/03/letter-spacing",
+              "fontSize": "IBM/Label/03/font-size",
+              "fontFamily": "IBM/Label/03/font-family",
+              "paragraphSpacing": "IBM/Label/03/letter-spacing",
+              "fontWeight": "IBM/Label/03/font-weight"
+             },
+             "font": {
+              "fam": "IBM Plex Sans Thai",
+              "style": "SemiBold",
+              "size": 14,
+              "lh": null,
+              "ls": -0.20000000298023224
+             },
+             "text": "Button"
+            },
+            {
+             "name": "crop_free-20-400-round",
+             "type": "INSTANCE",
+             "visible": false,
+             "w": 20,
+             "h": 20,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "component": "crop_free-20-400-round",
+             "kids": [
+              {
+               "name": "Bounding box",
+               "type": "RECTANGLE",
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D9D9D9"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE"
+              },
+              {
+               "name": "Vector",
+               "type": "VECTOR",
+               "w": 14,
+               "h": 14,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#A80689"
+               ],
+               "sw": 0.02083333395421505,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/icon/brand"
+               }
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "name": "Tertiary button",
+           "type": "INSTANCE",
+           "w": 40,
+           "h": 40,
+           "sizing": [
+            "HUG",
+            "FIXED"
+           ],
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "justify": "CENTER",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/100",
+            "paddingLeft": "Spacing/200",
+            "paddingTop": "Spacing/200",
+            "paddingRight": "Spacing/200",
+            "paddingBottom": "Spacing/200",
+            "topLeftRadius": "Radius/200",
+            "topRightRadius": "Radius/200",
+            "bottomLeftRadius": "Radius/200",
+            "bottomRightRadius": "Radius/200"
+           },
+           "variant": {
+            "Leading icon swap#133:10": "1:6852",
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "1:3546",
+            "Leading icon#105:2": false,
+            "Button text#1153:0": false,
+            "Text#105:0": "Button",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Tertiary button [State=Default, Size=md]",
+           "kids": [
+            {
+             "name": "more_vert-20-400-round",
+             "type": "INSTANCE",
+             "visible": false,
+             "w": 20,
+             "h": 20,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "component": "more_vert-20-400-round",
+             "kids": [
+              {
+               "name": "Bounding box",
+               "type": "RECTANGLE",
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D9D9D9"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE"
+              },
+              {
+               "name": "Vector",
+               "type": "VECTOR",
+               "w": 3,
+               "h": 12,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#475467"
+               ],
+               "sw": 0.02083333395421505,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/component/button/tertiary/icon"
+               }
+              }
+             ]
+            },
+            {
+             "name": "Text",
+             "type": "TEXT",
+             "visible": false,
+             "w": 43,
+             "h": 21,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "fill": [
+              "#475467"
+             ],
+             "sw": 1,
+             "strokeAlign": "OUTSIDE",
+             "vars": {
+              "fills": "Color/component/button/tertiary/text",
+              "letterSpacing": "IBM/Label/03/letter-spacing",
+              "fontSize": "IBM/Label/03/font-size",
+              "fontFamily": "IBM/Label/03/font-family",
+              "paragraphSpacing": "IBM/Label/03/letter-spacing",
+              "fontWeight": "IBM/Label/03/font-weight"
+             },
+             "font": {
+              "fam": "IBM Plex Sans Thai",
+              "style": "SemiBold",
+              "size": 14,
+              "lh": null,
+              "ls": -0.20000000298023224
+             },
+             "text": "Button"
+            },
+            {
+             "name": "crop_free-20-400-round",
+             "type": "INSTANCE",
+             "visible": false,
+             "w": 20,
+             "h": 20,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "component": "crop_free-20-400-round",
+             "kids": [
+              {
+               "name": "Bounding box",
+               "type": "RECTANGLE",
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D9D9D9"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE"
+              },
+              {
+               "name": "Vector",
+               "type": "VECTOR",
+               "w": 14,
+               "h": 14,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#475467"
+               ],
+               "sw": 0.02083333395421505,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/component/button/tertiary/icon"
+               }
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Gallery",
+     "type": "FRAME",
+     "w": 746,
+     "h": 156,
+     "sizing": [
+      "FIXED",
+      "HUG"
+     ],
+     "gap": 16,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/400"
+     },
+     "kids": [
+      {
+       "name": "Images",
+       "type": "FRAME",
+       "w": 746,
+       "h": 156,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
+       "gap": 16,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "justify": "MIN",
+       "align": "CENTER",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/400"
+       },
+       "kids": [
+        {
+         "name": "Images",
+         "type": "INSTANCE",
+         "w": 175,
+         "h": 156,
+         "sizing": [
+          "FILL",
+          "FIXED"
+         ],
+         "r": 8,
+         "justify": "MIN",
+         "align": "MIN",
+         "paint": [
+          "image"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "topLeftRadius": "Radius/200",
+          "topRightRadius": "Radius/200",
+          "bottomLeftRadius": "Radius/200",
+          "bottomRightRadius": "Radius/200"
+         },
+         "variant": {
+          "Buttons#2635:15": true,
+          "Indicator pagination#2635:14": false,
+          "Size": "sm",
+          "Type": "Image"
+         },
+         "component": "Images [Size=sm, Type=Image]",
+         "kids": [
+          {
+           "name": "Indicator pagination",
+           "type": "INSTANCE",
+           "visible": false,
+           "w": 56,
+           "h": 8,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "MIN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/100"
+           },
+           "variant": {
+            "Indicator 5#2714:2": true,
+            "Indicator 4#2714:1": true,
+            "Indicator 3#2714:0": true
+           },
+           "component": "Indicator pagination",
+           "kids": [
+            {
+             "name": "_Indicator pagination item",
+             "type": "INSTANCE",
+             "w": 8,
+             "h": 8,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "variant": {
+              "Current": "True"
+             },
+             "component": "_Indicator pagination item [Current=True]",
+             "kids": [
+              {
+               "name": "Indicator",
+               "type": "ELLIPSE",
+               "w": 8,
+               "h": 8,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#A80689"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/icon/brand"
+               }
+              }
+             ]
+            },
+            {
+             "name": "_Indicator pagination item",
+             "type": "INSTANCE",
+             "w": 8,
+             "h": 8,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "variant": {
+              "Current": "False"
+             },
+             "component": "_Indicator pagination item [Current=False]",
+             "kids": [
+              {
+               "name": "Indicator",
+               "type": "ELLIPSE",
+               "w": 8,
+               "h": 8,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/icon/tertiary"
+               }
+              }
+             ]
+            },
+            {
+             "name": "_Indicator pagination item",
+             "type": "INSTANCE",
+             "w": 8,
+             "h": 8,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "variant": {
+              "Current": "False"
+             },
+             "component": "_Indicator pagination item [Current=False]",
+             "kids": [
+              {
+               "name": "Indicator",
+               "type": "ELLIPSE",
+               "w": 8,
+               "h": 8,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/icon/tertiary"
+               }
+              }
+             ]
+            },
+            {
+             "name": "_Indicator pagination item",
+             "type": "INSTANCE",
+             "w": 8,
+             "h": 8,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "variant": {
+              "Current": "False"
+             },
+             "component": "_Indicator pagination item [Current=False]",
+             "kids": [
+              {
+               "name": "Indicator",
+               "type": "ELLIPSE",
+               "w": 8,
+               "h": 8,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/icon/tertiary"
+               }
+              }
+             ]
+            },
+            {
+             "name": "_Indicator pagination item",
+             "type": "INSTANCE",
+             "w": 8,
+             "h": 8,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "variant": {
+              "Current": "False"
+             },
+             "component": "_Indicator pagination item [Current=False]",
+             "kids": [
+              {
+               "name": "Indicator",
+               "type": "ELLIPSE",
+               "w": 8,
+               "h": 8,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/icon/tertiary"
+               }
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "name": "Images",
+         "type": "INSTANCE",
+         "w": 175,
+         "h": 156,
+         "sizing": [
+          "FILL",
+          "FIXED"
+         ],
+         "r": 8,
+         "justify": "MIN",
+         "align": "MIN",
+         "paint": [
+          "image"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "topLeftRadius": "Radius/200",
+          "topRightRadius": "Radius/200",
+          "bottomLeftRadius": "Radius/200",
+          "bottomRightRadius": "Radius/200"
+         },
+         "variant": {
+          "Buttons#2635:15": true,
+          "Indicator pagination#2635:14": false,
+          "Size": "sm",
+          "Type": "Image"
+         },
+         "component": "Images [Size=sm, Type=Image]",
+         "kids": [
+          {
+           "name": "Indicator pagination",
+           "type": "INSTANCE",
+           "visible": false,
+           "w": 56,
+           "h": 8,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "MIN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/100"
+           },
+           "variant": {
+            "Indicator 5#2714:2": true,
+            "Indicator 4#2714:1": true,
+            "Indicator 3#2714:0": true
+           },
+           "component": "Indicator pagination",
+           "kids": [
+            {
+             "name": "_Indicator pagination item",
+             "type": "INSTANCE",
+             "w": 8,
+             "h": 8,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "variant": {
+              "Current": "True"
+             },
+             "component": "_Indicator pagination item [Current=True]",
+             "kids": [
+              {
+               "name": "Indicator",
+               "type": "ELLIPSE",
+               "w": 8,
+               "h": 8,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#A80689"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/icon/brand"
+               }
+              }
+             ]
+            },
+            {
+             "name": "_Indicator pagination item",
+             "type": "INSTANCE",
+             "w": 8,
+             "h": 8,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "variant": {
+              "Current": "False"
+             },
+             "component": "_Indicator pagination item [Current=False]",
+             "kids": [
+              {
+               "name": "Indicator",
+               "type": "ELLIPSE",
+               "w": 8,
+               "h": 8,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/icon/tertiary"
+               }
+              }
+             ]
+            },
+            {
+             "name": "_Indicator pagination item",
+             "type": "INSTANCE",
+             "w": 8,
+             "h": 8,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "variant": {
+              "Current": "False"
+             },
+             "component": "_Indicator pagination item [Current=False]",
+             "kids": [
+              {
+               "name": "Indicator",
+               "type": "ELLIPSE",
+               "w": 8,
+               "h": 8,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/icon/tertiary"
+               }
+              }
+             ]
+            },
+            {
+             "name": "_Indicator pagination item",
+             "type": "INSTANCE",
+             "w": 8,
+             "h": 8,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "variant": {
+              "Current": "False"
+             },
+             "component": "_Indicator pagination item [Current=False]",
+             "kids": [
+              {
+               "name": "Indicator",
+               "type": "ELLIPSE",
+               "w": 8,
+               "h": 8,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/icon/tertiary"
+               }
+              }
+             ]
+            },
+            {
+             "name": "_Indicator pagination item",
+             "type": "INSTANCE",
+             "w": 8,
+             "h": 8,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "variant": {
+              "Current": "False"
+             },
+             "component": "_Indicator pagination item [Current=False]",
+             "kids": [
+              {
+               "name": "Indicator",
+               "type": "ELLIPSE",
+               "w": 8,
+               "h": 8,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/icon/tertiary"
+               }
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "name": "Images",
+         "type": "INSTANCE",
+         "w": 175,
+         "h": 156,
+         "sizing": [
+          "FILL",
+          "FIXED"
+         ],
+         "r": 8,
+         "justify": "MIN",
+         "align": "MIN",
+         "paint": [
+          "image"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "topLeftRadius": "Radius/200",
+          "topRightRadius": "Radius/200",
+          "bottomLeftRadius": "Radius/200",
+          "bottomRightRadius": "Radius/200"
+         },
+         "variant": {
+          "Buttons#2635:15": true,
+          "Indicator pagination#2635:14": false,
+          "Size": "sm",
+          "Type": "Image"
+         },
+         "component": "Images [Size=sm, Type=Image]",
+         "kids": [
+          {
+           "name": "Indicator pagination",
+           "type": "INSTANCE",
+           "visible": false,
+           "w": 56,
+           "h": 8,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "MIN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/100"
+           },
+           "variant": {
+            "Indicator 5#2714:2": true,
+            "Indicator 4#2714:1": true,
+            "Indicator 3#2714:0": true
+           },
+           "component": "Indicator pagination",
+           "kids": [
+            {
+             "name": "_Indicator pagination item",
+             "type": "INSTANCE",
+             "w": 8,
+             "h": 8,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "variant": {
+              "Current": "True"
+             },
+             "component": "_Indicator pagination item [Current=True]",
+             "kids": [
+              {
+               "name": "Indicator",
+               "type": "ELLIPSE",
+               "w": 8,
+               "h": 8,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#A80689"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/icon/brand"
+               }
+              }
+             ]
+            },
+            {
+             "name": "_Indicator pagination item",
+             "type": "INSTANCE",
+             "w": 8,
+             "h": 8,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "variant": {
+              "Current": "False"
+             },
+             "component": "_Indicator pagination item [Current=False]",
+             "kids": [
+              {
+               "name": "Indicator",
+               "type": "ELLIPSE",
+               "w": 8,
+               "h": 8,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/icon/tertiary"
+               }
+              }
+             ]
+            },
+            {
+             "name": "_Indicator pagination item",
+             "type": "INSTANCE",
+             "w": 8,
+             "h": 8,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "variant": {
+              "Current": "False"
+             },
+             "component": "_Indicator pagination item [Current=False]",
+             "kids": [
+              {
+               "name": "Indicator",
+               "type": "ELLIPSE",
+               "w": 8,
+               "h": 8,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/icon/tertiary"
+               }
+              }
+             ]
+            },
+            {
+             "name": "_Indicator pagination item",
+             "type": "INSTANCE",
+             "w": 8,
+             "h": 8,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "variant": {
+              "Current": "False"
+             },
+             "component": "_Indicator pagination item [Current=False]",
+             "kids": [
+              {
+               "name": "Indicator",
+               "type": "ELLIPSE",
+               "w": 8,
+               "h": 8,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/icon/tertiary"
+               }
+              }
+             ]
+            },
+            {
+             "name": "_Indicator pagination item",
+             "type": "INSTANCE",
+             "w": 8,
+             "h": 8,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "variant": {
+              "Current": "False"
+             },
+             "component": "_Indicator pagination item [Current=False]",
+             "kids": [
+              {
+               "name": "Indicator",
+               "type": "ELLIPSE",
+               "w": 8,
+               "h": 8,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/icon/tertiary"
+               }
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "name": "Images",
+         "type": "INSTANCE",
+         "w": 175,
+         "h": 156,
+         "sizing": [
+          "FILL",
+          "FIXED"
+         ],
+         "r": 8,
+         "justify": "MIN",
+         "align": "MIN",
+         "paint": [
+          "image"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "topLeftRadius": "Radius/200",
+          "topRightRadius": "Radius/200",
+          "bottomLeftRadius": "Radius/200",
+          "bottomRightRadius": "Radius/200"
+         },
+         "variant": {
+          "Buttons#2635:15": true,
+          "Indicator pagination#2635:14": false,
+          "Size": "sm",
+          "Type": "Image"
+         },
+         "component": "Images [Size=sm, Type=Image]",
+         "kids": [
+          {
+           "name": "Indicator pagination",
+           "type": "INSTANCE",
+           "visible": false,
+           "w": 56,
+           "h": 8,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "MIN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/100"
+           },
+           "variant": {
+            "Indicator 5#2714:2": true,
+            "Indicator 4#2714:1": true,
+            "Indicator 3#2714:0": true
+           },
+           "component": "Indicator pagination",
+           "kids": [
+            {
+             "name": "_Indicator pagination item",
+             "type": "INSTANCE",
+             "w": 8,
+             "h": 8,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "variant": {
+              "Current": "True"
+             },
+             "component": "_Indicator pagination item [Current=True]",
+             "kids": [
+              {
+               "name": "Indicator",
+               "type": "ELLIPSE",
+               "w": 8,
+               "h": 8,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#A80689"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/icon/brand"
+               }
+              }
+             ]
+            },
+            {
+             "name": "_Indicator pagination item",
+             "type": "INSTANCE",
+             "w": 8,
+             "h": 8,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "variant": {
+              "Current": "False"
+             },
+             "component": "_Indicator pagination item [Current=False]",
+             "kids": [
+              {
+               "name": "Indicator",
+               "type": "ELLIPSE",
+               "w": 8,
+               "h": 8,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/icon/tertiary"
+               }
+              }
+             ]
+            },
+            {
+             "name": "_Indicator pagination item",
+             "type": "INSTANCE",
+             "w": 8,
+             "h": 8,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "variant": {
+              "Current": "False"
+             },
+             "component": "_Indicator pagination item [Current=False]",
+             "kids": [
+              {
+               "name": "Indicator",
+               "type": "ELLIPSE",
+               "w": 8,
+               "h": 8,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/icon/tertiary"
+               }
+              }
+             ]
+            },
+            {
+             "name": "_Indicator pagination item",
+             "type": "INSTANCE",
+             "w": 8,
+             "h": 8,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "variant": {
+              "Current": "False"
+             },
+             "component": "_Indicator pagination item [Current=False]",
+             "kids": [
+              {
+               "name": "Indicator",
+               "type": "ELLIPSE",
+               "w": 8,
+               "h": 8,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/icon/tertiary"
+               }
+              }
+             ]
+            },
+            {
+             "name": "_Indicator pagination item",
+             "type": "INSTANCE",
+             "w": 8,
+             "h": 8,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "variant": {
+              "Current": "False"
+             },
+             "component": "_Indicator pagination item [Current=False]",
+             "kids": [
+              {
+               "name": "Indicator",
+               "type": "ELLIPSE",
+               "w": 8,
+               "h": 8,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "fill": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "fills": "Color/icon/tertiary"
+               }
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Icon button",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "pl": 8,
+       "pr": 8,
+       "pt": 8,
+       "pb": 8,
+       "r": 9999,
+       "dir": "HORIZONTAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "paddingLeft": "Spacing/200",
+        "paddingTop": "Spacing/200",
+        "paddingRight": "Spacing/200",
+        "paddingBottom": "Spacing/200",
+        "topLeftRadius": "Radius/full",
+        "topRightRadius": "Radius/full",
+        "bottomLeftRadius": "Radius/full",
+        "bottomRightRadius": "Radius/full",
+        "fills": "Color/component/button/secondary/surface",
+        "strokes": "Color/border/primary"
+       },
+       "variant": {
+        "Icon swap#133:10": "1:3390",
+        "State": "Default"
+       },
+       "component": "Icon button [State=Default]",
+       "kids": [
+        {
+         "name": "keyboard_arrow_right-20-400-round",
+         "type": "INSTANCE",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "justify": "MIN",
+         "align": "MIN",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "component": "keyboard_arrow_right-20-400-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 5,
+           "h": 9,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/secondary/icon"
+           }
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

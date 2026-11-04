@@ -4,7 +4,7 @@
             Size = md (กว้าง 500) | lg (800) | xl (1140)
    โครง: Background overlay + กล่อง Modal (รัศมี 12 พื้น white) = Modal header + เนื้อหา (Content / Form ขอบในข้าง 24 ช่องไฟ 12) + Modal footer
    ใช้แบบ confirm() / formModal() ใน core.js: confirm = Centered image ซ่อนรูป (Content) · ลบ = Destructive (ซ่อน Form) ปุ่มหลัก Primary danger button
-   มือถือใช้ BottomSheet แทน (กติกาข้อ 6) · เงาไม่มีในดัมป์ → shadow-float */
+   มือถือใช้ BottomSheet แทน (กติกาข้อ 6) · ไลบรารีไม่มีเงา (ดัมป์ 4 พ.ย. 2569 ไม่มี effect ที่ Modal) — มีแค่ Background overlay */
 import { useEffect, type ReactNode } from "react";
 import { cx } from "@/lib/cx";
 import { BackgroundOverlay } from "./BackgroundOverlay";
@@ -39,7 +39,7 @@ export function Modal({ Type = "Centered image", Size = "md", open, onClose, Hea
     <>
       <BackgroundOverlay onClick={onClose} />
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
-        <div role="dialog" aria-modal="true" aria-labelledby={labelledBy} data-type={Type} onClick={(e) => e.stopPropagation()} className={cx("flex max-h-full max-w-full flex-col overflow-y-auto rounded-lg bg-white shadow-float animate-fade-in", WIDTH[Size])}>
+        <div role="dialog" aria-modal="true" aria-labelledby={labelledBy} data-type={Type} onClick={(e) => e.stopPropagation()} className={cx("flex max-h-full max-w-full flex-col overflow-y-auto rounded-lg bg-white animate-fade-in", WIDTH[Size])}>
           {Header}
           {children && <div className="flex flex-col gap-3 px-6">{children}</div>}
           {Footer}

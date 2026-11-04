@@ -1,5 +1,5 @@
 {
- "_note": "component ของไลบรารี (Component) VMS Plus ที่ต้นแบบใช้ — เพิ่มชื่อที่นี่แล้วรัน npm run figma-spec ก่อนเขียน component ใหม่",
+ "_note": "component ที่ต้นแบบใช้ — components = ไลบรารี (Component) VMS Plus · maintainD = ไฟล์ Figma งานซ่อม Maintain-D (CLAUDE.md ข้อ 12) — เพิ่มชื่อที่นี่แล้วรัน npm run figma-spec ก่อนเขียน component ใหม่",
  "components": [
   "Primary button",
   "Secondary button",
@@ -61,5 +61,22 @@
   "Nav item",
   "Nav list item",
   "Pill color"
+ ],
+ "maintainD": [
+  "ReceiptChecklist",
+  "HandoverSignature",
+  "Modal Signature",
+  "InspectionChecklist",
+  "PartRequestStepPanel",
+  "PartsInventoryPanel",
+  "RequestedPartsPanel",
+  "Spare Part Card Item",
+  "Selecte Spare Part",
+  "IncidentPhotoGallery",
+  "VehicleAndReporterInfo",
+  "SummaryRequestedParts",
+  "BudgetSource",
+  "RepairFeedback",
+  "ReturnPart"
  ]
 }

@@ -13,7 +13,7 @@ fs.writeFileSync(path.join(ROOT, "src/styles/tokens.css"),
   "/* ก๊อปจาก Maintenance-Request-Form/design-system/tokens.css ด้วย npm run sync-tokens — ห้ามแก้มือ */\n" + css);
 
 const names = [...new Set([...css.matchAll(/^\s*--([a-z0-9-]+)\s*:/gm)].map((m) => m[1]))];
-const COLOR = /^(brand|gray|success|warning|error|info|primary|secondary|chart|badge)-/;
+const COLOR = /^(brand|gray|success|warning|error|info|primary|secondary|chart|badge|purple)-/;
 const colors = names.filter((n) => COLOR.test(n));
 const theme = `/* สร้างจาก tokens.css ด้วย scripts/sync-tokens.mjs — ห้ามแก้มือ
    utility เช่น bg-brand-900 = var(--brand-900) · ล้าง palette/ขนาด/รัศมี/เงาตั้งต้นของ Tailwind ทิ้ง ใช้ได้เฉพาะค่าจาก token */
@@ -31,6 +31,8 @@ ${colors.map((n) => `  --color-${n}: var(--${n});`).join("\n")}
   --color-line: var(--color-border-primary);
   --color-disabled-bg: var(--color-bg-disabled);
   --color-disabled-fg: var(--color-fg-disabled);
+  /* พื้นหลังทึบของ Background overlay (Variable Color/background/overlay · #000000 40%) — bg-overlay */
+  --color-overlay: var(--overlay);
 
   /* ตัวอักษร: สเกล 12/14/16 ของไลบรารี + หัวข้อ */
   --text-*: initial;
@@ -64,8 +66,12 @@ ${colors.map((n) => `  --color-${n}: var(--${n});`).join("\n")}
   --shadow-field: var(--shadow-xs);
   --shadow-float: var(--shadow-pop);
   --shadow-shell: var(--shadow-app);
-  --shadow-ring: 0 0 0 4px var(--focus-ring);
-  --shadow-ring-error: 0 0 0 4px var(--focus-ring-error);
+  --shadow-lg-lib: var(--shadow-lg);   /* ไลบรารี Dropdown menu · Dropdown list · Notification (y12 blur16 spread-4 #10182814) */
+  /* วงโฟกัสของไลบรารี (effect DROP_SHADOW spread 4 ไม่เบลอ ความทึบ 12%): brand-900 · gray-500 (ปุ่มรอง Checkbox/Radio ไม่เลือก) · error-600
+     สีจาก token + ความทึบ 12% จาก effect ในดัมป์ — token --focus-ring/--focus-ring-error เป็น .24 (ประมาณ) ไม่ตรงไลบรารี ดู figma-spec/COMPOSED.md ข. */
+  --shadow-ring: 0 0 0 4px color-mix(in srgb, var(--brand-900) 12%, transparent);
+  --shadow-ring-gray: 0 0 0 4px color-mix(in srgb, var(--gray-500) 12%, transparent);
+  --shadow-ring-error: 0 0 0 4px color-mix(in srgb, var(--error-600) 12%, transparent);
 
   --animate-sheet-up: sheet-up 0.24s cubic-bezier(0.22, 1, 0.36, 1);
   --animate-fade-in: fade-in 0.2s ease-out;

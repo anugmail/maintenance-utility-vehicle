@@ -1,5 +1,7 @@
 {
  "component": "Content item row",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
  "page": "Cards",
  "node": "2413:11354",
  "props": {
@@ -64,6 +66,27 @@
     "50% last column"
    ]
   }
+ },
+ "set": {
+  "name": "Content item row",
+  "type": "COMPONENT_SET",
+  "w": 772,
+  "h": 236,
+  "pl": 20,
+  "pr": 20,
+  "pt": 20,
+  "pb": 20,
+  "gap": 20,
+  "r": 5,
+  "dir": "VERTICAL",
+  "align": "MIN",
+  "fill": [
+   "#FFFFFF"
+  ],
+  "stroke": [
+   "#9747FF"
+  ],
+  "sw": 1
  },
  "variants": [
   {

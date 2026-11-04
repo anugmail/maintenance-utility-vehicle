@@ -1,0 +1,5562 @@
+{
+ "component": "RequestedPartsPanel",
+ "source": "Maintain-D",
+ "page": "Design",
+ "node": "0:1",
+ "props": {
+  "State": {
+   "type": "VARIANT",
+   "defaultValue": "Default",
+   "variantOptions": [
+    "Default",
+    "Filled"
+   ]
+  }
+ },
+ "set": {
+  "name": "RequestedPartsPanel",
+  "type": "COMPONENT_SET",
+  "w": 899,
+  "h": 1680,
+  "sizing": [
+   "FIXED",
+   "HUG"
+  ],
+  "pl": 20,
+  "pr": 20,
+  "pt": 20,
+  "pb": 20,
+  "gap": 20,
+  "r": 5,
+  "dir": "VERTICAL",
+  "justify": "MIN",
+  "align": "MIN",
+  "stroke": [
+   "#8A38F5"
+  ],
+  "sw": 1,
+  "strokeAlign": "INSIDE"
+ },
+ "variants": [
+  {
+   "name": "State=Default",
+   "type": "COMPONENT",
+   "w": 857,
+   "h": 518,
+   "sizing": [
+    "FILL",
+    "FIXED"
+   ],
+   "pl": 17,
+   "pr": 17,
+   "pt": 17,
+   "pb": 17,
+   "gap": 10,
+   "r": 16,
+   "dir": "VERTICAL",
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#E9EAEB"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "topLeftRadius": "corner radius/16",
+    "topRightRadius": "corner radius/16",
+    "bottomLeftRadius": "corner radius/16",
+    "bottomRightRadius": "corner radius/16",
+    "strokeTopWeight": "stroke weight/1",
+    "strokeBottomWeight": "stroke weight/1",
+    "strokeLeftWeight": "stroke weight/1",
+    "strokeRightWeight": "stroke weight/1",
+    "fills": "color/white/solid",
+    "strokes": "color/grey/92 2"
+   },
+   "variant": {
+    "State": "Default"
+   },
+   "kids": [
+    {
+     "name": "Container",
+     "type": "FRAME",
+     "w": 821,
+     "h": 482,
+     "sizing": [
+      "FILL",
+      "FILL"
+     ],
+     "gap": 16,
+     "r": 0,
+     "dir": "VERTICAL",
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "kids": [
+      {
+       "name": "Section header",
+       "type": "INSTANCE",
+       "w": 821,
+       "h": 59,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
+       "gap": 20,
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "MIN",
+       "align": "MIN",
+       "sws": [
+        1,
+        0,
+        0,
+        0
+       ],
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/500",
+        "paddingLeft": "Spacing/none",
+        "paddingTop": "Spacing/none",
+        "paddingRight": "Spacing/none",
+        "paddingBottom": "Spacing/none"
+       },
+       "variant": {
+        "Badge#1985:2": false,
+        "More actions#2004:6": true,
+        "Divider#1985:5": false,
+        "Actions#1985:4": false,
+        "Supporting text#1985:3": true,
+        "Title#1985:6": "อะไหล่ที่ต้องการใช้งาน",
+        "Breakpoint": "Desktop"
+       },
+       "component": "Section header [Breakpoint=Desktop]",
+       "kids": [
+        {
+         "name": "Content",
+         "type": "FRAME",
+         "w": 821,
+         "h": 59,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "MIN",
+         "align": "MIN",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/300"
+         },
+         "kids": [
+          {
+           "name": "Text and supporting text",
+           "type": "FRAME",
+           "w": 821,
+           "h": 59,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           },
+           "kids": [
+            {
+             "name": "Text and badge",
+             "type": "FRAME",
+             "w": 821,
+             "h": 30,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "gap": 12,
+             "r": 0,
+             "dir": "HORIZONTAL",
+             "justify": "MIN",
+             "align": "CENTER",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Spacing/300"
+             },
+             "kids": [
+              {
+               "name": "Line",
+               "type": "RECTANGLE",
+               "w": 4,
+               "h": 24,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 9999,
+               "fill": [
+                "#A80689"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "topLeftRadius": "Radius/full",
+                "topRightRadius": "Radius/full",
+                "bottomLeftRadius": "Radius/full",
+                "bottomRightRadius": "Radius/full",
+                "fills": "Color/icon/brand"
+               }
+              },
+              {
+               "name": "Text",
+               "type": "TEXT",
+               "w": 184,
+               "h": 30,
+               "sizing": [
+                "HUG",
+                "HUG"
+               ],
+               "fill": [
+                "#000000"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/text/primary",
+                "letterSpacing": "IBM/Title/01/letter-spacing",
+                "fontSize": "IBM/Title/01/font-size",
+                "fontFamily": "IBM/font-family",
+                "paragraphSpacing": "IBM/Title/01/font-size",
+                "fontWeight": "IBM/Title/01/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "SemiBold",
+                "size": 20,
+                "lh": null
+               },
+               "text": "อะไหล่ที่ต้องการใช้งาน"
+              },
+              {
+               "name": "Badge outline",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 51,
+               "h": 24,
+               "sizing": [
+                "HUG",
+                "FIXED"
+               ],
+               "pl": 8,
+               "pr": 8,
+               "pt": 4,
+               "pb": 4,
+               "gap": 4,
+               "r": 4,
+               "dir": "HORIZONTAL",
+               "justify": "CENTER",
+               "align": "CENTER",
+               "fill": [
+                "#FFFFFF"
+               ],
+               "stroke": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/100",
+                "paddingLeft": "Spacing/200",
+                "paddingTop": "Spacing/100",
+                "paddingRight": "Spacing/200",
+                "paddingBottom": "Spacing/100",
+                "topLeftRadius": "Radius/100",
+                "topRightRadius": "Radius/100",
+                "bottomLeftRadius": "Radius/100",
+                "bottomRightRadius": "Radius/100",
+                "fills": "Color/surface/primary",
+                "strokes": "Color/border/primary"
+               },
+               "variant": {
+                "Text#2104:3": "Badge",
+                "Color": "Gray"
+               },
+               "component": "Badge outline [Color=Gray]"
+              }
+             ]
+            },
+            {
+             "name": "Supporting text",
+             "type": "TEXT",
+             "w": 821,
+             "h": 21,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "fill": [
+              "#475467"
+             ],
+             "sw": 1,
+             "strokeAlign": "OUTSIDE",
+             "vars": {
+              "fills": "Color/text/secondary",
+              "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+              "fontSize": "IBM/Helper-text/01/font-size",
+              "fontFamily": "IBM/font-family",
+              "paragraphSpacing": "IBM/Helper-text/01/font-size",
+              "fontWeight": "IBM/Helper-text/01/font-weight"
+             },
+             "font": {
+              "fam": "IBM Plex Sans Thai",
+              "style": "Regular",
+              "size": 14,
+              "lh": null,
+              "ls": -0.20000000298023224
+             },
+             "text": "เลือกอะไหล่จากคลังเพื่อเบิกหรือยื่นรายการจัดซื้อสำหรับงานซ่อมครั้งนี้"
+            }
+           ]
+          },
+          {
+           "name": "Actions",
+           "type": "FRAME",
+           "visible": false,
+           "w": 348,
+           "h": 40,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/300"
+           },
+           "kids": [
+            {
+             "name": "Tertiary button",
+             "type": "INSTANCE",
+             "w": 59,
+             "h": 40,
+             "sizing": [
+              "HUG",
+              "FIXED"
+             ],
+             "pl": 8,
+             "pr": 8,
+             "pt": 8,
+             "pb": 8,
+             "gap": 4,
+             "r": 8,
+             "dir": "HORIZONTAL",
+             "justify": "CENTER",
+             "align": "CENTER",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Spacing/100",
+              "paddingLeft": "Spacing/200",
+              "paddingTop": "Spacing/200",
+              "paddingRight": "Spacing/200",
+              "paddingBottom": "Spacing/200",
+              "topLeftRadius": "Radius/200",
+              "topRightRadius": "Radius/200",
+              "bottomLeftRadius": "Radius/200",
+              "bottomRightRadius": "Radius/200"
+             },
+             "variant": {
+              "Leading icon swap#133:10": "1:107",
+              "Trailing icon#105:4": false,
+              "Trailing icon swap#133:12": "1:107",
+              "Leading icon#105:2": false,
+              "Button text#1153:0": true,
+              "Text#105:0": "Button",
+              "State": "Default",
+              "Size": "md"
+             },
+             "component": "Tertiary button [State=Default, Size=md]",
+             "kids": [
+              {
+               "name": "crop_free-20-400-round",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "component": "crop_free-20-400-round"
+              },
+              {
+               "name": "Text",
+               "type": "TEXT",
+               "w": 43,
+               "h": 21,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "fill": [
+                "#475467"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/component/button/tertiary/text",
+                "letterSpacing": "IBM/Label/03/letter-spacing",
+                "fontSize": "IBM/Label/03/font-size",
+                "fontFamily": "IBM/font-family",
+                "paragraphSpacing": "IBM/Label/03/letter-spacing",
+                "fontWeight": "IBM/Label/03/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "SemiBold",
+                "size": 14,
+                "lh": null,
+                "ls": -0.20000000298023224
+               },
+               "text": "Button"
+              },
+              {
+               "name": "crop_free-20-400-round",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "component": "crop_free-20-400-round"
+              }
+             ]
+            },
+            {
+             "name": "Secondary button",
+             "type": "INSTANCE",
+             "w": 67,
+             "h": 40,
+             "sizing": [
+              "HUG",
+              "FIXED"
+             ],
+             "pl": 12,
+             "pr": 12,
+             "pt": 8,
+             "pb": 8,
+             "gap": 4,
+             "r": 8,
+             "dir": "HORIZONTAL",
+             "justify": "CENTER",
+             "align": "CENTER",
+             "fill": [
+              "#FFFFFF"
+             ],
+             "stroke": [
+              "#D0D5DD"
+             ],
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Spacing/100",
+              "paddingLeft": "Spacing/300",
+              "paddingTop": "Spacing/200",
+              "paddingRight": "Spacing/300",
+              "paddingBottom": "Spacing/200",
+              "topLeftRadius": "Radius/200",
+              "topRightRadius": "Radius/200",
+              "bottomLeftRadius": "Radius/200",
+              "bottomRightRadius": "Radius/200",
+              "fills": "Color/component/button/secondary/surface",
+              "strokes": "Color/border/primary"
+             },
+             "variant": {
+              "Leading icon swap#133:10": "1:107",
+              "Button text#1246:27": true,
+              "Trailing icon#105:4": false,
+              "Trailing icon swap#133:12": "1:107",
+              "Leading icon#105:2": false,
+              "Text#105:0": "Button",
+              "State": "Default",
+              "Size": "md"
+             },
+             "component": "Secondary button [State=Default, Size=md]",
+             "kids": [
+              {
+               "name": "crop_free-20-400-round",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "component": "crop_free-20-400-round"
+              },
+              {
+               "name": "Text",
+               "type": "TEXT",
+               "w": 43,
+               "h": 21,
+               "sizing": [
+                "HUG",
+                "HUG"
+               ],
+               "fill": [
+                "#475467"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/component/button/secondary/text",
+                "letterSpacing": "IBM/Label/03/letter-spacing",
+                "fontSize": "IBM/Label/03/font-size",
+                "fontFamily": "IBM/font-family",
+                "paragraphSpacing": "IBM/Label/03/letter-spacing",
+                "fontWeight": "IBM/Label/03/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "SemiBold",
+                "size": 14,
+                "lh": null,
+                "ls": -0.20000000298023224
+               },
+               "text": "Button"
+              },
+              {
+               "name": "crop_free-20-400-round",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "component": "crop_free-20-400-round"
+              }
+             ]
+            },
+            {
+             "name": "Secondary button",
+             "type": "INSTANCE",
+             "w": 67,
+             "h": 40,
+             "sizing": [
+              "HUG",
+              "FIXED"
+             ],
+             "pl": 12,
+             "pr": 12,
+             "pt": 8,
+             "pb": 8,
+             "gap": 4,
+             "r": 8,
+             "dir": "HORIZONTAL",
+             "justify": "CENTER",
+             "align": "CENTER",
+             "fill": [
+              "#FFFFFF"
+             ],
+             "stroke": [
+              "#D0D5DD"
+             ],
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Spacing/100",
+              "paddingLeft": "Spacing/300",
+              "paddingTop": "Spacing/200",
+              "paddingRight": "Spacing/300",
+              "paddingBottom": "Spacing/200",
+              "topLeftRadius": "Radius/200",
+              "topRightRadius": "Radius/200",
+              "bottomLeftRadius": "Radius/200",
+              "bottomRightRadius": "Radius/200",
+              "fills": "Color/component/button/secondary/surface",
+              "strokes": "Color/border/primary"
+             },
+             "variant": {
+              "Leading icon swap#133:10": "1:107",
+              "Button text#1246:27": true,
+              "Trailing icon#105:4": false,
+              "Trailing icon swap#133:12": "1:107",
+              "Leading icon#105:2": false,
+              "Text#105:0": "Button",
+              "State": "Default",
+              "Size": "md"
+             },
+             "component": "Secondary button [State=Default, Size=md]",
+             "kids": [
+              {
+               "name": "crop_free-20-400-round",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "component": "crop_free-20-400-round"
+              },
+              {
+               "name": "Text",
+               "type": "TEXT",
+               "w": 43,
+               "h": 21,
+               "sizing": [
+                "HUG",
+                "HUG"
+               ],
+               "fill": [
+                "#475467"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/component/button/secondary/text",
+                "letterSpacing": "IBM/Label/03/letter-spacing",
+                "fontSize": "IBM/Label/03/font-size",
+                "fontFamily": "IBM/font-family",
+                "paragraphSpacing": "IBM/Label/03/letter-spacing",
+                "fontWeight": "IBM/Label/03/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "SemiBold",
+                "size": 14,
+                "lh": null,
+                "ls": -0.20000000298023224
+               },
+               "text": "Button"
+              },
+              {
+               "name": "crop_free-20-400-round",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "component": "crop_free-20-400-round"
+              }
+             ]
+            },
+            {
+             "name": "Primary button",
+             "type": "INSTANCE",
+             "w": 67,
+             "h": 40,
+             "sizing": [
+              "HUG",
+              "FIXED"
+             ],
+             "pl": 12,
+             "pr": 12,
+             "pt": 8,
+             "pb": 8,
+             "gap": 4,
+             "r": 8,
+             "dir": "HORIZONTAL",
+             "justify": "CENTER",
+             "align": "CENTER",
+             "fill": [
+              "#A80689"
+             ],
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Spacing/100",
+              "paddingLeft": "Spacing/300",
+              "paddingTop": "Spacing/200",
+              "paddingRight": "Spacing/300",
+              "paddingBottom": "Spacing/200",
+              "topLeftRadius": "Radius/200",
+              "topRightRadius": "Radius/200",
+              "bottomLeftRadius": "Radius/200",
+              "bottomRightRadius": "Radius/200",
+              "fills": "Color/component/button/primary/surface"
+             },
+             "variant": {
+              "Leading icon swap#133:10": "1:107",
+              "Trailing icon#105:4": false,
+              "Trailing icon swap#133:12": "1:107",
+              "Leading icon#105:2": false,
+              "Button text#1246:11": true,
+              "Text#105:0": "Button",
+              "State": "Default",
+              "Size": "md"
+             },
+             "component": "Primary button [State=Default, Size=md]",
+             "kids": [
+              {
+               "name": "crop_free-20-400-round",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "component": "crop_free-20-400-round"
+              },
+              {
+               "name": "Text",
+               "type": "TEXT",
+               "w": 43,
+               "h": 21,
+               "sizing": [
+                "HUG",
+                "HUG"
+               ],
+               "fill": [
+                "#FFFFFF"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/component/button/primary/text",
+                "letterSpacing": "IBM/Label/03/letter-spacing",
+                "fontSize": "IBM/Label/03/font-size",
+                "fontFamily": "IBM/font-family",
+                "paragraphSpacing": "IBM/Label/03/letter-spacing",
+                "fontWeight": "IBM/Label/03/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "SemiBold",
+                "size": 14,
+                "lh": null,
+                "ls": -0.20000000298023224
+               },
+               "text": "Button"
+              },
+              {
+               "name": "crop_free-20-400-round",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "component": "crop_free-20-400-round"
+              }
+             ]
+            },
+            {
+             "name": "Tertiary button",
+             "type": "INSTANCE",
+             "w": 40,
+             "h": 40,
+             "sizing": [
+              "HUG",
+              "FIXED"
+             ],
+             "pl": 8,
+             "pr": 8,
+             "pt": 8,
+             "pb": 8,
+             "gap": 4,
+             "r": 8,
+             "dir": "HORIZONTAL",
+             "justify": "CENTER",
+             "align": "CENTER",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Spacing/100",
+              "paddingLeft": "Spacing/200",
+              "paddingTop": "Spacing/200",
+              "paddingRight": "Spacing/200",
+              "paddingBottom": "Spacing/200",
+              "topLeftRadius": "Radius/200",
+              "topRightRadius": "Radius/200",
+              "bottomLeftRadius": "Radius/200",
+              "bottomRightRadius": "Radius/200"
+             },
+             "variant": {
+              "Leading icon swap#133:10": "1:7416",
+              "Trailing icon#105:4": false,
+              "Trailing icon swap#133:12": "1:107",
+              "Leading icon#105:2": true,
+              "Button text#1153:0": false,
+              "Text#105:0": "Button",
+              "State": "Default",
+              "Size": "md"
+             },
+             "component": "Tertiary button [State=Default, Size=md]",
+             "kids": [
+              {
+               "name": "more_vert-20-400-round",
+               "type": "INSTANCE",
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "component": "more_vert-20-400-round"
+              },
+              {
+               "name": "Text",
+               "type": "TEXT",
+               "visible": false,
+               "w": 43,
+               "h": 21,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "fill": [
+                "#475467"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/component/button/tertiary/text",
+                "letterSpacing": "IBM/Label/03/letter-spacing",
+                "fontSize": "IBM/Label/03/font-size",
+                "fontFamily": "IBM/font-family",
+                "paragraphSpacing": "IBM/Label/03/letter-spacing",
+                "fontWeight": "IBM/Label/03/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "SemiBold",
+                "size": 14,
+                "lh": null,
+                "ls": -0.20000000298023224
+               },
+               "text": "Button"
+              },
+              {
+               "name": "crop_free-20-400-round",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "component": "crop_free-20-400-round"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "name": "Divider",
+         "type": "VECTOR",
+         "visible": false,
+         "w": 1440,
+         "h": 1,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "fill": [
+          "#D0D5DD"
+         ],
+         "sw": 1,
+         "strokeAlign": "CENTER",
+         "vars": {
+          "fills": "Color/icon/tertiary"
+         }
+        }
+       ]
+      },
+      {
+       "name": "Selected parts",
+       "type": "FRAME",
+       "w": 821,
+       "h": 175,
+       "sizing": [
+        "FILL",
+        "FILL"
+       ],
+       "gap": 16,
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "kids": [
+        {
+         "name": "Text and supporting text",
+         "type": "FRAME",
+         "w": 352,
+         "h": 46,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "gap": 4,
+         "r": 0,
+         "dir": "VERTICAL",
+         "justify": "MIN",
+         "align": "CENTER",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "space-1"
+         },
+         "kids": [
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 352,
+           "h": 24,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "fill": [
+            "#181D27"
+           ],
+           "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "color/text/primary",
+            "fontSize": "font size/16",
+            "fontFamily": "font family/Font 1",
+            "lineHeight": "line height/24",
+            "fontWeight": "font weight/600"
+           },
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 16,
+            "lh": 24,
+            "align": "CENTER"
+           },
+           "text": "ยังไม่ได้เพิ่มอะไหล่"
+          },
+          {
+           "name": "Supporting text",
+           "type": "TEXT",
+           "w": 352,
+           "h": 18,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "fill": [
+            "#535862"
+           ],
+           "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "color/text/tertiary",
+            "fontFamily": "font family/Font 1",
+            "lineHeight": "corner radius/18",
+            "fontWeight": "font weight/400"
+           },
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12.600000381469727,
+            "lh": 18,
+            "align": "CENTER"
+           },
+           "text": "กรุณาเลือกอะไหล่จากคลังอะไหล่หรือระบุอะไหล่เพิ่มเติม"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Secondary button",
+       "type": "INSTANCE",
+       "w": 163,
+       "h": 48,
+       "sizing": [
+        "HUG",
+        "FIXED"
+       ],
+       "pl": 12,
+       "pr": 12,
+       "pt": 8,
+       "pb": 8,
+       "gap": 4,
+       "r": 8,
+       "dir": "HORIZONTAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100",
+        "paddingLeft": "Spacing/300",
+        "paddingTop": "Spacing/200",
+        "paddingRight": "Spacing/300",
+        "paddingBottom": "Spacing/200",
+        "topLeftRadius": "Radius/200",
+        "topRightRadius": "Radius/200",
+        "bottomLeftRadius": "Radius/200",
+        "bottomRightRadius": "Radius/200",
+        "fills": "Color/component/button/secondary/surface",
+        "strokes": "Color/border/primary"
+       },
+       "variant": {
+        "Button text#1246:27": true,
+        "Leading icon swap#133:10": "1:56013",
+        "Trailing icon#105:4": false,
+        "Trailing icon swap#133:12": "1:3546",
+        "Leading icon#105:2": true,
+        "Text#105:0": "ระบุอะไหล่เพิ่มเติม",
+        "State": "Default",
+        "Size": "lg"
+       },
+       "component": "Secondary button [State=Default, Size=lg]",
+       "kids": [
+        {
+         "name": "add-24-300-round",
+         "type": "INSTANCE",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "justify": "MIN",
+         "align": "MIN",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "component": "add-24-300-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 13,
+           "h": 13,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 0.02500000037252903,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/secondary/icon"
+           }
+          }
+         ]
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 115,
+         "h": 24,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/secondary/text",
+          "letterSpacing": "IBM/Label/02/letter-spacing",
+          "fontSize": "IBM/Label/02/font-size",
+          "fontFamily": "IBM/Label/02/font-family",
+          "paragraphSpacing": "IBM/Label/02/font-size",
+          "fontWeight": "IBM/Label/02/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 16,
+          "lh": null,
+          "ls": -0.20000000298023224,
+          "align": "CENTER"
+         },
+         "text": "ระบุอะไหล่เพิ่มเติม"
+        },
+        {
+         "name": "crop_free-20-400-round",
+         "type": "INSTANCE",
+         "visible": false,
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "justify": "MIN",
+         "align": "MIN",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "component": "crop_free-20-400-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 14,
+           "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/secondary/icon"
+           }
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Divider Container",
+       "type": "FRAME",
+       "w": 821,
+       "h": 152,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
+       "gap": 16,
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "kids": [
+        {
+         "name": "Vector 1",
+         "type": "VECTOR",
+         "w": 821,
+         "h": 0,
+         "sizing": [
+          "FILL",
+          "FIXED"
+         ],
+         "r": 0,
+         "stroke": [
+          "#E9EAEB"
+         ],
+         "sw": 1,
+         "strokeAlign": "CENTER"
+        },
+        {
+         "name": "Cost Container",
+         "type": "FRAME",
+         "w": 821,
+         "h": 136,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "gap": 16,
+         "r": 0,
+         "dir": "VERTICAL",
+         "justify": "MIN",
+         "align": "MIN",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "kids": [
+          {
+           "name": "Section header",
+           "type": "INSTANCE",
+           "w": 821,
+           "h": 30,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 20,
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "MIN",
+           "align": "MIN",
+           "sws": [
+            1,
+            0,
+            0,
+            0
+           ],
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/500",
+            "paddingLeft": "Spacing/none",
+            "paddingTop": "Spacing/none",
+            "paddingRight": "Spacing/none",
+            "paddingBottom": "Spacing/none"
+           },
+           "variant": {
+            "Badge#1985:2": false,
+            "More actions#2004:6": true,
+            "Divider#1985:5": false,
+            "Actions#1985:4": false,
+            "Supporting text#1985:3": false,
+            "Title#1985:6": "รวมค่าอะไหล่",
+            "Breakpoint": "Desktop"
+           },
+           "component": "Section header [Breakpoint=Desktop]",
+           "kids": [
+            {
+             "name": "Content",
+             "type": "FRAME",
+             "w": 821,
+             "h": 30,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "gap": 12,
+             "r": 0,
+             "dir": "HORIZONTAL",
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Spacing/300"
+             },
+             "kids": [
+              {
+               "name": "Text and supporting text",
+               "type": "FRAME",
+               "w": 821,
+               "h": 30,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "gap": 8,
+               "r": 0,
+               "dir": "VERTICAL",
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/200"
+               }
+              },
+              {
+               "name": "Actions",
+               "type": "FRAME",
+               "visible": false,
+               "w": 348,
+               "h": 40,
+               "sizing": [
+                "HUG",
+                "HUG"
+               ],
+               "gap": 12,
+               "r": 0,
+               "dir": "HORIZONTAL",
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/300"
+               }
+              }
+             ]
+            },
+            {
+             "name": "Divider",
+             "type": "VECTOR",
+             "visible": false,
+             "w": 1440,
+             "h": 1,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "fill": [
+              "#D0D5DD"
+             ],
+             "sw": 1,
+             "strokeAlign": "CENTER",
+             "vars": {
+              "fills": "Color/icon/tertiary"
+             }
+            }
+           ]
+          },
+          {
+           "name": "Cost Breakdown",
+           "type": "FRAME",
+           "w": 821,
+           "h": 50,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "kids": [
+            {
+             "name": "Purchase Info",
+             "type": "FRAME",
+             "w": 821,
+             "h": 21,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "gap": 16,
+             "r": 0,
+             "dir": "HORIZONTAL",
+             "justify": "MIN",
+             "align": "CENTER",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "kids": [
+              {
+               "name": "Supporting text",
+               "type": "TEXT",
+               "w": 402,
+               "h": 21,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "fill": [
+                "#475467"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/text/secondary",
+                "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+                "fontSize": "IBM/Helper-text/01/font-size",
+                "fontFamily": "IBM/font-family",
+                "paragraphSpacing": "IBM/Helper-text/01/font-size",
+                "fontWeight": "IBM/Helper-text/01/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "Regular",
+                "size": 14,
+                "lh": null,
+                "ls": -0.20000000298023224
+               },
+               "text": "เบิกจากคลัง"
+              },
+              {
+               "name": "Text",
+               "type": "TEXT",
+               "w": 402,
+               "h": 21,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "fill": [
+                "#475467"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/text/secondary",
+                "letterSpacing": "IBM/Label/03/letter-spacing",
+                "fontSize": "IBM/Label/03/font-size",
+                "fontFamily": "IBM/Label/03/font-family",
+                "paragraphSpacing": "IBM/Label/03/letter-spacing",
+                "fontWeight": "IBM/Label/03/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "SemiBold",
+                "size": 14,
+                "lh": null,
+                "ls": -0.20000000298023224,
+                "align": "RIGHT"
+               },
+               "text": "0 บาท"
+              }
+             ]
+            },
+            {
+             "name": "Purchase Info",
+             "type": "FRAME",
+             "w": 821,
+             "h": 21,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "gap": 16,
+             "r": 0,
+             "dir": "HORIZONTAL",
+             "justify": "MIN",
+             "align": "CENTER",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "kids": [
+              {
+               "name": "Supporting text",
+               "type": "TEXT",
+               "w": 402,
+               "h": 21,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "fill": [
+                "#475467"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/text/secondary",
+                "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+                "fontSize": "IBM/Helper-text/01/font-size",
+                "fontFamily": "IBM/font-family",
+                "paragraphSpacing": "IBM/Helper-text/01/font-size",
+                "fontWeight": "IBM/Helper-text/01/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "Regular",
+                "size": 14,
+                "lh": null,
+                "ls": -0.20000000298023224
+               },
+               "text": "ต้องจัดซื้อ"
+              },
+              {
+               "name": "Text",
+               "type": "TEXT",
+               "w": 402,
+               "h": 21,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "fill": [
+                "#475467"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/text/secondary",
+                "letterSpacing": "IBM/Label/03/letter-spacing",
+                "fontSize": "IBM/Label/03/font-size",
+                "fontFamily": "IBM/Label/03/font-family",
+                "paragraphSpacing": "IBM/Label/03/letter-spacing",
+                "fontWeight": "IBM/Label/03/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "SemiBold",
+                "size": 14,
+                "lh": null,
+                "ls": -0.20000000298023224,
+                "align": "RIGHT"
+               },
+               "text": "0 บาท"
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "name": "Total Cost",
+           "type": "FRAME",
+           "w": 821,
+           "h": 24,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 16,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "MIN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "kids": [
+            {
+             "name": "Text",
+             "type": "TEXT",
+             "w": 402,
+             "h": 21,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "fill": [
+              "#475467"
+             ],
+             "sw": 1,
+             "strokeAlign": "OUTSIDE",
+             "vars": {
+              "fills": "Color/text/secondary",
+              "letterSpacing": "IBM/Label/03/letter-spacing",
+              "fontSize": "IBM/Label/03/font-size",
+              "fontFamily": "IBM/Label/03/font-family",
+              "paragraphSpacing": "IBM/Label/03/letter-spacing",
+              "fontWeight": "IBM/Label/03/font-weight"
+             },
+             "font": {
+              "fam": "IBM Plex Sans Thai",
+              "style": "SemiBold",
+              "size": 14,
+              "lh": null,
+              "ls": -0.20000000298023224
+             },
+             "text": "รวมทั้งหมด"
+            },
+            {
+             "name": "Text",
+             "type": "TEXT",
+             "w": 402,
+             "h": 24,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "fill": [
+              "#475467"
+             ],
+             "sw": 1,
+             "strokeAlign": "OUTSIDE",
+             "vars": {
+              "fills": "Color/text/secondary",
+              "letterSpacing": "IBM/Label/02/letter-spacing",
+              "fontSize": "IBM/Label/02/font-size",
+              "fontFamily": "IBM/Label/02/font-family",
+              "paragraphSpacing": "IBM/Label/02/font-size",
+              "fontWeight": "IBM/Label/02/font-weight"
+             },
+             "font": {
+              "fam": "IBM Plex Sans Thai",
+              "style": "SemiBold",
+              "size": 16,
+              "lh": null,
+              "ls": -0.20000000298023224,
+              "align": "RIGHT"
+             },
+             "text": "0 บาท"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Filled",
+   "type": "COMPONENT",
+   "w": 857,
+   "h": 1100,
+   "sizing": [
+    "FILL",
+    "FIXED"
+   ],
+   "pl": 17,
+   "pr": 17,
+   "pt": 17,
+   "pb": 17,
+   "gap": 10,
+   "r": 16,
+   "dir": "VERTICAL",
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#E9EAEB"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "topLeftRadius": "corner radius/16",
+    "topRightRadius": "corner radius/16",
+    "bottomLeftRadius": "corner radius/16",
+    "bottomRightRadius": "corner radius/16",
+    "strokeTopWeight": "stroke weight/1",
+    "strokeBottomWeight": "stroke weight/1",
+    "strokeLeftWeight": "stroke weight/1",
+    "strokeRightWeight": "stroke weight/1",
+    "fills": "color/white/solid",
+    "strokes": "color/grey/92 2"
+   },
+   "variant": {
+    "State": "Filled"
+   },
+   "kids": [
+    {
+     "name": "Container",
+     "type": "FRAME",
+     "w": 821,
+     "h": 1064,
+     "sizing": [
+      "FILL",
+      "FILL"
+     ],
+     "gap": 16,
+     "r": 0,
+     "dir": "VERTICAL",
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "kids": [
+      {
+       "name": "Section header",
+       "type": "INSTANCE",
+       "w": 821,
+       "h": 59,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
+       "gap": 20,
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "MIN",
+       "align": "MIN",
+       "sws": [
+        1,
+        0,
+        0,
+        0
+       ],
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/500",
+        "paddingLeft": "Spacing/none",
+        "paddingTop": "Spacing/none",
+        "paddingRight": "Spacing/none",
+        "paddingBottom": "Spacing/none"
+       },
+       "variant": {
+        "Badge#1985:2": false,
+        "More actions#2004:6": true,
+        "Divider#1985:5": false,
+        "Actions#1985:4": false,
+        "Supporting text#1985:3": true,
+        "Title#1985:6": "อะไหล่ที่ต้องการใช้งาน",
+        "Breakpoint": "Desktop"
+       },
+       "component": "Section header [Breakpoint=Desktop]",
+       "kids": [
+        {
+         "name": "Content",
+         "type": "FRAME",
+         "w": 821,
+         "h": 59,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "MIN",
+         "align": "MIN",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/300"
+         },
+         "kids": [
+          {
+           "name": "Text and supporting text",
+           "type": "FRAME",
+           "w": 821,
+           "h": 59,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/200"
+           },
+           "kids": [
+            {
+             "name": "Text and badge",
+             "type": "FRAME",
+             "w": 821,
+             "h": 30,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "gap": 12,
+             "r": 0,
+             "dir": "HORIZONTAL",
+             "justify": "MIN",
+             "align": "CENTER",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Spacing/300"
+             },
+             "kids": [
+              {
+               "name": "Line",
+               "type": "RECTANGLE",
+               "w": 4,
+               "h": 24,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 9999,
+               "fill": [
+                "#A80689"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "topLeftRadius": "Radius/full",
+                "topRightRadius": "Radius/full",
+                "bottomLeftRadius": "Radius/full",
+                "bottomRightRadius": "Radius/full",
+                "fills": "Color/icon/brand"
+               }
+              },
+              {
+               "name": "Text",
+               "type": "TEXT",
+               "w": 184,
+               "h": 30,
+               "sizing": [
+                "HUG",
+                "HUG"
+               ],
+               "fill": [
+                "#000000"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/text/primary",
+                "letterSpacing": "IBM/Title/01/letter-spacing",
+                "fontSize": "IBM/Title/01/font-size",
+                "fontFamily": "IBM/font-family",
+                "paragraphSpacing": "IBM/Title/01/font-size",
+                "fontWeight": "IBM/Title/01/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "SemiBold",
+                "size": 20,
+                "lh": null
+               },
+               "text": "อะไหล่ที่ต้องการใช้งาน"
+              },
+              {
+               "name": "Badge outline",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 51,
+               "h": 24,
+               "sizing": [
+                "HUG",
+                "FIXED"
+               ],
+               "pl": 8,
+               "pr": 8,
+               "pt": 4,
+               "pb": 4,
+               "gap": 4,
+               "r": 4,
+               "dir": "HORIZONTAL",
+               "justify": "CENTER",
+               "align": "CENTER",
+               "fill": [
+                "#FFFFFF"
+               ],
+               "stroke": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/100",
+                "paddingLeft": "Spacing/200",
+                "paddingTop": "Spacing/100",
+                "paddingRight": "Spacing/200",
+                "paddingBottom": "Spacing/100",
+                "topLeftRadius": "Radius/100",
+                "topRightRadius": "Radius/100",
+                "bottomLeftRadius": "Radius/100",
+                "bottomRightRadius": "Radius/100",
+                "fills": "Color/surface/primary",
+                "strokes": "Color/border/primary"
+               },
+               "variant": {
+                "Text#2104:3": "Badge",
+                "Color": "Gray"
+               },
+               "component": "Badge outline [Color=Gray]"
+              }
+             ]
+            },
+            {
+             "name": "Supporting text",
+             "type": "TEXT",
+             "w": 821,
+             "h": 21,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "fill": [
+              "#475467"
+             ],
+             "sw": 1,
+             "strokeAlign": "OUTSIDE",
+             "vars": {
+              "fills": "Color/text/secondary",
+              "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+              "fontSize": "IBM/Helper-text/01/font-size",
+              "fontFamily": "IBM/font-family",
+              "paragraphSpacing": "IBM/Helper-text/01/font-size",
+              "fontWeight": "IBM/Helper-text/01/font-weight"
+             },
+             "font": {
+              "fam": "IBM Plex Sans Thai",
+              "style": "Regular",
+              "size": 14,
+              "lh": null,
+              "ls": -0.20000000298023224
+             },
+             "text": "จำนวนที่เกินยอดในคลัง จะถูกตั้งเป็นรายการจัดซื้อให้อัตโนมัติ"
+            }
+           ]
+          },
+          {
+           "name": "Actions",
+           "type": "FRAME",
+           "visible": false,
+           "w": 348,
+           "h": 40,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/300"
+           },
+           "kids": [
+            {
+             "name": "Tertiary button",
+             "type": "INSTANCE",
+             "w": 59,
+             "h": 40,
+             "sizing": [
+              "HUG",
+              "FIXED"
+             ],
+             "pl": 8,
+             "pr": 8,
+             "pt": 8,
+             "pb": 8,
+             "gap": 4,
+             "r": 8,
+             "dir": "HORIZONTAL",
+             "justify": "CENTER",
+             "align": "CENTER",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Spacing/100",
+              "paddingLeft": "Spacing/200",
+              "paddingTop": "Spacing/200",
+              "paddingRight": "Spacing/200",
+              "paddingBottom": "Spacing/200",
+              "topLeftRadius": "Radius/200",
+              "topRightRadius": "Radius/200",
+              "bottomLeftRadius": "Radius/200",
+              "bottomRightRadius": "Radius/200"
+             },
+             "variant": {
+              "Leading icon swap#133:10": "1:107",
+              "Trailing icon#105:4": false,
+              "Trailing icon swap#133:12": "1:107",
+              "Leading icon#105:2": false,
+              "Button text#1153:0": true,
+              "Text#105:0": "Button",
+              "State": "Default",
+              "Size": "md"
+             },
+             "component": "Tertiary button [State=Default, Size=md]",
+             "kids": [
+              {
+               "name": "crop_free-20-400-round",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "component": "crop_free-20-400-round"
+              },
+              {
+               "name": "Text",
+               "type": "TEXT",
+               "w": 43,
+               "h": 21,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "fill": [
+                "#475467"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/component/button/tertiary/text",
+                "letterSpacing": "IBM/Label/03/letter-spacing",
+                "fontSize": "IBM/Label/03/font-size",
+                "fontFamily": "IBM/font-family",
+                "paragraphSpacing": "IBM/Label/03/letter-spacing",
+                "fontWeight": "IBM/Label/03/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "SemiBold",
+                "size": 14,
+                "lh": null,
+                "ls": -0.20000000298023224
+               },
+               "text": "Button"
+              },
+              {
+               "name": "crop_free-20-400-round",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "component": "crop_free-20-400-round"
+              }
+             ]
+            },
+            {
+             "name": "Secondary button",
+             "type": "INSTANCE",
+             "w": 67,
+             "h": 40,
+             "sizing": [
+              "HUG",
+              "FIXED"
+             ],
+             "pl": 12,
+             "pr": 12,
+             "pt": 8,
+             "pb": 8,
+             "gap": 4,
+             "r": 8,
+             "dir": "HORIZONTAL",
+             "justify": "CENTER",
+             "align": "CENTER",
+             "fill": [
+              "#FFFFFF"
+             ],
+             "stroke": [
+              "#D0D5DD"
+             ],
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Spacing/100",
+              "paddingLeft": "Spacing/300",
+              "paddingTop": "Spacing/200",
+              "paddingRight": "Spacing/300",
+              "paddingBottom": "Spacing/200",
+              "topLeftRadius": "Radius/200",
+              "topRightRadius": "Radius/200",
+              "bottomLeftRadius": "Radius/200",
+              "bottomRightRadius": "Radius/200",
+              "fills": "Color/component/button/secondary/surface",
+              "strokes": "Color/border/primary"
+             },
+             "variant": {
+              "Leading icon swap#133:10": "1:107",
+              "Button text#1246:27": true,
+              "Trailing icon#105:4": false,
+              "Trailing icon swap#133:12": "1:107",
+              "Leading icon#105:2": false,
+              "Text#105:0": "Button",
+              "State": "Default",
+              "Size": "md"
+             },
+             "component": "Secondary button [State=Default, Size=md]",
+             "kids": [
+              {
+               "name": "crop_free-20-400-round",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "component": "crop_free-20-400-round"
+              },
+              {
+               "name": "Text",
+               "type": "TEXT",
+               "w": 43,
+               "h": 21,
+               "sizing": [
+                "HUG",
+                "HUG"
+               ],
+               "fill": [
+                "#475467"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/component/button/secondary/text",
+                "letterSpacing": "IBM/Label/03/letter-spacing",
+                "fontSize": "IBM/Label/03/font-size",
+                "fontFamily": "IBM/font-family",
+                "paragraphSpacing": "IBM/Label/03/letter-spacing",
+                "fontWeight": "IBM/Label/03/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "SemiBold",
+                "size": 14,
+                "lh": null,
+                "ls": -0.20000000298023224
+               },
+               "text": "Button"
+              },
+              {
+               "name": "crop_free-20-400-round",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "component": "crop_free-20-400-round"
+              }
+             ]
+            },
+            {
+             "name": "Secondary button",
+             "type": "INSTANCE",
+             "w": 67,
+             "h": 40,
+             "sizing": [
+              "HUG",
+              "FIXED"
+             ],
+             "pl": 12,
+             "pr": 12,
+             "pt": 8,
+             "pb": 8,
+             "gap": 4,
+             "r": 8,
+             "dir": "HORIZONTAL",
+             "justify": "CENTER",
+             "align": "CENTER",
+             "fill": [
+              "#FFFFFF"
+             ],
+             "stroke": [
+              "#D0D5DD"
+             ],
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Spacing/100",
+              "paddingLeft": "Spacing/300",
+              "paddingTop": "Spacing/200",
+              "paddingRight": "Spacing/300",
+              "paddingBottom": "Spacing/200",
+              "topLeftRadius": "Radius/200",
+              "topRightRadius": "Radius/200",
+              "bottomLeftRadius": "Radius/200",
+              "bottomRightRadius": "Radius/200",
+              "fills": "Color/component/button/secondary/surface",
+              "strokes": "Color/border/primary"
+             },
+             "variant": {
+              "Leading icon swap#133:10": "1:107",
+              "Button text#1246:27": true,
+              "Trailing icon#105:4": false,
+              "Trailing icon swap#133:12": "1:107",
+              "Leading icon#105:2": false,
+              "Text#105:0": "Button",
+              "State": "Default",
+              "Size": "md"
+             },
+             "component": "Secondary button [State=Default, Size=md]",
+             "kids": [
+              {
+               "name": "crop_free-20-400-round",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "component": "crop_free-20-400-round"
+              },
+              {
+               "name": "Text",
+               "type": "TEXT",
+               "w": 43,
+               "h": 21,
+               "sizing": [
+                "HUG",
+                "HUG"
+               ],
+               "fill": [
+                "#475467"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/component/button/secondary/text",
+                "letterSpacing": "IBM/Label/03/letter-spacing",
+                "fontSize": "IBM/Label/03/font-size",
+                "fontFamily": "IBM/font-family",
+                "paragraphSpacing": "IBM/Label/03/letter-spacing",
+                "fontWeight": "IBM/Label/03/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "SemiBold",
+                "size": 14,
+                "lh": null,
+                "ls": -0.20000000298023224
+               },
+               "text": "Button"
+              },
+              {
+               "name": "crop_free-20-400-round",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "component": "crop_free-20-400-round"
+              }
+             ]
+            },
+            {
+             "name": "Primary button",
+             "type": "INSTANCE",
+             "w": 67,
+             "h": 40,
+             "sizing": [
+              "HUG",
+              "FIXED"
+             ],
+             "pl": 12,
+             "pr": 12,
+             "pt": 8,
+             "pb": 8,
+             "gap": 4,
+             "r": 8,
+             "dir": "HORIZONTAL",
+             "justify": "CENTER",
+             "align": "CENTER",
+             "fill": [
+              "#A80689"
+             ],
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Spacing/100",
+              "paddingLeft": "Spacing/300",
+              "paddingTop": "Spacing/200",
+              "paddingRight": "Spacing/300",
+              "paddingBottom": "Spacing/200",
+              "topLeftRadius": "Radius/200",
+              "topRightRadius": "Radius/200",
+              "bottomLeftRadius": "Radius/200",
+              "bottomRightRadius": "Radius/200",
+              "fills": "Color/component/button/primary/surface"
+             },
+             "variant": {
+              "Leading icon swap#133:10": "1:107",
+              "Trailing icon#105:4": false,
+              "Trailing icon swap#133:12": "1:107",
+              "Leading icon#105:2": false,
+              "Button text#1246:11": true,
+              "Text#105:0": "Button",
+              "State": "Default",
+              "Size": "md"
+             },
+             "component": "Primary button [State=Default, Size=md]",
+             "kids": [
+              {
+               "name": "crop_free-20-400-round",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "component": "crop_free-20-400-round"
+              },
+              {
+               "name": "Text",
+               "type": "TEXT",
+               "w": 43,
+               "h": 21,
+               "sizing": [
+                "HUG",
+                "HUG"
+               ],
+               "fill": [
+                "#FFFFFF"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/component/button/primary/text",
+                "letterSpacing": "IBM/Label/03/letter-spacing",
+                "fontSize": "IBM/Label/03/font-size",
+                "fontFamily": "IBM/font-family",
+                "paragraphSpacing": "IBM/Label/03/letter-spacing",
+                "fontWeight": "IBM/Label/03/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "SemiBold",
+                "size": 14,
+                "lh": null,
+                "ls": -0.20000000298023224
+               },
+               "text": "Button"
+              },
+              {
+               "name": "crop_free-20-400-round",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "component": "crop_free-20-400-round"
+              }
+             ]
+            },
+            {
+             "name": "Tertiary button",
+             "type": "INSTANCE",
+             "w": 40,
+             "h": 40,
+             "sizing": [
+              "HUG",
+              "FIXED"
+             ],
+             "pl": 8,
+             "pr": 8,
+             "pt": 8,
+             "pb": 8,
+             "gap": 4,
+             "r": 8,
+             "dir": "HORIZONTAL",
+             "justify": "CENTER",
+             "align": "CENTER",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Spacing/100",
+              "paddingLeft": "Spacing/200",
+              "paddingTop": "Spacing/200",
+              "paddingRight": "Spacing/200",
+              "paddingBottom": "Spacing/200",
+              "topLeftRadius": "Radius/200",
+              "topRightRadius": "Radius/200",
+              "bottomLeftRadius": "Radius/200",
+              "bottomRightRadius": "Radius/200"
+             },
+             "variant": {
+              "Leading icon swap#133:10": "1:7416",
+              "Trailing icon#105:4": false,
+              "Trailing icon swap#133:12": "1:107",
+              "Leading icon#105:2": true,
+              "Button text#1153:0": false,
+              "Text#105:0": "Button",
+              "State": "Default",
+              "Size": "md"
+             },
+             "component": "Tertiary button [State=Default, Size=md]",
+             "kids": [
+              {
+               "name": "more_vert-20-400-round",
+               "type": "INSTANCE",
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "component": "more_vert-20-400-round"
+              },
+              {
+               "name": "Text",
+               "type": "TEXT",
+               "visible": false,
+               "w": 43,
+               "h": 21,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "fill": [
+                "#475467"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/component/button/tertiary/text",
+                "letterSpacing": "IBM/Label/03/letter-spacing",
+                "fontSize": "IBM/Label/03/font-size",
+                "fontFamily": "IBM/font-family",
+                "paragraphSpacing": "IBM/Label/03/letter-spacing",
+                "fontWeight": "IBM/Label/03/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "SemiBold",
+                "size": 14,
+                "lh": null,
+                "ls": -0.20000000298023224
+               },
+               "text": "Button"
+              },
+              {
+               "name": "crop_free-20-400-round",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 20,
+               "h": 20,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "component": "crop_free-20-400-round"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "name": "Divider",
+         "type": "VECTOR",
+         "visible": false,
+         "w": 1440,
+         "h": 1,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "fill": [
+          "#D0D5DD"
+         ],
+         "sw": 1,
+         "strokeAlign": "CENTER",
+         "vars": {
+          "fills": "Color/icon/tertiary"
+         }
+        }
+       ]
+      },
+      {
+       "name": "Selected parts",
+       "type": "FRAME",
+       "w": 821,
+       "h": 821,
+       "sizing": [
+        "FILL",
+        "FILL"
+       ],
+       "gap": 16,
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "kids": [
+        {
+         "name": "Spare Part Card Item",
+         "type": "INSTANCE",
+         "w": 821,
+         "h": 168,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "pl": 16,
+         "pr": 16,
+         "pt": 16,
+         "pb": 16,
+         "gap": 16,
+         "r": 12,
+         "dir": "VERTICAL",
+         "justify": "MIN",
+         "align": "MIN",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#E9EAEB"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Margin",
+          "topLeftRadius": "corner radius/12",
+          "topRightRadius": "corner radius/12",
+          "bottomLeftRadius": "corner radius/12",
+          "bottomRightRadius": "corner radius/12",
+          "strokeTopWeight": "stroke weight/1",
+          "strokeBottomWeight": "stroke weight/1",
+          "strokeLeftWeight": "stroke weight/1",
+          "strokeRightWeight": "stroke weight/1",
+          "fills": "color/white/solid",
+          "strokes": "color/grey/92 2"
+         },
+         "variant": {
+          "Add#3429:10": true,
+          "Select#3429:5": false,
+          "เลือกผู้จัดซื้อ#3513:0": false,
+          "Suggestion#109:3": true,
+          "จัดซื้อเพิ่ม#109:2": false,
+          "อะไหล่": "รายการที่เลือก"
+         },
+         "component": "Spare Part Card Item [อะไหล่=รายการที่เลือก]",
+         "kids": [
+          {
+           "name": "Frame 1000003424",
+           "type": "FRAME",
+           "w": 787,
+           "h": 78,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "kids": [
+            {
+             "name": "Label and text",
+             "type": "FRAME",
+             "w": 787,
+             "h": 49,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "gap": 4,
+             "r": 0,
+             "dir": "VERTICAL",
+             "justify": "CENTER",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Spacing/100"
+             },
+             "kids": [
+              {
+               "name": "Frame 1000003473",
+               "type": "FRAME",
+               "w": 787,
+               "h": 24,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "gap": 4,
+               "r": 0,
+               "dir": "HORIZONTAL",
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE"
+              },
+              {
+               "name": "Frame 1000003433",
+               "type": "FRAME",
+               "w": 194,
+               "h": 21,
+               "sizing": [
+                "HUG",
+                "FIXED"
+               ],
+               "gap": 8,
+               "r": 0,
+               "dir": "HORIZONTAL",
+               "justify": "MIN",
+               "align": "CENTER",
+               "sw": 1,
+               "strokeAlign": "INSIDE"
+              }
+             ]
+            },
+            {
+             "name": "Frame 1000003474",
+             "type": "FRAME",
+             "w": 787,
+             "h": 21,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "gap": 8,
+             "r": 0,
+             "dir": "HORIZONTAL",
+             "justify": "MIN",
+             "align": "CENTER",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Space/200"
+             },
+             "kids": [
+              {
+               "name": "Supporting text",
+               "type": "TEXT",
+               "w": 190,
+               "h": 21,
+               "sizing": [
+                "HUG",
+                "HUG"
+               ],
+               "fill": [
+                "#475467"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/text/secondary",
+                "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+                "fontSize": "IBM/Helper-text/01/font-size",
+                "fontFamily": "IBM/font-family",
+                "paragraphSpacing": "IBM/Helper-text/01/font-size",
+                "fontWeight": "IBM/Helper-text/01/font-weight"
+               },
+               "font": {
+                "fam": null,
+                "style": null,
+                "size": 14,
+                "lh": null,
+                "ls": -0.20000000298023224
+               },
+               "text": "Smart Inventory : คงเหลือ 5 ชิ้น"
+              },
+              {
+               "name": "Frame 1000003433",
+               "type": "FRAME",
+               "visible": false,
+               "w": 97,
+               "h": 21,
+               "sizing": [
+                "HUG",
+                "HUG"
+               ],
+               "gap": 8,
+               "r": 0,
+               "dir": "HORIZONTAL",
+               "justify": "MIN",
+               "align": "CENTER",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Space/200"
+               }
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "name": "Frame 1000003432",
+           "type": "FRAME",
+           "w": 787,
+           "h": 40,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "SPACE_BETWEEN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "kids": [
+            {
+             "name": "Text",
+             "type": "TEXT",
+             "w": 74,
+             "h": 24,
+             "sizing": [
+              "HUG",
+              "HUG"
+             ],
+             "fill": [
+              "#475467"
+             ],
+             "sw": 1,
+             "strokeAlign": "OUTSIDE",
+             "vars": {
+              "fills": "Color/text/secondary",
+              "letterSpacing": "IBM/Label/02/letter-spacing",
+              "fontSize": "IBM/Label/02/font-size",
+              "fontFamily": "IBM/Label/02/font-family",
+              "paragraphSpacing": "IBM/Label/02/font-size",
+              "fontWeight": "IBM/Label/02/font-weight"
+             },
+             "font": {
+              "fam": "IBM Plex Sans Thai",
+              "style": "SemiBold",
+              "size": 16,
+              "lh": null,
+              "ls": -0.20000000298023224,
+              "align": "RIGHT"
+             },
+             "text": "3,400 บาท"
+            },
+            {
+             "name": "Number input",
+             "type": "INSTANCE",
+             "w": 120,
+             "h": 40,
+             "sizing": [
+              "FIXED",
+              "HUG"
+             ],
+             "gap": 8,
+             "r": 0,
+             "dir": "VERTICAL",
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Spacing/200",
+              "paddingLeft": "Spacing/none",
+              "paddingTop": "Spacing/none",
+              "paddingRight": "Spacing/none",
+              "paddingBottom": "Spacing/none"
+             },
+             "variant": {
+              "Optional#1990:14": true,
+              "Info icon#1990:11": true,
+              "Number#1990:9": "5",
+              "Label#1990:6": false,
+              "Helper#1990:13": false,
+              "Label text#1990:7": "Label",
+              "Helper text#1990:10": "Helper",
+              "State": "Filled",
+              "Size": "md"
+             },
+             "component": "Number input [State=Filled, Size=md]",
+             "kids": [
+              {
+               "name": "Label",
+               "type": "FRAME",
+               "visible": false,
+               "w": 360,
+               "h": 24,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "gap": 4,
+               "r": 0,
+               "dir": "HORIZONTAL",
+               "justify": "MIN",
+               "align": "CENTER",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/100",
+                "paddingLeft": "Spacing/none",
+                "paddingTop": "Spacing/none",
+                "paddingRight": "Spacing/none",
+                "paddingBottom": "Spacing/none"
+               }
+              },
+              {
+               "name": "Container",
+               "type": "FRAME",
+               "w": 120,
+               "h": 40,
+               "sizing": [
+                "FILL",
+                "FIXED"
+               ],
+               "gap": 8,
+               "r": 8,
+               "dir": "HORIZONTAL",
+               "justify": "MIN",
+               "align": "CENTER",
+               "fill": [
+                "#FFFFFF"
+               ],
+               "stroke": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/200",
+                "paddingLeft": "Spacing/none",
+                "paddingTop": "Spacing/none",
+                "paddingRight": "Spacing/none",
+                "paddingBottom": "Spacing/none",
+                "topLeftRadius": "Radius/200",
+                "topRightRadius": "Radius/200",
+                "bottomLeftRadius": "Radius/200",
+                "bottomRightRadius": "Radius/200",
+                "fills": "Color/surface/primary",
+                "strokes": "Color/border/primary"
+               }
+              },
+              {
+               "name": "Helper",
+               "type": "TEXT",
+               "visible": false,
+               "w": 360,
+               "h": 18,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "fill": [
+                "#475467"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/text/secondary",
+                "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+                "fontSize": "IBM/Helper-text/02/font-size",
+                "fontFamily": "IBM/font-family",
+                "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+                "fontWeight": "IBM/Helper-text/02/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "Regular",
+                "size": 12,
+                "lh": null,
+                "ls": -0.20000000298023224
+               },
+               "text": "Helper"
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "name": "Frame 1000003478",
+           "type": "FRAME",
+           "visible": false,
+           "w": 787,
+           "h": 88,
+           "sizing": [
+            "FIXED",
+            "HUG"
+           ],
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Space/200"
+           },
+           "kids": [
+            {
+             "name": "Input label",
+             "type": "INSTANCE",
+             "w": 787,
+             "h": 24,
+             "sizing": [
+              "FILL",
+              "FIXED"
+             ],
+             "gap": 4,
+             "r": 0,
+             "dir": "HORIZONTAL",
+             "justify": "SPACE_BETWEEN",
+             "align": "CENTER",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "paddingLeft": "Spacing/none",
+              "paddingTop": "Spacing/none",
+              "paddingRight": "Spacing/none",
+              "paddingBottom": "Spacing/none"
+             },
+             "variant": {
+              "button#3608:0": false,
+              "Info icon#2404:1": false,
+              "Optional#2404:2": false,
+              "Label text#2404:0": "เลือกผู้จัดซื้ออะไหล่เพิ่ม"
+             },
+             "component": "Input label",
+             "kids": [
+              {
+               "name": "Left",
+               "type": "FRAME",
+               "w": 787,
+               "h": 24,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "gap": 4,
+               "r": 0,
+               "dir": "HORIZONTAL",
+               "justify": "MIN",
+               "align": "CENTER",
+               "sw": 1,
+               "strokeAlign": "INSIDE"
+              },
+              {
+               "name": "Tertiary brand button",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 107,
+               "h": 24,
+               "sizing": [
+                "HUG",
+                "FIXED"
+               ],
+               "pl": 8,
+               "pr": 8,
+               "pt": 8,
+               "pb": 8,
+               "gap": 4,
+               "r": 8,
+               "dir": "HORIZONTAL",
+               "justify": "CENTER",
+               "align": "CENTER",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/100",
+                "paddingLeft": "Spacing/200",
+                "paddingTop": "Spacing/200",
+                "paddingRight": "Spacing/200",
+                "paddingBottom": "Spacing/200",
+                "topLeftRadius": "Radius/200",
+                "topRightRadius": "Radius/200",
+                "bottomLeftRadius": "Radius/200",
+                "bottomRightRadius": "Radius/200"
+               },
+               "variant": {
+                "Leading icon swap#133:10": "1:107",
+                "Button text#1153:12": true,
+                "Trailing icon#105:4": false,
+                "Trailing icon swap#133:12": "1:107",
+                "Leading icon#105:2": false,
+                "Text#105:0": "Button",
+                "State": "Default"
+               },
+               "component": "Tertiary brand button [State=Default]"
+              }
+             ]
+            },
+            {
+             "name": "Check 2",
+             "type": "FRAME",
+             "w": 787,
+             "h": 56,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "gap": 16,
+             "r": 0,
+             "dir": "HORIZONTAL",
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Margin"
+             },
+             "kids": [
+              {
+               "name": "Radio text card",
+               "type": "INSTANCE",
+               "w": 385,
+               "h": 56,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "pl": 16,
+               "pr": 16,
+               "pt": 16,
+               "pb": 16,
+               "gap": 16,
+               "r": 8,
+               "dir": "VERTICAL",
+               "justify": "MIN",
+               "align": "MIN",
+               "fill": [
+                "#FFFFFF"
+               ],
+               "stroke": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/400",
+                "paddingLeft": "Spacing/400",
+                "paddingTop": "Spacing/400",
+                "paddingRight": "Spacing/400",
+                "paddingBottom": "Spacing/400",
+                "topLeftRadius": "Radius/200",
+                "topRightRadius": "Radius/200",
+                "bottomLeftRadius": "Radius/200",
+                "bottomRightRadius": "Radius/200",
+                "fills": "Color/surface/primary",
+                "strokes": "Color/border/primary"
+               },
+               "variant": {
+                "Supporting#2713:5": false,
+                "Supporting text#2713:3": "Supporting text",
+                "Text#2713:4": "Smart Inventory",
+                "State": "Default",
+                "Selected": "False"
+               },
+               "component": "Radio text card [State=Default, Selected=False]"
+              },
+              {
+               "name": "Radio text card",
+               "type": "INSTANCE",
+               "w": 385,
+               "h": 56,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "pl": 16,
+               "pr": 16,
+               "pt": 16,
+               "pb": 16,
+               "gap": 16,
+               "r": 8,
+               "dir": "VERTICAL",
+               "justify": "MIN",
+               "align": "MIN",
+               "fill": [
+                "#FFFFFF"
+               ],
+               "stroke": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/400",
+                "paddingLeft": "Spacing/400",
+                "paddingTop": "Spacing/400",
+                "paddingRight": "Spacing/400",
+                "paddingBottom": "Spacing/400",
+                "topLeftRadius": "Radius/200",
+                "topRightRadius": "Radius/200",
+                "bottomLeftRadius": "Radius/200",
+                "bottomRightRadius": "Radius/200",
+                "fills": "Color/surface/primary",
+                "strokes": "Color/border/primary"
+               },
+               "variant": {
+                "Supporting#2713:5": false,
+                "Supporting text#2713:3": "Supporting text",
+                "Text#2713:4": "กบค.",
+                "State": "Default",
+                "Selected": "False"
+               },
+               "component": "Radio text card [State=Default, Selected=False]"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "name": "Spare Part Card Item",
+         "type": "INSTANCE",
+         "w": 821,
+         "h": 272,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "pl": 16,
+         "pr": 16,
+         "pt": 16,
+         "pb": 16,
+         "gap": 16,
+         "r": 12,
+         "dir": "VERTICAL",
+         "justify": "MIN",
+         "align": "MIN",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#E9EAEB"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Margin",
+          "topLeftRadius": "corner radius/12",
+          "topRightRadius": "corner radius/12",
+          "bottomLeftRadius": "corner radius/12",
+          "bottomRightRadius": "corner radius/12",
+          "strokeTopWeight": "stroke weight/1",
+          "strokeBottomWeight": "stroke weight/1",
+          "strokeLeftWeight": "stroke weight/1",
+          "strokeRightWeight": "stroke weight/1",
+          "fills": "color/white/solid",
+          "strokes": "color/grey/92 2"
+         },
+         "variant": {
+          "Add#3429:10": true,
+          "Select#3429:5": false,
+          "เลือกผู้จัดซื้อ#3513:0": true,
+          "Suggestion#109:3": true,
+          "จัดซื้อเพิ่ม#109:2": true,
+          "อะไหล่": "รายการที่เลือก"
+         },
+         "component": "Spare Part Card Item [อะไหล่=รายการที่เลือก]",
+         "kids": [
+          {
+           "name": "Frame 1000003424",
+           "type": "FRAME",
+           "w": 787,
+           "h": 78,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "kids": [
+            {
+             "name": "Label and text",
+             "type": "FRAME",
+             "w": 787,
+             "h": 49,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "gap": 4,
+             "r": 0,
+             "dir": "VERTICAL",
+             "justify": "CENTER",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Spacing/100"
+             },
+             "kids": [
+              {
+               "name": "Frame 1000003473",
+               "type": "FRAME",
+               "w": 787,
+               "h": 24,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "gap": 4,
+               "r": 0,
+               "dir": "HORIZONTAL",
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE"
+              },
+              {
+               "name": "Frame 1000003433",
+               "type": "FRAME",
+               "w": 194,
+               "h": 21,
+               "sizing": [
+                "HUG",
+                "FIXED"
+               ],
+               "gap": 8,
+               "r": 0,
+               "dir": "HORIZONTAL",
+               "justify": "MIN",
+               "align": "CENTER",
+               "sw": 1,
+               "strokeAlign": "INSIDE"
+              }
+             ]
+            },
+            {
+             "name": "Frame 1000003474",
+             "type": "FRAME",
+             "w": 787,
+             "h": 21,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "gap": 8,
+             "r": 0,
+             "dir": "HORIZONTAL",
+             "justify": "MIN",
+             "align": "CENTER",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Space/200"
+             },
+             "kids": [
+              {
+               "name": "Supporting text",
+               "type": "TEXT",
+               "w": 149,
+               "h": 21,
+               "sizing": [
+                "HUG",
+                "HUG"
+               ],
+               "fill": [
+                "#475467"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/text/secondary",
+                "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+                "fontSize": "IBM/Helper-text/01/font-size",
+                "fontFamily": "IBM/font-family",
+                "paragraphSpacing": "IBM/Helper-text/01/font-size",
+                "fontWeight": "IBM/Helper-text/01/font-weight"
+               },
+               "font": {
+                "fam": null,
+                "style": null,
+                "size": 14,
+                "lh": null,
+                "ls": -0.20000000298023224
+               },
+               "text": "คลังสำรอง : คงเหลือ 2 ชิ้น"
+              },
+              {
+               "name": "Frame 1000003433",
+               "type": "FRAME",
+               "w": 81,
+               "h": 21,
+               "sizing": [
+                "HUG",
+                "HUG"
+               ],
+               "gap": 8,
+               "r": 0,
+               "dir": "HORIZONTAL",
+               "justify": "MIN",
+               "align": "CENTER",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Space/200"
+               }
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "name": "Frame 1000003432",
+           "type": "FRAME",
+           "w": 787,
+           "h": 40,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "SPACE_BETWEEN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "kids": [
+            {
+             "name": "Text",
+             "type": "TEXT",
+             "w": 74,
+             "h": 24,
+             "sizing": [
+              "HUG",
+              "HUG"
+             ],
+             "fill": [
+              "#475467"
+             ],
+             "sw": 1,
+             "strokeAlign": "OUTSIDE",
+             "vars": {
+              "fills": "Color/text/secondary",
+              "letterSpacing": "IBM/Label/02/letter-spacing",
+              "fontSize": "IBM/Label/02/font-size",
+              "fontFamily": "IBM/Label/02/font-family",
+              "paragraphSpacing": "IBM/Label/02/font-size",
+              "fontWeight": "IBM/Label/02/font-weight"
+             },
+             "font": {
+              "fam": "IBM Plex Sans Thai",
+              "style": "SemiBold",
+              "size": 16,
+              "lh": null,
+              "ls": -0.20000000298023224,
+              "align": "RIGHT"
+             },
+             "text": "2,720 บาท"
+            },
+            {
+             "name": "Number input",
+             "type": "INSTANCE",
+             "w": 120,
+             "h": 40,
+             "sizing": [
+              "FIXED",
+              "HUG"
+             ],
+             "gap": 8,
+             "r": 0,
+             "dir": "VERTICAL",
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Spacing/200",
+              "paddingLeft": "Spacing/none",
+              "paddingTop": "Spacing/none",
+              "paddingRight": "Spacing/none",
+              "paddingBottom": "Spacing/none"
+             },
+             "variant": {
+              "Optional#1990:14": true,
+              "Info icon#1990:11": true,
+              "Number#1990:9": "4",
+              "Label#1990:6": false,
+              "Helper#1990:13": false,
+              "Label text#1990:7": "Label",
+              "Helper text#1990:10": "Helper",
+              "State": "Filled",
+              "Size": "md"
+             },
+             "component": "Number input [State=Filled, Size=md]",
+             "kids": [
+              {
+               "name": "Label",
+               "type": "FRAME",
+               "visible": false,
+               "w": 360,
+               "h": 24,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "gap": 4,
+               "r": 0,
+               "dir": "HORIZONTAL",
+               "justify": "MIN",
+               "align": "CENTER",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/100",
+                "paddingLeft": "Spacing/none",
+                "paddingTop": "Spacing/none",
+                "paddingRight": "Spacing/none",
+                "paddingBottom": "Spacing/none"
+               }
+              },
+              {
+               "name": "Container",
+               "type": "FRAME",
+               "w": 120,
+               "h": 40,
+               "sizing": [
+                "FILL",
+                "FIXED"
+               ],
+               "gap": 8,
+               "r": 8,
+               "dir": "HORIZONTAL",
+               "justify": "MIN",
+               "align": "CENTER",
+               "fill": [
+                "#FFFFFF"
+               ],
+               "stroke": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/200",
+                "paddingLeft": "Spacing/none",
+                "paddingTop": "Spacing/none",
+                "paddingRight": "Spacing/none",
+                "paddingBottom": "Spacing/none",
+                "topLeftRadius": "Radius/200",
+                "topRightRadius": "Radius/200",
+                "bottomLeftRadius": "Radius/200",
+                "bottomRightRadius": "Radius/200",
+                "fills": "Color/surface/primary",
+                "strokes": "Color/border/primary"
+               }
+              },
+              {
+               "name": "Helper",
+               "type": "TEXT",
+               "visible": false,
+               "w": 360,
+               "h": 18,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "fill": [
+                "#475467"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/text/secondary",
+                "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+                "fontSize": "IBM/Helper-text/02/font-size",
+                "fontFamily": "IBM/font-family",
+                "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+                "fontWeight": "IBM/Helper-text/02/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "Regular",
+                "size": 12,
+                "lh": null,
+                "ls": -0.20000000298023224
+               },
+               "text": "Helper"
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "name": "Frame 1000003478",
+           "type": "FRAME",
+           "w": 787,
+           "h": 88,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Space/200"
+           },
+           "kids": [
+            {
+             "name": "Input label",
+             "type": "INSTANCE",
+             "w": 787,
+             "h": 24,
+             "sizing": [
+              "FILL",
+              "FIXED"
+             ],
+             "gap": 4,
+             "r": 0,
+             "dir": "HORIZONTAL",
+             "justify": "SPACE_BETWEEN",
+             "align": "CENTER",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "paddingLeft": "Spacing/none",
+              "paddingTop": "Spacing/none",
+              "paddingRight": "Spacing/none",
+              "paddingBottom": "Spacing/none"
+             },
+             "variant": {
+              "button#3608:0": false,
+              "Info icon#2404:1": false,
+              "Optional#2404:2": false,
+              "Label text#2404:0": "เลือกผู้จัดซื้ออะไหล่เพิ่ม"
+             },
+             "component": "Input label",
+             "kids": [
+              {
+               "name": "Left",
+               "type": "FRAME",
+               "w": 787,
+               "h": 24,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "gap": 4,
+               "r": 0,
+               "dir": "HORIZONTAL",
+               "justify": "MIN",
+               "align": "CENTER",
+               "sw": 1,
+               "strokeAlign": "INSIDE"
+              },
+              {
+               "name": "Tertiary brand button",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 107,
+               "h": 24,
+               "sizing": [
+                "HUG",
+                "FIXED"
+               ],
+               "pl": 8,
+               "pr": 8,
+               "pt": 8,
+               "pb": 8,
+               "gap": 4,
+               "r": 8,
+               "dir": "HORIZONTAL",
+               "justify": "CENTER",
+               "align": "CENTER",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/100",
+                "paddingLeft": "Spacing/200",
+                "paddingTop": "Spacing/200",
+                "paddingRight": "Spacing/200",
+                "paddingBottom": "Spacing/200",
+                "topLeftRadius": "Radius/200",
+                "topRightRadius": "Radius/200",
+                "bottomLeftRadius": "Radius/200",
+                "bottomRightRadius": "Radius/200"
+               },
+               "variant": {
+                "Leading icon swap#133:10": "1:107",
+                "Button text#1153:12": true,
+                "Trailing icon#105:4": false,
+                "Trailing icon swap#133:12": "1:107",
+                "Leading icon#105:2": false,
+                "Text#105:0": "Button",
+                "State": "Default"
+               },
+               "component": "Tertiary brand button [State=Default]"
+              }
+             ]
+            },
+            {
+             "name": "Check 2",
+             "type": "FRAME",
+             "w": 787,
+             "h": 56,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "gap": 16,
+             "r": 0,
+             "dir": "HORIZONTAL",
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Margin"
+             },
+             "kids": [
+              {
+               "name": "Radio text card",
+               "type": "INSTANCE",
+               "w": 386,
+               "h": 56,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "pl": 16,
+               "pr": 16,
+               "pt": 16,
+               "pb": 16,
+               "gap": 16,
+               "r": 8,
+               "dir": "VERTICAL",
+               "justify": "MIN",
+               "align": "MIN",
+               "fill": [
+                "#FFFFFF"
+               ],
+               "stroke": [
+                "#A80689"
+               ],
+               "sw": 2,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/400",
+                "paddingLeft": "Spacing/400",
+                "paddingTop": "Spacing/400",
+                "paddingRight": "Spacing/400",
+                "paddingBottom": "Spacing/400",
+                "topLeftRadius": "Radius/200",
+                "topRightRadius": "Radius/200",
+                "bottomLeftRadius": "Radius/200",
+                "bottomRightRadius": "Radius/200",
+                "fills": "Color/surface/primary",
+                "strokes": "Color/border/brand"
+               },
+               "variant": {
+                "Supporting#2713:5": false,
+                "Supporting text#2713:3": "Supporting text",
+                "Text#2713:4": "Smart Inventory",
+                "State": "Default",
+                "Selected": "True"
+               },
+               "component": "Radio text card [State=Default, Selected=True]"
+              },
+              {
+               "name": "Radio text card",
+               "type": "INSTANCE",
+               "w": 384,
+               "h": 56,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "pl": 16,
+               "pr": 16,
+               "pt": 16,
+               "pb": 16,
+               "gap": 16,
+               "r": 8,
+               "dir": "VERTICAL",
+               "justify": "MIN",
+               "align": "MIN",
+               "fill": [
+                "#FFFFFF"
+               ],
+               "stroke": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/400",
+                "paddingLeft": "Spacing/400",
+                "paddingTop": "Spacing/400",
+                "paddingRight": "Spacing/400",
+                "paddingBottom": "Spacing/400",
+                "topLeftRadius": "Radius/200",
+                "topRightRadius": "Radius/200",
+                "bottomLeftRadius": "Radius/200",
+                "bottomRightRadius": "Radius/200",
+                "fills": "Color/surface/primary",
+                "strokes": "Color/border/primary"
+               },
+               "variant": {
+                "Supporting#2713:5": false,
+                "Supporting text#2713:3": "Supporting text",
+                "Text#2713:4": "กบค.",
+                "State": "Default",
+                "Selected": "False"
+               },
+               "component": "Radio text card [State=Default, Selected=False]"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "name": "Spare Part Card Item",
+         "type": "INSTANCE",
+         "w": 821,
+         "h": 272,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "pl": 16,
+         "pr": 16,
+         "pt": 16,
+         "pb": 16,
+         "gap": 16,
+         "r": 12,
+         "dir": "VERTICAL",
+         "justify": "MIN",
+         "align": "MIN",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#E9EAEB"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Margin",
+          "topLeftRadius": "corner radius/12",
+          "topRightRadius": "corner radius/12",
+          "bottomLeftRadius": "corner radius/12",
+          "bottomRightRadius": "corner radius/12",
+          "strokeTopWeight": "stroke weight/1",
+          "strokeBottomWeight": "stroke weight/1",
+          "strokeLeftWeight": "stroke weight/1",
+          "strokeRightWeight": "stroke weight/1",
+          "fills": "color/white/solid",
+          "strokes": "color/grey/92 2"
+         },
+         "variant": {
+          "Add#3429:10": true,
+          "Select#3429:5": false,
+          "เลือกผู้จัดซื้อ#3513:0": true,
+          "Suggestion#109:3": false,
+          "จัดซื้อเพิ่ม#109:2": true,
+          "อะไหล่": "รายการที่เลือก"
+         },
+         "component": "Spare Part Card Item [อะไหล่=รายการที่เลือก]",
+         "kids": [
+          {
+           "name": "Frame 1000003424",
+           "type": "FRAME",
+           "w": 787,
+           "h": 78,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "kids": [
+            {
+             "name": "Label and text",
+             "type": "FRAME",
+             "w": 787,
+             "h": 49,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "gap": 4,
+             "r": 0,
+             "dir": "VERTICAL",
+             "justify": "CENTER",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Spacing/100"
+             },
+             "kids": [
+              {
+               "name": "Frame 1000003473",
+               "type": "FRAME",
+               "w": 787,
+               "h": 24,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "gap": 4,
+               "r": 0,
+               "dir": "HORIZONTAL",
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE"
+              },
+              {
+               "name": "Frame 1000003433",
+               "type": "FRAME",
+               "w": 194,
+               "h": 21,
+               "sizing": [
+                "HUG",
+                "FIXED"
+               ],
+               "gap": 8,
+               "r": 0,
+               "dir": "HORIZONTAL",
+               "justify": "MIN",
+               "align": "CENTER",
+               "sw": 1,
+               "strokeAlign": "INSIDE"
+              }
+             ]
+            },
+            {
+             "name": "Frame 1000003474",
+             "type": "FRAME",
+             "w": 787,
+             "h": 21,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "gap": 8,
+             "r": 0,
+             "dir": "HORIZONTAL",
+             "justify": "MIN",
+             "align": "CENTER",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Space/200"
+             },
+             "kids": [
+              {
+               "name": "Supporting text",
+               "type": "TEXT",
+               "w": 146,
+               "h": 21,
+               "sizing": [
+                "HUG",
+                "HUG"
+               ],
+               "fill": [
+                "#475467"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/text/secondary",
+                "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+                "fontSize": "IBM/Helper-text/01/font-size",
+                "fontFamily": "IBM/font-family",
+                "paragraphSpacing": "IBM/Helper-text/01/font-size",
+                "fontWeight": "IBM/Helper-text/01/font-weight"
+               },
+               "font": {
+                "fam": null,
+                "style": null,
+                "size": 14,
+                "lh": null,
+                "ls": -0.20000000298023224
+               },
+               "text": "ซื้อเพิ่มเติม : คงเหลือ 5 ชิ้น"
+              },
+              {
+               "name": "Frame 1000003433",
+               "type": "FRAME",
+               "w": 97,
+               "h": 21,
+               "sizing": [
+                "HUG",
+                "HUG"
+               ],
+               "gap": 8,
+               "r": 0,
+               "dir": "HORIZONTAL",
+               "justify": "MIN",
+               "align": "CENTER",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Space/200"
+               }
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "name": "Frame 1000003432",
+           "type": "FRAME",
+           "w": 787,
+           "h": 40,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "SPACE_BETWEEN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "kids": [
+            {
+             "name": "Text",
+             "type": "TEXT",
+             "w": 74,
+             "h": 24,
+             "sizing": [
+              "HUG",
+              "HUG"
+             ],
+             "fill": [
+              "#475467"
+             ],
+             "sw": 1,
+             "strokeAlign": "OUTSIDE",
+             "vars": {
+              "fills": "Color/text/secondary",
+              "letterSpacing": "IBM/Label/02/letter-spacing",
+              "fontSize": "IBM/Label/02/font-size",
+              "fontFamily": "IBM/Label/02/font-family",
+              "paragraphSpacing": "IBM/Label/02/font-size",
+              "fontWeight": "IBM/Label/02/font-weight"
+             },
+             "font": {
+              "fam": "IBM Plex Sans Thai",
+              "style": "SemiBold",
+              "size": 16,
+              "lh": null,
+              "ls": -0.20000000298023224,
+              "align": "RIGHT"
+             },
+             "text": "4,080 บาท"
+            },
+            {
+             "name": "Number input",
+             "type": "INSTANCE",
+             "w": 120,
+             "h": 40,
+             "sizing": [
+              "FIXED",
+              "HUG"
+             ],
+             "gap": 8,
+             "r": 0,
+             "dir": "VERTICAL",
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Spacing/200",
+              "paddingLeft": "Spacing/none",
+              "paddingTop": "Spacing/none",
+              "paddingRight": "Spacing/none",
+              "paddingBottom": "Spacing/none"
+             },
+             "variant": {
+              "Optional#1990:14": true,
+              "Info icon#1990:11": true,
+              "Number#1990:9": "6",
+              "Label#1990:6": false,
+              "Helper#1990:13": false,
+              "Label text#1990:7": "Label",
+              "Helper text#1990:10": "Helper",
+              "State": "Filled",
+              "Size": "md"
+             },
+             "component": "Number input [State=Filled, Size=md]",
+             "kids": [
+              {
+               "name": "Label",
+               "type": "FRAME",
+               "visible": false,
+               "w": 360,
+               "h": 24,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "gap": 4,
+               "r": 0,
+               "dir": "HORIZONTAL",
+               "justify": "MIN",
+               "align": "CENTER",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/100",
+                "paddingLeft": "Spacing/none",
+                "paddingTop": "Spacing/none",
+                "paddingRight": "Spacing/none",
+                "paddingBottom": "Spacing/none"
+               }
+              },
+              {
+               "name": "Container",
+               "type": "FRAME",
+               "w": 120,
+               "h": 40,
+               "sizing": [
+                "FILL",
+                "FIXED"
+               ],
+               "gap": 8,
+               "r": 8,
+               "dir": "HORIZONTAL",
+               "justify": "MIN",
+               "align": "CENTER",
+               "fill": [
+                "#FFFFFF"
+               ],
+               "stroke": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/200",
+                "paddingLeft": "Spacing/none",
+                "paddingTop": "Spacing/none",
+                "paddingRight": "Spacing/none",
+                "paddingBottom": "Spacing/none",
+                "topLeftRadius": "Radius/200",
+                "topRightRadius": "Radius/200",
+                "bottomLeftRadius": "Radius/200",
+                "bottomRightRadius": "Radius/200",
+                "fills": "Color/surface/primary",
+                "strokes": "Color/border/primary"
+               }
+              },
+              {
+               "name": "Helper",
+               "type": "TEXT",
+               "visible": false,
+               "w": 360,
+               "h": 18,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "fill": [
+                "#475467"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/text/secondary",
+                "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+                "fontSize": "IBM/Helper-text/02/font-size",
+                "fontFamily": "IBM/font-family",
+                "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+                "fontWeight": "IBM/Helper-text/02/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "Regular",
+                "size": 12,
+                "lh": null,
+                "ls": -0.20000000298023224
+               },
+               "text": "Helper"
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "name": "Frame 1000003478",
+           "type": "FRAME",
+           "w": 787,
+           "h": 88,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Space/200"
+           },
+           "kids": [
+            {
+             "name": "Input label",
+             "type": "INSTANCE",
+             "w": 787,
+             "h": 24,
+             "sizing": [
+              "FILL",
+              "FIXED"
+             ],
+             "gap": 4,
+             "r": 0,
+             "dir": "HORIZONTAL",
+             "justify": "SPACE_BETWEEN",
+             "align": "CENTER",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "paddingLeft": "Spacing/none",
+              "paddingTop": "Spacing/none",
+              "paddingRight": "Spacing/none",
+              "paddingBottom": "Spacing/none"
+             },
+             "variant": {
+              "button#3608:0": false,
+              "Info icon#2404:1": false,
+              "Optional#2404:2": false,
+              "Label text#2404:0": "เลือกผู้จัดซื้ออะไหล่เพิ่ม"
+             },
+             "component": "Input label",
+             "kids": [
+              {
+               "name": "Left",
+               "type": "FRAME",
+               "w": 787,
+               "h": 24,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "gap": 4,
+               "r": 0,
+               "dir": "HORIZONTAL",
+               "justify": "MIN",
+               "align": "CENTER",
+               "sw": 1,
+               "strokeAlign": "INSIDE"
+              },
+              {
+               "name": "Tertiary brand button",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 107,
+               "h": 24,
+               "sizing": [
+                "HUG",
+                "FIXED"
+               ],
+               "pl": 8,
+               "pr": 8,
+               "pt": 8,
+               "pb": 8,
+               "gap": 4,
+               "r": 8,
+               "dir": "HORIZONTAL",
+               "justify": "CENTER",
+               "align": "CENTER",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/100",
+                "paddingLeft": "Spacing/200",
+                "paddingTop": "Spacing/200",
+                "paddingRight": "Spacing/200",
+                "paddingBottom": "Spacing/200",
+                "topLeftRadius": "Radius/200",
+                "topRightRadius": "Radius/200",
+                "bottomLeftRadius": "Radius/200",
+                "bottomRightRadius": "Radius/200"
+               },
+               "variant": {
+                "Leading icon swap#133:10": "1:107",
+                "Button text#1153:12": true,
+                "Trailing icon#105:4": false,
+                "Trailing icon swap#133:12": "1:107",
+                "Leading icon#105:2": false,
+                "Text#105:0": "Button",
+                "State": "Default"
+               },
+               "component": "Tertiary brand button [State=Default]"
+              }
+             ]
+            },
+            {
+             "name": "Check 2",
+             "type": "FRAME",
+             "w": 787,
+             "h": 56,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "gap": 16,
+             "r": 0,
+             "dir": "HORIZONTAL",
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Margin"
+             },
+             "kids": [
+              {
+               "name": "Radio text card",
+               "type": "INSTANCE",
+               "w": 384,
+               "h": 56,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "pl": 16,
+               "pr": 16,
+               "pt": 16,
+               "pb": 16,
+               "gap": 16,
+               "r": 8,
+               "dir": "VERTICAL",
+               "justify": "MIN",
+               "align": "MIN",
+               "fill": [
+                "#FFFFFF"
+               ],
+               "stroke": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/400",
+                "paddingLeft": "Spacing/400",
+                "paddingTop": "Spacing/400",
+                "paddingRight": "Spacing/400",
+                "paddingBottom": "Spacing/400",
+                "topLeftRadius": "Radius/200",
+                "topRightRadius": "Radius/200",
+                "bottomLeftRadius": "Radius/200",
+                "bottomRightRadius": "Radius/200",
+                "fills": "Color/surface/primary",
+                "strokes": "Color/border/primary"
+               },
+               "variant": {
+                "Supporting#2713:5": false,
+                "Supporting text#2713:3": "Supporting text",
+                "Text#2713:4": "Smart Inventory",
+                "State": "Default",
+                "Selected": "False"
+               },
+               "component": "Radio text card [State=Default, Selected=False]"
+              },
+              {
+               "name": "Radio text card",
+               "type": "INSTANCE",
+               "w": 386,
+               "h": 56,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "pl": 16,
+               "pr": 16,
+               "pt": 16,
+               "pb": 16,
+               "gap": 16,
+               "r": 8,
+               "dir": "VERTICAL",
+               "justify": "MIN",
+               "align": "MIN",
+               "fill": [
+                "#FFFFFF"
+               ],
+               "stroke": [
+                "#A80689"
+               ],
+               "sw": 2,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/400",
+                "paddingLeft": "Spacing/400",
+                "paddingTop": "Spacing/400",
+                "paddingRight": "Spacing/400",
+                "paddingBottom": "Spacing/400",
+                "topLeftRadius": "Radius/200",
+                "topRightRadius": "Radius/200",
+                "bottomLeftRadius": "Radius/200",
+                "bottomRightRadius": "Radius/200",
+                "fills": "Color/surface/primary",
+                "strokes": "Color/border/brand"
+               },
+               "variant": {
+                "Supporting#2713:5": false,
+                "Supporting text#2713:3": "Supporting text",
+                "Text#2713:4": "กบค.",
+                "State": "Default",
+                "Selected": "True"
+               },
+               "component": "Radio text card [State=Default, Selected=True]"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "name": "Spare Part Card Item",
+         "type": "INSTANCE",
+         "w": 821,
+         "h": 202,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "pl": 16,
+         "pr": 16,
+         "pt": 16,
+         "pb": 16,
+         "gap": 16,
+         "r": 12,
+         "dir": "VERTICAL",
+         "justify": "MIN",
+         "align": "MIN",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#E9EAEB"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Margin",
+          "topLeftRadius": "corner radius/12",
+          "topRightRadius": "corner radius/12",
+          "bottomLeftRadius": "corner radius/12",
+          "bottomRightRadius": "corner radius/12",
+          "strokeTopWeight": "stroke weight/1",
+          "strokeBottomWeight": "stroke weight/1",
+          "strokeLeftWeight": "stroke weight/1",
+          "strokeRightWeight": "stroke weight/1",
+          "fills": "color/white/solid",
+          "strokes": "color/grey/92 2"
+         },
+         "variant": {
+          "Add#3429:10": true,
+          "Select#3429:5": false,
+          "เลือกผู้จัดซื้อ#3513:0": true,
+          "จัดซื้อเพิ่ม#109:2": false,
+          "Suggestion#109:3": false,
+          "อะไหล่": "เพิ่มอะไหล่"
+         },
+         "component": "Spare Part Card Item [อะไหล่=เพิ่มอะไหล่]",
+         "kids": [
+          {
+           "name": "Frame 1000003435",
+           "type": "FRAME",
+           "w": 787,
+           "h": 112,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 16,
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Margin"
+           },
+           "kids": [
+            {
+             "name": "Frame 1000003551",
+             "type": "FRAME",
+             "w": 787,
+             "h": 24,
+             "sizing": [
+              "FIXED",
+              "HUG"
+             ],
+             "gap": 672,
+             "r": 0,
+             "dir": "HORIZONTAL",
+             "justify": "SPACE_BETWEEN",
+             "align": "CENTER",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "kids": [
+              {
+               "name": "Name",
+               "type": "TEXT",
+               "w": 104,
+               "h": 24,
+               "sizing": [
+                "HUG",
+                "HUG"
+               ],
+               "fill": [
+                "#000000"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/text/primary",
+                "letterSpacing": "IBM/Label/02/letter-spacing",
+                "fontSize": "IBM/Label/02/font-size",
+                "fontFamily": "IBM/Label/02/font-family",
+                "paragraphSpacing": "IBM/Label/02/font-size",
+                "fontWeight": "IBM/Label/02/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "SemiBold",
+                "size": 16,
+                "lh": null,
+                "ls": -0.20000000298023224
+               },
+               "text": "รายการเพิ่มเติม"
+              },
+              {
+               "name": "delete-24-300-round",
+               "type": "INSTANCE",
+               "w": 24,
+               "h": 24,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "r": 0,
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "component": "delete-24-300-round"
+              }
+             ]
+            },
+            {
+             "name": "Frame 1000003475",
+             "type": "FRAME",
+             "w": 787,
+             "h": 72,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "gap": 16,
+             "r": 0,
+             "dir": "HORIZONTAL",
+             "justify": "MIN",
+             "align": "CENTER",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Margin"
+             },
+             "kids": [
+              {
+               "name": "Text input",
+               "type": "INSTANCE",
+               "w": 385,
+               "h": 72,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "gap": 8,
+               "r": 0,
+               "dir": "VERTICAL",
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/200",
+                "paddingLeft": "Spacing/none",
+                "paddingTop": "Spacing/none",
+                "paddingRight": "Spacing/none",
+                "paddingBottom": "Spacing/none"
+               },
+               "variant": {
+                "Leading icon swap#33:3": "1:185",
+                "Info icon#522:0": false,
+                "Label text#265:7": "ชื่อ-นามสกุล",
+                "Label#265:0": true,
+                "Optional#1105:0": true,
+                "Leading icon#33:9": false,
+                "Helper#33:19": false,
+                "Trailing icon swap#33:6": "1:1160",
+                "Text#33:0": "ไส้กรองอากาศขนาดเล็ก",
+                "Helper text#33:15": "Helper",
+                "Trailing icon#33:12": false,
+                "State": "Filled",
+                "Size": "md"
+               },
+               "component": "Text input [State=Filled, Size=md]"
+              },
+              {
+               "name": "Text input",
+               "type": "INSTANCE",
+               "visible": false,
+               "w": 252,
+               "h": 72,
+               "sizing": [
+                "FIXED",
+                "HUG"
+               ],
+               "gap": 8,
+               "r": 0,
+               "dir": "VERTICAL",
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/200",
+                "paddingLeft": "Spacing/none",
+                "paddingTop": "Spacing/none",
+                "paddingRight": "Spacing/none",
+                "paddingBottom": "Spacing/none"
+               },
+               "variant": {
+                "Leading icon swap#33:3": "1:185",
+                "Optional#1105:0": true,
+                "Info icon#522:0": false,
+                "Label text#265:7": "ชื่อ-นามสกุล",
+                "Label#265:0": true,
+                "Leading icon#33:9": false,
+                "Helper#33:19": false,
+                "Trailing icon swap#33:6": "1:1160",
+                "Text#33:0": "ระบุรหัสอะไหล่",
+                "Helper text#33:15": "Helper",
+                "Trailing icon#33:12": false,
+                "State": "Default",
+                "Size": "md"
+               },
+               "component": "Text input [State=Default, Size=md]"
+              },
+              {
+               "name": "Text input",
+               "type": "INSTANCE",
+               "w": 385,
+               "h": 72,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "gap": 8,
+               "r": 0,
+               "dir": "VERTICAL",
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/200",
+                "paddingLeft": "Spacing/none",
+                "paddingTop": "Spacing/none",
+                "paddingRight": "Spacing/none",
+                "paddingBottom": "Spacing/none"
+               },
+               "variant": {
+                "Leading icon swap#33:3": "1:185",
+                "Info icon#522:0": false,
+                "Label text#265:7": "ชื่อ-นามสกุล",
+                "Label#265:0": true,
+                "Optional#1105:0": true,
+                "Leading icon#33:9": false,
+                "Helper#33:19": false,
+                "Trailing icon swap#33:6": "1:1160",
+                "Text#33:0": "500",
+                "Helper text#33:15": "Helper",
+                "Trailing icon#33:12": false,
+                "State": "Filled",
+                "Size": "md"
+               },
+               "component": "Text input [State=Filled, Size=md]"
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "name": "Frame 1000003432",
+           "type": "FRAME",
+           "w": 787,
+           "h": 40,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "SPACE_BETWEEN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "kids": [
+            {
+             "name": "Text",
+             "type": "TEXT",
+             "w": 74,
+             "h": 24,
+             "sizing": [
+              "HUG",
+              "HUG"
+             ],
+             "fill": [
+              "#475467"
+             ],
+             "sw": 1,
+             "strokeAlign": "OUTSIDE",
+             "vars": {
+              "fills": "Color/text/secondary",
+              "letterSpacing": "IBM/Label/02/letter-spacing",
+              "fontSize": "IBM/Label/02/font-size",
+              "fontFamily": "IBM/Label/02/font-family",
+              "paragraphSpacing": "IBM/Label/02/font-size",
+              "fontWeight": "IBM/Label/02/font-weight"
+             },
+             "font": {
+              "fam": "IBM Plex Sans Thai",
+              "style": "SemiBold",
+              "size": 16,
+              "lh": null,
+              "ls": -0.20000000298023224,
+              "align": "RIGHT"
+             },
+             "text": "1,500 บาท"
+            },
+            {
+             "name": "Number input",
+             "type": "INSTANCE",
+             "w": 120,
+             "h": 40,
+             "sizing": [
+              "FIXED",
+              "HUG"
+             ],
+             "gap": 8,
+             "r": 0,
+             "dir": "VERTICAL",
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Spacing/200",
+              "paddingLeft": "Spacing/none",
+              "paddingTop": "Spacing/none",
+              "paddingRight": "Spacing/none",
+              "paddingBottom": "Spacing/none"
+             },
+             "variant": {
+              "Optional#1990:14": true,
+              "Info icon#1990:11": true,
+              "Number#1990:9": "3",
+              "Label#1990:6": false,
+              "Helper#1990:13": false,
+              "Label text#1990:7": "Label",
+              "Helper text#1990:10": "Helper",
+              "State": "Filled",
+              "Size": "md"
+             },
+             "component": "Number input [State=Filled, Size=md]",
+             "kids": [
+              {
+               "name": "Label",
+               "type": "FRAME",
+               "visible": false,
+               "w": 360,
+               "h": 24,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "gap": 4,
+               "r": 0,
+               "dir": "HORIZONTAL",
+               "justify": "MIN",
+               "align": "CENTER",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/100",
+                "paddingLeft": "Spacing/none",
+                "paddingTop": "Spacing/none",
+                "paddingRight": "Spacing/none",
+                "paddingBottom": "Spacing/none"
+               }
+              },
+              {
+               "name": "Container",
+               "type": "FRAME",
+               "w": 120,
+               "h": 40,
+               "sizing": [
+                "FILL",
+                "FIXED"
+               ],
+               "gap": 8,
+               "r": 8,
+               "dir": "HORIZONTAL",
+               "justify": "MIN",
+               "align": "CENTER",
+               "fill": [
+                "#FFFFFF"
+               ],
+               "stroke": [
+                "#D0D5DD"
+               ],
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/200",
+                "paddingLeft": "Spacing/none",
+                "paddingTop": "Spacing/none",
+                "paddingRight": "Spacing/none",
+                "paddingBottom": "Spacing/none",
+                "topLeftRadius": "Radius/200",
+                "topRightRadius": "Radius/200",
+                "bottomLeftRadius": "Radius/200",
+                "bottomRightRadius": "Radius/200",
+                "fills": "Color/surface/primary",
+                "strokes": "Color/border/primary"
+               }
+              },
+              {
+               "name": "Helper",
+               "type": "TEXT",
+               "visible": false,
+               "w": 360,
+               "h": 18,
+               "sizing": [
+                "FIXED",
+                "FIXED"
+               ],
+               "fill": [
+                "#475467"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/text/secondary",
+                "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+                "fontSize": "IBM/Helper-text/02/font-size",
+                "fontFamily": "IBM/font-family",
+                "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+                "fontWeight": "IBM/Helper-text/02/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "Regular",
+                "size": 12,
+                "lh": null,
+                "ls": -0.20000000298023224
+               },
+               "text": "Helper"
+              }
+             ]
+            }
+           ]
+          }
+         ]
+        },
+        {
+         "name": "Secondary button",
+         "type": "INSTANCE",
+         "w": 163,
+         "h": 48,
+         "sizing": [
+          "HUG",
+          "FIXED"
+         ],
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "justify": "CENTER",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/100",
+          "paddingLeft": "Spacing/300",
+          "paddingTop": "Spacing/200",
+          "paddingRight": "Spacing/300",
+          "paddingBottom": "Spacing/200",
+          "topLeftRadius": "Radius/200",
+          "topRightRadius": "Radius/200",
+          "bottomLeftRadius": "Radius/200",
+          "bottomRightRadius": "Radius/200",
+          "fills": "Color/component/button/secondary/surface",
+          "strokes": "Color/border/primary"
+         },
+         "variant": {
+          "Button text#1246:27": true,
+          "Leading icon swap#133:10": "1:56013",
+          "Trailing icon#105:4": false,
+          "Trailing icon swap#133:12": "1:3546",
+          "Leading icon#105:2": true,
+          "Text#105:0": "ระบุอะไหล่เพิ่มเติม",
+          "State": "Default",
+          "Size": "lg"
+         },
+         "component": "Secondary button [State=Default, Size=lg]",
+         "kids": [
+          {
+           "name": "add-24-300-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "component": "add-24-300-round",
+           "kids": [
+            {
+             "name": "Bounding box",
+             "type": "RECTANGLE",
+             "w": 20,
+             "h": 20,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "fill": [
+              "#D9D9D9"
+             ],
+             "sw": 1,
+             "strokeAlign": "INSIDE"
+            },
+            {
+             "name": "Vector",
+             "type": "VECTOR",
+             "w": 13,
+             "h": 13,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "fill": [
+              "#475467"
+             ],
+             "sw": 0.02500000037252903,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "fills": "Color/component/button/secondary/icon"
+             }
+            }
+           ]
+          },
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 115,
+           "h": 24,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/component/button/secondary/text",
+            "letterSpacing": "IBM/Label/02/letter-spacing",
+            "fontSize": "IBM/Label/02/font-size",
+            "fontFamily": "IBM/Label/02/font-family",
+            "paragraphSpacing": "IBM/Label/02/font-size",
+            "fontWeight": "IBM/Label/02/font-weight"
+           },
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 16,
+            "lh": null,
+            "ls": -0.20000000298023224,
+            "align": "CENTER"
+           },
+           "text": "ระบุอะไหล่เพิ่มเติม"
+          },
+          {
+           "name": "crop_free-20-400-round",
+           "type": "INSTANCE",
+           "visible": false,
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "component": "crop_free-20-400-round",
+           "kids": [
+            {
+             "name": "Bounding box",
+             "type": "RECTANGLE",
+             "w": 20,
+             "h": 20,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "fill": [
+              "#D9D9D9"
+             ],
+             "sw": 1,
+             "strokeAlign": "INSIDE"
+            },
+            {
+             "name": "Vector",
+             "type": "VECTOR",
+             "w": 14,
+             "h": 14,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "fill": [
+              "#475467"
+             ],
+             "sw": 0.02083333395421505,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "fills": "Color/component/button/secondary/icon"
+             }
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Divider Container",
+       "type": "FRAME",
+       "w": 821,
+       "h": 152,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
+       "gap": 16,
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "kids": [
+        {
+         "name": "Vector 1",
+         "type": "VECTOR",
+         "w": 821,
+         "h": 0,
+         "sizing": [
+          "FILL",
+          "FIXED"
+         ],
+         "r": 0,
+         "stroke": [
+          "#E9EAEB"
+         ],
+         "sw": 1,
+         "strokeAlign": "CENTER"
+        },
+        {
+         "name": "Cost Container",
+         "type": "FRAME",
+         "w": 821,
+         "h": 136,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "gap": 16,
+         "r": 0,
+         "dir": "VERTICAL",
+         "justify": "MIN",
+         "align": "MIN",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "kids": [
+          {
+           "name": "Section header",
+           "type": "INSTANCE",
+           "w": 821,
+           "h": 30,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 20,
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "MIN",
+           "align": "MIN",
+           "sws": [
+            1,
+            0,
+            0,
+            0
+           ],
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/500",
+            "paddingLeft": "Spacing/none",
+            "paddingTop": "Spacing/none",
+            "paddingRight": "Spacing/none",
+            "paddingBottom": "Spacing/none"
+           },
+           "variant": {
+            "Badge#1985:2": false,
+            "More actions#2004:6": true,
+            "Divider#1985:5": false,
+            "Actions#1985:4": false,
+            "Supporting text#1985:3": false,
+            "Title#1985:6": "รวมค่าอะไหล่",
+            "Breakpoint": "Desktop"
+           },
+           "component": "Section header [Breakpoint=Desktop]",
+           "kids": [
+            {
+             "name": "Content",
+             "type": "FRAME",
+             "w": 821,
+             "h": 30,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "gap": 12,
+             "r": 0,
+             "dir": "HORIZONTAL",
+             "justify": "MIN",
+             "align": "MIN",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "vars": {
+              "itemSpacing": "Spacing/300"
+             },
+             "kids": [
+              {
+               "name": "Text and supporting text",
+               "type": "FRAME",
+               "w": 821,
+               "h": 30,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "gap": 8,
+               "r": 0,
+               "dir": "VERTICAL",
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/200"
+               }
+              },
+              {
+               "name": "Actions",
+               "type": "FRAME",
+               "visible": false,
+               "w": 348,
+               "h": 40,
+               "sizing": [
+                "HUG",
+                "HUG"
+               ],
+               "gap": 12,
+               "r": 0,
+               "dir": "HORIZONTAL",
+               "justify": "MIN",
+               "align": "MIN",
+               "sw": 1,
+               "strokeAlign": "INSIDE",
+               "vars": {
+                "itemSpacing": "Spacing/300"
+               }
+              }
+             ]
+            },
+            {
+             "name": "Divider",
+             "type": "VECTOR",
+             "visible": false,
+             "w": 1440,
+             "h": 1,
+             "sizing": [
+              "FIXED",
+              "FIXED"
+             ],
+             "r": 0,
+             "fill": [
+              "#D0D5DD"
+             ],
+             "sw": 1,
+             "strokeAlign": "CENTER",
+             "vars": {
+              "fills": "Color/icon/tertiary"
+             }
+            }
+           ]
+          },
+          {
+           "name": "Cost Breakdown",
+           "type": "FRAME",
+           "w": 821,
+           "h": 50,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "kids": [
+            {
+             "name": "Purchase Info",
+             "type": "FRAME",
+             "w": 821,
+             "h": 21,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "gap": 16,
+             "r": 0,
+             "dir": "HORIZONTAL",
+             "justify": "MIN",
+             "align": "CENTER",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "kids": [
+              {
+               "name": "Supporting text",
+               "type": "TEXT",
+               "w": 402,
+               "h": 21,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "fill": [
+                "#475467"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/text/secondary",
+                "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+                "fontSize": "IBM/Helper-text/01/font-size",
+                "fontFamily": "IBM/font-family",
+                "paragraphSpacing": "IBM/Helper-text/01/font-size",
+                "fontWeight": "IBM/Helper-text/01/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "Regular",
+                "size": 14,
+                "lh": null,
+                "ls": -0.20000000298023224
+               },
+               "text": "เบิกจากคลัง"
+              },
+              {
+               "name": "Text",
+               "type": "TEXT",
+               "w": 402,
+               "h": 21,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "fill": [
+                "#475467"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/text/secondary",
+                "letterSpacing": "IBM/Label/03/letter-spacing",
+                "fontSize": "IBM/Label/03/font-size",
+                "fontFamily": "IBM/Label/03/font-family",
+                "paragraphSpacing": "IBM/Label/03/letter-spacing",
+                "fontWeight": "IBM/Label/03/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "SemiBold",
+                "size": 14,
+                "lh": null,
+                "ls": -0.20000000298023224,
+                "align": "RIGHT"
+               },
+               "text": "8,160 บาท"
+              }
+             ]
+            },
+            {
+             "name": "Purchase Info",
+             "type": "FRAME",
+             "w": 821,
+             "h": 21,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "gap": 16,
+             "r": 0,
+             "dir": "HORIZONTAL",
+             "justify": "MIN",
+             "align": "CENTER",
+             "sw": 1,
+             "strokeAlign": "INSIDE",
+             "kids": [
+              {
+               "name": "Supporting text",
+               "type": "TEXT",
+               "w": 402,
+               "h": 21,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "fill": [
+                "#475467"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/text/secondary",
+                "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+                "fontSize": "IBM/Helper-text/01/font-size",
+                "fontFamily": "IBM/font-family",
+                "paragraphSpacing": "IBM/Helper-text/01/font-size",
+                "fontWeight": "IBM/Helper-text/01/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "Regular",
+                "size": 14,
+                "lh": null,
+                "ls": -0.20000000298023224
+               },
+               "text": "ต้องจัดซื้อ"
+              },
+              {
+               "name": "Text",
+               "type": "TEXT",
+               "w": 402,
+               "h": 21,
+               "sizing": [
+                "FILL",
+                "HUG"
+               ],
+               "fill": [
+                "#475467"
+               ],
+               "sw": 1,
+               "strokeAlign": "OUTSIDE",
+               "vars": {
+                "fills": "Color/text/secondary",
+                "letterSpacing": "IBM/Label/03/letter-spacing",
+                "fontSize": "IBM/Label/03/font-size",
+                "fontFamily": "IBM/Label/03/font-family",
+                "paragraphSpacing": "IBM/Label/03/letter-spacing",
+                "fontWeight": "IBM/Label/03/font-weight"
+               },
+               "font": {
+                "fam": "IBM Plex Sans Thai",
+                "style": "SemiBold",
+                "size": 14,
+                "lh": null,
+                "ls": -0.20000000298023224,
+                "align": "RIGHT"
+               },
+               "text": "3,540 บาท"
+              }
+             ]
+            }
+           ]
+          },
+          {
+           "name": "Total Cost",
+           "type": "FRAME",
+           "w": 821,
+           "h": 24,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 16,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "MIN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "kids": [
+            {
+             "name": "Text",
+             "type": "TEXT",
+             "w": 402,
+             "h": 21,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "fill": [
+              "#475467"
+             ],
+             "sw": 1,
+             "strokeAlign": "OUTSIDE",
+             "vars": {
+              "fills": "Color/text/secondary",
+              "letterSpacing": "IBM/Label/03/letter-spacing",
+              "fontSize": "IBM/Label/03/font-size",
+              "fontFamily": "IBM/Label/03/font-family",
+              "paragraphSpacing": "IBM/Label/03/letter-spacing",
+              "fontWeight": "IBM/Label/03/font-weight"
+             },
+             "font": {
+              "fam": "IBM Plex Sans Thai",
+              "style": "SemiBold",
+              "size": 14,
+              "lh": null,
+              "ls": -0.20000000298023224
+             },
+             "text": "รวมทั้งหมด"
+            },
+            {
+             "name": "Text",
+             "type": "TEXT",
+             "w": 402,
+             "h": 24,
+             "sizing": [
+              "FILL",
+              "HUG"
+             ],
+             "fill": [
+              "#475467"
+             ],
+             "sw": 1,
+             "strokeAlign": "OUTSIDE",
+             "vars": {
+              "fills": "Color/text/secondary",
+              "letterSpacing": "IBM/Label/02/letter-spacing",
+              "fontSize": "IBM/Label/02/font-size",
+              "fontFamily": "IBM/Label/02/font-family",
+              "paragraphSpacing": "IBM/Label/02/font-size",
+              "fontWeight": "IBM/Label/02/font-weight"
+             },
+             "font": {
+              "fam": "IBM Plex Sans Thai",
+              "style": "SemiBold",
+              "size": 16,
+              "lh": null,
+              "ls": -0.20000000298023224,
+              "align": "RIGHT"
+             },
+             "text": "11,700 บาท"
+            }
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

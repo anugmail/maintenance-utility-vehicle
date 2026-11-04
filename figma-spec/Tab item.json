@@ -1,5 +1,7 @@
 {
  "component": "Tab item",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
  "page": "✅ Tabs",
  "node": "2:9",
  "props": {
@@ -29,12 +31,45 @@
    ]
   }
  },
+ "set": {
+  "name": "Tab item",
+  "type": "COMPONENT_SET",
+  "w": 289,
+  "h": 224,
+  "sizing": [
+   "FIXED",
+   "FIXED"
+  ],
+  "pl": 20,
+  "pr": 20,
+  "pt": 20,
+  "pb": 20,
+  "gap": 20,
+  "r": 5,
+  "justify": "MIN",
+  "align": "MIN",
+  "fill": [
+   "#FFFFFF"
+  ],
+  "stroke": [
+   "#9747FF"
+  ],
+  "sw": 1,
+  "strokeAlign": "INSIDE",
+  "vars": {
+   "fills": "Color/background/default"
+  }
+ },
  "variants": [
   {
    "name": "State=Default, Active=False",
    "type": "COMPONENT",
    "w": 110,
    "h": 48,
+   "sizing": [
+    "HUG",
+    "FIXED"
+   ],
    "pl": 24,
    "pr": 24,
    "pt": 12,
@@ -42,6 +77,7 @@
    "gap": 8,
    "r": 0,
    "dir": "HORIZONTAL",
+   "justify": "CENTER",
    "align": "CENTER",
    "fill": [
     "#FFFFFF"
@@ -49,6 +85,26 @@
    "stroke": [
     "#D0D5DD"
    ],
+   "sws": [
+    0,
+    0,
+    1,
+    0
+   ],
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/200",
+    "paddingLeft": "Spacing/600",
+    "paddingTop": "Spacing/300",
+    "paddingRight": "Spacing/600",
+    "paddingBottom": "Spacing/300",
+    "topLeftRadius": "Radius/none",
+    "topRightRadius": "Radius/none",
+    "bottomLeftRadius": "Radius/none",
+    "bottomRightRadius": "Radius/none",
+    "fills": "Color/surface/primary",
+    "strokes": "Color/border/primary"
+   },
    "variant": {
     "State": "Default",
     "Active": "False"
@@ -59,15 +115,29 @@
      "type": "TEXT",
      "w": 23,
      "h": 21,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
      "fill": [
       "#475467"
      ],
      "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/secondary",
+      "letterSpacing": "IBM/Label/03/letter-spacing",
+      "fontSize": "IBM/Label/03/font-size",
+      "fontFamily": "IBM/Label/03/font-family",
+      "paragraphSpacing": "IBM/Label/03/letter-spacing",
+      "fontWeight": "IBM/Label/03/font-weight"
+     },
      "font": {
       "fam": "IBM Plex Sans Thai",
       "style": "SemiBold",
       "size": 14,
-      "lh": null
+      "lh": null,
+      "ls": -0.20000000298023224
      },
      "text": "Tab"
     },
@@ -76,12 +146,17 @@
      "type": "INSTANCE",
      "w": 31,
      "h": 24,
+     "sizing": [
+      "HUG",
+      "FIXED"
+     ],
      "pl": 8,
      "pr": 8,
      "pt": 4,
      "pb": 4,
      "r": 9999,
      "dir": "VERTICAL",
+     "justify": "CENTER",
      "align": "CENTER",
      "fill": [
       "#F4F2FF"
@@ -90,6 +165,20 @@
       "#DCD3FF"
      ],
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/none",
+      "paddingLeft": "Spacing/200",
+      "paddingTop": "Spacing/100",
+      "paddingRight": "Spacing/200",
+      "paddingBottom": "Spacing/100",
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full",
+      "fills": "Color/component/utility/brand/50",
+      "strokes": "Color/component/utility/brand/200"
+     },
      "variant": {
       "Text#695:3": "20",
       "Color": "Brand"
@@ -101,15 +190,29 @@
        "type": "TEXT",
        "w": 15,
        "h": 18,
+       "sizing": [
+        "HUG",
+        "HUG"
+       ],
        "fill": [
         "#6E1AE7"
        ],
        "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/component/utility/brand/900",
+        "letterSpacing": "IBM/Label/04/letter-spacing",
+        "fontSize": "IBM/Label/04/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Label/04/letter-spacing",
+        "fontWeight": "IBM/Label/04/font-weight"
+       },
        "font": {
         "fam": "IBM Plex Sans Thai",
         "style": "SemiBold",
         "size": 12,
-        "lh": null
+        "lh": null,
+        "ls": -0.20000000298023224
        },
        "text": "20"
       }
@@ -122,6 +225,10 @@
    "type": "COMPONENT",
    "w": 110,
    "h": 48,
+   "sizing": [
+    "HUG",
+    "FIXED"
+   ],
    "pl": 24,
    "pr": 24,
    "pt": 12,
@@ -129,6 +236,7 @@
    "gap": 8,
    "r": 0,
    "dir": "HORIZONTAL",
+   "justify": "CENTER",
    "align": "CENTER",
    "fill": [
     "#EAECF0"
@@ -136,6 +244,26 @@
    "stroke": [
     "#D0D5DD"
    ],
+   "sws": [
+    0,
+    0,
+    1,
+    0
+   ],
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/200",
+    "paddingLeft": "Spacing/600",
+    "paddingTop": "Spacing/300",
+    "paddingRight": "Spacing/600",
+    "paddingBottom": "Spacing/300",
+    "topLeftRadius": "Radius/none",
+    "topRightRadius": "Radius/none",
+    "bottomLeftRadius": "Radius/none",
+    "bottomRightRadius": "Radius/none",
+    "fills": "Color/surface/tertiary",
+    "strokes": "Color/border/primary"
+   },
    "variant": {
     "State": "Hover",
     "Active": "False"
@@ -146,15 +274,29 @@
      "type": "TEXT",
      "w": 23,
      "h": 21,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
      "fill": [
       "#000000"
      ],
      "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/primary",
+      "letterSpacing": "IBM/Label/03/letter-spacing",
+      "fontSize": "IBM/Label/03/font-size",
+      "fontFamily": "IBM/Label/03/font-family",
+      "paragraphSpacing": "IBM/Label/03/letter-spacing",
+      "fontWeight": "IBM/Label/03/font-weight"
+     },
      "font": {
       "fam": "IBM Plex Sans Thai",
       "style": "SemiBold",
       "size": 14,
-      "lh": null
+      "lh": null,
+      "ls": -0.20000000298023224
      },
      "text": "Tab"
     },
@@ -163,12 +305,17 @@
      "type": "INSTANCE",
      "w": 31,
      "h": 24,
+     "sizing": [
+      "HUG",
+      "FIXED"
+     ],
      "pl": 8,
      "pr": 8,
      "pt": 4,
      "pb": 4,
      "r": 9999,
      "dir": "VERTICAL",
+     "justify": "CENTER",
      "align": "CENTER",
      "fill": [
       "#F4F2FF"
@@ -177,6 +324,20 @@
       "#DCD3FF"
      ],
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/none",
+      "paddingLeft": "Spacing/200",
+      "paddingTop": "Spacing/100",
+      "paddingRight": "Spacing/200",
+      "paddingBottom": "Spacing/100",
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full",
+      "fills": "Color/component/utility/brand/50",
+      "strokes": "Color/component/utility/brand/200"
+     },
      "variant": {
       "Text#695:3": "20",
       "Color": "Brand"
@@ -188,15 +349,29 @@
        "type": "TEXT",
        "w": 15,
        "h": 18,
+       "sizing": [
+        "HUG",
+        "HUG"
+       ],
        "fill": [
         "#6E1AE7"
        ],
        "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/component/utility/brand/900",
+        "letterSpacing": "IBM/Label/04/letter-spacing",
+        "fontSize": "IBM/Label/04/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Label/04/letter-spacing",
+        "fontWeight": "IBM/Label/04/font-weight"
+       },
        "font": {
         "fam": "IBM Plex Sans Thai",
         "style": "SemiBold",
         "size": 12,
-        "lh": null
+        "lh": null,
+        "ls": -0.20000000298023224
        },
        "text": "20"
       }
@@ -209,6 +384,10 @@
    "type": "COMPONENT",
    "w": 110,
    "h": 48,
+   "sizing": [
+    "HUG",
+    "FIXED"
+   ],
    "pl": 24,
    "pr": 24,
    "pt": 12,
@@ -216,6 +395,7 @@
    "gap": 8,
    "r": 0,
    "dir": "HORIZONTAL",
+   "justify": "CENTER",
    "align": "CENTER",
    "fill": [
     "#F9FAFB"
@@ -223,6 +403,26 @@
    "stroke": [
     "#D0D5DD"
    ],
+   "sws": [
+    0,
+    0,
+    1,
+    0
+   ],
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/200",
+    "paddingLeft": "Spacing/600",
+    "paddingTop": "Spacing/300",
+    "paddingRight": "Spacing/600",
+    "paddingBottom": "Spacing/300",
+    "topLeftRadius": "Radius/none",
+    "topRightRadius": "Radius/none",
+    "bottomLeftRadius": "Radius/none",
+    "bottomRightRadius": "Radius/none",
+    "fills": "Color/surface/secondary-subtle",
+    "strokes": "Color/border/primary"
+   },
    "variant": {
     "State": "Focused",
     "Active": "False"
@@ -233,15 +433,29 @@
      "type": "TEXT",
      "w": 23,
      "h": 21,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
      "fill": [
       "#000000"
      ],
      "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/primary",
+      "letterSpacing": "IBM/Label/03/letter-spacing",
+      "fontSize": "IBM/Label/03/font-size",
+      "fontFamily": "IBM/Label/03/font-family",
+      "paragraphSpacing": "IBM/Label/03/letter-spacing",
+      "fontWeight": "IBM/Label/03/font-weight"
+     },
      "font": {
       "fam": "IBM Plex Sans Thai",
       "style": "SemiBold",
       "size": 14,
-      "lh": null
+      "lh": null,
+      "ls": -0.20000000298023224
      },
      "text": "Tab"
     },
@@ -250,12 +464,17 @@
      "type": "INSTANCE",
      "w": 31,
      "h": 24,
+     "sizing": [
+      "HUG",
+      "FIXED"
+     ],
      "pl": 8,
      "pr": 8,
      "pt": 4,
      "pb": 4,
      "r": 9999,
      "dir": "VERTICAL",
+     "justify": "CENTER",
      "align": "CENTER",
      "fill": [
       "#F4F2FF"
@@ -264,6 +483,20 @@
       "#DCD3FF"
      ],
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/none",
+      "paddingLeft": "Spacing/200",
+      "paddingTop": "Spacing/100",
+      "paddingRight": "Spacing/200",
+      "paddingBottom": "Spacing/100",
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full",
+      "fills": "Color/component/utility/brand/50",
+      "strokes": "Color/component/utility/brand/200"
+     },
      "variant": {
       "Text#695:3": "20",
       "Color": "Brand"
@@ -275,15 +508,29 @@
        "type": "TEXT",
        "w": 15,
        "h": 18,
+       "sizing": [
+        "HUG",
+        "HUG"
+       ],
        "fill": [
         "#6E1AE7"
        ],
        "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/component/utility/brand/900",
+        "letterSpacing": "IBM/Label/04/letter-spacing",
+        "fontSize": "IBM/Label/04/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Label/04/letter-spacing",
+        "fontWeight": "IBM/Label/04/font-weight"
+       },
        "font": {
         "fam": "IBM Plex Sans Thai",
         "style": "SemiBold",
         "size": 12,
-        "lh": null
+        "lh": null,
+        "ls": -0.20000000298023224
        },
        "text": "20"
       }
@@ -296,6 +543,10 @@
    "type": "COMPONENT",
    "w": 110,
    "h": 48,
+   "sizing": [
+    "HUG",
+    "FIXED"
+   ],
    "pl": 24,
    "pr": 24,
    "pt": 12,
@@ -303,6 +554,7 @@
    "gap": 8,
    "r": 0,
    "dir": "HORIZONTAL",
+   "justify": "CENTER",
    "align": "CENTER",
    "fill": [
     "#FFFFFF"
@@ -310,6 +562,26 @@
    "stroke": [
     "#6E1AE7"
    ],
+   "sws": [
+    0,
+    0,
+    2,
+    0
+   ],
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/200",
+    "paddingLeft": "Spacing/600",
+    "paddingTop": "Spacing/300",
+    "paddingRight": "Spacing/600",
+    "paddingBottom": "Spacing/300",
+    "topLeftRadius": "Radius/none",
+    "topRightRadius": "Radius/none",
+    "bottomLeftRadius": "Radius/none",
+    "bottomRightRadius": "Radius/none",
+    "fills": "Color/surface/primary",
+    "strokes": "Color/component/utility/brand/900"
+   },
    "variant": {
     "State": "Default",
     "Active": "True"
@@ -320,15 +592,29 @@
      "type": "TEXT",
      "w": 23,
      "h": 21,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
      "fill": [
       "#000000"
      ],
      "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/primary",
+      "letterSpacing": "IBM/Label/03/letter-spacing",
+      "fontSize": "IBM/Label/03/font-size",
+      "fontFamily": "IBM/Label/03/font-family",
+      "paragraphSpacing": "IBM/Label/03/letter-spacing",
+      "fontWeight": "IBM/Label/03/font-weight"
+     },
      "font": {
       "fam": "IBM Plex Sans Thai",
       "style": "SemiBold",
       "size": 14,
-      "lh": null
+      "lh": null,
+      "ls": -0.20000000298023224
      },
      "text": "Tab"
     },
@@ -337,12 +623,17 @@
      "type": "INSTANCE",
      "w": 31,
      "h": 24,
+     "sizing": [
+      "HUG",
+      "FIXED"
+     ],
      "pl": 8,
      "pr": 8,
      "pt": 4,
      "pb": 4,
      "r": 9999,
      "dir": "VERTICAL",
+     "justify": "CENTER",
      "align": "CENTER",
      "fill": [
       "#F4F2FF"
@@ -351,6 +642,20 @@
       "#DCD3FF"
      ],
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/none",
+      "paddingLeft": "Spacing/200",
+      "paddingTop": "Spacing/100",
+      "paddingRight": "Spacing/200",
+      "paddingBottom": "Spacing/100",
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full",
+      "fills": "Color/component/utility/brand/50",
+      "strokes": "Color/component/utility/brand/200"
+     },
      "variant": {
       "Text#695:3": "20",
       "Color": "Brand"
@@ -362,15 +667,29 @@
        "type": "TEXT",
        "w": 15,
        "h": 18,
+       "sizing": [
+        "HUG",
+        "HUG"
+       ],
        "fill": [
         "#6E1AE7"
        ],
        "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/component/utility/brand/900",
+        "letterSpacing": "IBM/Label/04/letter-spacing",
+        "fontSize": "IBM/Label/04/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Label/04/letter-spacing",
+        "fontWeight": "IBM/Label/04/font-weight"
+       },
        "font": {
         "fam": "IBM Plex Sans Thai",
         "style": "SemiBold",
         "size": 12,
-        "lh": null
+        "lh": null,
+        "ls": -0.20000000298023224
        },
        "text": "20"
       }
@@ -383,6 +702,10 @@
    "type": "COMPONENT",
    "w": 110,
    "h": 48,
+   "sizing": [
+    "HUG",
+    "FIXED"
+   ],
    "pl": 24,
    "pr": 24,
    "pt": 12,
@@ -390,6 +713,7 @@
    "gap": 8,
    "r": 0,
    "dir": "HORIZONTAL",
+   "justify": "CENTER",
    "align": "CENTER",
    "fill": [
     "#EAECF0"
@@ -397,6 +721,26 @@
    "stroke": [
     "#6E1AE7"
    ],
+   "sws": [
+    0,
+    0,
+    2,
+    0
+   ],
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/200",
+    "paddingLeft": "Spacing/600",
+    "paddingTop": "Spacing/300",
+    "paddingRight": "Spacing/600",
+    "paddingBottom": "Spacing/300",
+    "topLeftRadius": "Radius/none",
+    "topRightRadius": "Radius/none",
+    "bottomLeftRadius": "Radius/none",
+    "bottomRightRadius": "Radius/none",
+    "fills": "Color/surface/tertiary",
+    "strokes": "Color/component/utility/brand/900"
+   },
    "variant": {
     "State": "Hover",
     "Active": "True"
@@ -407,15 +751,29 @@
      "type": "TEXT",
      "w": 23,
      "h": 21,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
      "fill": [
       "#000000"
      ],
      "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/primary",
+      "letterSpacing": "IBM/Label/03/letter-spacing",
+      "fontSize": "IBM/Label/03/font-size",
+      "fontFamily": "IBM/Label/03/font-family",
+      "paragraphSpacing": "IBM/Label/03/letter-spacing",
+      "fontWeight": "IBM/Label/03/font-weight"
+     },
      "font": {
       "fam": "IBM Plex Sans Thai",
       "style": "SemiBold",
       "size": 14,
-      "lh": null
+      "lh": null,
+      "ls": -0.20000000298023224
      },
      "text": "Tab"
     },
@@ -424,12 +782,17 @@
      "type": "INSTANCE",
      "w": 31,
      "h": 24,
+     "sizing": [
+      "HUG",
+      "FIXED"
+     ],
      "pl": 8,
      "pr": 8,
      "pt": 4,
      "pb": 4,
      "r": 9999,
      "dir": "VERTICAL",
+     "justify": "CENTER",
      "align": "CENTER",
      "fill": [
       "#F4F2FF"
@@ -438,6 +801,20 @@
       "#DCD3FF"
      ],
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/none",
+      "paddingLeft": "Spacing/200",
+      "paddingTop": "Spacing/100",
+      "paddingRight": "Spacing/200",
+      "paddingBottom": "Spacing/100",
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full",
+      "fills": "Color/component/utility/brand/50",
+      "strokes": "Color/component/utility/brand/200"
+     },
      "variant": {
       "Text#695:3": "20",
       "Color": "Brand"
@@ -449,15 +826,29 @@
        "type": "TEXT",
        "w": 15,
        "h": 18,
+       "sizing": [
+        "HUG",
+        "HUG"
+       ],
        "fill": [
         "#6E1AE7"
        ],
        "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/component/utility/brand/900",
+        "letterSpacing": "IBM/Label/04/letter-spacing",
+        "fontSize": "IBM/Label/04/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Label/04/letter-spacing",
+        "fontWeight": "IBM/Label/04/font-weight"
+       },
        "font": {
         "fam": "IBM Plex Sans Thai",
         "style": "SemiBold",
         "size": 12,
-        "lh": null
+        "lh": null,
+        "ls": -0.20000000298023224
        },
        "text": "20"
       }
@@ -470,6 +861,10 @@
    "type": "COMPONENT",
    "w": 110,
    "h": 48,
+   "sizing": [
+    "HUG",
+    "FIXED"
+   ],
    "pl": 24,
    "pr": 24,
    "pt": 12,
@@ -477,6 +872,7 @@
    "gap": 8,
    "r": 0,
    "dir": "HORIZONTAL",
+   "justify": "CENTER",
    "align": "CENTER",
    "fill": [
     "#F9FAFB"
@@ -484,6 +880,26 @@
    "stroke": [
     "#6E1AE7"
    ],
+   "sws": [
+    0,
+    0,
+    2,
+    0
+   ],
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/200",
+    "paddingLeft": "Spacing/600",
+    "paddingTop": "Spacing/300",
+    "paddingRight": "Spacing/600",
+    "paddingBottom": "Spacing/300",
+    "topLeftRadius": "Radius/none",
+    "topRightRadius": "Radius/none",
+    "bottomLeftRadius": "Radius/none",
+    "bottomRightRadius": "Radius/none",
+    "fills": "Color/surface/secondary-subtle",
+    "strokes": "Color/component/utility/brand/900"
+   },
    "variant": {
     "State": "Focused",
     "Active": "True"
@@ -494,15 +910,29 @@
      "type": "TEXT",
      "w": 23,
      "h": 21,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
      "fill": [
       "#000000"
      ],
      "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/primary",
+      "letterSpacing": "IBM/Label/03/letter-spacing",
+      "fontSize": "IBM/Label/03/font-size",
+      "fontFamily": "IBM/Label/03/font-family",
+      "paragraphSpacing": "IBM/Label/03/letter-spacing",
+      "fontWeight": "IBM/Label/03/font-weight"
+     },
      "font": {
       "fam": "IBM Plex Sans Thai",
       "style": "SemiBold",
       "size": 14,
-      "lh": null
+      "lh": null,
+      "ls": -0.20000000298023224
      },
      "text": "Tab"
     },
@@ -511,12 +941,17 @@
      "type": "INSTANCE",
      "w": 31,
      "h": 24,
+     "sizing": [
+      "HUG",
+      "FIXED"
+     ],
      "pl": 8,
      "pr": 8,
      "pt": 4,
      "pb": 4,
      "r": 9999,
      "dir": "VERTICAL",
+     "justify": "CENTER",
      "align": "CENTER",
      "fill": [
       "#F4F2FF"
@@ -525,6 +960,20 @@
       "#DCD3FF"
      ],
      "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/none",
+      "paddingLeft": "Spacing/200",
+      "paddingTop": "Spacing/100",
+      "paddingRight": "Spacing/200",
+      "paddingBottom": "Spacing/100",
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full",
+      "fills": "Color/component/utility/brand/50",
+      "strokes": "Color/component/utility/brand/200"
+     },
      "variant": {
       "Text#695:3": "20",
       "Color": "Brand"
@@ -536,15 +985,29 @@
        "type": "TEXT",
        "w": 15,
        "h": 18,
+       "sizing": [
+        "HUG",
+        "HUG"
+       ],
        "fill": [
         "#6E1AE7"
        ],
        "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/component/utility/brand/900",
+        "letterSpacing": "IBM/Label/04/letter-spacing",
+        "fontSize": "IBM/Label/04/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Label/04/letter-spacing",
+        "fontWeight": "IBM/Label/04/font-weight"
+       },
        "font": {
         "fam": "IBM Plex Sans Thai",
         "style": "SemiBold",
         "size": 12,
-        "lh": null
+        "lh": null,
+        "ls": -0.20000000298023224
        },
        "text": "20"
       }

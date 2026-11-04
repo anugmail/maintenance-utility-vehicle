@@ -1,5 +1,7 @@
 {
  "component": "Progress bar",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
  "page": "✅ Progress bar",
  "node": "2843:13902",
  "props": {
@@ -36,17 +38,56 @@
    ]
   }
  },
+ "set": {
+  "name": "Progress bar",
+  "type": "COMPONENT_SET",
+  "w": 488,
+  "h": 515,
+  "sizing": [
+   "FIXED",
+   "HUG"
+  ],
+  "pl": 20,
+  "pr": 20,
+  "pt": 20,
+  "pb": 20,
+  "gap": 20,
+  "r": 5,
+  "dir": "VERTICAL",
+  "justify": "MIN",
+  "align": "MIN",
+  "fill": [
+   "#FFFFFF"
+  ],
+  "stroke": [
+   "#9747FF"
+  ],
+  "sw": 1,
+  "strokeAlign": "INSIDE",
+  "vars": {
+   "fills": "Color/background/default"
+  }
+ },
  "variants": [
   {
    "name": "Label=Right, Progress=0%, Size=md",
    "type": "COMPONENT",
    "w": 448,
    "h": 22,
+   "sizing": [
+    "FILL",
+    "HUG"
+   ],
    "gap": 8,
    "r": 0,
    "dir": "HORIZONTAL",
+   "justify": "MIN",
    "align": "CENTER",
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/200"
+   },
    "variant": {
     "Label": "Right",
     "Progress": "0%",
@@ -58,39 +99,79 @@
      "type": "RECTANGLE",
      "w": 400,
      "h": 8,
+     "sizing": [
+      "FILL",
+      "FIXED"
+     ],
      "r": 9999,
      "fill": [
       "#D0D5DD"
      ],
-     "sw": 1
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full",
+      "fills": "Color/component/progress/track"
+     }
     },
     {
      "name": "Percentage",
      "type": "TEXT",
      "w": 40,
      "h": 22,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "fill": [
       "#475467"
      ],
      "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/secondary",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
      "font": {
       "fam": "IBM Plex Sans Thai",
       "style": "Regular",
       "size": 14,
-      "lh": null
+      "lh": null,
+      "ls": -0.20000000298023224,
+      "align": "RIGHT"
      },
      "text": "0%"
     },
     {
      "name": "Progress",
      "type": "VECTOR",
+     "visible": false,
      "w": 8,
      "h": 8,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "r": 9999,
      "fill": [
       "#A80689"
      ],
-     "sw": 1
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full",
+      "fills": "Color/component/progress/progress"
+     }
     }
    ]
   },
@@ -99,11 +180,20 @@
    "type": "COMPONENT",
    "w": 448,
    "h": 22,
+   "sizing": [
+    "FILL",
+    "HUG"
+   ],
    "gap": 8,
    "r": 0,
    "dir": "HORIZONTAL",
+   "justify": "MIN",
    "align": "CENTER",
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/200"
+   },
    "variant": {
     "Label": "Right",
     "Progress": "20%",
@@ -115,28 +205,59 @@
      "type": "GROUP",
      "w": 400,
      "h": 8,
+     "sizing": [
+      "FILL",
+      "FIXED"
+     ],
+     "vars": {
+      "cornerRadius": "Radius/full"
+     },
      "kids": [
       {
        "name": "Track",
        "type": "RECTANGLE",
        "w": 400,
        "h": 8,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 9999,
        "fill": [
         "#D0D5DD"
        ],
-       "sw": 1
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/full",
+        "topRightRadius": "Radius/full",
+        "bottomLeftRadius": "Radius/full",
+        "bottomRightRadius": "Radius/full",
+        "fills": "Color/component/progress/track"
+       }
       },
       {
        "name": "Progress",
        "type": "RECTANGLE",
        "w": 80,
        "h": 8,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 9999,
        "fill": [
         "#A80689"
        ],
-       "sw": 1
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/full",
+        "topRightRadius": "Radius/full",
+        "bottomLeftRadius": "Radius/full",
+        "bottomRightRadius": "Radius/full",
+        "fills": "Color/component/progress/progress"
+       }
       }
      ]
     },
@@ -145,15 +266,30 @@
      "type": "TEXT",
      "w": 40,
      "h": 22,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "fill": [
       "#475467"
      ],
      "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/secondary",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
      "font": {
       "fam": "IBM Plex Sans Thai",
       "style": "Regular",
       "size": 14,
-      "lh": null
+      "lh": null,
+      "ls": -0.20000000298023224,
+      "align": "RIGHT"
      },
      "text": "20%"
     }
@@ -164,11 +300,20 @@
    "type": "COMPONENT",
    "w": 448,
    "h": 22,
+   "sizing": [
+    "FILL",
+    "HUG"
+   ],
    "gap": 8,
    "r": 0,
    "dir": "HORIZONTAL",
+   "justify": "MIN",
    "align": "CENTER",
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/200"
+   },
    "variant": {
     "Label": "Right",
     "Progress": "40%",
@@ -180,28 +325,59 @@
      "type": "GROUP",
      "w": 400,
      "h": 8,
+     "sizing": [
+      "FILL",
+      "FIXED"
+     ],
+     "vars": {
+      "cornerRadius": "Radius/full"
+     },
      "kids": [
       {
        "name": "Track",
        "type": "RECTANGLE",
        "w": 400,
        "h": 8,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 9999,
        "fill": [
         "#D0D5DD"
        ],
-       "sw": 1
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/full",
+        "topRightRadius": "Radius/full",
+        "bottomLeftRadius": "Radius/full",
+        "bottomRightRadius": "Radius/full",
+        "fills": "Color/component/progress/track"
+       }
       },
       {
        "name": "Progress",
        "type": "RECTANGLE",
        "w": 160,
        "h": 8,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 9999,
        "fill": [
         "#A80689"
        ],
-       "sw": 1
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/full",
+        "topRightRadius": "Radius/full",
+        "bottomLeftRadius": "Radius/full",
+        "bottomRightRadius": "Radius/full",
+        "fills": "Color/component/progress/progress"
+       }
       }
      ]
     },
@@ -210,15 +386,30 @@
      "type": "TEXT",
      "w": 40,
      "h": 22,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "fill": [
       "#475467"
      ],
      "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/secondary",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
      "font": {
       "fam": "IBM Plex Sans Thai",
       "style": "Regular",
       "size": 14,
-      "lh": null
+      "lh": null,
+      "ls": -0.20000000298023224,
+      "align": "RIGHT"
      },
      "text": "40%"
     }
@@ -229,11 +420,20 @@
    "type": "COMPONENT",
    "w": 448,
    "h": 22,
+   "sizing": [
+    "FILL",
+    "HUG"
+   ],
    "gap": 8,
    "r": 0,
    "dir": "HORIZONTAL",
+   "justify": "MIN",
    "align": "CENTER",
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/200"
+   },
    "variant": {
     "Label": "Right",
     "Progress": "60%",
@@ -245,28 +445,59 @@
      "type": "GROUP",
      "w": 400,
      "h": 8,
+     "sizing": [
+      "FILL",
+      "FIXED"
+     ],
+     "vars": {
+      "cornerRadius": "Radius/full"
+     },
      "kids": [
       {
        "name": "Track",
        "type": "RECTANGLE",
        "w": 400,
        "h": 8,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 9999,
        "fill": [
         "#D0D5DD"
        ],
-       "sw": 1
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/full",
+        "topRightRadius": "Radius/full",
+        "bottomLeftRadius": "Radius/full",
+        "bottomRightRadius": "Radius/full",
+        "fills": "Color/component/progress/track"
+       }
       },
       {
        "name": "Progress",
        "type": "RECTANGLE",
        "w": 240,
        "h": 8,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 9999,
        "fill": [
         "#A80689"
        ],
-       "sw": 1
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/full",
+        "topRightRadius": "Radius/full",
+        "bottomLeftRadius": "Radius/full",
+        "bottomRightRadius": "Radius/full",
+        "fills": "Color/component/progress/progress"
+       }
       }
      ]
     },
@@ -275,15 +506,30 @@
      "type": "TEXT",
      "w": 40,
      "h": 22,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "fill": [
       "#475467"
      ],
      "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/secondary",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
      "font": {
       "fam": "IBM Plex Sans Thai",
       "style": "Regular",
       "size": 14,
-      "lh": null
+      "lh": null,
+      "ls": -0.20000000298023224,
+      "align": "RIGHT"
      },
      "text": "60%"
     }
@@ -294,11 +540,20 @@
    "type": "COMPONENT",
    "w": 448,
    "h": 22,
+   "sizing": [
+    "FILL",
+    "HUG"
+   ],
    "gap": 8,
    "r": 0,
    "dir": "HORIZONTAL",
+   "justify": "MIN",
    "align": "CENTER",
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/200"
+   },
    "variant": {
     "Label": "Right",
     "Progress": "80%",
@@ -310,28 +565,59 @@
      "type": "GROUP",
      "w": 400,
      "h": 8,
+     "sizing": [
+      "FILL",
+      "FIXED"
+     ],
+     "vars": {
+      "cornerRadius": "Radius/full"
+     },
      "kids": [
       {
        "name": "Track",
        "type": "RECTANGLE",
        "w": 400,
        "h": 8,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 9999,
        "fill": [
         "#D0D5DD"
        ],
-       "sw": 1
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/full",
+        "topRightRadius": "Radius/full",
+        "bottomLeftRadius": "Radius/full",
+        "bottomRightRadius": "Radius/full",
+        "fills": "Color/component/progress/track"
+       }
       },
       {
        "name": "Progress",
        "type": "RECTANGLE",
        "w": 320,
        "h": 8,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 9999,
        "fill": [
         "#A80689"
        ],
-       "sw": 1
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/full",
+        "topRightRadius": "Radius/full",
+        "bottomLeftRadius": "Radius/full",
+        "bottomRightRadius": "Radius/full",
+        "fills": "Color/component/progress/progress"
+       }
       }
      ]
     },
@@ -340,15 +626,30 @@
      "type": "TEXT",
      "w": 40,
      "h": 22,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "fill": [
       "#475467"
      ],
      "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/secondary",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
      "font": {
       "fam": "IBM Plex Sans Thai",
       "style": "Regular",
       "size": 14,
-      "lh": null
+      "lh": null,
+      "ls": -0.20000000298023224,
+      "align": "RIGHT"
      },
      "text": "80%"
     }
@@ -359,11 +660,20 @@
    "type": "COMPONENT",
    "w": 448,
    "h": 22,
+   "sizing": [
+    "FILL",
+    "HUG"
+   ],
    "gap": 8,
    "r": 0,
    "dir": "HORIZONTAL",
+   "justify": "MIN",
    "align": "CENTER",
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/200"
+   },
    "variant": {
     "Label": "Right",
     "Progress": "100%",
@@ -375,28 +685,59 @@
      "type": "GROUP",
      "w": 400,
      "h": 8,
+     "sizing": [
+      "FILL",
+      "FIXED"
+     ],
+     "vars": {
+      "cornerRadius": "Radius/full"
+     },
      "kids": [
       {
        "name": "Track",
        "type": "RECTANGLE",
        "w": 400,
        "h": 8,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 9999,
        "fill": [
         "#D0D5DD"
        ],
-       "sw": 1
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/full",
+        "topRightRadius": "Radius/full",
+        "bottomLeftRadius": "Radius/full",
+        "bottomRightRadius": "Radius/full",
+        "fills": "Color/component/progress/track"
+       }
       },
       {
        "name": "Progress",
        "type": "RECTANGLE",
        "w": 400,
        "h": 8,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 9999,
        "fill": [
         "#A80689"
        ],
-       "sw": 1
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/full",
+        "topRightRadius": "Radius/full",
+        "bottomLeftRadius": "Radius/full",
+        "bottomRightRadius": "Radius/full",
+        "fills": "Color/component/progress/progress"
+       }
       }
      ]
     },
@@ -405,15 +746,30 @@
      "type": "TEXT",
      "w": 40,
      "h": 22,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "fill": [
       "#475467"
      ],
      "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/secondary",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
      "font": {
       "fam": "IBM Plex Sans Thai",
       "style": "Regular",
       "size": 14,
-      "lh": null
+      "lh": null,
+      "ls": -0.20000000298023224,
+      "align": "RIGHT"
      },
      "text": "100%"
     }
@@ -424,11 +780,20 @@
    "type": "COMPONENT",
    "w": 448,
    "h": 22,
+   "sizing": [
+    "FILL",
+    "HUG"
+   ],
    "gap": 8,
    "r": 0,
    "dir": "HORIZONTAL",
+   "justify": "MIN",
    "align": "CENTER",
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/200"
+   },
    "variant": {
     "Label": "Right",
     "Progress": "100%",
@@ -440,28 +805,59 @@
      "type": "GROUP",
      "w": 400,
      "h": 12,
+     "sizing": [
+      "FILL",
+      "FIXED"
+     ],
+     "vars": {
+      "cornerRadius": "Radius/full"
+     },
      "kids": [
       {
        "name": "Track",
        "type": "RECTANGLE",
        "w": 400,
        "h": 12,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 9999,
        "fill": [
         "#D0D5DD"
        ],
-       "sw": 1
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/full",
+        "topRightRadius": "Radius/full",
+        "bottomLeftRadius": "Radius/full",
+        "bottomRightRadius": "Radius/full",
+        "fills": "Color/component/progress/track"
+       }
       },
       {
        "name": "Progress",
        "type": "RECTANGLE",
        "w": 400,
        "h": 12,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 9999,
        "fill": [
         "#A80689"
        ],
-       "sw": 1
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/full",
+        "topRightRadius": "Radius/full",
+        "bottomLeftRadius": "Radius/full",
+        "bottomRightRadius": "Radius/full",
+        "fills": "Color/component/progress/progress"
+       }
       }
      ]
     },
@@ -470,15 +866,30 @@
      "type": "TEXT",
      "w": 40,
      "h": 22,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "fill": [
       "#475467"
      ],
      "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/secondary",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
      "font": {
       "fam": "IBM Plex Sans Thai",
       "style": "Regular",
       "size": 14,
-      "lh": null
+      "lh": null,
+      "ls": -0.20000000298023224,
+      "align": "RIGHT"
      },
      "text": "100%"
     }
@@ -489,11 +900,20 @@
    "type": "COMPONENT",
    "w": 448,
    "h": 22,
+   "sizing": [
+    "FILL",
+    "HUG"
+   ],
    "gap": 8,
    "r": 0,
    "dir": "HORIZONTAL",
+   "justify": "MIN",
    "align": "CENTER",
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/200"
+   },
    "variant": {
     "Label": "Right",
     "Progress": "60%",
@@ -505,28 +925,59 @@
      "type": "GROUP",
      "w": 400,
      "h": 12,
+     "sizing": [
+      "FILL",
+      "FIXED"
+     ],
+     "vars": {
+      "cornerRadius": "Radius/full"
+     },
      "kids": [
       {
        "name": "Track",
        "type": "RECTANGLE",
        "w": 400,
        "h": 12,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 9999,
        "fill": [
         "#D0D5DD"
        ],
-       "sw": 1
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/full",
+        "topRightRadius": "Radius/full",
+        "bottomLeftRadius": "Radius/full",
+        "bottomRightRadius": "Radius/full",
+        "fills": "Color/component/progress/track"
+       }
       },
       {
        "name": "Progress",
        "type": "RECTANGLE",
        "w": 240,
        "h": 12,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 9999,
        "fill": [
         "#A80689"
        ],
-       "sw": 1
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/full",
+        "topRightRadius": "Radius/full",
+        "bottomLeftRadius": "Radius/full",
+        "bottomRightRadius": "Radius/full",
+        "fills": "Color/component/progress/progress"
+       }
       }
      ]
     },
@@ -535,15 +986,30 @@
      "type": "TEXT",
      "w": 40,
      "h": 22,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "fill": [
       "#475467"
      ],
      "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/secondary",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
      "font": {
       "fam": "IBM Plex Sans Thai",
       "style": "Regular",
       "size": 14,
-      "lh": null
+      "lh": null,
+      "ls": -0.20000000298023224,
+      "align": "RIGHT"
      },
      "text": "60%"
     }
@@ -554,11 +1020,20 @@
    "type": "COMPONENT",
    "w": 448,
    "h": 33,
+   "sizing": [
+    "FILL",
+    "HUG"
+   ],
    "gap": 4,
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "CENTER",
    "align": "MIN",
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/100"
+   },
    "variant": {
     "Label": "Top left",
     "Progress": "0%",
@@ -570,15 +1045,29 @@
      "type": "TEXT",
      "w": 22,
      "h": 21,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
      "fill": [
       "#475467"
      ],
      "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/secondary",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
      "font": {
       "fam": "IBM Plex Sans Thai",
       "style": "Regular",
       "size": 14,
-      "lh": null
+      "lh": null,
+      "ls": -0.20000000298023224
      },
      "text": "0%"
     },
@@ -587,22 +1076,47 @@
      "type": "RECTANGLE",
      "w": 448,
      "h": 8,
+     "sizing": [
+      "FILL",
+      "FIXED"
+     ],
      "r": 9999,
      "fill": [
       "#D0D5DD"
      ],
-     "sw": 1
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full",
+      "fills": "Color/component/progress/track"
+     }
     },
     {
      "name": "Progress",
      "type": "VECTOR",
+     "visible": false,
      "w": 8,
      "h": 8,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
      "r": 9999,
      "fill": [
       "#A80689"
      ],
-     "sw": 1
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full",
+      "fills": "Color/component/progress/progress"
+     }
     }
    ]
   },
@@ -611,11 +1125,20 @@
    "type": "COMPONENT",
    "w": 448,
    "h": 33,
+   "sizing": [
+    "FILL",
+    "HUG"
+   ],
    "gap": 4,
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "CENTER",
    "align": "MIN",
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/100"
+   },
    "variant": {
     "Label": "Top left",
     "Progress": "20%",
@@ -627,15 +1150,29 @@
      "type": "TEXT",
      "w": 30,
      "h": 21,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
      "fill": [
       "#475467"
      ],
      "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/secondary",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
      "font": {
       "fam": "IBM Plex Sans Thai",
       "style": "Regular",
       "size": 14,
-      "lh": null
+      "lh": null,
+      "ls": -0.20000000298023224
      },
      "text": "20%"
     },
@@ -644,28 +1181,59 @@
      "type": "GROUP",
      "w": 448,
      "h": 8,
+     "sizing": [
+      "FILL",
+      "FIXED"
+     ],
+     "vars": {
+      "cornerRadius": "Radius/full"
+     },
      "kids": [
       {
        "name": "Track",
        "type": "RECTANGLE",
        "w": 448,
        "h": 8,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 9999,
        "fill": [
         "#D0D5DD"
        ],
-       "sw": 1
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/full",
+        "topRightRadius": "Radius/full",
+        "bottomLeftRadius": "Radius/full",
+        "bottomRightRadius": "Radius/full",
+        "fills": "Color/component/progress/track"
+       }
       },
       {
        "name": "Progress",
        "type": "RECTANGLE",
        "w": 90,
        "h": 8,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 9999,
        "fill": [
         "#A80689"
        ],
-       "sw": 1
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/full",
+        "topRightRadius": "Radius/full",
+        "bottomLeftRadius": "Radius/full",
+        "bottomRightRadius": "Radius/full",
+        "fills": "Color/component/progress/progress"
+       }
       }
      ]
     }
@@ -676,11 +1244,20 @@
    "type": "COMPONENT",
    "w": 448,
    "h": 33,
+   "sizing": [
+    "FILL",
+    "HUG"
+   ],
    "gap": 4,
    "r": 0,
    "dir": "VERTICAL",
+   "justify": "CENTER",
    "align": "MIN",
    "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/100"
+   },
    "variant": {
     "Label": "Top left",
     "Progress": "40%",
@@ -692,15 +1269,29 @@
      "type": "TEXT",
      "w": 30,
      "h": 21,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
      "fill": [
       "#475467"
      ],
      "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/secondary",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
      "font": {
       "fam": "IBM Plex Sans Thai",
       "style": "Regular",
       "size": 14,
-      "lh": null
+      "lh": null,
+      "ls": -0.20000000298023224
      },
      "text": "40%"
     },
@@ -709,28 +1300,59 @@
      "type": "GROUP",
      "w": 448,
      "h": 8,
+     "sizing": [
+      "FILL",
+      "FIXED"
+     ],
+     "vars": {
+      "cornerRadius": "Radius/full"
+     },
      "kids": [
       {
        "name": "Track",
        "type": "RECTANGLE",
        "w": 448,
        "h": 8,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 9999,
        "fill": [
         "#D0D5DD"
        ],
-       "sw": 1
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/full",
+        "topRightRadius": "Radius/full",
+        "bottomLeftRadius": "Radius/full",
+        "bottomRightRadius": "Radius/full",
+        "fills": "Color/component/progress/track"
+       }
       },
       {
        "name": "Progress",
        "type": "RECTANGLE",
        "w": 160,
        "h": 8,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
        "r": 9999,
        "fill": [
         "#A80689"
        ],
-       "sw": 1
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/full",
+        "topRightRadius": "Radius/full",
+        "bottomLeftRadius": "Radius/full",
+        "bottomRightRadius": "Radius/full",
+        "fills": "Color/component/progress/progress"
+       }
       }
      ]
     }
