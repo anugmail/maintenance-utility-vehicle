@@ -32,7 +32,18 @@ export interface Plan {
   types?: string[];
   alloc?: Record<number, number>;   // ลำดับรถใน CAND → ไตรมาส
   picks?: Record<number, number[]>; // ลำดับรถ → ลำดับอะไหล่ใน PARTS
+  /* S21 อะไหล่ของรถ: จำนวนต่อคันที่แก้ไว้ (ไม่มี = CAR_QTY) · อะไหล่ที่ กบค. ระบุเอง (การ์ด "รายการเพิ่มเติม") */
+  qty?: Record<number, Record<number, number>>;   // ลำดับรถ → ลำดับอะไหล่ → จำนวน
+  manual?: Record<number, ManualPart[]>;          // ลำดับรถ → รายการเพิ่มเติม
+  /* S2 S19 S22 วันที่และผลการพิจารณา */
+  sentAt?: string;          // วันที่ส่ง (ส่งอนุมัติใหม่หลังแก้ไข S19) · ไม่มี = created
+  approvedAt?: string;      // วันที่อนุมัติ (S2)
+  returnReason?: string;    // เหตุผลที่ส่งกลับ (S2 → S19)
+  ack?: Record<number, string>;   // ไตรมาสที่คลังรับทราบแล้ว → วันที่ (S22) · ไม่มี = ใช้ค่าตัวอย่าง WH_ACK / WH_LIST
 }
+
+/* ManualPart — อะไหล่ที่ กบค. ระบุเอง (S21 · MANUAL ของ screens.js) · ราคาเก็บเป็นข้อความตามช่องกรอก */
+export interface ManualPart { name: string; code: string; price: string; qty: number }
 
 const P = (a: [string, string, string, string, string, PlanStatus, string, string, string, string]): Plan =>
   ({ mr: a[0], name: a[1], region: a[2], nowQ: a[3], cars: Number(a[4]), status: a[5], created: a[6], type: a[7], year: a[8], perQ: a[9] });
@@ -95,6 +106,23 @@ export const PARTS: Part[] = [
 /* CAR_QTY — จำนวนต่อคัน · CAR_PICK — ไส้กรองที่ กบค. เลือกให้รถ 1 คันในข้อมูลตัวอย่าง */
 export const CAR_QTY = [30, 2, 2, 2, 2];
 export const CAR_PICK = [1, 2, 3];
+
+/* WH · PRICE — คลังและราคาต่อหน่วยตามลำดับ PARTS (การ์ด Spare Part Card Item ของ S21) */
+export const PART_WH = ["Smart Inventory", "Smart Inventory", "Smart Inventory", "คลังสำรอง", "คลังสำรอง"];
+export const PART_PRICE = [120, 680, 250, 420, 350];
+
+/* RETURN_REASON — เหตุผลที่ผู้อนุมัติส่งกลับ (S2 B.7 · S19 R.2 R.3) */
+export const RETURN_REASON = "จำนวนไส้กรองไฮโดรลิกไม่ตรงกับรอบบำรุงรักษาของรถกระเช้า กรุณาตรวจสอบรถที่เลือกเข้าแผน";
+/* ผู้สร้างแผน — ช่อง "ผู้สร้างแผน" ของรายละเอียดแผน · "ผู้สร้าง (กบค.)" ของรายการแผนรออนุมัติ */
+export const PLAN_CREATOR = "นายวิชัย ทองดี (กบค.)";
+export const PLAN_CREATOR_SHORT = "นายวิชัย ทองดี";
+
+/* WH_LIST — แถวตัวอย่างของหน้า "แผนที่ต้องเตรียมอะไหล่" (S22 U.1 · whRow ใน screens.js) สำหรับแผนที่ไม่มีข้อมูลรับทราบจริง: วันที่อนุมัติ · จำนวนไตรมาสที่รับทราบ
+   (จอ S22 คิด Z7000002 = รับทราบ 1/3 · Z7000001 = ครบ ต่างจากคอลัมน์คลังรับทราบของ S1 ที่ใช้ WH_ACK — ข้อมูลตัวอย่างของ screens.js คนละชุด) */
+export const WH_LIST: Record<string, { approvedAt: string; acked: number }> = {
+  "MR Z7000002": { approvedAt: "08/10/2569", acked: 1 },
+  "MR Z7000001": { approvedAt: "06/10/2569", acked: 4 },
+};
 
 /* WH_ACK — จำนวนไตรมาสที่คลังรับทราบแล้วต่อเลขที่ MR (S22) */
 export const WH_ACK: Record<string, number> = { "MR Z7000004": 1, "MR Z7000001": 2 };
