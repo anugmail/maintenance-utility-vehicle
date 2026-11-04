@@ -26,6 +26,11 @@
     - Sidebar navigation ใช้เมนูจริงตามหน้า "Sidebar Navigation" (277:230639) ของ UI Release#2 · งานนี้อยู่ที่ "งานซ่อมและบำรุงรักษา > บำรุงรักษาตามวาระ" (Active) · เมนูอื่นแสดงแต่ไม่พาไปไหน
 11. **มือถือ — บรรทัดรองของตาราง** (`{ text, sub }`) ลง Supporting text ของ Mobile table item เสมอ ห้ามต่อท้าย Text ด้วย " · " (เจ้าของงาน 4 พ.ย. 2569)
 
+12. **ต้องเป็น component เท่านั้น** (เจ้าของงาน 4 พ.ย. 2569 _"ต้องมี component เท่านั้นในการทำเว็บ"_) — ทุกชิ้นบนจอ (ยกเว้นแถบต้นแบบ หน้า /kit/ /scenarios/ /soon/) ต้องชี้กลับ component จริงใน Figma ได้ · แหล่ง component ที่ใช้ได้มี 2 ไฟล์:
+    - ไลบรารี **(Component) VMS Plus** — ดัมป์ slug `component`
+    - ไฟล์ Figma ของงานซ่อม **Maintain-D** (ReceiptChecklist · HandoverSignature · Modal Signature · InspectionChecklist · PartRequestStepPanel · PartsInventoryPanel · Spare Part Card Item · IncidentPhotoGallery · VehicleAndReporterInfo ฯลฯ) — เจ้าของงาน _"ใช้ได้ เอามาเป็นข้อมูลในการใช้ครั้งต่อไปด้วยเลย"_ · ดัมป์ slug `maintain-d` (`Maintenance-Request-Form/design-system/.figma-extract/maintain-d/` หรือ `figma-export/out/figma-dump/maintain-d/`) · ดึงสเปกแบบเดียวกับไลบรารี (figma-spec)
+13. **ของที่ทั้งสองไฟล์ไม่มี** (เช่น Bottom sheet ที่ใส่เนื้อหาได้ · หน้าต่างยืนยัน · เมนูมือถือ) — เจ้าของงาน _"ออกแบบได้แต่ต้องสอดคล้องกับเว็บเดวที่ออกแบบเรื่องพวกนี้ไปแล้ว"_ ⇒ ประกอบจากชิ้นไลบรารีเท่านั้น โดยหน้าตาและพฤติกรรมตามระบบจริงฝั่ง dev (vmsplus-dev · vms-plus-uat.odds.team/maintain-d) · จดใน `figma-spec/COMPOSED.md` ทุกครั้ง (ประกอบจากอะไร · อิงหน้าไหนของระบบ dev)
+
 ## ตรวจก่อนบอกว่าเสร็จ
 
 ```bash
