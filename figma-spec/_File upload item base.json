@@ -1,0 +1,1958 @@
+{
+ "component": "_File upload item base",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
+ "page": "✅ File upload",
+ "node": "2123:5261",
+ "props": {
+  "File name#2841:4": {
+   "type": "TEXT",
+   "defaultValue": "Document.pdf"
+  },
+  "File size#2841:8": {
+   "type": "TEXT",
+   "defaultValue": "200 KB"
+  },
+  "Progress bar#2843:0": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Actions#2858:1": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Download action#2858:5": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Delete action#2858:9": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "State": {
+   "type": "VARIANT",
+   "defaultValue": "In progress",
+   "variantOptions": [
+    "In progress",
+    "Completed",
+    "Error"
+   ]
+  }
+ },
+ "set": {
+  "name": "_File upload item base",
+  "type": "COMPONENT_SET",
+  "w": 440,
+  "h": 345,
+  "sizing": [
+   "FIXED",
+   "HUG"
+  ],
+  "pl": 20,
+  "pr": 20,
+  "pt": 20,
+  "pb": 20,
+  "gap": 20,
+  "r": 5,
+  "dir": "VERTICAL",
+  "justify": "MIN",
+  "align": "MIN",
+  "fill": [
+   "#FFFFFF"
+  ],
+  "stroke": [
+   "#9747FF"
+  ],
+  "sw": 1,
+  "strokeAlign": "INSIDE",
+  "vars": {
+   "fills": "Color/background/default"
+  }
+ },
+ "variants": [
+  {
+   "name": "State=In progress",
+   "type": "COMPONENT",
+   "w": 400,
+   "h": 97,
+   "sizing": [
+    "FILL",
+    "HUG"
+   ],
+   "pl": 16,
+   "pr": 16,
+   "pt": 16,
+   "pb": 16,
+   "gap": 4,
+   "r": 8,
+   "dir": "VERTICAL",
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/100",
+    "paddingLeft": "Spacing/400",
+    "paddingTop": "Spacing/400",
+    "paddingRight": "Spacing/400",
+    "paddingBottom": "Spacing/400",
+    "topLeftRadius": "Radius/200",
+    "topRightRadius": "Radius/200",
+    "bottomLeftRadius": "Radius/200",
+    "bottomRightRadius": "Radius/200",
+    "fills": "Color/surface/primary",
+    "strokes": "Color/border/primary"
+   },
+   "variant": {
+    "State": "In progress"
+   },
+   "kids": [
+    {
+     "name": "Actions",
+     "type": "FRAME",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "CENTER",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "kids": [
+      {
+       "name": "Tertiary button",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "pl": 8,
+       "pr": 8,
+       "pt": 8,
+       "pb": 8,
+       "gap": 4,
+       "r": 8,
+       "dir": "HORIZONTAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100",
+        "paddingLeft": "Spacing/200",
+        "paddingTop": "Spacing/200",
+        "paddingRight": "Spacing/200",
+        "paddingBottom": "Spacing/200",
+        "topLeftRadius": "Radius/200",
+        "topRightRadius": "Radius/200",
+        "bottomLeftRadius": "Radius/200",
+        "bottomRightRadius": "Radius/200"
+       },
+       "variant": {
+        "Leading icon swap#133:10": "1084:414",
+        "Trailing icon#105:4": false,
+        "Trailing icon swap#133:12": "133:3719",
+        "Leading icon#105:2": true,
+        "Button text#1153:0": false,
+        "Text#105:0": "Button",
+        "State": "Default",
+        "Size": "md"
+       },
+       "component": "Tertiary button [State=Default, Size=md]",
+       "kids": [
+        {
+         "name": "close-24-300-round",
+         "type": "INSTANCE",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "justify": "MIN",
+         "align": "MIN",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "component": "close-24-300-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 11,
+           "h": 11,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 0.02500000037252903,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
+          }
+         ]
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "visible": false,
+         "w": 47,
+         "h": 21,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/tertiary/text",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Button"
+        },
+        {
+         "name": "crop_free-20-400-round",
+         "type": "INSTANCE",
+         "visible": false,
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "justify": "MIN",
+         "align": "MIN",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "component": "crop_free-20-400-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 14,
+           "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Text and icon",
+     "type": "FRAME",
+     "w": 368,
+     "h": 39,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
+     "gap": 12,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "CENTER",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/300"
+     },
+     "kids": [
+      {
+       "name": "_File icon",
+       "type": "INSTANCE",
+       "w": 36,
+       "h": 36,
+       "sizing": [
+        "HUG",
+        "HUG"
+       ],
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "variant": {
+        "Type": "Document"
+       },
+       "component": "_File icon [Type=Document]",
+       "kids": [
+        {
+         "name": "Featured icon",
+         "type": "INSTANCE",
+         "w": 36,
+         "h": 36,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 9999,
+         "dir": "HORIZONTAL",
+         "justify": "CENTER",
+         "align": "CENTER",
+         "fill": [
+          "#F2F4F7"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "topLeftRadius": "Radius/full",
+          "topRightRadius": "Radius/full",
+          "bottomLeftRadius": "Radius/full",
+          "bottomRightRadius": "Radius/full",
+          "fills": "Color/component/utility/gray/100"
+         },
+         "variant": {
+          "Icon swap#2032:0": "2843:12224",
+          "Color": "Gray",
+          "Size": "sm"
+         },
+         "component": "Featured icon [Color=Gray, Size=sm]",
+         "kids": [
+          {
+           "name": "draft-24-300-round",
+           "type": "INSTANCE",
+           "w": 24,
+           "h": 24,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "component": "draft-24-300-round"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 320,
+       "h": 39,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "MIN",
+       "align": "CENTER",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/none"
+       },
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 320,
+         "h": 21,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/secondary",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Document.pdf"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 320,
+         "h": 18,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/secondary",
+          "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+          "fontSize": "IBM/Helper-text/02/font-size",
+          "fontFamily": "IBM/font-family",
+          "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+          "fontWeight": "IBM/Helper-text/02/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 12,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "200 KB"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Progress bar",
+     "type": "INSTANCE",
+     "w": 368,
+     "h": 22,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
+     "gap": 8,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "CENTER",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/200"
+     },
+     "variant": {
+      "Percentage#2941:3": true,
+      "Label": "Right",
+      "Progress": "40%",
+      "Size": "md"
+     },
+     "component": "Progress bar [Label=Right, Progress=40%, Size=md]",
+     "kids": [
+      {
+       "name": "Progress bar",
+       "type": "GROUP",
+       "w": 320,
+       "h": 8,
+       "sizing": [
+        "FILL",
+        "FIXED"
+       ],
+       "vars": {
+        "cornerRadius": "Radius/full"
+       },
+       "kids": [
+        {
+         "name": "Track",
+         "type": "RECTANGLE",
+         "w": 320,
+         "h": 8,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 9999,
+         "fill": [
+          "#D0D5DD"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "topLeftRadius": "Radius/full",
+          "topRightRadius": "Radius/full",
+          "bottomLeftRadius": "Radius/full",
+          "bottomRightRadius": "Radius/full",
+          "fills": "Color/component/progress/track"
+         }
+        },
+        {
+         "name": "Progress",
+         "type": "RECTANGLE",
+         "w": 128,
+         "h": 8,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 9999,
+         "fill": [
+          "#A80689"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "topLeftRadius": "Radius/full",
+          "topRightRadius": "Radius/full",
+          "bottomLeftRadius": "Radius/full",
+          "bottomRightRadius": "Radius/full",
+          "fills": "Color/component/progress/progress"
+         }
+        }
+       ]
+      },
+      {
+       "name": "Percentage",
+       "type": "TEXT",
+       "w": 40,
+       "h": 22,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#475467"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/secondary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "RIGHT"
+       },
+       "text": "40%"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Completed",
+   "type": "COMPONENT",
+   "w": 400,
+   "h": 97,
+   "sizing": [
+    "FILL",
+    "HUG"
+   ],
+   "pl": 16,
+   "pr": 16,
+   "pt": 16,
+   "pb": 16,
+   "gap": 4,
+   "r": 8,
+   "dir": "VERTICAL",
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/100",
+    "paddingLeft": "Spacing/400",
+    "paddingTop": "Spacing/400",
+    "paddingRight": "Spacing/400",
+    "paddingBottom": "Spacing/400",
+    "topLeftRadius": "Radius/200",
+    "topRightRadius": "Radius/200",
+    "bottomLeftRadius": "Radius/200",
+    "bottomRightRadius": "Radius/200",
+    "fills": "Color/surface/primary",
+    "strokes": "Color/border/primary"
+   },
+   "variant": {
+    "State": "Completed"
+   },
+   "kids": [
+    {
+     "name": "Actions",
+     "type": "FRAME",
+     "w": 80,
+     "h": 40,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "CENTER",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "kids": [
+      {
+       "name": "Tertiary button",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "pl": 8,
+       "pr": 8,
+       "pt": 8,
+       "pb": 8,
+       "gap": 4,
+       "r": 8,
+       "dir": "HORIZONTAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100",
+        "paddingLeft": "Spacing/200",
+        "paddingTop": "Spacing/200",
+        "paddingRight": "Spacing/200",
+        "paddingBottom": "Spacing/200",
+        "topLeftRadius": "Radius/200",
+        "topRightRadius": "Radius/200",
+        "bottomLeftRadius": "Radius/200",
+        "bottomRightRadius": "Radius/200"
+       },
+       "variant": {
+        "Leading icon swap#133:10": "2841:82758",
+        "Trailing icon#105:4": false,
+        "Trailing icon swap#133:12": "133:3719",
+        "Leading icon#105:2": true,
+        "Button text#1153:0": false,
+        "Text#105:0": "Button",
+        "State": "Default",
+        "Size": "md"
+       },
+       "component": "Tertiary button [State=Default, Size=md]",
+       "kids": [
+        {
+         "name": "download-24-300-round",
+         "type": "INSTANCE",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "justify": "MIN",
+         "align": "MIN",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "component": "download-24-300-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 13,
+           "h": 13,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 0.02500000037252903,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
+          }
+         ]
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "visible": false,
+         "w": 47,
+         "h": 21,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/tertiary/text",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Button"
+        },
+        {
+         "name": "crop_free-20-400-round",
+         "type": "INSTANCE",
+         "visible": false,
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "justify": "MIN",
+         "align": "MIN",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "component": "crop_free-20-400-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 14,
+           "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Tertiary button",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "pl": 8,
+       "pr": 8,
+       "pt": 8,
+       "pb": 8,
+       "gap": 4,
+       "r": 8,
+       "dir": "HORIZONTAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100",
+        "paddingLeft": "Spacing/200",
+        "paddingTop": "Spacing/200",
+        "paddingRight": "Spacing/200",
+        "paddingBottom": "Spacing/200",
+        "topLeftRadius": "Radius/200",
+        "topRightRadius": "Radius/200",
+        "bottomLeftRadius": "Radius/200",
+        "bottomRightRadius": "Radius/200"
+       },
+       "variant": {
+        "Leading icon swap#133:10": "1787:13965",
+        "Trailing icon#105:4": false,
+        "Trailing icon swap#133:12": "133:3719",
+        "Leading icon#105:2": true,
+        "Button text#1153:0": false,
+        "Text#105:0": "Button",
+        "State": "Default",
+        "Size": "md"
+       },
+       "component": "Tertiary button [State=Default, Size=md]",
+       "kids": [
+        {
+         "name": "delete-24-300-round",
+         "type": "INSTANCE",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "justify": "MIN",
+         "align": "MIN",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "component": "delete-24-300-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 13,
+           "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 0.02500000037252903,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
+          }
+         ]
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "visible": false,
+         "w": 47,
+         "h": 21,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/tertiary/text",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Button"
+        },
+        {
+         "name": "crop_free-20-400-round",
+         "type": "INSTANCE",
+         "visible": false,
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "justify": "MIN",
+         "align": "MIN",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "component": "crop_free-20-400-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 14,
+           "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Text and icon",
+     "type": "FRAME",
+     "w": 368,
+     "h": 39,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
+     "gap": 12,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "CENTER",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/300"
+     },
+     "kids": [
+      {
+       "name": "_File icon",
+       "type": "INSTANCE",
+       "w": 36,
+       "h": 36,
+       "sizing": [
+        "HUG",
+        "HUG"
+       ],
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "variant": {
+        "Type": "Document"
+       },
+       "component": "_File icon [Type=Document]",
+       "kids": [
+        {
+         "name": "Featured icon",
+         "type": "INSTANCE",
+         "w": 36,
+         "h": 36,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 9999,
+         "dir": "HORIZONTAL",
+         "justify": "CENTER",
+         "align": "CENTER",
+         "fill": [
+          "#F2F4F7"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "topLeftRadius": "Radius/full",
+          "topRightRadius": "Radius/full",
+          "bottomLeftRadius": "Radius/full",
+          "bottomRightRadius": "Radius/full",
+          "fills": "Color/component/utility/gray/100"
+         },
+         "variant": {
+          "Icon swap#2032:0": "2843:12224",
+          "Color": "Gray",
+          "Size": "sm"
+         },
+         "component": "Featured icon [Color=Gray, Size=sm]",
+         "kids": [
+          {
+           "name": "draft-24-300-round",
+           "type": "INSTANCE",
+           "w": 24,
+           "h": 24,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "component": "draft-24-300-round"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 320,
+       "h": 39,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "MIN",
+       "align": "CENTER",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/none"
+       },
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 320,
+         "h": 21,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/secondary",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Document.pdf"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 320,
+         "h": 18,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/secondary",
+          "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+          "fontSize": "IBM/Helper-text/02/font-size",
+          "fontFamily": "IBM/font-family",
+          "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+          "fontWeight": "IBM/Helper-text/02/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 12,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "200 KB"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Progress bar",
+     "type": "INSTANCE",
+     "w": 368,
+     "h": 22,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
+     "gap": 8,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "CENTER",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/200"
+     },
+     "variant": {
+      "Percentage#2941:3": true,
+      "Label": "Right",
+      "Progress": "100%",
+      "Size": "md"
+     },
+     "component": "Progress bar [Label=Right, Progress=100%, Size=md]",
+     "kids": [
+      {
+       "name": "Progress bar",
+       "type": "GROUP",
+       "w": 320,
+       "h": 8,
+       "sizing": [
+        "FILL",
+        "FIXED"
+       ],
+       "vars": {
+        "cornerRadius": "Radius/full"
+       },
+       "kids": [
+        {
+         "name": "Track",
+         "type": "RECTANGLE",
+         "w": 320,
+         "h": 8,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 9999,
+         "fill": [
+          "#D0D5DD"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "topLeftRadius": "Radius/full",
+          "topRightRadius": "Radius/full",
+          "bottomLeftRadius": "Radius/full",
+          "bottomRightRadius": "Radius/full",
+          "fills": "Color/component/progress/track"
+         }
+        },
+        {
+         "name": "Progress",
+         "type": "RECTANGLE",
+         "w": 320,
+         "h": 8,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 9999,
+         "fill": [
+          "#079455"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "topLeftRadius": "Radius/full",
+          "topRightRadius": "Radius/full",
+          "bottomLeftRadius": "Radius/full",
+          "bottomRightRadius": "Radius/full",
+          "fills": "Color/icon/success"
+         }
+        }
+       ]
+      },
+      {
+       "name": "Percentage",
+       "type": "TEXT",
+       "w": 40,
+       "h": 22,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#475467"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/secondary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "RIGHT"
+       },
+       "text": "100%"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Error",
+   "type": "COMPONENT",
+   "w": 400,
+   "h": 71,
+   "sizing": [
+    "FILL",
+    "HUG"
+   ],
+   "pl": 16,
+   "pr": 16,
+   "pt": 16,
+   "pb": 16,
+   "gap": 8,
+   "r": 8,
+   "dir": "VERTICAL",
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#F04438"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/200",
+    "paddingLeft": "Spacing/400",
+    "paddingTop": "Spacing/400",
+    "paddingRight": "Spacing/400",
+    "paddingBottom": "Spacing/400",
+    "topLeftRadius": "Radius/200",
+    "topRightRadius": "Radius/200",
+    "bottomLeftRadius": "Radius/200",
+    "bottomRightRadius": "Radius/200",
+    "fills": "Color/surface/primary",
+    "strokes": "Color/border/error-solid"
+   },
+   "variant": {
+    "State": "Error"
+   },
+   "kids": [
+    {
+     "name": "Text and icon",
+     "type": "FRAME",
+     "w": 368,
+     "h": 39,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
+     "gap": 12,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "CENTER",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/300"
+     },
+     "kids": [
+      {
+       "name": "_File icon",
+       "type": "INSTANCE",
+       "w": 36,
+       "h": 36,
+       "sizing": [
+        "HUG",
+        "HUG"
+       ],
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "variant": {
+        "Type": "Document"
+       },
+       "component": "_File icon [Type=Document]",
+       "kids": [
+        {
+         "name": "Featured icon",
+         "type": "INSTANCE",
+         "w": 36,
+         "h": 36,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 9999,
+         "dir": "HORIZONTAL",
+         "justify": "CENTER",
+         "align": "CENTER",
+         "fill": [
+          "#F2F4F7"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "topLeftRadius": "Radius/full",
+          "topRightRadius": "Radius/full",
+          "bottomLeftRadius": "Radius/full",
+          "bottomRightRadius": "Radius/full",
+          "fills": "Color/component/utility/gray/100"
+         },
+         "variant": {
+          "Icon swap#2032:0": "2843:12224",
+          "Color": "Gray",
+          "Size": "sm"
+         },
+         "component": "Featured icon [Color=Gray, Size=sm]",
+         "kids": [
+          {
+           "name": "draft-24-300-round",
+           "type": "INSTANCE",
+           "w": 24,
+           "h": 24,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "component": "draft-24-300-round"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 320,
+       "h": 39,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "MIN",
+       "align": "CENTER",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/none"
+       },
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 320,
+         "h": 21,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/secondary",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Document.pdf"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 320,
+         "h": 18,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#D92D20"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/error",
+          "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+          "fontSize": "IBM/Helper-text/02/font-size",
+          "fontFamily": "IBM/font-family",
+          "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+          "fontWeight": "IBM/Helper-text/02/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 12,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "อัปโหลดไม่สำเร็จ"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Actions",
+     "type": "FRAME",
+     "w": 80,
+     "h": 40,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "CENTER",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "kids": [
+      {
+       "name": "Tertiary button",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "pl": 8,
+       "pr": 8,
+       "pt": 8,
+       "pb": 8,
+       "gap": 4,
+       "r": 8,
+       "dir": "HORIZONTAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100",
+        "paddingLeft": "Spacing/200",
+        "paddingTop": "Spacing/200",
+        "paddingRight": "Spacing/200",
+        "paddingBottom": "Spacing/200",
+        "topLeftRadius": "Radius/200",
+        "topRightRadius": "Radius/200",
+        "bottomLeftRadius": "Radius/200",
+        "bottomRightRadius": "Radius/200"
+       },
+       "variant": {
+        "Leading icon swap#133:10": "2841:82268",
+        "Trailing icon#105:4": false,
+        "Trailing icon swap#133:12": "133:3719",
+        "Leading icon#105:2": true,
+        "Button text#1153:0": false,
+        "Text#105:0": "อัปโหลดใหม่",
+        "State": "Default",
+        "Size": "md"
+       },
+       "component": "Tertiary button [State=Default, Size=md]",
+       "kids": [
+        {
+         "name": "restart_alt-24-300-round",
+         "type": "INSTANCE",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "justify": "MIN",
+         "align": "MIN",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "component": "restart_alt-24-300-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 13,
+           "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 0.02500000037252903,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
+          }
+         ]
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "visible": false,
+         "w": 47,
+         "h": 42,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/tertiary/text",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "อัปโหลดใหม่"
+        },
+        {
+         "name": "crop_free-20-400-round",
+         "type": "INSTANCE",
+         "visible": false,
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "justify": "MIN",
+         "align": "MIN",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "component": "crop_free-20-400-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 14,
+           "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Tertiary button",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "pl": 8,
+       "pr": 8,
+       "pt": 8,
+       "pb": 8,
+       "gap": 4,
+       "r": 8,
+       "dir": "HORIZONTAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100",
+        "paddingLeft": "Spacing/200",
+        "paddingTop": "Spacing/200",
+        "paddingRight": "Spacing/200",
+        "paddingBottom": "Spacing/200",
+        "topLeftRadius": "Radius/200",
+        "topRightRadius": "Radius/200",
+        "bottomLeftRadius": "Radius/200",
+        "bottomRightRadius": "Radius/200"
+       },
+       "variant": {
+        "Leading icon swap#133:10": "1084:414",
+        "Trailing icon#105:4": false,
+        "Trailing icon swap#133:12": "133:3719",
+        "Leading icon#105:2": true,
+        "Button text#1153:0": false,
+        "Text#105:0": "Button",
+        "State": "Default",
+        "Size": "md"
+       },
+       "component": "Tertiary button [State=Default, Size=md]",
+       "kids": [
+        {
+         "name": "close-24-300-round",
+         "type": "INSTANCE",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "justify": "MIN",
+         "align": "MIN",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "component": "close-24-300-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 11,
+           "h": 11,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 0.02500000037252903,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
+          }
+         ]
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "visible": false,
+         "w": 47,
+         "h": 21,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/component/button/tertiary/text",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Button"
+        },
+        {
+         "name": "crop_free-20-400-round",
+         "type": "INSTANCE",
+         "visible": false,
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "justify": "MIN",
+         "align": "MIN",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "component": "crop_free-20-400-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 14,
+           "h": 14,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 0.02083333395421505,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/button/tertiary/icon"
+           }
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

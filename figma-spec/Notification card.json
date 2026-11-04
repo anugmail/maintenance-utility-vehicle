@@ -1,0 +1,952 @@
+{
+ "component": "Notification card",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
+ "page": "Header navigation",
+ "node": "2:4",
+ "props": {},
+ "variants": [
+  {
+   "name": "Notification card",
+   "type": "COMPONENT",
+   "w": 314,
+   "h": 511,
+   "sizing": [
+    "HUG",
+    "HUG"
+   ],
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "justify": "MIN",
+   "align": "CENTER",
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "kids": [
+    {
+     "name": "Container",
+     "type": "FRAME",
+     "w": 314,
+     "h": 511,
+     "sizing": [
+      "FIXED",
+      "HUG"
+     ],
+     "r": 8,
+     "dir": "VERTICAL",
+     "justify": "MIN",
+     "align": "MIN",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "stroke": [
+      "#EAECF0"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "effects": [
+      {
+       "type": "DROP_SHADOW",
+       "color": "#10182814",
+       "x": 0,
+       "y": 12,
+       "blur": 16,
+       "spread": -4
+      }
+     ],
+     "vars": {
+      "topLeftRadius": "Radius/200",
+      "topRightRadius": "Radius/200",
+      "bottomLeftRadius": "Radius/200",
+      "bottomRightRadius": "Radius/200",
+      "fills": "Color/surface/primary",
+      "strokes": "Color/border/secondary",
+      "effects": "Color/effect/shadow-8"
+     },
+     "kids": [
+      {
+       "name": "_Notification header",
+       "type": "INSTANCE",
+       "w": 314,
+       "h": 51,
+       "sizing": [
+        "FIXED",
+        "HUG"
+       ],
+       "pl": 12,
+       "pr": 12,
+       "pt": 12,
+       "pb": 12,
+       "gap": 110,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "justify": "SPACE_BETWEEN",
+       "align": "MIN",
+       "stroke": [
+        "#EAECF0"
+       ],
+       "sws": [
+        0,
+        0,
+        1,
+        0
+       ],
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "paddingLeft": "Spacing/300",
+        "paddingTop": "Spacing/300",
+        "paddingRight": "Spacing/300",
+        "paddingBottom": "Spacing/300",
+        "bottomLeftRadius": "Radius/none",
+        "bottomRightRadius": "Radius/none",
+        "strokes": "Color/border/secondary"
+       },
+       "variant": {
+        "Text#2984:0": "แจ้งเตือน"
+       },
+       "component": "_Notification header",
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 70,
+         "h": 27,
+         "sizing": [
+          "HUG",
+          "HUG"
+         ],
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/primary",
+          "letterSpacing": "IBM/Label/01/letter-spacing",
+          "fontSize": "IBM/Label/01/font-size",
+          "fontFamily": "IBM/font-family",
+          "paragraphSpacing": "IBM/Label/01/font-size",
+          "fontWeight": "IBM/Label/01/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 18,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "แจ้งเตือน"
+        },
+        {
+         "name": "Badge outline",
+         "type": "INSTANCE",
+         "w": 89,
+         "h": 24,
+         "sizing": [
+          "HUG",
+          "FIXED"
+         ],
+         "pl": 8,
+         "pr": 8,
+         "pt": 4,
+         "pb": 4,
+         "gap": 4,
+         "r": 4,
+         "dir": "HORIZONTAL",
+         "justify": "CENTER",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/100",
+          "paddingLeft": "Spacing/200",
+          "paddingTop": "Spacing/100",
+          "paddingRight": "Spacing/200",
+          "paddingBottom": "Spacing/100",
+          "topLeftRadius": "Radius/100",
+          "topRightRadius": "Radius/100",
+          "bottomLeftRadius": "Radius/100",
+          "bottomRightRadius": "Radius/100",
+          "fills": "Color/surface/primary",
+          "strokes": "Color/border/primary"
+         },
+         "variant": {
+          "Text#2104:3": "3 แจ้งเตือนใหม่",
+          "Color": "Gray"
+         },
+         "component": "Badge outline [Color=Gray]",
+         "kids": [
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 73,
+           "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/secondary",
+            "letterSpacing": "IBM/Label/04/letter-spacing",
+            "fontSize": "IBM/Label/04/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Label/04/letter-spacing",
+            "fontWeight": "IBM/Label/04/font-weight"
+           },
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 12,
+            "lh": null,
+            "ls": -0.20000000298023224
+           },
+           "text": "3 แจ้งเตือนใหม่"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Content",
+       "type": "FRAME",
+       "w": 314,
+       "h": 400,
+       "sizing": [
+        "FILL",
+        "FIXED"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "kids": [
+        {
+         "name": "Vertical scrollbar",
+         "type": "INSTANCE",
+         "w": 16,
+         "h": 400,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "pl": 4,
+         "pr": 4,
+         "pt": 4,
+         "pb": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "MIN",
+         "align": "MIN",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "paddingLeft": "Spacing/100",
+          "paddingTop": "Spacing/100",
+          "paddingRight": "Spacing/100",
+          "paddingBottom": "Spacing/100"
+         },
+         "variant": {
+          "Length": "25%",
+          "Position": "Top"
+         },
+         "component": "Vertical scrollbar [Length=25%, Position=Top]",
+         "kids": [
+          {
+           "name": "Scrollbar",
+           "type": "FRAME",
+           "w": 8,
+           "h": 392,
+           "sizing": [
+            "FILL",
+            "FILL"
+           ],
+           "r": 0,
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          }
+         ]
+        },
+        {
+         "name": "_Notification item base",
+         "type": "INSTANCE",
+         "w": 314,
+         "h": 140,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "pl": 12,
+         "pr": 12,
+         "pt": 12,
+         "pb": 12,
+         "gap": 8,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "MIN",
+         "align": "MIN",
+         "stroke": [
+          "#EAECF0"
+         ],
+         "sws": [
+          0,
+          0,
+          1,
+          0
+         ],
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/200",
+          "paddingLeft": "Spacing/300",
+          "paddingTop": "Spacing/300",
+          "paddingRight": "Spacing/300",
+          "paddingBottom": "Spacing/300",
+          "strokes": "Color/border/secondary"
+         },
+         "variant": {
+          "Show status#3520:0": true,
+          "Show button#3507:0": true,
+          "Supporting text#2984:2": "10 นาทีที่แล้ว",
+          "Text#2984:1": "คำขอใช้ยานพาหนะ VA67RA000001 อนุมัติแล้ว โปรดระบุข้อมูลผู้รับกุญแจ"
+         },
+         "component": "_Notification item base",
+         "kids": [
+          {
+           "name": "Status",
+           "type": "FRAME",
+           "w": 12,
+           "h": 17,
+           "sizing": [
+            "FIXED",
+            "HUG"
+           ],
+           "pt": 5,
+           "gap": 10,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "MIN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Content",
+           "type": "FRAME",
+           "w": 270,
+           "h": 116,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 12,
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "CENTER",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/300"
+           }
+          }
+         ]
+        },
+        {
+         "name": "_Notification item base",
+         "type": "INSTANCE",
+         "w": 314,
+         "h": 140,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "pl": 12,
+         "pr": 12,
+         "pt": 12,
+         "pb": 12,
+         "gap": 8,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "MIN",
+         "align": "MIN",
+         "stroke": [
+          "#EAECF0"
+         ],
+         "sws": [
+          0,
+          0,
+          1,
+          0
+         ],
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/200",
+          "paddingLeft": "Spacing/300",
+          "paddingTop": "Spacing/300",
+          "paddingRight": "Spacing/300",
+          "paddingBottom": "Spacing/300",
+          "strokes": "Color/border/secondary"
+         },
+         "variant": {
+          "Show status#3520:0": true,
+          "Show button#3507:0": true,
+          "Supporting text#2984:2": "10 นาทีที่แล้ว",
+          "Text#2984:1": "คำขอใช้ยานพาหนะ VA67RA000001 อนุมัติแล้ว โปรดระบุข้อมูลผู้รับกุญแจ"
+         },
+         "component": "_Notification item base",
+         "kids": [
+          {
+           "name": "Status",
+           "type": "FRAME",
+           "w": 12,
+           "h": 17,
+           "sizing": [
+            "FIXED",
+            "HUG"
+           ],
+           "pt": 5,
+           "gap": 10,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "MIN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Content",
+           "type": "FRAME",
+           "w": 270,
+           "h": 116,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 12,
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "CENTER",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/300"
+           }
+          }
+         ]
+        },
+        {
+         "name": "_Notification item base",
+         "type": "INSTANCE",
+         "w": 314,
+         "h": 140,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "pl": 12,
+         "pr": 12,
+         "pt": 12,
+         "pb": 12,
+         "gap": 8,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "MIN",
+         "align": "MIN",
+         "stroke": [
+          "#EAECF0"
+         ],
+         "sws": [
+          0,
+          0,
+          1,
+          0
+         ],
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/200",
+          "paddingLeft": "Spacing/300",
+          "paddingTop": "Spacing/300",
+          "paddingRight": "Spacing/300",
+          "paddingBottom": "Spacing/300",
+          "strokes": "Color/border/secondary"
+         },
+         "variant": {
+          "Show status#3520:0": true,
+          "Show button#3507:0": true,
+          "Supporting text#2984:2": "10 นาทีที่แล้ว",
+          "Text#2984:1": "คำขอใช้ยานพาหนะ VA67RA000001 อนุมัติแล้ว โปรดระบุข้อมูลผู้รับกุญแจ"
+         },
+         "component": "_Notification item base",
+         "kids": [
+          {
+           "name": "Status",
+           "type": "FRAME",
+           "w": 12,
+           "h": 17,
+           "sizing": [
+            "FIXED",
+            "HUG"
+           ],
+           "pt": 5,
+           "gap": 10,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "MIN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Content",
+           "type": "FRAME",
+           "w": 270,
+           "h": 116,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 12,
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "CENTER",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/300"
+           }
+          }
+         ]
+        },
+        {
+         "name": "_Notification item base",
+         "type": "INSTANCE",
+         "visible": false,
+         "w": 314,
+         "h": 82,
+         "sizing": [
+          "FIXED",
+          "HUG"
+         ],
+         "pl": 12,
+         "pr": 12,
+         "pt": 12,
+         "pb": 12,
+         "gap": 8,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "MIN",
+         "align": "MIN",
+         "stroke": [
+          "#EAECF0"
+         ],
+         "sws": [
+          0,
+          0,
+          1,
+          0
+         ],
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/200",
+          "paddingLeft": "Spacing/300",
+          "paddingTop": "Spacing/300",
+          "paddingRight": "Spacing/300",
+          "paddingBottom": "Spacing/300",
+          "strokes": "Color/border/secondary"
+         },
+         "variant": {
+          "Show status#3520:0": true,
+          "Show button#3507:0": true,
+          "Supporting text#2984:2": "10 นาทีที่แล้ว",
+          "Text#2984:1": "คำขอใช้ยานพาหนะ VA67RA000001 อนุมัติแล้ว โปรดระบุข้อมูลผู้รับกุญแจ"
+         },
+         "component": "_Notification item base",
+         "kids": [
+          {
+           "name": "Status",
+           "type": "FRAME",
+           "w": 12,
+           "h": 17,
+           "sizing": [
+            "FIXED",
+            "HUG"
+           ],
+           "pt": 5,
+           "gap": 10,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "MIN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Content",
+           "type": "FRAME",
+           "w": 270,
+           "h": 116,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 12,
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "CENTER",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/300"
+           }
+          }
+         ]
+        },
+        {
+         "name": "_Notification item base",
+         "type": "INSTANCE",
+         "visible": false,
+         "w": 314,
+         "h": 82,
+         "sizing": [
+          "FIXED",
+          "HUG"
+         ],
+         "pl": 12,
+         "pr": 12,
+         "pt": 12,
+         "pb": 12,
+         "gap": 8,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "MIN",
+         "align": "MIN",
+         "stroke": [
+          "#EAECF0"
+         ],
+         "sws": [
+          0,
+          0,
+          1,
+          0
+         ],
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/200",
+          "paddingLeft": "Spacing/300",
+          "paddingTop": "Spacing/300",
+          "paddingRight": "Spacing/300",
+          "paddingBottom": "Spacing/300",
+          "strokes": "Color/border/secondary"
+         },
+         "variant": {
+          "Show status#3520:0": true,
+          "Show button#3507:0": true,
+          "Supporting text#2984:2": "10 นาทีที่แล้ว",
+          "Text#2984:1": "คำขอใช้ยานพาหนะ VA67RA000001 อนุมัติแล้ว โปรดระบุข้อมูลผู้รับกุญแจ"
+         },
+         "component": "_Notification item base",
+         "kids": [
+          {
+           "name": "Status",
+           "type": "FRAME",
+           "w": 12,
+           "h": 17,
+           "sizing": [
+            "FIXED",
+            "HUG"
+           ],
+           "pt": 5,
+           "gap": 10,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "MIN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Content",
+           "type": "FRAME",
+           "w": 270,
+           "h": 116,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 12,
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "CENTER",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/300"
+           }
+          }
+         ]
+        },
+        {
+         "name": "_Notification item base",
+         "type": "INSTANCE",
+         "visible": false,
+         "w": 314,
+         "h": 82,
+         "sizing": [
+          "FIXED",
+          "HUG"
+         ],
+         "pl": 12,
+         "pr": 12,
+         "pt": 12,
+         "pb": 12,
+         "gap": 8,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "MIN",
+         "align": "MIN",
+         "stroke": [
+          "#EAECF0"
+         ],
+         "sws": [
+          0,
+          0,
+          1,
+          0
+         ],
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/200",
+          "paddingLeft": "Spacing/300",
+          "paddingTop": "Spacing/300",
+          "paddingRight": "Spacing/300",
+          "paddingBottom": "Spacing/300",
+          "strokes": "Color/border/secondary"
+         },
+         "variant": {
+          "Show status#3520:0": true,
+          "Show button#3507:0": true,
+          "Supporting text#2984:2": "10 นาทีที่แล้ว",
+          "Text#2984:1": "คำขอใช้ยานพาหนะ VA67RA000001 อนุมัติแล้ว โปรดระบุข้อมูลผู้รับกุญแจ"
+         },
+         "component": "_Notification item base",
+         "kids": [
+          {
+           "name": "Status",
+           "type": "FRAME",
+           "w": 12,
+           "h": 17,
+           "sizing": [
+            "FIXED",
+            "HUG"
+           ],
+           "pt": 5,
+           "gap": 10,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "MIN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Content",
+           "type": "FRAME",
+           "w": 270,
+           "h": 116,
+           "sizing": [
+            "FILL",
+            "HUG"
+           ],
+           "gap": 12,
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "CENTER",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/300"
+           }
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "_Notification footer",
+       "type": "INSTANCE",
+       "w": 314,
+       "h": 60,
+       "sizing": [
+        "FIXED",
+        "HUG"
+       ],
+       "pl": 12,
+       "pr": 12,
+       "pt": 12,
+       "pb": 12,
+       "gap": 110,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "stroke": [
+        "#EAECF0"
+       ],
+       "sws": [
+        1,
+        0,
+        0,
+        0
+       ],
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "paddingLeft": "Spacing/300",
+        "paddingTop": "Spacing/300",
+        "paddingRight": "Spacing/300",
+        "paddingBottom": "Spacing/300",
+        "topLeftRadius": "Radius/none",
+        "topRightRadius": "Radius/none",
+        "strokes": "Color/border/secondary"
+       },
+       "component": "_Notification footer",
+       "kids": [
+        {
+         "name": "Primary button",
+         "type": "INSTANCE",
+         "w": 284,
+         "h": 36,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "justify": "CENTER",
+         "align": "CENTER",
+         "fill": [
+          "#A80689"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/100",
+          "paddingLeft": "Spacing/300",
+          "paddingTop": "Spacing/200",
+          "paddingRight": "Spacing/300",
+          "paddingBottom": "Spacing/200",
+          "topLeftRadius": "Radius/200",
+          "topRightRadius": "Radius/200",
+          "bottomLeftRadius": "Radius/200",
+          "bottomRightRadius": "Radius/200",
+          "fills": "Color/component/button/primary/surface"
+         },
+         "variant": {
+          "Leading icon swap#133:10": "133:3719",
+          "Trailing icon#105:4": false,
+          "Trailing icon swap#133:12": "133:3719",
+          "Leading icon#105:2": false,
+          "Button text#1246:11": true,
+          "Text#105:0": "ลบข้อความแจ้งเตือนทั้งหมด",
+          "State": "Default",
+          "Size": "md"
+         },
+         "component": "Primary button [State=Default, Size=md]",
+         "kids": [
+          {
+           "name": "crop_free-20-400-round",
+           "type": "INSTANCE",
+           "visible": false,
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "component": "crop_free-20-400-round"
+          },
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 159,
+           "h": 21,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "fill": [
+            "#FFFFFF"
+           ],
+           "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/component/button/primary/text",
+            "letterSpacing": "IBM/Label/03/letter-spacing",
+            "fontSize": "IBM/Label/03/font-size",
+            "fontFamily": "IBM/Label/03/font-family",
+            "paragraphSpacing": "IBM/Label/03/letter-spacing",
+            "fontWeight": "IBM/Label/03/font-weight"
+           },
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 14,
+            "lh": null,
+            "ls": -0.20000000298023224
+           },
+           "text": "ลบข้อความแจ้งเตือนทั้งหมด"
+          },
+          {
+           "name": "crop_free-20-400-round",
+           "type": "INSTANCE",
+           "visible": false,
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "component": "crop_free-20-400-round"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

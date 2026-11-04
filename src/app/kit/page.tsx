@@ -54,25 +54,10 @@ import { TertiaryButton } from "@/components/vms/TertiaryButton";
 import { TertiaryDangerButton } from "@/components/vms/TertiaryDangerButton";
 import { TextInput, type TextInputState } from "@/components/vms/TextInput";
 import { MENU } from "@/lib/mock/data";
+import { Block, V } from "./KitBlocks";
+import { KitMore } from "./KitMore";
 
 const STATES = ["Default", "Hover", "Focused", "Disabled"] as const;
-
-function Block({ name, node, children }: { name: string; node: string; children: ReactNode }) {
-  return (
-    <section id={name.replace(/[^a-zA-Z]/g, "-")} className="flex flex-col gap-4 border-t border-gray-200 pt-6">
-      <SectionLabel Title={name} SupportingText={node} />
-      <div className="flex flex-wrap items-start gap-6">{children}</div>
-    </section>
-  );
-}
-function V({ label, children, wide }: { label: string; children: ReactNode; wide?: boolean }) {
-  return (
-    <div className={wide ? "flex w-full min-w-0 flex-col gap-2" : "flex max-w-full min-w-0 flex-col gap-2"}>
-      <span className="text-xs text-gray-600">{label}</span>
-      {children}
-    </div>
-  );
-}
 
 const PCOLS: TableColumn[] = [
   { head: "เลขที่ MR", width: 150, Style: "Lead text", SortIcon: "Down" },
@@ -320,6 +305,8 @@ export default function Kit() {
         <V label="State=Collapsed"><div className="flex h-[960px] rounded-md border border-gray-200"><SidebarNavigation /></div></V>
         <V label="State=Expanded (เมนูตามหน้า Sidebar Navigation ของ UI Release#2)"><div className="flex h-[960px] rounded-md border border-gray-200"><SidebarNavigation State="Expanded" /></div></V>
       </Block>
+
+      <KitMore />
 
       <Modal open={modal === "confirm"} onClose={() => setModal("")} Type="Centered image"
         Header={<ModalHeader Title="ยืนยันการออก" SupportingText="ข้อมูลที่กรอกไว้จะไม่ถูกบันทึก" onClose={() => setModal("")} />}

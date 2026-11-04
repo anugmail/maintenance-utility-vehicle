@@ -50,7 +50,7 @@ import { Table, type TableColumn } from "@/components/vms/Table";
 | `SectionHeader` | Section header · 2011:6955 (หน้า Create/Edit) | `Breakpoint` `Title` `Badge` `SupportingText` `Actions` |
 | `SectionLabel` | Section label · 2011:6955 (หน้า Detail) | `Title` `SupportingText` `Actions` |
 | `Tabs` / `TabItem` | Tabs · Tab item · Tabs 2:9 | item: `Text` `Badge` `Active` `State` `onClick` |
-| `Modal` / `ModalHeader` / `ModalFooter` | Modal · Modal header · Modal footer · Modals 2:16 | modal: `Type` `Size` (md 500/lg 800/xl 1140) `open` `onClose` `Header` `Footer` children · header: `Alignment` `Title` `SupportingText` `FeaturedIcon` `onClose` `onBack` · footer: `Alignment` `SecondaryAction` `PrimaryAction` `TertiaryAction` |
+| `Modal` / `ModalHeader` / `ModalFooter` | Modal · Modal header · Modal footer · Modals 2:16 | modal: `Type` `Size` (md 500/lg 800/xl 1140) `open` `onClose` `Header` `Footer` children · header: `Alignment` `Title` `SupportingText` `FeaturedIcon` `Divider` `onClose` `onBack` · footer: `Alignment` `SecondaryAction` `PrimaryAction` `TertiaryAction` `Divider` `PaddingTop` |
 | `BackgroundOverlay` | Background overlay · 2428:4927 | `onClick` |
 | `BottomSheetHeader` / `BottomSheetFooter` | Bottom sheet header/footer · Bottom sheets 1180:2 | header: `Text` `ActionText` `onAction` `onBack` · footer: `SecondaryAction` `PrimaryAction` |
 | `BottomSheet` | **ประกอบ** (ดู `figma-spec/COMPOSED.md`) | `open` `onClose` `Title` `children` `Footer` `flush` |
@@ -62,12 +62,65 @@ import { Table, type TableColumn } from "@/components/vms/Table";
 | `PillColor` | Pill color · Badge 2:13 | `Text` `Color` (Brand/Gray/Info/Success/Warning/Error/Disabled) |
 | `HeaderNavigation` | Header navigation · 2:4 | `Breakpoint` (Desktop/Tablet/Mobile) `bell` `onMenu` |
 | `SidebarNavigation` | Sidebar navigation · 2:2 (เมนูจริงจากหน้า Sidebar Navigation 277:230639 ของ UI Release#2) | `State` (Collapsed/Expanded) `menu` (กลุ่ม + เมนูย่อย) `footer` `active` (ข้อความเมนูที่ Active · ตั้งต้น "บำรุงรักษาตามวาระ") `onToggle` `toggleLabel` |
-| `Ms` | (ไม่ใช่ component ไลบรารี) ไอคอน Material Symbols Rounded | `name` `size` (12/16/20/24) |
+| `TextArea` | Text area · Inputs 2:6 | `State` (10 ค่า) `LabelText` `Optional` `Text` `Placeholder` `HelperText` `onChange(v)` |
+| `NumberInput` | Number input · Inputs 2:6 | `State` `Size` `Label` `LabelText` `Number` `min` `max` `step` `onChange(n)` `HelperText` |
+| `RadioButton` (+ `RadioDot`) | Radio button · Radio button 2:17 | `Selected` `State` `onChange` `label` `bare` |
+| `HorizontalRadioGroups` | Horizontal radio groups · 2:17 | `Label` `Optional` `options[]` `value` `onChange(v)` `HelperText` `Error` `Disabled` |
+| `RadioTextCard` (+ `RadioTextCards`) | Radio text card · 2:17 | `Text` `SupportingText` `Selected` `State` `onClick` `compact` · `RadioTextCards` = แถวตาม radioPick(): `options[{Text, SupportingText}]` `value` `onChange` `row` |
+| `CheckboxTextCard` | Checkbox text card · Checkbox 2:18 | `Text` `SupportingText` `Selected` `State` `onChange(next)` |
+| `ProgressBar` | Progress bar · 2843:13902 | `Progress` (0–100) `Percentage` `Color` (Brand/Success) |
+| `FileUpload` | File upload · 2123:5261 (upload() ใน core.js) | `LabelText` `Optional` `files[{name, size, progress, bar, err}]` `hint` `max` `readonly` `bar` `HelperText` `Error` `onFiles` `onDelete(i)` `onDownload(i)` |
+| `FileUploadBase` / `FileUploadItemBase` / `FileIcon` | _File upload base · _File upload item base · _File icon · 2123:5261 | base: `State` `SupportingText` `onFiles` · item: `State` (In progress/Completed/Error) `FileName` `FileSize` `Progress` `ProgressBar` `DownloadAction` `DeleteAction` · icon: `Type` (Document/Image) + `fileIconType(name)` |
+| `ContentItemBase` / `ContentItemRow` | _Content item base · Content item row · Cards 2413:11354 | base: `Type` `Label` `Text` `SupportingText` `LeadingIconSwap` `InstanceSwap` · row: `items` ([label, text] หรือ props ของ base) `perRow` `ColumnWidth` `gap` |
+| `CardFormRow` | Card form row · Cards 2413:11354 | `Width` (Full/50%/25%) `Input1` `Input2` |
+| `ContentDivider` | Content divider · 2635:20181 | `Type` (Default/Text) `Text` |
+| `EmptyStateSearchNotFound` | Empty state/Search not found · Table 2:14 | `Text` `SupportingText` `Actions` (ค่าเริ่มไลบรารี "ไม่พบข้อมูล") |
+| `Images` | Images · 2648:43267 | `Size` (md/sm) `src` (ไม่ส่ง = Type Empty) `alt` `className` (กว้าง/สูง) |
+| `IconButton` | Icon button · Button 2:5 | `IconSwap` `State` + ปุ่ม HTML |
+| `ListWithCheckbox` / `ListWithCheckboxItem` / `ListHeaderItem` | List with checkbox (+ item, header) · List 3285:58382 | list: `Title` `Badge` `options[{value, Text, SupportingText, Disabled}]` `value[]` `onChange(next[])` · item: `Text` `SupportingText` `Selected` `State` `onChange` |
+| `DatePicker` | Date picker · 855:376 | `Type` (Dual/Single) `value{start,end}` `month` `today` `onApply(v)` `onCancel` `weekdays` `monthLabel` `ClearText` `CancelText` `ApplyText` |
+| `Status` | Status · Header navigation 2:4 | `State` (Success/Warning/Error/Brand/Info) |
+| `NotificationItemBase` / `NotificationCard` | _Notification item base · Notification card · 2:4 | item: `Text` `SupportingText` `StatusState` `Button` `onClick` · card: `Badge` children `Header` `Footer` `FooterText` `onFooter` |
+| `BadgeOutlineWithLeadingIcon` | Badge outline with leading icon · Badge 2:13 | `Text` `Color` `LeadingIconSwap` |
+| `Ms` | (ไม่ใช่ component ไลบรารี) ไอคอน Material Symbols Rounded | `name` `size` (12/16/20/24/48) |
 
 กรอบหน้า + แถบต้นแบบอยู่ `src/components/shell/` (`AppFrame` — Sidebar ย่อ/ขยาย + เมนูมือถือ · `PrototypeBar` · `ToastHost` · `MovedTo` หน้าพาจากที่อยู่เดิม)
 
 ชุดประกอบที่ใช้ซ้ำ (จาก core.js) อยู่ `src/components/patterns/`:
 - `ConfirmDialog` — `spec={{ title, sub, cancel, ok, danger }}` `onOk` `onCancel` (desktop Modal · มือถือ Bottom sheet)
 - `RowMenu` + `anchorOf(el)` — เมนู "…" ท้ายแถว `anchor` `items` `onClose` (desktop Dropdown menu ลอย · มือถือ Bottom sheet)
+- `FormModal` — formModal(): `open` `title` `sub` `fields[{label, value, placeholder, area, optional, error}]` `onField(i, v)` หรือ children · `ok` (บันทึก) `cancel` (ยกเลิก) `okDisabled` `onOk` `onCancel` (desktop Modal Type=Form · มือถือ Bottom sheet)
+- `PopupModal` — popupModal() เนื้อหาอิสระ (ตาราง/อัปโหลด): `open` `title` `sub` `width` (640/800) children `ok` `okDisabled` `showOk` `onOk` `onCancel`
+- `NotificationPanel` — แผงกระดิ่ง (S8): `open` `onClose` `badge` `items[{state, text, time, onClick}]` `onClearAll` (desktop Notification card ใต้หัว · มือถือ Bottom sheet)
+- `DisplayBox` (+ `chunk`) — กล่องแสดงข้อมูล kv(): `Title` `pairs[[label, text]]` `perRow` (desktop 4 · มือถือ 2) `Actions`
+- `PhotoGallery` — แถวภาพ library fallback: `Title` `photos[{src, alt}]` (desktop 4 · มือถือ 2)
+
+component จากไฟล์ Figma งานซ่อม **Maintain-D** (CLAUDE.md ข้อ 12) อยู่ `src/components/maintain-d/` — ชื่อไฟล์ = ชื่อใน Figma ตัดช่องว่าง · สเปก `figma-spec/<ชื่อ>.json`:
+
+| ไฟล์ | Figma (หน้า · node) | prop หลัก |
+|---|---|---|
+| `VehicleAndReporterInfo` | รายละเอียดงานซ่อม 175:79986 (vehicleInfo()) | `Title` `pairs[[label, text]]` · มือถือ = DisplayBox |
+| `IncidentPhotoGallery` | รายละเอียดงานซ่อม 175:79986 (photoGallery()) | `Title` `photos[]` · มากกว่า 4 ภาพมีปุ่มถัดไป · มือถือ = PhotoGallery |
+| `RepairFeedback` | Design 0:1 (S14) | `Title` `SupportingText` `value` (1–5) `onChange(n)` `Disabled` |
+| `HandoverSignature` | Design 0:1 (S10) | `Title` `slots[{LabelText, Placeholder, options, value, signed, HelperText}]` `onPick(i, name)` `onSign(i)` |
+| `ModalSignature` | Design 0:1 (S10) | `open` `Title` `signer` ([ป้าย, ชื่อ]) `value` `onSave(dataUrl)` `onClose` — ช่องวาดลายเซ็นจริง |
+| `ReceiptChecklist` | Design 0:1 (S10 รับรถ) | `Title` `Badge` `items[{name, has, damaged, wrongModel, note, battery}]` `onChange(i, patch)` `onAdd` `readonly` |
+| `InspectionChecklist` | Design 0:1 (S10 รับรถ/ปิดงาน) | `Title` `GroupTitle` `Badge` `items[{name, ok, note}]` `onChange(i, patch)` `onAdd` `readonly` |
+| `SparePartCardItem` (+ `baht`) | Local Component 8:133440 | `อะไหล่` (รายการในคลัง/รายการที่เลือก/V2 รายการที่เลือก/เพิ่มอะไหล่) `part{name, code, unit, price, warehouse, stock, suggestion}` `picked` `onPick` `qty` `onQty` `onDelete` `buyMore` `buyerOptions` `manual` `onManual` |
+| `SelecteSparePart` | Local Component 8:133440 | `State` (Add/Checked/Text) `Text` `onClick` |
+| `PartsInventoryPanel` | Design 0:1 (S21) | `parts[]` `picked[]` (รหัส) `onPick(part)` `query` `onQuery` `apiError` (State Not Found อัตโนมัติเมื่อค้นไม่เจอ) |
+| `RequestedPartsPanel` | Design 0:1 (S21) | `Title` `SupportingText` `Badge` children (การ์ด) `onAddManual` `costs[[ป้าย, บาท]]` |
+| `PartRequestStepPanel` | Design 0:1 (S21) | `Inventory` `Requested` (มือถือเรียงลง) |
+| `SummaryRequestedParts` | Design 0:1 (S4) | `open` `Title` `info` `groups[{title, subs[{title, rows[[ชื่อ, บาท]]}]}]` `totals` `cancel` `ok` `onOk` `onCancel` |
+
+```tsx
+import { FormModal } from "@/components/patterns/FormModal";
+import { VehicleAndReporterInfo } from "@/components/maintain-d/VehicleAndReporterInfo";
+import { FileUpload } from "@/components/vms/FileUpload";
+
+<VehicleAndReporterInfo Title="รายละเอียดแผนเดินทาง" pairs={[["ไตรมาส", "ไตรมาส 1"], ["ช่วงวันเดินทาง", "03/11/2569 – 07/11/2569"]]} />
+<FileUpload LabelText="ภาพก่อนเริ่มงาน" hint="JPG, PNG · 1 ภาพ" files={[{ name: "ภาพก่อนเริ่มงาน-1.jpg", size: "1.2 MB", bar: true }]} />
+<FormModal open={open} title="แก้ไขเบอร์ติดต่อและสถานที่" fields={[{ label: "เบอร์ติดต่อ", value: tel }]} onField={(i, v) => setTel(v)} onOk={save} onCancel={close} />
+```
 
 ข้อมูลจำลอง `src/lib/mock/` — `data.ts` (ค่าชุด screens.js) · `plan.ts` (ตัวช่วยแผน) · `store.ts` (`useMock` `setMock` `resetMock` `useRole` `notify`)

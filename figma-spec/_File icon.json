@@ -1,0 +1,265 @@
+{
+ "component": "_File icon",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
+ "page": "✅ File upload",
+ "node": "2123:5261",
+ "props": {
+  "Type": {
+   "type": "VARIANT",
+   "defaultValue": "Document",
+   "variantOptions": [
+    "Document",
+    "Image"
+   ]
+  }
+ },
+ "set": {
+  "name": "_File icon",
+  "type": "COMPONENT_SET",
+  "w": 132,
+  "h": 76,
+  "sizing": [
+   "HUG",
+   "HUG"
+  ],
+  "pl": 20,
+  "pr": 20,
+  "pt": 20,
+  "pb": 20,
+  "gap": 20,
+  "r": 5,
+  "dir": "HORIZONTAL",
+  "justify": "MIN",
+  "align": "CENTER",
+  "fill": [
+   "#FFFFFF"
+  ],
+  "stroke": [
+   "#9747FF"
+  ],
+  "sw": 1,
+  "strokeAlign": "INSIDE",
+  "vars": {
+   "fills": "Color/background/default"
+  }
+ },
+ "variants": [
+  {
+   "name": "Type=Document",
+   "type": "COMPONENT",
+   "w": 36,
+   "h": 36,
+   "sizing": [
+    "HUG",
+    "HUG"
+   ],
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "justify": "MIN",
+   "align": "MIN",
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "variant": {
+    "Type": "Document"
+   },
+   "kids": [
+    {
+     "name": "Featured icon",
+     "type": "INSTANCE",
+     "w": 36,
+     "h": 36,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "dir": "HORIZONTAL",
+     "justify": "CENTER",
+     "align": "CENTER",
+     "fill": [
+      "#F2F4F7"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full",
+      "fills": "Color/component/utility/gray/100"
+     },
+     "variant": {
+      "Icon swap#2032:0": "2843:12224",
+      "Color": "Gray",
+      "Size": "sm"
+     },
+     "component": "Featured icon [Color=Gray, Size=sm]",
+     "kids": [
+      {
+       "name": "draft-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "component": "draft-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE"
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 15,
+         "h": 19,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "fill": [
+          "#667085"
+         ],
+         "sw": 0.02500000037252903,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "fills": "Color/component/utility/gray/500"
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Image",
+   "type": "COMPONENT",
+   "w": 36,
+   "h": 36,
+   "sizing": [
+    "HUG",
+    "HUG"
+   ],
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "justify": "MIN",
+   "align": "MIN",
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "variant": {
+    "Type": "Image"
+   },
+   "kids": [
+    {
+     "name": "Featured icon",
+     "type": "INSTANCE",
+     "w": 36,
+     "h": 36,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "dir": "HORIZONTAL",
+     "justify": "CENTER",
+     "align": "CENTER",
+     "fill": [
+      "#F2F4F7"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full",
+      "fills": "Color/component/utility/gray/100"
+     },
+     "variant": {
+      "Icon swap#2032:0": "2841:82520",
+      "Color": "Gray",
+      "Size": "sm"
+     },
+     "component": "Featured icon [Color=Gray, Size=sm]",
+     "kids": [
+      {
+       "name": "image-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "component": "image-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE"
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 17,
+         "h": 17,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "fill": [
+          "#667085"
+         ],
+         "sw": 0.02500000037252903,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "fills": "Color/component/utility/gray/500"
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

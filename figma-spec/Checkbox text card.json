@@ -1,0 +1,1780 @@
+{
+ "component": "Checkbox text card",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
+ "page": "✅ Checkbox",
+ "node": "2:18",
+ "props": {
+  "Supporting text#2713:3": {
+   "type": "TEXT",
+   "defaultValue": "Supporting text"
+  },
+  "Text#2713:4": {
+   "type": "TEXT",
+   "defaultValue": "Text"
+  },
+  "Supporting#2713:5": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "State": {
+   "type": "VARIANT",
+   "defaultValue": "Default",
+   "variantOptions": [
+    "Default",
+    "Hover",
+    "Focused",
+    "Disabled"
+   ]
+  },
+  "Selected": {
+   "type": "VARIANT",
+   "defaultValue": "False",
+   "variantOptions": [
+    "False",
+    "True"
+   ]
+  }
+ },
+ "set": {
+  "name": "Checkbox text card",
+  "type": "COMPONENT_SET",
+  "w": 540,
+  "h": 397,
+  "sizing": [
+   "FIXED",
+   "FIXED"
+  ],
+  "pl": 20,
+  "pr": 20,
+  "pt": 20,
+  "pb": 20,
+  "gap": 20,
+  "r": 5,
+  "justify": "MIN",
+  "align": "MIN",
+  "fill": [
+   "#FFFFFF"
+  ],
+  "stroke": [
+   "#9747FF"
+  ],
+  "sw": 1,
+  "strokeAlign": "INSIDE",
+  "vars": {
+   "fills": "Color/surface/primary"
+  }
+ },
+ "variants": [
+  {
+   "name": "State=Default, Selected=False",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 78,
+   "sizing": [
+    "FIXED",
+    "HUG"
+   ],
+   "pl": 16,
+   "pr": 16,
+   "pt": 16,
+   "pb": 16,
+   "gap": 16,
+   "r": 8,
+   "dir": "VERTICAL",
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#EAECF0"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/400",
+    "paddingLeft": "Spacing/400",
+    "paddingTop": "Spacing/400",
+    "paddingRight": "Spacing/400",
+    "paddingBottom": "Spacing/400",
+    "topLeftRadius": "Radius/200",
+    "topRightRadius": "Radius/200",
+    "bottomLeftRadius": "Radius/200",
+    "bottomRightRadius": "Radius/200",
+    "fills": "Color/surface/primary",
+    "strokes": "Color/border/secondary"
+   },
+   "variant": {
+    "State": "Default",
+    "Selected": "False"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 208,
+     "h": 46,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
+     "gap": 12,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/300"
+     },
+     "kids": [
+      {
+       "name": "Checkbox",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "variant": {
+        "State": "Default",
+        "Type": "Unselected"
+       },
+       "component": "Checkbox [State=Default, Type=Unselected]",
+       "kids": [
+        {
+         "name": "Surface",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 4,
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 2,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "topLeftRadius": "Radius/100",
+          "topRightRadius": "Radius/100",
+          "bottomLeftRadius": "Radius/100",
+          "bottomRightRadius": "Radius/100",
+          "strokes": "Color/border/primary"
+         }
+        }
+       ]
+      },
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 176,
+       "h": 46,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100"
+       },
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/primary",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Text"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/secondary",
+          "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+          "fontSize": "IBM/Helper-text/01/font-size",
+          "fontFamily": "IBM/font-family",
+          "paragraphSpacing": "IBM/Helper-text/01/font-size",
+          "fontWeight": "IBM/Helper-text/01/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Supporting text"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Default, Selected=True",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 78,
+   "sizing": [
+    "FIXED",
+    "HUG"
+   ],
+   "pl": 16,
+   "pr": 16,
+   "pt": 16,
+   "pb": 16,
+   "gap": 16,
+   "r": 8,
+   "dir": "VERTICAL",
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#A80689"
+   ],
+   "sw": 2,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/400",
+    "paddingLeft": "Spacing/400",
+    "paddingTop": "Spacing/400",
+    "paddingRight": "Spacing/400",
+    "paddingBottom": "Spacing/400",
+    "topLeftRadius": "Radius/200",
+    "topRightRadius": "Radius/200",
+    "bottomLeftRadius": "Radius/200",
+    "bottomRightRadius": "Radius/200",
+    "fills": "Color/surface/primary",
+    "strokes": "Color/border/brand"
+   },
+   "variant": {
+    "State": "Default",
+    "Selected": "True"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 208,
+     "h": 46,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
+     "gap": 12,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/300"
+     },
+     "kids": [
+      {
+       "name": "Checkbox",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "variant": {
+        "State": "Default",
+        "Type": "Selected"
+       },
+       "component": "Checkbox [State=Default, Type=Selected]",
+       "kids": [
+        {
+         "name": "Surface with icon",
+         "type": "GROUP",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "kids": [
+          {
+           "name": "Surface",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 4,
+           "fill": [
+            "#A80689"
+           ],
+           "sw": 2,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "topLeftRadius": "Radius/100",
+            "topRightRadius": "Radius/100",
+            "bottomLeftRadius": "Radius/100",
+            "bottomRightRadius": "Radius/100",
+            "fills": "Color/component/selection/surface"
+           }
+          },
+          {
+           "name": "check-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "component": "check-20-400-round"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 176,
+       "h": 46,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100"
+       },
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/primary",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Text"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/secondary",
+          "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+          "fontSize": "IBM/Helper-text/01/font-size",
+          "fontFamily": "IBM/font-family",
+          "paragraphSpacing": "IBM/Helper-text/01/font-size",
+          "fontWeight": "IBM/Helper-text/01/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Supporting text"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Hover, Selected=False",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 78,
+   "sizing": [
+    "FIXED",
+    "HUG"
+   ],
+   "pl": 16,
+   "pr": 16,
+   "pt": 16,
+   "pb": 16,
+   "gap": 16,
+   "r": 8,
+   "dir": "VERTICAL",
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#CF07AA"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/400",
+    "paddingLeft": "Spacing/400",
+    "paddingTop": "Spacing/400",
+    "paddingRight": "Spacing/400",
+    "paddingBottom": "Spacing/400",
+    "topLeftRadius": "Radius/200",
+    "topRightRadius": "Radius/200",
+    "bottomLeftRadius": "Radius/200",
+    "bottomRightRadius": "Radius/200",
+    "fills": "Color/surface/primary",
+    "strokes": "Color/border/brand-secondary"
+   },
+   "variant": {
+    "State": "Hover",
+    "Selected": "False"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 208,
+     "h": 46,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
+     "gap": 12,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/300"
+     },
+     "kids": [
+      {
+       "name": "Checkbox",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "variant": {
+        "State": "Default",
+        "Type": "Unselected"
+       },
+       "component": "Checkbox [State=Default, Type=Unselected]",
+       "kids": [
+        {
+         "name": "Surface",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 4,
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 2,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "topLeftRadius": "Radius/100",
+          "topRightRadius": "Radius/100",
+          "bottomLeftRadius": "Radius/100",
+          "bottomRightRadius": "Radius/100",
+          "strokes": "Color/border/primary"
+         }
+        }
+       ]
+      },
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 176,
+       "h": 46,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100"
+       },
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/primary",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Text"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/secondary",
+          "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+          "fontSize": "IBM/Helper-text/01/font-size",
+          "fontFamily": "IBM/font-family",
+          "paragraphSpacing": "IBM/Helper-text/01/font-size",
+          "fontWeight": "IBM/Helper-text/01/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Supporting text"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Focused, Selected=False",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 78,
+   "sizing": [
+    "FIXED",
+    "HUG"
+   ],
+   "pl": 16,
+   "pr": 16,
+   "pt": 16,
+   "pb": 16,
+   "gap": 16,
+   "r": 8,
+   "dir": "VERTICAL",
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#CF07AA"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "effects": [
+    {
+     "type": "DROP_SHADOW",
+     "color": "#A806891F",
+     "x": 0,
+     "y": 0,
+     "blur": 0,
+     "spread": 4
+    }
+   ],
+   "vars": {
+    "itemSpacing": "Spacing/400",
+    "paddingLeft": "Spacing/400",
+    "paddingTop": "Spacing/400",
+    "paddingRight": "Spacing/400",
+    "paddingBottom": "Spacing/400",
+    "topLeftRadius": "Radius/200",
+    "topRightRadius": "Radius/200",
+    "bottomLeftRadius": "Radius/200",
+    "bottomRightRadius": "Radius/200",
+    "fills": "Color/surface/primary",
+    "strokes": "Color/border/brand-secondary",
+    "effects": "Color/effect/focus-brand"
+   },
+   "variant": {
+    "State": "Focused",
+    "Selected": "False"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 208,
+     "h": 46,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
+     "gap": 12,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/300"
+     },
+     "kids": [
+      {
+       "name": "Checkbox",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "variant": {
+        "State": "Default",
+        "Type": "Unselected"
+       },
+       "component": "Checkbox [State=Default, Type=Unselected]",
+       "kids": [
+        {
+         "name": "Surface",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 4,
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 2,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "topLeftRadius": "Radius/100",
+          "topRightRadius": "Radius/100",
+          "bottomLeftRadius": "Radius/100",
+          "bottomRightRadius": "Radius/100",
+          "strokes": "Color/border/primary"
+         }
+        }
+       ]
+      },
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 176,
+       "h": 46,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100"
+       },
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/primary",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Text"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/secondary",
+          "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+          "fontSize": "IBM/Helper-text/01/font-size",
+          "fontFamily": "IBM/font-family",
+          "paragraphSpacing": "IBM/Helper-text/01/font-size",
+          "fontWeight": "IBM/Helper-text/01/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Supporting text"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Disabled, Selected=False",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 78,
+   "sizing": [
+    "FIXED",
+    "HUG"
+   ],
+   "pl": 16,
+   "pr": 16,
+   "pt": 16,
+   "pb": 16,
+   "gap": 16,
+   "r": 8,
+   "dir": "VERTICAL",
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#F9FAFB"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/400",
+    "paddingLeft": "Spacing/400",
+    "paddingTop": "Spacing/400",
+    "paddingRight": "Spacing/400",
+    "paddingBottom": "Spacing/400",
+    "topLeftRadius": "Radius/200",
+    "topRightRadius": "Radius/200",
+    "bottomLeftRadius": "Radius/200",
+    "bottomRightRadius": "Radius/200",
+    "fills": "Color/surface/secondary-subtle",
+    "strokes": "Color/border/disabled"
+   },
+   "variant": {
+    "State": "Disabled",
+    "Selected": "False"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 208,
+     "h": 46,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
+     "gap": 12,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/300"
+     },
+     "kids": [
+      {
+       "name": "Checkbox",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "variant": {
+        "State": "Disabled",
+        "Type": "Unselected"
+       },
+       "component": "Checkbox [State=Disabled, Type=Unselected]",
+       "kids": [
+        {
+         "name": "Surface",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 4,
+         "fill": [
+          "#EAECF0"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 2,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "topLeftRadius": "Radius/100",
+          "topRightRadius": "Radius/100",
+          "bottomLeftRadius": "Radius/100",
+          "bottomRightRadius": "Radius/100",
+          "fills": "Color/component/selection/surface-disabled",
+          "strokes": "Color/border/primary"
+         }
+        }
+       ]
+      },
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 176,
+       "h": 46,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100"
+       },
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#98A2B3"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/disabled",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Text"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#98A2B3"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/disabled",
+          "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+          "fontSize": "IBM/Helper-text/01/font-size",
+          "fontFamily": "IBM/font-family",
+          "paragraphSpacing": "IBM/Helper-text/01/font-size",
+          "fontWeight": "IBM/Helper-text/01/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Supporting text"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Disabled, Selected=True",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 78,
+   "sizing": [
+    "FIXED",
+    "HUG"
+   ],
+   "pl": 16,
+   "pr": 16,
+   "pt": 16,
+   "pb": 16,
+   "gap": 16,
+   "r": 8,
+   "dir": "VERTICAL",
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#F9FAFB"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "sw": 2,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/400",
+    "paddingLeft": "Spacing/400",
+    "paddingTop": "Spacing/400",
+    "paddingRight": "Spacing/400",
+    "paddingBottom": "Spacing/400",
+    "topLeftRadius": "Radius/200",
+    "topRightRadius": "Radius/200",
+    "bottomLeftRadius": "Radius/200",
+    "bottomRightRadius": "Radius/200",
+    "fills": "Color/surface/secondary-subtle",
+    "strokes": "Color/border/disabled"
+   },
+   "variant": {
+    "State": "Disabled",
+    "Selected": "True"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 208,
+     "h": 46,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
+     "gap": 12,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/300"
+     },
+     "kids": [
+      {
+       "name": "Checkbox",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "variant": {
+        "State": "Disabled",
+        "Type": "Selected"
+       },
+       "component": "Checkbox [State=Disabled, Type=Selected]",
+       "kids": [
+        {
+         "name": "Surface with icon",
+         "type": "GROUP",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "kids": [
+          {
+           "name": "Surface",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 4,
+           "fill": [
+            "#EAECF0"
+           ],
+           "stroke": [
+            "#D0D5DD"
+           ],
+           "sw": 2,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "topLeftRadius": "Radius/100",
+            "topRightRadius": "Radius/100",
+            "bottomLeftRadius": "Radius/100",
+            "bottomRightRadius": "Radius/100",
+            "fills": "Color/component/selection/surface-disabled",
+            "strokes": "Color/border/primary"
+           }
+          },
+          {
+           "name": "check-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "component": "check-20-400-round"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 176,
+       "h": 46,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100"
+       },
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#98A2B3"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/disabled",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Text"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#98A2B3"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/disabled",
+          "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+          "fontSize": "IBM/Helper-text/01/font-size",
+          "fontFamily": "IBM/font-family",
+          "paragraphSpacing": "IBM/Helper-text/01/font-size",
+          "fontWeight": "IBM/Helper-text/01/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Supporting text"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Hover, Selected=True",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 78,
+   "sizing": [
+    "FIXED",
+    "HUG"
+   ],
+   "pl": 16,
+   "pr": 16,
+   "pt": 16,
+   "pb": 16,
+   "gap": 16,
+   "r": 8,
+   "dir": "VERTICAL",
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#CF07AA"
+   ],
+   "sw": 2,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/400",
+    "paddingLeft": "Spacing/400",
+    "paddingTop": "Spacing/400",
+    "paddingRight": "Spacing/400",
+    "paddingBottom": "Spacing/400",
+    "topLeftRadius": "Radius/200",
+    "topRightRadius": "Radius/200",
+    "bottomLeftRadius": "Radius/200",
+    "bottomRightRadius": "Radius/200",
+    "fills": "Color/surface/primary",
+    "strokes": "Color/border/brand-secondary"
+   },
+   "variant": {
+    "State": "Hover",
+    "Selected": "True"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 208,
+     "h": 46,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
+     "gap": 12,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/300"
+     },
+     "kids": [
+      {
+       "name": "Checkbox",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "variant": {
+        "State": "Default",
+        "Type": "Selected"
+       },
+       "component": "Checkbox [State=Default, Type=Selected]",
+       "kids": [
+        {
+         "name": "Surface with icon",
+         "type": "GROUP",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "kids": [
+          {
+           "name": "Surface",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 4,
+           "fill": [
+            "#A80689"
+           ],
+           "sw": 2,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "topLeftRadius": "Radius/100",
+            "topRightRadius": "Radius/100",
+            "bottomLeftRadius": "Radius/100",
+            "bottomRightRadius": "Radius/100",
+            "fills": "Color/component/selection/surface"
+           }
+          },
+          {
+           "name": "check-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "component": "check-20-400-round"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 176,
+       "h": 46,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100"
+       },
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/primary",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Text"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/secondary",
+          "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+          "fontSize": "IBM/Helper-text/01/font-size",
+          "fontFamily": "IBM/font-family",
+          "paragraphSpacing": "IBM/Helper-text/01/font-size",
+          "fontWeight": "IBM/Helper-text/01/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Supporting text"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Focused, Selected=True",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 78,
+   "sizing": [
+    "FIXED",
+    "HUG"
+   ],
+   "pl": 16,
+   "pr": 16,
+   "pt": 16,
+   "pb": 16,
+   "gap": 16,
+   "r": 8,
+   "dir": "VERTICAL",
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#CF07AA"
+   ],
+   "sw": 2,
+   "strokeAlign": "INSIDE",
+   "effects": [
+    {
+     "type": "DROP_SHADOW",
+     "color": "#A806891F",
+     "x": 0,
+     "y": 0,
+     "blur": 0,
+     "spread": 4
+    }
+   ],
+   "vars": {
+    "itemSpacing": "Spacing/400",
+    "paddingLeft": "Spacing/400",
+    "paddingTop": "Spacing/400",
+    "paddingRight": "Spacing/400",
+    "paddingBottom": "Spacing/400",
+    "topLeftRadius": "Radius/200",
+    "topRightRadius": "Radius/200",
+    "bottomLeftRadius": "Radius/200",
+    "bottomRightRadius": "Radius/200",
+    "fills": "Color/surface/primary",
+    "strokes": "Color/border/brand-secondary",
+    "effects": "Color/effect/focus-brand"
+   },
+   "variant": {
+    "State": "Focused",
+    "Selected": "True"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 208,
+     "h": 46,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
+     "gap": 12,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/300"
+     },
+     "kids": [
+      {
+       "name": "Checkbox",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "variant": {
+        "State": "Default",
+        "Type": "Selected"
+       },
+       "component": "Checkbox [State=Default, Type=Selected]",
+       "kids": [
+        {
+         "name": "Surface with icon",
+         "type": "GROUP",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "kids": [
+          {
+           "name": "Surface",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 4,
+           "fill": [
+            "#A80689"
+           ],
+           "sw": 2,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "topLeftRadius": "Radius/100",
+            "topRightRadius": "Radius/100",
+            "bottomLeftRadius": "Radius/100",
+            "bottomRightRadius": "Radius/100",
+            "fills": "Color/component/selection/surface"
+           }
+          },
+          {
+           "name": "check-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "component": "check-20-400-round"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 176,
+       "h": 46,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100"
+       },
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/primary",
+          "letterSpacing": "IBM/Label/03/letter-spacing",
+          "fontSize": "IBM/Label/03/font-size",
+          "fontFamily": "IBM/Label/03/font-family",
+          "paragraphSpacing": "IBM/Label/03/letter-spacing",
+          "fontWeight": "IBM/Label/03/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Text"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/secondary",
+          "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+          "fontSize": "IBM/Helper-text/01/font-size",
+          "fontFamily": "IBM/font-family",
+          "paragraphSpacing": "IBM/Helper-text/01/font-size",
+          "fontWeight": "IBM/Helper-text/01/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Supporting text"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,192 @@
+{
+ "component": "Content divider",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
+ "page": "✅ Content divider",
+ "node": "2635:20181",
+ "props": {
+  "Text#2631:0": {
+   "type": "TEXT",
+   "defaultValue": "หรือ"
+  },
+  "Type": {
+   "type": "VARIANT",
+   "defaultValue": "Default",
+   "variantOptions": [
+    "Text",
+    "Default"
+   ]
+  }
+ },
+ "set": {
+  "name": "Content divider",
+  "type": "COMPONENT_SET",
+  "w": 388,
+  "h": 82,
+  "sizing": [
+   "FIXED",
+   "HUG"
+  ],
+  "pl": 20,
+  "pr": 20,
+  "pt": 20,
+  "pb": 20,
+  "gap": 20,
+  "r": 5,
+  "dir": "VERTICAL",
+  "justify": "MIN",
+  "align": "MIN",
+  "fill": [
+   "#FFFFFF"
+  ],
+  "stroke": [
+   "#9747FF"
+  ],
+  "sw": 1,
+  "strokeAlign": "INSIDE",
+  "vars": {
+   "fills": "Color/background/default"
+  }
+ },
+ "variants": [
+  {
+   "name": "Type=Default",
+   "type": "COMPONENT",
+   "w": 348,
+   "h": 1,
+   "sizing": [
+    "FILL",
+    "HUG"
+   ],
+   "gap": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "justify": "CENTER",
+   "align": "CENTER",
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/100"
+   },
+   "variant": {
+    "Type": "Default"
+   },
+   "kids": [
+    {
+     "name": "Divider",
+     "type": "VECTOR",
+     "w": 348,
+     "h": 1,
+     "sizing": [
+      "FILL",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#D0D5DD"
+     ],
+     "sw": 1,
+     "strokeAlign": "CENTER",
+     "vars": {
+      "fills": "Color/icon/tertiary"
+     }
+    }
+   ]
+  },
+  {
+   "name": "Type=Text",
+   "type": "COMPONENT",
+   "w": 348,
+   "h": 21,
+   "sizing": [
+    "FILL",
+    "HUG"
+   ],
+   "gap": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "justify": "CENTER",
+   "align": "CENTER",
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/100"
+   },
+   "variant": {
+    "Type": "Text"
+   },
+   "kids": [
+    {
+     "name": "Divider",
+     "type": "VECTOR",
+     "w": 158,
+     "h": 1,
+     "sizing": [
+      "FILL",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#D0D5DD"
+     ],
+     "sw": 1,
+     "strokeAlign": "CENTER",
+     "vars": {
+      "fills": "Color/icon/tertiary"
+     }
+    },
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 24,
+     "h": 21,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/secondary",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null,
+      "ls": -0.20000000298023224,
+      "align": "CENTER"
+     },
+     "text": "หรือ"
+    },
+    {
+     "name": "Divider",
+     "type": "VECTOR",
+     "w": 158,
+     "h": 1,
+     "sizing": [
+      "FILL",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#D0D5DD"
+     ],
+     "sw": 1,
+     "strokeAlign": "CENTER",
+     "vars": {
+      "fills": "Color/icon/tertiary"
+     }
+    }
+   ]
+  }
+ ]
+}

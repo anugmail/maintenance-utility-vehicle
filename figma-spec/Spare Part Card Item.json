@@ -1728,7 +1728,31 @@
                "name": "Surface with icon",
                "type": "GROUP",
                "w": 20,
-               "h": 20
+               "h": 20,
+               "kids": [
+                {
+                 "name": "Surface",
+                 "type": "ELLIPSE",
+                 "w": 20,
+                 "h": 20,
+                 "r": 0,
+                 "fill": [
+                  "#A80689"
+                 ],
+                 "sw": 1.5
+                },
+                {
+                 "name": "Icon",
+                 "type": "ELLIPSE",
+                 "w": 8,
+                 "h": 8,
+                 "r": 0,
+                 "fill": [
+                  "#FFFFFF"
+                 ],
+                 "sw": 1.5
+                }
+               ]
               }
              ]
             },

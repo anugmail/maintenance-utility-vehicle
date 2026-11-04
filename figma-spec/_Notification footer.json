@@ -1,0 +1,234 @@
+{
+ "component": "_Notification footer",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
+ "page": "Header navigation",
+ "node": "2:4",
+ "props": {},
+ "variants": [
+  {
+   "name": "_Notification footer",
+   "type": "COMPONENT",
+   "w": 314,
+   "h": 60,
+   "sizing": [
+    "FIXED",
+    "HUG"
+   ],
+   "pl": 12,
+   "pr": 12,
+   "pt": 12,
+   "pb": 12,
+   "gap": 110,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "justify": "CENTER",
+   "align": "CENTER",
+   "sws": [
+    0,
+    0,
+    1,
+    0
+   ],
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "paddingLeft": "Spacing/300",
+    "paddingTop": "Spacing/300",
+    "paddingRight": "Spacing/300",
+    "paddingBottom": "Spacing/300",
+    "topLeftRadius": "Radius/none",
+    "topRightRadius": "Radius/none"
+   },
+   "kids": [
+    {
+     "name": "Primary button",
+     "type": "INSTANCE",
+     "w": 284,
+     "h": 36,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "pl": 12,
+     "pr": 12,
+     "pt": 8,
+     "pb": 8,
+     "gap": 4,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "justify": "CENTER",
+     "align": "CENTER",
+     "fill": [
+      "#A80689"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/100",
+      "paddingLeft": "Spacing/300",
+      "paddingTop": "Spacing/200",
+      "paddingRight": "Spacing/300",
+      "paddingBottom": "Spacing/200",
+      "topLeftRadius": "Radius/200",
+      "topRightRadius": "Radius/200",
+      "bottomLeftRadius": "Radius/200",
+      "bottomRightRadius": "Radius/200",
+      "fills": "Color/component/button/primary/surface"
+     },
+     "variant": {
+      "Leading icon swap#133:10": "133:3719",
+      "Trailing icon#105:4": false,
+      "Trailing icon swap#133:12": "133:3719",
+      "Leading icon#105:2": false,
+      "Button text#1246:11": true,
+      "Text#105:0": "ลบข้อความแจ้งเตือนทั้งหมด",
+      "State": "Default",
+      "Size": "md"
+     },
+     "component": "Primary button [State=Default, Size=md]",
+     "kids": [
+      {
+       "name": "crop_free-20-400-round",
+       "type": "INSTANCE",
+       "visible": false,
+       "w": 20,
+       "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "component": "crop_free-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE"
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 14,
+         "h": 14,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "fill": [
+          "#FFFFFF"
+         ],
+         "sw": 0.02083333395421505,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "fills": "Color/component/button/primary/icon"
+         }
+        }
+       ]
+      },
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 159,
+       "h": 21,
+       "sizing": [
+        "HUG",
+        "HUG"
+       ],
+       "fill": [
+        "#FFFFFF"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/component/button/primary/text",
+        "letterSpacing": "IBM/Label/03/letter-spacing",
+        "fontSize": "IBM/Label/03/font-size",
+        "fontFamily": "IBM/Label/03/font-family",
+        "paragraphSpacing": "IBM/Label/03/letter-spacing",
+        "fontWeight": "IBM/Label/03/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224
+       },
+       "text": "ลบข้อความแจ้งเตือนทั้งหมด"
+      },
+      {
+       "name": "crop_free-20-400-round",
+       "type": "INSTANCE",
+       "visible": false,
+       "w": 20,
+       "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "component": "crop_free-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE"
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 14,
+         "h": 14,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "fill": [
+          "#FFFFFF"
+         ],
+         "sw": 0.02083333395421505,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "fills": "Color/component/button/primary/icon"
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

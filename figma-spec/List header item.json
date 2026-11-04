@@ -1,0 +1,219 @@
+{
+ "component": "List header item",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
+ "page": "List",
+ "node": "3285:58382",
+ "props": {},
+ "variants": [
+  {
+   "name": "List header item",
+   "type": "COMPONENT",
+   "w": 238,
+   "h": 40,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "pl": 16,
+   "pr": 16,
+   "gap": 16,
+   "r": 4,
+   "dir": "HORIZONTAL",
+   "justify": "MIN",
+   "align": "CENTER",
+   "fill": [
+    "#EAECF0"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/400",
+    "paddingLeft": "Spacing/400",
+    "paddingRight": "Spacing/400",
+    "topLeftRadius": "Radius/100",
+    "topRightRadius": "Radius/100",
+    "bottomLeftRadius": "Radius/100",
+    "bottomRightRadius": "Radius/100",
+    "fills": "Color/surface/tertiary"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 170,
+     "h": 40,
+     "sizing": [
+      "FILL",
+      "FILL"
+     ],
+     "gap": 12,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "CENTER",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/300"
+     },
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 33,
+       "h": 24,
+       "sizing": [
+        "HUG",
+        "HUG"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Label/02/letter-spacing",
+        "fontSize": "IBM/Label/02/font-size",
+        "fontFamily": "IBM/Label/02/font-family",
+        "paragraphSpacing": "IBM/Label/02/font-size",
+        "fontWeight": "IBM/Label/02/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 16,
+        "lh": null,
+        "ls": -0.20000000298023224
+       },
+       "text": "Title"
+      },
+      {
+       "name": "Badge outline",
+       "type": "INSTANCE",
+       "w": 51,
+       "h": 24,
+       "sizing": [
+        "HUG",
+        "FIXED"
+       ],
+       "pl": 8,
+       "pr": 8,
+       "pt": 4,
+       "pb": 4,
+       "gap": 4,
+       "r": 4,
+       "dir": "HORIZONTAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/100",
+        "paddingLeft": "Spacing/200",
+        "paddingTop": "Spacing/100",
+        "paddingRight": "Spacing/200",
+        "paddingBottom": "Spacing/100",
+        "topLeftRadius": "Radius/100",
+        "topRightRadius": "Radius/100",
+        "bottomLeftRadius": "Radius/100",
+        "bottomRightRadius": "Radius/100",
+        "fills": "Color/surface/primary",
+        "strokes": "Color/border/primary"
+       },
+       "variant": {
+        "Text#2104:3": "Badge",
+        "Color": "Gray"
+       },
+       "component": "Badge outline [Color=Gray]",
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 35,
+         "h": 18,
+         "sizing": [
+          "HUG",
+          "HUG"
+         ],
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/secondary",
+          "letterSpacing": "IBM/Label/04/letter-spacing",
+          "fontSize": "IBM/Label/04/font-size",
+          "fontFamily": "IBM/font-family",
+          "paragraphSpacing": "IBM/Label/04/letter-spacing",
+          "fontWeight": "IBM/Label/04/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 12,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Badge"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Checkbox",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "dir": "VERTICAL",
+     "justify": "CENTER",
+     "align": "CENTER",
+     "variant": {
+      "State": "Default",
+      "Type": "Unselected"
+     },
+     "component": "Checkbox [State=Default, Type=Unselected]",
+     "kids": [
+      {
+       "name": "Surface",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 4,
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "sw": 2,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/100",
+        "topRightRadius": "Radius/100",
+        "bottomLeftRadius": "Radius/100",
+        "bottomRightRadius": "Radius/100",
+        "strokes": "Color/border/primary"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

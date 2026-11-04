@@ -18,14 +18,16 @@ export interface ModalHeaderProps {
   FeaturedIconColor?: FeaturedIconColor;
   onClose?: () => void;
   onBack?: () => void;
+  /** property Divider (Alignment=Left) — เส้นคั่นใต้หัว ห่าง 20 (ค่าเริ่มปิดตาม R2/R13 · Modal Signature / SummaryRequestedParts เปิด) */
+  Divider?: boolean;
   id?: string;
 }
 
-export function ModalHeader({ Alignment = "Center", Title, SupportingText, FeaturedIcon: fi = true, FeaturedIconSwap, FeaturedIconColor = "Brand", onClose, onBack, id }: ModalHeaderProps) {
+export function ModalHeader({ Alignment = "Center", Title, SupportingText, FeaturedIcon: fi = true, FeaturedIconSwap, FeaturedIconColor = "Brand", onClose, onBack, Divider, id }: ModalHeaderProps) {
   const close = onClose && <TertiaryButton LeadingIconSwap="close-24-300-round" ButtonText={false} aria-label="ปิด" onClick={onClose} />;
   if (Alignment === "Left") {
-    return (
-      <div className="flex items-center gap-2 px-6 pt-6 pb-4">
+    const row = (
+      <div className={cx("flex items-center gap-2 px-6 pt-6", !Divider && "pb-4")}>
         {onBack && <TertiaryButton LeadingIconSwap="keyboard_arrow_left-20-400-round" ButtonText={false} aria-label="ย้อนกลับ" onClick={onBack} />}
         <div className="flex min-w-0 flex-1 items-center gap-4">
           {fi && <FeaturedIcon Color={FeaturedIconColor} IconSwap={FeaturedIconSwap} />}
@@ -37,6 +39,8 @@ export function ModalHeader({ Alignment = "Center", Title, SupportingText, Featu
         {close}
       </div>
     );
+    if (!Divider) return row;
+    return <div className="pb-4">{row}<div className="pt-5"><div className="h-px bg-gray-300" /></div></div>;
   }
   return (
     <div className="relative flex flex-col items-center gap-4 px-6 pt-6 pb-4 text-center">

@@ -4,7 +4,7 @@
    - components.json "maintainD"  → ไฟล์ Figma งานซ่อม "Maintain-D" · ดัมป์ slug `maintain-d`
    ต้นทาง: Maintenance-Request-Form/design-system/.figma-extract/<slug>/*.json (ดัมป์ด้วยปลั๊กอิน figma-export/dump-plugin · รอบ 4 พ.ย. 2569
    มี vars effects paint sws strokeAlign justify sizing visible opacity ระยะ/จัดแนวตัวอักษร และ svg ของ component กราฟิก)
-   ผลลัพธ์: figma-spec/<ชื่อ component>.json (ทุก variant) + figma-spec/svg/<ชื่อ>.svg (กราฟิก) + figma-spec/INDEX.md
+   ผลลัพธ์: figma-spec/<ชื่อ component>.json (ทุก variant) + figma-spec/svg/<ชื่อ>.svg (กราฟิก · สำเนาที่ public/figma-svg/) + figma-spec/INDEX.md
    รัน: npm run figma-spec [-- <โฟลเดอร์ดัมป์ component> [<โฟลเดอร์ดัมป์ maintain-d>]] · component React ทุกตัวต้องอ้างค่าจากไฟล์เหล่านี้ */
 import fs from "node:fs";
 import path from "node:path";
@@ -15,11 +15,13 @@ const EXTRACT = path.join(ROOT, "..", "Maintenance-Request", "Maintenance-Reques
 const LIST = JSON.parse(fs.readFileSync(path.join(ROOT, "figma-spec", "components.json"), "utf8"));
 const SOURCES = [
   { key: "component", label: "(Component) VMS Plus", fileKey: "VmOC07pKEsDkHZagOgcSU2", dir: process.argv[2] || path.join(EXTRACT, "component"), want: LIST.components || [], depth: 4 },
-  { key: "maintain-d", label: "Maintain-D", fileKey: null, dir: process.argv[3] || path.join(EXTRACT, "maintain-d"), want: LIST.maintainD || [], depth: 6 },
+  { key: "maintain-d", label: "Maintain-D", fileKey: null, dir: process.argv[3] || path.join(EXTRACT, "maintain-d"), want: LIST.maintainD || [], depth: 10, skipHidden: true },
 ];
 const OUT = path.join(ROOT, "figma-spec");
 const SVG_DIR = path.join(OUT, "svg");
+const SVG_PUBLIC = path.join(ROOT, "public", "figma-svg");   // สำเนาให้หน้าเว็บโหลดได้ (asset("/figma-svg/<ชื่อ>.svg"))
 fs.rmSync(SVG_DIR, { recursive: true, force: true });
+fs.rmSync(SVG_PUBLIC, { recursive: true, force: true });
 const safe = (s) => s.replace(/[\/\\:*?"<>|]/g, "_");
 
 /* เก็บเฉพาะค่าที่ใช้ทำ UI · svg ของ component กราฟิก (ปลายสุด) เขียนแยกเป็นไฟล์ ไม่ฝังใน json */
@@ -35,9 +37,11 @@ function slim(n, d, ctx) {
     ctx.used.add(base);
     fs.mkdirSync(SVG_DIR, { recursive: true });
     fs.writeFileSync(path.join(SVG_DIR, file), n.svg);
+    fs.mkdirSync(SVG_PUBLIC, { recursive: true });
+    fs.writeFileSync(path.join(SVG_PUBLIC, file), n.svg);
     o.svg = "svg/" + file;
   }
-  if (n.kids && d < ctx.depth) o.kids = n.kids.map((k) => slim(k, d + 1, ctx));
+  if (n.kids && d < ctx.depth && !(ctx.skipHidden && n.visible === false)) o.kids = n.kids.map((k) => slim(k, d + 1, ctx));   // Maintain-D: ชั้นที่ซ่อนไม่เก็บลูก (แผงใหญ่)
   return o;
 }
 
@@ -51,16 +55,20 @@ for (const src of SOURCES) {
   const want = new Set(src.want), hits = new Map();   // ชื่อ → { set, file } · COMPONENT_SET มาก่อน COMPONENT · อ่านแต่ละหน้าครั้งเดียว
   for (const f of files) {
     const j = JSON.parse(fs.readFileSync(path.join(src.dir, f), "utf8"));
-    for (const s of j.sets || []) {
-      if (!want.has(s.name) || (s.type !== "COMPONENT_SET" && s.type !== "COMPONENT")) continue;
+    const take = (s) => {
+      if (!want.has(s.name) || (s.type !== "COMPONENT_SET" && s.type !== "COMPONENT")) return;
       const prev = hits.get(s.name);
       if (!prev || (prev.set.type === "COMPONENT" && s.type === "COMPONENT_SET")) hits.set(s.name, { set: s, file: f });
-    }
+    };
+    for (const s of j.sets || []) take(s);
+    // component ที่วางอยู่ในกรอบ (FRAME/SECTION) ของหน้า เช่น ไอคอน resize-right ในกรอบ "Icon" ของหน้า Icons — ใช้เมื่อไม่มีตัวบนสุดชื่อเดียวกัน
+    const inFrames = (n, d) => { for (const k of n.kids || []) { if (k.type === "COMPONENT" || k.type === "COMPONENT_SET") { if (!hits.has(k.name)) take(k); } else if (d < 3 && (k.type === "FRAME" || k.type === "SECTION")) inFrames(k, d + 1); } };
+    for (const s of j.sets || []) if (s.type === "FRAME" || s.type === "SECTION") inFrames(s, 0);
   }
   for (const name of src.want) {
     const h = hits.get(name);
     if (!h) { index.push(`| ${name} | ${src.label} | ✗ ไม่พบในดัมป์ | — |`); missing.push(src.key + ": " + name); continue; }
-    const ctx = { component: name, used: new Set(), depth: src.depth };
+    const ctx = { component: name, used: new Set(), depth: src.depth, skipHidden: !!src.skipHidden };
     const { kids, ...setOnly } = h.set;
     const out = {
       component: name, source: src.label, ...(src.fileKey ? { fileKey: src.fileKey } : {}), page: pageName(h.file), node: h.file.replace(".json", "").replace("-", ":"),

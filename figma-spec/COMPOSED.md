@@ -22,15 +22,29 @@
 | ช่อง "จำลองบันทึกไม่สำเร็จ" ในแถบต้นแบบ | Checkbox | ให้เปิดดูจอ "บันทึกไม่สำเร็จ" ของ S1 ได้ (ระบบจริงไม่มี) |
 | ปุ่ม "ใส่อะไหล่ตัวอย่าง (ข้อมูลจำลอง)" ในหน้า `/soon/?s=S21` | Primary button | S21 ยังไม่ทำ — ใส่อะไหล่ CAR_PICK ของ screens.js ให้รถในฟอร์มสร้างแผน เพื่อให้เห็นจออะไหล่ในไตรมาส + ยืนยันเอาอะไหล่ออกของ S1 · เอาออกเมื่อทำ S21 |
 
+| `patterns/FormModal` | Modal Type=Form + Modal header Left (ไม่มี Featured icon) + Card form row (Text input / Text area) + Modal footer Horizontal right · มือถือ Bottom sheet + Bottom sheet footer | formModal() ใน core.js ใช้ซ้ำหลาย scenario (S2 S7 ส่งกลับ · S6 แก้ไขเบอร์/สถานที่ · S21 รายการเพิ่มเติม) |
+| `patterns/PopupModal` | Background overlay + กล่อง white รัศมี 12 กว้าง 640/800 + Modal header Left + เนื้อหาอิสระ + Modal footer Horizontal right · มือถือ Bottom sheet | popupModal() ใน screens.js — Modal ของไลบรารีมีแค่ md/lg/xl และเนื้อหาตายตัว ใช้กับตาราง/อัปโหลดใน popup (S6 เพิ่มรถ · S10 ฯลฯ) |
+| `patterns/NotificationPanel` | Notification card + _Notification item base + Status ลอยใต้ Header navigation (ขวา 24 · ใต้หัว 8) · มือถือ Bottom sheet "แจ้งเตือน (n)" + การ์ดไม่มีหัว/ท้าย + ปุ่ม "ลบข้อความแจ้งเตือนทั้งหมด" | notiPanel() ใน screens.js (S8) — Notification card ไม่มี variant มือถือ · desktop ไม่มีพื้นทึบ (คลิกนอกแผง = ปิด) |
+| `patterns/DisplayBox` | Section label + กล่อง gray-50 รัศมี 8 ขอบใน 24 ช่องไฟ 24 + Content item row (Text with label) แถวละ 4 / มือถือ 2 | kv() + displayBox() ใน core.js (กล่องแสดงข้อมูลหน้า Detail) · desktop ใช้ VehicleAndReporterInfo ของไฟล์ Maintain-D ได้ (ช่องไฟ 16) |
+| `patterns/PhotoGallery` | Section label + Images Size=sm × สูงสุด 4 (มือถือ 2) ช่องไฟ 16 | photoGallery() fallback ใน screens.js · desktop ใช้ IncidentPhotoGallery ของไฟล์ Maintain-D |
+| มือถือของ `ModalSignature` · `SummaryRequestedParts` · `PartRequestStepPanel` | Bottom sheet + เนื้อหาเดียวกับ desktop + Bottom sheet footer · PartRequestStepPanel เรียงลง | ไฟล์ Maintain-D มีแต่ desktop · S4 มือถือใช้ ConfirmDialog ตาม spec (SummaryRequestedParts บนมือถือเป็นทางเลือก) |
+| ช่องเลือกชื่อใน `HandoverSignature` | Input dropdown + Dropdown list | ไฟล์ Maintain-D วาดเป็น Text input + ลูกศร keyboard_arrow_down · S10 spec ระบุ Input dropdown → ใช้ Input dropdown ของไลบรารี (หน้าตาเดียวกัน) |
+| ช่องวาดลายเซ็นใน `ModalSignature` | Container ของ Text area (สูง 249) + canvas วาดด้วยเมาส์/นิ้ว + Tertiary button close (ล้าง) | ไฟล์ Maintain-D แสดงภาพลายเซ็นในกรอบ Text area — ต้นแบบให้วาดได้จริง (ผลเป็นภาพ data URL ในข้อมูลจำลอง) |
+| แบตเตอรี่ใน `ReceiptChecklist` มือถือ | Text input ยี่ห้อ + จำนวน + หน่วย ใต้ชื่อรายการในการ์ด | ไฟล์มีช่องนี้เฉพาะตาราง desktop · การ์ดมือถือของไฟล์ไม่ได้แสดงช่องแบตเตอรี่ |
+| `src/app/kit/KitBlocks.tsx` `KitMore.tsx` | Section label เป็นหัวแต่ละชุด | หน้า /kit/ ของต้นแบบ (แยกไฟล์ให้หน้า kit ไม่ยาวเกิน) |
+
 ## ข. ค่าที่ไลบรารีมีแต่ไม่มี token (ไม่ได้ hardcode — ใช้ค่าใกล้เคียงแทน · รอเคาะ)
 
-ตรวจใหม่กับดัมป์ 4 พ.ย. 2569 (มี `vars` `effects` `paint` `sws`) — รายการที่กลายเป็นค่าตรงแล้ว (overlay 40% · เงา Dropdown/Notification · Modal ไม่มีเงา · เส้นแยกด้าน · Purple · Tab item Active) ย้ายออกจากตารางนี้แล้ว ดูท้ายหัวข้อ
+ตรวจใหม่กับดัมป์ 4 พ.ย. 2569 (มี `vars` `effects` `paint` `sws`) — รายการที่กลายเป็นค่าตรงแล้ว (overlay 40% · เงา Dropdown/Notification · Modal ไม่มีเงา · เส้นแยกด้าน · Purple · Tab item Active · วงโฟกัส) ย้ายออกจากตารางนี้แล้ว ดูท้ายหัวข้อ
 
 | จุด | ค่าในไลบรารี | ที่ใช้แทน |
 |---|---|---|
-| Featured icon `Color=Purple, Size=sm` — ไอคอน | Variable `Color/component/utility/purple/600` (#7839EE) | `purple-700` (token มีแค่ purple-50/200/700) · Size=md ใช้ purple/700 ตรงอยู่แล้ว |
 | Avatar (Header navigation · แถวผู้ใช้ใน Sidebar navigation) | วงกลม พื้น #DCD3FF (ไม่ผูก Variable) + ภาพคน (paint `image`) | `purple-200` (#DDD6FE ใกล้สุด) ไม่มีภาพ · Avatar ใน Dropdown list item ปิดไว้ · component "Avatar" (หน้า Avatar 2:20) มี SVG แต่ฝังภาพถ่าย ~460 KB ไม่ได้ใช้ |
-| วงโฟกัส (Primary/Secondary/Primary danger/Secondary danger button · Text input · Input dropdown · Checkbox) | effect DROP_SHADOW spread 4 ไม่เบลอ ทึบ 12%: #A806891F (brand-900) · #6670851F (gray-500) · #D92D201F (error-600) | `shadow-ring` / `shadow-ring-gray` / `shadow-ring-error` ใน theme = `0 0 0 4px color-mix(สี token 12%)` · token `--focus-ring` `--focus-ring-error` ของ design system เป็น .24 (ประมาณ) และไม่มีของ gray — **รอเพิ่ม/แก้ token** แล้วให้ theme ชี้ token |
+| ขอบการ์ด/กล่องของ Spare Part Card Item · PartsInventoryPanel · RequestedPartsPanel (ไฟล์ Maintain-D) | #E9EAEB (ไม่ผูก Variable) | `gray-200` (#EAECF0) |
+| ไอคอนลบในการ์ด Spare Part Card Item | delete 24 สี #1C1B1F | Tertiary button ไอคอนอย่างเดียว (gray-600) |
+| ข้อความว่างของ RequestedPartsPanel | #181D27 / #535862 ขนาด 12.6 | `black` / `gray-600` ขนาด 12 |
+| _Content item base Type=Attachment | ตัวอักษร #444CE7 | `info-700` (#3538CD ใกล้สุด) |
+| ปุ่มท้าย Notification card | Primary button สูง 36 (instance ย่อ) | Primary button md 40 |
 | พื้นหลังกรอบ Notification (520×240 · มือถือ 360×260) | paint GRADIENT_LINEAR ดำ 10% → 0% ที่ 95% · ดัมป์ไม่บอกทิศ (ไม่มี gradientTransform) | ยังไม่ทำ (มีแค่การ์ด) |
 
 ค่าที่ตรงแล้ว (ดัมป์ 4 พ.ย. 2569):
@@ -38,7 +52,8 @@
 - เงา Dropdown menu · Dropdown list · Notification (การ์ด) = DROP_SHADOW #10182814 y12 blur16 spread-4 → token `--shadow-lg` (`shadow-lg-lib`) · Tooltips ใน Nav button มีเงาเดียวกันแต่ `visible:false` (ไลบรารีซ่อน → ต้นแบบไม่แสดง)
 - Modal · Bottom sheet (Sheet) ไม่มี effect ในไลบรารี → เอาเงาออก · Bottom sheet รัศมีบน Radius/600 = 24 ตรงกับ `rounded-t-sheet`
 - เส้นแยกด้าน (`sws` [บน,ขวา,ล่าง,ซ้าย]): Table cell / Mobile table item (Text · Lead text · Badge) [0,0,1,0] Color/border/secondary = gray-200 · Tab item ไม่ Active [0,0,1,0] Color/border/primary = gray-300 · Tab item Active [0,0,2,0] Variable `Color/component/utility/brand/900` = brand-900 (hex ในดัมป์ #6E1AE7 เป็นค่าของโหมดในไฟล์ Component — ยึดชื่อ Variable) · Tabs [0,0,1,0] gray-300 · Header navigation [0,0,1,0] gray-200 · Sidebar navigation Expanded [0,1,0,0] / Collapsed [0,1,1,1] gray-200 · _Dropdown menu header [0,0,1,0] gray-200 (ต้นแบบยังไม่ใช้ header) · Modal header / Modal footer / Bottom sheet header / Bottom sheet footer / Table header / Table header cell / Page header / Section header / Section label / Mobile table item Action icons·Action buttons มี `sws` แต่ไม่มีสีเส้น = ไม่มีเส้นให้เห็น
-- Pill outline `Color=Purple` = purple-50 / purple-200 / purple-700 · Featured icon `Color=Purple` พื้น purple-50 ไอคอน md purple-700
+- Pill outline `Color=Purple` = purple-50 / purple-200 / purple-700 · Featured icon `Color=Purple` พื้น purple-50 ไอคอน md purple-700 · sm purple-600 (token v0.74)
+- วงโฟกัส State=Focused (ปุ่ม Primary/Secondary/danger · Text input · Input dropdown · Checkbox) = DROP_SHADOW spread 4 ทึบ 12% → token v0.74 `--focus-ring` (brand-900) · `--focus-ring-gray` (gray-500) · `--focus-ring-error` (error-600) = `shadow-ring` / `shadow-ring-gray` / `shadow-ring-error`
 - Spacing/Radius Variable ↔ px ในดัมป์ไลบรารีตรงกันทุกจุด: Spacing/none 0 · 100 4 · 200 8 · 300 12 · 400 16 · 500 20 · 600 24 · 800 32 · 1000 40 · Radius/none 0 · 100 4 · 200 8 · 300 12 · 400 16 · 600 24 · full 9999 = สเกล Tailwind (4 px ต่อหน่วย) + `rounded-xs/md/lg/xl/pill/sheet` ที่ใช้อยู่ (ไม่มี `rounded-sm` 6 px ในโค้ด)
 
 ## ค. asset ที่ดัมป์ไม่มี
@@ -47,6 +62,9 @@
 |---|---|
 | PEA logo (Sidebar navigation) · Brand logo (Header navigation Tablet/Mobile) | `public/pea-logo.svg` ยก path จากภาพส่งออกหน้าจอ Figma `Maintenance-Request-Form/figma/สรุปรายการอะไหล่.svg` (ไม่ได้วาดเอง) · Brand logo ของ Header ใช้ตัวเดียวกัน (ไลบรารีมีตัวอักษรต่อท้ายที่ยังไม่มีไฟล์) |
 | ภาพ Graphic 200×200 ของ Empty state/Data empty | ยังไม่แสดง — ดัมป์ 4 พ.ย. 2569 บอกว่าเป็นพื้นภาพ (paint `image`) ไม่ใช่ vector จึงไม่มี SVG — รอส่งออกรูปจาก Figma |
+| ภาพใน Images / IncidentPhotoGallery / PhotoGallery / Images ของ File upload Type=Gallery | ต้นแบบไม่มีไฟล์ภาพจริง → ช่องภาพ Images Type=Empty (พื้น gray-200 ไอคอน imagesmode 48 gray-300) · ส่ง `src` เมื่อมีภาพ |
+| ภาพ Graphic 200×200 ของ Empty state/Search not found | เหมือน Data empty — พื้นภาพ (paint image) ไม่มีไฟล์ → ยังไม่แสดง |
+| ไอคอน resize-right ของ Text area | ไม่ใช่ฟอนต์ Material → ใช้ SVG ของ component "resize-right" (หน้า Icons) จากดัมป์ `figma-spec/svg/resize-right.svg` (สำเนา `public/figma-svg/`) |
 | ไอคอนและข้อความเมนูใน Sidebar navigation | ไลบรารีเป็นไอคอนตั้งต้น (crop_free) และข้อความ "Text" → ใช้ชุดของ component "Sidebar" ในหน้า "Sidebar Navigation" (277:230639) ของ UI Release#2: หน้าหลัก (home) · ระบบจองยานพาหนะ (car_rental) · จัดการคำขอใช้ยานพาหนะ (traffic_jam) · ข้อมูลพนักงานและยานพาหนะ (database) · การอัดประจุไฟฟ้า (ev_station) · งานซ่อมและบำรุงรักษา (build) · จัดการเหตุการณ์ (e911_emergency) · รายงาน (news) / โหมดสว่าง (light_mode) · ล็อกหน้าจอ (lock) · ใบอนุญาตขับขี่ (id_card) · ผู้ใช้ (Avatar + logout) · เมนูย่อย "บันทึกการอัดประจุ Wall Charger" ตาม Sidebar (component Nav menu EV ซ้ำ "อัตราค่าไฟฟ้า") |
 | Brand logo (Light mode) แบบมีตัวอักษรใน Sidebar navigation State=Expanded | ไม่มีไฟล์ตัวอักษร → ใช้ `pea-logo.svg` 32 ตัวเดียวกับ Collapsed · ดัมป์ 4 พ.ย. 2569 ยังไม่มี component โลโก้ PEA แบบมีตัวอักษรที่มี SVG (โลโก้ใน Header navigation เป็น vector ใน instance — SVG ดึงได้เฉพาะ component กราฟิก) |
 | ชื่อไอคอนที่ฟอนต์ Material Symbols ไม่มี | `warning_circle` → `error` · `cancel_circle` → `cancel` (ใน `Ms.tsx`) |
@@ -59,6 +77,8 @@
 | S1 toast บันทึกไม่สำเร็จ | จอ Figma เขียน "general error" → ใช้ข้อความนี้ตรงตัว |
 | S1 ค้นทะเบียนไม่เจอในรายการเลือกรถ | "ไม่พบทะเบียนที่ค้นหา" (จอ Figma ไม่มี state นี้) |
 | S1 ภาค/ประเภทรถในตารางรายการ เมื่อเลือกหลายค่า | ต่อด้วย ", " |
+| ข้อความใน Date picker | ค่าตั้งต้นไลบรารี Mo–Su · "Dec 2024" · Clear / Cancel / Apply (screens.js ไม่ได้เปลี่ยน) — component รับ `weekdays` `monthLabel` `ClearText` `CancelText` `ApplyText` · **รอเคาะว่าใช้ภาษาไทย/พ.ศ. หรือไม่** |
+| หัวข้อตั้งต้นของ RepairFeedback / RequestedPartsPanel / SummaryRequestedParts | ค่าของไฟล์ Maintain-D (งานซ่อม) "คะแนนประเมินคุณภาพงานซ่อมบำรุง" / "อะไหล่ที่ต้องการใช้งาน" / "สรุปรายการอะไหล่" — scenario ส่งข้อความตาม spec (S14 S21 S4) |
 | S1 ปุ่ม "ตัวกรอง" | ยังไม่มีจอแผงตัวกรองใน S1 → ปุ่มยังไม่ทำงาน |
 
 ## จ. ที่ variant ไม่ได้บอก
@@ -73,3 +93,8 @@
 | Mobile table item — Supporting text | ช่อง `{text, sub}` ของตาราง → `SupportingText` (12 gray-600) แทนการต่อท้าย Text ด้วย " · " (เจ้าของงาน 4 พ.ย. 2569) |
 | Mobile table ที่ไม่มีแถว Action icons | ไลบรารีมีแต่แบบที่ปิดท้ายด้วย Action icons (แถวนั้นไม่มีเส้น) · แถว Text มีเส้นล่างเสมอ ⇒ การ์ดที่ไม่มีปุ่ม แถวท้ายไม่ใส่เส้นล่าง (กันเส้นซ้อนกับขอบการ์ด gray-300) |
 | วงโฟกัสตอนใช้งานจริง | variant State=Focused บอกหน้าตา ไม่บอกว่าเกิดเมื่อไร ⇒ ปุ่ม/Checkbox = `focus-visible` · ช่องกรอก = `focus-within` · Input dropdown = ตอนรายการเปิด · Checkbox State=Hover มีวงด้วย (ตามไลบรารี) |
+| RepairFeedback บนมือถือ | การ์ด 5 ใบแถวเดียว (S14: ช่องไฟ 8) กว้างไม่พอขอบใน 16 → ขอบในข้าง 12 |
+| หัวตาราง ReceiptChecklist / InspectionChecklist | ตามไฟล์: ReceiptChecklist หัวสูง 74 · InspectionChecklist "รายการ" สูง 88 (2 ชั้น) + หัวกลุ่ม 44 + หัวย่อย 44 · แถว 56 ไม่มีเส้น พื้นสลับ |
+| ชำรุด / ผิดรุ่น ใน ReceiptChecklist | Checkbox กดได้เมื่อเลือก "มี" (เลือก "ไม่มี" ล้างค่า) — ไฟล์ไม่ได้บอกพฤติกรรม |
+| Date picker วันนอกเดือน | แสดงเป็น Day State=Disabled ตามไลบรารี (ทั้งต้นและท้ายเดือน) · สัปดาห์เริ่มวันจันทร์ (Mo) ตามไลบรารี |
+| File upload ปุ่มในแถวไฟล์ | In progress = close (ยกเลิก) · Error = restart_alt (ลองใหม่) + close · Completed = download + delete ตาม _File upload item base |

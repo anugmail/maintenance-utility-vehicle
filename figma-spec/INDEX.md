@@ -65,6 +65,29 @@
 | Nav item | (Component) VMS Plus | ✅Sidebar navigation (2:2) | 5 |
 | Nav list item | (Component) VMS Plus | ✅Sidebar navigation (2:2) | 5 |
 | Pill color | (Component) VMS Plus | ✅ Badge (2:13) | 7 |
+| _File upload item base | (Component) VMS Plus | ✅ File upload (2123:5261) | 3 |
+| _File icon | (Component) VMS Plus | ✅ File upload (2123:5261) | 2 |
+| _Content item base | (Component) VMS Plus | Cards (2413:11354) | 5 |
+| Images | (Component) VMS Plus | Images (2648:43267) | 4 |
+| List with checkbox | (Component) VMS Plus | List (3285:58382) | 1 |
+| List with checkbox item | (Component) VMS Plus | List (3285:58382) | 5 |
+| List header item | (Component) VMS Plus | List (3285:58382) | 1 |
+| Number input | (Component) VMS Plus | ✅ Inputs (2:6) | 14 |
+| Date picker | (Component) VMS Plus | ✅ Date picker (855:376) | 4 |
+| Checkbox text card | (Component) VMS Plus | ✅ Checkbox (2:18) | 8 |
+| Notification card | (Component) VMS Plus | Header navigation (2:4) | 1 |
+| _Notification item base | (Component) VMS Plus | Header navigation (2:4) | 1 |
+| Status | (Component) VMS Plus | Header navigation (2:4) | 5 |
+| Card form row | (Component) VMS Plus | Cards (2413:11354) | 3 |
+| Content divider | (Component) VMS Plus | ✅ Content divider (2635:20181) | 2 |
+| resize-right | (Component) VMS Plus | Icons (21:163) | 1 |
+| _File upload base | (Component) VMS Plus | ✅ File upload (2123:5261) | 5 |
+| _Date picker calendar item base | (Component) VMS Plus | ✅ Date picker (855:376) | 12 |
+| _Date picker calendar | (Component) VMS Plus | ✅ Date picker (855:376) | 1 |
+| Badge outline with leading icon | (Component) VMS Plus | ✅ Badge (2:13) | 5 |
+| Icon button | (Component) VMS Plus | ✅ Button (2:5) | 4 |
+| _Notification header | (Component) VMS Plus | Header navigation (2:4) | 1 |
+| _Notification footer | (Component) VMS Plus | Header navigation (2:4) | 1 |
 | ReceiptChecklist | Maintain-D | Design (0:1) | 4 |
 | HandoverSignature | Maintain-D | Design (0:1) | 3 |
 | Modal Signature | Maintain-D | Design (0:1) | 2 |

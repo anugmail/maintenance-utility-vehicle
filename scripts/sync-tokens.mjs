@@ -67,11 +67,10 @@ ${colors.map((n) => `  --color-${n}: var(--${n});`).join("\n")}
   --shadow-float: var(--shadow-pop);
   --shadow-shell: var(--shadow-app);
   --shadow-lg-lib: var(--shadow-lg);   /* ไลบรารี Dropdown menu · Dropdown list · Notification (y12 blur16 spread-4 #10182814) */
-  /* วงโฟกัสของไลบรารี (effect DROP_SHADOW spread 4 ไม่เบลอ ความทึบ 12%): brand-900 · gray-500 (ปุ่มรอง Checkbox/Radio ไม่เลือก) · error-600
-     สีจาก token + ความทึบ 12% จาก effect ในดัมป์ — token --focus-ring/--focus-ring-error เป็น .24 (ประมาณ) ไม่ตรงไลบรารี ดู figma-spec/COMPOSED.md ข. */
-  --shadow-ring: 0 0 0 4px color-mix(in srgb, var(--brand-900) 12%, transparent);
-  --shadow-ring-gray: 0 0 0 4px color-mix(in srgb, var(--gray-500) 12%, transparent);
-  --shadow-ring-error: 0 0 0 4px color-mix(in srgb, var(--error-600) 12%, transparent);
+  /* วงโฟกัสของไลบรารี (effect DROP_SHADOW spread 4 ไม่เบลอ ทึบ 12%): brand-900 · gray-500 (ปุ่มรอง Checkbox/Radio ไม่เลือก) · error-600 — token v0.74 */
+  --shadow-ring: 0 0 0 4px var(--focus-ring);
+  --shadow-ring-gray: 0 0 0 4px var(--focus-ring-gray);
+  --shadow-ring-error: 0 0 0 4px var(--focus-ring-error);
 
   --animate-sheet-up: sheet-up 0.24s cubic-bezier(0.22, 1, 0.36, 1);
   --animate-fade-in: fade-in 0.2s ease-out;

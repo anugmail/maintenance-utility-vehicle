@@ -1,0 +1,194 @@
+{
+ "component": "Status",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
+ "page": "Header navigation",
+ "node": "2:4",
+ "props": {
+  "State": {
+   "type": "VARIANT",
+   "defaultValue": "Success",
+   "variantOptions": [
+    "Success",
+    "Warning",
+    "Error",
+    "Brand",
+    "Info"
+   ]
+  }
+ },
+ "set": {
+  "name": "Status",
+  "type": "COMPONENT_SET",
+  "w": 140,
+  "h": 52,
+  "sizing": [
+   "HUG",
+   "HUG"
+  ],
+  "pl": 20,
+  "pr": 20,
+  "pt": 20,
+  "pb": 20,
+  "gap": 10,
+  "r": 5,
+  "dir": "HORIZONTAL",
+  "justify": "MIN",
+  "align": "CENTER",
+  "fill": [
+   "#FFFFFF"
+  ],
+  "stroke": [
+   "#9747FF"
+  ],
+  "sw": 1,
+  "strokeAlign": "INSIDE"
+ },
+ "variants": [
+  {
+   "name": "State=Success",
+   "type": "COMPONENT",
+   "w": 12,
+   "h": 12,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "r": 9999,
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#17B26A"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "topLeftRadius": "Radius/full",
+    "topRightRadius": "Radius/full",
+    "bottomLeftRadius": "Radius/full",
+    "bottomRightRadius": "Radius/full",
+    "fills": "Color/surface/success"
+   },
+   "variant": {
+    "State": "Success"
+   },
+   "svg": "svg/Status--State=Success.svg"
+  },
+  {
+   "name": "State=Warning",
+   "type": "COMPONENT",
+   "w": 12,
+   "h": 12,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "r": 9999,
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#F79009"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "topLeftRadius": "Radius/full",
+    "topRightRadius": "Radius/full",
+    "bottomLeftRadius": "Radius/full",
+    "bottomRightRadius": "Radius/full",
+    "fills": "Color/surface/warning"
+   },
+   "variant": {
+    "State": "Warning"
+   },
+   "svg": "svg/Status--State=Warning.svg"
+  },
+  {
+   "name": "State=Error",
+   "type": "COMPONENT",
+   "w": 12,
+   "h": 12,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "r": 9999,
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#F04438"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "topLeftRadius": "Radius/full",
+    "topRightRadius": "Radius/full",
+    "bottomLeftRadius": "Radius/full",
+    "bottomRightRadius": "Radius/full",
+    "fills": "Color/surface/error"
+   },
+   "variant": {
+    "State": "Error"
+   },
+   "svg": "svg/Status--State=Error.svg"
+  },
+  {
+   "name": "State=Brand",
+   "type": "COMPONENT",
+   "w": 12,
+   "h": 12,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "r": 9999,
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#A80689"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "topLeftRadius": "Radius/full",
+    "topRightRadius": "Radius/full",
+    "bottomLeftRadius": "Radius/full",
+    "bottomRightRadius": "Radius/full",
+    "fills": "Color/surface/brand"
+   },
+   "variant": {
+    "State": "Brand"
+   },
+   "svg": "svg/Status--State=Brand.svg"
+  },
+  {
+   "name": "State=Info",
+   "type": "COMPONENT",
+   "w": 12,
+   "h": 12,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "r": 9999,
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#6172F3"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "topLeftRadius": "Radius/full",
+    "topRightRadius": "Radius/full",
+    "bottomLeftRadius": "Radius/full",
+    "bottomRightRadius": "Radius/full",
+    "fills": "Color/surface/info"
+   },
+   "variant": {
+    "State": "Info"
+   },
+   "svg": "svg/Status--State=Info.svg"
+  }
+ ]
+}

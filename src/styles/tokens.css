@@ -87,6 +87,7 @@
   /* ---------- Purple (v0.73 · 4 พ.ย. 2569) — Pill outline / Featured icon Color=Purple
      ✔ Variable ของไลบรารี Color/component/utility/purple/50 · 200 · 700 (ดัมป์ปลั๊กอินรุ่นที่เก็บชื่อ Variable 4 พ.ย. 2569) */
   --purple-700:#6927DA;    /* ✔ Color/component/utility/purple/700 — ตัวอักษร Pill outline Purple */
+  --purple-600:#7839EE;    /* ✔ v0.74 Featured icon Color=Purple Size=sm (ไอคอน) */
   --purple-200:#DDD6FE;    /* ✔ Color/component/utility/purple/200 — ขอบ */
   --purple-50:#F5F3FF;     /* ✔ Color/component/utility/purple/50 — พื้น */
 
@@ -205,8 +206,9 @@
   --btn-link-text-hover:var(--brand-950);           /* ⚠ ยังไม่ยืนยัน */
 
   /* วงแหวน focus */
-  --focus-ring:rgba(168,6,137,.24);                 /* ⚠ ประมาณจาก brand-900 · แอปจริงใช้ #a806891f (อัลฟา .12) */
-  --focus-ring-error:rgba(217,45,32,.24);           /* ⚠ */
+  --focus-ring:rgba(168,6,137,.12);                 /* ✔ v0.74 ไลบรารี State=Focused #A806891F (อัลฟา .12) ตรงแอปจริง · เดิม .24 */
+  --focus-ring-error:rgba(217,45,32,.12);           /* ✔ v0.74 ไลบรารี State=Focused (error) #D92D201F · เดิม .24 */
+  --focus-ring-gray:rgba(102,112,133,.12);          /* ✔ v0.74 ไลบรารี State=Focused (Secondary/Checkbox) #6670851F */
 
 
   /* ══════════ alias เดิม — ห้ามลบ (ใช้อยู่ทั่วต้นแบบ ~350 จุด) ══════════

@@ -1,0 +1,1695 @@
+{
+ "component": "List with checkbox",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
+ "page": "List",
+ "node": "3285:58382",
+ "props": {},
+ "variants": [
+  {
+   "name": "List with checkbox",
+   "type": "COMPONENT",
+   "w": 348,
+   "h": 330,
+   "sizing": [
+    "FIXED",
+    "HUG"
+   ],
+   "r": 0,
+   "dir": "VERTICAL",
+   "justify": "MIN",
+   "align": "MIN",
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "kids": [
+    {
+     "name": "List header item",
+     "type": "INSTANCE",
+     "w": 348,
+     "h": 40,
+     "sizing": [
+      "FILL",
+      "FIXED"
+     ],
+     "pl": 16,
+     "pr": 16,
+     "gap": 16,
+     "r": 4,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "CENTER",
+     "fill": [
+      "#EAECF0"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/400",
+      "paddingLeft": "Spacing/400",
+      "paddingRight": "Spacing/400",
+      "topLeftRadius": "Radius/100",
+      "topRightRadius": "Radius/100",
+      "bottomLeftRadius": "Radius/100",
+      "bottomRightRadius": "Radius/100",
+      "fills": "Color/surface/tertiary"
+     },
+     "variant": {
+      "Badge#3117:1": true
+     },
+     "component": "List header item",
+     "kids": [
+      {
+       "name": "Content",
+       "type": "FRAME",
+       "w": 280,
+       "h": 40,
+       "sizing": [
+        "FILL",
+        "FILL"
+       ],
+       "gap": 12,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "justify": "MIN",
+       "align": "CENTER",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/300"
+       },
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 33,
+         "h": 24,
+         "sizing": [
+          "HUG",
+          "HUG"
+         ],
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/primary",
+          "letterSpacing": "IBM/Label/02/letter-spacing",
+          "fontSize": "IBM/Label/02/font-size",
+          "fontFamily": "IBM/Label/02/font-family",
+          "paragraphSpacing": "IBM/Label/02/font-size",
+          "fontWeight": "IBM/Label/02/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 16,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Title"
+        },
+        {
+         "name": "Badge outline",
+         "type": "INSTANCE",
+         "w": 51,
+         "h": 24,
+         "sizing": [
+          "HUG",
+          "FIXED"
+         ],
+         "pl": 8,
+         "pr": 8,
+         "pt": 4,
+         "pb": 4,
+         "gap": 4,
+         "r": 4,
+         "dir": "HORIZONTAL",
+         "justify": "CENTER",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/100",
+          "paddingLeft": "Spacing/200",
+          "paddingTop": "Spacing/100",
+          "paddingRight": "Spacing/200",
+          "paddingBottom": "Spacing/100",
+          "topLeftRadius": "Radius/100",
+          "topRightRadius": "Radius/100",
+          "bottomLeftRadius": "Radius/100",
+          "bottomRightRadius": "Radius/100",
+          "fills": "Color/surface/primary",
+          "strokes": "Color/border/primary"
+         },
+         "variant": {
+          "Text#2104:3": "Badge",
+          "Color": "Gray"
+         },
+         "component": "Badge outline [Color=Gray]",
+         "kids": [
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 35,
+           "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/secondary",
+            "letterSpacing": "IBM/Label/04/letter-spacing",
+            "fontSize": "IBM/Label/04/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Label/04/letter-spacing",
+            "fontWeight": "IBM/Label/04/font-weight"
+           },
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 12,
+            "lh": null,
+            "ls": -0.20000000298023224
+           },
+           "text": "Badge"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Checkbox",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "variant": {
+        "State": "Default",
+        "Type": "Indeterminate"
+       },
+       "component": "Checkbox [State=Default, Type=Indeterminate]",
+       "kids": [
+        {
+         "name": "Surface with icon",
+         "type": "GROUP",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "kids": [
+          {
+           "name": "Surface",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 4,
+           "fill": [
+            "#A80689"
+           ],
+           "sw": 2,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "topLeftRadius": "Radius/100",
+            "topRightRadius": "Radius/100",
+            "bottomLeftRadius": "Radius/100",
+            "bottomRightRadius": "Radius/100",
+            "fills": "Color/component/selection/surface"
+           }
+          },
+          {
+           "name": "check_indeterminate_small-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "component": "check_indeterminate_small-20-400-round"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "List with checkbox item",
+     "type": "INSTANCE",
+     "w": 348,
+     "h": 58,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
+     "pl": 16,
+     "pr": 16,
+     "pt": 8,
+     "pb": 8,
+     "gap": 16,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "CENTER",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "stroke": [
+      "#EAECF0"
+     ],
+     "sws": [
+      0,
+      0,
+      1,
+      0
+     ],
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/400",
+      "paddingLeft": "Spacing/400",
+      "paddingTop": "Spacing/200",
+      "paddingRight": "Spacing/400",
+      "paddingBottom": "Spacing/200",
+      "fills": "Color/surface/primary",
+      "strokes": "Color/border/secondary"
+     },
+     "variant": {
+      "Avatar#3119:9": true,
+      "Supporting text 2#2147:0": "Description",
+      "Supporting#1807:0": true,
+      "Supporting 2#1028:15": true,
+      "Supporting text#1028:5": "Description",
+      "Text#1028:0": "List item",
+      "State": "Selected"
+     },
+     "component": "List with checkbox item [State=Selected]",
+     "kids": [
+      {
+       "name": "Avatar",
+       "type": "INSTANCE",
+       "w": 36,
+       "h": 36,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/none",
+        "topRightRadius": "Radius/none",
+        "bottomLeftRadius": "Radius/none",
+        "bottomRightRadius": "Radius/none"
+       },
+       "variant": {
+        "Size": "sm"
+       },
+       "component": "Avatar [Size=sm]",
+       "kids": [
+        {
+         "name": "Ellipse",
+         "type": "ELLIPSE",
+         "w": 36,
+         "h": 36,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "fill": [
+          "#DCD3FF"
+         ],
+         "paint": [
+          "#DCD3FF",
+          "image"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE"
+        }
+       ]
+      },
+      {
+       "name": "Content",
+       "type": "FRAME",
+       "w": 228,
+       "h": 42,
+       "sizing": [
+        "FILL",
+        "FILL"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "CENTER",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 228,
+         "h": 24,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#A80689"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/brand",
+          "letterSpacing": "IBM/Body/02/letter-spacing",
+          "fontSize": "IBM/Body/02/font-size",
+          "fontFamily": "IBM/font-family",
+          "paragraphSpacing": "IBM/Body/02/font-size",
+          "fontWeight": "IBM/Body/02/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 16,
+          "lh": null
+         },
+         "text": "List item"
+        },
+        {
+         "name": "Supporting text",
+         "type": "FRAME",
+         "w": 228,
+         "h": 18,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "MIN",
+         "align": "CENTER",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/100"
+         },
+         "kids": [
+          {
+           "name": "Supporting text 1",
+           "type": "TEXT",
+           "w": 60,
+           "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/secondary",
+            "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontSize": "IBM/Helper-text/02/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontWeight": "IBM/Helper-text/02/font-weight"
+           },
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null,
+            "ls": -0.20000000298023224
+           },
+           "text": "Description"
+          },
+          {
+           "name": "Supporting text 2",
+           "type": "FRAME",
+           "w": 64,
+           "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "MIN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/100"
+           }
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Checkbox",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "variant": {
+        "State": "Default",
+        "Type": "Selected"
+       },
+       "component": "Checkbox [State=Default, Type=Selected]",
+       "kids": [
+        {
+         "name": "Surface with icon",
+         "type": "GROUP",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "kids": [
+          {
+           "name": "Surface",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 4,
+           "fill": [
+            "#A80689"
+           ],
+           "sw": 2,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "topLeftRadius": "Radius/100",
+            "topRightRadius": "Radius/100",
+            "bottomLeftRadius": "Radius/100",
+            "bottomRightRadius": "Radius/100",
+            "fills": "Color/component/selection/surface"
+           }
+          },
+          {
+           "name": "check-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "component": "check-20-400-round"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "List with checkbox item",
+     "type": "INSTANCE",
+     "w": 348,
+     "h": 58,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
+     "pl": 16,
+     "pr": 16,
+     "pt": 8,
+     "pb": 8,
+     "gap": 16,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "CENTER",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "stroke": [
+      "#EAECF0"
+     ],
+     "sws": [
+      0,
+      0,
+      1,
+      0
+     ],
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/400",
+      "paddingLeft": "Spacing/400",
+      "paddingTop": "Spacing/200",
+      "paddingRight": "Spacing/400",
+      "paddingBottom": "Spacing/200",
+      "fills": "Color/surface/primary",
+      "strokes": "Color/border/secondary"
+     },
+     "variant": {
+      "Avatar#3119:9": true,
+      "Supporting 2#1028:15": true,
+      "Supporting text 2#2147:0": "Description",
+      "Supporting#1807:0": true,
+      "Supporting text#1028:5": "Description",
+      "Text#1028:0": "List item",
+      "State": "Default"
+     },
+     "component": "List with checkbox item [State=Default]",
+     "kids": [
+      {
+       "name": "Avatar",
+       "type": "INSTANCE",
+       "w": 36,
+       "h": 36,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/none",
+        "topRightRadius": "Radius/none",
+        "bottomLeftRadius": "Radius/none",
+        "bottomRightRadius": "Radius/none"
+       },
+       "variant": {
+        "Size": "sm"
+       },
+       "component": "Avatar [Size=sm]",
+       "kids": [
+        {
+         "name": "Ellipse",
+         "type": "ELLIPSE",
+         "w": 36,
+         "h": 36,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "fill": [
+          "#DCD3FF"
+         ],
+         "paint": [
+          "#DCD3FF",
+          "image"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE"
+        }
+       ]
+      },
+      {
+       "name": "Content",
+       "type": "FRAME",
+       "w": 228,
+       "h": 42,
+       "sizing": [
+        "FILL",
+        "FILL"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "CENTER",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 228,
+         "h": 24,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/primary",
+          "letterSpacing": "IBM/Body/02/letter-spacing",
+          "fontSize": "IBM/Body/02/font-size",
+          "fontFamily": "IBM/font-family",
+          "paragraphSpacing": "IBM/Body/02/font-size",
+          "fontWeight": "IBM/Body/02/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 16,
+          "lh": null
+         },
+         "text": "List item"
+        },
+        {
+         "name": "Supporting text",
+         "type": "FRAME",
+         "w": 228,
+         "h": 18,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "MIN",
+         "align": "CENTER",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/100"
+         },
+         "kids": [
+          {
+           "name": "Supporting text 1",
+           "type": "TEXT",
+           "w": 60,
+           "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/secondary",
+            "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontSize": "IBM/Helper-text/02/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontWeight": "IBM/Helper-text/02/font-weight"
+           },
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null,
+            "ls": -0.20000000298023224
+           },
+           "text": "Description"
+          },
+          {
+           "name": "Supporting text 2",
+           "type": "FRAME",
+           "w": 64,
+           "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "MIN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/100"
+           }
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Checkbox",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "variant": {
+        "State": "Default",
+        "Type": "Unselected"
+       },
+       "component": "Checkbox [State=Default, Type=Unselected]",
+       "kids": [
+        {
+         "name": "Surface",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 4,
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 2,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "topLeftRadius": "Radius/100",
+          "topRightRadius": "Radius/100",
+          "bottomLeftRadius": "Radius/100",
+          "bottomRightRadius": "Radius/100",
+          "strokes": "Color/border/primary"
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "List with checkbox item",
+     "type": "INSTANCE",
+     "w": 348,
+     "h": 58,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
+     "pl": 16,
+     "pr": 16,
+     "pt": 8,
+     "pb": 8,
+     "gap": 16,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "CENTER",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "stroke": [
+      "#EAECF0"
+     ],
+     "sws": [
+      0,
+      0,
+      1,
+      0
+     ],
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/400",
+      "paddingLeft": "Spacing/400",
+      "paddingTop": "Spacing/200",
+      "paddingRight": "Spacing/400",
+      "paddingBottom": "Spacing/200",
+      "fills": "Color/surface/primary",
+      "strokes": "Color/border/secondary"
+     },
+     "variant": {
+      "Avatar#3119:9": true,
+      "Supporting 2#1028:15": true,
+      "Supporting text 2#2147:0": "Description",
+      "Supporting#1807:0": true,
+      "Supporting text#1028:5": "Description",
+      "Text#1028:0": "List item",
+      "State": "Default"
+     },
+     "component": "List with checkbox item [State=Default]",
+     "kids": [
+      {
+       "name": "Avatar",
+       "type": "INSTANCE",
+       "w": 36,
+       "h": 36,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/none",
+        "topRightRadius": "Radius/none",
+        "bottomLeftRadius": "Radius/none",
+        "bottomRightRadius": "Radius/none"
+       },
+       "variant": {
+        "Size": "sm"
+       },
+       "component": "Avatar [Size=sm]",
+       "kids": [
+        {
+         "name": "Ellipse",
+         "type": "ELLIPSE",
+         "w": 36,
+         "h": 36,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "fill": [
+          "#DCD3FF"
+         ],
+         "paint": [
+          "#DCD3FF",
+          "image"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE"
+        }
+       ]
+      },
+      {
+       "name": "Content",
+       "type": "FRAME",
+       "w": 228,
+       "h": 42,
+       "sizing": [
+        "FILL",
+        "FILL"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "CENTER",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 228,
+         "h": 24,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/primary",
+          "letterSpacing": "IBM/Body/02/letter-spacing",
+          "fontSize": "IBM/Body/02/font-size",
+          "fontFamily": "IBM/font-family",
+          "paragraphSpacing": "IBM/Body/02/font-size",
+          "fontWeight": "IBM/Body/02/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 16,
+          "lh": null
+         },
+         "text": "List item"
+        },
+        {
+         "name": "Supporting text",
+         "type": "FRAME",
+         "w": 228,
+         "h": 18,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "MIN",
+         "align": "CENTER",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/100"
+         },
+         "kids": [
+          {
+           "name": "Supporting text 1",
+           "type": "TEXT",
+           "w": 60,
+           "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/secondary",
+            "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontSize": "IBM/Helper-text/02/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontWeight": "IBM/Helper-text/02/font-weight"
+           },
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null,
+            "ls": -0.20000000298023224
+           },
+           "text": "Description"
+          },
+          {
+           "name": "Supporting text 2",
+           "type": "FRAME",
+           "w": 64,
+           "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "MIN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/100"
+           }
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Checkbox",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "variant": {
+        "State": "Default",
+        "Type": "Unselected"
+       },
+       "component": "Checkbox [State=Default, Type=Unselected]",
+       "kids": [
+        {
+         "name": "Surface",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 4,
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 2,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "topLeftRadius": "Radius/100",
+          "topRightRadius": "Radius/100",
+          "bottomLeftRadius": "Radius/100",
+          "bottomRightRadius": "Radius/100",
+          "strokes": "Color/border/primary"
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "List with checkbox item",
+     "type": "INSTANCE",
+     "w": 348,
+     "h": 58,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
+     "pl": 16,
+     "pr": 16,
+     "pt": 8,
+     "pb": 8,
+     "gap": 16,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "CENTER",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "stroke": [
+      "#EAECF0"
+     ],
+     "sws": [
+      0,
+      0,
+      1,
+      0
+     ],
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/400",
+      "paddingLeft": "Spacing/400",
+      "paddingTop": "Spacing/200",
+      "paddingRight": "Spacing/400",
+      "paddingBottom": "Spacing/200",
+      "fills": "Color/surface/primary",
+      "strokes": "Color/border/secondary"
+     },
+     "variant": {
+      "Avatar#3119:9": true,
+      "Supporting 2#1028:15": true,
+      "Supporting text 2#2147:0": "Description",
+      "Supporting#1807:0": true,
+      "Supporting text#1028:5": "Description",
+      "Text#1028:0": "List item",
+      "State": "Default"
+     },
+     "component": "List with checkbox item [State=Default]",
+     "kids": [
+      {
+       "name": "Avatar",
+       "type": "INSTANCE",
+       "w": 36,
+       "h": 36,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/none",
+        "topRightRadius": "Radius/none",
+        "bottomLeftRadius": "Radius/none",
+        "bottomRightRadius": "Radius/none"
+       },
+       "variant": {
+        "Size": "sm"
+       },
+       "component": "Avatar [Size=sm]",
+       "kids": [
+        {
+         "name": "Ellipse",
+         "type": "ELLIPSE",
+         "w": 36,
+         "h": 36,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "fill": [
+          "#DCD3FF"
+         ],
+         "paint": [
+          "#DCD3FF",
+          "image"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE"
+        }
+       ]
+      },
+      {
+       "name": "Content",
+       "type": "FRAME",
+       "w": 228,
+       "h": 42,
+       "sizing": [
+        "FILL",
+        "FILL"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "CENTER",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 228,
+         "h": 24,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/primary",
+          "letterSpacing": "IBM/Body/02/letter-spacing",
+          "fontSize": "IBM/Body/02/font-size",
+          "fontFamily": "IBM/font-family",
+          "paragraphSpacing": "IBM/Body/02/font-size",
+          "fontWeight": "IBM/Body/02/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 16,
+          "lh": null
+         },
+         "text": "List item"
+        },
+        {
+         "name": "Supporting text",
+         "type": "FRAME",
+         "w": 228,
+         "h": 18,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "MIN",
+         "align": "CENTER",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/100"
+         },
+         "kids": [
+          {
+           "name": "Supporting text 1",
+           "type": "TEXT",
+           "w": 60,
+           "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/secondary",
+            "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontSize": "IBM/Helper-text/02/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontWeight": "IBM/Helper-text/02/font-weight"
+           },
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null,
+            "ls": -0.20000000298023224
+           },
+           "text": "Description"
+          },
+          {
+           "name": "Supporting text 2",
+           "type": "FRAME",
+           "w": 64,
+           "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "MIN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/100"
+           }
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Checkbox",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "variant": {
+        "State": "Default",
+        "Type": "Unselected"
+       },
+       "component": "Checkbox [State=Default, Type=Unselected]",
+       "kids": [
+        {
+         "name": "Surface",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 4,
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 2,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "topLeftRadius": "Radius/100",
+          "topRightRadius": "Radius/100",
+          "bottomLeftRadius": "Radius/100",
+          "bottomRightRadius": "Radius/100",
+          "strokes": "Color/border/primary"
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "List with checkbox item",
+     "type": "INSTANCE",
+     "w": 348,
+     "h": 58,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
+     "pl": 16,
+     "pr": 16,
+     "pt": 8,
+     "pb": 8,
+     "gap": 16,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "CENTER",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "stroke": [
+      "#EAECF0"
+     ],
+     "sws": [
+      0,
+      0,
+      1,
+      0
+     ],
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/400",
+      "paddingLeft": "Spacing/400",
+      "paddingTop": "Spacing/200",
+      "paddingRight": "Spacing/400",
+      "paddingBottom": "Spacing/200",
+      "fills": "Color/surface/primary",
+      "strokes": "Color/border/secondary"
+     },
+     "variant": {
+      "Avatar#3119:9": true,
+      "Supporting 2#1028:15": true,
+      "Supporting text 2#2147:0": "Description",
+      "Supporting#1807:0": true,
+      "Supporting text#1028:5": "Description",
+      "Text#1028:0": "List item",
+      "State": "Default"
+     },
+     "component": "List with checkbox item [State=Default]",
+     "kids": [
+      {
+       "name": "Avatar",
+       "type": "INSTANCE",
+       "w": 36,
+       "h": 36,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/none",
+        "topRightRadius": "Radius/none",
+        "bottomLeftRadius": "Radius/none",
+        "bottomRightRadius": "Radius/none"
+       },
+       "variant": {
+        "Size": "sm"
+       },
+       "component": "Avatar [Size=sm]",
+       "kids": [
+        {
+         "name": "Ellipse",
+         "type": "ELLIPSE",
+         "w": 36,
+         "h": 36,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "fill": [
+          "#DCD3FF"
+         ],
+         "paint": [
+          "#DCD3FF",
+          "image"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE"
+        }
+       ]
+      },
+      {
+       "name": "Content",
+       "type": "FRAME",
+       "w": 228,
+       "h": 42,
+       "sizing": [
+        "FILL",
+        "FILL"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "CENTER",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 228,
+         "h": 24,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/primary",
+          "letterSpacing": "IBM/Body/02/letter-spacing",
+          "fontSize": "IBM/Body/02/font-size",
+          "fontFamily": "IBM/font-family",
+          "paragraphSpacing": "IBM/Body/02/font-size",
+          "fontWeight": "IBM/Body/02/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 16,
+          "lh": null
+         },
+         "text": "List item"
+        },
+        {
+         "name": "Supporting text",
+         "type": "FRAME",
+         "w": 228,
+         "h": 18,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "MIN",
+         "align": "CENTER",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/100"
+         },
+         "kids": [
+          {
+           "name": "Supporting text 1",
+           "type": "TEXT",
+           "w": 60,
+           "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/secondary",
+            "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontSize": "IBM/Helper-text/02/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontWeight": "IBM/Helper-text/02/font-weight"
+           },
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null,
+            "ls": -0.20000000298023224
+           },
+           "text": "Description"
+          },
+          {
+           "name": "Supporting text 2",
+           "type": "FRAME",
+           "w": 64,
+           "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "justify": "MIN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/100"
+           }
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Checkbox",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "variant": {
+        "State": "Default",
+        "Type": "Unselected"
+       },
+       "component": "Checkbox [State=Default, Type=Unselected]",
+       "kids": [
+        {
+         "name": "Surface",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 4,
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 2,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "topLeftRadius": "Radius/100",
+          "topRightRadius": "Radius/100",
+          "bottomLeftRadius": "Radius/100",
+          "bottomRightRadius": "Radius/100",
+          "strokes": "Color/border/primary"
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Vertical scrollbar",
+     "type": "INSTANCE",
+     "w": 16,
+     "h": 290,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "pl": 4,
+     "pr": 4,
+     "pt": 4,
+     "pb": 4,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "paddingLeft": "Spacing/100",
+      "paddingTop": "Spacing/100",
+      "paddingRight": "Spacing/100",
+      "paddingBottom": "Spacing/100"
+     },
+     "variant": {
+      "Length": "25%",
+      "Position": "Top"
+     },
+     "component": "Vertical scrollbar [Length=25%, Position=Top]",
+     "kids": [
+      {
+       "name": "Scrollbar",
+       "type": "FRAME",
+       "w": 8,
+       "h": 282,
+       "sizing": [
+        "FILL",
+        "FILL"
+       ],
+       "r": 0,
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "kids": [
+        {
+         "name": "Thumb",
+         "type": "RECTANGLE",
+         "w": 8,
+         "h": 71,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 9999,
+         "fill": [
+          "#EAECF0"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "topLeftRadius": "radius-full",
+          "topRightRadius": "radius-full",
+          "bottomLeftRadius": "radius-full",
+          "bottomRightRadius": "radius-full",
+          "fills": "Color/component/scrollbar/thumb"
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,4189 @@
+{
+ "component": "_Date picker calendar",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
+ "page": "✅ Date picker",
+ "node": "855:376",
+ "props": {},
+ "variants": [
+  {
+   "name": "_Date picker calendar",
+   "type": "COMPONENT",
+   "w": 280,
+   "h": 280,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "justify": "MIN",
+   "align": "CENTER",
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "kids": [
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "Mo",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 20,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Label/03/letter-spacing",
+        "fontSize": "IBM/Label/03/font-size",
+        "fontFamily": "IBM/Label/03/font-family",
+        "paragraphSpacing": "IBM/Label/03/letter-spacing",
+        "fontWeight": "IBM/Label/03/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "Mo"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "Tu",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 16,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Label/03/letter-spacing",
+        "fontSize": "IBM/Label/03/font-size",
+        "fontFamily": "IBM/Label/03/font-family",
+        "paragraphSpacing": "IBM/Label/03/letter-spacing",
+        "fontWeight": "IBM/Label/03/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "Tu"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "We",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 21,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Label/03/letter-spacing",
+        "fontSize": "IBM/Label/03/font-size",
+        "fontFamily": "IBM/Label/03/font-family",
+        "paragraphSpacing": "IBM/Label/03/letter-spacing",
+        "fontWeight": "IBM/Label/03/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "We"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "Th",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Label/03/letter-spacing",
+        "fontSize": "IBM/Label/03/font-size",
+        "fontFamily": "IBM/Label/03/font-family",
+        "paragraphSpacing": "IBM/Label/03/letter-spacing",
+        "fontWeight": "IBM/Label/03/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "Th"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "Fr",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 13,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Label/03/letter-spacing",
+        "fontSize": "IBM/Label/03/font-size",
+        "fontFamily": "IBM/Label/03/font-family",
+        "paragraphSpacing": "IBM/Label/03/letter-spacing",
+        "fontWeight": "IBM/Label/03/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "Fr"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "Sa",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Label/03/letter-spacing",
+        "fontSize": "IBM/Label/03/font-size",
+        "fontFamily": "IBM/Label/03/font-family",
+        "paragraphSpacing": "IBM/Label/03/letter-spacing",
+        "fontWeight": "IBM/Label/03/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "Sa"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "Su",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Label/03/letter-spacing",
+        "fontSize": "IBM/Label/03/font-size",
+        "fontFamily": "IBM/Label/03/font-family",
+        "paragraphSpacing": "IBM/Label/03/letter-spacing",
+        "fontWeight": "IBM/Label/03/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "Su"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "1",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 9,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "1"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "fill": [
+      "#F2F4F7"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full",
+      "fills": "Color/component/date-picker/surface-in-range"
+     },
+     "variant": {
+      "Left connector #2532:0": true,
+      "Text#2681:21": "2",
+      "Right connector#2532:10": true,
+      "Indicator#2507:0": false,
+      "Type": "Today",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Today, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 9,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/brand",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "2"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "3",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 9,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "3"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "4",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 9,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "4"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "5",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 9,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "5"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "6",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 9,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "6"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "7",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 9,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "7"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "8",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 9,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "8"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "9",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 9,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "9"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "10",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "10"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "11",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "11"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "fill": [
+      "#A80689"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full",
+      "fills": "Color/component/date-picker/surface-selected"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "12",
+      "Indicator#2507:0": false,
+      "Type": "Selected day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Selected day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#FFFFFF"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary-on-brand",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "12"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#FFFFFF"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/primary-on-brand"
+       }
+      },
+      {
+       "name": "Right connector",
+       "type": "VECTOR",
+       "w": 20,
+       "h": 40,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#F2F4F7"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/component/date-picker/surface-in-range"
+       }
+      },
+      {
+       "name": "Left connector",
+       "type": "VECTOR",
+       "w": 20,
+       "h": 40,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#F2F4F7"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/component/date-picker/surface-in-range"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "13",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "13"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "14",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "14"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "15",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "15"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "16",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "16"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "17",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "17"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "18",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "18"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "19",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "19"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "20",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "20"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "21",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "21"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "22",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "22"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "23",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "23"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "24",
+      "Indicator#2507:0": true,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "24"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "25",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "25"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "26",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "26"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "27",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "27"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "28",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "28"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "29",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "29"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "30",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "30"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Right connector#2532:10": true,
+      "Left connector #2532:0": true,
+      "Text#2681:21": "31",
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Default"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Default]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "31"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/brand"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Left connector #2532:0": true,
+      "Text#2681:21": "1",
+      "Right connector#2532:10": true,
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Disabled"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Disabled]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 9,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/disabled",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "1"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/disabled"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Left connector #2532:0": true,
+      "Text#2681:21": "2",
+      "Right connector#2532:10": true,
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Disabled"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Disabled]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 9,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/disabled",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "2"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/disabled"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Left connector #2532:0": true,
+      "Text#2681:21": "3",
+      "Right connector#2532:10": true,
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Disabled"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Disabled]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 9,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/disabled",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "3"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/disabled"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Left connector #2532:0": true,
+      "Text#2681:21": "4",
+      "Right connector#2532:10": true,
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Disabled"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Disabled]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 9,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/disabled",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "4"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/disabled"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Left connector #2532:0": true,
+      "Text#2681:21": "5",
+      "Right connector#2532:10": true,
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Disabled"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Disabled]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 9,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/disabled",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "5"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/disabled"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Left connector #2532:0": true,
+      "Text#2681:21": "6",
+      "Right connector#2532:10": true,
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Disabled"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Disabled]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 9,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/disabled",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "6"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/disabled"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Left connector #2532:0": true,
+      "Text#2681:21": "7",
+      "Right connector#2532:10": true,
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Disabled"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Disabled]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 9,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/disabled",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "7"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/disabled"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Left connector #2532:0": true,
+      "Text#2681:21": "8",
+      "Right connector#2532:10": true,
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Disabled"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Disabled]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 9,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/disabled",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "8"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/disabled"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Left connector #2532:0": true,
+      "Text#2681:21": "9",
+      "Right connector#2532:10": true,
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Disabled"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Disabled]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 9,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/disabled",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "9"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/disabled"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Left connector #2532:0": true,
+      "Text#2681:21": "10",
+      "Right connector#2532:10": true,
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Disabled"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Disabled]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/disabled",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "10"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/disabled"
+       }
+      }
+     ]
+    },
+    {
+     "name": "_Date picker calendar item base",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 9999,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "topLeftRadius": "Radius/full",
+      "topRightRadius": "Radius/full",
+      "bottomLeftRadius": "Radius/full",
+      "bottomRightRadius": "Radius/full"
+     },
+     "variant": {
+      "Left connector #2532:0": true,
+      "Text#2681:21": "11",
+      "Right connector#2532:10": true,
+      "Indicator#2507:0": false,
+      "Type": "Day",
+      "State": "Disabled"
+     },
+     "component": "_Date picker calendar item base [Type=Day, State=Disabled]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 17,
+       "h": 21,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/disabled",
+        "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+        "fontSize": "IBM/Helper-text/01/font-size",
+        "fontFamily": "IBM/font-family",
+        "paragraphSpacing": "IBM/Helper-text/01/font-size",
+        "fontWeight": "IBM/Helper-text/01/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224,
+        "align": "CENTER"
+       },
+       "text": "11"
+      },
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "visible": false,
+       "w": 4,
+       "h": 4,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/disabled"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

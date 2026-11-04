@@ -1,0 +1,1279 @@
+{
+ "component": "_Date picker calendar item base",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
+ "page": "✅ Date picker",
+ "node": "855:376",
+ "props": {
+  "Indicator#2507:0": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Left connector #2532:0": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Right connector#2532:10": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Text#2681:21": {
+   "type": "TEXT",
+   "defaultValue": "1"
+  },
+  "Type": {
+   "type": "VARIANT",
+   "defaultValue": "Day",
+   "variantOptions": [
+    "Day",
+    "Today",
+    "Day in range",
+    "Selected day"
+   ]
+  },
+  "State": {
+   "type": "VARIANT",
+   "defaultValue": "Default",
+   "variantOptions": [
+    "Default",
+    "Hover",
+    "Disabled"
+   ]
+  }
+ },
+ "set": {
+  "name": "_Date picker calendar item base",
+  "type": "COMPONENT_SET",
+  "w": 329,
+  "h": 240,
+  "sizing": [
+   "FIXED",
+   "FIXED"
+  ],
+  "pl": 20,
+  "pr": 20,
+  "pt": 20,
+  "pb": 20,
+  "gap": 40,
+  "r": 5,
+  "justify": "MIN",
+  "align": "MIN",
+  "fill": [
+   "#FFFFFF"
+  ],
+  "stroke": [
+   "#9747FF"
+  ],
+  "sw": 1,
+  "strokeAlign": "INSIDE",
+  "vars": {
+   "fills": "Color/surface/primary"
+  }
+ },
+ "variants": [
+  {
+   "name": "Type=Selected day, State=Disabled",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "r": 9999,
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#EAECF0"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "topLeftRadius": "Radius/full",
+    "topRightRadius": "Radius/full",
+    "bottomLeftRadius": "Radius/full",
+    "bottomRightRadius": "Radius/full",
+    "fills": "Color/component/date-picker/surface-selected-disabled"
+   },
+   "variant": {
+    "Type": "Selected day",
+    "State": "Disabled"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 9,
+     "h": 21,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "fill": [
+      "#98A2B3"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/disabled",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null,
+      "ls": -0.20000000298023224,
+      "align": "CENTER"
+     },
+     "text": "1"
+    },
+    {
+     "name": "Indicator",
+     "type": "ELLIPSE",
+     "w": 4,
+     "h": 4,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#98A2B3"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/icon/disabled"
+     }
+    },
+    {
+     "name": "Right connector",
+     "type": "VECTOR",
+     "w": 20,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#F2F4F7"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/component/date-picker/surface-in-range"
+     }
+    },
+    {
+     "name": "Left connector",
+     "type": "VECTOR",
+     "w": 20,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#F2F4F7"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/component/date-picker/surface-in-range"
+     }
+    }
+   ]
+  },
+  {
+   "name": "Type=Selected day, State=Hover",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "r": 9999,
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#CF07AA"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "topLeftRadius": "Radius/full",
+    "topRightRadius": "Radius/full",
+    "bottomLeftRadius": "Radius/full",
+    "bottomRightRadius": "Radius/full",
+    "fills": "Color/component/date-picker/surface-selected-hover"
+   },
+   "variant": {
+    "Type": "Selected day",
+    "State": "Hover"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 9,
+     "h": 21,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "fill": [
+      "#FFFFFF"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/primary-on-brand",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null,
+      "ls": -0.20000000298023224,
+      "align": "CENTER"
+     },
+     "text": "1"
+    },
+    {
+     "name": "Indicator",
+     "type": "ELLIPSE",
+     "w": 4,
+     "h": 4,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#FFFFFF"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/icon/primary-on-brand"
+     }
+    },
+    {
+     "name": "Right connector",
+     "type": "VECTOR",
+     "w": 20,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#F2F4F7"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/component/date-picker/surface-in-range"
+     }
+    },
+    {
+     "name": "Left connector",
+     "type": "VECTOR",
+     "w": 20,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#F2F4F7"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/component/date-picker/surface-in-range"
+     }
+    }
+   ]
+  },
+  {
+   "name": "Type=Selected day, State=Default",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "r": 9999,
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#A80689"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "topLeftRadius": "Radius/full",
+    "topRightRadius": "Radius/full",
+    "bottomLeftRadius": "Radius/full",
+    "bottomRightRadius": "Radius/full",
+    "fills": "Color/component/date-picker/surface-selected"
+   },
+   "variant": {
+    "Type": "Selected day",
+    "State": "Default"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 9,
+     "h": 21,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "fill": [
+      "#FFFFFF"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/primary-on-brand",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null,
+      "ls": -0.20000000298023224,
+      "align": "CENTER"
+     },
+     "text": "1"
+    },
+    {
+     "name": "Indicator",
+     "type": "ELLIPSE",
+     "w": 4,
+     "h": 4,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#FFFFFF"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/icon/primary-on-brand"
+     }
+    },
+    {
+     "name": "Right connector",
+     "type": "VECTOR",
+     "w": 20,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#F2F4F7"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/component/date-picker/surface-in-range"
+     }
+    },
+    {
+     "name": "Left connector",
+     "type": "VECTOR",
+     "w": 20,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#F2F4F7"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/component/date-picker/surface-in-range"
+     }
+    }
+   ]
+  },
+  {
+   "name": "Type=Day in range, State=Disabled",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "r": 9999,
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#F2F4F7"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "topLeftRadius": "Radius/full",
+    "topRightRadius": "Radius/full",
+    "bottomLeftRadius": "Radius/full",
+    "bottomRightRadius": "Radius/full",
+    "fills": "Color/component/date-picker/surface-in-range"
+   },
+   "variant": {
+    "Type": "Day in range",
+    "State": "Disabled"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 9,
+     "h": 21,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "fill": [
+      "#98A2B3"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/disabled",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null,
+      "ls": -0.20000000298023224,
+      "align": "CENTER"
+     },
+     "text": "1"
+    },
+    {
+     "name": "Indicator",
+     "type": "ELLIPSE",
+     "w": 4,
+     "h": 4,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#98A2B3"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/icon/disabled"
+     }
+    },
+    {
+     "name": "Right connector",
+     "type": "VECTOR",
+     "w": 20,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#F2F4F7"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/component/date-picker/surface-in-range"
+     }
+    },
+    {
+     "name": "Left connector",
+     "type": "VECTOR",
+     "w": 20,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#F2F4F7"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/component/date-picker/surface-in-range"
+     }
+    }
+   ]
+  },
+  {
+   "name": "Type=Day in range, State=Hover",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "r": 9999,
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#EAECF0"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "topLeftRadius": "Radius/full",
+    "topRightRadius": "Radius/full",
+    "bottomLeftRadius": "Radius/full",
+    "bottomRightRadius": "Radius/full",
+    "fills": "Color/component/date-picker/surface-in-range-hover"
+   },
+   "variant": {
+    "Type": "Day in range",
+    "State": "Hover"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 9,
+     "h": 21,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "fill": [
+      "#000000"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/primary",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null,
+      "ls": -0.20000000298023224,
+      "align": "CENTER"
+     },
+     "text": "1"
+    },
+    {
+     "name": "Indicator",
+     "type": "ELLIPSE",
+     "w": 4,
+     "h": 4,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#A80689"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/icon/brand"
+     }
+    },
+    {
+     "name": "Right connector",
+     "type": "VECTOR",
+     "w": 20,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#F2F4F7"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/component/date-picker/surface-in-range"
+     }
+    },
+    {
+     "name": "Left connector",
+     "type": "VECTOR",
+     "w": 20,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#F2F4F7"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/component/date-picker/surface-in-range"
+     }
+    }
+   ]
+  },
+  {
+   "name": "Type=Day in range, State=Default",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "r": 9999,
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#F2F4F7"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "topLeftRadius": "Radius/full",
+    "topRightRadius": "Radius/full",
+    "bottomLeftRadius": "Radius/full",
+    "bottomRightRadius": "Radius/full",
+    "fills": "Color/component/date-picker/surface-in-range"
+   },
+   "variant": {
+    "Type": "Day in range",
+    "State": "Default"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 9,
+     "h": 21,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "fill": [
+      "#000000"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/primary",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null,
+      "ls": -0.20000000298023224,
+      "align": "CENTER"
+     },
+     "text": "1"
+    },
+    {
+     "name": "Indicator",
+     "type": "ELLIPSE",
+     "w": 4,
+     "h": 4,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#A80689"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/icon/brand"
+     }
+    },
+    {
+     "name": "Right connector",
+     "type": "VECTOR",
+     "w": 20,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#F2F4F7"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/component/date-picker/surface-in-range"
+     }
+    },
+    {
+     "name": "Left connector",
+     "type": "VECTOR",
+     "w": 20,
+     "h": 40,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#F2F4F7"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/component/date-picker/surface-in-range"
+     }
+    }
+   ]
+  },
+  {
+   "name": "Type=Today, State=Disabled",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "r": 9999,
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#F2F4F7"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "topLeftRadius": "Radius/full",
+    "topRightRadius": "Radius/full",
+    "bottomLeftRadius": "Radius/full",
+    "bottomRightRadius": "Radius/full",
+    "fills": "Color/component/date-picker/surface-in-range"
+   },
+   "variant": {
+    "Type": "Today",
+    "State": "Disabled"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 9,
+     "h": 21,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "fill": [
+      "#98A2B3"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/disabled",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null,
+      "ls": -0.20000000298023224,
+      "align": "CENTER"
+     },
+     "text": "1"
+    },
+    {
+     "name": "Indicator",
+     "type": "ELLIPSE",
+     "w": 4,
+     "h": 4,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#98A2B3"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/icon/disabled"
+     }
+    }
+   ]
+  },
+  {
+   "name": "Type=Today, State=Hover",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "r": 9999,
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#EAECF0"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "topLeftRadius": "Radius/full",
+    "topRightRadius": "Radius/full",
+    "bottomLeftRadius": "Radius/full",
+    "bottomRightRadius": "Radius/full",
+    "fills": "Color/component/date-picker/surface-in-range-hover"
+   },
+   "variant": {
+    "Type": "Today",
+    "State": "Hover"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 9,
+     "h": 21,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "fill": [
+      "#A80689"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/brand",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null,
+      "ls": -0.20000000298023224,
+      "align": "CENTER"
+     },
+     "text": "1"
+    },
+    {
+     "name": "Indicator",
+     "type": "ELLIPSE",
+     "w": 4,
+     "h": 4,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#A80689"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/icon/brand"
+     }
+    }
+   ]
+  },
+  {
+   "name": "Type=Today, State=Default",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "r": 9999,
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#F2F4F7"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "topLeftRadius": "Radius/full",
+    "topRightRadius": "Radius/full",
+    "bottomLeftRadius": "Radius/full",
+    "bottomRightRadius": "Radius/full",
+    "fills": "Color/component/date-picker/surface-in-range"
+   },
+   "variant": {
+    "Type": "Today",
+    "State": "Default"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 9,
+     "h": 21,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "fill": [
+      "#A80689"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/brand",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null,
+      "ls": -0.20000000298023224,
+      "align": "CENTER"
+     },
+     "text": "1"
+    },
+    {
+     "name": "Indicator",
+     "type": "ELLIPSE",
+     "w": 4,
+     "h": 4,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#A80689"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/icon/brand"
+     }
+    }
+   ]
+  },
+  {
+   "name": "Type=Day, State=Disabled",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "r": 9999,
+   "justify": "MIN",
+   "align": "MIN",
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "topLeftRadius": "Radius/full",
+    "topRightRadius": "Radius/full",
+    "bottomLeftRadius": "Radius/full",
+    "bottomRightRadius": "Radius/full"
+   },
+   "variant": {
+    "Type": "Day",
+    "State": "Disabled"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 9,
+     "h": 21,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "fill": [
+      "#98A2B3"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/disabled",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null,
+      "ls": -0.20000000298023224,
+      "align": "CENTER"
+     },
+     "text": "1"
+    },
+    {
+     "name": "Indicator",
+     "type": "ELLIPSE",
+     "w": 4,
+     "h": 4,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#98A2B3"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/icon/disabled"
+     }
+    }
+   ]
+  },
+  {
+   "name": "Type=Day, State=Hover",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "r": 9999,
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#EAECF0"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "topLeftRadius": "Radius/full",
+    "topRightRadius": "Radius/full",
+    "bottomLeftRadius": "Radius/full",
+    "bottomRightRadius": "Radius/full",
+    "fills": "Color/component/date-picker/surface-in-range-hover"
+   },
+   "variant": {
+    "Type": "Day",
+    "State": "Hover"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 9,
+     "h": 21,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "fill": [
+      "#000000"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/primary",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null,
+      "ls": -0.20000000298023224,
+      "align": "CENTER"
+     },
+     "text": "1"
+    },
+    {
+     "name": "Indicator",
+     "type": "ELLIPSE",
+     "w": 4,
+     "h": 4,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#A80689"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/icon/brand"
+     }
+    }
+   ]
+  },
+  {
+   "name": "Type=Day, State=Default",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "r": 9999,
+   "justify": "MIN",
+   "align": "MIN",
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "topLeftRadius": "Radius/full",
+    "topRightRadius": "Radius/full",
+    "bottomLeftRadius": "Radius/full",
+    "bottomRightRadius": "Radius/full"
+   },
+   "variant": {
+    "Type": "Day",
+    "State": "Default"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 9,
+     "h": 21,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "fill": [
+      "#000000"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/primary",
+      "letterSpacing": "IBM/Helper-text/01/letter-spacing",
+      "fontSize": "IBM/Helper-text/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Helper-text/01/font-size",
+      "fontWeight": "IBM/Helper-text/01/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null,
+      "ls": -0.20000000298023224,
+      "align": "CENTER"
+     },
+     "text": "1"
+    },
+    {
+     "name": "Indicator",
+     "type": "ELLIPSE",
+     "w": 4,
+     "h": 4,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#A80689"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/icon/brand"
+     }
+    }
+   ]
+  }
+ ]
+}

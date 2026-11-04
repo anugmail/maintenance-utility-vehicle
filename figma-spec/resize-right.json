@@ -1,0 +1,44 @@
+{
+ "component": "resize-right",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
+ "page": "Icons",
+ "node": "21:163",
+ "props": {},
+ "variants": [
+  {
+   "name": "resize-right",
+   "type": "COMPONENT",
+   "w": 24,
+   "h": 24,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "r": 0,
+   "justify": "MIN",
+   "align": "MIN",
+   "sw": 1.3333333730697632,
+   "strokeAlign": "INSIDE",
+   "svg": "svg/resize-right.svg",
+   "kids": [
+    {
+     "name": "Vector",
+     "type": "VECTOR",
+     "w": 19,
+     "h": 19,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#494C4E"
+     ],
+     "sw": 1.3333333730697632,
+     "strokeAlign": "INSIDE"
+    }
+   ]
+  }
+ ]
+}

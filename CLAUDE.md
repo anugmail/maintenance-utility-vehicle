@@ -45,8 +45,10 @@ grep -rnE '#[0-9a-fA-F]{3,8}\b' src --include='*.tsx'        # ต้องว�
 
 | ที่ | อะไร |
 |---|---|
-| `figma-spec/` | สเปก component จากไฟล์ Figma (สร้างด้วยสคริปต์) · `components.json` รายชื่อที่ใช้ · `COMPOSED.md` ส่วนที่ต้องประกอบเอง |
+| `figma-spec/` | สเปก component จากไฟล์ Figma (สร้างด้วยสคริปต์) · `components.json` รายชื่อที่ใช้ (`components` ไลบรารี · `maintainD` ไฟล์ Maintain-D) · `svg/` กราฟิก (สำเนา `public/figma-svg/`) · `COMPOSED.md` ส่วนที่ต้องประกอบเอง |
 | `src/components/vms/` | component ตามไลบรารี ชื่อเดียวกับ Figma |
+| `src/components/maintain-d/` | component จากไฟล์ Figma งานซ่อม Maintain-D (ข้อ 12) ชื่อเดียวกับ Figma · สเปกจาก `maintainD` ใน `figma-spec/components.json` |
+| `src/components/patterns/` | ชุดประกอบจากชิ้นไลบรารี (ข้อ 13) ConfirmDialog · RowMenu · FormModal · PopupModal · NotificationPanel · DisplayBox · PhotoGallery — จดใน `COMPOSED.md` |
 | `src/components/shell/` | กรอบหน้า (Header navigation + Sidebar navigation) และแถบต้นแบบ (สลับบทบาท) |
 | `src/app/` | หน้าตาม scenario (`page.tsx` = รายการแผน · `new/` ฟอร์มสร้างแผน · `scenarios/` `kit/` `soon/` ของต้นแบบ · `plans/` ที่อยู่เดิมที่พาไปที่ใหม่) |
 | `src/lib/mock/` | ข้อมูลจำลอง |
