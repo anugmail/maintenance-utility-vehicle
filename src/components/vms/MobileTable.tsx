@@ -3,6 +3,7 @@
    variant: Alternating fills = False | True
    ค่า: รัศมี 8 · ขอบ 1 gray-300 · พื้น white (True = gray-50) · ขอบในบน 4 · ลูก = Mobile table item (แถวท้ายเป็น Action icons)
    ใช้แบบ mobileCards() ใน core.js: 1 แถวตาราง = 1 การ์ด · การ์ดห่างกัน 12 · แถวแรกเป็น Lead text · ช่อง {pills} = แถว Badge · ปุ่ม = แถวท้าย Action icons
+   ช่อง {actions, mobileActions} → แถวท้าย Action icons ใช้ mobileActions ถ้ามี (ไอคอนดู แก้ไข ลบ กางออกเลย ไม่เปิดเมนู … · เจ้าของงาน 4 พ.ย. 2569 "ส่วนที่เป็น mobile อยากให้ expand view edit delete icon ออกมาแบบตัวอย่างทั้งหมด")
    ช่อง {text, sub} (บรรทัดรองของตาราง เช่น ชื่อแผน + ปีงบประมาณ) → Text + Supporting text ของ Mobile table item (12 gray-600) ไม่ต่อท้าย Text (เจ้าของงาน 4 พ.ย. 2569) */
 import type { ReactNode } from "react";
 import { cx } from "@/lib/cx";
@@ -27,7 +28,7 @@ export function MobileCards({ columns, rows, rowKey }: { columns: TableColumn[];
           else if (c.head && v && typeof v === "object" && "pills" in v) v.pills.forEach((p) => data.push({ head: c.head, v: { pills: [p] } }));
           else if (c.head) data.push({ head: c.head, v });
         });
-        const a = acts as { actions: CellAction[] } | null;
+        const a = acts as { actions: CellAction[]; mobileActions?: CellAction[] } | null;
         return (
           <MobileTable key={rowKey ? rowKey(r, ri) : ri}>
             {data.map(({ head, v }, i) => {
@@ -36,7 +37,7 @@ export function MobileCards({ columns, rows, rowKey }: { columns: TableColumn[];
               if (v && typeof v === "object" && "text" in v) return <MobileTableItem key={i} Style={i === 0 ? "Lead text" : "Text"} Header={head} Text={v.text} SupportingText={v.sub || undefined} last={last} />;
               return <MobileTableItem key={i} Style={i === 0 ? "Lead text" : "Text"} Header={head} Text={v == null ? "" : String(v)} last={last} />;
             })}
-            {a && <MobileTableItem Style="Action icons" Actions={a.actions} />}
+            {a && <MobileTableItem Style="Action icons" Actions={a.mobileActions ?? a.actions} />}
           </MobileTable>
         );
       })}

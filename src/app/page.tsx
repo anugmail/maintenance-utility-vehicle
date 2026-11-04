@@ -39,7 +39,11 @@ export default function PlanList() {
   const open = plans.find((p) => p.mr === menu?.mr);
   const items = open ? MENU.slice(0, kbk ? menuCount(open) : 1).map((m, i) => ({ ...m, onClick: () => router.push("/soon/?s=" + MENU_TO[i]) })) : [];
 
-  const data = shown.map((p) => planRow(p, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู " + p.mr, onClick: (e) => setMenu({ mr: p.mr, anchor: anchorOf(e.currentTarget) }) }] }));
+  const data = shown.map((p) => planRow(p, {
+    actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู " + p.mr, onClick: (e) => setMenu({ mr: p.mr, anchor: anchorOf(e.currentTarget) }) }],
+    // มือถือ: กางไอคอนดู แก้ไข ลบ ตามสถานะแผนบนการ์ดเลย (Mobile table item Style=Action icons · View Edit Delete · เจ้าของงาน 4 พ.ย. 2569)
+    mobileActions: MENU.slice(0, kbk ? menuCount(p) : 1).map((m, i) => ({ IconSwap: m.IconSwap, label: m.Text + " " + p.mr, onClick: () => router.push("/soon/?s=" + MENU_TO[i]) })),
+  }));
   const create = kbk ? <PrimaryButton Text="สร้างแผน" LeadingIconSwap="add-24-300-round" Size={mob ? "lg" : "md"} onClick={() => router.push("/new/")} /> : undefined;
 
   return (

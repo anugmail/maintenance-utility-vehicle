@@ -31,6 +31,8 @@
     - ไฟล์ Figma ของงานซ่อม **Maintain-D** (ReceiptChecklist · HandoverSignature · Modal Signature · InspectionChecklist · PartRequestStepPanel · PartsInventoryPanel · Spare Part Card Item · IncidentPhotoGallery · VehicleAndReporterInfo ฯลฯ) — เจ้าของงาน _"ใช้ได้ เอามาเป็นข้อมูลในการใช้ครั้งต่อไปด้วยเลย"_ · ดัมป์ slug `maintain-d` (`Maintenance-Request-Form/design-system/.figma-extract/maintain-d/` หรือ `figma-export/out/figma-dump/maintain-d/`) · ดึงสเปกแบบเดียวกับไลบรารี (figma-spec)
 13. **ของที่ทั้งสองไฟล์ไม่มี** (เช่น Bottom sheet ที่ใส่เนื้อหาได้ · หน้าต่างยืนยัน · เมนูมือถือ) — เจ้าของงาน _"ออกแบบได้แต่ต้องสอดคล้องกับเว็บเดวที่ออกแบบเรื่องพวกนี้ไปแล้ว"_ ⇒ ประกอบจากชิ้นไลบรารีเท่านั้น โดยหน้าตาและพฤติกรรมตามระบบจริงฝั่ง dev (vmsplus-dev · vms-plus-uat.odds.team/maintain-d) · จดใน `figma-spec/COMPOSED.md` ทุกครั้ง (ประกอบจากอะไร · อิงหน้าไหนของระบบ dev)
 
+14. **มือถือ — ไอคอนดู แก้ไข ลบ กางบนการ์ด** (เจ้าของงาน 4 พ.ย. 2569 _"ส่วนที่เป็น mobile อยากให้ expand view edit delete icon ออกมาแบบตัวอย่างทั้งหมด"_) — ช่องเมนู "…" ของตารางต้องส่ง `mobileActions` ตามรายการที่ทำได้ในสถานะนั้น (Mobile table item Style=Action icons · View/Edit/Delete) · มือถือไม่เปิดเมนู … / bottom sheet เมนู · desktop คงปุ่ม "…" + Dropdown menu
+
 ## ตรวจก่อนบอกว่าเสร็จ
 
 ```bash

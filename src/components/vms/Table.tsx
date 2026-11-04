@@ -22,7 +22,7 @@ export type TableValue =
   | string | number | null | undefined
   | { text: string; sub?: string }
   | { pills: [string, PillColor][] }
-  | { actions: CellAction[] };
+  | { actions: CellAction[]; mobileActions?: CellAction[] };   // mobileActions = ไอคอนดู แก้ไข ลบ ที่กางบนการ์ดมือถือแทนปุ่ม … (เจ้าของงาน 4 พ.ย. 2569)
 
 export function cellProps(v: TableValue, style?: TableCellStyle) {
   if (v && typeof v === "object" && "pills" in v) return { Style: (v.pills.length > 1 ? "Multiple badges" : "Badge") as TableCellStyle, Pills: v.pills };
