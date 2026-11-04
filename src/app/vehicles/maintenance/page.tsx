@@ -49,7 +49,7 @@ const maRow = (c: MaCar, open: (e: React.MouseEvent<HTMLButtonElement>) => void,
   return [
     { text: c.car.plate, sub: c.car.model }, { text: c.car.type, sub: c.car.owner },
     l ? { text: l.date, sub: l.planMr } : "-", l ? { text: l.km ?? "-", sub: l.hours } : "-",
-    l ? { text: "เปลี่ยน " + c.oilAt, sub: c.oilResult ? "ผลตรวจ " + c.oilResult : undefined } : "-",
+    l ? { text: c.oilAt ? "เปลี่ยน " + c.oilAt : "-", sub: c.oilResult ? "ผลตรวจ " + c.oilResult : undefined } : "-",
     l ? c.safety ?? "-" : "-",
     l ? { text: nextText(c), sub: st ? MA_DUE[st][0] : undefined, tone: st ? MA_DUE[st][1] : undefined } : { text: MA_NO_DATA },
     { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู " + c.car.plate, onClick: open }],

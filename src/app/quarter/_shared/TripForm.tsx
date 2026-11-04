@@ -27,7 +27,7 @@ import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
 import { mrOf } from "@/lib/mock/closeout";
 import { notify, useMock, useRole } from "@/lib/mock/store";
-import { CREATOR, SENT_AT, STAFF, TRIP_CARS, VENDORS, carOf, locCell, nextTripId, phoneCell, putTrip, quarterTrips, tripsOf, type Trip, type TripCar } from "@/lib/mock/trips";
+import { CREATOR, SENT_AT, STAFF, VENDORS, quarterCars, carOf, locCell, nextTripId, phoneCell, putTrip, quarterTrips, tripsOf, type Trip, type TripCar } from "@/lib/mock/trips";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useOutside } from "@/lib/useOutside";
 import { TripCarEditModal, type CarOverrides } from "./TripCarEditModal";
@@ -95,8 +95,9 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
   /* รถที่เลือกได้ = รถของไตรมาสที่ยังไม่อยู่ในแผนเดินทางใบอื่น (ซ่อน ไม่ทำเป็นสีจาง) และยังไม่อยู่ในใบนี้ */
   const others = quarterTrips(mock, planId, q).filter((t) => t.id !== edit?.id);
   const usedIds = new Set(others.flatMap((t) => t.carIds));
-  const pool = TRIP_CARS.filter((c) => !usedIds.has(c.id) && !v.carIds.includes(c.id));
-  const used = TRIP_CARS.filter((c) => usedIds.has(c.id)).length;
+  const qCars = quarterCars(mock, planId, q);
+  const pool = qCars.filter((c) => !usedIds.has(c.id) && !v.carIds.includes(c.id));
+  const used = qCars.filter((c) => usedIds.has(c.id)).length;
   const cars = v.carIds.map(carOf).filter((c): c is TripCar => !!c);
   const over: CarOverrides = { locs: v.locs, phones: v.phones };
   const drop = (id: string) => { const locs = { ...v.locs }, phones = { ...v.phones }; delete locs[id]; delete phones[id]; put({ carIds: v.carIds.filter((x) => x !== id), locs, phones }); };

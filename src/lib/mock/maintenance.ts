@@ -10,7 +10,7 @@
      ใกล้ครบ = ครบภายใน 6 เดือนนับจากวันนี้ · ครบ = ถึงหรือเลยวันครบ · วันเท่ากัน = รายการที่มาก่อนใน MA_ITEMS */
 import { useMemo } from "react";
 import {
-  closeRows, jobsOf, oilSampled, num, nf, safetyOn, SIGN_DATE, TRIP_CARS, WSTAT, OIL_JOB_OPTS,
+  carOf, closeRows, jobsOf, oilSampled, num, nf, safetyOn, SIGN_DATE, TRIP_CARS, WSTAT, OIL_JOB_OPTS,
   type Job, type JobTrip, type OilChoice, type TripCar,
 } from "./jobs";
 import { useMock, type MockState } from "./store";
@@ -152,11 +152,12 @@ export function maCar(car: TripCar, all: MaRecord[], today = dayOf(MA_TODAY)): M
     at(1, withH[0].hours + (withH[0].km ? " · " + withH[0].km : ""), est, nf(target) + " ชม." + (est != null ? " (ประมาณ " + thaiMonth(est) + ")" : ""));
   } else at(1, "-", undefined);
   /* (3) น้ำมันไฮโดรลิก */
-  at(2, "เปลี่ยน " + oilAt, addMonths(dayOf(oilAt), 36));
+  const oilOk = /^\d{2}\/\d{2}\/\d{4}/.test(oilAt);   // LAST_OIL "ไม่มีข้อมูล" = คิดไม่ได้
+  at(2, oilOk ? "เปลี่ยน " + oilAt : "-", oilOk ? addMonths(dayOf(oilAt), 36) : undefined);
   /* (4) Safety Inspection — เฉพาะรถเครน/รถกระเช้า */
   if (safetyOn(car)) at(3, safetyRec?.safety ?? "-", safetyRec?.safety ? addMonths(dayOf(safetyRec.safety), 12) : undefined);
   const next = items.filter((i) => i.due != null).sort((a, b) => a.due! - b.due! || a.k - b.k)[0];
-  return { car, records, latest, oilAt, oilResult: sampled?.oilResult, safety: safetyRec?.safety, items, next };
+  return { car, records, latest, oilAt: oilOk ? oilAt : undefined, oilResult: sampled?.oilResult, safety: safetyRec?.safety, items, next };
 }
 
 /* รถทุกคันของงานบำรุงรักษา (รถในงานรายคัน jobs.ts) + บันทึก · เรียงกำหนดครั้งถัดไปที่ใกล้สุดก่อน · คันที่ยังไม่มีบันทึกอยู่ท้าย
@@ -165,7 +166,9 @@ export function maCars(m: MockState, owner = false): MaCar[] {
   const s = jobsOf(m);
   const fromJobs = Object.values(s.jobs).map((j) => (s.trips[j.tripId] ? jobRecord(j, s.trips[j.tripId]) : null)).filter((r): r is MaRecord => !!r);
   const all = [...SEED, ...fromJobs];
-  return TRIP_CARS.filter((c) => !owner || c.owner === OWN_UNIT).map((c) => maCar(c, all))
+  /* รถตัวอย่าง (TRIP_CARS) + รถจากแผนที่สร้างในฟอร์มที่มีบันทึกแล้ว */
+  const extra = [...new Set(fromJobs.map((r) => r.carId))].filter((id) => !TRIP_CARS.some((c) => c.id === id)).map(carOf).filter((c): c is TripCar => !!c);
+  return [...TRIP_CARS, ...extra].filter((c) => !owner || c.owner === OWN_UNIT).map((c) => maCar(c, all))
     .sort((a, b) => (a.next ? a.next.due! : Infinity) - (b.next ? b.next.due! : Infinity) || a.car.plate.localeCompare(b.car.plate));
 }
 export function useMaCars(owner: boolean) { const m = useMock(); return useMemo(() => maCars(m, owner), [m, owner]); }

@@ -16,9 +16,9 @@ import type { ReceiptItem } from "@/components/maintain-d/ReceiptChecklist";
 import type { UploadFile } from "@/components/vms/FileUpload";
 import type { PillColor } from "@/components/vms/PillOutline";
 import { useMemo } from "react";
-import { PLANS, type Plan } from "./data";
+import { CAND, LAST_OIL, PLANS, type Plan } from "./data";
 import { setMock, useMock, type MockState, type Role } from "./store";
-import { APPROVED_AT, TRIP_1, TRIP_CARS as CARS, TRIP_V, tripsOf, type Trip } from "./trips";
+import { APPROVED_AT, PLAN_CARS, TRIP_1, TRIP_CARS as CARS, TRIP_V, candId, tripsOf, type Trip } from "./trips";
 
 /* ---------- เพิ่มฟิลด์ jobs ให้ MockState (store.ts) ---------- */
 declare module "./store" {
@@ -81,7 +81,10 @@ export interface TripCar { id: string; plate: string; model: string; owner: stri
 /* รถชุดเดียวกับ trips.ts (TRIP_CARS + OWNER_PH) · เปลี่ยนน้ำมันครั้งล่าสุด LAST_OIL (82-3302 = 05/02/2567 · คันอื่น 12/03/2568) */
 const LAST_OIL_OF: Record<string, string> = { "82-3302": "05/02/2567" };
 export const TRIP_CARS: TripCar[] = CARS.map((c) => ({ id: c.id, plate: c.plate, model: c.model, owner: c.owner, ownerPhone: c.phone, type: "รถกระเช้า", lastOil: LAST_OIL_OF[c.id] ?? "12/03/2568" }));
-export const carOf = (id: string) => TRIP_CARS.find((c) => c.id === id);
+/* รถจากแผนที่สร้างในฟอร์ม (PLAN_CARS ของ trips.ts) — ประเภทรถและเปลี่ยนน้ำมันครั้งล่าสุดตาม CAND / LAST_OIL ของ data.ts */
+export const PLAN_JOB_CARS: TripCar[] = PLAN_CARS.map((c) => { const i = CAND.findIndex((x) => candId(x.plate) === c.id);
+  return { id: c.id, plate: c.plate, model: c.model, owner: c.owner, ownerPhone: c.phone, type: CAND[i]?.type ?? "รถกระเช้า", lastOil: LAST_OIL[i] ?? "-" }; });
+export const carOf = (id: string) => TRIP_CARS.find((c) => c.id === id) ?? PLAN_JOB_CARS.find((c) => c.id === id);
 
 /* ---------- แผนเดินทางที่อนุมัติแล้ว — มุมมองของ Trip (trips.ts) ที่สถานะ approved ----------
    planMr planName จากแผนใน store · quarter = ป้าย "ไตรมาส n" · q = เลขไตรมาส */

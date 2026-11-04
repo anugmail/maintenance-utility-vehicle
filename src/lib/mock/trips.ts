@@ -5,6 +5,7 @@
 import type { BadgeOutlineColor } from "@/components/vms/BadgeOutline";
 import type { PillColor } from "@/components/vms/PillOutline";
 import type { StatusState } from "@/components/vms/Status";
+import { CAND } from "./data";
 import { setMock, type MockState } from "./store";
 
 export const NOW_Q = "ไตรมาส 1";
@@ -24,7 +25,20 @@ export const TRIP_CARS: TripCar[] = [
   { id: "81-6604", plate: "81-6604 เชียงราย", model: "Isuzu FRR + กระเช้า Aichi SK10A", owner: "กฟน.1 เชียงราย", phone: "053-711-402" },
   { id: "80-4458", plate: "80-4458 แพร่", model: "Hino FG + กระเช้า Tadano AT-146", owner: "กฟน.2 แพร่", phone: "054-511-226" },
 ];
-export const carOf = (id: string) => TRIP_CARS.find((c) => c.id === id);
+/* รถที่ กบค. จัดลงไตรมาสในฟอร์มสร้างแผน (S1 · CAND ของ data.ts) — id = ทะเบียนไม่มีจังหวัด · คันที่ซ้ำกับ TRIP_CARS ใช้ข้อมูลของ TRIP_CARS
+   เบอร์ติดต่อ = เบอร์ของหน่วยงานเจ้าของรถเดียวกันใน TRIP_CARS (OWNER_PH) · ไม่มี = ว่าง (ตารางแสดง "-") */
+export const candId = (plate: string) => plate.split(" ")[0];
+const ownerPhone = (owner: string) => TRIP_CARS.find((c) => c.owner === owner)?.phone ?? "";
+export const PLAN_CARS: TripCar[] = CAND.filter((c) => !TRIP_CARS.some((t) => t.id === candId(c.plate)))
+  .map((c) => ({ id: candId(c.plate), plate: c.plate, model: c.model, owner: c.owner, phone: ownerPhone(c.owner) }));
+export const carOf = (id: string) => TRIP_CARS.find((c) => c.id === id) ?? PLAN_CARS.find((c) => c.id === id);
+/** รถของไตรมาส q ในแผน — แผนที่สร้างจากฟอร์ม (มี alloc) = รถที่จัดลงไตรมาสนั้น · แผนตัวอย่าง (ไม่มี alloc) = รถตัวอย่าง TRIP_CARS ของ screens.js */
+export function quarterCars(s: Pick<MockState, "plans">, planId: string, q: number): TripCar[] {
+  const p = s.plans.find((x) => x.mr === "MR " + planId);
+  const alloc = p?.alloc;
+  if (!alloc || !Object.keys(alloc).length) return TRIP_CARS;
+  return Object.keys(alloc).map(Number).filter((i) => alloc[i] === q && CAND[i]).map((i) => carOf(candId(CAND[i].plate))).filter((c): c is TripCar => !!c);
+}
 
 /* ---------- สถานะแผนเดินทาง TST ---------- */
 export type TripStatus = "review" | "approved" | "returned";
