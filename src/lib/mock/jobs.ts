@@ -6,12 +6,13 @@
 
    โครง: JobsState = { trips: แผนเดินทางที่อนุมัติแล้ว (T1 ตรวจเอง · TV จ้าง), jobs: งานรายคัน คีย์ "<trip>:<car>" }
    งานที่ยังไม่มีในที่เก็บ = ยังไม่เริ่ม (getJob คืนค่าตั้งต้น) · เปลี่ยนสถานะผ่านฟังก์ชันท้ายไฟล์ (startJob closeJob cannotJob saveOilResult …)
-   สถานะ hire (worked reported wait returned) มีใน JobStatus ครบ — S23/S11 เพิ่มฟังก์ชันเปลี่ยนสถานะเองได้ด้วย patchJob() */
+   สถานะ hire (worked reported wait returned) มีใน JobStatus ครบ — การเปลี่ยนสถานะของแผนจ้าง (ส่งตรวจงาน อนุมัติ ส่งกลับ แก้อะไหล่) อยู่ที่ ./hire.ts (เรียก patchJob())
+   ที่เก็บงานรายคันมีที่เดียวคือไฟล์นี้ (MockState.jobs) — S10 S12 S23 S11 ใช้ร่วมกัน */
 import type { InspectionItem } from "@/components/maintain-d/InspectionChecklist";
 import type { ReceiptItem } from "@/components/maintain-d/ReceiptChecklist";
 import type { UploadFile } from "@/components/vms/FileUpload";
 import type { PillColor } from "@/components/vms/PillOutline";
-import { setMock, useMock } from "./store";
+import { setMock, useMock, type Role } from "./store";
 
 /* ---------- เพิ่มฟิลด์ jobs ให้ MockState (store.ts) ---------- */
 declare module "./store" {
@@ -254,7 +255,7 @@ export function tripProgress(s: JobsState, t: JobTrip) {
 /** จำนวนรายการเมนู "…" ของรถ (MENU = ดูรายละเอียด แก้ไข ลบ) — กบค.: ยังไม่เริ่ม 3 · อยู่ระหว่างบำรุงรักษา 2 · อื่นๆ 1 · ผู้รับจ้าง 1 เสมอ */
 export const menuCount = (st: JobStatus, vendor?: boolean) => (vendor ? 1 : st === "todo" ? 3 : st === "doing" ? 2 : 1);
 /** ตารางอะไหล่ส่งคืน (retRows): [ชื่อ, ตามแผน, ใช้, คืน] พร้อมหน่วย */
-export const retRows = (parts: PlanPart[], used?: number[] | null): string[][] =>
+export const retRows = (parts: Pick<PlanPart, "part" | "planQty" | "unit">[], used?: number[] | null): string[][] =>
   parts.map((p, k) => { const u = used ? used[k] ?? 0 : 0; return [p.part, p.planQty + " " + p.unit, u + " " + p.unit, Math.max(0, p.planQty - u) + " " + p.unit]; });
 export const nf = (n: number) => n.toLocaleString("en-US");
 export const num = (s: string | number | null | undefined) => { const v = Number(String(s ?? "").replace(/[^\d.]/g, "")); return Number.isFinite(v) ? v : 0; };
@@ -281,7 +282,7 @@ export function startJob(t: JobTrip, carId: string, vendor: boolean) {
 export function closeJob(t: JobTrip, carId: string, f: CloseForm, vendor: boolean) {
   const at = vendor ? JOB_TIMES.hire.end : JOB_TIMES.self.end, by = actorOf(vendor);
   patchJob(t.id, carId, (j) => ({
-    ...j, status: t.mode === "hire" ? "worked" : "done", close: f, closedAt: at, recordedBy: by,
+    ...j, status: t.mode === "hire" ? "worked" : "done", close: f, closedAt: at, recordedBy: by, cannot: undefined,
     kmAfter: f.km + " กม.", hoursAfter: f.hours + " ชม.", oilChoice: f.oilChoice,
     oilResult: oilSampled(f.oilChoice) ? { sel: f.oilSel, files: f.oilFiles, sampledAt: at.slice(0, 10), sampledBy: by, ...(f.oilSel >= 0 ? { savedAt: at, savedBy: by } : {}) } : undefined,
   }));
@@ -314,8 +315,16 @@ export function removeTripCar(t: JobTrip, carId: string) {
    T1_afterCannot (80-9981 บำรุงรักษาไม่ได้) · TV_vendor = HIRE_VENDOR (S23) · TV_kbk = HIRE_MIX (S11) */
 export const SAMPLES = ["T1_start", "T1_afterClose", "T1_afterCannot", "TV_start", "TV_vendor", "TV_kbk"] as const;
 export type SampleName = (typeof SAMPLES)[number];
+/* ชื่อเรียกตาม scenario (ลิงก์ S23 S11 ในหน้า /scenarios/) + บทบาทที่สลับให้ตอนเปิดชุดตัวอย่าง */
+export const SAMPLE_ALIAS: Record<string, SampleName> = { S23: "TV_vendor", S11: "TV_kbk" };
+export const SAMPLE_ROLE: Partial<Record<SampleName, Role>> = { T1_start: "กบค.", T1_afterClose: "กบค.", T1_afterCannot: "กบค.", TV_vendor: "ผู้รับจ้าง", TV_kbk: "กบค." };
+export const sampleOf = (name: string | null | undefined): SampleName | undefined =>
+  !name ? undefined : (SAMPLES as readonly string[]).includes(name) ? (name as SampleName) : SAMPLE_ALIAS[name];
+/* ภาพก่อนเริ่มงานของชุดตัวอย่าง: ตรวจเอง = ไฟล์จากหน้ารับรถ · จ้าง = photoFiles() ของ screens.js (before-1.jpg before-2.jpg) */
+const samplePhotos = (vendor: boolean): UploadFile[] =>
+  vendor ? BEFORE.map((_, k) => ({ name: "before-" + (k + 1) + ".jpg", size: "2.4 MB", bar: true })) : filledReceive(actorOf(vendor)).photos.flat();
 function doing(t: JobTrip, carId: string, vendor: boolean): Job {
-  return { ...newJob(t.id, carId), status: "doing", oilChoice: OIL_DEFAULT, receive: filledReceive(actorOf(vendor)), photos: filledReceive(actorOf(vendor)).photos.flat(),
+  return { ...newJob(t.id, carId), status: "doing", oilChoice: OIL_DEFAULT, receive: filledReceive(actorOf(vendor)), photos: samplePhotos(vendor),
     startedAt: vendor ? JOB_TIMES.hire.start : JOB_TIMES.self.start, startedBy: actorOf(vendor) };
 }
 function closed(t: JobTrip, carId: string, vendor: boolean, status: JobStatus): Job {

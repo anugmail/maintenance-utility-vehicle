@@ -4,13 +4,14 @@
    → VehicleAndReporterInfo "ข้อมูลยานพาหนะ" (6) · "การนัดหมาย" (+ เริ่มงาน ผู้เริ่มงาน เมื่ออยู่ระหว่างบำรุงรักษา)
    → (อยู่ระหว่างบำรุงรักษา) IncidentPhotoGallery "ภาพก่อนเริ่มงาน (n)" (ผู้รับจ้าง: File upload แก้ไขได้) · Section header "น้ำมันไฮโดรลิก" + Radio text card 3 ใบ + เปลี่ยนน้ำมันครั้งล่าสุด
    → Section label "รายการงานและอะไหล่ตามแผน (n)" + Tertiary button "เพิ่มอะไหล่" + Table JOB_COLS (ไอคอนแก้ไข → หน้าอะไหล่ของรถ S21 · ลบ → ยืนยันเอาอะไหล่ออก)
+     ผู้รับจ้างเริ่มงานแล้ว (S23 V.4 V.5): ภาพก่อนเริ่มงานเป็น File upload (BeforePhotos) · ไอคอนแก้ไข = popup แก้ไขอะไหล่ · "เพิ่มอะไหล่" = popup เพิ่มอะไหล่ที่ใช้จริง
+     (เก็บเป็นร่างของหน้าปิดงาน — lib/mock/hire.ts hireRows)
    popup "บำรุงรักษาไม่ได้ · <ทะเบียน>" (cannotModal) → ยืนยัน → กลับหน้ารายละเอียดแผนเดินทาง + toast "บันทึกบำรุงรักษาไม่ได้แล้ว" */
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ConfirmDialog } from "@/components/patterns/ConfirmDialog";
 import { IncidentPhotoGallery } from "@/components/maintain-d/IncidentPhotoGallery";
 import { VehicleAndReporterInfo } from "@/components/maintain-d/VehicleAndReporterInfo";
-import { FileUpload } from "@/components/vms/FileUpload";
 import { PageHeader } from "@/components/vms/PageHeader";
 import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
@@ -18,13 +19,14 @@ import { SectionHeader } from "@/components/vms/SectionHeader";
 import { SectionLabel } from "@/components/vms/SectionLabel";
 import type { TableColumn } from "@/components/vms/Table";
 import { TertiaryButton } from "@/components/vms/TertiaryButton";
+import { hireAddPart, hireDeletePart, hireEditUsed, hireWork } from "@/lib/mock/hire";
 import {
   cannotJob, jobWork, ODOMETER, OIL_DEFAULT, patchJob, thaiNow, tripLoc, tripPhone, tripRange, WORK, WSTAT, JOB_TIMES,
   type Job, type JobTrip, type PlanPart, type TripCar,
 } from "@/lib/mock/jobs";
 import { notify } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
-import { badgeOf, CannotPopup, DataTable, jobCrumbs, jobHref, LastOil, OilCards, Section, toUpload, tripHref, useBack } from "../_lib/ui";
+import { badgeOf, BeforePhotos, CannotPopup, DataTable, jobCrumbs, jobHref, LastOil, OilCards, PartAddModal, PartEditModal, Section, tripHref, useBack } from "../_lib/ui";
 
 const JOB_COLS: TableColumn[] = [{ head: "รายการงาน" }, { head: "อะไหล่ตามแผน", width: 320 }, { head: "จำนวนตามแผน", width: 140 }, { head: "หน่วย", width: 110 }, { head: "", width: 104, Style: "Action icons" }];
 
@@ -50,21 +52,25 @@ export function JobPage({ trip, car, job, actor, vendor, kbk }: { trip: JobTrip;
   const [cannot, setCannot] = useState(false);
   const [reason, setReason] = useState("");
   const [err, setErr] = useState(false);
-  const [del, setDel] = useState<PlanPart | null>(null);
+  const [del, setDel] = useState<{ part: string; k: number } | null>(null);
+  const [editK, setEditK] = useState<number | null>(null);
+  const [adding, setAdding] = useState(false);
 
   /* อะไหล่ตามแผน: กบค. เพิ่ม แก้ไข ลบ ได้ตอนยังไม่เริ่ม/อยู่ระหว่างบำรุงรักษา · ผู้รับจ้าง ยังไม่เริ่ม = ดูอย่างเดียว · เริ่มแล้วแก้ได้ (S23) */
   const editParts = actor && (kbk || doing);
   const oil = job.oilChoice ?? OIL_DEFAULT;
-  const work = jobWork(job.parts, doing ? oil : 1);
-  const toParts = () => router.push("/soon/?s=" + (vendor ? "S23" : "S21") + "&car=" + car.id);
+  const hireEdit = editParts && vendor;
+  const work = hireEdit ? hireWork(job) : jobWork(job.parts, doing ? oil : 1).map((p) => ({ ...p, usedQty: p.planQty, k: job.parts.indexOf(p) }));
+  const toParts = () => router.push("/soon/?s=S21&car=" + car.id);
   const cols = editParts ? JOB_COLS : JOB_COLS.slice(0, 4);
   const rows = work.map((w) => {
     const r = [w.task, w.part, String(w.planQty), w.unit];
     return editParts ? [...r, { actions: [
-      { IconSwap: "stylus-24-300-round", label: "แก้ไข " + w.part, onClick: toParts },
-      { IconSwap: "delete-24-300-round", label: "ลบ " + w.part, onClick: () => setDel(w) },
+      { IconSwap: "stylus-24-300-round", label: "แก้ไข " + w.part, onClick: hireEdit ? () => setEditK(w.k) : toParts },
+      { IconSwap: "delete-24-300-round", label: "ลบ " + w.part, onClick: () => setDel({ part: w.part, k: w.k }) },
     ] }] : r;
   });
+  const editItem = editK == null ? null : work.find((w) => w.k === editK) ?? null;
   const used = doing ? usedWhileDoing(job.parts) : null;
   const confirmCannot = () => {
     if (!reason.trim()) { setErr(true); return; }
@@ -88,26 +94,27 @@ export function JobPage({ trip, car, job, actor, vendor, kbk }: { trip: JobTrip;
       <VehicleAndReporterInfo Title="ข้อมูลยานพาหนะ" pairs={vehiclePairs(trip, car)} />
       <VehicleAndReporterInfo Title="การนัดหมาย" pairs={appointmentPairs(trip, car, job)} />
       {doing && (vendor && actor
-        ? <FileUpload LabelText="ภาพก่อนเริ่มงาน" files={photos} hint="JPG, PNG · สูงสุด 10 ภาพ" bar accept=".jpg,.jpeg,.png"
-            onFiles={(fs) => patchJob(trip.id, car.id, (j) => ({ ...j, photos: [...(j.photos ?? []), ...fs.map(toUpload)].slice(0, 10) }))}
-            onDelete={(i) => patchJob(trip.id, car.id, (j) => ({ ...j, photos: (j.photos ?? []).filter((_, k) => k !== i) }))} />
+        ? <BeforePhotos trip={trip} car={car} photos={photos} />
         : <IncidentPhotoGallery Title={"ภาพก่อนเริ่มงาน (" + photos.length + ")"} photos={photos.map((p) => ({ alt: p.name }))} />)}
       {doing && (
         <Section>
           <SectionHeader Title="น้ำมันไฮโดรลิก" />
-          <OilCards value={oil} Disabled={!actor} onChange={(k) => patchJob(trip.id, car.id, (j) => ({ ...j, oilChoice: k }))} />
+          <OilCards value={oil} Disabled={!actor} onChange={(k) => patchJob(trip.id, car.id, (j) => ({ ...j, oilChoice: k, close: j.close && { ...j.close, oilChoice: k } }))} />
           <LastOil car={car} />
         </Section>
       )}
       <Section>
         <SectionLabel Title={"รายการงานและอะไหล่ตามแผน (" + work.length + ")"}
-          Actions={editParts ? <TertiaryButton Text="เพิ่มอะไหล่" LeadingIconSwap="add-24-300-round" onClick={toParts} /> : undefined} />
+          Actions={editParts ? <TertiaryButton Text="เพิ่มอะไหล่" LeadingIconSwap="add-24-300-round" onClick={hireEdit ? () => setAdding(true) : toParts} /> : undefined} />
         <DataTable cols={cols} rows={rows} />
       </Section>
       <CannotPopup open={cannot} car={car} parts={job.parts} used={used} reason={reason} error={err}
         onReason={(v) => { setReason(v); if (v.trim()) setErr(false); }} onOk={confirmCannot} onCancel={() => setCannot(false)} />
       <ConfirmDialog spec={del ? { danger: true, title: "ยืนยันการเอาอะไหล่ออก", sub: del.part + " จะถูกเอาออกจากรถคันนี้", cancel: "ยกเลิก", ok: "เอาออก" } : null}
-        onOk={() => { if (del) patchJob(trip.id, car.id, (j) => ({ ...j, parts: j.parts.filter((p) => p.part !== del.part) })); setDel(null); }} onCancel={() => setDel(null)} />
+        onOk={() => { if (del) { if (hireEdit) hireDeletePart(trip, car, del.k); else patchJob(trip.id, car.id, (j) => ({ ...j, parts: j.parts.filter((p) => p.part !== del.part) })); } setDel(null); }} onCancel={() => setDel(null)} />
+      <PartEditModal item={editItem && { ...editItem, used: editItem.usedQty }} onCancel={() => setEditK(null)}
+        onSave={(v) => { if (editItem) hireEditUsed(trip, car, editItem.k, v.used); setEditK(null); }} />
+      <PartAddModal open={adding} onCancel={() => setAdding(false)} onAdd={(p) => { hireAddPart(trip, car, p); setAdding(false); }} />
     </>
   );
 }

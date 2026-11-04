@@ -102,3 +102,17 @@
 | ชำรุด / ผิดรุ่น ใน ReceiptChecklist | Checkbox กดได้เมื่อเลือก "มี" (เลือก "ไม่มี" ล้างค่า) — ไฟล์ไม่ได้บอกพฤติกรรม |
 | Date picker วันนอกเดือน | แสดงเป็น Day State=Disabled ตามไลบรารี (ทั้งต้นและท้ายเดือน) · สัปดาห์เริ่มวันจันทร์ (Mo) ตามไลบรารี |
 | File upload ปุ่มในแถวไฟล์ | In progress = close (ยกเลิก) · Error = restart_alt (ลองใหม่) + close · Completed = download + delete ตาม _File upload item base |
+
+## ฉ. ชุด C (S10 S12 S23 S11 S13 S14 — งานรายคัน แผนจ้างดำเนินการ ตรวจรับ ยอมรับผล)
+
+รวมชุด C1 (S10 S12) กับ C2 (S23 S11 S13 S14) เป็นชุดเดียว: หน้ารายละเอียดแผนเดินทาง `/trips/detail/` และหน้างานรายคัน `/trips/job/` ใช้ทั้งแผนตรวจเอง (T1) และแผนจ้าง (TV) · ชิ้นประกอบอยู่ที่ `src/app/trips/_lib/ui.tsx` ที่เดียว
+
+| ส่วน | ประกอบจาก | เหตุผล |
+|---|---|---|
+| `src/app/trips/_lib/ui.tsx` `ButtonRow` | แถวปุ่ม Secondary + Primary (ชิดซ้าย–ขวา · ปุ่มเดียวชิดขวา · มือถือแบ่งเท่ากัน) | btnRow() ของ core.js ไม่มี component แถวปุ่มในไลบรารี (แบบเดียวกับท้ายฟอร์ม `/new/`) · หน้ายอมรับผล `/acceptance/*` ใช้ตัวเดียวกัน |
+| `src/app/acceptance/_lib/ui.tsx` `DocList` | Input label + _File upload item base (Download action อย่างเดียว ไม่มีแถบ) | carResult() (S13) ต้องการไฟล์ดาวน์โหลดได้อย่างเดียว — File upload `readonly` ของไลบรารีซ่อนทั้งดาวน์โหลดและลบ |
+| `src/app/trips/job/HireView.tsx` (หน้างานรายคันของแผนจ้างหลังปิดงาน/แจ้งไม่ได้) | Page header + Alert + VehicleAndReporterInfo + File upload / IncidentPhotoGallery + Section label + Table + Radio text card + Text area | hireJob() ของ screens.js · JobView เลือกตามสถานะ (ดำเนินการบำรุงรักษาแล้ว แจ้งบำรุงรักษาไม่ได้ รอตรวจรับ ส่งกลับแก้ไข) |
+| `PartEditModal` · `PartAddModal` · `CannotPopup` ใน `src/app/trips/_lib/ui.tsx` (ใช้ทั้งหน้างานรายคัน หน้าปิดงาน และแผนจ้าง) | `patterns/PopupModal` + Text input / Input dropdown / Text area + Section header + Table | partEditModal · partAddModal · cannotModal ของ screens.js · หน้าปิดงานเปิด PartEditModal แบบ `extra` (+ จำนวนอะไหล่เก่า หมายเหตุ) · ไม่มีข้อความ error ของ popup อะไหล่ในสเปก ⇒ ปุ่มหลัก Disabled จนกรอกครบ / ใช้จริงเกินแผน (**รอเคาะข้อความ error**) |
+| `BeforePhotos` ใน `src/app/trips/_lib/ui.tsx` — อัปโหลดภาพก่อนเริ่มงาน (ผู้รับจ้าง) | File upload (รายการไฟล์ + ปุ่มลบ) · แถบความคืบหน้าเดินทีละ 20% ทุก 0.7 วิ (จำลอง) · ไฟล์ที่ไม่ใช่ JPG/PNG = State Error | photoFiles() ของ screens.js · ต้นแบบไม่มีเซิร์ฟเวอร์อัปโหลดจริง |
+| ผู้รับจ้างแก้อะไหล่ระหว่าง/หลังบำรุงรักษา | เก็บเป็นร่างของหน้าปิดงาน (`job.close.parts`) หรือจำนวนที่ใช้ของคันที่แจ้งไม่ได้ (`job.cannot.used`) — `src/lib/mock/hire.ts` | ข้อมูลชุดเดียวกับหน้าปิดงาน: แก้ที่หน้างานแล้วหน้าปิดงาน/หน้ารายละเอียดเห็นค่าเดียวกัน |
+| `?sample=S23` `S11` (= `TV_vendor` `TV_kbk`) · `S13` `S14` | (ไม่มี component) — `src/lib/useSample.ts` | ของต้นแบบ: ลิงก์จาก `/scenarios/` ใส่ข้อมูลตั้งต้นของ scenario + สลับบทบาท แล้วเอา sample ออกจาก URL |

@@ -8,7 +8,6 @@
    ช่องในตารางอะไหล่เป็นข้อความตามจอ Figma (Table cell ไม่มีช่องกรอก) — กดแถวเปิด popup แก้ไขอะไหล่ (โครง partEditModal ของ screens.js) · "เพิ่มรายการ" = popup "เพิ่มอะไหล่ที่ใช้จริง" (partAddModal) */
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
-import { PopupModal } from "@/components/patterns/PopupModal";
 import { HandoverSignature } from "@/components/maintain-d/HandoverSignature";
 import { InspectionChecklist } from "@/components/maintain-d/InspectionChecklist";
 import { ModalSignature } from "@/components/maintain-d/ModalSignature";
@@ -31,7 +30,7 @@ import {
 } from "@/lib/mock/jobs";
 import { notify } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
-import { ButtonRow, DataTable, Grid, jobCrumbs, jobHref, KvBox, LastOil, OilCards, OilResultFields, Section, toUpload, tripHref, useBack, useTripCar } from "../../_lib/ui";
+import { ButtonRow, DataTable, Grid, jobCrumbs, jobHref, KvBox, LastOil, OilCards, OilResultFields, PartAddModal, PartEditModal, Section, toUpload, tripHref, useBack, useTripCar, type PartEditValue } from "../../_lib/ui";
 
 const PART_COLS: TableColumn[] = ["ชื่ออะไหล่", "ราคาต่อหน่วย", "จำนวนที่ใช้", "ราคารวมที่ใช้", "จำนวนที่คืน", "ราคารวมที่คืน", "จำนวนอะไหล่เก่า", "หมายเหตุ"]
   .map((head, i) => ({ head, width: i === 0 ? 220 : i === 7 ? undefined : 118, Style: i === 0 ? "Lead text" : "Text" }));
@@ -39,13 +38,8 @@ const RETURN_SLOTS = [
   { LabelText: "ผู้ส่งมอบรถ (กบค.)", Placeholder: "เลือกผู้ส่งมอบรถ (กบค.)" },
   { LabelText: "ผู้รับมอบรถ (หน่วยงานเจ้าของรถ)", Placeholder: "เลือกผู้รับมอบรถ (หน่วยงานเจ้าของรถ)" },
 ];
-const UNITS = ["ชิ้น", "ลิตร"];
 /* ตัวเลขมีจุลภาค "182,640" */
 const digits = (v: string) => { const d = v.replace(/\D/g, ""); return d ? Number(d).toLocaleString("en-US") : ""; };
-const n0 = (v: string) => Number(v.replace(/\D/g, "")) || 0;
-
-type PartEdit = { i: number; used: string; old: string; note: string };
-type PartAdd = { name: string; code: string; qty: string; unit: string | null; open: boolean };
 
 export function ClosePage() {
   const router = useRouter();
@@ -54,8 +48,8 @@ export function ClosePage() {
   const { trip, car, job, actor, vendor } = useTripCar();
   const [errors, setErrors] = useState(false);
   const [sign, setSign] = useState(-1);
-  const [edit, setEdit] = useState<PartEdit | null>(null);
-  const [add, setAdd] = useState<PartAdd | null>(null);
+  const [edit, setEdit] = useState<number | null>(null);
+  const [add, setAdd] = useState(false);
   const [open, setOpen] = useState("");   // ช่อง dropdown ที่เปิด
   const [query, setQuery] = useState("");
   const result = useRef<HTMLDivElement>(null);
@@ -86,20 +80,17 @@ export function ClosePage() {
   };
 
   /* ---------- popup แก้ไขอะไหล่ / เพิ่มอะไหล่ที่ใช้จริง ---------- */
-  const editRow = edit ? rows[edit.i] : null;
-  const openEdit = (i: number) => { const r = rows[i]; if (actor && r) setEdit({ i, used: String(r.used), old: String(r.old), note: r.note }); };
-  const saveEdit = () => {
-    if (!edit || !editRow) return;
-    const used = editRow.added ? n0(edit.used) : Math.min(editRow.planQty, n0(edit.used));
-    put((x) => ({ ...x, parts: x.parts.map((r) => (r === editRow || (r.part === editRow.part && !r.added === !editRow.added) ? { ...r, used, old: n0(edit.old), note: edit.note.trim() } : r)) }));
+  const editRow = edit != null ? rows[edit] ?? null : null;
+  const openEdit = (i: number) => { if (actor && rows[i]) setEdit(i); };
+  const saveEdit = (v: PartEditValue) => {
+    if (!editRow) return;
+    put((x) => ({ ...x, parts: x.parts.map((r) => (r === editRow || (r.part === editRow.part && !r.added === !editRow.added) ? { ...r, used: v.used, old: v.old, note: v.note } : r)) }));
     setEdit(null);
   };
-  const addOk = !!add && !!add.name.trim() && !!add.qty.trim() && !!add.unit;
-  const saveAdd = () => {
-    if (!add || !addOk) return;
-    const row: ClosePartRow = { part: add.name.trim(), code: add.code.trim() || undefined, unit: add.unit!, unitPrice: 0, planQty: 0, used: n0(add.qty), old: 0, note: "", added: true };
+  const saveAdd = (p: { name: string; code: string; qty: string; unit: string }) => {
+    const row: ClosePartRow = { part: p.name.trim(), code: p.code.trim() || undefined, unit: p.unit, unitPrice: 0, planQty: 0, used: Number(p.qty) || 0, old: 0, note: "", added: true };
     put((x) => ({ ...x, parts: [...x.parts, row] }));
-    setAdd(null);
+    setAdd(false);
   };
   const partRows = rows.map((r) => {
     const ret = Math.max(0, r.planQty - r.used);
@@ -147,7 +138,7 @@ export function ClosePage() {
         <SectionHeader Title="รายการสภาพวัสดุอะไหล่" Badge={rows.length} />
         <DataTable cols={PART_COLS} rows={partRows} onRow={openEdit} />
         <div className="flex"><SecondaryButton Text="เพิ่มรายการ" LeadingIconSwap="add-24-300-round" Size={mob ? "lg" : "md"} className={mob ? "w-full" : undefined}
-          onClick={() => actor && setAdd({ name: "", code: "", qty: "", unit: null, open: false })} /></div>
+          onClick={() => actor && setAdd(true)} /></div>
       </Section>
       <Section>
         <SectionHeader Title="ค่าใช้จ่ายของรถคันนี้ (บาท)" Badge={f.costs.length + " คน"} />
@@ -214,32 +205,9 @@ export function ClosePage() {
         value={sign >= 0 && f.signers[sign].sig !== "sample" ? f.signers[sign].sig : null}
         onSave={(url) => { const i = sign; put((x) => ({ ...x, signers: x.signers.map((s, k) => (k === i ? { ...s, sig: url } : s)) as CloseForm["signers"] })); setSign(-1); }}
         onClose={() => setSign(-1)} />
-      <PopupModal open={!!edit && !!editRow} title={"แก้ไขอะไหล่ · " + (editRow?.part ?? "")} ok="บันทึก" onOk={saveEdit} onCancel={() => setEdit(null)}>
-        {edit && editRow && <>
-          <TextInput LabelText="รายการงาน" Text={job.parts.find((p) => p.part === editRow.part)?.task ?? "-"} State="Readonly" readOnly />
-          <Grid n={3}>
-            <TextInput LabelText="จำนวนตามแผน" Text={editRow.planQty + " " + editRow.unit} State="Readonly" readOnly />
-            <TextInput LabelText={"จำนวนที่ใช้จริง (" + editRow.unit + ")"} Text={edit.used} Placeholder="0" inputMode="numeric" onChange={(v) => setEdit({ ...edit, used: v.replace(/\D/g, "") })} />
-            <TextInput LabelText="จำนวนที่คืน" Text={Math.max(0, editRow.planQty - (editRow.added ? n0(edit.used) : Math.min(editRow.planQty, n0(edit.used)))) + " " + editRow.unit} State="Readonly" readOnly />
-          </Grid>
-          <Grid>
-            <TextInput LabelText="จำนวนอะไหล่เก่า" Text={edit.old} Placeholder="0" inputMode="numeric" onChange={(v) => setEdit({ ...edit, old: v.replace(/\D/g, "") })} />
-            <TextInput LabelText="หมายเหตุ" Optional Text={edit.note} Placeholder="ระบุหมายเหตุ" onChange={(v) => setEdit({ ...edit, note: v })} />
-          </Grid>
-        </>}
-      </PopupModal>
-      <PopupModal open={!!add} title="เพิ่มอะไหล่ที่ใช้จริง" ok="เพิ่ม" okDisabled={!addOk} onOk={saveAdd} onCancel={() => setAdd(null)}>
-        {add && <>
-          <TextInput LabelText="ชื่ออะไหล่" Text={add.name} Placeholder="ระบุชื่ออะไหล่" onChange={(v) => setAdd({ ...add, name: v })} />
-          <TextInput LabelText="รหัสอะไหล่" Optional Text={add.code} Placeholder="ระบุรหัสอะไหล่" onChange={(v) => setAdd({ ...add, code: v })} />
-          <Grid>
-            <TextInput LabelText="จำนวนที่ใช้จริง" Text={add.qty} Placeholder="0" inputMode="numeric" onChange={(v) => setAdd({ ...add, qty: v.replace(/\D/g, "") })} />
-            <InputDropdown LabelText="หน่วย" Text={add.unit ?? ""} Placeholder="เลือกหน่วย" open={add.open} onOpenChange={(o) => setAdd({ ...add, open: o })}>
-              <DropdownList>{UNITS.map((u) => <DropdownListItem key={u} Text={u} State={u === add.unit ? "Selected" : "Default"} onClick={() => setAdd({ ...add, unit: u, open: false })} />)}</DropdownList>
-            </InputDropdown>
-          </Grid>
-        </>}
-      </PopupModal>
+      <PartEditModal extra item={editRow && { part: editRow.part, task: job.parts.find((p) => p.part === editRow.part)?.task ?? "-", planQty: editRow.planQty, unit: editRow.unit,
+        used: editRow.used, old: editRow.old, note: editRow.note, added: editRow.added }} onSave={saveEdit} onCancel={() => setEdit(null)} />
+      <PartAddModal open={add} onAdd={saveAdd} onCancel={() => setAdd(false)} />
     </>
   );
 }
