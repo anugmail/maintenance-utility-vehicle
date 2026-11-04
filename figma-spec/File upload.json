@@ -1,0 +1,1604 @@
+{
+ "component": "File upload",
+ "page": "✅ File upload",
+ "node": "2123:5261",
+ "props": {
+  "Helper text#2951:13": {
+   "type": "TEXT",
+   "defaultValue": "Helper"
+  },
+  "File queue#2951:14": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Helper#2951:15": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "File upload#2955:3": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Type": {
+   "type": "VARIANT",
+   "defaultValue": "Default",
+   "variantOptions": [
+    "Default",
+    "Gallery"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "name": "Type=Default",
+   "type": "COMPONENT",
+   "w": 402,
+   "h": 595,
+   "gap": 16,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Type": "Default"
+   },
+   "kids": [
+    {
+     "name": "File upload with label",
+     "type": "FRAME",
+     "w": 402,
+     "h": 181,
+     "gap": 8,
+     "r": 0,
+     "dir": "VERTICAL",
+     "align": "MIN",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Input label",
+       "type": "INSTANCE",
+       "w": 402,
+       "h": 24,
+       "gap": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "button#3608:0": false,
+        "Info icon#2404:1": true,
+        "Optional#2404:2": true,
+        "Label text#2404:0": "Label"
+       },
+       "component": "Input label",
+       "kids": [
+        {
+         "name": "Left",
+         "type": "FRAME",
+         "w": 402,
+         "h": 24,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Label",
+           "type": "TEXT",
+           "w": 40,
+           "h": 24,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 16,
+            "lh": null
+           },
+           "text": "Label"
+          },
+          {
+           "name": "(ถ้ามี)",
+           "type": "TEXT",
+           "w": 38,
+           "h": 24,
+           "fill": [
+            "#98A2B3"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 16,
+            "lh": null
+           },
+           "text": "(ถ้ามี)"
+          },
+          {
+           "name": "info-24-300-round",
+           "type": "INSTANCE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "info-24-300-round"
+          }
+         ]
+        },
+        {
+         "name": "Tertiary brand button",
+         "type": "INSTANCE",
+         "w": 107,
+         "h": 24,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "variant": {
+          "Leading icon swap#133:10": "133:3719",
+          "Button text#1153:12": true,
+          "Trailing icon#105:4": false,
+          "Trailing icon swap#133:12": "133:3719",
+          "Leading icon#105:2": false,
+          "Text#105:0": "Button",
+          "State": "Default"
+         },
+         "component": "Tertiary brand button [State=Default]",
+         "kids": [
+          {
+           "name": "crop_free-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "crop_free-20-400-round"
+          },
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 43,
+           "h": 21,
+           "fill": [
+            "#A80689"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 14,
+            "lh": null
+           },
+           "text": "Button"
+          },
+          {
+           "name": "crop_free-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "crop_free-20-400-round"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "_File upload base",
+       "type": "INSTANCE",
+       "w": 402,
+       "h": 123,
+       "pl": 16,
+       "pr": 16,
+       "pt": 16,
+       "pb": 16,
+       "gap": 16,
+       "r": 8,
+       "dir": "VERTICAL",
+       "align": "CENTER",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "sw": 1,
+       "variant": {
+        "Supporting text#2839:0": "SVG, PNG, JPG or GIF",
+        "State": "Default"
+       },
+       "component": "_File upload base [State=Default]",
+       "kids": [
+        {
+         "name": "Text and icon",
+         "type": "FRAME",
+         "w": 370,
+         "h": 91,
+         "gap": 12,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Featured icon",
+           "type": "INSTANCE",
+           "w": 36,
+           "h": 36,
+           "r": 9999,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F2F4F7"
+           ],
+           "sw": 1,
+           "variant": {
+            "Icon swap#2032:0": "2839:81503",
+            "Color": "Gray",
+            "Size": "sm"
+           },
+           "component": "Featured icon [Color=Gray, Size=sm]"
+          },
+          {
+           "name": "Text and supporting text",
+           "type": "FRAME",
+           "w": 370,
+           "h": 43,
+           "gap": 4,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "CENTER",
+           "sw": 1
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Helper text",
+       "type": "TEXT",
+       "w": 402,
+       "h": 18,
+       "fill": [
+        "#475467"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 12,
+        "lh": null
+       },
+       "text": "Helper"
+      }
+     ]
+    },
+    {
+     "name": "File queue",
+     "type": "FRAME",
+     "w": 402,
+     "h": 398,
+     "gap": 12,
+     "r": 0,
+     "dir": "VERTICAL",
+     "align": "MIN",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "_File upload item base",
+       "type": "INSTANCE",
+       "w": 402,
+       "h": 97,
+       "pl": 16,
+       "pr": 16,
+       "pt": 16,
+       "pb": 16,
+       "gap": 4,
+       "r": 8,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "sw": 1,
+       "variant": {
+        "Delete action#2858:9": true,
+        "Download action#2858:5": true,
+        "Actions#2858:1": true,
+        "Progress bar#2843:0": true,
+        "File size#2841:8": "200 KB",
+        "File name#2841:4": "Document.pdf",
+        "State": "Completed"
+       },
+       "component": "_File upload item base [State=Completed]",
+       "kids": [
+        {
+         "name": "Actions",
+         "type": "FRAME",
+         "w": 80,
+         "h": 40,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Tertiary button",
+           "type": "INSTANCE",
+           "w": 40,
+           "h": 40,
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "2841:82758",
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": true,
+            "Button text#1153:0": false,
+            "Text#105:0": "Button",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Tertiary button [State=Default, Size=md]"
+          },
+          {
+           "name": "Tertiary button",
+           "type": "INSTANCE",
+           "w": 40,
+           "h": 40,
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "1787:13965",
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": true,
+            "Button text#1153:0": false,
+            "Text#105:0": "Button",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Tertiary button [State=Default, Size=md]"
+          }
+         ]
+        },
+        {
+         "name": "Text and icon",
+         "type": "FRAME",
+         "w": 370,
+         "h": 39,
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "_File icon",
+           "type": "INSTANCE",
+           "w": 36,
+           "h": 36,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Type": "Document"
+           },
+           "component": "_File icon [Type=Document]"
+          },
+          {
+           "name": "Text and supporting text",
+           "type": "FRAME",
+           "w": 322,
+           "h": 39,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "CENTER",
+           "sw": 1
+          }
+         ]
+        },
+        {
+         "name": "Progress bar",
+         "type": "INSTANCE",
+         "w": 370,
+         "h": 22,
+         "gap": 8,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "variant": {
+          "Percentage#2941:3": true,
+          "Label": "Right",
+          "Progress": "100%",
+          "Size": "md"
+         },
+         "component": "Progress bar [Label=Right, Progress=100%, Size=md]",
+         "kids": [
+          {
+           "name": "Progress bar",
+           "type": "GROUP",
+           "w": 322,
+           "h": 8
+          },
+          {
+           "name": "Percentage",
+           "type": "TEXT",
+           "w": 40,
+           "h": 22,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 14,
+            "lh": null
+           },
+           "text": "100%"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "_File upload item base",
+       "type": "INSTANCE",
+       "w": 402,
+       "h": 97,
+       "pl": 16,
+       "pr": 16,
+       "pt": 16,
+       "pb": 16,
+       "gap": 4,
+       "r": 8,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "sw": 1,
+       "variant": {
+        "Delete action#2858:9": true,
+        "Download action#2858:5": true,
+        "File size#2841:8": "200 KB",
+        "Actions#2858:1": true,
+        "Progress bar#2843:0": true,
+        "File name#2841:4": "Document.pdf",
+        "State": "In progress"
+       },
+       "component": "_File upload item base [State=In progress]",
+       "kids": [
+        {
+         "name": "Actions",
+         "type": "FRAME",
+         "w": 40,
+         "h": 40,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Tertiary button",
+           "type": "INSTANCE",
+           "w": 40,
+           "h": 40,
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "1084:414",
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": true,
+            "Button text#1153:0": false,
+            "Text#105:0": "Button",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Tertiary button [State=Default, Size=md]"
+          }
+         ]
+        },
+        {
+         "name": "Text and icon",
+         "type": "FRAME",
+         "w": 370,
+         "h": 39,
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "_File icon",
+           "type": "INSTANCE",
+           "w": 36,
+           "h": 36,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Type": "Document"
+           },
+           "component": "_File icon [Type=Document]"
+          },
+          {
+           "name": "Text and supporting text",
+           "type": "FRAME",
+           "w": 322,
+           "h": 39,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "CENTER",
+           "sw": 1
+          }
+         ]
+        },
+        {
+         "name": "Progress bar",
+         "type": "INSTANCE",
+         "w": 370,
+         "h": 22,
+         "gap": 8,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "variant": {
+          "Percentage#2941:3": true,
+          "Label": "Right",
+          "Progress": "40%",
+          "Size": "md"
+         },
+         "component": "Progress bar [Label=Right, Progress=40%, Size=md]",
+         "kids": [
+          {
+           "name": "Progress bar",
+           "type": "GROUP",
+           "w": 322,
+           "h": 8
+          },
+          {
+           "name": "Percentage",
+           "type": "TEXT",
+           "w": 40,
+           "h": 22,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 14,
+            "lh": null
+           },
+           "text": "40%"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "_File upload item base",
+       "type": "INSTANCE",
+       "w": 402,
+       "h": 97,
+       "pl": 16,
+       "pr": 16,
+       "pt": 16,
+       "pb": 16,
+       "gap": 4,
+       "r": 8,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "sw": 1,
+       "variant": {
+        "Delete action#2858:9": true,
+        "Download action#2858:5": true,
+        "File size#2841:8": "200 KB",
+        "Actions#2858:1": true,
+        "Progress bar#2843:0": true,
+        "File name#2841:4": "Document.pdf",
+        "State": "In progress"
+       },
+       "component": "_File upload item base [State=In progress]",
+       "kids": [
+        {
+         "name": "Actions",
+         "type": "FRAME",
+         "w": 40,
+         "h": 40,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Tertiary button",
+           "type": "INSTANCE",
+           "w": 40,
+           "h": 40,
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "1084:414",
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": true,
+            "Button text#1153:0": false,
+            "Text#105:0": "Button",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Tertiary button [State=Default, Size=md]"
+          }
+         ]
+        },
+        {
+         "name": "Text and icon",
+         "type": "FRAME",
+         "w": 370,
+         "h": 39,
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "_File icon",
+           "type": "INSTANCE",
+           "w": 36,
+           "h": 36,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Type": "Document"
+           },
+           "component": "_File icon [Type=Document]"
+          },
+          {
+           "name": "Text and supporting text",
+           "type": "FRAME",
+           "w": 322,
+           "h": 39,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "CENTER",
+           "sw": 1
+          }
+         ]
+        },
+        {
+         "name": "Progress bar",
+         "type": "INSTANCE",
+         "w": 370,
+         "h": 22,
+         "gap": 8,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "variant": {
+          "Percentage#2941:3": true,
+          "Label": "Right",
+          "Progress": "40%",
+          "Size": "md"
+         },
+         "component": "Progress bar [Label=Right, Progress=40%, Size=md]",
+         "kids": [
+          {
+           "name": "Progress bar",
+           "type": "GROUP",
+           "w": 322,
+           "h": 8
+          },
+          {
+           "name": "Percentage",
+           "type": "TEXT",
+           "w": 40,
+           "h": 22,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 14,
+            "lh": null
+           },
+           "text": "40%"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "_File upload item base",
+       "type": "INSTANCE",
+       "w": 402,
+       "h": 71,
+       "pl": 16,
+       "pr": 16,
+       "pt": 16,
+       "pb": 16,
+       "gap": 8,
+       "r": 8,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "stroke": [
+        "#F04438"
+       ],
+       "sw": 1,
+       "variant": {
+        "Delete action#2858:9": true,
+        "File name#2841:4": "Document.pdf",
+        "Download action#2858:5": true,
+        "Progress bar#2843:0": true,
+        "Actions#2858:1": true,
+        "File size#2841:8": "200 KB",
+        "State": "Error"
+       },
+       "component": "_File upload item base [State=Error]",
+       "kids": [
+        {
+         "name": "Text and icon",
+         "type": "FRAME",
+         "w": 370,
+         "h": 39,
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "_File icon",
+           "type": "INSTANCE",
+           "w": 36,
+           "h": 36,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Type": "Document"
+           },
+           "component": "_File icon [Type=Document]"
+          },
+          {
+           "name": "Text and supporting text",
+           "type": "FRAME",
+           "w": 322,
+           "h": 39,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "CENTER",
+           "sw": 1
+          }
+         ]
+        },
+        {
+         "name": "Actions",
+         "type": "FRAME",
+         "w": 80,
+         "h": 40,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Tertiary button",
+           "type": "INSTANCE",
+           "w": 40,
+           "h": 40,
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "2841:82268",
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": true,
+            "Button text#1153:0": false,
+            "Text#105:0": "อัปโหลดใหม่",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Tertiary button [State=Default, Size=md]"
+          },
+          {
+           "name": "Tertiary button",
+           "type": "INSTANCE",
+           "w": 40,
+           "h": 40,
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "1084:414",
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": true,
+            "Button text#1153:0": false,
+            "Text#105:0": "Button",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Tertiary button [State=Default, Size=md]"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Gallery",
+   "type": "COMPONENT",
+   "w": 402,
+   "h": 457,
+   "gap": 16,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Type": "Gallery"
+   },
+   "kids": [
+    {
+     "name": "File upload with label",
+     "type": "FRAME",
+     "w": 402,
+     "h": 181,
+     "gap": 8,
+     "r": 0,
+     "dir": "VERTICAL",
+     "align": "MIN",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Input label",
+       "type": "INSTANCE",
+       "w": 402,
+       "h": 24,
+       "gap": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "button#3608:0": false,
+        "Info icon#2404:1": true,
+        "Optional#2404:2": true,
+        "Label text#2404:0": "Label"
+       },
+       "component": "Input label",
+       "kids": [
+        {
+         "name": "Left",
+         "type": "FRAME",
+         "w": 402,
+         "h": 24,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Label",
+           "type": "TEXT",
+           "w": 40,
+           "h": 24,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 16,
+            "lh": null
+           },
+           "text": "Label"
+          },
+          {
+           "name": "(ถ้ามี)",
+           "type": "TEXT",
+           "w": 38,
+           "h": 24,
+           "fill": [
+            "#98A2B3"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 16,
+            "lh": null
+           },
+           "text": "(ถ้ามี)"
+          },
+          {
+           "name": "info-24-300-round",
+           "type": "INSTANCE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "info-24-300-round"
+          }
+         ]
+        },
+        {
+         "name": "Tertiary brand button",
+         "type": "INSTANCE",
+         "w": 107,
+         "h": 24,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "variant": {
+          "Leading icon swap#133:10": "133:3719",
+          "Button text#1153:12": true,
+          "Trailing icon#105:4": false,
+          "Trailing icon swap#133:12": "133:3719",
+          "Leading icon#105:2": false,
+          "Text#105:0": "Button",
+          "State": "Default"
+         },
+         "component": "Tertiary brand button [State=Default]",
+         "kids": [
+          {
+           "name": "crop_free-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "crop_free-20-400-round"
+          },
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 43,
+           "h": 21,
+           "fill": [
+            "#A80689"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 14,
+            "lh": null
+           },
+           "text": "Button"
+          },
+          {
+           "name": "crop_free-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "crop_free-20-400-round"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "_File upload base",
+       "type": "INSTANCE",
+       "w": 402,
+       "h": 123,
+       "pl": 16,
+       "pr": 16,
+       "pt": 16,
+       "pb": 16,
+       "gap": 16,
+       "r": 8,
+       "dir": "VERTICAL",
+       "align": "CENTER",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "sw": 1,
+       "variant": {
+        "Supporting text#2839:0": "SVG, PNG, JPG or GIF",
+        "State": "Default"
+       },
+       "component": "_File upload base [State=Default]",
+       "kids": [
+        {
+         "name": "Text and icon",
+         "type": "FRAME",
+         "w": 370,
+         "h": 91,
+         "gap": 12,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Featured icon",
+           "type": "INSTANCE",
+           "w": 36,
+           "h": 36,
+           "r": 9999,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F2F4F7"
+           ],
+           "sw": 1,
+           "variant": {
+            "Icon swap#2032:0": "2839:81503",
+            "Color": "Gray",
+            "Size": "sm"
+           },
+           "component": "Featured icon [Color=Gray, Size=sm]"
+          },
+          {
+           "name": "Text and supporting text",
+           "type": "FRAME",
+           "w": 370,
+           "h": 43,
+           "gap": 4,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "CENTER",
+           "sw": 1
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Helper text",
+       "type": "TEXT",
+       "w": 402,
+       "h": 18,
+       "fill": [
+        "#475467"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 12,
+        "lh": null
+       },
+       "text": "Helper"
+      }
+     ]
+    },
+    {
+     "name": "File queue",
+     "type": "FRAME",
+     "w": 402,
+     "h": 260,
+     "gap": 12,
+     "r": 0,
+     "dir": "VERTICAL",
+     "align": "MIN",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "_Image queue row",
+       "type": "INSTANCE",
+       "w": 402,
+       "h": 124,
+       "gap": 12,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "MIN",
+       "sw": 1,
+       "variant": {
+        "Item 4#2953:0": false,
+        "Item 3#2953:1": false,
+        "Item 2#2953:2": true,
+        "Width": "100%"
+       },
+       "component": "_Image queue row [Width=100%]",
+       "kids": [
+        {
+         "name": "_Image upload item base",
+         "type": "INSTANCE",
+         "w": 195,
+         "h": 124,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Delete action#2951:1": true,
+          "Actions#2941:0": true,
+          "State": "Completed"
+         },
+         "component": "_Image upload item base [State=Completed]",
+         "kids": [
+          {
+           "name": "Actions",
+           "type": "FRAME",
+           "w": 179,
+           "h": 40,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "MIN",
+           "sw": 1
+          }
+         ]
+        },
+        {
+         "name": "_Image upload item base",
+         "type": "INSTANCE",
+         "w": 195,
+         "h": 124,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Delete action#2951:1": true,
+          "Actions#2941:0": true,
+          "State": "Completed"
+         },
+         "component": "_Image upload item base [State=Completed]",
+         "kids": [
+          {
+           "name": "Actions",
+           "type": "FRAME",
+           "w": 179,
+           "h": 40,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "MIN",
+           "sw": 1
+          }
+         ]
+        },
+        {
+         "name": "_Image upload item base",
+         "type": "INSTANCE",
+         "w": 115,
+         "h": 124,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 16,
+         "r": 8,
+         "dir": "VERTICAL",
+         "align": "CENTER",
+         "fill": [
+          "#EAECF0"
+         ],
+         "sw": 1,
+         "variant": {
+          "Delete action#2951:1": true,
+          "Actions#2941:0": true,
+          "State": "In progress"
+         },
+         "component": "_Image upload item base [State=In progress]",
+         "kids": [
+          {
+           "name": "Actions",
+           "type": "FRAME",
+           "w": 99,
+           "h": 40,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "MIN",
+           "sw": 1
+          },
+          {
+           "name": "imagesmode-40-300-round",
+           "type": "INSTANCE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "imagesmode-40-300-round"
+          },
+          {
+           "name": "Progress",
+           "type": "FRAME",
+           "w": 99,
+           "h": 40,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1
+          }
+         ]
+        },
+        {
+         "name": "_Image upload item base",
+         "type": "INSTANCE",
+         "w": 115,
+         "h": 124,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 16,
+         "r": 8,
+         "dir": "VERTICAL",
+         "align": "CENTER",
+         "fill": [
+          "#EAECF0"
+         ],
+         "sw": 1,
+         "variant": {
+          "Delete action#2951:1": true,
+          "Actions#2941:0": true,
+          "State": "In progress"
+         },
+         "component": "_Image upload item base [State=In progress]",
+         "kids": [
+          {
+           "name": "Actions",
+           "type": "FRAME",
+           "w": 99,
+           "h": 40,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "MIN",
+           "sw": 1
+          },
+          {
+           "name": "imagesmode-40-300-round",
+           "type": "INSTANCE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "imagesmode-40-300-round"
+          },
+          {
+           "name": "Progress",
+           "type": "FRAME",
+           "w": 99,
+           "h": 40,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "_Image queue row",
+       "type": "INSTANCE",
+       "w": 402,
+       "h": 124,
+       "gap": 12,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "MIN",
+       "sw": 1,
+       "variant": {
+        "Item 4#2953:0": false,
+        "Item 3#2953:1": false,
+        "Item 2#2953:2": true,
+        "Width": "100%"
+       },
+       "component": "_Image queue row [Width=100%]",
+       "kids": [
+        {
+         "name": "_Image upload item base",
+         "type": "INSTANCE",
+         "w": 195,
+         "h": 124,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Delete action#2951:1": true,
+          "Actions#2941:0": true,
+          "State": "Completed"
+         },
+         "component": "_Image upload item base [State=Completed]",
+         "kids": [
+          {
+           "name": "Actions",
+           "type": "FRAME",
+           "w": 179,
+           "h": 40,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "MIN",
+           "sw": 1
+          }
+         ]
+        },
+        {
+         "name": "_Image upload item base",
+         "type": "INSTANCE",
+         "w": 195,
+         "h": 124,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 16,
+         "r": 8,
+         "dir": "VERTICAL",
+         "align": "CENTER",
+         "fill": [
+          "#EAECF0"
+         ],
+         "sw": 1,
+         "variant": {
+          "Delete action#2951:1": true,
+          "Actions#2941:0": true,
+          "State": "In progress"
+         },
+         "component": "_Image upload item base [State=In progress]",
+         "kids": [
+          {
+           "name": "Actions",
+           "type": "FRAME",
+           "w": 179,
+           "h": 40,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "MIN",
+           "sw": 1
+          },
+          {
+           "name": "imagesmode-40-300-round",
+           "type": "INSTANCE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "imagesmode-40-300-round"
+          },
+          {
+           "name": "Progress",
+           "type": "FRAME",
+           "w": 179,
+           "h": 40,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1
+          }
+         ]
+        },
+        {
+         "name": "_Image upload item base",
+         "type": "INSTANCE",
+         "w": 115,
+         "h": 124,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 16,
+         "r": 8,
+         "dir": "VERTICAL",
+         "align": "CENTER",
+         "fill": [
+          "#EAECF0"
+         ],
+         "sw": 1,
+         "variant": {
+          "Delete action#2951:1": true,
+          "Actions#2941:0": true,
+          "State": "In progress"
+         },
+         "component": "_Image upload item base [State=In progress]",
+         "kids": [
+          {
+           "name": "Actions",
+           "type": "FRAME",
+           "w": 99,
+           "h": 40,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "MIN",
+           "sw": 1
+          },
+          {
+           "name": "imagesmode-40-300-round",
+           "type": "INSTANCE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "imagesmode-40-300-round"
+          },
+          {
+           "name": "Progress",
+           "type": "FRAME",
+           "w": 99,
+           "h": 40,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1
+          }
+         ]
+        },
+        {
+         "name": "_Image upload item base",
+         "type": "INSTANCE",
+         "w": 115,
+         "h": 124,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 16,
+         "r": 8,
+         "dir": "VERTICAL",
+         "align": "CENTER",
+         "fill": [
+          "#EAECF0"
+         ],
+         "sw": 1,
+         "variant": {
+          "Delete action#2951:1": true,
+          "Actions#2941:0": true,
+          "State": "In progress"
+         },
+         "component": "_Image upload item base [State=In progress]",
+         "kids": [
+          {
+           "name": "Actions",
+           "type": "FRAME",
+           "w": 99,
+           "h": 40,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "MIN",
+           "sw": 1
+          },
+          {
+           "name": "imagesmode-40-300-round",
+           "type": "INSTANCE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "imagesmode-40-300-round"
+          },
+          {
+           "name": "Progress",
+           "type": "FRAME",
+           "w": 99,
+           "h": 40,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

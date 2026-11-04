@@ -1,0 +1,325 @@
+{
+ "component": "Radio button",
+ "page": "✅ Radio button",
+ "node": "2:17",
+ "props": {
+  "State": {
+   "type": "VARIANT",
+   "defaultValue": "Default",
+   "variantOptions": [
+    "Default",
+    "Hover",
+    "Focused",
+    "Disabled"
+   ]
+  },
+  "Selected": {
+   "type": "VARIANT",
+   "defaultValue": "False",
+   "variantOptions": [
+    "True",
+    "False"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "name": "State=Default, Selected=False",
+   "type": "COMPONENT",
+   "w": 20,
+   "h": 20,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "State": "Default",
+    "Selected": "False"
+   },
+   "kids": [
+    {
+     "name": "Surface",
+     "type": "ELLIPSE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "stroke": [
+      "#D0D5DD"
+     ],
+     "sw": 2
+    }
+   ]
+  },
+  {
+   "name": "State=Hover, Selected=False",
+   "type": "COMPONENT",
+   "w": 20,
+   "h": 20,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "State": "Hover",
+    "Selected": "False"
+   },
+   "kids": [
+    {
+     "name": "Surface",
+     "type": "ELLIPSE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "stroke": [
+      "#D0D5DD"
+     ],
+     "sw": 2
+    }
+   ]
+  },
+  {
+   "name": "State=Focused, Selected=False",
+   "type": "COMPONENT",
+   "w": 20,
+   "h": 20,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "State": "Focused",
+    "Selected": "False"
+   },
+   "kids": [
+    {
+     "name": "Surface",
+     "type": "ELLIPSE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "stroke": [
+      "#D0D5DD"
+     ],
+     "sw": 2
+    }
+   ]
+  },
+  {
+   "name": "State=Default, Selected=True",
+   "type": "COMPONENT",
+   "w": 20,
+   "h": 20,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "State": "Default",
+    "Selected": "True"
+   },
+   "kids": [
+    {
+     "name": "Surface with icon",
+     "type": "GROUP",
+     "w": 20,
+     "h": 20,
+     "kids": [
+      {
+       "name": "Surface",
+       "type": "ELLIPSE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1.5
+      },
+      {
+       "name": "Icon",
+       "type": "ELLIPSE",
+       "w": 8,
+       "h": 8,
+       "r": 0,
+       "fill": [
+        "#FFFFFF"
+       ],
+       "sw": 1.5
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Hover, Selected=True",
+   "type": "COMPONENT",
+   "w": 20,
+   "h": 20,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "State": "Hover",
+    "Selected": "True"
+   },
+   "kids": [
+    {
+     "name": "Surface with icon",
+     "type": "GROUP",
+     "w": 20,
+     "h": 20,
+     "kids": [
+      {
+       "name": "Surface",
+       "type": "ELLIPSE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1.5
+      },
+      {
+       "name": "Icon",
+       "type": "ELLIPSE",
+       "w": 8,
+       "h": 8,
+       "r": 0,
+       "fill": [
+        "#FFFFFF"
+       ],
+       "sw": 1.5
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Focused, Selected=True",
+   "type": "COMPONENT",
+   "w": 20,
+   "h": 20,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "State": "Focused",
+    "Selected": "True"
+   },
+   "kids": [
+    {
+     "name": "Surface with icon",
+     "type": "GROUP",
+     "w": 20,
+     "h": 20,
+     "kids": [
+      {
+       "name": "Surface",
+       "type": "ELLIPSE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1.5
+      },
+      {
+       "name": "Icon",
+       "type": "ELLIPSE",
+       "w": 8,
+       "h": 8,
+       "r": 0,
+       "fill": [
+        "#FFFFFF"
+       ],
+       "sw": 1.5
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Disabled, Selected=True",
+   "type": "COMPONENT",
+   "w": 20,
+   "h": 20,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "State": "Disabled",
+    "Selected": "True"
+   },
+   "kids": [
+    {
+     "name": "Surface with icon",
+     "type": "GROUP",
+     "w": 20,
+     "h": 20,
+     "kids": [
+      {
+       "name": "Surface",
+       "type": "ELLIPSE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#EAECF0"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "sw": 2
+      },
+      {
+       "name": "Icon",
+       "type": "ELLIPSE",
+       "w": 8,
+       "h": 8,
+       "r": 0,
+       "fill": [
+        "#D0D5DD"
+       ],
+       "sw": 1.5
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Disabled, Selected=False",
+   "type": "COMPONENT",
+   "w": 20,
+   "h": 20,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "State": "Disabled",
+    "Selected": "False"
+   },
+   "kids": [
+    {
+     "name": "Container",
+     "type": "ELLIPSE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "fill": [
+      "#EAECF0"
+     ],
+     "stroke": [
+      "#D0D5DD"
+     ],
+     "sw": 2
+    }
+   ]
+  }
+ ]
+}

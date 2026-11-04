@@ -1,0 +1,6863 @@
+{
+ "component": "Table",
+ "page": "✅ Table",
+ "node": "2:14",
+ "props": {
+  "Scrollbar #782:0": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Pagination#2220:23": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Alternating fills": {
+   "type": "VARIANT",
+   "defaultValue": "True",
+   "variantOptions": [
+    "False",
+    "True"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "name": "Alternating fills=True",
+   "type": "COMPONENT",
+   "w": 1280,
+   "h": 692,
+   "gap": 20,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Alternating fills": "True"
+   },
+   "kids": [
+    {
+     "name": "Content with scrollbar",
+     "type": "FRAME",
+     "w": 1280,
+     "h": 632,
+     "gap": 12,
+     "r": 0,
+     "dir": "VERTICAL",
+     "align": "MIN",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Content",
+       "type": "FRAME",
+       "w": 1280,
+       "h": 604,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Column",
+         "type": "FRAME",
+         "w": 160,
+         "h": 604,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Table header cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 44,
+           "pl": 16,
+           "pr": 16,
+           "pt": 12,
+           "pb": 12,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F2F4F7"
+           ],
+           "variant": {
+            "Header text#3243:0": true,
+            "Text#3243:1": "Header",
+            "Sort icon#3243:2": true,
+            "Checkbox": "False"
+           },
+           "component": "Table header cell [Checkbox=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          }
+         ]
+        },
+        {
+         "name": "Column",
+         "type": "FRAME",
+         "w": 160,
+         "h": 604,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Table header cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 44,
+           "pl": 16,
+           "pr": 16,
+           "pt": 12,
+           "pb": 12,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F2F4F7"
+           ],
+           "variant": {
+            "Header text#3243:0": true,
+            "Text#3243:1": "Header",
+            "Sort icon#3243:2": true,
+            "Checkbox": "False"
+           },
+           "component": "Table header cell [Checkbox=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          }
+         ]
+        },
+        {
+         "name": "Column",
+         "type": "FRAME",
+         "w": 160,
+         "h": 604,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Table header cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 44,
+           "pl": 16,
+           "pr": 16,
+           "pt": 12,
+           "pb": 12,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F2F4F7"
+           ],
+           "variant": {
+            "Header text#3243:0": true,
+            "Text#3243:1": "Header",
+            "Sort icon#3243:2": true,
+            "Checkbox": "False"
+           },
+           "component": "Table header cell [Checkbox=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          }
+         ]
+        },
+        {
+         "name": "Column",
+         "type": "FRAME",
+         "w": 160,
+         "h": 604,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Table header cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 44,
+           "pl": 16,
+           "pr": 16,
+           "pt": 12,
+           "pb": 12,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F2F4F7"
+           ],
+           "variant": {
+            "Header text#3243:0": true,
+            "Text#3243:1": "Header",
+            "Sort icon#3243:2": true,
+            "Checkbox": "False"
+           },
+           "component": "Table header cell [Checkbox=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          }
+         ]
+        },
+        {
+         "name": "Column",
+         "type": "FRAME",
+         "w": 160,
+         "h": 604,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Table header cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 44,
+           "pl": 16,
+           "pr": 16,
+           "pt": 12,
+           "pb": 12,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F2F4F7"
+           ],
+           "variant": {
+            "Header text#3243:0": true,
+            "Text#3243:1": "Header",
+            "Sort icon#3243:2": true,
+            "Checkbox": "False"
+           },
+           "component": "Table header cell [Checkbox=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          }
+         ]
+        },
+        {
+         "name": "Column",
+         "type": "FRAME",
+         "w": 160,
+         "h": 604,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Table header cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 44,
+           "pl": 16,
+           "pr": 16,
+           "pt": 12,
+           "pb": 12,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F2F4F7"
+           ],
+           "variant": {
+            "Header text#3243:0": true,
+            "Text#3243:1": "Header",
+            "Sort icon#3243:2": true,
+            "Checkbox": "False"
+           },
+           "component": "Table header cell [Checkbox=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          }
+         ]
+        },
+        {
+         "name": "Column",
+         "type": "FRAME",
+         "w": 160,
+         "h": 604,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Table header cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 44,
+           "pl": 16,
+           "pr": 16,
+           "pt": 12,
+           "pb": 12,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F2F4F7"
+           ],
+           "variant": {
+            "Header text#3243:0": true,
+            "Text#3243:1": "Header",
+            "Sort icon#3243:2": true,
+            "Checkbox": "False"
+           },
+           "component": "Table header cell [Checkbox=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          }
+         ]
+        },
+        {
+         "name": "Column",
+         "type": "FRAME",
+         "w": 160,
+         "h": 604,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Table header cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 44,
+           "pl": 16,
+           "pr": 16,
+           "pt": 12,
+           "pb": 12,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F2F4F7"
+           ],
+           "variant": {
+            "Header text#3243:0": true,
+            "Text#3243:1": "Header",
+            "Sort icon#3243:2": true,
+            "Checkbox": "False"
+           },
+           "component": "Table header cell [Checkbox=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F9FAFB"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Instance swap#3567:0": "74:3207",
+            "Edit#2220:35": true,
+            "Supporting text#2220:2": "Supporting text",
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Delete#2220:53": true,
+            "Print#2220:44": true,
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "True"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=True]"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Horizontal scrollbar",
+       "type": "INSTANCE",
+       "w": 1280,
+       "h": 16,
+       "pl": 4,
+       "pr": 4,
+       "pt": 4,
+       "pb": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "variant": {
+        "Length": "75%"
+       },
+       "component": "Horizontal scrollbar [Length=75%]",
+       "kids": [
+        {
+         "name": "Scrollbar",
+         "type": "FRAME",
+         "w": 1272,
+         "h": 8,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Thumb",
+           "type": "RECTANGLE",
+           "w": 876,
+           "h": 8,
+           "r": 9999,
+           "fill": [
+            "#EAECF0"
+           ],
+           "sw": 1
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Table pagination",
+     "type": "INSTANCE",
+     "w": 1280,
+     "h": 40,
+     "gap": 24,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "MIN",
+     "sw": 1,
+     "variant": {
+      "Breakpoint": "Desktop"
+     },
+     "component": "Table pagination [Breakpoint=Desktop]",
+     "kids": [
+      {
+       "name": "Container",
+       "type": "FRAME",
+       "w": 278,
+       "h": 40,
+       "gap": 8,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 178,
+         "h": 21,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null
+         },
+         "text": "แสดง 1 ถึง 10  จาก 95 รายการ"
+        },
+        {
+         "name": "Items per page dropdown",
+         "type": "INSTANCE",
+         "w": 92,
+         "h": 40,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "State": "Default"
+         },
+         "component": "Items per page dropdown [State=Default]",
+         "kids": [
+          {
+           "name": "Input dropdown",
+           "type": "INSTANCE",
+           "w": 92,
+           "h": 40,
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Cursor#3340:0": false,
+            "Leading icon swap#2011:39": "476:1742",
+            "Text#545:18": "10",
+            "Helper#2011:48": false,
+            "Supporting#3300:0": false,
+            "Helper text#2011:75": "Helper",
+            "Supporting text#3300:17": "Description",
+            "Leading icon#2011:21": false,
+            "Info icon#2011:12": true,
+            "Placeholder#545:12": true,
+            "Label#74:40": false,
+            "Optional#2147:29": true,
+            "Label text#74:30": "Label",
+            "State": "Selected",
+            "Size": "md"
+           },
+           "component": "Input dropdown [State=Selected, Size=md]"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Pagination",
+       "type": "FRAME",
+       "w": 280,
+       "h": 40,
+       "r": 8,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Button groups pagination item",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "variant": {
+          "Number#917:4": "1",
+          "Type": "Previous",
+          "State": "Disabled"
+         },
+         "component": "Button groups pagination item [Type=Previous, State=Disabled]",
+         "kids": [
+          {
+           "name": "keyboard_arrow_left-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "keyboard_arrow_left-20-400-round"
+          }
+         ]
+        },
+        {
+         "name": "Button groups pagination item",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#EAECF0"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "variant": {
+          "Number#917:4": "1",
+          "Type": "Number",
+          "State": "Hover/Active"
+         },
+         "component": "Button groups pagination item [Type=Number, State=Hover/Active]",
+         "kids": [
+          {
+           "name": "Number",
+           "type": "TEXT",
+           "w": 9,
+           "h": 21,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 14,
+            "lh": null
+           },
+           "text": "1"
+          }
+         ]
+        },
+        {
+         "name": "Button groups pagination item",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "variant": {
+          "Number#917:4": "2",
+          "Type": "Number",
+          "State": "Default"
+         },
+         "component": "Button groups pagination item [Type=Number, State=Default]",
+         "kids": [
+          {
+           "name": "Number",
+           "type": "TEXT",
+           "w": 9,
+           "h": 21,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 14,
+            "lh": null
+           },
+           "text": "2"
+          }
+         ]
+        },
+        {
+         "name": "Button groups pagination item",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "variant": {
+          "Number#917:4": "...",
+          "Type": "Number",
+          "State": "Default"
+         },
+         "component": "Button groups pagination item [Type=Number, State=Default]",
+         "kids": [
+          {
+           "name": "Number",
+           "type": "TEXT",
+           "w": 12,
+           "h": 21,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 14,
+            "lh": null
+           },
+           "text": "..."
+          }
+         ]
+        },
+        {
+         "name": "Button groups pagination item",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "variant": {
+          "Number#917:4": "9",
+          "Type": "Number",
+          "State": "Default"
+         },
+         "component": "Button groups pagination item [Type=Number, State=Default]",
+         "kids": [
+          {
+           "name": "Number",
+           "type": "TEXT",
+           "w": 9,
+           "h": 21,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 14,
+            "lh": null
+           },
+           "text": "9"
+          }
+         ]
+        },
+        {
+         "name": "Button groups pagination item",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "variant": {
+          "Number#917:4": "10",
+          "Type": "Number",
+          "State": "Default"
+         },
+         "component": "Button groups pagination item [Type=Number, State=Default]",
+         "kids": [
+          {
+           "name": "Number",
+           "type": "TEXT",
+           "w": 17,
+           "h": 21,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 14,
+            "lh": null
+           },
+           "text": "10"
+          }
+         ]
+        },
+        {
+         "name": "Button groups pagination item",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "variant": {
+          "Number#917:4": "1",
+          "Type": "Next",
+          "State": "Default"
+         },
+         "component": "Button groups pagination item [Type=Next, State=Default]",
+         "kids": [
+          {
+           "name": "keyboard_arrow_right-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "keyboard_arrow_right-20-400-round"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Alternating fills=False",
+   "type": "COMPONENT",
+   "w": 1280,
+   "h": 680,
+   "gap": 8,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Alternating fills": "False"
+   },
+   "kids": [
+    {
+     "name": "Content with scrollbar",
+     "type": "FRAME",
+     "w": 1280,
+     "h": 632,
+     "gap": 12,
+     "r": 0,
+     "dir": "VERTICAL",
+     "align": "MIN",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Content",
+       "type": "FRAME",
+       "w": 1280,
+       "h": 604,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Column",
+         "type": "FRAME",
+         "w": 160,
+         "h": 604,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Table header cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 44,
+           "pl": 16,
+           "pr": 16,
+           "pt": 12,
+           "pb": 12,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F2F4F7"
+           ],
+           "variant": {
+            "Header text#3243:0": true,
+            "Text#3243:1": "Header",
+            "Sort icon#3243:2": true,
+            "Checkbox": "False"
+           },
+           "component": "Table header cell [Checkbox=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          }
+         ]
+        },
+        {
+         "name": "Column",
+         "type": "FRAME",
+         "w": 160,
+         "h": 604,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Table header cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 44,
+           "pl": 16,
+           "pr": 16,
+           "pt": 12,
+           "pb": 12,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F2F4F7"
+           ],
+           "variant": {
+            "Header text#3243:0": true,
+            "Text#3243:1": "Header",
+            "Sort icon#3243:2": true,
+            "Checkbox": "False"
+           },
+           "component": "Table header cell [Checkbox=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          }
+         ]
+        },
+        {
+         "name": "Column",
+         "type": "FRAME",
+         "w": 160,
+         "h": 604,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Table header cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 44,
+           "pl": 16,
+           "pr": 16,
+           "pt": 12,
+           "pb": 12,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F2F4F7"
+           ],
+           "variant": {
+            "Header text#3243:0": true,
+            "Text#3243:1": "Header",
+            "Sort icon#3243:2": true,
+            "Checkbox": "False"
+           },
+           "component": "Table header cell [Checkbox=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          }
+         ]
+        },
+        {
+         "name": "Column",
+         "type": "FRAME",
+         "w": 160,
+         "h": 604,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Table header cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 44,
+           "pl": 16,
+           "pr": 16,
+           "pt": 12,
+           "pb": 12,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F2F4F7"
+           ],
+           "variant": {
+            "Header text#3243:0": true,
+            "Text#3243:1": "Header",
+            "Sort icon#3243:2": true,
+            "Checkbox": "False"
+           },
+           "component": "Table header cell [Checkbox=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          }
+         ]
+        },
+        {
+         "name": "Column",
+         "type": "FRAME",
+         "w": 160,
+         "h": 604,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Table header cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 44,
+           "pl": 16,
+           "pr": 16,
+           "pt": 12,
+           "pb": 12,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F2F4F7"
+           ],
+           "variant": {
+            "Header text#3243:0": true,
+            "Text#3243:1": "Header",
+            "Sort icon#3243:2": true,
+            "Checkbox": "False"
+           },
+           "component": "Table header cell [Checkbox=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          }
+         ]
+        },
+        {
+         "name": "Column",
+         "type": "FRAME",
+         "w": 160,
+         "h": 604,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Table header cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 44,
+           "pl": 16,
+           "pr": 16,
+           "pt": 12,
+           "pb": 12,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F2F4F7"
+           ],
+           "variant": {
+            "Header text#3243:0": true,
+            "Text#3243:1": "Header",
+            "Sort icon#3243:2": true,
+            "Checkbox": "False"
+           },
+           "component": "Table header cell [Checkbox=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          }
+         ]
+        },
+        {
+         "name": "Column",
+         "type": "FRAME",
+         "w": 160,
+         "h": 604,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Table header cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 44,
+           "pl": 16,
+           "pr": 16,
+           "pt": 12,
+           "pb": 12,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F2F4F7"
+           ],
+           "variant": {
+            "Header text#3243:0": true,
+            "Text#3243:1": "Header",
+            "Sort icon#3243:2": true,
+            "Checkbox": "False"
+           },
+           "component": "Table header cell [Checkbox=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          }
+         ]
+        },
+        {
+         "name": "Column",
+         "type": "FRAME",
+         "w": 160,
+         "h": 604,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Table header cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 44,
+           "pl": 16,
+           "pr": 16,
+           "pt": 12,
+           "pb": 12,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F2F4F7"
+           ],
+           "variant": {
+            "Header text#3243:0": true,
+            "Text#3243:1": "Header",
+            "Sort icon#3243:2": true,
+            "Checkbox": "False"
+           },
+           "component": "Table header cell [Checkbox=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          },
+          {
+           "name": "Table cell",
+           "type": "INSTANCE",
+           "w": 160,
+           "h": 56,
+           "pl": 16,
+           "pr": 16,
+           "pt": 8,
+           "pb": 8,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "variant": {
+            "Delete#2220:53": true,
+            "Instance swap#3567:0": "74:3207",
+            "Print#2220:44": true,
+            "Edit#2220:35": true,
+            "View#2220:26": true,
+            "Supporting#213:24": false,
+            "Supporting text#2220:2": "Supporting text",
+            "Text#213:0": "Text",
+            "Style": "Text",
+            "Alternating fills": "False"
+           },
+           "component": "Table cell [Style=Text, Alternating fills=False]"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Horizontal scrollbar",
+       "type": "INSTANCE",
+       "w": 1280,
+       "h": 16,
+       "pl": 4,
+       "pr": 4,
+       "pt": 4,
+       "pb": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "variant": {
+        "Length": "75%"
+       },
+       "component": "Horizontal scrollbar [Length=75%]",
+       "kids": [
+        {
+         "name": "Scrollbar",
+         "type": "FRAME",
+         "w": 1272,
+         "h": 8,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Thumb",
+           "type": "RECTANGLE",
+           "w": 876,
+           "h": 8,
+           "r": 9999,
+           "fill": [
+            "#EAECF0"
+           ],
+           "sw": 1
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Table pagination",
+     "type": "INSTANCE",
+     "w": 1280,
+     "h": 40,
+     "gap": 24,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "MIN",
+     "sw": 1,
+     "variant": {
+      "Breakpoint": "Desktop"
+     },
+     "component": "Table pagination [Breakpoint=Desktop]",
+     "kids": [
+      {
+       "name": "Container",
+       "type": "FRAME",
+       "w": 278,
+       "h": 40,
+       "gap": 8,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 178,
+         "h": 21,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null
+         },
+         "text": "แสดง 1 ถึง 10  จาก 95 รายการ"
+        },
+        {
+         "name": "Items per page dropdown",
+         "type": "INSTANCE",
+         "w": 92,
+         "h": 40,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "State": "Default"
+         },
+         "component": "Items per page dropdown [State=Default]",
+         "kids": [
+          {
+           "name": "Input dropdown",
+           "type": "INSTANCE",
+           "w": 92,
+           "h": 40,
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Cursor#3340:0": false,
+            "Leading icon swap#2011:39": "476:1742",
+            "Text#545:18": "10",
+            "Helper#2011:48": false,
+            "Supporting#3300:0": false,
+            "Helper text#2011:75": "Helper",
+            "Supporting text#3300:17": "Description",
+            "Leading icon#2011:21": false,
+            "Info icon#2011:12": true,
+            "Placeholder#545:12": true,
+            "Label#74:40": false,
+            "Optional#2147:29": true,
+            "Label text#74:30": "Label",
+            "State": "Selected",
+            "Size": "md"
+           },
+           "component": "Input dropdown [State=Selected, Size=md]"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Pagination",
+       "type": "FRAME",
+       "w": 280,
+       "h": 40,
+       "r": 8,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Button groups pagination item",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "variant": {
+          "Number#917:4": "1",
+          "Type": "Previous",
+          "State": "Disabled"
+         },
+         "component": "Button groups pagination item [Type=Previous, State=Disabled]",
+         "kids": [
+          {
+           "name": "keyboard_arrow_left-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "keyboard_arrow_left-20-400-round"
+          }
+         ]
+        },
+        {
+         "name": "Button groups pagination item",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#EAECF0"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "variant": {
+          "Number#917:4": "1",
+          "Type": "Number",
+          "State": "Hover/Active"
+         },
+         "component": "Button groups pagination item [Type=Number, State=Hover/Active]",
+         "kids": [
+          {
+           "name": "Number",
+           "type": "TEXT",
+           "w": 9,
+           "h": 21,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 14,
+            "lh": null
+           },
+           "text": "1"
+          }
+         ]
+        },
+        {
+         "name": "Button groups pagination item",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "variant": {
+          "Number#917:4": "2",
+          "Type": "Number",
+          "State": "Default"
+         },
+         "component": "Button groups pagination item [Type=Number, State=Default]",
+         "kids": [
+          {
+           "name": "Number",
+           "type": "TEXT",
+           "w": 9,
+           "h": 21,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 14,
+            "lh": null
+           },
+           "text": "2"
+          }
+         ]
+        },
+        {
+         "name": "Button groups pagination item",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "variant": {
+          "Number#917:4": "...",
+          "Type": "Number",
+          "State": "Default"
+         },
+         "component": "Button groups pagination item [Type=Number, State=Default]",
+         "kids": [
+          {
+           "name": "Number",
+           "type": "TEXT",
+           "w": 12,
+           "h": 21,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 14,
+            "lh": null
+           },
+           "text": "..."
+          }
+         ]
+        },
+        {
+         "name": "Button groups pagination item",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "variant": {
+          "Number#917:4": "9",
+          "Type": "Number",
+          "State": "Default"
+         },
+         "component": "Button groups pagination item [Type=Number, State=Default]",
+         "kids": [
+          {
+           "name": "Number",
+           "type": "TEXT",
+           "w": 9,
+           "h": 21,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 14,
+            "lh": null
+           },
+           "text": "9"
+          }
+         ]
+        },
+        {
+         "name": "Button groups pagination item",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "variant": {
+          "Number#917:4": "10",
+          "Type": "Number",
+          "State": "Default"
+         },
+         "component": "Button groups pagination item [Type=Number, State=Default]",
+         "kids": [
+          {
+           "name": "Number",
+           "type": "TEXT",
+           "w": 17,
+           "h": 21,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 14,
+            "lh": null
+           },
+           "text": "10"
+          }
+         ]
+        },
+        {
+         "name": "Button groups pagination item",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "variant": {
+          "Number#917:4": "1",
+          "Type": "Next",
+          "State": "Default"
+         },
+         "component": "Button groups pagination item [Type=Next, State=Default]",
+         "kids": [
+          {
+           "name": "keyboard_arrow_right-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "keyboard_arrow_right-20-400-round"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

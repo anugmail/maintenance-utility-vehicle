@@ -1,0 +1,2707 @@
+{
+ "component": "Input dropdown with badges",
+ "page": "✅ Dropdowns",
+ "node": "2:8",
+ "props": {
+  "Label text#74:30": {
+   "type": "TEXT",
+   "defaultValue": "Label"
+  },
+  "Label#74:40": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Text#545:18": {
+   "type": "TEXT",
+   "defaultValue": "Text"
+  },
+  "Info icon#2011:12": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Leading icon#2011:21": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Leading icon swap#2011:30": {
+   "type": "INSTANCE_SWAP",
+   "defaultValue": "476:1742",
+   "preferredValues": []
+  },
+  "Helper#2011:57": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Helper text#2011:66": {
+   "type": "TEXT",
+   "defaultValue": "Helper"
+  },
+  "Optional#3119:0": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "State": {
+   "type": "VARIANT",
+   "defaultValue": "Default",
+   "variantOptions": [
+    "Default",
+    "Selected",
+    "Hover",
+    "Focused",
+    "Disabled",
+    "Error",
+    "Error Hover",
+    "Error Focused"
+   ]
+  },
+  "Size": {
+   "type": "VARIANT",
+   "defaultValue": "md",
+   "variantOptions": [
+    "md"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "name": "State=Default, Size=md",
+   "type": "COMPONENT",
+   "w": 352,
+   "h": 98,
+   "gap": 8,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "State": "Default",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "Label",
+     "type": "FRAME",
+     "w": 352,
+     "h": 24,
+     "gap": 4,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Label",
+       "type": "TEXT",
+       "w": 40,
+       "h": 24,
+       "fill": [
+        "#475467"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 16,
+        "lh": null
+       },
+       "text": "Label"
+      },
+      {
+       "name": "(ถ้ามี)",
+       "type": "TEXT",
+       "w": 38,
+       "h": 24,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 16,
+        "lh": null
+       },
+       "text": "(ถ้ามี)"
+      },
+      {
+       "name": "info-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "info-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 19,
+         "h": 19,
+         "r": 0,
+         "fill": [
+          "#D0D5DD"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Container",
+     "type": "FRAME",
+     "w": 352,
+     "h": 40,
+     "pl": 12,
+     "pr": 12,
+     "pt": 8,
+     "pb": 8,
+     "gap": 8,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "stroke": [
+      "#D0D5DD"
+     ],
+     "sw": 1,
+     "kids": [
+      {
+       "name": "crop_free-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 17,
+         "h": 17,
+         "r": 0,
+         "fill": [
+          "#667085"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      },
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 268,
+       "h": 24,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 16,
+        "lh": null
+       },
+       "text": "Text"
+      },
+      {
+       "name": "keyboard_arrow_down-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "keyboard_arrow_down-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 9,
+         "h": 5,
+         "r": 0,
+         "fill": [
+          "#667085"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Helper",
+     "type": "TEXT",
+     "w": 352,
+     "h": 18,
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 12,
+      "lh": null
+     },
+     "text": "Helper"
+    }
+   ]
+  },
+  {
+   "name": "State=Selected, Size=md",
+   "type": "COMPONENT",
+   "w": 352,
+   "h": 98,
+   "gap": 8,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "State": "Selected",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "Label",
+     "type": "FRAME",
+     "w": 352,
+     "h": 24,
+     "gap": 4,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Label",
+       "type": "TEXT",
+       "w": 40,
+       "h": 24,
+       "fill": [
+        "#475467"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 16,
+        "lh": null
+       },
+       "text": "Label"
+      },
+      {
+       "name": "(ถ้ามี)",
+       "type": "TEXT",
+       "w": 38,
+       "h": 24,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 16,
+        "lh": null
+       },
+       "text": "(ถ้ามี)"
+      },
+      {
+       "name": "info-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "info-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 19,
+         "h": 19,
+         "r": 0,
+         "fill": [
+          "#D0D5DD"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Container",
+     "type": "FRAME",
+     "w": 352,
+     "h": 40,
+     "pl": 12,
+     "pr": 12,
+     "pt": 8,
+     "pb": 8,
+     "gap": 8,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "stroke": [
+      "#D0D5DD"
+     ],
+     "sw": 1,
+     "kids": [
+      {
+       "name": "crop_free-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 17,
+         "h": 17,
+         "r": 0,
+         "fill": [
+          "#667085"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      },
+      {
+       "name": "Badges",
+       "type": "FRAME",
+       "w": 268,
+       "h": 24,
+       "gap": 8,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Badge outline with remove icon",
+         "type": "INSTANCE",
+         "w": 63,
+         "h": 24,
+         "pl": 8,
+         "pr": 4,
+         "pt": 4,
+         "pb": 4,
+         "gap": 4,
+         "r": 4,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 1,
+         "variant": {
+          "Text#2104:0": "Badge",
+          "Color": "Gray"
+         },
+         "component": "Badge outline with remove icon [Color=Gray]",
+         "kids": [
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 35,
+           "h": 18,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 12,
+            "lh": null
+           },
+           "text": "Badge"
+          },
+          {
+           "name": "_close_small-20-400-round-resized",
+           "type": "INSTANCE",
+           "w": 12,
+           "h": 12,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "_close_small-20-400-round-resized"
+          }
+         ]
+        },
+        {
+         "name": "Badge outline with remove icon",
+         "type": "INSTANCE",
+         "w": 63,
+         "h": 24,
+         "pl": 8,
+         "pr": 4,
+         "pt": 4,
+         "pb": 4,
+         "gap": 4,
+         "r": 4,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 1,
+         "variant": {
+          "Text#2104:0": "Badge",
+          "Color": "Gray"
+         },
+         "component": "Badge outline with remove icon [Color=Gray]",
+         "kids": [
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 35,
+           "h": 18,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 12,
+            "lh": null
+           },
+           "text": "Badge"
+          },
+          {
+           "name": "_close_small-20-400-round-resized",
+           "type": "INSTANCE",
+           "w": 12,
+           "h": 12,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "_close_small-20-400-round-resized"
+          }
+         ]
+        },
+        {
+         "name": "Badge outline with remove icon",
+         "type": "INSTANCE",
+         "w": 63,
+         "h": 24,
+         "pl": 8,
+         "pr": 4,
+         "pt": 4,
+         "pb": 4,
+         "gap": 4,
+         "r": 4,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 1,
+         "variant": {
+          "Text#2104:0": "Badge",
+          "Color": "Gray"
+         },
+         "component": "Badge outline with remove icon [Color=Gray]",
+         "kids": [
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 35,
+           "h": 18,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 12,
+            "lh": null
+           },
+           "text": "Badge"
+          },
+          {
+           "name": "_close_small-20-400-round-resized",
+           "type": "INSTANCE",
+           "w": 12,
+           "h": 12,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "_close_small-20-400-round-resized"
+          }
+         ]
+        },
+        {
+         "name": "Badge outline with remove icon",
+         "type": "INSTANCE",
+         "w": 63,
+         "h": 24,
+         "pl": 8,
+         "pr": 4,
+         "pt": 4,
+         "pb": 4,
+         "gap": 4,
+         "r": 4,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 1,
+         "variant": {
+          "Text#2104:0": "Badge",
+          "Color": "Gray"
+         },
+         "component": "Badge outline with remove icon [Color=Gray]",
+         "kids": [
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 35,
+           "h": 18,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 12,
+            "lh": null
+           },
+           "text": "Badge"
+          },
+          {
+           "name": "_close_small-20-400-round-resized",
+           "type": "INSTANCE",
+           "w": 12,
+           "h": 12,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "_close_small-20-400-round-resized"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "keyboard_arrow_down-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "keyboard_arrow_down-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 9,
+         "h": 5,
+         "r": 0,
+         "fill": [
+          "#667085"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Helper",
+     "type": "TEXT",
+     "w": 352,
+     "h": 18,
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 12,
+      "lh": null
+     },
+     "text": "Helper"
+    }
+   ]
+  },
+  {
+   "name": "State=Hover, Size=md",
+   "type": "COMPONENT",
+   "w": 352,
+   "h": 98,
+   "gap": 8,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "State": "Hover",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "Label",
+     "type": "FRAME",
+     "w": 352,
+     "h": 24,
+     "gap": 4,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Label",
+       "type": "TEXT",
+       "w": 40,
+       "h": 24,
+       "fill": [
+        "#475467"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 16,
+        "lh": null
+       },
+       "text": "Label"
+      },
+      {
+       "name": "(ถ้ามี)",
+       "type": "TEXT",
+       "w": 38,
+       "h": 24,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 16,
+        "lh": null
+       },
+       "text": "(ถ้ามี)"
+      },
+      {
+       "name": "info-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "info-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 19,
+         "h": 19,
+         "r": 0,
+         "fill": [
+          "#D0D5DD"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Container",
+     "type": "FRAME",
+     "w": 352,
+     "h": 40,
+     "pl": 12,
+     "pr": 12,
+     "pt": 8,
+     "pb": 8,
+     "gap": 8,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "stroke": [
+      "#CF07AA"
+     ],
+     "sw": 1,
+     "kids": [
+      {
+       "name": "crop_free-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 17,
+         "h": 17,
+         "r": 0,
+         "fill": [
+          "#667085"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      },
+      {
+       "name": "Badges",
+       "type": "FRAME",
+       "w": 268,
+       "h": 24,
+       "gap": 8,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Badge outline with remove icon",
+         "type": "INSTANCE",
+         "w": 63,
+         "h": 24,
+         "pl": 8,
+         "pr": 4,
+         "pt": 4,
+         "pb": 4,
+         "gap": 4,
+         "r": 4,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 1,
+         "variant": {
+          "Text#2104:0": "Badge",
+          "Color": "Gray"
+         },
+         "component": "Badge outline with remove icon [Color=Gray]",
+         "kids": [
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 35,
+           "h": 18,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 12,
+            "lh": null
+           },
+           "text": "Badge"
+          },
+          {
+           "name": "_close_small-20-400-round-resized",
+           "type": "INSTANCE",
+           "w": 12,
+           "h": 12,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "_close_small-20-400-round-resized"
+          }
+         ]
+        },
+        {
+         "name": "Badge outline with remove icon",
+         "type": "INSTANCE",
+         "w": 63,
+         "h": 24,
+         "pl": 8,
+         "pr": 4,
+         "pt": 4,
+         "pb": 4,
+         "gap": 4,
+         "r": 4,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 1,
+         "variant": {
+          "Text#2104:0": "Badge",
+          "Color": "Gray"
+         },
+         "component": "Badge outline with remove icon [Color=Gray]",
+         "kids": [
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 35,
+           "h": 18,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 12,
+            "lh": null
+           },
+           "text": "Badge"
+          },
+          {
+           "name": "_close_small-20-400-round-resized",
+           "type": "INSTANCE",
+           "w": 12,
+           "h": 12,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "_close_small-20-400-round-resized"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "keyboard_arrow_down-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "keyboard_arrow_down-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 9,
+         "h": 5,
+         "r": 0,
+         "fill": [
+          "#667085"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Helper",
+     "type": "TEXT",
+     "w": 352,
+     "h": 18,
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 12,
+      "lh": null
+     },
+     "text": "Helper"
+    }
+   ]
+  },
+  {
+   "name": "State=Focused, Size=md",
+   "type": "COMPONENT",
+   "w": 352,
+   "h": 98,
+   "gap": 8,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "State": "Focused",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "Label",
+     "type": "FRAME",
+     "w": 352,
+     "h": 24,
+     "gap": 4,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Label",
+       "type": "TEXT",
+       "w": 40,
+       "h": 24,
+       "fill": [
+        "#475467"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 16,
+        "lh": null
+       },
+       "text": "Label"
+      },
+      {
+       "name": "(ถ้ามี)",
+       "type": "TEXT",
+       "w": 38,
+       "h": 24,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 16,
+        "lh": null
+       },
+       "text": "(ถ้ามี)"
+      },
+      {
+       "name": "info-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "info-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 19,
+         "h": 19,
+         "r": 0,
+         "fill": [
+          "#D0D5DD"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Container",
+     "type": "FRAME",
+     "w": 352,
+     "h": 40,
+     "pl": 12,
+     "pr": 12,
+     "pt": 8,
+     "pb": 8,
+     "gap": 8,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "stroke": [
+      "#CF07AA"
+     ],
+     "sw": 1,
+     "kids": [
+      {
+       "name": "crop_free-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 17,
+         "h": 17,
+         "r": 0,
+         "fill": [
+          "#667085"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      },
+      {
+       "name": "Badges",
+       "type": "FRAME",
+       "w": 134,
+       "h": 24,
+       "gap": 8,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Badge outline with remove icon",
+         "type": "INSTANCE",
+         "w": 63,
+         "h": 24,
+         "pl": 8,
+         "pr": 4,
+         "pt": 4,
+         "pb": 4,
+         "gap": 4,
+         "r": 4,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 1,
+         "variant": {
+          "Text#2104:0": "Badge",
+          "Color": "Gray"
+         },
+         "component": "Badge outline with remove icon [Color=Gray]",
+         "kids": [
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 35,
+           "h": 18,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 12,
+            "lh": null
+           },
+           "text": "Badge"
+          },
+          {
+           "name": "_close_small-20-400-round-resized",
+           "type": "INSTANCE",
+           "w": 12,
+           "h": 12,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "_close_small-20-400-round-resized"
+          }
+         ]
+        },
+        {
+         "name": "Badge outline with remove icon",
+         "type": "INSTANCE",
+         "w": 63,
+         "h": 24,
+         "pl": 8,
+         "pr": 4,
+         "pt": 4,
+         "pb": 4,
+         "gap": 4,
+         "r": 4,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 1,
+         "variant": {
+          "Text#2104:0": "Badge",
+          "Color": "Gray"
+         },
+         "component": "Badge outline with remove icon [Color=Gray]",
+         "kids": [
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 35,
+           "h": 18,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 12,
+            "lh": null
+           },
+           "text": "Badge"
+          },
+          {
+           "name": "_close_small-20-400-round-resized",
+           "type": "INSTANCE",
+           "w": 12,
+           "h": 12,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "_close_small-20-400-round-resized"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Text",
+       "type": "FRAME",
+       "w": 126,
+       "h": 24,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 31,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Text"
+        },
+        {
+         "name": "_Cursor",
+         "type": "INSTANCE",
+         "w": 1,
+         "h": 20,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Hidden": "False"
+         },
+         "component": "_Cursor [Hidden=False]",
+         "kids": [
+          {
+           "name": "Indicator",
+           "type": "RECTANGLE",
+           "w": 1,
+           "h": 20,
+           "r": 1,
+           "fill": [
+            "#667085"
+           ],
+           "sw": 1
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "keyboard_arrow_up-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "keyboard_arrow_up-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 9,
+         "h": 5,
+         "r": 0,
+         "fill": [
+          "#667085"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Helper",
+     "type": "TEXT",
+     "w": 352,
+     "h": 18,
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 12,
+      "lh": null
+     },
+     "text": "Helper"
+    }
+   ]
+  },
+  {
+   "name": "State=Disabled, Size=md",
+   "type": "COMPONENT",
+   "w": 352,
+   "h": 98,
+   "gap": 8,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "State": "Disabled",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "Label",
+     "type": "FRAME",
+     "w": 352,
+     "h": 24,
+     "gap": 4,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Label",
+       "type": "TEXT",
+       "w": 40,
+       "h": 24,
+       "fill": [
+        "#475467"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 16,
+        "lh": null
+       },
+       "text": "Label"
+      },
+      {
+       "name": "(ถ้ามี)",
+       "type": "TEXT",
+       "w": 38,
+       "h": 24,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 16,
+        "lh": null
+       },
+       "text": "(ถ้ามี)"
+      },
+      {
+       "name": "info-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "info-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 19,
+         "h": 19,
+         "r": 0,
+         "fill": [
+          "#D0D5DD"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Container",
+     "type": "FRAME",
+     "w": 352,
+     "h": 40,
+     "pl": 12,
+     "pr": 12,
+     "pt": 8,
+     "pb": 8,
+     "gap": 8,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "fill": [
+      "#F2F4F7"
+     ],
+     "stroke": [
+      "#D0D5DD"
+     ],
+     "sw": 1,
+     "kids": [
+      {
+       "name": "crop_free-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 17,
+         "h": 17,
+         "r": 0,
+         "fill": [
+          "#98A2B3"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      },
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 268,
+       "h": 24,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 16,
+        "lh": null
+       },
+       "text": "Text"
+      },
+      {
+       "name": "keyboard_arrow_down-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "keyboard_arrow_down-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 9,
+         "h": 5,
+         "r": 0,
+         "fill": [
+          "#98A2B3"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Helper",
+     "type": "TEXT",
+     "w": 352,
+     "h": 18,
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 12,
+      "lh": null
+     },
+     "text": "Helper"
+    }
+   ]
+  },
+  {
+   "name": "State=Error, Size=md",
+   "type": "COMPONENT",
+   "w": 352,
+   "h": 98,
+   "gap": 8,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "State": "Error",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "Label",
+     "type": "FRAME",
+     "w": 352,
+     "h": 24,
+     "gap": 4,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Label",
+       "type": "TEXT",
+       "w": 40,
+       "h": 24,
+       "fill": [
+        "#475467"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 16,
+        "lh": null
+       },
+       "text": "Label"
+      },
+      {
+       "name": "(ถ้ามี)",
+       "type": "TEXT",
+       "w": 38,
+       "h": 24,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 16,
+        "lh": null
+       },
+       "text": "(ถ้ามี)"
+      },
+      {
+       "name": "info-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "info-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 19,
+         "h": 19,
+         "r": 0,
+         "fill": [
+          "#D0D5DD"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Container",
+     "type": "FRAME",
+     "w": 352,
+     "h": 40,
+     "pl": 12,
+     "pr": 12,
+     "pt": 8,
+     "pb": 8,
+     "gap": 8,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "stroke": [
+      "#F04438"
+     ],
+     "sw": 1,
+     "kids": [
+      {
+       "name": "crop_free-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 17,
+         "h": 17,
+         "r": 0,
+         "fill": [
+          "#667085"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      },
+      {
+       "name": "Badges",
+       "type": "FRAME",
+       "w": 268,
+       "h": 24,
+       "gap": 8,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Badge outline with remove icon",
+         "type": "INSTANCE",
+         "w": 63,
+         "h": 24,
+         "pl": 8,
+         "pr": 4,
+         "pt": 4,
+         "pb": 4,
+         "gap": 4,
+         "r": 4,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 1,
+         "variant": {
+          "Text#2104:0": "Badge",
+          "Color": "Gray"
+         },
+         "component": "Badge outline with remove icon [Color=Gray]",
+         "kids": [
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 35,
+           "h": 18,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 12,
+            "lh": null
+           },
+           "text": "Badge"
+          },
+          {
+           "name": "_close_small-20-400-round-resized",
+           "type": "INSTANCE",
+           "w": 12,
+           "h": 12,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "_close_small-20-400-round-resized"
+          }
+         ]
+        },
+        {
+         "name": "Badge outline with remove icon",
+         "type": "INSTANCE",
+         "w": 63,
+         "h": 24,
+         "pl": 8,
+         "pr": 4,
+         "pt": 4,
+         "pb": 4,
+         "gap": 4,
+         "r": 4,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 1,
+         "variant": {
+          "Text#2104:0": "Badge",
+          "Color": "Gray"
+         },
+         "component": "Badge outline with remove icon [Color=Gray]",
+         "kids": [
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 35,
+           "h": 18,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 12,
+            "lh": null
+           },
+           "text": "Badge"
+          },
+          {
+           "name": "_close_small-20-400-round-resized",
+           "type": "INSTANCE",
+           "w": 12,
+           "h": 12,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "_close_small-20-400-round-resized"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "keyboard_arrow_down-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "keyboard_arrow_down-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 9,
+         "h": 5,
+         "r": 0,
+         "fill": [
+          "#667085"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Helper",
+     "type": "TEXT",
+     "w": 352,
+     "h": 18,
+     "fill": [
+      "#D92D20"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 12,
+      "lh": null
+     },
+     "text": "Helper"
+    }
+   ]
+  },
+  {
+   "name": "State=Error Hover, Size=md",
+   "type": "COMPONENT",
+   "w": 352,
+   "h": 98,
+   "gap": 8,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "State": "Error Hover",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "Label",
+     "type": "FRAME",
+     "w": 352,
+     "h": 24,
+     "gap": 4,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Label",
+       "type": "TEXT",
+       "w": 40,
+       "h": 24,
+       "fill": [
+        "#475467"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 16,
+        "lh": null
+       },
+       "text": "Label"
+      },
+      {
+       "name": "(ถ้ามี)",
+       "type": "TEXT",
+       "w": 38,
+       "h": 24,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 16,
+        "lh": null
+       },
+       "text": "(ถ้ามี)"
+      },
+      {
+       "name": "info-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "info-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 19,
+         "h": 19,
+         "r": 0,
+         "fill": [
+          "#D0D5DD"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Container",
+     "type": "FRAME",
+     "w": 352,
+     "h": 40,
+     "pl": 12,
+     "pr": 12,
+     "pt": 8,
+     "pb": 8,
+     "gap": 8,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "stroke": [
+      "#F04438"
+     ],
+     "sw": 1,
+     "kids": [
+      {
+       "name": "crop_free-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 17,
+         "h": 17,
+         "r": 0,
+         "fill": [
+          "#667085"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      },
+      {
+       "name": "Badges",
+       "type": "FRAME",
+       "w": 268,
+       "h": 24,
+       "gap": 8,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Badge outline with remove icon",
+         "type": "INSTANCE",
+         "w": 63,
+         "h": 24,
+         "pl": 8,
+         "pr": 4,
+         "pt": 4,
+         "pb": 4,
+         "gap": 4,
+         "r": 4,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 1,
+         "variant": {
+          "Text#2104:0": "Badge",
+          "Color": "Gray"
+         },
+         "component": "Badge outline with remove icon [Color=Gray]",
+         "kids": [
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 35,
+           "h": 18,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 12,
+            "lh": null
+           },
+           "text": "Badge"
+          },
+          {
+           "name": "_close_small-20-400-round-resized",
+           "type": "INSTANCE",
+           "w": 12,
+           "h": 12,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "_close_small-20-400-round-resized"
+          }
+         ]
+        },
+        {
+         "name": "Badge outline with remove icon",
+         "type": "INSTANCE",
+         "w": 63,
+         "h": 24,
+         "pl": 8,
+         "pr": 4,
+         "pt": 4,
+         "pb": 4,
+         "gap": 4,
+         "r": 4,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 1,
+         "variant": {
+          "Text#2104:0": "Badge",
+          "Color": "Gray"
+         },
+         "component": "Badge outline with remove icon [Color=Gray]",
+         "kids": [
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 35,
+           "h": 18,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 12,
+            "lh": null
+           },
+           "text": "Badge"
+          },
+          {
+           "name": "_close_small-20-400-round-resized",
+           "type": "INSTANCE",
+           "w": 12,
+           "h": 12,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "_close_small-20-400-round-resized"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "keyboard_arrow_down-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "keyboard_arrow_down-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 9,
+         "h": 5,
+         "r": 0,
+         "fill": [
+          "#667085"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Helper",
+     "type": "TEXT",
+     "w": 352,
+     "h": 18,
+     "fill": [
+      "#D92D20"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 12,
+      "lh": null
+     },
+     "text": "Helper"
+    }
+   ]
+  },
+  {
+   "name": "State=Error Focused, Size=md",
+   "type": "COMPONENT",
+   "w": 352,
+   "h": 98,
+   "gap": 8,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "State": "Error Focused",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "Label",
+     "type": "FRAME",
+     "w": 352,
+     "h": 24,
+     "gap": 4,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Label",
+       "type": "TEXT",
+       "w": 40,
+       "h": 24,
+       "fill": [
+        "#475467"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 16,
+        "lh": null
+       },
+       "text": "Label"
+      },
+      {
+       "name": "(ถ้ามี)",
+       "type": "TEXT",
+       "w": 38,
+       "h": 24,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 16,
+        "lh": null
+       },
+       "text": "(ถ้ามี)"
+      },
+      {
+       "name": "info-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "info-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 19,
+         "h": 19,
+         "r": 0,
+         "fill": [
+          "#D0D5DD"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Container",
+     "type": "FRAME",
+     "w": 352,
+     "h": 40,
+     "pl": 12,
+     "pr": 12,
+     "pt": 8,
+     "pb": 8,
+     "gap": 8,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "stroke": [
+      "#F04438"
+     ],
+     "sw": 1,
+     "kids": [
+      {
+       "name": "crop_free-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 17,
+         "h": 17,
+         "r": 0,
+         "fill": [
+          "#667085"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      },
+      {
+       "name": "Badges",
+       "type": "FRAME",
+       "w": 134,
+       "h": 24,
+       "gap": 8,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Badge outline with remove icon",
+         "type": "INSTANCE",
+         "w": 63,
+         "h": 24,
+         "pl": 8,
+         "pr": 4,
+         "pt": 4,
+         "pb": 4,
+         "gap": 4,
+         "r": 4,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 1,
+         "variant": {
+          "Text#2104:0": "Badge",
+          "Color": "Gray"
+         },
+         "component": "Badge outline with remove icon [Color=Gray]",
+         "kids": [
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 35,
+           "h": 18,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 12,
+            "lh": null
+           },
+           "text": "Badge"
+          },
+          {
+           "name": "_close_small-20-400-round-resized",
+           "type": "INSTANCE",
+           "w": 12,
+           "h": 12,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "_close_small-20-400-round-resized"
+          }
+         ]
+        },
+        {
+         "name": "Badge outline with remove icon",
+         "type": "INSTANCE",
+         "w": 63,
+         "h": 24,
+         "pl": 8,
+         "pr": 4,
+         "pt": 4,
+         "pb": 4,
+         "gap": 4,
+         "r": 4,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 1,
+         "variant": {
+          "Text#2104:0": "Badge",
+          "Color": "Gray"
+         },
+         "component": "Badge outline with remove icon [Color=Gray]",
+         "kids": [
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 35,
+           "h": 18,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 12,
+            "lh": null
+           },
+           "text": "Badge"
+          },
+          {
+           "name": "_close_small-20-400-round-resized",
+           "type": "INSTANCE",
+           "w": 12,
+           "h": 12,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "_close_small-20-400-round-resized"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Text",
+       "type": "FRAME",
+       "w": 126,
+       "h": 24,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 31,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Text"
+        },
+        {
+         "name": "_Cursor",
+         "type": "INSTANCE",
+         "w": 1,
+         "h": 20,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Hidden": "False"
+         },
+         "component": "_Cursor [Hidden=False]",
+         "kids": [
+          {
+           "name": "Indicator",
+           "type": "RECTANGLE",
+           "w": 1,
+           "h": 20,
+           "r": 1,
+           "fill": [
+            "#667085"
+           ],
+           "sw": 1
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "keyboard_arrow_up-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "keyboard_arrow_up-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 9,
+         "h": 5,
+         "r": 0,
+         "fill": [
+          "#667085"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Helper",
+     "type": "TEXT",
+     "w": 352,
+     "h": 18,
+     "fill": [
+      "#D92D20"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 12,
+      "lh": null
+     },
+     "text": "Helper"
+    }
+   ]
+  }
+ ]
+}

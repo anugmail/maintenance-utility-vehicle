@@ -1,0 +1,781 @@
+{
+ "component": "Dropdown menu",
+ "page": "✅ Dropdowns",
+ "node": "2:8",
+ "props": {},
+ "variants": [
+  {
+   "name": "Dropdown menu",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 410,
+   "r": 8,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#EAECF0"
+   ],
+   "sw": 1,
+   "kids": [
+    {
+     "name": "_Dropdown menu header",
+     "type": "INSTANCE",
+     "w": 240,
+     "h": 64,
+     "pl": 16,
+     "pr": 16,
+     "pt": 12,
+     "pb": 12,
+     "gap": 12,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "stroke": [
+      "#EAECF0"
+     ],
+     "variant": {
+      "Supporting text#2993:23": "Description",
+      "Text#2993:20": "Header",
+      "Type": "Avatar"
+     },
+     "component": "_Dropdown menu header [Type=Avatar]",
+     "kids": [
+      {
+       "name": "Avatar",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "variant": {
+        "Size": "lg"
+       },
+       "component": "Avatar [Size=lg]",
+       "kids": [
+        {
+         "name": "Ellipse",
+         "type": "ELLIPSE",
+         "w": 40,
+         "h": 40,
+         "r": 0,
+         "fill": [
+          "#DCD3FF"
+         ],
+         "sw": 1
+        }
+       ]
+      },
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 156,
+       "h": 40,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 156,
+         "h": 21,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 14,
+          "lh": null
+         },
+         "text": "Header"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 156,
+         "h": 18,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 12,
+          "lh": null
+         },
+         "text": "Description"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Menu items",
+     "type": "FRAME",
+     "w": 240,
+     "h": 346,
+     "pt": 4,
+     "pb": 4,
+     "r": 0,
+     "dir": "VERTICAL",
+     "align": "MIN",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "_Dropdown menu item",
+       "type": "INSTANCE",
+       "w": 240,
+       "h": 40,
+       "pl": 4,
+       "pr": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "Instance swap#3010:10": "1387:259",
+        "Badge#3010:0": true,
+        "Icon swap#2993:15": "133:3719",
+        "Icon#2993:10": true,
+        "Supporting text#2993:5": "⌘C",
+        "Shortcut#2993:0": true,
+        "Text#11:0": "Text",
+        "Type": "Shortcut",
+        "State": "Default",
+        "Divider": "False"
+       },
+       "component": "_Dropdown menu item [Type=Shortcut, State=Default, Divider=False]",
+       "kids": [
+        {
+         "name": "Content",
+         "type": "FRAME",
+         "w": 232,
+         "h": 40,
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Icon and text",
+           "type": "FRAME",
+           "w": 195,
+           "h": 24,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1
+          },
+          {
+           "name": "Shortcut",
+           "type": "TEXT",
+           "w": 13,
+           "h": 18,
+           "fill": [
+            "#98A2B3"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null
+           },
+           "text": "⌘C"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "_Dropdown menu item",
+       "type": "INSTANCE",
+       "w": 240,
+       "h": 40,
+       "pl": 4,
+       "pr": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "Instance swap#3010:10": "1387:259",
+        "Badge#3010:0": true,
+        "Icon swap#2993:15": "133:3719",
+        "Icon#2993:10": true,
+        "Supporting text#2993:5": "⌘C",
+        "Shortcut#2993:0": true,
+        "Text#11:0": "Text",
+        "Type": "Shortcut",
+        "State": "Default",
+        "Divider": "False"
+       },
+       "component": "_Dropdown menu item [Type=Shortcut, State=Default, Divider=False]",
+       "kids": [
+        {
+         "name": "Content",
+         "type": "FRAME",
+         "w": 232,
+         "h": 40,
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Icon and text",
+           "type": "FRAME",
+           "w": 195,
+           "h": 24,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1
+          },
+          {
+           "name": "Shortcut",
+           "type": "TEXT",
+           "w": 13,
+           "h": 18,
+           "fill": [
+            "#98A2B3"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null
+           },
+           "text": "⌘C"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "_Dropdown menu item",
+       "type": "INSTANCE",
+       "w": 240,
+       "h": 40,
+       "pl": 4,
+       "pr": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "Instance swap#3010:10": "1387:259",
+        "Badge#3010:0": true,
+        "Icon swap#2993:15": "133:3719",
+        "Icon#2993:10": true,
+        "Supporting text#2993:5": "⌘C",
+        "Shortcut#2993:0": true,
+        "Text#11:0": "Text",
+        "Type": "Shortcut",
+        "State": "Default",
+        "Divider": "False"
+       },
+       "component": "_Dropdown menu item [Type=Shortcut, State=Default, Divider=False]",
+       "kids": [
+        {
+         "name": "Content",
+         "type": "FRAME",
+         "w": 232,
+         "h": 40,
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Icon and text",
+           "type": "FRAME",
+           "w": 195,
+           "h": 24,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1
+          },
+          {
+           "name": "Shortcut",
+           "type": "TEXT",
+           "w": 13,
+           "h": 18,
+           "fill": [
+            "#98A2B3"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null
+           },
+           "text": "⌘C"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "_Dropdown menu item",
+       "type": "INSTANCE",
+       "w": 240,
+       "h": 9,
+       "pt": 4,
+       "pb": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "Badge#3010:0": true,
+        "Supporting text#2993:5": "⌘C",
+        "Icon swap#2993:15": "133:3719",
+        "Instance swap#3010:10": "1387:259",
+        "Shortcut#2993:0": true,
+        "Icon#2993:10": true,
+        "Text#11:0": "Text",
+        "Type": "Shortcut",
+        "State": "Default",
+        "Divider": "True"
+       },
+       "component": "_Dropdown menu item [Type=Shortcut, State=Default, Divider=True]",
+       "kids": [
+        {
+         "name": "Divider",
+         "type": "VECTOR",
+         "w": 240,
+         "h": 1,
+         "r": 0,
+         "fill": [
+          "#EAECF0"
+         ],
+         "sw": 1
+        }
+       ]
+      },
+      {
+       "name": "_Dropdown menu item",
+       "type": "INSTANCE",
+       "w": 240,
+       "h": 40,
+       "pl": 4,
+       "pr": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "Instance swap#3010:10": "1387:259",
+        "Badge#3010:0": true,
+        "Icon swap#2993:15": "133:3719",
+        "Icon#2993:10": true,
+        "Supporting text#2993:5": "⌘C",
+        "Shortcut#2993:0": true,
+        "Text#11:0": "Text",
+        "Type": "Shortcut",
+        "State": "Default",
+        "Divider": "False"
+       },
+       "component": "_Dropdown menu item [Type=Shortcut, State=Default, Divider=False]",
+       "kids": [
+        {
+         "name": "Content",
+         "type": "FRAME",
+         "w": 232,
+         "h": 40,
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Icon and text",
+           "type": "FRAME",
+           "w": 195,
+           "h": 24,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1
+          },
+          {
+           "name": "Shortcut",
+           "type": "TEXT",
+           "w": 13,
+           "h": 18,
+           "fill": [
+            "#98A2B3"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null
+           },
+           "text": "⌘C"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "_Dropdown menu item",
+       "type": "INSTANCE",
+       "w": 240,
+       "h": 40,
+       "pl": 4,
+       "pr": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "Instance swap#3010:10": "1387:259",
+        "Badge#3010:0": true,
+        "Icon swap#2993:15": "133:3719",
+        "Icon#2993:10": true,
+        "Supporting text#2993:5": "⌘C",
+        "Shortcut#2993:0": true,
+        "Text#11:0": "Text",
+        "Type": "Shortcut",
+        "State": "Default",
+        "Divider": "False"
+       },
+       "component": "_Dropdown menu item [Type=Shortcut, State=Default, Divider=False]",
+       "kids": [
+        {
+         "name": "Content",
+         "type": "FRAME",
+         "w": 232,
+         "h": 40,
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Icon and text",
+           "type": "FRAME",
+           "w": 195,
+           "h": 24,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1
+          },
+          {
+           "name": "Shortcut",
+           "type": "TEXT",
+           "w": 13,
+           "h": 18,
+           "fill": [
+            "#98A2B3"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null
+           },
+           "text": "⌘C"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "_Dropdown menu item",
+       "type": "INSTANCE",
+       "w": 240,
+       "h": 40,
+       "pl": 4,
+       "pr": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "Instance swap#3010:10": "1387:259",
+        "Badge#3010:0": true,
+        "Icon swap#2993:15": "133:3719",
+        "Icon#2993:10": true,
+        "Supporting text#2993:5": "⌘C",
+        "Shortcut#2993:0": true,
+        "Text#11:0": "Text",
+        "Type": "Shortcut",
+        "State": "Default",
+        "Divider": "False"
+       },
+       "component": "_Dropdown menu item [Type=Shortcut, State=Default, Divider=False]",
+       "kids": [
+        {
+         "name": "Content",
+         "type": "FRAME",
+         "w": 232,
+         "h": 40,
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Icon and text",
+           "type": "FRAME",
+           "w": 195,
+           "h": 24,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1
+          },
+          {
+           "name": "Shortcut",
+           "type": "TEXT",
+           "w": 13,
+           "h": 18,
+           "fill": [
+            "#98A2B3"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null
+           },
+           "text": "⌘C"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "_Dropdown menu item",
+       "type": "INSTANCE",
+       "w": 240,
+       "h": 40,
+       "pl": 4,
+       "pr": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "Instance swap#3010:10": "1387:259",
+        "Badge#3010:0": true,
+        "Icon swap#2993:15": "133:3719",
+        "Icon#2993:10": true,
+        "Supporting text#2993:5": "⌘C",
+        "Shortcut#2993:0": true,
+        "Text#11:0": "Text",
+        "Type": "Shortcut",
+        "State": "Default",
+        "Divider": "False"
+       },
+       "component": "_Dropdown menu item [Type=Shortcut, State=Default, Divider=False]",
+       "kids": [
+        {
+         "name": "Content",
+         "type": "FRAME",
+         "w": 232,
+         "h": 40,
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Icon and text",
+           "type": "FRAME",
+           "w": 195,
+           "h": 24,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1
+          },
+          {
+           "name": "Shortcut",
+           "type": "TEXT",
+           "w": 13,
+           "h": 18,
+           "fill": [
+            "#98A2B3"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null
+           },
+           "text": "⌘C"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "_Dropdown menu item",
+       "type": "INSTANCE",
+       "w": 240,
+       "h": 9,
+       "pt": 4,
+       "pb": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "Badge#3010:0": true,
+        "Supporting text#2993:5": "⌘C",
+        "Icon swap#2993:15": "133:3719",
+        "Instance swap#3010:10": "1387:259",
+        "Shortcut#2993:0": true,
+        "Icon#2993:10": true,
+        "Text#11:0": "Text",
+        "Type": "Shortcut",
+        "State": "Default",
+        "Divider": "True"
+       },
+       "component": "_Dropdown menu item [Type=Shortcut, State=Default, Divider=True]",
+       "kids": [
+        {
+         "name": "Divider",
+         "type": "VECTOR",
+         "w": 240,
+         "h": 1,
+         "r": 0,
+         "fill": [
+          "#EAECF0"
+         ],
+         "sw": 1
+        }
+       ]
+      },
+      {
+       "name": "_Dropdown menu item",
+       "type": "INSTANCE",
+       "w": 240,
+       "h": 40,
+       "pl": 4,
+       "pr": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "Instance swap#3010:10": "1387:259",
+        "Badge#3010:0": true,
+        "Icon swap#2993:15": "133:3719",
+        "Icon#2993:10": true,
+        "Supporting text#2993:5": "⌘C",
+        "Shortcut#2993:0": true,
+        "Text#11:0": "Text",
+        "Type": "Shortcut",
+        "State": "Default",
+        "Divider": "False"
+       },
+       "component": "_Dropdown menu item [Type=Shortcut, State=Default, Divider=False]",
+       "kids": [
+        {
+         "name": "Content",
+         "type": "FRAME",
+         "w": 232,
+         "h": 40,
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Icon and text",
+           "type": "FRAME",
+           "w": 195,
+           "h": 24,
+           "gap": 8,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1
+          },
+          {
+           "name": "Shortcut",
+           "type": "TEXT",
+           "w": 13,
+           "h": 18,
+           "fill": [
+            "#98A2B3"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null
+           },
+           "text": "⌘C"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

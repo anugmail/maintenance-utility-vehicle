@@ -1,0 +1,685 @@
+{
+ "component": "Checkbox",
+ "page": "✅ Checkbox",
+ "node": "2:18",
+ "props": {
+  "State": {
+   "type": "VARIANT",
+   "defaultValue": "Default",
+   "variantOptions": [
+    "Default",
+    "Hover",
+    "Focused",
+    "Disabled"
+   ]
+  },
+  "Type": {
+   "type": "VARIANT",
+   "defaultValue": "Unselected",
+   "variantOptions": [
+    "Unselected",
+    "Selected",
+    "Indeterminate"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "name": "State=Default, Type=Unselected",
+   "type": "COMPONENT",
+   "w": 20,
+   "h": 20,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "CENTER",
+   "variant": {
+    "State": "Default",
+    "Type": "Unselected"
+   },
+   "kids": [
+    {
+     "name": "Surface",
+     "type": "RECTANGLE",
+     "w": 20,
+     "h": 20,
+     "r": 4,
+     "stroke": [
+      "#D0D5DD"
+     ],
+     "sw": 2
+    }
+   ]
+  },
+  {
+   "name": "State=Hover, Type=Unselected",
+   "type": "COMPONENT",
+   "w": 20,
+   "h": 20,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "CENTER",
+   "variant": {
+    "State": "Hover",
+    "Type": "Unselected"
+   },
+   "kids": [
+    {
+     "name": "Surface",
+     "type": "RECTANGLE",
+     "w": 20,
+     "h": 20,
+     "r": 4,
+     "stroke": [
+      "#D0D5DD"
+     ],
+     "sw": 2
+    }
+   ]
+  },
+  {
+   "name": "State=Focused, Type=Unselected",
+   "type": "COMPONENT",
+   "w": 20,
+   "h": 20,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "CENTER",
+   "variant": {
+    "State": "Focused",
+    "Type": "Unselected"
+   },
+   "kids": [
+    {
+     "name": "Surface",
+     "type": "RECTANGLE",
+     "w": 20,
+     "h": 20,
+     "r": 4,
+     "stroke": [
+      "#D0D5DD"
+     ],
+     "sw": 2
+    }
+   ]
+  },
+  {
+   "name": "State=Default, Type=Selected",
+   "type": "COMPONENT",
+   "w": 20,
+   "h": 20,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "CENTER",
+   "variant": {
+    "State": "Default",
+    "Type": "Selected"
+   },
+   "kids": [
+    {
+     "name": "Surface with icon",
+     "type": "GROUP",
+     "w": 20,
+     "h": 20,
+     "kids": [
+      {
+       "name": "Surface",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 4,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 2
+      },
+      {
+       "name": "check-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "check-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 11,
+         "h": 8,
+         "r": 0,
+         "fill": [
+          "#FFFFFF"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Hover, Type=Selected",
+   "type": "COMPONENT",
+   "w": 20,
+   "h": 20,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "CENTER",
+   "variant": {
+    "State": "Hover",
+    "Type": "Selected"
+   },
+   "kids": [
+    {
+     "name": "Surface with icon",
+     "type": "GROUP",
+     "w": 20,
+     "h": 20,
+     "kids": [
+      {
+       "name": "Surface",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 4,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 2
+      },
+      {
+       "name": "check-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "check-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 11,
+         "h": 8,
+         "r": 0,
+         "fill": [
+          "#FFFFFF"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Focused, Type=Selected",
+   "type": "COMPONENT",
+   "w": 20,
+   "h": 20,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "CENTER",
+   "variant": {
+    "State": "Focused",
+    "Type": "Selected"
+   },
+   "kids": [
+    {
+     "name": "Surface with icon",
+     "type": "GROUP",
+     "w": 20,
+     "h": 20,
+     "kids": [
+      {
+       "name": "Surface",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 4,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 2
+      },
+      {
+       "name": "check-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "check-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 11,
+         "h": 8,
+         "r": 0,
+         "fill": [
+          "#FFFFFF"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Default, Type=Indeterminate",
+   "type": "COMPONENT",
+   "w": 20,
+   "h": 20,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "CENTER",
+   "variant": {
+    "State": "Default",
+    "Type": "Indeterminate"
+   },
+   "kids": [
+    {
+     "name": "Surface with icon",
+     "type": "GROUP",
+     "w": 20,
+     "h": 20,
+     "kids": [
+      {
+       "name": "Surface",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 4,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 2
+      },
+      {
+       "name": "check_indeterminate_small-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "check_indeterminate_small-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 8,
+         "h": 2,
+         "r": 0,
+         "fill": [
+          "#FFFFFF"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Hover, Type=Indeterminate",
+   "type": "COMPONENT",
+   "w": 20,
+   "h": 20,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "CENTER",
+   "variant": {
+    "State": "Hover",
+    "Type": "Indeterminate"
+   },
+   "kids": [
+    {
+     "name": "Surface with icon",
+     "type": "GROUP",
+     "w": 20,
+     "h": 20,
+     "kids": [
+      {
+       "name": "Surface",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 4,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 2
+      },
+      {
+       "name": "check_indeterminate_small-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "check_indeterminate_small-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 8,
+         "h": 2,
+         "r": 0,
+         "fill": [
+          "#FFFFFF"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Focused, Type=Indeterminate",
+   "type": "COMPONENT",
+   "w": 20,
+   "h": 20,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "CENTER",
+   "variant": {
+    "State": "Focused",
+    "Type": "Indeterminate"
+   },
+   "kids": [
+    {
+     "name": "Surface with icon",
+     "type": "GROUP",
+     "w": 20,
+     "h": 20,
+     "kids": [
+      {
+       "name": "Surface",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 4,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 2
+      },
+      {
+       "name": "check_indeterminate_small-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "check_indeterminate_small-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 8,
+         "h": 2,
+         "r": 0,
+         "fill": [
+          "#FFFFFF"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Disabled, Type=Selected",
+   "type": "COMPONENT",
+   "w": 20,
+   "h": 20,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "CENTER",
+   "variant": {
+    "State": "Disabled",
+    "Type": "Selected"
+   },
+   "kids": [
+    {
+     "name": "Surface with icon",
+     "type": "GROUP",
+     "w": 20,
+     "h": 20,
+     "kids": [
+      {
+       "name": "Surface",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 4,
+       "fill": [
+        "#EAECF0"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "sw": 2
+      },
+      {
+       "name": "check-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "check-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 11,
+         "h": 8,
+         "r": 0,
+         "fill": [
+          "#D0D5DD"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Disabled, Type=Unselected",
+   "type": "COMPONENT",
+   "w": 20,
+   "h": 20,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "CENTER",
+   "variant": {
+    "State": "Disabled",
+    "Type": "Unselected"
+   },
+   "kids": [
+    {
+     "name": "Surface",
+     "type": "RECTANGLE",
+     "w": 20,
+     "h": 20,
+     "r": 4,
+     "fill": [
+      "#EAECF0"
+     ],
+     "stroke": [
+      "#D0D5DD"
+     ],
+     "sw": 2
+    }
+   ]
+  },
+  {
+   "name": "State=Disabled, Type=Indeterminate",
+   "type": "COMPONENT",
+   "w": 20,
+   "h": 20,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "CENTER",
+   "variant": {
+    "State": "Disabled",
+    "Type": "Indeterminate"
+   },
+   "kids": [
+    {
+     "name": "Surface with icon",
+     "type": "GROUP",
+     "w": 20,
+     "h": 20,
+     "kids": [
+      {
+       "name": "Surface",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 4,
+       "fill": [
+        "#EAECF0"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "sw": 2
+      },
+      {
+       "name": "check_indeterminate_small-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "check_indeterminate_small-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 8,
+         "h": 2,
+         "r": 0,
+         "fill": [
+          "#D0D5DD"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

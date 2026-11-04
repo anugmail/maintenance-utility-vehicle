@@ -1,0 +1,1194 @@
+{
+ "component": "Content item row",
+ "page": "Cards",
+ "node": "2413:11354",
+ "props": {
+  "Item 2#2511:0": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Item 1 swap#2513:12": {
+   "type": "INSTANCE_SWAP",
+   "defaultValue": "2511:6836",
+   "preferredValues": [
+    {
+     "type": "COMPONENT_SET",
+     "key": "32e4785ff52d4ae492ee2196adab05e17dcbd812"
+    }
+   ]
+  },
+  "Item 2 swap#2513:14": {
+   "type": "INSTANCE_SWAP",
+   "defaultValue": "2511:6836",
+   "preferredValues": [
+    {
+     "type": "COMPONENT_SET",
+     "key": "32e4785ff52d4ae492ee2196adab05e17dcbd812"
+    }
+   ]
+  },
+  "Item 3#2542:0": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Item 3 swap#2542:2": {
+   "type": "INSTANCE_SWAP",
+   "defaultValue": "2511:6836",
+   "preferredValues": [
+    {
+     "type": "COMPONENT",
+     "key": "a5f488e03c844ba4f09e5813f3255e693b17b670"
+    }
+   ]
+  },
+  "Item 4#2542:4": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Item 4 swap#2542:6": {
+   "type": "INSTANCE_SWAP",
+   "defaultValue": "2511:6836",
+   "preferredValues": [
+    {
+     "type": "COMPONENT",
+     "key": "a5f488e03c844ba4f09e5813f3255e693b17b670"
+    }
+   ]
+  },
+  "Column width": {
+   "type": "VARIANT",
+   "defaultValue": "Full",
+   "variantOptions": [
+    "Full",
+    "50% first column",
+    "50% last column"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "name": "Column width=Full",
+   "type": "COMPONENT",
+   "w": 732,
+   "h": 52,
+   "gap": 24,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Column width": "Full"
+   },
+   "kids": [
+    {
+     "name": "_Content item base",
+     "type": "INSTANCE",
+     "w": 165,
+     "h": 52,
+     "gap": 8,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "MIN",
+     "sw": 1,
+     "variant": {
+      "Instance swap#3814:0": "1868:10033",
+      "Supporting text#2543:25": "Supporting text",
+      "Supporting#2543:21": true,
+      "Label#2543:26": "Label",
+      "Icon swap#2543:22": "476:1742",
+      "Leading icon#3384:0": true,
+      "Text#2543:24": "Item",
+      "Type": "Text with label"
+     },
+     "component": "_Content item base [Type=Text with label]",
+     "kids": [
+      {
+       "name": "crop_free-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 17,
+         "h": 17,
+         "r": 0,
+         "fill": [
+          "#A80689"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      },
+      {
+       "name": "Label and text",
+       "type": "FRAME",
+       "w": 133,
+       "h": 52,
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Label",
+         "type": "TEXT",
+         "w": 133,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Label"
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 133,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Item"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "_Content item base",
+     "type": "INSTANCE",
+     "w": 165,
+     "h": 52,
+     "gap": 8,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "MIN",
+     "sw": 1,
+     "variant": {
+      "Instance swap#3814:0": "1868:10033",
+      "Supporting text#2543:25": "Supporting text",
+      "Supporting#2543:21": true,
+      "Label#2543:26": "Label",
+      "Icon swap#2543:22": "476:1742",
+      "Leading icon#3384:0": true,
+      "Text#2543:24": "Item",
+      "Type": "Text with label"
+     },
+     "component": "_Content item base [Type=Text with label]",
+     "kids": [
+      {
+       "name": "crop_free-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 17,
+         "h": 17,
+         "r": 0,
+         "fill": [
+          "#A80689"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      },
+      {
+       "name": "Label and text",
+       "type": "FRAME",
+       "w": 133,
+       "h": 52,
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Label",
+         "type": "TEXT",
+         "w": 133,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Label"
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 133,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Item"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "_Content item base",
+     "type": "INSTANCE",
+     "w": 165,
+     "h": 52,
+     "gap": 8,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "MIN",
+     "sw": 1,
+     "variant": {
+      "Instance swap#3814:0": "1868:10033",
+      "Supporting text#2543:25": "Supporting text",
+      "Supporting#2543:21": true,
+      "Label#2543:26": "Label",
+      "Icon swap#2543:22": "476:1742",
+      "Leading icon#3384:0": true,
+      "Text#2543:24": "Item",
+      "Type": "Text with label"
+     },
+     "component": "_Content item base [Type=Text with label]",
+     "kids": [
+      {
+       "name": "crop_free-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 17,
+         "h": 17,
+         "r": 0,
+         "fill": [
+          "#A80689"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      },
+      {
+       "name": "Label and text",
+       "type": "FRAME",
+       "w": 133,
+       "h": 52,
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Label",
+         "type": "TEXT",
+         "w": 133,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Label"
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 133,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Item"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "_Content item base",
+     "type": "INSTANCE",
+     "w": 165,
+     "h": 52,
+     "gap": 8,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "MIN",
+     "sw": 1,
+     "variant": {
+      "Instance swap#3814:0": "1868:10033",
+      "Supporting text#2543:25": "Supporting text",
+      "Supporting#2543:21": true,
+      "Label#2543:26": "Label",
+      "Icon swap#2543:22": "476:1742",
+      "Leading icon#3384:0": true,
+      "Text#2543:24": "Item",
+      "Type": "Text with label"
+     },
+     "component": "_Content item base [Type=Text with label]",
+     "kids": [
+      {
+       "name": "crop_free-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 17,
+         "h": 17,
+         "r": 0,
+         "fill": [
+          "#A80689"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      },
+      {
+       "name": "Label and text",
+       "type": "FRAME",
+       "w": 133,
+       "h": 52,
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Label",
+         "type": "TEXT",
+         "w": 133,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Label"
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 133,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Item"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Column width=50% first column",
+   "type": "COMPONENT",
+   "w": 732,
+   "h": 52,
+   "gap": 24,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Column width": "50% first column"
+   },
+   "kids": [
+    {
+     "name": "_Content item base",
+     "type": "INSTANCE",
+     "w": 354,
+     "h": 52,
+     "gap": 8,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "MIN",
+     "sw": 1,
+     "variant": {
+      "Instance swap#3814:0": "1868:10033",
+      "Supporting text#2543:25": "Supporting text",
+      "Supporting#2543:21": true,
+      "Label#2543:26": "Label",
+      "Icon swap#2543:22": "476:1742",
+      "Leading icon#3384:0": true,
+      "Text#2543:24": "Item",
+      "Type": "Text with label"
+     },
+     "component": "_Content item base [Type=Text with label]",
+     "kids": [
+      {
+       "name": "crop_free-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 17,
+         "h": 17,
+         "r": 0,
+         "fill": [
+          "#A80689"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      },
+      {
+       "name": "Label and text",
+       "type": "FRAME",
+       "w": 322,
+       "h": 52,
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Label",
+         "type": "TEXT",
+         "w": 322,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Label"
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 322,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Item"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Items",
+     "type": "FRAME",
+     "w": 354,
+     "h": 52,
+     "gap": 24,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "_Content item base",
+       "type": "INSTANCE",
+       "w": 165,
+       "h": 52,
+       "gap": 8,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "MIN",
+       "sw": 1,
+       "variant": {
+        "Instance swap#3814:0": "1868:10033",
+        "Supporting text#2543:25": "Supporting text",
+        "Supporting#2543:21": true,
+        "Label#2543:26": "Label",
+        "Icon swap#2543:22": "476:1742",
+        "Leading icon#3384:0": true,
+        "Text#2543:24": "Item",
+        "Type": "Text with label"
+       },
+       "component": "_Content item base [Type=Text with label]",
+       "kids": [
+        {
+         "name": "crop_free-24-300-round",
+         "type": "INSTANCE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "crop_free-24-300-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 17,
+           "h": 17,
+           "r": 0,
+           "fill": [
+            "#A80689"
+           ],
+           "sw": 0.02500000037252903
+          }
+         ]
+        },
+        {
+         "name": "Label and text",
+         "type": "FRAME",
+         "w": 133,
+         "h": 52,
+         "gap": 4,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Label",
+           "type": "TEXT",
+           "w": 133,
+           "h": 24,
+           "fill": [
+            "#000000"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 16,
+            "lh": null
+           },
+           "text": "Label"
+          },
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 133,
+           "h": 24,
+           "fill": [
+            "#000000"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 16,
+            "lh": null
+           },
+           "text": "Item"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "_Content item base",
+       "type": "INSTANCE",
+       "w": 165,
+       "h": 52,
+       "gap": 8,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "MIN",
+       "sw": 1,
+       "variant": {
+        "Instance swap#3814:0": "1868:10033",
+        "Supporting text#2543:25": "Supporting text",
+        "Supporting#2543:21": true,
+        "Label#2543:26": "Label",
+        "Icon swap#2543:22": "476:1742",
+        "Leading icon#3384:0": true,
+        "Text#2543:24": "Item",
+        "Type": "Text with label"
+       },
+       "component": "_Content item base [Type=Text with label]",
+       "kids": [
+        {
+         "name": "crop_free-24-300-round",
+         "type": "INSTANCE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "crop_free-24-300-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 17,
+           "h": 17,
+           "r": 0,
+           "fill": [
+            "#A80689"
+           ],
+           "sw": 0.02500000037252903
+          }
+         ]
+        },
+        {
+         "name": "Label and text",
+         "type": "FRAME",
+         "w": 133,
+         "h": 52,
+         "gap": 4,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Label",
+           "type": "TEXT",
+           "w": 133,
+           "h": 24,
+           "fill": [
+            "#000000"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 16,
+            "lh": null
+           },
+           "text": "Label"
+          },
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 133,
+           "h": 24,
+           "fill": [
+            "#000000"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 16,
+            "lh": null
+           },
+           "text": "Item"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Column width=50% last column",
+   "type": "COMPONENT",
+   "w": 732,
+   "h": 52,
+   "gap": 24,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Column width": "50% last column"
+   },
+   "kids": [
+    {
+     "name": "Items",
+     "type": "FRAME",
+     "w": 354,
+     "h": 52,
+     "gap": 24,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "_Content item base",
+       "type": "INSTANCE",
+       "w": 165,
+       "h": 52,
+       "gap": 8,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "MIN",
+       "sw": 1,
+       "variant": {
+        "Instance swap#3814:0": "1868:10033",
+        "Supporting text#2543:25": "Supporting text",
+        "Supporting#2543:21": true,
+        "Label#2543:26": "Label",
+        "Icon swap#2543:22": "476:1742",
+        "Leading icon#3384:0": true,
+        "Text#2543:24": "Item",
+        "Type": "Text with label"
+       },
+       "component": "_Content item base [Type=Text with label]",
+       "kids": [
+        {
+         "name": "crop_free-24-300-round",
+         "type": "INSTANCE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "crop_free-24-300-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 17,
+           "h": 17,
+           "r": 0,
+           "fill": [
+            "#A80689"
+           ],
+           "sw": 0.02500000037252903
+          }
+         ]
+        },
+        {
+         "name": "Label and text",
+         "type": "FRAME",
+         "w": 133,
+         "h": 52,
+         "gap": 4,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Label",
+           "type": "TEXT",
+           "w": 133,
+           "h": 24,
+           "fill": [
+            "#000000"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 16,
+            "lh": null
+           },
+           "text": "Label"
+          },
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 133,
+           "h": 24,
+           "fill": [
+            "#000000"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 16,
+            "lh": null
+           },
+           "text": "Item"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "_Content item base",
+       "type": "INSTANCE",
+       "w": 165,
+       "h": 52,
+       "gap": 8,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "MIN",
+       "sw": 1,
+       "variant": {
+        "Instance swap#3814:0": "1868:10033",
+        "Supporting text#2543:25": "Supporting text",
+        "Supporting#2543:21": true,
+        "Label#2543:26": "Label",
+        "Icon swap#2543:22": "476:1742",
+        "Leading icon#3384:0": true,
+        "Text#2543:24": "Item",
+        "Type": "Text with label"
+       },
+       "component": "_Content item base [Type=Text with label]",
+       "kids": [
+        {
+         "name": "crop_free-24-300-round",
+         "type": "INSTANCE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "crop_free-24-300-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 17,
+           "h": 17,
+           "r": 0,
+           "fill": [
+            "#A80689"
+           ],
+           "sw": 0.02500000037252903
+          }
+         ]
+        },
+        {
+         "name": "Label and text",
+         "type": "FRAME",
+         "w": 133,
+         "h": 52,
+         "gap": 4,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Label",
+           "type": "TEXT",
+           "w": 133,
+           "h": 24,
+           "fill": [
+            "#000000"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 16,
+            "lh": null
+           },
+           "text": "Label"
+          },
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 133,
+           "h": 24,
+           "fill": [
+            "#000000"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 16,
+            "lh": null
+           },
+           "text": "Item"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "_Content item base",
+     "type": "INSTANCE",
+     "w": 354,
+     "h": 52,
+     "gap": 8,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "MIN",
+     "sw": 1,
+     "variant": {
+      "Instance swap#3814:0": "1868:10033",
+      "Supporting text#2543:25": "Supporting text",
+      "Supporting#2543:21": true,
+      "Label#2543:26": "Label",
+      "Icon swap#2543:22": "476:1742",
+      "Leading icon#3384:0": true,
+      "Text#2543:24": "Item",
+      "Type": "Text with label"
+     },
+     "component": "_Content item base [Type=Text with label]",
+     "kids": [
+      {
+       "name": "crop_free-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 17,
+         "h": 17,
+         "r": 0,
+         "fill": [
+          "#A80689"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      },
+      {
+       "name": "Label and text",
+       "type": "FRAME",
+       "w": 322,
+       "h": 52,
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Label",
+         "type": "TEXT",
+         "w": 322,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Label"
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 322,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Item"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

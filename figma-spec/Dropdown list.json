@@ -1,0 +1,738 @@
+{
+ "component": "Dropdown list",
+ "page": "✅ Dropdowns",
+ "node": "2:8",
+ "props": {},
+ "variants": [
+  {
+   "name": "Dropdown list",
+   "type": "COMPONENT",
+   "w": 252,
+   "h": 256,
+   "pl": 8,
+   "pr": 8,
+   "pt": 12,
+   "pb": 12,
+   "gap": 8,
+   "r": 8,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "sw": 1,
+   "kids": [
+    {
+     "name": "Dropdown list item",
+     "type": "INSTANCE",
+     "w": 236,
+     "h": 40,
+     "pl": 8,
+     "pr": 8,
+     "pt": 4,
+     "pb": 4,
+     "gap": 8,
+     "r": 4,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "sw": 1,
+     "variant": {
+      "Avatar#2147:11": false,
+      "Supporting text 2#2147:0": "Description",
+      "Supporting#1807:0": false,
+      "Supporting 2#1028:15": true,
+      "Supporting text#1028:5": "Description",
+      "Text#1028:0": "List item",
+      "State": "Selected"
+     },
+     "component": "Dropdown list item [State=Selected]",
+     "kids": [
+      {
+       "name": "Avatar",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "variant": {
+        "Size": "xs"
+       },
+       "component": "Avatar [Size=xs]",
+       "kids": [
+        {
+         "name": "Ellipse",
+         "type": "ELLIPSE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#DCD3FF"
+         ],
+         "sw": 1
+        }
+       ]
+      },
+      {
+       "name": "Content",
+       "type": "FRAME",
+       "w": 188,
+       "h": 32,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 188,
+         "h": 24,
+         "fill": [
+          "#A80689"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 16,
+          "lh": null
+         },
+         "text": "List item"
+        },
+        {
+         "name": "Supporting text",
+         "type": "FRAME",
+         "w": 212,
+         "h": 18,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Supporting text 1",
+           "type": "TEXT",
+           "w": 60,
+           "h": 18,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null
+           },
+           "text": "Description"
+          },
+          {
+           "name": "Supporting text 2",
+           "type": "FRAME",
+           "w": 0,
+           "h": 8,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "check-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "check-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 15,
+         "h": 11,
+         "r": 0,
+         "fill": [
+          "#A80689"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Dropdown list item",
+     "type": "INSTANCE",
+     "w": 236,
+     "h": 40,
+     "pl": 8,
+     "pr": 8,
+     "pt": 4,
+     "pb": 4,
+     "gap": 8,
+     "r": 4,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "sw": 1,
+     "variant": {
+      "Avatar#2147:11": false,
+      "Supporting 2#1028:15": true,
+      "Supporting text 2#2147:0": "Description",
+      "Supporting#1807:0": false,
+      "Supporting text#1028:5": "Description",
+      "Text#1028:0": "List item",
+      "State": "Default"
+     },
+     "component": "Dropdown list item [State=Default]",
+     "kids": [
+      {
+       "name": "Avatar",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "variant": {
+        "Size": "xs"
+       },
+       "component": "Avatar [Size=xs]",
+       "kids": [
+        {
+         "name": "Ellipse",
+         "type": "ELLIPSE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#DCD3FF"
+         ],
+         "sw": 1
+        }
+       ]
+      },
+      {
+       "name": "Content",
+       "type": "FRAME",
+       "w": 220,
+       "h": 32,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 220,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 16,
+          "lh": null
+         },
+         "text": "List item"
+        },
+        {
+         "name": "Supporting text",
+         "type": "FRAME",
+         "w": 244,
+         "h": 18,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Supporting text 1",
+           "type": "TEXT",
+           "w": 60,
+           "h": 18,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null
+           },
+           "text": "Description"
+          },
+          {
+           "name": "Supporting text 2",
+           "type": "FRAME",
+           "w": 0,
+           "h": 8,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Dropdown list item",
+     "type": "INSTANCE",
+     "w": 236,
+     "h": 40,
+     "pl": 8,
+     "pr": 8,
+     "pt": 4,
+     "pb": 4,
+     "gap": 8,
+     "r": 4,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "sw": 1,
+     "variant": {
+      "Avatar#2147:11": false,
+      "Supporting 2#1028:15": true,
+      "Supporting text 2#2147:0": "Description",
+      "Supporting#1807:0": false,
+      "Supporting text#1028:5": "Description",
+      "Text#1028:0": "List item",
+      "State": "Default"
+     },
+     "component": "Dropdown list item [State=Default]",
+     "kids": [
+      {
+       "name": "Avatar",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "variant": {
+        "Size": "xs"
+       },
+       "component": "Avatar [Size=xs]",
+       "kids": [
+        {
+         "name": "Ellipse",
+         "type": "ELLIPSE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#DCD3FF"
+         ],
+         "sw": 1
+        }
+       ]
+      },
+      {
+       "name": "Content",
+       "type": "FRAME",
+       "w": 220,
+       "h": 32,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 220,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 16,
+          "lh": null
+         },
+         "text": "List item"
+        },
+        {
+         "name": "Supporting text",
+         "type": "FRAME",
+         "w": 244,
+         "h": 18,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Supporting text 1",
+           "type": "TEXT",
+           "w": 60,
+           "h": 18,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null
+           },
+           "text": "Description"
+          },
+          {
+           "name": "Supporting text 2",
+           "type": "FRAME",
+           "w": 0,
+           "h": 8,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Dropdown list item",
+     "type": "INSTANCE",
+     "w": 236,
+     "h": 40,
+     "pl": 8,
+     "pr": 8,
+     "pt": 4,
+     "pb": 4,
+     "gap": 8,
+     "r": 4,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "sw": 1,
+     "variant": {
+      "Avatar#2147:11": false,
+      "Supporting 2#1028:15": true,
+      "Supporting text 2#2147:0": "Description",
+      "Supporting#1807:0": false,
+      "Supporting text#1028:5": "Description",
+      "Text#1028:0": "List item",
+      "State": "Default"
+     },
+     "component": "Dropdown list item [State=Default]",
+     "kids": [
+      {
+       "name": "Avatar",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "variant": {
+        "Size": "xs"
+       },
+       "component": "Avatar [Size=xs]",
+       "kids": [
+        {
+         "name": "Ellipse",
+         "type": "ELLIPSE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#DCD3FF"
+         ],
+         "sw": 1
+        }
+       ]
+      },
+      {
+       "name": "Content",
+       "type": "FRAME",
+       "w": 220,
+       "h": 32,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 220,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 16,
+          "lh": null
+         },
+         "text": "List item"
+        },
+        {
+         "name": "Supporting text",
+         "type": "FRAME",
+         "w": 244,
+         "h": 18,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Supporting text 1",
+           "type": "TEXT",
+           "w": 60,
+           "h": 18,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null
+           },
+           "text": "Description"
+          },
+          {
+           "name": "Supporting text 2",
+           "type": "FRAME",
+           "w": 0,
+           "h": 8,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Dropdown list item",
+     "type": "INSTANCE",
+     "w": 236,
+     "h": 40,
+     "pl": 8,
+     "pr": 8,
+     "pt": 4,
+     "pb": 4,
+     "gap": 8,
+     "r": 4,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "sw": 1,
+     "variant": {
+      "Avatar#2147:11": false,
+      "Supporting 2#1028:15": true,
+      "Supporting text 2#2147:0": "Description",
+      "Supporting#1807:0": false,
+      "Supporting text#1028:5": "Description",
+      "Text#1028:0": "List item",
+      "State": "Default"
+     },
+     "component": "Dropdown list item [State=Default]",
+     "kids": [
+      {
+       "name": "Avatar",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "variant": {
+        "Size": "xs"
+       },
+       "component": "Avatar [Size=xs]",
+       "kids": [
+        {
+         "name": "Ellipse",
+         "type": "ELLIPSE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#DCD3FF"
+         ],
+         "sw": 1
+        }
+       ]
+      },
+      {
+       "name": "Content",
+       "type": "FRAME",
+       "w": 220,
+       "h": 32,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 220,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 16,
+          "lh": null
+         },
+         "text": "List item"
+        },
+        {
+         "name": "Supporting text",
+         "type": "FRAME",
+         "w": 244,
+         "h": 18,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Supporting text 1",
+           "type": "TEXT",
+           "w": 60,
+           "h": 18,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null
+           },
+           "text": "Description"
+          },
+          {
+           "name": "Supporting text 2",
+           "type": "FRAME",
+           "w": 0,
+           "h": 8,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Vertical scrollbar",
+     "type": "INSTANCE",
+     "w": 16,
+     "h": 256,
+     "pl": 4,
+     "pr": 4,
+     "pt": 4,
+     "pb": 4,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "MIN",
+     "sw": 1,
+     "variant": {
+      "Length": "25%",
+      "Position": "Top"
+     },
+     "component": "Vertical scrollbar [Length=25%, Position=Top]",
+     "kids": [
+      {
+       "name": "Scrollbar",
+       "type": "FRAME",
+       "w": 8,
+       "h": 248,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Thumb",
+         "type": "RECTANGLE",
+         "w": 8,
+         "h": 62,
+         "r": 9999,
+         "fill": [
+          "#EAECF0"
+         ],
+         "sw": 1
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

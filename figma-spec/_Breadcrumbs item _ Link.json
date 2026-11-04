@@ -1,0 +1,140 @@
+{
+ "component": "_Breadcrumbs item / Link",
+ "page": "✅ Breadcrumbs",
+ "node": "2:7",
+ "props": {
+  "Text#2065:2": {
+   "type": "TEXT",
+   "defaultValue": "Link"
+  },
+  "Current": {
+   "type": "VARIANT",
+   "defaultValue": "False",
+   "variantOptions": [
+    "True",
+    "False"
+   ]
+  },
+  "State": {
+   "type": "VARIANT",
+   "defaultValue": "Default",
+   "variantOptions": [
+    "Default",
+    "Hover"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "name": "Current=False, State=Default",
+   "type": "COMPONENT",
+   "w": 30,
+   "h": 26,
+   "pl": 4,
+   "pr": 4,
+   "pt": 4,
+   "pb": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "Current": "False",
+    "State": "Default"
+   },
+   "kids": [
+    {
+     "name": "Link",
+     "type": "TEXT",
+     "w": 22,
+     "h": 18,
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 12,
+      "lh": null
+     },
+     "text": "Link"
+    }
+   ]
+  },
+  {
+   "name": "Current=False, State=Hover",
+   "type": "COMPONENT",
+   "w": 30,
+   "h": 26,
+   "pl": 4,
+   "pr": 4,
+   "pt": 4,
+   "pb": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "Current": "False",
+    "State": "Hover"
+   },
+   "kids": [
+    {
+     "name": "Link",
+     "type": "TEXT",
+     "w": 22,
+     "h": 18,
+     "fill": [
+      "#344054"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 12,
+      "lh": null
+     },
+     "text": "Link"
+    }
+   ]
+  },
+  {
+   "name": "Current=True, State=Default",
+   "type": "COMPONENT",
+   "w": 30,
+   "h": 26,
+   "pl": 4,
+   "pr": 4,
+   "pt": 4,
+   "pb": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "Current": "True",
+    "State": "Default"
+   },
+   "kids": [
+    {
+     "name": "Link",
+     "type": "TEXT",
+     "w": 22,
+     "h": 18,
+     "fill": [
+      "#A80689"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 12,
+      "lh": null
+     },
+     "text": "Link"
+    }
+   ]
+  }
+ ]
+}

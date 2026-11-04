@@ -1,0 +1,1153 @@
+{
+ "component": "_Dropdown menu item",
+ "page": "✅ Dropdowns",
+ "node": "2:8",
+ "props": {
+  "Text#11:0": {
+   "type": "TEXT",
+   "defaultValue": "Text"
+  },
+  "Shortcut#2993:0": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Supporting text#2993:5": {
+   "type": "TEXT",
+   "defaultValue": "⌘C"
+  },
+  "Icon#2993:10": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Icon swap#2993:15": {
+   "type": "INSTANCE_SWAP",
+   "defaultValue": "133:3719",
+   "preferredValues": [
+    {
+     "type": "COMPONENT",
+     "key": "234bdc259de272a633fc03791898e92bd60dfc64"
+    }
+   ]
+  },
+  "Badge#3010:0": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Instance swap#3010:10": {
+   "type": "INSTANCE_SWAP",
+   "defaultValue": "1387:259",
+   "preferredValues": [
+    {
+     "type": "COMPONENT_SET",
+     "key": "6ebef5045ecbed00104d93f8f37a4c4d4a636883"
+    }
+   ]
+  },
+  "Type": {
+   "type": "VARIANT",
+   "defaultValue": "Shortcut",
+   "variantOptions": [
+    "Shortcut",
+    "Badge"
+   ]
+  },
+  "State": {
+   "type": "VARIANT",
+   "defaultValue": "Default",
+   "variantOptions": [
+    "Default",
+    "Hover",
+    "Focused",
+    "Disabled"
+   ]
+  },
+  "Divider": {
+   "type": "VARIANT",
+   "defaultValue": "False",
+   "variantOptions": [
+    "False",
+    "True"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "name": "Type=Shortcut, State=Default, Divider=False",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 40,
+   "pl": 4,
+   "pr": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "Type": "Shortcut",
+    "State": "Default",
+    "Divider": "False"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 232,
+     "h": 40,
+     "pl": 12,
+     "pr": 12,
+     "pt": 8,
+     "pb": 8,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Icon and text",
+       "type": "FRAME",
+       "w": 190,
+       "h": 24,
+       "gap": 8,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "crop_free-20-400-round",
+         "type": "INSTANCE",
+         "w": 16,
+         "h": 16,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "crop_free-20-400-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 16,
+           "h": 16,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 11,
+           "h": 11,
+           "r": 0,
+           "fill": [
+            "#667085"
+           ],
+           "sw": 0.02083333395421505
+          }
+         ]
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 166,
+         "h": 21,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Medium",
+          "size": 14,
+          "lh": null
+         },
+         "text": "Text"
+        }
+       ]
+      },
+      {
+       "name": "Shortcut",
+       "type": "TEXT",
+       "w": 18,
+       "h": 18,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 12,
+        "lh": null
+       },
+       "text": "⌘C"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Badge, State=Default, Divider=False",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 40,
+   "pl": 4,
+   "pr": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "Type": "Badge",
+    "State": "Default",
+    "Divider": "False"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 232,
+     "h": 40,
+     "pl": 12,
+     "pr": 12,
+     "pt": 8,
+     "pb": 8,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Icon and text",
+       "type": "FRAME",
+       "w": 157,
+       "h": 24,
+       "gap": 8,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "crop_free-20-400-round",
+         "type": "INSTANCE",
+         "w": 16,
+         "h": 16,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "crop_free-20-400-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 16,
+           "h": 16,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 11,
+           "h": 11,
+           "r": 0,
+           "fill": [
+            "#667085"
+           ],
+           "sw": 0.02083333395421505
+          }
+         ]
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 133,
+         "h": 21,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Medium",
+          "size": 14,
+          "lh": null
+         },
+         "text": "Text"
+        }
+       ]
+      },
+      {
+       "name": "Pill outline",
+       "type": "INSTANCE",
+       "w": 51,
+       "h": 24,
+       "pl": 8,
+       "pr": 8,
+       "pt": 4,
+       "pb": 4,
+       "r": 9999,
+       "dir": "VERTICAL",
+       "align": "CENTER",
+       "fill": [
+        "#FFF5FD"
+       ],
+       "stroke": [
+        "#FED8F6"
+       ],
+       "sw": 1,
+       "variant": {
+        "Text#695:3": "Badge",
+        "Color": "Brand"
+       },
+       "component": "Pill outline [Color=Brand]",
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 35,
+         "h": 18,
+         "fill": [
+          "#A80689"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 12,
+          "lh": null
+         },
+         "text": "Badge"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Shortcut, State=Hover, Divider=False",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 40,
+   "pl": 4,
+   "pr": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "Type": "Shortcut",
+    "State": "Hover",
+    "Divider": "False"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 232,
+     "h": 40,
+     "pl": 12,
+     "pr": 12,
+     "pt": 8,
+     "pb": 8,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "fill": [
+      "#F2F4F7"
+     ],
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Icon and text",
+       "type": "FRAME",
+       "w": 190,
+       "h": 24,
+       "gap": 8,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "crop_free-20-400-round",
+         "type": "INSTANCE",
+         "w": 16,
+         "h": 16,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "crop_free-20-400-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 16,
+           "h": 16,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 11,
+           "h": 11,
+           "r": 0,
+           "fill": [
+            "#667085"
+           ],
+           "sw": 0.02083333395421505
+          }
+         ]
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 166,
+         "h": 21,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Medium",
+          "size": 14,
+          "lh": null
+         },
+         "text": "Text"
+        }
+       ]
+      },
+      {
+       "name": "Shortcut",
+       "type": "TEXT",
+       "w": 18,
+       "h": 18,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 12,
+        "lh": null
+       },
+       "text": "⌘C"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Badge, State=Hover, Divider=False",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 40,
+   "pl": 4,
+   "pr": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "Type": "Badge",
+    "State": "Hover",
+    "Divider": "False"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 232,
+     "h": 40,
+     "pl": 12,
+     "pr": 12,
+     "pt": 8,
+     "pb": 8,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "fill": [
+      "#F2F4F7"
+     ],
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Icon and text",
+       "type": "FRAME",
+       "w": 157,
+       "h": 24,
+       "gap": 8,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "crop_free-20-400-round",
+         "type": "INSTANCE",
+         "w": 16,
+         "h": 16,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "crop_free-20-400-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 16,
+           "h": 16,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 11,
+           "h": 11,
+           "r": 0,
+           "fill": [
+            "#667085"
+           ],
+           "sw": 0.02083333395421505
+          }
+         ]
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 133,
+         "h": 21,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Medium",
+          "size": 14,
+          "lh": null
+         },
+         "text": "Text"
+        }
+       ]
+      },
+      {
+       "name": "Pill outline",
+       "type": "INSTANCE",
+       "w": 51,
+       "h": 24,
+       "pl": 8,
+       "pr": 8,
+       "pt": 4,
+       "pb": 4,
+       "r": 9999,
+       "dir": "VERTICAL",
+       "align": "CENTER",
+       "fill": [
+        "#FFF5FD"
+       ],
+       "stroke": [
+        "#FED8F6"
+       ],
+       "sw": 1,
+       "variant": {
+        "Text#695:3": "Badge",
+        "Color": "Brand"
+       },
+       "component": "Pill outline [Color=Brand]",
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 35,
+         "h": 18,
+         "fill": [
+          "#A80689"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 12,
+          "lh": null
+         },
+         "text": "Badge"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Shortcut, State=Focused, Divider=False",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 40,
+   "pl": 4,
+   "pr": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "Type": "Shortcut",
+    "State": "Focused",
+    "Divider": "False"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 232,
+     "h": 40,
+     "pl": 12,
+     "pr": 12,
+     "pt": 8,
+     "pb": 8,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "fill": [
+      "#F9FAFB"
+     ],
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Icon and text",
+       "type": "FRAME",
+       "w": 190,
+       "h": 24,
+       "gap": 8,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "crop_free-20-400-round",
+         "type": "INSTANCE",
+         "w": 16,
+         "h": 16,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "crop_free-20-400-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 16,
+           "h": 16,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 11,
+           "h": 11,
+           "r": 0,
+           "fill": [
+            "#667085"
+           ],
+           "sw": 0.02083333395421505
+          }
+         ]
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 166,
+         "h": 21,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Medium",
+          "size": 14,
+          "lh": null
+         },
+         "text": "Text"
+        }
+       ]
+      },
+      {
+       "name": "Shortcut",
+       "type": "TEXT",
+       "w": 18,
+       "h": 18,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 12,
+        "lh": null
+       },
+       "text": "⌘C"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Badge, State=Focused, Divider=False",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 40,
+   "pl": 4,
+   "pr": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "Type": "Badge",
+    "State": "Focused",
+    "Divider": "False"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 232,
+     "h": 40,
+     "pl": 12,
+     "pr": 12,
+     "pt": 8,
+     "pb": 8,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "fill": [
+      "#F9FAFB"
+     ],
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Icon and text",
+       "type": "FRAME",
+       "w": 157,
+       "h": 24,
+       "gap": 8,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "crop_free-20-400-round",
+         "type": "INSTANCE",
+         "w": 16,
+         "h": 16,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "crop_free-20-400-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 16,
+           "h": 16,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 11,
+           "h": 11,
+           "r": 0,
+           "fill": [
+            "#667085"
+           ],
+           "sw": 0.02083333395421505
+          }
+         ]
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 133,
+         "h": 21,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Medium",
+          "size": 14,
+          "lh": null
+         },
+         "text": "Text"
+        }
+       ]
+      },
+      {
+       "name": "Pill outline",
+       "type": "INSTANCE",
+       "w": 51,
+       "h": 24,
+       "pl": 8,
+       "pr": 8,
+       "pt": 4,
+       "pb": 4,
+       "r": 9999,
+       "dir": "VERTICAL",
+       "align": "CENTER",
+       "fill": [
+        "#FFF5FD"
+       ],
+       "stroke": [
+        "#FED8F6"
+       ],
+       "sw": 1,
+       "variant": {
+        "Text#695:3": "Badge",
+        "Color": "Brand"
+       },
+       "component": "Pill outline [Color=Brand]",
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 35,
+         "h": 18,
+         "fill": [
+          "#A80689"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 12,
+          "lh": null
+         },
+         "text": "Badge"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Shortcut, State=Disabled, Divider=False",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 40,
+   "pl": 4,
+   "pr": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "Type": "Shortcut",
+    "State": "Disabled",
+    "Divider": "False"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 232,
+     "h": 40,
+     "pl": 12,
+     "pr": 12,
+     "pt": 8,
+     "pb": 8,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Icon and text",
+       "type": "FRAME",
+       "w": 190,
+       "h": 24,
+       "gap": 8,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "crop_free-20-400-round",
+         "type": "INSTANCE",
+         "w": 16,
+         "h": 16,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "crop_free-20-400-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 16,
+           "h": 16,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 11,
+           "h": 11,
+           "r": 0,
+           "fill": [
+            "#98A2B3"
+           ],
+           "sw": 0.02083333395421505
+          }
+         ]
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 166,
+         "h": 21,
+         "fill": [
+          "#98A2B3"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Medium",
+          "size": 14,
+          "lh": null
+         },
+         "text": "Text"
+        }
+       ]
+      },
+      {
+       "name": "Shortcut",
+       "type": "TEXT",
+       "w": 18,
+       "h": 18,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 12,
+        "lh": null
+       },
+       "text": "⌘C"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Badge, State=Disabled, Divider=False",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 40,
+   "pl": 4,
+   "pr": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "Type": "Badge",
+    "State": "Disabled",
+    "Divider": "False"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 232,
+     "h": 40,
+     "pl": 12,
+     "pr": 12,
+     "pt": 8,
+     "pb": 8,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Icon and text",
+       "type": "FRAME",
+       "w": 157,
+       "h": 24,
+       "gap": 8,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "crop_free-20-400-round",
+         "type": "INSTANCE",
+         "w": 16,
+         "h": 16,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "crop_free-20-400-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 16,
+           "h": 16,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 11,
+           "h": 11,
+           "r": 0,
+           "fill": [
+            "#98A2B3"
+           ],
+           "sw": 0.02083333395421505
+          }
+         ]
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 133,
+         "h": 21,
+         "fill": [
+          "#98A2B3"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Medium",
+          "size": 14,
+          "lh": null
+         },
+         "text": "Text"
+        }
+       ]
+      },
+      {
+       "name": "Pill outline",
+       "type": "INSTANCE",
+       "w": 51,
+       "h": 24,
+       "pl": 8,
+       "pr": 8,
+       "pt": 4,
+       "pb": 4,
+       "r": 9999,
+       "dir": "VERTICAL",
+       "align": "CENTER",
+       "fill": [
+        "#FFF5FD"
+       ],
+       "stroke": [
+        "#FED8F6"
+       ],
+       "sw": 1,
+       "variant": {
+        "Text#695:3": "Badge",
+        "Color": "Brand"
+       },
+       "component": "Pill outline [Color=Brand]",
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 35,
+         "h": 18,
+         "fill": [
+          "#A80689"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 12,
+          "lh": null
+         },
+         "text": "Badge"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Shortcut, State=Default, Divider=True",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 9,
+   "pt": 4,
+   "pb": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "Type": "Shortcut",
+    "State": "Default",
+    "Divider": "True"
+   },
+   "kids": [
+    {
+     "name": "Divider",
+     "type": "VECTOR",
+     "w": 240,
+     "h": 1,
+     "r": 0,
+     "fill": [
+      "#EAECF0"
+     ],
+     "sw": 1
+    }
+   ]
+  }
+ ]
+}

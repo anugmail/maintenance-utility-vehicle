@@ -1,0 +1,4455 @@
+{
+ "component": "Modal",
+ "page": "✅ Modals",
+ "node": "2:16",
+ "props": {
+  "Type": {
+   "type": "VARIANT",
+   "defaultValue": "Centered image",
+   "variantOptions": [
+    "Centered image",
+    "Centered image with input",
+    "Destructive centered image with input",
+    "Form",
+    "Card list",
+    "Left aligned image",
+    "Centered image carousel"
+   ]
+  },
+  "Size": {
+   "type": "VARIANT",
+   "defaultValue": "md",
+   "variantOptions": [
+    "md",
+    "lg",
+    "xl"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "name": "Type=Centered image, Size=md",
+   "type": "COMPONENT",
+   "w": 1440,
+   "h": 1024,
+   "r": 0,
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Type": "Centered image",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "Background overlay",
+     "type": "INSTANCE",
+     "w": 1440,
+     "h": 1024,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "Background overlay",
+     "kids": [
+      {
+       "name": "Background overlay",
+       "type": "RECTANGLE",
+       "w": 1440,
+       "h": 1024,
+       "r": 0,
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1
+      }
+     ]
+    },
+    {
+     "name": "Modal",
+     "type": "FRAME",
+     "w": 500,
+     "h": 434,
+     "r": 12,
+     "dir": "VERTICAL",
+     "align": "MIN",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Content",
+       "type": "FRAME",
+       "w": 500,
+       "h": 264,
+       "pl": 24,
+       "pr": 24,
+       "pt": 24,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Images",
+         "type": "INSTANCE",
+         "w": 452,
+         "h": 240,
+         "r": 8,
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Buttons#2635:15": true,
+          "Indicator pagination#2635:14": false,
+          "Size": "sm",
+          "Type": "Image"
+         },
+         "component": "Images [Size=sm, Type=Image]",
+         "kids": [
+          {
+           "name": "Indicator pagination",
+           "type": "INSTANCE",
+           "w": 56,
+           "h": 8,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Indicator 5#2714:2": true,
+            "Indicator 4#2714:1": true,
+            "Indicator 3#2714:0": true
+           },
+           "component": "Indicator pagination"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Modal header",
+       "type": "INSTANCE",
+       "w": 500,
+       "h": 82,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MAX",
+       "variant": {
+        "Divider#1278:0": false,
+        "Supporting text#2486:2": "คุณต้องการอนุมัติคำขอใช้ยานพาหนะหรือไม่ ?",
+        "Back icon#2633:8": true,
+        "Supporting#2485:0": true,
+        "Padding bottom#2491:0": false,
+        "Featured icon#2487:8": false,
+        "Title#1276:1": "ยืนยันอนุมัติคำขอ",
+        "Close icon#1276:2": false,
+        "Alignment": "Center"
+       },
+       "component": "Modal header [Alignment=Center]",
+       "kids": [
+        {
+         "name": "Content",
+         "type": "FRAME",
+         "w": 500,
+         "h": 82,
+         "pl": 24,
+         "pr": 24,
+         "pt": 24,
+         "gap": 16,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Featured icon",
+           "type": "INSTANCE",
+           "w": 48,
+           "h": 48,
+           "r": 9999,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFF5FD"
+           ],
+           "sw": 1,
+           "variant": {
+            "Icon swap#2032:0": "522:18597",
+            "Color": "Brand",
+            "Size": "md"
+           },
+           "component": "Featured icon [Color=Brand, Size=md]"
+          },
+          {
+           "name": "Text and supporting text",
+           "type": "FRAME",
+           "w": 452,
+           "h": 58,
+           "gap": 4,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "CENTER",
+           "sw": 1
+          }
+         ]
+        },
+        {
+         "name": "Divider",
+         "type": "FRAME",
+         "w": 560,
+         "h": 21,
+         "pt": 20,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Content divider",
+           "type": "INSTANCE",
+           "w": 560,
+           "h": 1,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Text#2631:0": "หรือ",
+            "Type": "Default"
+           },
+           "component": "Content divider [Type=Default]"
+          }
+         ]
+        },
+        {
+         "name": "Padding bottom",
+         "type": "FRAME",
+         "w": 560,
+         "h": 16,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1
+        },
+        {
+         "name": "Tertiary button",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "variant": {
+          "Leading icon swap#133:10": "1084:414",
+          "Trailing icon#105:4": false,
+          "Trailing icon swap#133:12": "133:3719",
+          "Leading icon#105:2": true,
+          "Button text#1153:0": false,
+          "Text#105:0": "Button",
+          "State": "Default",
+          "Size": "md"
+         },
+         "component": "Tertiary button [State=Default, Size=md]",
+         "kids": [
+          {
+           "name": "close-24-300-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "close-24-300-round"
+          },
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 47,
+           "h": 21,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 14,
+            "lh": null
+           },
+           "text": "Button"
+          },
+          {
+           "name": "crop_free-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "crop_free-20-400-round"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Modal footer",
+       "type": "INSTANCE",
+       "w": 500,
+       "h": 88,
+       "pb": 24,
+       "r": [
+        0,
+        0,
+        12,
+        12
+       ],
+       "dir": "VERTICAL",
+       "align": "MAX",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "variant": {
+        "Primary action#2505:14": true,
+        "Padding top#2487:4": true,
+        "Divider#2487:0": false,
+        "Tertiary action#2560:61": true,
+        "Secondary action#106:3": true,
+        "Alignment": "Horizontal fill"
+       },
+       "component": "Modal footer [Alignment=Horizontal fill]",
+       "kids": [
+        {
+         "name": "Padding top",
+         "type": "FRAME",
+         "w": 500,
+         "h": 24,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1
+        },
+        {
+         "name": "Divider",
+         "type": "FRAME",
+         "w": 560,
+         "h": 21,
+         "pb": 20,
+         "gap": 8,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Content divider",
+           "type": "INSTANCE",
+           "w": 560,
+           "h": 1,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Text#2631:0": "หรือ",
+            "Type": "Default"
+           },
+           "component": "Content divider [Type=Default]"
+          }
+         ]
+        },
+        {
+         "name": "Actions",
+         "type": "FRAME",
+         "w": 500,
+         "h": 40,
+         "pl": 24,
+         "pr": 24,
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Secondary button",
+           "type": "INSTANCE",
+           "w": 220,
+           "h": 40,
+           "pl": 12,
+           "pr": 12,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#D0D5DD"
+           ],
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "133:3719",
+            "Button text#1246:27": true,
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": false,
+            "Text#105:0": "ไม่ใช่ตอนนี้",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Secondary button [State=Default, Size=md]"
+          },
+          {
+           "name": "Primary button",
+           "type": "INSTANCE",
+           "w": 220,
+           "h": 40,
+           "pl": 12,
+           "pr": 12,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#A80689"
+           ],
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "133:3719",
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": false,
+            "Button text#1246:11": true,
+            "Text#105:0": "อนุมัติคำขอ",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Primary button [State=Default, Size=md]"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Centered image with input, Size=md",
+   "type": "COMPONENT",
+   "w": 1440,
+   "h": 1024,
+   "r": 0,
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Type": "Centered image with input",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "Background overlay",
+     "type": "INSTANCE",
+     "w": 1440,
+     "h": 1024,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "Background overlay",
+     "kids": [
+      {
+       "name": "Background overlay",
+       "type": "RECTANGLE",
+       "w": 1440,
+       "h": 1024,
+       "r": 0,
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1
+      }
+     ]
+    },
+    {
+     "name": "Modal",
+     "type": "FRAME",
+     "w": 500,
+     "h": 514,
+     "r": 12,
+     "dir": "VERTICAL",
+     "align": "MIN",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Content",
+       "type": "FRAME",
+       "w": 500,
+       "h": 264,
+       "pl": 24,
+       "pr": 24,
+       "pt": 24,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Images",
+         "type": "INSTANCE",
+         "w": 452,
+         "h": 240,
+         "r": 8,
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Buttons#2635:15": true,
+          "Indicator pagination#2635:14": false,
+          "Size": "sm",
+          "Type": "Image"
+         },
+         "component": "Images [Size=sm, Type=Image]",
+         "kids": [
+          {
+           "name": "Indicator pagination",
+           "type": "INSTANCE",
+           "w": 56,
+           "h": 8,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Indicator 5#2714:2": true,
+            "Indicator 4#2714:1": true,
+            "Indicator 3#2714:0": true
+           },
+           "component": "Indicator pagination"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Modal header",
+       "type": "INSTANCE",
+       "w": 500,
+       "h": 122,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MAX",
+       "variant": {
+        "Divider#1278:0": false,
+        "Supporting text#2486:2": "ระบบจะแจ้งเตือนผู้สร้างคำขอ ผู้ใช้ยานพาหนะ และผู้ขับขี่ ให้ดำเนินการแก้ไขและส่งคำขอใหม่อีกครั้ง",
+        "Back icon#2633:8": true,
+        "Supporting#2485:0": true,
+        "Padding bottom#2491:0": true,
+        "Featured icon#2487:8": false,
+        "Title#1276:1": "ยืนยันตีกลับคำขอ",
+        "Close icon#1276:2": false,
+        "Alignment": "Center"
+       },
+       "component": "Modal header [Alignment=Center]",
+       "kids": [
+        {
+         "name": "Content",
+         "type": "FRAME",
+         "w": 500,
+         "h": 106,
+         "pl": 24,
+         "pr": 24,
+         "pt": 24,
+         "gap": 16,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Featured icon",
+           "type": "INSTANCE",
+           "w": 48,
+           "h": 48,
+           "r": 9999,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFF5FD"
+           ],
+           "sw": 1,
+           "variant": {
+            "Icon swap#2032:0": "522:18597",
+            "Color": "Brand",
+            "Size": "md"
+           },
+           "component": "Featured icon [Color=Brand, Size=md]"
+          },
+          {
+           "name": "Text and supporting text",
+           "type": "FRAME",
+           "w": 452,
+           "h": 82,
+           "gap": 4,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "CENTER",
+           "sw": 1
+          }
+         ]
+        },
+        {
+         "name": "Divider",
+         "type": "FRAME",
+         "w": 560,
+         "h": 21,
+         "pt": 20,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Content divider",
+           "type": "INSTANCE",
+           "w": 560,
+           "h": 1,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Text#2631:0": "หรือ",
+            "Type": "Default"
+           },
+           "component": "Content divider [Type=Default]"
+          }
+         ]
+        },
+        {
+         "name": "Padding bottom",
+         "type": "FRAME",
+         "w": 500,
+         "h": 16,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1
+        },
+        {
+         "name": "Tertiary button",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "variant": {
+          "Leading icon swap#133:10": "1084:414",
+          "Trailing icon#105:4": false,
+          "Trailing icon swap#133:12": "133:3719",
+          "Leading icon#105:2": true,
+          "Button text#1153:0": false,
+          "Text#105:0": "Button",
+          "State": "Default",
+          "Size": "md"
+         },
+         "component": "Tertiary button [State=Default, Size=md]",
+         "kids": [
+          {
+           "name": "close-24-300-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "close-24-300-round"
+          },
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 47,
+           "h": 21,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 14,
+            "lh": null
+           },
+           "text": "Button"
+          },
+          {
+           "name": "crop_free-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "crop_free-20-400-round"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Form",
+       "type": "FRAME",
+       "w": 500,
+       "h": 40,
+       "pl": 24,
+       "pr": 24,
+       "gap": 12,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Card form row",
+         "type": "INSTANCE",
+         "w": 452,
+         "h": 40,
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Input 2 swap#2499:5": "26:65",
+          "Input 1 swap#2499:3": "26:65",
+          "Input 2#2499:4": false,
+          "Width": "Full"
+         },
+         "component": "Card form row [Width=Full]",
+         "kids": [
+          {
+           "name": "Text input",
+           "type": "INSTANCE",
+           "w": 452,
+           "h": 40,
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#33:3": "476:1742",
+            "Optional#1105:0": true,
+            "Show Placeholder#3747:0": true,
+            "Trailing icon swap#33:6": "22:133",
+            "Info icon#522:0": true,
+            "Text#33:0": "โปรดระบุเหตุผลที่ตีกลับคำขอ",
+            "Label text#265:7": "Label",
+            "Label#265:0": false,
+            "Leading icon#33:9": false,
+            "Helper#33:19": false,
+            "Helper text#33:15": "Helper",
+            "Trailing icon#33:12": false,
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Text input [State=Default, Size=md]"
+          },
+          {
+           "name": "Text input",
+           "type": "INSTANCE",
+           "w": 232,
+           "h": 72,
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#33:3": "476:1742",
+            "Optional#1105:0": true,
+            "Show Placeholder#3747:0": true,
+            "Trailing icon swap#33:6": "22:133",
+            "Info icon#522:0": true,
+            "Text#33:0": "Text input",
+            "Label text#265:7": "Label",
+            "Label#265:0": true,
+            "Leading icon#33:9": false,
+            "Helper#33:19": false,
+            "Helper text#33:15": "Helper",
+            "Trailing icon#33:12": false,
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Text input [State=Default, Size=md]"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Modal footer",
+       "type": "INSTANCE",
+       "w": 500,
+       "h": 88,
+       "pb": 24,
+       "r": [
+        0,
+        0,
+        12,
+        12
+       ],
+       "dir": "VERTICAL",
+       "align": "MAX",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "variant": {
+        "Primary action#2505:14": true,
+        "Padding top#2487:4": true,
+        "Divider#2487:0": false,
+        "Tertiary action#2560:61": true,
+        "Secondary action#106:3": true,
+        "Alignment": "Horizontal fill"
+       },
+       "component": "Modal footer [Alignment=Horizontal fill]",
+       "kids": [
+        {
+         "name": "Padding top",
+         "type": "FRAME",
+         "w": 500,
+         "h": 24,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1
+        },
+        {
+         "name": "Divider",
+         "type": "FRAME",
+         "w": 560,
+         "h": 21,
+         "pb": 20,
+         "gap": 8,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Content divider",
+           "type": "INSTANCE",
+           "w": 560,
+           "h": 1,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Text#2631:0": "หรือ",
+            "Type": "Default"
+           },
+           "component": "Content divider [Type=Default]"
+          }
+         ]
+        },
+        {
+         "name": "Actions",
+         "type": "FRAME",
+         "w": 500,
+         "h": 40,
+         "pl": 24,
+         "pr": 24,
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Secondary button",
+           "type": "INSTANCE",
+           "w": 220,
+           "h": 40,
+           "pl": 12,
+           "pr": 12,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#D0D5DD"
+           ],
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "133:3719",
+            "Button text#1246:27": true,
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": false,
+            "Text#105:0": "ไม่ใช่ตอนนี้",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Secondary button [State=Default, Size=md]"
+          },
+          {
+           "name": "Primary button",
+           "type": "INSTANCE",
+           "w": 220,
+           "h": 40,
+           "pl": 12,
+           "pr": 12,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#A80689"
+           ],
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "133:3719",
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": false,
+            "Button text#1246:11": true,
+            "Text#105:0": "ตีกลับคำขอ",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Primary button [State=Default, Size=md]"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Destructive centered image with input, Size=md",
+   "type": "COMPONENT",
+   "w": 1440,
+   "h": 1024,
+   "r": 0,
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Type": "Destructive centered image with input",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "Background overlay",
+     "type": "INSTANCE",
+     "w": 1440,
+     "h": 1024,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "Background overlay",
+     "kids": [
+      {
+       "name": "Background overlay",
+       "type": "RECTANGLE",
+       "w": 1440,
+       "h": 1024,
+       "r": 0,
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1
+      }
+     ]
+    },
+    {
+     "name": "Modal",
+     "type": "FRAME",
+     "w": 500,
+     "h": 490,
+     "r": 12,
+     "dir": "VERTICAL",
+     "align": "MIN",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Content",
+       "type": "FRAME",
+       "w": 500,
+       "h": 264,
+       "pl": 24,
+       "pr": 24,
+       "pt": 24,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Images",
+         "type": "INSTANCE",
+         "w": 452,
+         "h": 240,
+         "r": 8,
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Buttons#2635:15": true,
+          "Indicator pagination#2635:14": false,
+          "Size": "sm",
+          "Type": "Image"
+         },
+         "component": "Images [Size=sm, Type=Image]",
+         "kids": [
+          {
+           "name": "Indicator pagination",
+           "type": "INSTANCE",
+           "w": 56,
+           "h": 8,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Indicator 5#2714:2": true,
+            "Indicator 4#2714:1": true,
+            "Indicator 3#2714:0": true
+           },
+           "component": "Indicator pagination"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Modal header",
+       "type": "INSTANCE",
+       "w": 500,
+       "h": 98,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MAX",
+       "variant": {
+        "Divider#1278:0": false,
+        "Supporting text#2486:2": "ยานพาหนะและพนักงานขับรถที่จองไว้จะถูกยกเลิก",
+        "Back icon#2633:8": true,
+        "Supporting#2485:0": true,
+        "Padding bottom#2491:0": true,
+        "Featured icon#2487:8": false,
+        "Title#1276:1": "ยืนยันยกเลิกคำขอ",
+        "Close icon#1276:2": false,
+        "Alignment": "Center"
+       },
+       "component": "Modal header [Alignment=Center]",
+       "kids": [
+        {
+         "name": "Content",
+         "type": "FRAME",
+         "w": 500,
+         "h": 82,
+         "pl": 24,
+         "pr": 24,
+         "pt": 24,
+         "gap": 16,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Featured icon",
+           "type": "INSTANCE",
+           "w": 48,
+           "h": 48,
+           "r": 9999,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFF5FD"
+           ],
+           "sw": 1,
+           "variant": {
+            "Icon swap#2032:0": "522:18597",
+            "Color": "Brand",
+            "Size": "md"
+           },
+           "component": "Featured icon [Color=Brand, Size=md]"
+          },
+          {
+           "name": "Text and supporting text",
+           "type": "FRAME",
+           "w": 452,
+           "h": 58,
+           "gap": 4,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "CENTER",
+           "sw": 1
+          }
+         ]
+        },
+        {
+         "name": "Divider",
+         "type": "FRAME",
+         "w": 560,
+         "h": 21,
+         "pt": 20,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Content divider",
+           "type": "INSTANCE",
+           "w": 560,
+           "h": 1,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Text#2631:0": "หรือ",
+            "Type": "Default"
+           },
+           "component": "Content divider [Type=Default]"
+          }
+         ]
+        },
+        {
+         "name": "Padding bottom",
+         "type": "FRAME",
+         "w": 500,
+         "h": 16,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1
+        },
+        {
+         "name": "Tertiary button",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "variant": {
+          "Leading icon swap#133:10": "1084:414",
+          "Trailing icon#105:4": false,
+          "Trailing icon swap#133:12": "133:3719",
+          "Leading icon#105:2": true,
+          "Button text#1153:0": false,
+          "Text#105:0": "Button",
+          "State": "Default",
+          "Size": "md"
+         },
+         "component": "Tertiary button [State=Default, Size=md]",
+         "kids": [
+          {
+           "name": "close-24-300-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "close-24-300-round"
+          },
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 47,
+           "h": 21,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 14,
+            "lh": null
+           },
+           "text": "Button"
+          },
+          {
+           "name": "crop_free-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "crop_free-20-400-round"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Form",
+       "type": "FRAME",
+       "w": 500,
+       "h": 40,
+       "pl": 24,
+       "pr": 24,
+       "gap": 12,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Card form row",
+         "type": "INSTANCE",
+         "w": 452,
+         "h": 40,
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Input 2 swap#2499:5": "26:65",
+          "Input 1 swap#2499:3": "26:65",
+          "Input 2#2499:4": false,
+          "Width": "Full"
+         },
+         "component": "Card form row [Width=Full]",
+         "kids": [
+          {
+           "name": "Text input",
+           "type": "INSTANCE",
+           "w": 452,
+           "h": 40,
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#33:3": "476:1742",
+            "Optional#1105:0": true,
+            "Show Placeholder#3747:0": true,
+            "Trailing icon swap#33:6": "22:133",
+            "Info icon#522:0": true,
+            "Text#33:0": "โปรดระบุเหตุผลที่ยกเลิกคำขอ",
+            "Label text#265:7": "Label",
+            "Label#265:0": false,
+            "Leading icon#33:9": false,
+            "Helper#33:19": false,
+            "Helper text#33:15": "Helper",
+            "Trailing icon#33:12": false,
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Text input [State=Default, Size=md]"
+          },
+          {
+           "name": "Text input",
+           "type": "INSTANCE",
+           "w": 232,
+           "h": 72,
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#33:3": "476:1742",
+            "Optional#1105:0": true,
+            "Show Placeholder#3747:0": true,
+            "Trailing icon swap#33:6": "22:133",
+            "Info icon#522:0": true,
+            "Text#33:0": "Text input",
+            "Label text#265:7": "Label",
+            "Label#265:0": true,
+            "Leading icon#33:9": false,
+            "Helper#33:19": false,
+            "Helper text#33:15": "Helper",
+            "Trailing icon#33:12": false,
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Text input [State=Default, Size=md]"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Modal footer",
+       "type": "INSTANCE",
+       "w": 500,
+       "h": 88,
+       "pb": 24,
+       "r": [
+        0,
+        0,
+        12,
+        12
+       ],
+       "dir": "VERTICAL",
+       "align": "MAX",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "variant": {
+        "Primary action#2505:14": true,
+        "Padding top#2487:4": true,
+        "Divider#2487:0": false,
+        "Tertiary action#2560:61": true,
+        "Secondary action#106:3": true,
+        "Alignment": "Horizontal fill"
+       },
+       "component": "Modal footer [Alignment=Horizontal fill]",
+       "kids": [
+        {
+         "name": "Padding top",
+         "type": "FRAME",
+         "w": 500,
+         "h": 24,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1
+        },
+        {
+         "name": "Divider",
+         "type": "FRAME",
+         "w": 560,
+         "h": 21,
+         "pb": 20,
+         "gap": 8,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Content divider",
+           "type": "INSTANCE",
+           "w": 560,
+           "h": 1,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Text#2631:0": "หรือ",
+            "Type": "Default"
+           },
+           "component": "Content divider [Type=Default]"
+          }
+         ]
+        },
+        {
+         "name": "Actions",
+         "type": "FRAME",
+         "w": 500,
+         "h": 40,
+         "pl": 24,
+         "pr": 24,
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Secondary button",
+           "type": "INSTANCE",
+           "w": 220,
+           "h": 40,
+           "pl": 12,
+           "pr": 12,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#D0D5DD"
+           ],
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "133:3719",
+            "Button text#1246:27": true,
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": false,
+            "Text#105:0": "ไม่ใช่ตอนนี้",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Secondary button [State=Default, Size=md]"
+          },
+          {
+           "name": "Primary danger button",
+           "type": "INSTANCE",
+           "w": 220,
+           "h": 40,
+           "pl": 12,
+           "pr": 12,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#D92D20"
+           ],
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "133:3719",
+            "Button text#1246:33": true,
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": false,
+            "Text#105:0": "ยกเลิกคำขอ",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Primary danger button [State=Default, Size=md]"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Centered image carousel, Size=md",
+   "type": "COMPONENT",
+   "w": 1440,
+   "h": 1024,
+   "r": 0,
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Type": "Centered image carousel",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "Background overlay",
+     "type": "INSTANCE",
+     "w": 1440,
+     "h": 1024,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "Background overlay",
+     "kids": [
+      {
+       "name": "Background overlay",
+       "type": "RECTANGLE",
+       "w": 1440,
+       "h": 1024,
+       "r": 0,
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1
+      }
+     ]
+    },
+    {
+     "name": "Modal",
+     "type": "FRAME",
+     "w": 500,
+     "h": 482,
+     "r": 12,
+     "dir": "VERTICAL",
+     "align": "CENTER",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Content",
+       "type": "FRAME",
+       "w": 500,
+       "h": 264,
+       "pl": 24,
+       "pr": 24,
+       "pt": 24,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Images",
+         "type": "INSTANCE",
+         "w": 452,
+         "h": 240,
+         "r": 8,
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Buttons#2635:15": true,
+          "Indicator pagination#2635:14": false,
+          "Size": "sm",
+          "Type": "Image"
+         },
+         "component": "Images [Size=sm, Type=Image]",
+         "kids": [
+          {
+           "name": "Indicator pagination",
+           "type": "INSTANCE",
+           "w": 56,
+           "h": 8,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Indicator 5#2714:2": true,
+            "Indicator 4#2714:1": true,
+            "Indicator 3#2714:0": true
+           },
+           "component": "Indicator pagination"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Modal header",
+       "type": "INSTANCE",
+       "w": 500,
+       "h": 122,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MAX",
+       "variant": {
+        "Divider#1278:0": false,
+        "Supporting text#2486:2": "คุณสามารถคัดลอกเลขที่คำขอไปใช้อ้างอิง ในการขออนุมัติเดินทางไปปฏิบัติงานต่างพื้นที่ได้",
+        "Back icon#2633:8": true,
+        "Supporting#2485:0": true,
+        "Padding bottom#2491:0": true,
+        "Featured icon#2487:8": false,
+        "Title#1276:1": "คำขอใช้ยานพาหนะได้รับการอนุมัติแล้ว",
+        "Close icon#1276:2": false,
+        "Alignment": "Center"
+       },
+       "component": "Modal header [Alignment=Center]",
+       "kids": [
+        {
+         "name": "Content",
+         "type": "FRAME",
+         "w": 500,
+         "h": 106,
+         "pl": 24,
+         "pr": 24,
+         "pt": 24,
+         "gap": 16,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Featured icon",
+           "type": "INSTANCE",
+           "w": 48,
+           "h": 48,
+           "r": 9999,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFF5FD"
+           ],
+           "sw": 1,
+           "variant": {
+            "Icon swap#2032:0": "522:18597",
+            "Color": "Brand",
+            "Size": "md"
+           },
+           "component": "Featured icon [Color=Brand, Size=md]"
+          },
+          {
+           "name": "Text and supporting text",
+           "type": "FRAME",
+           "w": 452,
+           "h": 82,
+           "gap": 4,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "CENTER",
+           "sw": 1
+          }
+         ]
+        },
+        {
+         "name": "Divider",
+         "type": "FRAME",
+         "w": 560,
+         "h": 21,
+         "pt": 20,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Content divider",
+           "type": "INSTANCE",
+           "w": 560,
+           "h": 1,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Text#2631:0": "หรือ",
+            "Type": "Default"
+           },
+           "component": "Content divider [Type=Default]"
+          }
+         ]
+        },
+        {
+         "name": "Padding bottom",
+         "type": "FRAME",
+         "w": 500,
+         "h": 16,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1
+        },
+        {
+         "name": "Tertiary button",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "variant": {
+          "Leading icon swap#133:10": "1084:414",
+          "Trailing icon#105:4": false,
+          "Trailing icon swap#133:12": "133:3719",
+          "Leading icon#105:2": true,
+          "Button text#1153:0": false,
+          "Text#105:0": "Button",
+          "State": "Default",
+          "Size": "md"
+         },
+         "component": "Tertiary button [State=Default, Size=md]",
+         "kids": [
+          {
+           "name": "close-24-300-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "close-24-300-round"
+          },
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 47,
+           "h": 21,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 14,
+            "lh": null
+           },
+           "text": "Button"
+          },
+          {
+           "name": "crop_free-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "crop_free-20-400-round"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Indicator pagination",
+       "type": "INSTANCE",
+       "w": 56,
+       "h": 8,
+       "gap": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "Indicator 5#2714:2": true,
+        "Indicator 4#2714:1": true,
+        "Indicator 3#2714:0": true
+       },
+       "component": "Indicator pagination",
+       "kids": [
+        {
+         "name": "_Indicator pagination item",
+         "type": "INSTANCE",
+         "w": 8,
+         "h": 8,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Current": "True"
+         },
+         "component": "_Indicator pagination item [Current=True]",
+         "kids": [
+          {
+           "name": "Indicator",
+           "type": "ELLIPSE",
+           "w": 8,
+           "h": 8,
+           "r": 0,
+           "fill": [
+            "#A80689"
+           ],
+           "sw": 1
+          }
+         ]
+        },
+        {
+         "name": "_Indicator pagination item",
+         "type": "INSTANCE",
+         "w": 8,
+         "h": 8,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Current": "False"
+         },
+         "component": "_Indicator pagination item [Current=False]",
+         "kids": [
+          {
+           "name": "Indicator",
+           "type": "ELLIPSE",
+           "w": 8,
+           "h": 8,
+           "r": 0,
+           "fill": [
+            "#D0D5DD"
+           ],
+           "sw": 1
+          }
+         ]
+        },
+        {
+         "name": "_Indicator pagination item",
+         "type": "INSTANCE",
+         "w": 8,
+         "h": 8,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Current": "False"
+         },
+         "component": "_Indicator pagination item [Current=False]",
+         "kids": [
+          {
+           "name": "Indicator",
+           "type": "ELLIPSE",
+           "w": 8,
+           "h": 8,
+           "r": 0,
+           "fill": [
+            "#D0D5DD"
+           ],
+           "sw": 1
+          }
+         ]
+        },
+        {
+         "name": "_Indicator pagination item",
+         "type": "INSTANCE",
+         "w": 8,
+         "h": 8,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Current": "False"
+         },
+         "component": "_Indicator pagination item [Current=False]",
+         "kids": [
+          {
+           "name": "Indicator",
+           "type": "ELLIPSE",
+           "w": 8,
+           "h": 8,
+           "r": 0,
+           "fill": [
+            "#D0D5DD"
+           ],
+           "sw": 1
+          }
+         ]
+        },
+        {
+         "name": "_Indicator pagination item",
+         "type": "INSTANCE",
+         "w": 8,
+         "h": 8,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Current": "False"
+         },
+         "component": "_Indicator pagination item [Current=False]",
+         "kids": [
+          {
+           "name": "Indicator",
+           "type": "ELLIPSE",
+           "w": 8,
+           "h": 8,
+           "r": 0,
+           "fill": [
+            "#D0D5DD"
+           ],
+           "sw": 1
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Modal footer",
+       "type": "INSTANCE",
+       "w": 500,
+       "h": 88,
+       "pb": 24,
+       "r": [
+        0,
+        0,
+        12,
+        12
+       ],
+       "dir": "VERTICAL",
+       "align": "MAX",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "variant": {
+        "Primary action#2505:14": true,
+        "Padding top#2487:4": true,
+        "Divider#2487:0": false,
+        "Tertiary action#2560:61": true,
+        "Secondary action#106:3": true,
+        "Alignment": "Horizontal fill"
+       },
+       "component": "Modal footer [Alignment=Horizontal fill]",
+       "kids": [
+        {
+         "name": "Padding top",
+         "type": "FRAME",
+         "w": 500,
+         "h": 24,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1
+        },
+        {
+         "name": "Divider",
+         "type": "FRAME",
+         "w": 560,
+         "h": 21,
+         "pb": 20,
+         "gap": 8,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Content divider",
+           "type": "INSTANCE",
+           "w": 560,
+           "h": 1,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Text#2631:0": "หรือ",
+            "Type": "Default"
+           },
+           "component": "Content divider [Type=Default]"
+          }
+         ]
+        },
+        {
+         "name": "Actions",
+         "type": "FRAME",
+         "w": 500,
+         "h": 40,
+         "pl": 24,
+         "pr": 24,
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Secondary button",
+           "type": "INSTANCE",
+           "w": 220,
+           "h": 40,
+           "pl": 12,
+           "pr": 12,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#D0D5DD"
+           ],
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "133:3719",
+            "Button text#1246:27": true,
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": false,
+            "Text#105:0": "ข้าม",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Secondary button [State=Default, Size=md]"
+          },
+          {
+           "name": "Primary button",
+           "type": "INSTANCE",
+           "w": 220,
+           "h": 40,
+           "pl": 12,
+           "pr": 12,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#A80689"
+           ],
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "133:3719",
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": false,
+            "Button text#1246:11": true,
+            "Text#105:0": "ถัดไป",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Primary button [State=Default, Size=md]"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Form, Size=md",
+   "type": "COMPONENT",
+   "w": 1440,
+   "h": 1024,
+   "r": 0,
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Type": "Form",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "Background overlay",
+     "type": "INSTANCE",
+     "w": 1440,
+     "h": 1024,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "Background overlay",
+     "kids": [
+      {
+       "name": "Background overlay",
+       "type": "RECTANGLE",
+       "w": 1440,
+       "h": 1024,
+       "r": 0,
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1
+      }
+     ]
+    },
+    {
+     "name": "Modal",
+     "type": "FRAME",
+     "w": 500,
+     "h": 450,
+     "r": 12,
+     "dir": "VERTICAL",
+     "align": "MIN",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Modal header",
+       "type": "INSTANCE",
+       "w": 500,
+       "h": 101,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MAX",
+       "variant": {
+        "Back icon#2633:8": false,
+        "Padding bottom#2491:0": true,
+        "Divider#1278:0": true,
+        "Supporting text#2486:2": "Description",
+        "Supporting#2485:0": false,
+        "Featured icon#2487:8": false,
+        "Title#1276:1": "แก้ไขข้อมูลผู้ใช้ยานพาหนะ",
+        "Close icon#1276:2": true,
+        "Alignment": "Left"
+       },
+       "component": "Modal header [Alignment=Left]",
+       "kids": [
+        {
+         "name": "Content",
+         "type": "FRAME",
+         "w": 500,
+         "h": 64,
+         "pl": 24,
+         "pr": 24,
+         "pt": 24,
+         "gap": 8,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Tertiary button",
+           "type": "INSTANCE",
+           "w": 40,
+           "h": 40,
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "1885:5296",
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": true,
+            "Button text#1153:0": false,
+            "Text#105:0": "Button",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Tertiary button [State=Default, Size=md]"
+          },
+          {
+           "name": "Title and icon",
+           "type": "FRAME",
+           "w": 404,
+           "h": 30,
+           "gap": 16,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1
+          },
+          {
+           "name": "Tertiary button",
+           "type": "INSTANCE",
+           "w": 40,
+           "h": 40,
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "1084:414",
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": true,
+            "Button text#1153:0": false,
+            "Text#105:0": "Button",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Tertiary button [State=Default, Size=md]"
+          }
+         ]
+        },
+        {
+         "name": "Divider",
+         "type": "FRAME",
+         "w": 500,
+         "h": 21,
+         "pt": 20,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Content divider",
+           "type": "INSTANCE",
+           "w": 500,
+           "h": 1,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Text#2631:0": "หรือ",
+            "Type": "Default"
+           },
+           "component": "Content divider [Type=Default]"
+          }
+         ]
+        },
+        {
+         "name": "Padding bottom",
+         "type": "FRAME",
+         "w": 500,
+         "h": 16,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1
+        }
+       ]
+      },
+      {
+       "name": "Form",
+       "type": "FRAME",
+       "w": 500,
+       "h": 240,
+       "pl": 24,
+       "pr": 24,
+       "gap": 12,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Card form row",
+         "type": "INSTANCE",
+         "w": 452,
+         "h": 72,
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Input 2 swap#2499:5": "26:65",
+          "Input 1 swap#2499:3": "33:2835",
+          "Input 2#2499:4": false,
+          "Width": "Full"
+         },
+         "component": "Card form row [Width=Full]",
+         "kids": [
+          {
+           "name": "Text input",
+           "type": "INSTANCE",
+           "w": 452,
+           "h": 72,
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Trailing icon swap#33:6": "22:133",
+            "Leading icon swap#33:3": "476:1742",
+            "Show Placeholder#3747:0": true,
+            "Optional#1105:0": true,
+            "Info icon#522:0": true,
+            "Label#265:0": true,
+            "Leading icon#33:9": false,
+            "Helper#33:19": false,
+            "Label text#265:7": "Label",
+            "Text#33:0": "สมคิด จงจองหอ",
+            "Helper text#33:15": "Helper",
+            "Trailing icon#33:12": false,
+            "State": "Readonly",
+            "Size": "md"
+           },
+           "component": "Text input [State=Readonly, Size=md]"
+          },
+          {
+           "name": "Text input",
+           "type": "INSTANCE",
+           "w": 232,
+           "h": 72,
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#33:3": "476:1742",
+            "Optional#1105:0": true,
+            "Show Placeholder#3747:0": true,
+            "Trailing icon swap#33:6": "22:133",
+            "Info icon#522:0": true,
+            "Text#33:0": "Text input",
+            "Label text#265:7": "Label",
+            "Label#265:0": true,
+            "Leading icon#33:9": false,
+            "Helper#33:19": false,
+            "Helper text#33:15": "Helper",
+            "Trailing icon#33:12": false,
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Text input [State=Default, Size=md]"
+          }
+         ]
+        },
+        {
+         "name": "Card form row",
+         "type": "INSTANCE",
+         "w": 452,
+         "h": 72,
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Input 2 swap#2499:5": "26:65",
+          "Input 1 swap#2499:3": "33:2835",
+          "Input 2#2499:4": false,
+          "Width": "Full"
+         },
+         "component": "Card form row [Width=Full]",
+         "kids": [
+          {
+           "name": "Text input",
+           "type": "INSTANCE",
+           "w": 452,
+           "h": 72,
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Trailing icon swap#33:6": "22:133",
+            "Leading icon swap#33:3": "476:1742",
+            "Show Placeholder#3747:0": true,
+            "Optional#1105:0": true,
+            "Info icon#522:0": true,
+            "Label#265:0": true,
+            "Leading icon#33:9": false,
+            "Helper#33:19": false,
+            "Label text#265:7": "Label",
+            "Text#33:0": "นรค.6 กอพ.1 ฝพจ.",
+            "Helper text#33:15": "Helper",
+            "Trailing icon#33:12": false,
+            "State": "Readonly",
+            "Size": "md"
+           },
+           "component": "Text input [State=Readonly, Size=md]"
+          },
+          {
+           "name": "Text input",
+           "type": "INSTANCE",
+           "w": 232,
+           "h": 72,
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#33:3": "476:1742",
+            "Optional#1105:0": true,
+            "Show Placeholder#3747:0": true,
+            "Trailing icon swap#33:6": "22:133",
+            "Info icon#522:0": true,
+            "Text#33:0": "Text input",
+            "Label text#265:7": "Label",
+            "Label#265:0": true,
+            "Leading icon#33:9": false,
+            "Helper#33:19": false,
+            "Helper text#33:15": "Helper",
+            "Trailing icon#33:12": false,
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Text input [State=Default, Size=md]"
+          }
+         ]
+        },
+        {
+         "name": "Card form row",
+         "type": "INSTANCE",
+         "w": 452,
+         "h": 72,
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Input 2 swap#2499:5": "761:8704",
+          "Input 1 swap#2499:3": "761:8704",
+          "Input 2#2499:4": true,
+          "Width": "Full"
+         },
+         "component": "Card form row [Width=Full]",
+         "kids": [
+          {
+           "name": "Text input",
+           "type": "INSTANCE",
+           "w": 220,
+           "h": 72,
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Show Placeholder#3747:0": true,
+            "Leading icon swap#33:3": "476:1742",
+            "Trailing icon swap#33:6": "22:133",
+            "Info icon#522:0": true,
+            "Text#33:0": "6892",
+            "Label text#265:7": "Label",
+            "Label#265:0": true,
+            "Optional#1105:0": true,
+            "Leading icon#33:9": false,
+            "Helper#33:19": false,
+            "Helper text#33:15": "Helper",
+            "Trailing icon#33:12": false,
+            "State": "Filled",
+            "Size": "md"
+           },
+           "component": "Text input [State=Filled, Size=md]"
+          },
+          {
+           "name": "Text input",
+           "type": "INSTANCE",
+           "w": 220,
+           "h": 72,
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Show Placeholder#3747:0": true,
+            "Leading icon swap#33:3": "476:1742",
+            "Trailing icon swap#33:6": "22:133",
+            "Info icon#522:0": true,
+            "Text#33:0": "091-234-5678",
+            "Label text#265:7": "Label",
+            "Label#265:0": true,
+            "Optional#1105:0": true,
+            "Leading icon#33:9": false,
+            "Helper#33:19": false,
+            "Helper text#33:15": "Helper",
+            "Trailing icon#33:12": false,
+            "State": "Filled",
+            "Size": "md"
+           },
+           "component": "Text input [State=Filled, Size=md]"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Modal footer",
+       "type": "INSTANCE",
+       "w": 500,
+       "h": 109,
+       "pb": 24,
+       "r": [
+        0,
+        0,
+        12,
+        12
+       ],
+       "dir": "VERTICAL",
+       "align": "MAX",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "variant": {
+        "Tertiary action#2560:61": false,
+        "Divider#2487:0": true,
+        "Primary action#2505:14": true,
+        "Padding top#2487:4": true,
+        "Secondary action#106:3": true,
+        "Alignment": "Horizontal right"
+       },
+       "component": "Modal footer [Alignment=Horizontal right]",
+       "kids": [
+        {
+         "name": "Padding top",
+         "type": "FRAME",
+         "w": 500,
+         "h": 24,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1
+        },
+        {
+         "name": "Divider",
+         "type": "FRAME",
+         "w": 500,
+         "h": 21,
+         "pb": 20,
+         "gap": 8,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Content divider",
+           "type": "INSTANCE",
+           "w": 500,
+           "h": 1,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Text#2631:0": "หรือ",
+            "Type": "Default"
+           },
+           "component": "Content divider [Type=Default]"
+          }
+         ]
+        },
+        {
+         "name": "Actions",
+         "type": "FRAME",
+         "w": 500,
+         "h": 40,
+         "pl": 24,
+         "pr": 24,
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Tertiary brand button",
+           "type": "INSTANCE",
+           "w": 59,
+           "h": 40,
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "133:3719",
+            "Button text#1153:12": true,
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": false,
+            "Text#105:0": "Button",
+            "State": "Default"
+           },
+           "component": "Tertiary brand button [State=Default]"
+          },
+          {
+           "name": "Primary and secondary actions",
+           "type": "FRAME",
+           "w": 452,
+           "h": 40,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Form, Size=lg",
+   "type": "COMPONENT",
+   "w": 1440,
+   "h": 1024,
+   "r": 0,
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Type": "Form",
+    "Size": "lg"
+   },
+   "kids": [
+    {
+     "name": "Background overlay",
+     "type": "INSTANCE",
+     "w": 1440,
+     "h": 1024,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "Background overlay",
+     "kids": [
+      {
+       "name": "Background overlay",
+       "type": "RECTANGLE",
+       "w": 1440,
+       "h": 1024,
+       "r": 0,
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1
+      }
+     ]
+    },
+    {
+     "name": "Modal",
+     "type": "FRAME",
+     "w": 800,
+     "h": 702,
+     "r": 12,
+     "dir": "VERTICAL",
+     "align": "MIN",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Modal header",
+       "type": "INSTANCE",
+       "w": 800,
+       "h": 101,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MAX",
+       "variant": {
+        "Back icon#2633:8": false,
+        "Padding bottom#2491:0": true,
+        "Divider#1278:0": true,
+        "Supporting text#2486:2": "Description",
+        "Supporting#2485:0": false,
+        "Featured icon#2487:8": false,
+        "Title#1276:1": "แก้ไขรายละเอียดการเดินทาง",
+        "Close icon#1276:2": true,
+        "Alignment": "Left"
+       },
+       "component": "Modal header [Alignment=Left]",
+       "kids": [
+        {
+         "name": "Content",
+         "type": "FRAME",
+         "w": 800,
+         "h": 64,
+         "pl": 24,
+         "pr": 24,
+         "pt": 24,
+         "gap": 8,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Tertiary button",
+           "type": "INSTANCE",
+           "w": 40,
+           "h": 40,
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "1885:5296",
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": true,
+            "Button text#1153:0": false,
+            "Text#105:0": "Button",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Tertiary button [State=Default, Size=md]"
+          },
+          {
+           "name": "Title and icon",
+           "type": "FRAME",
+           "w": 704,
+           "h": 30,
+           "gap": 16,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1
+          },
+          {
+           "name": "Tertiary button",
+           "type": "INSTANCE",
+           "w": 40,
+           "h": 40,
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "1084:414",
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": true,
+            "Button text#1153:0": false,
+            "Text#105:0": "Button",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Tertiary button [State=Default, Size=md]"
+          }
+         ]
+        },
+        {
+         "name": "Divider",
+         "type": "FRAME",
+         "w": 800,
+         "h": 21,
+         "pt": 20,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Content divider",
+           "type": "INSTANCE",
+           "w": 800,
+           "h": 1,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Text#2631:0": "หรือ",
+            "Type": "Default"
+           },
+           "component": "Content divider [Type=Default]"
+          }
+         ]
+        },
+        {
+         "name": "Padding bottom",
+         "type": "FRAME",
+         "w": 800,
+         "h": 16,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1
+        }
+       ]
+      },
+      {
+       "name": "Form",
+       "type": "FRAME",
+       "w": 800,
+       "h": 492,
+       "pl": 24,
+       "pr": 24,
+       "gap": 12,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Card form row",
+         "type": "INSTANCE",
+         "w": 752,
+         "h": 72,
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Input 2 swap#2499:5": "33:2835",
+          "Input 1 swap#2499:3": "33:2835",
+          "Input 2#2499:4": true,
+          "Width": "Full"
+         },
+         "component": "Card form row [Width=Full]",
+         "kids": [
+          {
+           "name": "Text input",
+           "type": "INSTANCE",
+           "w": 370,
+           "h": 72,
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Trailing icon swap#33:6": "22:133",
+            "Leading icon swap#33:3": "476:1742",
+            "Show Placeholder#3747:0": true,
+            "Optional#1105:0": true,
+            "Info icon#522:0": true,
+            "Label#265:0": true,
+            "Leading icon#33:9": false,
+            "Helper#33:19": false,
+            "Label text#265:7": "Label",
+            "Text#33:0": "01/01/2567",
+            "Helper text#33:15": "Helper",
+            "Trailing icon#33:12": false,
+            "State": "Readonly",
+            "Size": "md"
+           },
+           "component": "Text input [State=Readonly, Size=md]"
+          },
+          {
+           "name": "Text input",
+           "type": "INSTANCE",
+           "w": 370,
+           "h": 72,
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Trailing icon swap#33:6": "22:133",
+            "Leading icon swap#33:3": "476:1742",
+            "Show Placeholder#3747:0": true,
+            "Optional#1105:0": true,
+            "Info icon#522:0": true,
+            "Label#265:0": true,
+            "Leading icon#33:9": false,
+            "Helper#33:19": false,
+            "Label text#265:7": "Label",
+            "Text#33:0": "07/01/2567",
+            "Helper text#33:15": "Helper",
+            "Trailing icon#33:12": false,
+            "State": "Readonly",
+            "Size": "md"
+           },
+           "component": "Text input [State=Readonly, Size=md]"
+          }
+         ]
+        },
+        {
+         "name": "Card form row",
+         "type": "INSTANCE",
+         "w": 752,
+         "h": 72,
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Input 2 swap#2499:5": "29:219",
+          "Input 1 swap#2499:3": "29:219",
+          "Input 2#2499:4": true,
+          "Width": "Full"
+         },
+         "component": "Card form row [Width=Full]",
+         "kids": [
+          {
+           "name": "Horizontal radio groups",
+           "type": "INSTANCE",
+           "w": 370,
+           "h": 72,
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#2159:1": "476:1742",
+            "Leading icon#2159:0": false,
+            "Radio 3#1231:3": true,
+            "Info icon#1733:1": false,
+            "Helper#1701:5": false,
+            "Radio 4#1231:5": false,
+            "Helper text#1701:3": "Helper",
+            "Radio text 1#1152:9": "เต็มวัน",
+            "Radio text 4#1152:17": "Option",
+            "Radio text 2#1152:13": "ครึ่งวันเช้า",
+            "Radio text 3#1152:15": "ครึ่งวันบ่าย",
+            "Label#1152:5": true,
+            "Label text#1152:1": "ช่วงเวลาการเดินทาง"
+           },
+           "component": "Horizontal radio groups"
+          },
+          {
+           "name": "Horizontal radio groups",
+           "type": "INSTANCE",
+           "w": 370,
+           "h": 72,
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#2159:1": "476:1742",
+            "Leading icon#2159:0": false,
+            "Radio 3#1231:3": false,
+            "Info icon#1733:1": false,
+            "Helper#1701:5": false,
+            "Radio 4#1231:5": false,
+            "Helper text#1701:3": "Helper",
+            "Radio text 1#1152:9": "ไป-กลับ",
+            "Radio text 4#1152:17": "Option",
+            "Radio text 2#1152:13": "ค้างแรม",
+            "Radio text 3#1152:15": "Option",
+            "Label#1152:5": true,
+            "Label text#1152:1": "ประเภทการเดินทาง"
+           },
+           "component": "Horizontal radio groups"
+          }
+         ]
+        },
+        {
+         "name": "Card form row",
+         "type": "INSTANCE",
+         "w": 752,
+         "h": 72,
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Input 2 swap#2499:5": "26:65",
+          "Input 1 swap#2499:3": "761:8704",
+          "Input 2#2499:4": false,
+          "Width": "Full"
+         },
+         "component": "Card form row [Width=Full]",
+         "kids": [
+          {
+           "name": "Text input",
+           "type": "INSTANCE",
+           "w": 752,
+           "h": 72,
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Show Placeholder#3747:0": true,
+            "Leading icon swap#33:3": "476:1742",
+            "Trailing icon swap#33:6": "22:133",
+            "Info icon#522:0": true,
+            "Text#33:0": "การไฟฟ้าเขต ฉ.1 และ กฟฟ. ในสังกัด",
+            "Label text#265:7": "Label",
+            "Label#265:0": true,
+            "Optional#1105:0": true,
+            "Leading icon#33:9": false,
+            "Helper#33:19": false,
+            "Helper text#33:15": "Helper",
+            "Trailing icon#33:12": false,
+            "State": "Filled",
+            "Size": "md"
+           },
+           "component": "Text input [State=Filled, Size=md]"
+          },
+          {
+           "name": "Text input",
+           "type": "INSTANCE",
+           "w": 232,
+           "h": 72,
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#33:3": "476:1742",
+            "Optional#1105:0": true,
+            "Show Placeholder#3747:0": true,
+            "Trailing icon swap#33:6": "22:133",
+            "Info icon#522:0": true,
+            "Text#33:0": "Text input",
+            "Label text#265:7": "Label",
+            "Label#265:0": true,
+            "Leading icon#33:9": false,
+            "Helper#33:19": false,
+            "Helper text#33:15": "Helper",
+            "Trailing icon#33:12": false,
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Text input [State=Default, Size=md]"
+          }
+         ]
+        },
+        {
+         "name": "Card form row",
+         "type": "INSTANCE",
+         "w": 752,
+         "h": 72,
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Input 2 swap#2499:5": "26:65",
+          "Input 1 swap#2499:3": "761:8704",
+          "Input 2#2499:4": false,
+          "Width": "Full"
+         },
+         "component": "Card form row [Width=Full]",
+         "kids": [
+          {
+           "name": "Text input",
+           "type": "INSTANCE",
+           "w": 752,
+           "h": 72,
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Show Placeholder#3747:0": true,
+            "Leading icon swap#33:3": "476:1742",
+            "Trailing icon swap#33:6": "22:133",
+            "Info icon#522:0": true,
+            "Text#33:0": "เพื่อเก็บรวบรวมข้อมูลการใช้งานระบบ VMS Plus ขอบเขตงานบริการเช่าชุดเครื่องยนต์กำเนิดไฟฟ้าของ กฟภ. และงานบริหารจัดการยานพาหนะขนาดใหญ่",
+            "Label text#265:7": "Label",
+            "Label#265:0": true,
+            "Optional#1105:0": true,
+            "Leading icon#33:9": false,
+            "Helper#33:19": false,
+            "Helper text#33:15": "Helper",
+            "Trailing icon#33:12": false,
+            "State": "Filled",
+            "Size": "md"
+           },
+           "component": "Text input [State=Filled, Size=md]"
+          },
+          {
+           "name": "Text input",
+           "type": "INSTANCE",
+           "w": 232,
+           "h": 72,
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#33:3": "476:1742",
+            "Optional#1105:0": true,
+            "Show Placeholder#3747:0": true,
+            "Trailing icon swap#33:6": "22:133",
+            "Info icon#522:0": true,
+            "Text#33:0": "Text input",
+            "Label text#265:7": "Label",
+            "Label#265:0": true,
+            "Leading icon#33:9": false,
+            "Helper#33:19": false,
+            "Helper text#33:15": "Helper",
+            "Trailing icon#33:12": false,
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Text input [State=Default, Size=md]"
+          }
+         ]
+        },
+        {
+         "name": "Card form row",
+         "type": "INSTANCE",
+         "w": 752,
+         "h": 72,
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Input 2 swap#2499:5": "26:65",
+          "Input 1 swap#2499:3": "761:8704",
+          "Input 2#2499:4": false,
+          "Width": "Full"
+         },
+         "component": "Card form row [Width=Full]",
+         "kids": [
+          {
+           "name": "Text input",
+           "type": "INSTANCE",
+           "w": 752,
+           "h": 72,
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Show Placeholder#3747:0": true,
+            "Leading icon swap#33:3": "476:1742",
+            "Trailing icon swap#33:6": "22:133",
+            "Info icon#522:0": true,
+            "Text#33:0": "รายละเอียดแผนและรายชื่อพนักงานตามเอกสารแนบ",
+            "Label text#265:7": "Label",
+            "Label#265:0": true,
+            "Optional#1105:0": true,
+            "Leading icon#33:9": false,
+            "Helper#33:19": false,
+            "Helper text#33:15": "Helper",
+            "Trailing icon#33:12": false,
+            "State": "Filled",
+            "Size": "md"
+           },
+           "component": "Text input [State=Filled, Size=md]"
+          },
+          {
+           "name": "Text input",
+           "type": "INSTANCE",
+           "w": 232,
+           "h": 72,
+           "gap": 8,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#33:3": "476:1742",
+            "Optional#1105:0": true,
+            "Show Placeholder#3747:0": true,
+            "Trailing icon swap#33:6": "22:133",
+            "Info icon#522:0": true,
+            "Text#33:0": "Text input",
+            "Label text#265:7": "Label",
+            "Label#265:0": true,
+            "Leading icon#33:9": false,
+            "Helper#33:19": false,
+            "Helper text#33:15": "Helper",
+            "Trailing icon#33:12": false,
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Text input [State=Default, Size=md]"
+          }
+         ]
+        },
+        {
+         "name": "Card form row",
+         "type": "INSTANCE",
+         "w": 752,
+         "h": 72,
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Input 2 swap#2499:5": "26:65",
+          "Input 2#2499:4": false,
+          "Input 1 swap#2499:3": "391:10249",
+          "Width": "25%"
+         },
+         "component": "Card form row [Width=25%]",
+         "kids": [
+          {
+           "name": "Input",
+           "type": "FRAME",
+           "w": 370,
+           "h": 72,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "MIN",
+           "sw": 1
+          },
+          {
+           "name": "Spacing",
+           "type": "FRAME",
+           "w": 370,
+           "h": 72,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Modal footer",
+       "type": "INSTANCE",
+       "w": 800,
+       "h": 109,
+       "pb": 24,
+       "r": [
+        0,
+        0,
+        12,
+        12
+       ],
+       "dir": "VERTICAL",
+       "align": "MAX",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "variant": {
+        "Tertiary action#2560:61": false,
+        "Divider#2487:0": true,
+        "Primary action#2505:14": true,
+        "Padding top#2487:4": true,
+        "Secondary action#106:3": true,
+        "Alignment": "Horizontal right"
+       },
+       "component": "Modal footer [Alignment=Horizontal right]",
+       "kids": [
+        {
+         "name": "Padding top",
+         "type": "FRAME",
+         "w": 800,
+         "h": 24,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1
+        },
+        {
+         "name": "Divider",
+         "type": "FRAME",
+         "w": 800,
+         "h": 21,
+         "pb": 20,
+         "gap": 8,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Content divider",
+           "type": "INSTANCE",
+           "w": 800,
+           "h": 1,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Text#2631:0": "หรือ",
+            "Type": "Default"
+           },
+           "component": "Content divider [Type=Default]"
+          }
+         ]
+        },
+        {
+         "name": "Actions",
+         "type": "FRAME",
+         "w": 800,
+         "h": 40,
+         "pl": 24,
+         "pr": 24,
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Tertiary brand button",
+           "type": "INSTANCE",
+           "w": 59,
+           "h": 40,
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "133:3719",
+            "Button text#1153:12": true,
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": false,
+            "Text#105:0": "Button",
+            "State": "Default"
+           },
+           "component": "Tertiary brand button [State=Default]"
+          },
+          {
+           "name": "Primary and secondary actions",
+           "type": "FRAME",
+           "w": 752,
+           "h": 40,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Card list, Size=xl",
+   "type": "COMPONENT",
+   "w": 1440,
+   "h": 1024,
+   "r": 0,
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Type": "Card list",
+    "Size": "xl"
+   },
+   "kids": [
+    {
+     "name": "Background overlay",
+     "type": "INSTANCE",
+     "w": 1440,
+     "h": 1024,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "Background overlay",
+     "kids": [
+      {
+       "name": "Background overlay",
+       "type": "RECTANGLE",
+       "w": 1440,
+       "h": 1024,
+       "r": 0,
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1
+      }
+     ]
+    },
+    {
+     "name": "Modal",
+     "type": "FRAME",
+     "w": 1140,
+     "h": 646,
+     "r": 12,
+     "dir": "VERTICAL",
+     "align": "MIN",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Modal header",
+       "type": "INSTANCE",
+       "w": 1140,
+       "h": 101,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MAX",
+       "variant": {
+        "Back icon#2633:8": false,
+        "Padding bottom#2491:0": true,
+        "Divider#1278:0": true,
+        "Supporting text#2486:2": "Description",
+        "Supporting#2485:0": false,
+        "Featured icon#2487:8": false,
+        "Title#1276:1": "เลือกยานพาหนะ",
+        "Close icon#1276:2": true,
+        "Alignment": "Left"
+       },
+       "component": "Modal header [Alignment=Left]",
+       "kids": [
+        {
+         "name": "Content",
+         "type": "FRAME",
+         "w": 1140,
+         "h": 64,
+         "pl": 24,
+         "pr": 24,
+         "pt": 24,
+         "gap": 8,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Tertiary button",
+           "type": "INSTANCE",
+           "w": 40,
+           "h": 40,
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "1885:5296",
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": true,
+            "Button text#1153:0": false,
+            "Text#105:0": "Button",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Tertiary button [State=Default, Size=md]"
+          },
+          {
+           "name": "Title and icon",
+           "type": "FRAME",
+           "w": 1044,
+           "h": 30,
+           "gap": 16,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1
+          },
+          {
+           "name": "Tertiary button",
+           "type": "INSTANCE",
+           "w": 40,
+           "h": 40,
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "1084:414",
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": true,
+            "Button text#1153:0": false,
+            "Text#105:0": "Button",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Tertiary button [State=Default, Size=md]"
+          }
+         ]
+        },
+        {
+         "name": "Divider",
+         "type": "FRAME",
+         "w": 1140,
+         "h": 21,
+         "pt": 20,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Content divider",
+           "type": "INSTANCE",
+           "w": 1140,
+           "h": 1,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Text#2631:0": "หรือ",
+            "Type": "Default"
+           },
+           "component": "Content divider [Type=Default]"
+          }
+         ]
+        },
+        {
+         "name": "Padding bottom",
+         "type": "FRAME",
+         "w": 1140,
+         "h": 16,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1
+        }
+       ]
+      },
+      {
+       "name": "Content",
+       "type": "FRAME",
+       "w": 1140,
+       "h": 545,
+       "pl": 24,
+       "pr": 24,
+       "pb": 24,
+       "gap": 24,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Table header",
+         "type": "INSTANCE",
+         "w": 1092,
+         "h": 90,
+         "gap": 20,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "variant": {
+          "Action 2 swap#2558:3": "810:28820",
+          "Action 1 swap#2558:0": "810:28820",
+          "Action 3 swap#2558:6": "133:5270",
+          "Filters#2043:0": false,
+          "More actions#2004:0": false,
+          "Badge#1985:2": true,
+          "Divider#1985:5": false,
+          "Actions#1985:4": true,
+          "Table title#2009:0": true,
+          "Supporting text#1985:3": false,
+          "Title#1985:6": "ผลการค้นหา",
+          "Breakpoint": "Desktop"
+         },
+         "component": "Table header [Breakpoint=Desktop]",
+         "kids": [
+          {
+           "name": "Content",
+           "type": "FRAME",
+           "w": 1092,
+           "h": 90,
+           "gap": 20,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1
+          },
+          {
+           "name": "Divider",
+           "type": "VECTOR",
+           "w": 1440,
+           "h": 1,
+           "r": 0,
+           "fill": [
+            "#D0D5DD"
+           ],
+           "sw": 1
+          }
+         ]
+        },
+        {
+         "name": "Cards",
+         "type": "FRAME",
+         "w": 1092,
+         "h": 375,
+         "gap": 24,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Icon button",
+           "type": "INSTANCE",
+           "w": 40,
+           "h": 40,
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "r": 9999,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F2F4F7"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "sw": 1,
+           "variant": {
+            "Icon swap#133:10": "1885:5296",
+            "State": "Disabled"
+           },
+           "component": "Icon button [State=Disabled]"
+          },
+          {
+           "name": "Card",
+           "type": "INSTANCE",
+           "w": 306,
+           "h": 375,
+           "pl": 16,
+           "pr": 16,
+           "pt": 16,
+           "pb": 16,
+           "gap": 16,
+           "r": 16,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "sw": 1,
+           "variant": {
+            "Tertiary action#2531:0": true,
+            "Primary action#2508:9": true,
+            "Supporting#2508:3": true,
+            "Secondary action#2508:0": true,
+            "Supporting 2#2508:2": true,
+            "Actions#2508:15": true,
+            "Subtitle#2508:6": true,
+            "Supporting text 2#2508:4": "สายงานดิจิทัล",
+            "Supporting text#2508:5": "รถแวนตรวจการ",
+            "Card item#2508:1": true,
+            "Subtitle text#2508:7": "5กก 1234 กรุงเทพมหานคร",
+            "Title#2508:8": "Totoya Fortuner",
+            "State": "Default",
+            "Type": "Centered image"
+           },
+           "component": "Card [State=Default, Type=Centered image]"
+          },
+          {
+           "name": "Card",
+           "type": "INSTANCE",
+           "w": 306,
+           "h": 375,
+           "pl": 16,
+           "pr": 16,
+           "pt": 16,
+           "pb": 16,
+           "gap": 16,
+           "r": 16,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "sw": 1,
+           "variant": {
+            "Tertiary action#2531:0": true,
+            "Primary action#2508:9": true,
+            "Supporting#2508:3": true,
+            "Secondary action#2508:0": true,
+            "Supporting 2#2508:2": true,
+            "Actions#2508:15": true,
+            "Subtitle#2508:6": true,
+            "Supporting text 2#2508:4": "สายงานดิจิทัล",
+            "Supporting text#2508:5": "รถแวนตรวจการ",
+            "Card item#2508:1": true,
+            "Subtitle text#2508:7": "5กก 6789 กรุงเทพมหานคร",
+            "Title#2508:8": "Isuzu MU-X",
+            "State": "Default",
+            "Type": "Centered image"
+           },
+           "component": "Card [State=Default, Type=Centered image]"
+          },
+          {
+           "name": "Card",
+           "type": "INSTANCE",
+           "w": 306,
+           "h": 375,
+           "pl": 16,
+           "pr": 16,
+           "pt": 16,
+           "pb": 16,
+           "gap": 16,
+           "r": 16,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "sw": 1,
+           "variant": {
+            "Tertiary action#2531:0": true,
+            "Primary action#2508:9": true,
+            "Supporting#2508:3": true,
+            "Secondary action#2508:0": true,
+            "Supporting 2#2508:2": true,
+            "Actions#2508:15": true,
+            "Subtitle#2508:6": true,
+            "Supporting text 2#2508:4": "สายงานดิจิทัล",
+            "Supporting text#2508:5": "รถแวนตรวจการ",
+            "Card item#2508:1": true,
+            "Subtitle text#2508:7": "5กก 8888 กรุงเทพมหานคร",
+            "Title#2508:8": "Tesla Model Y",
+            "State": "Default",
+            "Type": "Centered image"
+           },
+           "component": "Card [State=Default, Type=Centered image]"
+          },
+          {
+           "name": "Icon button",
+           "type": "INSTANCE",
+           "w": 40,
+           "h": 40,
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "r": 9999,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#D0D5DD"
+           ],
+           "sw": 1,
+           "variant": {
+            "Icon swap#133:10": "1885:5297",
+            "State": "Default"
+           },
+           "component": "Icon button [State=Default]"
+          }
+         ]
+        },
+        {
+         "name": "Indicator pagination",
+         "type": "INSTANCE",
+         "w": 56,
+         "h": 8,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "variant": {
+          "Indicator 5#2714:2": true,
+          "Indicator 4#2714:1": true,
+          "Indicator 3#2714:0": true
+         },
+         "component": "Indicator pagination",
+         "kids": [
+          {
+           "name": "_Indicator pagination item",
+           "type": "INSTANCE",
+           "w": 8,
+           "h": 8,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Current": "True"
+           },
+           "component": "_Indicator pagination item [Current=True]"
+          },
+          {
+           "name": "_Indicator pagination item",
+           "type": "INSTANCE",
+           "w": 8,
+           "h": 8,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Current": "False"
+           },
+           "component": "_Indicator pagination item [Current=False]"
+          },
+          {
+           "name": "_Indicator pagination item",
+           "type": "INSTANCE",
+           "w": 8,
+           "h": 8,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Current": "False"
+           },
+           "component": "_Indicator pagination item [Current=False]"
+          },
+          {
+           "name": "_Indicator pagination item",
+           "type": "INSTANCE",
+           "w": 8,
+           "h": 8,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Current": "False"
+           },
+           "component": "_Indicator pagination item [Current=False]"
+          },
+          {
+           "name": "_Indicator pagination item",
+           "type": "INSTANCE",
+           "w": 8,
+           "h": 8,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Current": "False"
+           },
+           "component": "_Indicator pagination item [Current=False]"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Left aligned image, Size=xl",
+   "type": "COMPONENT",
+   "w": 1440,
+   "h": 1024,
+   "r": 0,
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Type": "Left aligned image",
+    "Size": "xl"
+   },
+   "kids": [
+    {
+     "name": "Background overlay",
+     "type": "INSTANCE",
+     "w": 1440,
+     "h": 1024,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "Background overlay",
+     "kids": [
+      {
+       "name": "Background overlay",
+       "type": "RECTANGLE",
+       "w": 1440,
+       "h": 1024,
+       "r": 0,
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1
+      }
+     ]
+    },
+    {
+     "name": "Modal",
+     "type": "FRAME",
+     "w": 1140,
+     "h": 647,
+     "r": 12,
+     "dir": "VERTICAL",
+     "align": "MIN",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Modal header",
+       "type": "INSTANCE",
+       "w": 1140,
+       "h": 101,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MAX",
+       "variant": {
+        "Back icon#2633:8": true,
+        "Padding bottom#2491:0": true,
+        "Divider#1278:0": true,
+        "Supporting text#2486:2": "Description",
+        "Supporting#2485:0": false,
+        "Featured icon#2487:8": false,
+        "Title#1276:1": "รายละเอียด",
+        "Close icon#1276:2": true,
+        "Alignment": "Left"
+       },
+       "component": "Modal header [Alignment=Left]",
+       "kids": [
+        {
+         "name": "Content",
+         "type": "FRAME",
+         "w": 1140,
+         "h": 64,
+         "pl": 24,
+         "pr": 24,
+         "pt": 24,
+         "gap": 8,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Tertiary button",
+           "type": "INSTANCE",
+           "w": 40,
+           "h": 40,
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "1885:5296",
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": true,
+            "Button text#1153:0": false,
+            "Text#105:0": "Button",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Tertiary button [State=Default, Size=md]"
+          },
+          {
+           "name": "Title and icon",
+           "type": "FRAME",
+           "w": 996,
+           "h": 30,
+           "gap": 16,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1
+          },
+          {
+           "name": "Tertiary button",
+           "type": "INSTANCE",
+           "w": 40,
+           "h": 40,
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "1084:414",
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": true,
+            "Button text#1153:0": false,
+            "Text#105:0": "Button",
+            "State": "Default",
+            "Size": "md"
+           },
+           "component": "Tertiary button [State=Default, Size=md]"
+          }
+         ]
+        },
+        {
+         "name": "Divider",
+         "type": "FRAME",
+         "w": 1140,
+         "h": 21,
+         "pt": 20,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Content divider",
+           "type": "INSTANCE",
+           "w": 1140,
+           "h": 1,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Text#2631:0": "หรือ",
+            "Type": "Default"
+           },
+           "component": "Content divider [Type=Default]"
+          }
+         ]
+        },
+        {
+         "name": "Padding bottom",
+         "type": "FRAME",
+         "w": 1140,
+         "h": 16,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1
+        }
+       ]
+      },
+      {
+       "name": "Content",
+       "type": "FRAME",
+       "w": 1140,
+       "h": 437,
+       "pl": 24,
+       "pr": 24,
+       "gap": 24,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Image",
+         "type": "RECTANGLE",
+         "w": 534,
+         "h": 437,
+         "r": 12,
+         "sw": 1
+        },
+        {
+         "name": "Images",
+         "type": "INSTANCE",
+         "w": 534,
+         "h": 437,
+         "r": 12,
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Indicator pagination#2635:14": true,
+          "Buttons#2635:15": true,
+          "Size": "md",
+          "Type": "Image"
+         },
+         "component": "Images [Size=md, Type=Image]",
+         "kids": [
+          {
+           "name": "Indicator pagination",
+           "type": "INSTANCE",
+           "w": 56,
+           "h": 8,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Indicator 5#2714:2": true,
+            "Indicator 4#2714:1": true,
+            "Indicator 3#2714:0": true
+           },
+           "component": "Indicator pagination"
+          },
+          {
+           "name": "Icon button",
+           "type": "INSTANCE",
+           "w": 40,
+           "h": 40,
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "r": 9999,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#F2F4F7"
+           ],
+           "stroke": [
+            "#EAECF0"
+           ],
+           "sw": 1,
+           "variant": {
+            "Icon swap#133:10": "1885:5296",
+            "State": "Disabled"
+           },
+           "component": "Icon button [State=Disabled]"
+          },
+          {
+           "name": "Icon button",
+           "type": "INSTANCE",
+           "w": 40,
+           "h": 40,
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "r": 9999,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#D0D5DD"
+           ],
+           "sw": 1,
+           "variant": {
+            "Icon swap#133:10": "1885:5297",
+            "State": "Default"
+           },
+           "component": "Icon button [State=Default]"
+          }
+         ]
+        },
+        {
+         "name": "Scrollable section",
+         "type": "FRAME",
+         "w": 534,
+         "h": 437,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Section",
+           "type": "FRAME",
+           "w": 534,
+           "h": 633,
+           "gap": 16,
+           "r": 0,
+           "dir": "VERTICAL",
+           "align": "MIN",
+           "sw": 1
+          },
+          {
+           "name": "Vertical scrollbar",
+           "type": "INSTANCE",
+           "w": 16,
+           "h": 405,
+           "pl": 4,
+           "pr": 4,
+           "pt": 4,
+           "pb": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Length": "75%",
+            "Position": "Top"
+           },
+           "component": "Vertical scrollbar [Length=75%, Position=Top]"
+          }
+         ]
+        },
+        {
+         "name": "Icon button",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "r": 9999,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 1,
+         "variant": {
+          "Icon swap#133:10": "1885:5297",
+          "State": "Default"
+         },
+         "component": "Icon button [State=Default]",
+         "kids": [
+          {
+           "name": "keyboard_arrow_right-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "keyboard_arrow_right-20-400-round"
+          }
+         ]
+        },
+        {
+         "name": "Indicator pagination",
+         "type": "INSTANCE",
+         "w": 56,
+         "h": 8,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "variant": {
+          "Indicator 5#2714:2": true,
+          "Indicator 4#2714:1": true,
+          "Indicator 3#2714:0": true
+         },
+         "component": "Indicator pagination",
+         "kids": [
+          {
+           "name": "_Indicator pagination item",
+           "type": "INSTANCE",
+           "w": 8,
+           "h": 8,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Current": "True"
+           },
+           "component": "_Indicator pagination item [Current=True]"
+          },
+          {
+           "name": "_Indicator pagination item",
+           "type": "INSTANCE",
+           "w": 8,
+           "h": 8,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Current": "False"
+           },
+           "component": "_Indicator pagination item [Current=False]"
+          },
+          {
+           "name": "_Indicator pagination item",
+           "type": "INSTANCE",
+           "w": 8,
+           "h": 8,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Current": "False"
+           },
+           "component": "_Indicator pagination item [Current=False]"
+          },
+          {
+           "name": "_Indicator pagination item",
+           "type": "INSTANCE",
+           "w": 8,
+           "h": 8,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Current": "False"
+           },
+           "component": "_Indicator pagination item [Current=False]"
+          },
+          {
+           "name": "_Indicator pagination item",
+           "type": "INSTANCE",
+           "w": 8,
+           "h": 8,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Current": "False"
+           },
+           "component": "_Indicator pagination item [Current=False]"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Modal footer",
+       "type": "INSTANCE",
+       "w": 1140,
+       "h": 109,
+       "pb": 24,
+       "r": [
+        0,
+        0,
+        12,
+        12
+       ],
+       "dir": "VERTICAL",
+       "align": "MAX",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "variant": {
+        "Tertiary action#2560:61": false,
+        "Divider#2487:0": true,
+        "Primary action#2505:14": true,
+        "Padding top#2487:4": true,
+        "Secondary action#106:3": false,
+        "Alignment": "Horizontal right"
+       },
+       "component": "Modal footer [Alignment=Horizontal right]",
+       "kids": [
+        {
+         "name": "Padding top",
+         "type": "FRAME",
+         "w": 1140,
+         "h": 24,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1
+        },
+        {
+         "name": "Divider",
+         "type": "FRAME",
+         "w": 1140,
+         "h": 21,
+         "pb": 20,
+         "gap": 8,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Content divider",
+           "type": "INSTANCE",
+           "w": 1140,
+           "h": 1,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Text#2631:0": "หรือ",
+            "Type": "Default"
+           },
+           "component": "Content divider [Type=Default]"
+          }
+         ]
+        },
+        {
+         "name": "Actions",
+         "type": "FRAME",
+         "w": 1140,
+         "h": 40,
+         "pl": 24,
+         "pr": 24,
+         "gap": 12,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Tertiary brand button",
+           "type": "INSTANCE",
+           "w": 59,
+           "h": 40,
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "133:3719",
+            "Button text#1153:12": true,
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": false,
+            "Text#105:0": "Button",
+            "State": "Default"
+           },
+           "component": "Tertiary brand button [State=Default]"
+          },
+          {
+           "name": "Primary and secondary actions",
+           "type": "FRAME",
+           "w": 1092,
+           "h": 40,
+           "gap": 12,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

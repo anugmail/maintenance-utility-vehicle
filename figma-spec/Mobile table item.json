@@ -1,0 +1,1569 @@
+{
+ "component": "Mobile table item",
+ "page": "✅ Table",
+ "node": "2:14",
+ "props": {
+  "Supporting text#2220:13": {
+   "type": "TEXT",
+   "defaultValue": "Supporting text"
+  },
+  "Supporting#2220:14": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Header#2220:15": {
+   "type": "TEXT",
+   "defaultValue": "Header"
+  },
+  "Text#2220:16": {
+   "type": "TEXT",
+   "defaultValue": "Text"
+  },
+  "View#2220:62": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Edit#2220:67": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Print#2220:72": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Delete#2220:77": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Action 2#2894:0": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Action 3#2894:6": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Action 4#2894:12": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Style": {
+   "type": "VARIANT",
+   "defaultValue": "Text",
+   "variantOptions": [
+    "Text",
+    "Avatar",
+    "Badge",
+    "Action icons",
+    "Action buttons",
+    "Lead text",
+    "Lead avatar"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "name": "Style=Text",
+   "type": "COMPONENT",
+   "w": 320,
+   "h": 55,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 8,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "stroke": [
+    "#EAECF0"
+   ],
+   "variant": {
+    "Style": "Text"
+   },
+   "kids": [
+    {
+     "name": "Header",
+     "type": "TEXT",
+     "w": 144,
+     "h": 21,
+     "fill": [
+      "#000000"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 14,
+      "lh": null
+     },
+     "text": "Header"
+    },
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 144,
+     "h": 39,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 144,
+       "h": 39,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MAX",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 144,
+         "h": 21,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null
+         },
+         "text": "Text"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 144,
+         "h": 18,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 12,
+          "lh": null
+         },
+         "text": "Supporting text"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Style=Lead text",
+   "type": "COMPONENT",
+   "w": 320,
+   "h": 55,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 8,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "stroke": [
+    "#EAECF0"
+   ],
+   "variant": {
+    "Style": "Lead text"
+   },
+   "kids": [
+    {
+     "name": "Header",
+     "type": "TEXT",
+     "w": 144,
+     "h": 21,
+     "fill": [
+      "#000000"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 14,
+      "lh": null
+     },
+     "text": "Header"
+    },
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 144,
+     "h": 39,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 144,
+       "h": 39,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MAX",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 144,
+         "h": 21,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Medium",
+          "size": 14,
+          "lh": null
+         },
+         "text": "Text"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 144,
+         "h": 18,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 12,
+          "lh": null
+         },
+         "text": "Supporting text"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Style=Avatar",
+   "type": "COMPONENT",
+   "w": 320,
+   "h": 55,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 8,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "stroke": [
+    "#EAECF0"
+   ],
+   "variant": {
+    "Style": "Avatar"
+   },
+   "kids": [
+    {
+     "name": "Header",
+     "type": "TEXT",
+     "w": 144,
+     "h": 21,
+     "fill": [
+      "#000000"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 14,
+      "lh": null
+     },
+     "text": "Header"
+    },
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 144,
+     "h": 39,
+     "gap": 8,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Avatar",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "variant": {
+        "Size": "xs"
+       },
+       "component": "Avatar [Size=xs]",
+       "kids": [
+        {
+         "name": "Ellipse",
+         "type": "ELLIPSE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#DCD3FF"
+         ],
+         "sw": 1
+        }
+       ]
+      },
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 112,
+       "h": 39,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MAX",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 112,
+         "h": 21,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null
+         },
+         "text": "Text"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 112,
+         "h": 18,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 12,
+          "lh": null
+         },
+         "text": "Supporting text"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Style=Lead avatar",
+   "type": "COMPONENT",
+   "w": 320,
+   "h": 55,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 8,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "stroke": [
+    "#EAECF0"
+   ],
+   "variant": {
+    "Style": "Lead avatar"
+   },
+   "kids": [
+    {
+     "name": "Header",
+     "type": "TEXT",
+     "w": 144,
+     "h": 21,
+     "fill": [
+      "#000000"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 14,
+      "lh": null
+     },
+     "text": "Header"
+    },
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 144,
+     "h": 39,
+     "gap": 8,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Avatar",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "variant": {
+        "Size": "xs"
+       },
+       "component": "Avatar [Size=xs]",
+       "kids": [
+        {
+         "name": "Ellipse",
+         "type": "ELLIPSE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#DCD3FF"
+         ],
+         "sw": 1
+        }
+       ]
+      },
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 112,
+       "h": 39,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MAX",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 112,
+         "h": 21,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Medium",
+          "size": 14,
+          "lh": null
+         },
+         "text": "Text"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 112,
+         "h": 18,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 12,
+          "lh": null
+         },
+         "text": "Supporting text"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Style=Badge",
+   "type": "COMPONENT",
+   "w": 320,
+   "h": 40,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 8,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "stroke": [
+    "#EAECF0"
+   ],
+   "variant": {
+    "Style": "Badge"
+   },
+   "kids": [
+    {
+     "name": "Header",
+     "type": "TEXT",
+     "w": 144,
+     "h": 21,
+     "fill": [
+      "#000000"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 14,
+      "lh": null
+     },
+     "text": "Header"
+    },
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 144,
+     "h": 24,
+     "r": 0,
+     "dir": "VERTICAL",
+     "align": "MAX",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Pill outline",
+       "type": "INSTANCE",
+       "w": 51,
+       "h": 24,
+       "pl": 8,
+       "pr": 8,
+       "pt": 4,
+       "pb": 4,
+       "r": 9999,
+       "dir": "VERTICAL",
+       "align": "CENTER",
+       "fill": [
+        "#FFF5FD"
+       ],
+       "stroke": [
+        "#FED8F6"
+       ],
+       "sw": 1,
+       "variant": {
+        "Text#695:3": "Badge",
+        "Color": "Brand"
+       },
+       "component": "Pill outline [Color=Brand]",
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 35,
+         "h": 18,
+         "fill": [
+          "#A80689"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 12,
+          "lh": null
+         },
+         "text": "Badge"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Style=Action icons",
+   "type": "COMPONENT",
+   "w": 320,
+   "h": 56,
+   "pl": 12,
+   "pr": 12,
+   "pt": 12,
+   "pb": 12,
+   "gap": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "variant": {
+    "Style": "Action icons"
+   },
+   "kids": [
+    {
+     "name": "Tertiary button",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "pl": 8,
+     "pr": 8,
+     "pt": 8,
+     "pb": 8,
+     "gap": 4,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "variant": {
+      "Leading icon swap#133:10": "2217:8059",
+      "Trailing icon#105:4": false,
+      "Trailing icon swap#133:12": "133:3719",
+      "Leading icon#105:2": true,
+      "Button text#1153:0": false,
+      "Text#105:0": "Button",
+      "State": "Default",
+      "Size": "md"
+     },
+     "component": "Tertiary button [State=Default, Size=md]",
+     "kids": [
+      {
+       "name": "quick_reference_all-24-300-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "quick_reference_all-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 16,
+         "h": 17,
+         "r": 0,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      },
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 47,
+       "h": 21,
+       "fill": [
+        "#475467"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 14,
+        "lh": null
+       },
+       "text": "Button"
+      },
+      {
+       "name": "crop_free-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 14,
+         "h": 14,
+         "r": 0,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Tertiary button",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "pl": 8,
+     "pr": 8,
+     "pt": 8,
+     "pb": 8,
+     "gap": 4,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "variant": {
+      "Leading icon swap#133:10": "2217:8060",
+      "Trailing icon#105:4": false,
+      "Trailing icon swap#133:12": "133:3719",
+      "Leading icon#105:2": true,
+      "Button text#1153:0": false,
+      "Text#105:0": "Button",
+      "State": "Default",
+      "Size": "md"
+     },
+     "component": "Tertiary button [State=Default, Size=md]",
+     "kids": [
+      {
+       "name": "stylus-24-300-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "stylus-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 14,
+         "h": 14,
+         "r": 0,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      },
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 47,
+       "h": 21,
+       "fill": [
+        "#475467"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 14,
+        "lh": null
+       },
+       "text": "Button"
+      },
+      {
+       "name": "crop_free-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 14,
+         "h": 14,
+         "r": 0,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Tertiary button",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "pl": 8,
+     "pr": 8,
+     "pt": 8,
+     "pb": 8,
+     "gap": 4,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "variant": {
+      "Leading icon swap#133:10": "2217:8061",
+      "Trailing icon#105:4": false,
+      "Trailing icon swap#133:12": "133:3719",
+      "Leading icon#105:2": true,
+      "Button text#1153:0": false,
+      "Text#105:0": "Button",
+      "State": "Default",
+      "Size": "md"
+     },
+     "component": "Tertiary button [State=Default, Size=md]",
+     "kids": [
+      {
+       "name": "print-24-300-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "print-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 15,
+         "h": 14,
+         "r": 0,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      },
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 47,
+       "h": 21,
+       "fill": [
+        "#475467"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 14,
+        "lh": null
+       },
+       "text": "Button"
+      },
+      {
+       "name": "crop_free-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 14,
+         "h": 14,
+         "r": 0,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Tertiary button",
+     "type": "INSTANCE",
+     "w": 40,
+     "h": 40,
+     "pl": 8,
+     "pr": 8,
+     "pt": 8,
+     "pb": 8,
+     "gap": 4,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "variant": {
+      "Leading icon swap#133:10": "1787:13965",
+      "Trailing icon#105:4": false,
+      "Trailing icon swap#133:12": "133:3719",
+      "Leading icon#105:2": true,
+      "Button text#1153:0": false,
+      "Text#105:0": "Button",
+      "State": "Default",
+      "Size": "md"
+     },
+     "component": "Tertiary button [State=Default, Size=md]",
+     "kids": [
+      {
+       "name": "delete-24-300-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "delete-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 13,
+         "h": 14,
+         "r": 0,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      },
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 47,
+       "h": 21,
+       "fill": [
+        "#475467"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 14,
+        "lh": null
+       },
+       "text": "Button"
+      },
+      {
+       "name": "crop_free-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 14,
+         "h": 14,
+         "r": 0,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Style=Action buttons",
+   "type": "COMPONENT",
+   "w": 320,
+   "h": 140,
+   "pl": 12,
+   "pr": 12,
+   "pt": 16,
+   "pb": 16,
+   "gap": 12,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "variant": {
+    "Style": "Action buttons"
+   },
+   "kids": [
+    {
+     "name": "Secondary button",
+     "type": "INSTANCE",
+     "w": 142,
+     "h": 48,
+     "pl": 12,
+     "pr": 12,
+     "pt": 8,
+     "pb": 8,
+     "gap": 4,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "stroke": [
+      "#D0D5DD"
+     ],
+     "sw": 1,
+     "variant": {
+      "Leading icon swap#133:10": "133:3719",
+      "Button text#1246:27": true,
+      "Trailing icon#105:4": false,
+      "Trailing icon swap#133:12": "133:3719",
+      "Leading icon#105:2": true,
+      "Text#105:0": "Button",
+      "State": "Default",
+      "Size": "lg"
+     },
+     "component": "Secondary button [State=Default, Size=lg]",
+     "kids": [
+      {
+       "name": "crop_free-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 14,
+         "h": 14,
+         "r": 0,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      },
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 94,
+       "h": 24,
+       "fill": [
+        "#475467"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 16,
+        "lh": null
+       },
+       "text": "Button"
+      },
+      {
+       "name": "crop_free-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 14,
+         "h": 14,
+         "r": 0,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Secondary button",
+     "type": "INSTANCE",
+     "w": 142,
+     "h": 48,
+     "pl": 12,
+     "pr": 12,
+     "pt": 8,
+     "pb": 8,
+     "gap": 4,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "stroke": [
+      "#D0D5DD"
+     ],
+     "sw": 1,
+     "variant": {
+      "Leading icon swap#133:10": "133:3719",
+      "Button text#1246:27": true,
+      "Trailing icon#105:4": false,
+      "Trailing icon swap#133:12": "133:3719",
+      "Leading icon#105:2": true,
+      "Text#105:0": "Button",
+      "State": "Default",
+      "Size": "lg"
+     },
+     "component": "Secondary button [State=Default, Size=lg]",
+     "kids": [
+      {
+       "name": "crop_free-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 14,
+         "h": 14,
+         "r": 0,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      },
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 94,
+       "h": 24,
+       "fill": [
+        "#475467"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 16,
+        "lh": null
+       },
+       "text": "Button"
+      },
+      {
+       "name": "crop_free-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 14,
+         "h": 14,
+         "r": 0,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Secondary button",
+     "type": "INSTANCE",
+     "w": 142,
+     "h": 48,
+     "pl": 12,
+     "pr": 12,
+     "pt": 8,
+     "pb": 8,
+     "gap": 4,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "stroke": [
+      "#D0D5DD"
+     ],
+     "sw": 1,
+     "variant": {
+      "Leading icon swap#133:10": "133:3719",
+      "Button text#1246:27": true,
+      "Trailing icon#105:4": false,
+      "Trailing icon swap#133:12": "133:3719",
+      "Leading icon#105:2": true,
+      "Text#105:0": "Button",
+      "State": "Default",
+      "Size": "lg"
+     },
+     "component": "Secondary button [State=Default, Size=lg]",
+     "kids": [
+      {
+       "name": "crop_free-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 14,
+         "h": 14,
+         "r": 0,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      },
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 94,
+       "h": 24,
+       "fill": [
+        "#475467"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 16,
+        "lh": null
+       },
+       "text": "Button"
+      },
+      {
+       "name": "crop_free-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 14,
+         "h": 14,
+         "r": 0,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Secondary button",
+     "type": "INSTANCE",
+     "w": 142,
+     "h": 48,
+     "pl": 12,
+     "pr": 12,
+     "pt": 8,
+     "pb": 8,
+     "gap": 4,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "stroke": [
+      "#D0D5DD"
+     ],
+     "sw": 1,
+     "variant": {
+      "Leading icon swap#133:10": "133:3719",
+      "Button text#1246:27": true,
+      "Trailing icon#105:4": false,
+      "Trailing icon swap#133:12": "133:3719",
+      "Leading icon#105:2": true,
+      "Text#105:0": "Button",
+      "State": "Default",
+      "Size": "lg"
+     },
+     "component": "Secondary button [State=Default, Size=lg]",
+     "kids": [
+      {
+       "name": "crop_free-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 14,
+         "h": 14,
+         "r": 0,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      },
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 94,
+       "h": 24,
+       "fill": [
+        "#475467"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 16,
+        "lh": null
+       },
+       "text": "Button"
+      },
+      {
+       "name": "crop_free-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 14,
+         "h": 14,
+         "r": 0,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

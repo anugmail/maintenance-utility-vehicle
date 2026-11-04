@@ -1,0 +1,376 @@
+{
+ "component": "Horizontal radio groups",
+ "page": "✅ Radio button",
+ "node": "2:17",
+ "props": {},
+ "variants": [
+  {
+   "name": "Horizontal radio groups",
+   "type": "COMPONENT",
+   "w": 360,
+   "h": 98,
+   "gap": 8,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "sw": 1,
+   "kids": [
+    {
+     "name": "Label",
+     "type": "FRAME",
+     "w": 360,
+     "h": 24,
+     "gap": 4,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "crop_free-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 17,
+         "h": 17,
+         "r": 0,
+         "fill": [
+          "#667085"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      },
+      {
+       "name": "Label",
+       "type": "TEXT",
+       "w": 40,
+       "h": 24,
+       "fill": [
+        "#475467"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 16,
+        "lh": null
+       },
+       "text": "Label"
+      },
+      {
+       "name": "info-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "info-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 19,
+         "h": 19,
+         "r": 0,
+         "fill": [
+          "#D0D5DD"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Container",
+     "type": "FRAME",
+     "w": 360,
+     "h": 40,
+     "gap": 16,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Radio button with text",
+       "type": "FRAME",
+       "w": 81,
+       "h": 40,
+       "gap": 12,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Radio button",
+         "type": "INSTANCE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "variant": {
+          "State": "Default",
+          "Selected": "True"
+         },
+         "component": "Radio button [State=Default, Selected=True]",
+         "kids": [
+          {
+           "name": "Surface with icon",
+           "type": "GROUP",
+           "w": 20,
+           "h": 20
+          }
+         ]
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 49,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Option"
+        }
+       ]
+      },
+      {
+       "name": "Radio button with text",
+       "type": "FRAME",
+       "w": 77,
+       "h": 40,
+       "gap": 8,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Radio button",
+         "type": "INSTANCE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "variant": {
+          "State": "Default",
+          "Selected": "False"
+         },
+         "component": "Radio button [State=Default, Selected=False]",
+         "kids": [
+          {
+           "name": "Surface",
+           "type": "ELLIPSE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "stroke": [
+            "#D0D5DD"
+           ],
+           "sw": 2
+          }
+         ]
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 49,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Option"
+        }
+       ]
+      },
+      {
+       "name": "Radio button with text",
+       "type": "FRAME",
+       "w": 77,
+       "h": 40,
+       "gap": 8,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Radio button",
+         "type": "INSTANCE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "variant": {
+          "State": "Default",
+          "Selected": "False"
+         },
+         "component": "Radio button [State=Default, Selected=False]",
+         "kids": [
+          {
+           "name": "Surface",
+           "type": "ELLIPSE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "stroke": [
+            "#D0D5DD"
+           ],
+           "sw": 2
+          }
+         ]
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 49,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Option"
+        }
+       ]
+      },
+      {
+       "name": "Radio button with text",
+       "type": "FRAME",
+       "w": 77,
+       "h": 40,
+       "gap": 8,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Radio button",
+         "type": "INSTANCE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "variant": {
+          "State": "Default",
+          "Selected": "False"
+         },
+         "component": "Radio button [State=Default, Selected=False]",
+         "kids": [
+          {
+           "name": "Surface",
+           "type": "ELLIPSE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "stroke": [
+            "#D0D5DD"
+           ],
+           "sw": 2
+          }
+         ]
+        },
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 49,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Option"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Helper",
+     "type": "TEXT",
+     "w": 360,
+     "h": 18,
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 12,
+      "lh": null
+     },
+     "text": "Helper"
+    }
+   ]
+  }
+ ]
+}

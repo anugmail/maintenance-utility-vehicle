@@ -1,0 +1,1145 @@
+{
+ "component": "Header navigation",
+ "page": "Header navigation",
+ "node": "2:4",
+ "props": {
+  "Breakpoint": {
+   "type": "VARIANT",
+   "defaultValue": "Desktop",
+   "variantOptions": [
+    "Desktop",
+    "Tablet",
+    "Mobile"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "name": "Breakpoint=Desktop",
+   "type": "COMPONENT",
+   "w": 1187,
+   "h": 64,
+   "pl": 32,
+   "pr": 32,
+   "pt": 12,
+   "pb": 12,
+   "gap": 8,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#EAECF0"
+   ],
+   "variant": {
+    "Breakpoint": "Desktop"
+   },
+   "kids": [
+    {
+     "name": "Section",
+     "type": "FRAME",
+     "w": 164,
+     "h": 40,
+     "gap": 8,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Nav items",
+       "type": "FRAME",
+       "w": 120,
+       "h": 40,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Nav button",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 8,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "sw": 1,
+         "variant": {
+          "Text#1935:5": "Text",
+          "Indicator#1935:3": false,
+          "Icon swap#1935:1": "1308:1317",
+          "State": "Default"
+         },
+         "component": "Nav button [State=Default]",
+         "kids": [
+          {
+           "name": "Indicator",
+           "type": "INSTANCE",
+           "w": 8,
+           "h": 8,
+           "pl": 1,
+           "pr": 1,
+           "pt": 1,
+           "pb": 1,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Size": "sm"
+           },
+           "component": "Indicator [Size=sm]"
+          },
+          {
+           "name": "search-24-300-round",
+           "type": "INSTANCE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "search-24-300-round"
+          }
+         ]
+        },
+        {
+         "name": "Nav button",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 8,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "sw": 1,
+         "variant": {
+          "Text#1935:5": "Text",
+          "Indicator#1935:3": false,
+          "Icon swap#1935:1": "1308:1017",
+          "State": "Default"
+         },
+         "component": "Nav button [State=Default]",
+         "kids": [
+          {
+           "name": "Indicator",
+           "type": "INSTANCE",
+           "w": 8,
+           "h": 8,
+           "pl": 1,
+           "pr": 1,
+           "pt": 1,
+           "pb": 1,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Size": "sm"
+           },
+           "component": "Indicator [Size=sm]"
+          },
+          {
+           "name": "light_mode-24-300-round",
+           "type": "INSTANCE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "light_mode-24-300-round"
+          }
+         ]
+        },
+        {
+         "name": "Nav button",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 8,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "sw": 1,
+         "variant": {
+          "Text#1935:5": "Text",
+          "Indicator#1935:3": true,
+          "Icon swap#1935:1": "1308:1018",
+          "State": "Default"
+         },
+         "component": "Nav button [State=Default]",
+         "kids": [
+          {
+           "name": "Indicator",
+           "type": "INSTANCE",
+           "w": 8,
+           "h": 8,
+           "pl": 1,
+           "pr": 1,
+           "pt": 1,
+           "pb": 1,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Size": "sm"
+           },
+           "component": "Indicator [Size=sm]"
+          },
+          {
+           "name": "notifications-24-300-round",
+           "type": "INSTANCE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "notifications-24-300-round"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Avatar",
+       "type": "INSTANCE",
+       "w": 36,
+       "h": 36,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "variant": {
+        "Size": "sm"
+       },
+       "component": "Avatar [Size=sm]",
+       "kids": [
+        {
+         "name": "Ellipse",
+         "type": "ELLIPSE",
+         "w": 36,
+         "h": 36,
+         "r": 0,
+         "fill": [
+          "#DCD3FF"
+         ],
+         "sw": 1
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Breakpoint=Tablet",
+   "type": "COMPONENT",
+   "w": 768,
+   "h": 64,
+   "pl": 16,
+   "pr": 16,
+   "pt": 12,
+   "pb": 12,
+   "gap": 8,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#EAECF0"
+   ],
+   "variant": {
+    "Breakpoint": "Tablet"
+   },
+   "kids": [
+    {
+     "name": "Section",
+     "type": "FRAME",
+     "w": 146,
+     "h": 40,
+     "gap": 8,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Brand logo (Light mode)",
+       "type": "INSTANCE",
+       "w": 98,
+       "h": 40,
+       "pl": 4,
+       "pr": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "Size": "md"
+       },
+       "component": "Brand logo (Light mode) [Size=md]",
+       "kids": [
+        {
+         "name": "Logo",
+         "type": "GROUP",
+         "w": 90,
+         "h": 28,
+         "kids": [
+          {
+           "name": "Group",
+           "type": "GROUP",
+           "w": 32,
+           "h": 28
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 7,
+           "h": 7,
+           "r": 0,
+           "sw": 1
+          },
+          {
+           "name": "Group",
+           "type": "GROUP",
+           "w": 44,
+           "h": 15
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Nav button",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "pl": 8,
+       "pr": 8,
+       "pt": 8,
+       "pb": 8,
+       "gap": 8,
+       "r": 8,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "sw": 1,
+       "variant": {
+        "Text#1935:5": "Text",
+        "Indicator#1935:3": false,
+        "Icon swap#1935:1": "476:1729",
+        "State": "Default"
+       },
+       "component": "Nav button [State=Default]",
+       "kids": [
+        {
+         "name": "Indicator",
+         "type": "INSTANCE",
+         "w": 8,
+         "h": 8,
+         "pl": 1,
+         "pr": 1,
+         "pt": 1,
+         "pb": 1,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Size": "sm"
+         },
+         "component": "Indicator [Size=sm]",
+         "kids": [
+          {
+           "name": "Indicator",
+           "type": "ELLIPSE",
+           "w": 6,
+           "h": 6,
+           "r": 0,
+           "fill": [
+            "#A80689"
+           ],
+           "sw": 1
+          }
+         ]
+        },
+        {
+         "name": "menu-24-300-round",
+         "type": "INSTANCE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "menu-24-300-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 17,
+           "h": 11,
+           "r": 0,
+           "fill": [
+            "#667085"
+           ],
+           "sw": 0.02500000037252903
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Section",
+     "type": "FRAME",
+     "w": 164,
+     "h": 40,
+     "gap": 8,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Nav items",
+       "type": "FRAME",
+       "w": 120,
+       "h": 40,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Nav button",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 8,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "sw": 1,
+         "variant": {
+          "Text#1935:5": "Text",
+          "Indicator#1935:3": false,
+          "Icon swap#1935:1": "1308:1317",
+          "State": "Default"
+         },
+         "component": "Nav button [State=Default]",
+         "kids": [
+          {
+           "name": "Indicator",
+           "type": "INSTANCE",
+           "w": 8,
+           "h": 8,
+           "pl": 1,
+           "pr": 1,
+           "pt": 1,
+           "pb": 1,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Size": "sm"
+           },
+           "component": "Indicator [Size=sm]"
+          },
+          {
+           "name": "search-24-300-round",
+           "type": "INSTANCE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "search-24-300-round"
+          }
+         ]
+        },
+        {
+         "name": "Nav button",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 8,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "sw": 1,
+         "variant": {
+          "Text#1935:5": "Text",
+          "Indicator#1935:3": false,
+          "Icon swap#1935:1": "1308:1017",
+          "State": "Default"
+         },
+         "component": "Nav button [State=Default]",
+         "kids": [
+          {
+           "name": "Indicator",
+           "type": "INSTANCE",
+           "w": 8,
+           "h": 8,
+           "pl": 1,
+           "pr": 1,
+           "pt": 1,
+           "pb": 1,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Size": "sm"
+           },
+           "component": "Indicator [Size=sm]"
+          },
+          {
+           "name": "light_mode-24-300-round",
+           "type": "INSTANCE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "light_mode-24-300-round"
+          }
+         ]
+        },
+        {
+         "name": "Nav button",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 8,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "sw": 1,
+         "variant": {
+          "Text#1935:5": "Text",
+          "Indicator#1935:3": true,
+          "Icon swap#1935:1": "1308:1018",
+          "State": "Default"
+         },
+         "component": "Nav button [State=Default]",
+         "kids": [
+          {
+           "name": "Indicator",
+           "type": "INSTANCE",
+           "w": 8,
+           "h": 8,
+           "pl": 1,
+           "pr": 1,
+           "pt": 1,
+           "pb": 1,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Size": "sm"
+           },
+           "component": "Indicator [Size=sm]"
+          },
+          {
+           "name": "notifications-24-300-round",
+           "type": "INSTANCE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "notifications-24-300-round"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Avatar",
+       "type": "INSTANCE",
+       "w": 36,
+       "h": 36,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "variant": {
+        "Size": "sm"
+       },
+       "component": "Avatar [Size=sm]",
+       "kids": [
+        {
+         "name": "Ellipse",
+         "type": "ELLIPSE",
+         "w": 36,
+         "h": 36,
+         "r": 0,
+         "fill": [
+          "#DCD3FF"
+         ],
+         "sw": 1
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Breakpoint=Mobile",
+   "type": "COMPONENT",
+   "w": 360,
+   "h": 64,
+   "pl": 16,
+   "pr": 16,
+   "pt": 12,
+   "pb": 12,
+   "gap": 8,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#EAECF0"
+   ],
+   "variant": {
+    "Breakpoint": "Mobile"
+   },
+   "kids": [
+    {
+     "name": "Section",
+     "type": "FRAME",
+     "w": 40,
+     "h": 40,
+     "gap": 8,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Brand logo (Light mode)",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "Size": "sm"
+       },
+       "component": "Brand logo (Light mode) [Size=sm]",
+       "kids": [
+        {
+         "name": "Logo",
+         "type": "GROUP",
+         "w": 32,
+         "h": 28,
+         "kids": [
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 19,
+           "h": 28,
+           "r": 0,
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 19,
+           "h": 28,
+           "r": 0,
+           "sw": 1
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Menu",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "pl": 8,
+       "pr": 8,
+       "pt": 8,
+       "pb": 8,
+       "r": 9999,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "sw": 1,
+       "variant": {
+        "Icon swap#133:10": "476:1729",
+        "State": "Default"
+       },
+       "component": "Icon button [State=Default]",
+       "kids": [
+        {
+         "name": "menu-24-300-round",
+         "type": "INSTANCE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "menu-24-300-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 14,
+           "h": 9,
+           "r": 0,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 0.02500000037252903
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Search",
+       "type": "INSTANCE",
+       "w": 280,
+       "h": 40,
+       "gap": 8,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "variant": {
+        "Optional#1105:0": true,
+        "Show Placeholder#3747:0": true,
+        "Trailing icon swap#33:6": "22:133",
+        "Info icon#522:0": false,
+        "Text#33:0": "Search...",
+        "Label text#265:7": "Label",
+        "Label#265:0": false,
+        "Trailing icon#33:12": false,
+        "Helper#33:19": false,
+        "Leading icon#33:9": true,
+        "Helper text#33:15": "Helper",
+        "Leading icon swap#33:3": "3686:4382",
+        "State": "Default",
+        "Size": "md"
+       },
+       "component": "Text input [State=Default, Size=md]",
+       "kids": [
+        {
+         "name": "Input label",
+         "type": "INSTANCE",
+         "w": 352,
+         "h": 24,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "variant": {
+          "button#3608:0": false,
+          "Info icon#2404:1": true,
+          "Optional#2404:2": true,
+          "Label text#2404:0": "Label"
+         },
+         "component": "Input label",
+         "kids": [
+          {
+           "name": "Left",
+           "type": "FRAME",
+           "w": 352,
+           "h": 24,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1
+          },
+          {
+           "name": "Tertiary brand button",
+           "type": "INSTANCE",
+           "w": 107,
+           "h": 24,
+           "pl": 8,
+           "pr": 8,
+           "pt": 8,
+           "pb": 8,
+           "gap": 4,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1,
+           "variant": {
+            "Leading icon swap#133:10": "133:3719",
+            "Button text#1153:12": true,
+            "Trailing icon#105:4": false,
+            "Trailing icon swap#133:12": "133:3719",
+            "Leading icon#105:2": false,
+            "Text#105:0": "Button",
+            "State": "Default"
+           },
+           "component": "Tertiary brand button [State=Default]"
+          }
+         ]
+        },
+        {
+         "name": "Label",
+         "type": "FRAME",
+         "w": 352,
+         "h": 24,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Label",
+           "type": "TEXT",
+           "w": 40,
+           "h": 24,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 16,
+            "lh": null
+           },
+           "text": "Label"
+          },
+          {
+           "name": "(ถ้ามี)",
+           "type": "TEXT",
+           "w": 38,
+           "h": 24,
+           "fill": [
+            "#98A2B3"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 16,
+            "lh": null
+           },
+           "text": "(ถ้ามี)"
+          },
+          {
+           "name": "info-24-300-round",
+           "type": "INSTANCE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "info-24-300-round"
+          }
+         ]
+        },
+        {
+         "name": "Container",
+         "type": "FRAME",
+         "w": 280,
+         "h": 40,
+         "pl": 12,
+         "pr": 12,
+         "pt": 8,
+         "pb": 8,
+         "gap": 8,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 1,
+         "kids": [
+          {
+           "name": "search-24-300-round",
+           "type": "INSTANCE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "search-24-300-round"
+          },
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 224,
+           "h": 24,
+           "fill": [
+            "#98A2B3"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 16,
+            "lh": null
+           },
+           "text": "Search..."
+          },
+          {
+           "name": "close_small-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "close_small-20-400-round"
+          }
+         ]
+        },
+        {
+         "name": "Helper",
+         "type": "TEXT",
+         "w": 352,
+         "h": 18,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 12,
+          "lh": null
+         },
+         "text": "Helper"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Section",
+     "type": "FRAME",
+     "w": 80,
+     "h": 40,
+     "gap": 8,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Nav items",
+       "type": "FRAME",
+       "w": 80,
+       "h": 40,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Nav button",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 8,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "sw": 1,
+         "variant": {
+          "Text#1935:5": "Text",
+          "Indicator#1935:3": true,
+          "Icon swap#1935:1": "1308:1018",
+          "State": "Default"
+         },
+         "component": "Nav button [State=Default]",
+         "kids": [
+          {
+           "name": "Indicator",
+           "type": "INSTANCE",
+           "w": 8,
+           "h": 8,
+           "pl": 1,
+           "pr": 1,
+           "pt": 1,
+           "pb": 1,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Size": "sm"
+           },
+           "component": "Indicator [Size=sm]"
+          },
+          {
+           "name": "notifications-24-300-round",
+           "type": "INSTANCE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "notifications-24-300-round"
+          }
+         ]
+        },
+        {
+         "name": "Nav button",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 8,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "sw": 1,
+         "variant": {
+          "Text#1935:5": "Text",
+          "Indicator#1935:3": false,
+          "Icon swap#1935:1": "476:1729",
+          "State": "Default"
+         },
+         "component": "Nav button [State=Default]",
+         "kids": [
+          {
+           "name": "Indicator",
+           "type": "INSTANCE",
+           "w": 8,
+           "h": 8,
+           "pl": 1,
+           "pr": 1,
+           "pt": 1,
+           "pb": 1,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "MIN",
+           "sw": 1,
+           "variant": {
+            "Size": "sm"
+           },
+           "component": "Indicator [Size=sm]"
+          },
+          {
+           "name": "menu-24-300-round",
+           "type": "INSTANCE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "menu-24-300-round"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

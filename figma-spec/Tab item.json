@@ -1,0 +1,556 @@
+{
+ "component": "Tab item",
+ "page": "✅ Tabs",
+ "node": "2:9",
+ "props": {
+  "Text#22:4": {
+   "type": "TEXT",
+   "defaultValue": "Tab"
+  },
+  "Badge#1387:0": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "State": {
+   "type": "VARIANT",
+   "defaultValue": "Default",
+   "variantOptions": [
+    "Default",
+    "Hover",
+    "Focused"
+   ]
+  },
+  "Active": {
+   "type": "VARIANT",
+   "defaultValue": "False",
+   "variantOptions": [
+    "True",
+    "False"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "name": "State=Default, Active=False",
+   "type": "COMPONENT",
+   "w": 110,
+   "h": 48,
+   "pl": 24,
+   "pr": 24,
+   "pt": 12,
+   "pb": 12,
+   "gap": 8,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "variant": {
+    "State": "Default",
+    "Active": "False"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 23,
+     "h": 21,
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 14,
+      "lh": null
+     },
+     "text": "Tab"
+    },
+    {
+     "name": "Pill outline",
+     "type": "INSTANCE",
+     "w": 31,
+     "h": 24,
+     "pl": 8,
+     "pr": 8,
+     "pt": 4,
+     "pb": 4,
+     "r": 9999,
+     "dir": "VERTICAL",
+     "align": "CENTER",
+     "fill": [
+      "#F4F2FF"
+     ],
+     "stroke": [
+      "#DCD3FF"
+     ],
+     "sw": 1,
+     "variant": {
+      "Text#695:3": "20",
+      "Color": "Brand"
+     },
+     "component": "Pill outline [Color=Brand]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 15,
+       "h": 18,
+       "fill": [
+        "#6E1AE7"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 12,
+        "lh": null
+       },
+       "text": "20"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Hover, Active=False",
+   "type": "COMPONENT",
+   "w": 110,
+   "h": 48,
+   "pl": 24,
+   "pr": 24,
+   "pt": 12,
+   "pb": 12,
+   "gap": 8,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#EAECF0"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "variant": {
+    "State": "Hover",
+    "Active": "False"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 23,
+     "h": 21,
+     "fill": [
+      "#000000"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 14,
+      "lh": null
+     },
+     "text": "Tab"
+    },
+    {
+     "name": "Pill outline",
+     "type": "INSTANCE",
+     "w": 31,
+     "h": 24,
+     "pl": 8,
+     "pr": 8,
+     "pt": 4,
+     "pb": 4,
+     "r": 9999,
+     "dir": "VERTICAL",
+     "align": "CENTER",
+     "fill": [
+      "#F4F2FF"
+     ],
+     "stroke": [
+      "#DCD3FF"
+     ],
+     "sw": 1,
+     "variant": {
+      "Text#695:3": "20",
+      "Color": "Brand"
+     },
+     "component": "Pill outline [Color=Brand]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 15,
+       "h": 18,
+       "fill": [
+        "#6E1AE7"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 12,
+        "lh": null
+       },
+       "text": "20"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Focused, Active=False",
+   "type": "COMPONENT",
+   "w": 110,
+   "h": 48,
+   "pl": 24,
+   "pr": 24,
+   "pt": 12,
+   "pb": 12,
+   "gap": 8,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#F9FAFB"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "variant": {
+    "State": "Focused",
+    "Active": "False"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 23,
+     "h": 21,
+     "fill": [
+      "#000000"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 14,
+      "lh": null
+     },
+     "text": "Tab"
+    },
+    {
+     "name": "Pill outline",
+     "type": "INSTANCE",
+     "w": 31,
+     "h": 24,
+     "pl": 8,
+     "pr": 8,
+     "pt": 4,
+     "pb": 4,
+     "r": 9999,
+     "dir": "VERTICAL",
+     "align": "CENTER",
+     "fill": [
+      "#F4F2FF"
+     ],
+     "stroke": [
+      "#DCD3FF"
+     ],
+     "sw": 1,
+     "variant": {
+      "Text#695:3": "20",
+      "Color": "Brand"
+     },
+     "component": "Pill outline [Color=Brand]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 15,
+       "h": 18,
+       "fill": [
+        "#6E1AE7"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 12,
+        "lh": null
+       },
+       "text": "20"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Default, Active=True",
+   "type": "COMPONENT",
+   "w": 110,
+   "h": 48,
+   "pl": 24,
+   "pr": 24,
+   "pt": 12,
+   "pb": 12,
+   "gap": 8,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#6E1AE7"
+   ],
+   "variant": {
+    "State": "Default",
+    "Active": "True"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 23,
+     "h": 21,
+     "fill": [
+      "#000000"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 14,
+      "lh": null
+     },
+     "text": "Tab"
+    },
+    {
+     "name": "Pill outline",
+     "type": "INSTANCE",
+     "w": 31,
+     "h": 24,
+     "pl": 8,
+     "pr": 8,
+     "pt": 4,
+     "pb": 4,
+     "r": 9999,
+     "dir": "VERTICAL",
+     "align": "CENTER",
+     "fill": [
+      "#F4F2FF"
+     ],
+     "stroke": [
+      "#DCD3FF"
+     ],
+     "sw": 1,
+     "variant": {
+      "Text#695:3": "20",
+      "Color": "Brand"
+     },
+     "component": "Pill outline [Color=Brand]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 15,
+       "h": 18,
+       "fill": [
+        "#6E1AE7"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 12,
+        "lh": null
+       },
+       "text": "20"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Hover, Active=True",
+   "type": "COMPONENT",
+   "w": 110,
+   "h": 48,
+   "pl": 24,
+   "pr": 24,
+   "pt": 12,
+   "pb": 12,
+   "gap": 8,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#EAECF0"
+   ],
+   "stroke": [
+    "#6E1AE7"
+   ],
+   "variant": {
+    "State": "Hover",
+    "Active": "True"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 23,
+     "h": 21,
+     "fill": [
+      "#000000"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 14,
+      "lh": null
+     },
+     "text": "Tab"
+    },
+    {
+     "name": "Pill outline",
+     "type": "INSTANCE",
+     "w": 31,
+     "h": 24,
+     "pl": 8,
+     "pr": 8,
+     "pt": 4,
+     "pb": 4,
+     "r": 9999,
+     "dir": "VERTICAL",
+     "align": "CENTER",
+     "fill": [
+      "#F4F2FF"
+     ],
+     "stroke": [
+      "#DCD3FF"
+     ],
+     "sw": 1,
+     "variant": {
+      "Text#695:3": "20",
+      "Color": "Brand"
+     },
+     "component": "Pill outline [Color=Brand]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 15,
+       "h": 18,
+       "fill": [
+        "#6E1AE7"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 12,
+        "lh": null
+       },
+       "text": "20"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Focused, Active=True",
+   "type": "COMPONENT",
+   "w": 110,
+   "h": 48,
+   "pl": 24,
+   "pr": 24,
+   "pt": 12,
+   "pb": 12,
+   "gap": 8,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#F9FAFB"
+   ],
+   "stroke": [
+    "#6E1AE7"
+   ],
+   "variant": {
+    "State": "Focused",
+    "Active": "True"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 23,
+     "h": 21,
+     "fill": [
+      "#000000"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 14,
+      "lh": null
+     },
+     "text": "Tab"
+    },
+    {
+     "name": "Pill outline",
+     "type": "INSTANCE",
+     "w": 31,
+     "h": 24,
+     "pl": 8,
+     "pr": 8,
+     "pt": 4,
+     "pb": 4,
+     "r": 9999,
+     "dir": "VERTICAL",
+     "align": "CENTER",
+     "fill": [
+      "#F4F2FF"
+     ],
+     "stroke": [
+      "#DCD3FF"
+     ],
+     "sw": 1,
+     "variant": {
+      "Text#695:3": "20",
+      "Color": "Brand"
+     },
+     "component": "Pill outline [Color=Brand]",
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 15,
+       "h": 18,
+       "fill": [
+        "#6E1AE7"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 12,
+        "lh": null
+       },
+       "text": "20"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

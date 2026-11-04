@@ -1,0 +1,684 @@
+{
+ "component": "Button groups pagination item",
+ "page": "✅ Pagination",
+ "node": "2:15",
+ "props": {
+  "Number#917:4": {
+   "type": "TEXT",
+   "defaultValue": "1"
+  },
+  "Type": {
+   "type": "VARIANT",
+   "defaultValue": "Previous",
+   "variantOptions": [
+    "Previous",
+    "Next",
+    "Number"
+   ]
+  },
+  "State": {
+   "type": "VARIANT",
+   "defaultValue": "Default",
+   "variantOptions": [
+    "Default",
+    "Hover/Active",
+    "Focused",
+    "Disabled"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "name": "Type=Previous, State=Default",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "variant": {
+    "Type": "Previous",
+    "State": "Default"
+   },
+   "kids": [
+    {
+     "name": "keyboard_arrow_left-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "keyboard_arrow_left-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 5,
+       "h": 9,
+       "r": 0,
+       "fill": [
+        "#667085"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Next, State=Default",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "variant": {
+    "Type": "Next",
+    "State": "Default"
+   },
+   "kids": [
+    {
+     "name": "keyboard_arrow_right-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "keyboard_arrow_right-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 5,
+       "h": 9,
+       "r": 0,
+       "fill": [
+        "#667085"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Previous, State=Focused",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#F9FAFB"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "variant": {
+    "Type": "Previous",
+    "State": "Focused"
+   },
+   "kids": [
+    {
+     "name": "keyboard_arrow_left-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "keyboard_arrow_left-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 5,
+       "h": 9,
+       "r": 0,
+       "fill": [
+        "#667085"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Next, State=Focused",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#F9FAFB"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "variant": {
+    "Type": "Next",
+    "State": "Focused"
+   },
+   "kids": [
+    {
+     "name": "keyboard_arrow_right-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "keyboard_arrow_right-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 5,
+       "h": 9,
+       "r": 0,
+       "fill": [
+        "#667085"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Previous, State=Disabled",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "variant": {
+    "Type": "Previous",
+    "State": "Disabled"
+   },
+   "kids": [
+    {
+     "name": "keyboard_arrow_left-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "keyboard_arrow_left-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 5,
+       "h": 9,
+       "r": 0,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Next, State=Disabled",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "variant": {
+    "Type": "Next",
+    "State": "Disabled"
+   },
+   "kids": [
+    {
+     "name": "keyboard_arrow_right-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "keyboard_arrow_right-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 5,
+       "h": 9,
+       "r": 0,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Number, State=Default",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "variant": {
+    "Type": "Number",
+    "State": "Default"
+   },
+   "kids": [
+    {
+     "name": "Number",
+     "type": "TEXT",
+     "w": 9,
+     "h": 21,
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null
+     },
+     "text": "1"
+    }
+   ]
+  },
+  {
+   "name": "Type=Previous, State=Hover/Active",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#EAECF0"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "variant": {
+    "Type": "Previous",
+    "State": "Hover/Active"
+   },
+   "kids": [
+    {
+     "name": "keyboard_arrow_left-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "keyboard_arrow_left-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 5,
+       "h": 9,
+       "r": 0,
+       "fill": [
+        "#667085"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Next, State=Hover/Active",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#EAECF0"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "variant": {
+    "Type": "Next",
+    "State": "Hover/Active"
+   },
+   "kids": [
+    {
+     "name": "keyboard_arrow_right-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "keyboard_arrow_right-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 5,
+       "h": 9,
+       "r": 0,
+       "fill": [
+        "#667085"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Type=Number, State=Hover/Active",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#EAECF0"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "variant": {
+    "Type": "Number",
+    "State": "Hover/Active"
+   },
+   "kids": [
+    {
+     "name": "Number",
+     "type": "TEXT",
+     "w": 9,
+     "h": 21,
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null
+     },
+     "text": "1"
+    }
+   ]
+  },
+  {
+   "name": "Type=Number, State=Focused",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#F9FAFB"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "variant": {
+    "Type": "Number",
+    "State": "Focused"
+   },
+   "kids": [
+    {
+     "name": "Number",
+     "type": "TEXT",
+     "w": 9,
+     "h": 21,
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null
+     },
+     "text": "1"
+    }
+   ]
+  },
+  {
+   "name": "Type=Number, State=Disabled",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "variant": {
+    "Type": "Number",
+    "State": "Disabled"
+   },
+   "kids": [
+    {
+     "name": "Number",
+     "type": "TEXT",
+     "w": 9,
+     "h": 21,
+     "fill": [
+      "#98A2B3"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null
+     },
+     "text": "1"
+    }
+   ]
+  }
+ ]
+}

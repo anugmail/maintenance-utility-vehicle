@@ -1,0 +1,12 @@
+/* Tailwind 4 + token ของ design system (ค่าจากไลบรารี (Component) VMS Plus)
+   tokens.css และ theme.css สร้างด้วย npm run sync-tokens — แก้สีที่ design system ต้นทางที่เดียว · light เท่านั้น */
+@import "tailwindcss";
+@import "../styles/tokens.css";
+@import "../styles/theme.css";
+
+@layer base {
+  html { color-scheme: light; }
+  body { background-color: #fff; color: #000; font-family: var(--font); font-size: var(--fs-body); line-height: var(--lh); }
+  /* ไอคอน Material Symbols (ตามไลบรารี: ไอคอนทั้งหมดเป็น Material Symbols Rounded weight 300) */
+  .ms { font-family: "Material Symbols Rounded"; font-weight: 300; font-style: normal; display: inline-block; line-height: 1; vertical-align: middle; font-size: 20px; -webkit-font-smoothing: antialiased; font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 24; }
+}

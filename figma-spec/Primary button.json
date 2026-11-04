@@ -1,0 +1,935 @@
+{
+ "component": "Primary button",
+ "page": "✅ Button",
+ "node": "2:5",
+ "props": {
+  "Text#105:0": {
+   "type": "TEXT",
+   "defaultValue": "Button"
+  },
+  "Leading icon#105:2": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Trailing icon#105:4": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Leading icon swap#133:10": {
+   "type": "INSTANCE_SWAP",
+   "defaultValue": "133:3719",
+   "preferredValues": [
+    {
+     "type": "COMPONENT",
+     "key": "234bdc259de272a633fc03791898e92bd60dfc64"
+    }
+   ]
+  },
+  "Trailing icon swap#133:12": {
+   "type": "INSTANCE_SWAP",
+   "defaultValue": "133:3719",
+   "preferredValues": [
+    {
+     "type": "COMPONENT",
+     "key": "234bdc259de272a633fc03791898e92bd60dfc64"
+    }
+   ]
+  },
+  "Button text#1246:11": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "State": {
+   "type": "VARIANT",
+   "defaultValue": "Default",
+   "variantOptions": [
+    "Default",
+    "Hover",
+    "Focused",
+    "Disabled"
+   ]
+  },
+  "Size": {
+   "type": "VARIANT",
+   "defaultValue": "md",
+   "variantOptions": [
+    "md",
+    "lg"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "name": "State=Default, Size=md",
+   "type": "COMPONENT",
+   "w": 115,
+   "h": 40,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 8,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#A80689"
+   ],
+   "sw": 1,
+   "variant": {
+    "State": "Default",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "crop_free-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "crop_free-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 14,
+       "h": 14,
+       "r": 0,
+       "fill": [
+        "#FFFFFF"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    },
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 43,
+     "h": 21,
+     "fill": [
+      "#FFFFFF"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 14,
+      "lh": null
+     },
+     "text": "Button"
+    },
+    {
+     "name": "crop_free-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "crop_free-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 14,
+       "h": 14,
+       "r": 0,
+       "fill": [
+        "#FFFFFF"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Default, Size=lg",
+   "type": "COMPONENT",
+   "w": 122,
+   "h": 48,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 8,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#A80689"
+   ],
+   "sw": 1,
+   "variant": {
+    "State": "Default",
+    "Size": "lg"
+   },
+   "kids": [
+    {
+     "name": "crop_free-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "crop_free-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 14,
+       "h": 14,
+       "r": 0,
+       "fill": [
+        "#FFFFFF"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    },
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 50,
+     "h": 24,
+     "fill": [
+      "#FFFFFF"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 16,
+      "lh": null
+     },
+     "text": "Button"
+    },
+    {
+     "name": "crop_free-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "crop_free-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 14,
+       "h": 14,
+       "r": 0,
+       "fill": [
+        "#FFFFFF"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Hover, Size=md",
+   "type": "COMPONENT",
+   "w": 115,
+   "h": 40,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 8,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#CF07AA"
+   ],
+   "sw": 1,
+   "variant": {
+    "State": "Hover",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "crop_free-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "crop_free-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 14,
+       "h": 14,
+       "r": 0,
+       "fill": [
+        "#FFFFFF"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    },
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 43,
+     "h": 21,
+     "fill": [
+      "#FFFFFF"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 14,
+      "lh": null
+     },
+     "text": "Button"
+    },
+    {
+     "name": "crop_free-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "crop_free-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 14,
+       "h": 14,
+       "r": 0,
+       "fill": [
+        "#FFFFFF"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Hover, Size=lg",
+   "type": "COMPONENT",
+   "w": 122,
+   "h": 48,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 8,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#CF07AA"
+   ],
+   "sw": 1,
+   "variant": {
+    "State": "Hover",
+    "Size": "lg"
+   },
+   "kids": [
+    {
+     "name": "crop_free-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "crop_free-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 14,
+       "h": 14,
+       "r": 0,
+       "fill": [
+        "#FFFFFF"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    },
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 50,
+     "h": 24,
+     "fill": [
+      "#FFFFFF"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 16,
+      "lh": null
+     },
+     "text": "Button"
+    },
+    {
+     "name": "crop_free-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "crop_free-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 14,
+       "h": 14,
+       "r": 0,
+       "fill": [
+        "#FFFFFF"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Focused, Size=md",
+   "type": "COMPONENT",
+   "w": 115,
+   "h": 40,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 8,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#A80689"
+   ],
+   "sw": 1,
+   "variant": {
+    "State": "Focused",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "crop_free-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "crop_free-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 14,
+       "h": 14,
+       "r": 0,
+       "fill": [
+        "#FFFFFF"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    },
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 43,
+     "h": 21,
+     "fill": [
+      "#FFFFFF"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 14,
+      "lh": null
+     },
+     "text": "Button"
+    },
+    {
+     "name": "crop_free-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "crop_free-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 14,
+       "h": 14,
+       "r": 0,
+       "fill": [
+        "#FFFFFF"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Focused, Size=lg",
+   "type": "COMPONENT",
+   "w": 122,
+   "h": 48,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 8,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#A80689"
+   ],
+   "sw": 1,
+   "variant": {
+    "State": "Focused",
+    "Size": "lg"
+   },
+   "kids": [
+    {
+     "name": "crop_free-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "crop_free-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 14,
+       "h": 14,
+       "r": 0,
+       "fill": [
+        "#FFFFFF"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    },
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 50,
+     "h": 24,
+     "fill": [
+      "#FFFFFF"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 16,
+      "lh": null
+     },
+     "text": "Button"
+    },
+    {
+     "name": "crop_free-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "crop_free-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 14,
+       "h": 14,
+       "r": 0,
+       "fill": [
+        "#FFFFFF"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Disabled, Size=md",
+   "type": "COMPONENT",
+   "w": 115,
+   "h": 40,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 8,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#F2F4F7"
+   ],
+   "sw": 1,
+   "variant": {
+    "State": "Disabled",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "crop_free-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "crop_free-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 14,
+       "h": 14,
+       "r": 0,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    },
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 43,
+     "h": 21,
+     "fill": [
+      "#98A2B3"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 14,
+      "lh": null
+     },
+     "text": "Button"
+    },
+    {
+     "name": "crop_free-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "crop_free-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 14,
+       "h": 14,
+       "r": 0,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Disabled, Size=lg",
+   "type": "COMPONENT",
+   "w": 122,
+   "h": 48,
+   "pl": 12,
+   "pr": 12,
+   "pt": 8,
+   "pb": 8,
+   "gap": 4,
+   "r": 8,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#F2F4F7"
+   ],
+   "sw": 1,
+   "variant": {
+    "State": "Disabled",
+    "Size": "lg"
+   },
+   "kids": [
+    {
+     "name": "crop_free-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "crop_free-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 14,
+       "h": 14,
+       "r": 0,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    },
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 50,
+     "h": 24,
+     "fill": [
+      "#98A2B3"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 16,
+      "lh": null
+     },
+     "text": "Button"
+    },
+    {
+     "name": "crop_free-20-400-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "crop_free-20-400-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 14,
+       "h": 14,
+       "r": 0,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

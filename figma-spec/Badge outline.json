@@ -1,0 +1,239 @@
+{
+ "component": "Badge outline",
+ "page": "✅ Badge",
+ "node": "2:13",
+ "props": {
+  "Text#2104:3": {
+   "type": "TEXT",
+   "defaultValue": "Badge"
+  },
+  "Color": {
+   "type": "VARIANT",
+   "defaultValue": "Brand",
+   "variantOptions": [
+    "Brand",
+    "Gray",
+    "Disabled",
+    "Success",
+    "Error"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "name": "Color=Brand",
+   "type": "COMPONENT",
+   "w": 51,
+   "h": 24,
+   "pl": 8,
+   "pr": 8,
+   "pt": 4,
+   "pb": 4,
+   "gap": 4,
+   "r": 4,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#FFF5FD"
+   ],
+   "stroke": [
+    "#FED8F6"
+   ],
+   "sw": 1,
+   "variant": {
+    "Color": "Brand"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 35,
+     "h": 18,
+     "fill": [
+      "#A80689"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 12,
+      "lh": null
+     },
+     "text": "Badge"
+    }
+   ]
+  },
+  {
+   "name": "Color=Gray",
+   "type": "COMPONENT",
+   "w": 51,
+   "h": 24,
+   "pl": 8,
+   "pr": 8,
+   "pt": 4,
+   "pb": 4,
+   "gap": 4,
+   "r": 4,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "sw": 1,
+   "variant": {
+    "Color": "Gray"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 35,
+     "h": 18,
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 12,
+      "lh": null
+     },
+     "text": "Badge"
+    }
+   ]
+  },
+  {
+   "name": "Color=Disabled",
+   "type": "COMPONENT",
+   "w": 51,
+   "h": 24,
+   "pl": 8,
+   "pr": 8,
+   "pt": 4,
+   "pb": 4,
+   "gap": 4,
+   "r": 4,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#F2F4F7"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "sw": 1,
+   "variant": {
+    "Color": "Disabled"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 35,
+     "h": 18,
+     "fill": [
+      "#98A2B3"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 12,
+      "lh": null
+     },
+     "text": "Badge"
+    }
+   ]
+  },
+  {
+   "name": "Color=Success",
+   "type": "COMPONENT",
+   "w": 51,
+   "h": 24,
+   "pl": 8,
+   "pr": 8,
+   "pt": 4,
+   "pb": 4,
+   "gap": 4,
+   "r": 4,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#ECFDF3"
+   ],
+   "stroke": [
+    "#ABEFC6"
+   ],
+   "sw": 1,
+   "variant": {
+    "Color": "Success"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 35,
+     "h": 18,
+     "fill": [
+      "#067647"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 12,
+      "lh": null
+     },
+     "text": "Badge"
+    }
+   ]
+  },
+  {
+   "name": "Color=Error",
+   "type": "COMPONENT",
+   "w": 51,
+   "h": 24,
+   "pl": 8,
+   "pr": 8,
+   "pt": 4,
+   "pb": 4,
+   "gap": 4,
+   "r": 4,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#FEF3F2"
+   ],
+   "stroke": [
+    "#FECDCA"
+   ],
+   "sw": 1,
+   "variant": {
+    "Color": "Error"
+   },
+   "kids": [
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 35,
+     "h": 18,
+     "fill": [
+      "#B42318"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 12,
+      "lh": null
+     },
+     "text": "Badge"
+    }
+   ]
+  }
+ ]
+}

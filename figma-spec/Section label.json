@@ -1,0 +1,664 @@
+{
+ "component": "Section label",
+ "page": "✅ Section headers",
+ "node": "2011:6955",
+ "props": {
+  "Supporting#1985:3": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Actions#1985:4": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Title#1985:6": {
+   "type": "TEXT",
+   "defaultValue": "Section label"
+  },
+  "More actions#2004:6": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Info icon#2298:0": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Supporting text#2299:0": {
+   "type": "TEXT",
+   "defaultValue": "Supporting text"
+  },
+  "Primary action#2299:3": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Secondary action#2299:6": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Instance swap#3409:8": {
+   "type": "INSTANCE_SWAP",
+   "defaultValue": "522:18597",
+   "preferredValues": [
+    {
+     "type": "COMPONENT",
+     "key": "deed8e2c30f2e2ea34658c5d32377fbefa68b8f2"
+    }
+   ]
+  },
+  "Breakpoint": {
+   "type": "VARIANT",
+   "defaultValue": "Desktop",
+   "variantOptions": [
+    "Desktop",
+    "Mobile"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "name": "Breakpoint=Desktop",
+   "type": "COMPONENT",
+   "w": 573,
+   "h": 46,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "variant": {
+    "Breakpoint": "Desktop"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 573,
+     "h": 46,
+     "gap": 12,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Label and supporting text",
+       "type": "FRAME",
+       "w": 415,
+       "h": 46,
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Label",
+         "type": "FRAME",
+         "w": 415,
+         "h": 24,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 97,
+           "h": 24,
+           "fill": [
+            "#000000"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 16,
+            "lh": null
+           },
+           "text": "Section label"
+          },
+          {
+           "name": "info-24-300-round",
+           "type": "INSTANCE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "info-24-300-round"
+          }
+         ]
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 415,
+         "h": 18,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 12,
+          "lh": null
+         },
+         "text": "Supporting text"
+        }
+       ]
+      },
+      {
+       "name": "Actions",
+       "type": "FRAME",
+       "w": 158,
+       "h": 40,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Tertiary button",
+         "type": "INSTANCE",
+         "w": 59,
+         "h": 40,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "variant": {
+          "Leading icon swap#133:10": "133:3719",
+          "Trailing icon#105:4": false,
+          "Trailing icon swap#133:12": "133:3719",
+          "Leading icon#105:2": false,
+          "Button text#1153:0": true,
+          "Text#105:0": "Button",
+          "State": "Default",
+          "Size": "md"
+         },
+         "component": "Tertiary button [State=Default, Size=md]",
+         "kids": [
+          {
+           "name": "crop_free-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "crop_free-20-400-round"
+          },
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 43,
+           "h": 21,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 14,
+            "lh": null
+           },
+           "text": "Button"
+          },
+          {
+           "name": "crop_free-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "crop_free-20-400-round"
+          }
+         ]
+        },
+        {
+         "name": "Tertiary brand button",
+         "type": "INSTANCE",
+         "w": 59,
+         "h": 40,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "variant": {
+          "Leading icon swap#133:10": "133:3719",
+          "Button text#1153:12": true,
+          "Trailing icon#105:4": false,
+          "Trailing icon swap#133:12": "133:3719",
+          "Leading icon#105:2": false,
+          "Text#105:0": "Button",
+          "State": "Default"
+         },
+         "component": "Tertiary brand button [State=Default]",
+         "kids": [
+          {
+           "name": "crop_free-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "crop_free-20-400-round"
+          },
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 43,
+           "h": 21,
+           "fill": [
+            "#A80689"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 14,
+            "lh": null
+           },
+           "text": "Button"
+          },
+          {
+           "name": "crop_free-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "crop_free-20-400-round"
+          }
+         ]
+        },
+        {
+         "name": "Tertiary button",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "variant": {
+          "Leading icon swap#133:10": "2004:4890",
+          "Trailing icon#105:4": false,
+          "Trailing icon swap#133:12": "133:3719",
+          "Leading icon#105:2": true,
+          "Button text#1153:0": false,
+          "Text#105:0": "Button",
+          "State": "Default",
+          "Size": "md"
+         },
+         "component": "Tertiary button [State=Default, Size=md]",
+         "kids": [
+          {
+           "name": "more_vert-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "more_vert-20-400-round"
+          },
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 47,
+           "h": 21,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 14,
+            "lh": null
+           },
+           "text": "Button"
+          },
+          {
+           "name": "crop_free-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "crop_free-20-400-round"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Breakpoint=Mobile",
+   "type": "COMPONENT",
+   "w": 328,
+   "h": 46,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "variant": {
+    "Breakpoint": "Mobile"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 328,
+     "h": 46,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Label and supporting text",
+       "type": "FRAME",
+       "w": 170,
+       "h": 46,
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Label",
+         "type": "FRAME",
+         "w": 170,
+         "h": 24,
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "kids": [
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 97,
+           "h": 24,
+           "fill": [
+            "#000000"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 16,
+            "lh": null
+           },
+           "text": "Section label"
+          },
+          {
+           "name": "info-24-300-round",
+           "type": "INSTANCE",
+           "w": 24,
+           "h": 24,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "info-24-300-round"
+          }
+         ]
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 170,
+         "h": 18,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 12,
+          "lh": null
+         },
+         "text": "Supporting text"
+        }
+       ]
+      },
+      {
+       "name": "Actions",
+       "type": "FRAME",
+       "w": 158,
+       "h": 40,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Tertiary button",
+         "type": "INSTANCE",
+         "w": 59,
+         "h": 40,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "variant": {
+          "Leading icon swap#133:10": "133:3719",
+          "Trailing icon#105:4": false,
+          "Trailing icon swap#133:12": "133:3719",
+          "Leading icon#105:2": false,
+          "Button text#1153:0": true,
+          "Text#105:0": "Button",
+          "State": "Default",
+          "Size": "md"
+         },
+         "component": "Tertiary button [State=Default, Size=md]",
+         "kids": [
+          {
+           "name": "crop_free-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "crop_free-20-400-round"
+          },
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 43,
+           "h": 21,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 14,
+            "lh": null
+           },
+           "text": "Button"
+          },
+          {
+           "name": "crop_free-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "crop_free-20-400-round"
+          }
+         ]
+        },
+        {
+         "name": "Tertiary brand button",
+         "type": "INSTANCE",
+         "w": 59,
+         "h": 40,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "variant": {
+          "Leading icon swap#133:10": "133:3719",
+          "Button text#1153:12": true,
+          "Trailing icon#105:4": false,
+          "Trailing icon swap#133:12": "133:3719",
+          "Leading icon#105:2": false,
+          "Text#105:0": "Button",
+          "State": "Default"
+         },
+         "component": "Tertiary brand button [State=Default]",
+         "kids": [
+          {
+           "name": "crop_free-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "crop_free-20-400-round"
+          },
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 43,
+           "h": 21,
+           "fill": [
+            "#A80689"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 14,
+            "lh": null
+           },
+           "text": "Button"
+          },
+          {
+           "name": "crop_free-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "crop_free-20-400-round"
+          }
+         ]
+        },
+        {
+         "name": "Tertiary button",
+         "type": "INSTANCE",
+         "w": 40,
+         "h": 40,
+         "pl": 8,
+         "pr": 8,
+         "pt": 8,
+         "pb": 8,
+         "gap": 4,
+         "r": 8,
+         "dir": "HORIZONTAL",
+         "align": "CENTER",
+         "sw": 1,
+         "variant": {
+          "Leading icon swap#133:10": "2004:4890",
+          "Trailing icon#105:4": false,
+          "Trailing icon swap#133:12": "133:3719",
+          "Leading icon#105:2": true,
+          "Button text#1153:0": false,
+          "Text#105:0": "Button",
+          "State": "Default",
+          "Size": "md"
+         },
+         "component": "Tertiary button [State=Default, Size=md]",
+         "kids": [
+          {
+           "name": "more_vert-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "more_vert-20-400-round"
+          },
+          {
+           "name": "Text",
+           "type": "TEXT",
+           "w": 47,
+           "h": 21,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 14,
+            "lh": null
+           },
+           "text": "Button"
+          },
+          {
+           "name": "crop_free-20-400-round",
+           "type": "INSTANCE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "align": "MIN",
+           "sw": 1,
+           "component": "crop_free-20-400-round"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

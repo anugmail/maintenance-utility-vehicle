@@ -1,0 +1,740 @@
+{
+ "component": "Progress bar",
+ "page": "✅ Progress bar",
+ "node": "2843:13902",
+ "props": {
+  "Percentage#2941:3": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Label": {
+   "type": "VARIANT",
+   "defaultValue": "Right",
+   "variantOptions": [
+    "Right",
+    "Top left"
+   ]
+  },
+  "Progress": {
+   "type": "VARIANT",
+   "defaultValue": "0%",
+   "variantOptions": [
+    "0%",
+    "20%",
+    "40%",
+    "60%",
+    "80%",
+    "100%"
+   ]
+  },
+  "Size": {
+   "type": "VARIANT",
+   "defaultValue": "md",
+   "variantOptions": [
+    "md",
+    "lg"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "name": "Label=Right, Progress=0%, Size=md",
+   "type": "COMPONENT",
+   "w": 448,
+   "h": 22,
+   "gap": 8,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "Label": "Right",
+    "Progress": "0%",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "Track",
+     "type": "RECTANGLE",
+     "w": 400,
+     "h": 8,
+     "r": 9999,
+     "fill": [
+      "#D0D5DD"
+     ],
+     "sw": 1
+    },
+    {
+     "name": "Percentage",
+     "type": "TEXT",
+     "w": 40,
+     "h": 22,
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null
+     },
+     "text": "0%"
+    },
+    {
+     "name": "Progress",
+     "type": "VECTOR",
+     "w": 8,
+     "h": 8,
+     "r": 9999,
+     "fill": [
+      "#A80689"
+     ],
+     "sw": 1
+    }
+   ]
+  },
+  {
+   "name": "Label=Right, Progress=20%, Size=md",
+   "type": "COMPONENT",
+   "w": 448,
+   "h": 22,
+   "gap": 8,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "Label": "Right",
+    "Progress": "20%",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "Progress bar",
+     "type": "GROUP",
+     "w": 400,
+     "h": 8,
+     "kids": [
+      {
+       "name": "Track",
+       "type": "RECTANGLE",
+       "w": 400,
+       "h": 8,
+       "r": 9999,
+       "fill": [
+        "#D0D5DD"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Progress",
+       "type": "RECTANGLE",
+       "w": 80,
+       "h": 8,
+       "r": 9999,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1
+      }
+     ]
+    },
+    {
+     "name": "Percentage",
+     "type": "TEXT",
+     "w": 40,
+     "h": 22,
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null
+     },
+     "text": "20%"
+    }
+   ]
+  },
+  {
+   "name": "Label=Right, Progress=40%, Size=md",
+   "type": "COMPONENT",
+   "w": 448,
+   "h": 22,
+   "gap": 8,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "Label": "Right",
+    "Progress": "40%",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "Progress bar",
+     "type": "GROUP",
+     "w": 400,
+     "h": 8,
+     "kids": [
+      {
+       "name": "Track",
+       "type": "RECTANGLE",
+       "w": 400,
+       "h": 8,
+       "r": 9999,
+       "fill": [
+        "#D0D5DD"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Progress",
+       "type": "RECTANGLE",
+       "w": 160,
+       "h": 8,
+       "r": 9999,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1
+      }
+     ]
+    },
+    {
+     "name": "Percentage",
+     "type": "TEXT",
+     "w": 40,
+     "h": 22,
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null
+     },
+     "text": "40%"
+    }
+   ]
+  },
+  {
+   "name": "Label=Right, Progress=60%, Size=md",
+   "type": "COMPONENT",
+   "w": 448,
+   "h": 22,
+   "gap": 8,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "Label": "Right",
+    "Progress": "60%",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "Progress bar",
+     "type": "GROUP",
+     "w": 400,
+     "h": 8,
+     "kids": [
+      {
+       "name": "Track",
+       "type": "RECTANGLE",
+       "w": 400,
+       "h": 8,
+       "r": 9999,
+       "fill": [
+        "#D0D5DD"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Progress",
+       "type": "RECTANGLE",
+       "w": 240,
+       "h": 8,
+       "r": 9999,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1
+      }
+     ]
+    },
+    {
+     "name": "Percentage",
+     "type": "TEXT",
+     "w": 40,
+     "h": 22,
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null
+     },
+     "text": "60%"
+    }
+   ]
+  },
+  {
+   "name": "Label=Right, Progress=80%, Size=md",
+   "type": "COMPONENT",
+   "w": 448,
+   "h": 22,
+   "gap": 8,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "Label": "Right",
+    "Progress": "80%",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "Progress bar",
+     "type": "GROUP",
+     "w": 400,
+     "h": 8,
+     "kids": [
+      {
+       "name": "Track",
+       "type": "RECTANGLE",
+       "w": 400,
+       "h": 8,
+       "r": 9999,
+       "fill": [
+        "#D0D5DD"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Progress",
+       "type": "RECTANGLE",
+       "w": 320,
+       "h": 8,
+       "r": 9999,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1
+      }
+     ]
+    },
+    {
+     "name": "Percentage",
+     "type": "TEXT",
+     "w": 40,
+     "h": 22,
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null
+     },
+     "text": "80%"
+    }
+   ]
+  },
+  {
+   "name": "Label=Right, Progress=100%, Size=md",
+   "type": "COMPONENT",
+   "w": 448,
+   "h": 22,
+   "gap": 8,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "Label": "Right",
+    "Progress": "100%",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "Progress bar",
+     "type": "GROUP",
+     "w": 400,
+     "h": 8,
+     "kids": [
+      {
+       "name": "Track",
+       "type": "RECTANGLE",
+       "w": 400,
+       "h": 8,
+       "r": 9999,
+       "fill": [
+        "#D0D5DD"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Progress",
+       "type": "RECTANGLE",
+       "w": 400,
+       "h": 8,
+       "r": 9999,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1
+      }
+     ]
+    },
+    {
+     "name": "Percentage",
+     "type": "TEXT",
+     "w": 40,
+     "h": 22,
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null
+     },
+     "text": "100%"
+    }
+   ]
+  },
+  {
+   "name": "Label=Right, Progress=100%, Size=lg",
+   "type": "COMPONENT",
+   "w": 448,
+   "h": 22,
+   "gap": 8,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "Label": "Right",
+    "Progress": "100%",
+    "Size": "lg"
+   },
+   "kids": [
+    {
+     "name": "Progress bar",
+     "type": "GROUP",
+     "w": 400,
+     "h": 12,
+     "kids": [
+      {
+       "name": "Track",
+       "type": "RECTANGLE",
+       "w": 400,
+       "h": 12,
+       "r": 9999,
+       "fill": [
+        "#D0D5DD"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Progress",
+       "type": "RECTANGLE",
+       "w": 400,
+       "h": 12,
+       "r": 9999,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1
+      }
+     ]
+    },
+    {
+     "name": "Percentage",
+     "type": "TEXT",
+     "w": 40,
+     "h": 22,
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null
+     },
+     "text": "100%"
+    }
+   ]
+  },
+  {
+   "name": "Label=Right, Progress=60%, Size=lg",
+   "type": "COMPONENT",
+   "w": 448,
+   "h": 22,
+   "gap": 8,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "Label": "Right",
+    "Progress": "60%",
+    "Size": "lg"
+   },
+   "kids": [
+    {
+     "name": "Progress bar",
+     "type": "GROUP",
+     "w": 400,
+     "h": 12,
+     "kids": [
+      {
+       "name": "Track",
+       "type": "RECTANGLE",
+       "w": 400,
+       "h": 12,
+       "r": 9999,
+       "fill": [
+        "#D0D5DD"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Progress",
+       "type": "RECTANGLE",
+       "w": 240,
+       "h": 12,
+       "r": 9999,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1
+      }
+     ]
+    },
+    {
+     "name": "Percentage",
+     "type": "TEXT",
+     "w": 40,
+     "h": 22,
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null
+     },
+     "text": "60%"
+    }
+   ]
+  },
+  {
+   "name": "Label=Top left, Progress=0%, Size=md",
+   "type": "COMPONENT",
+   "w": 448,
+   "h": 33,
+   "gap": 4,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Label": "Top left",
+    "Progress": "0%",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "Percentage",
+     "type": "TEXT",
+     "w": 22,
+     "h": 21,
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null
+     },
+     "text": "0%"
+    },
+    {
+     "name": "Track",
+     "type": "RECTANGLE",
+     "w": 448,
+     "h": 8,
+     "r": 9999,
+     "fill": [
+      "#D0D5DD"
+     ],
+     "sw": 1
+    },
+    {
+     "name": "Progress",
+     "type": "VECTOR",
+     "w": 8,
+     "h": 8,
+     "r": 9999,
+     "fill": [
+      "#A80689"
+     ],
+     "sw": 1
+    }
+   ]
+  },
+  {
+   "name": "Label=Top left, Progress=20%, Size=md",
+   "type": "COMPONENT",
+   "w": 448,
+   "h": 33,
+   "gap": 4,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Label": "Top left",
+    "Progress": "20%",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "Percentage",
+     "type": "TEXT",
+     "w": 30,
+     "h": 21,
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null
+     },
+     "text": "20%"
+    },
+    {
+     "name": "Progress bar",
+     "type": "GROUP",
+     "w": 448,
+     "h": 8,
+     "kids": [
+      {
+       "name": "Track",
+       "type": "RECTANGLE",
+       "w": 448,
+       "h": 8,
+       "r": 9999,
+       "fill": [
+        "#D0D5DD"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Progress",
+       "type": "RECTANGLE",
+       "w": 90,
+       "h": 8,
+       "r": 9999,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Label=Top left, Progress=40%, Size=md",
+   "type": "COMPONENT",
+   "w": 448,
+   "h": 33,
+   "gap": 4,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Label": "Top left",
+    "Progress": "40%",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "Percentage",
+     "type": "TEXT",
+     "w": 30,
+     "h": 21,
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "Regular",
+      "size": 14,
+      "lh": null
+     },
+     "text": "40%"
+    },
+    {
+     "name": "Progress bar",
+     "type": "GROUP",
+     "w": 448,
+     "h": 8,
+     "kids": [
+      {
+       "name": "Track",
+       "type": "RECTANGLE",
+       "w": 448,
+       "h": 8,
+       "r": 9999,
+       "fill": [
+        "#D0D5DD"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Progress",
+       "type": "RECTANGLE",
+       "w": 160,
+       "h": 8,
+       "r": 9999,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

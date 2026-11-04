@@ -1,0 +1,133 @@
+/* สร้างจาก tokens.css ด้วย scripts/sync-tokens.mjs — ห้ามแก้มือ
+   utility เช่น bg-brand-900 = var(--brand-900) · ล้าง palette/ขนาด/รัศมี/เงาตั้งต้นของ Tailwind ทิ้ง ใช้ได้เฉพาะค่าจาก token */
+@theme inline {
+  --color-*: initial;
+  --color-white: #fff;
+  --color-black: #000;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-brand-950: var(--brand-950);
+  --color-brand-925: var(--brand-925);
+  --color-brand-900: var(--brand-900);
+  --color-brand-800: var(--brand-800);
+  --color-brand-700: var(--brand-700);
+  --color-brand-600: var(--brand-600);
+  --color-brand-500: var(--brand-500);
+  --color-brand-400: var(--brand-400);
+  --color-brand-300: var(--brand-300);
+  --color-brand-200: var(--brand-200);
+  --color-brand-100: var(--brand-100);
+  --color-brand-50: var(--brand-50);
+  --color-brand-25: var(--brand-25);
+  --color-brand-accent: var(--brand-accent);
+  --color-gray-950: var(--gray-950);
+  --color-gray-900: var(--gray-900);
+  --color-gray-800: var(--gray-800);
+  --color-gray-700: var(--gray-700);
+  --color-gray-600: var(--gray-600);
+  --color-gray-500: var(--gray-500);
+  --color-gray-400: var(--gray-400);
+  --color-gray-300: var(--gray-300);
+  --color-gray-200: var(--gray-200);
+  --color-gray-100: var(--gray-100);
+  --color-gray-50: var(--gray-50);
+  --color-gray-25: var(--gray-25);
+  --color-gray-dark-50: var(--gray-dark-50);
+  --color-gray-dark-300: var(--gray-dark-300);
+  --color-gray-dark-600: var(--gray-dark-600);
+  --color-success-700: var(--success-700);
+  --color-success-600: var(--success-600);
+  --color-success-500: var(--success-500);
+  --color-success-200: var(--success-200);
+  --color-success-100: var(--success-100);
+  --color-success-50: var(--success-50);
+  --color-success-25: var(--success-25);
+  --color-warning-800: var(--warning-800);
+  --color-warning-700: var(--warning-700);
+  --color-warning-600: var(--warning-600);
+  --color-warning-200: var(--warning-200);
+  --color-warning-50: var(--warning-50);
+  --color-error-700: var(--error-700);
+  --color-error-600: var(--error-600);
+  --color-error-500: var(--error-500);
+  --color-error-300: var(--error-300);
+  --color-error-200: var(--error-200);
+  --color-error-50: var(--error-50);
+  --color-info-700: var(--info-700);
+  --color-info-600: var(--info-600);
+  --color-info-200: var(--info-200);
+  --color-info-100: var(--info-100);
+  --color-info-50: var(--info-50);
+  --color-info-25: var(--info-25);
+  --color-badge-brand-bg: var(--badge-brand-bg);
+  --color-badge-brand-border: var(--badge-brand-border);
+  --color-badge-neutral-text: var(--badge-neutral-text);
+  --color-badge-neutral-bg: var(--badge-neutral-bg);
+  --color-badge-neutral-border: var(--badge-neutral-border);
+  --color-secondary-700: var(--secondary-700);
+  --color-secondary-600: var(--secondary-600);
+  --color-secondary-50: var(--secondary-50);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-chart-6: var(--chart-6);
+  --color-primary-800: var(--primary-800);
+  --color-primary-700: var(--primary-700);
+  --color-primary-600: var(--primary-600);
+  --color-primary-500: var(--primary-500);
+  --color-primary-50: var(--primary-50);
+  --color-primary-25: var(--primary-25);
+  /* ชื่อเชิงความหมายตั้งใหม่ กัน var อ้างตัวเอง: ink = --color-text-* · line = --color-border-primary */
+  --color-ink: var(--color-text-primary);
+  --color-ink-2: var(--color-text-secondary);
+  --color-ink-3: var(--color-text-tertiary);
+  --color-line: var(--color-border-primary);
+  --color-disabled-bg: var(--color-bg-disabled);
+  --color-disabled-fg: var(--color-fg-disabled);
+
+  /* ตัวอักษร: สเกล 12/14/16 ของไลบรารี + หัวข้อ */
+  --text-*: initial;
+  --text-xs: var(--fs-text-xs);
+  --text-xs--line-height: 18px;
+  --text-sm: var(--fs-text-sm);
+  --text-sm--line-height: 20px;
+  --text-md: var(--fs-text-md);
+  --text-md--line-height: 24px;
+  --text-lg: 20px;
+  --text-lg--line-height: 30px;
+  --text-xl: 24px;
+  --text-xl--line-height: 36px;
+  --text-title: 32px;
+  --text-title--line-height: 48px;
+  --text-title-m: 22px;
+  --text-title-m--line-height: 32px;
+
+  /* รัศมี */
+  --radius-*: initial;
+  --radius-xs: var(--rounded-xs);
+  --radius-sm: var(--rounded-sm);
+  --radius-md: var(--rounded-md);
+  --radius-lg: var(--rounded-lg);
+  --radius-xl: var(--r-lg);
+  --radius-pill: var(--r-pill);
+  --radius-sheet: 24px;
+
+  /* เงา (ตั้งชื่อใหม่ กันชน --shadow-xs ของ tokens) */
+  --shadow-*: initial;
+  --shadow-field: var(--shadow-xs);
+  --shadow-float: var(--shadow-pop);
+  --shadow-shell: var(--shadow-app);
+  --shadow-ring: 0 0 0 4px var(--focus-ring);
+  --shadow-ring-error: 0 0 0 4px var(--focus-ring-error);
+
+  --animate-sheet-up: sheet-up 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-fade-in: fade-in 0.2s ease-out;
+  @keyframes sheet-up { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  @keyframes fade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+}
+@theme {
+  --font-*: initial;
+  --font-sans: var(--font);
+}

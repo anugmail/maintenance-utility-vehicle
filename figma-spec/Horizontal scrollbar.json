@@ -1,0 +1,141 @@
+{
+ "component": "Horizontal scrollbar",
+ "page": "Scrollbar",
+ "node": "2230:14068",
+ "props": {
+  "Length": {
+   "type": "VARIANT",
+   "defaultValue": "25%",
+   "variantOptions": [
+    "75%",
+    "50%",
+    "25%"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "name": "Length=25%",
+   "type": "COMPONENT",
+   "w": 1168,
+   "h": 16,
+   "pl": 4,
+   "pr": 4,
+   "pt": 4,
+   "pb": 4,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Length": "25%"
+   },
+   "kids": [
+    {
+     "name": "Scrollbar",
+     "type": "FRAME",
+     "w": 1160,
+     "h": 8,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Thumb",
+       "type": "RECTANGLE",
+       "w": 292,
+       "h": 8,
+       "r": 9999,
+       "fill": [
+        "#EAECF0"
+       ],
+       "sw": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Length=50%",
+   "type": "COMPONENT",
+   "w": 1168,
+   "h": 16,
+   "pl": 4,
+   "pr": 4,
+   "pt": 4,
+   "pb": 4,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Length": "50%"
+   },
+   "kids": [
+    {
+     "name": "Scrollbar",
+     "type": "FRAME",
+     "w": 1160,
+     "h": 8,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Thumb",
+       "type": "RECTANGLE",
+       "w": 584,
+       "h": 8,
+       "r": 9999,
+       "fill": [
+        "#EAECF0"
+       ],
+       "sw": 1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Length=75%",
+   "type": "COMPONENT",
+   "w": 1168,
+   "h": 16,
+   "pl": 4,
+   "pr": 4,
+   "pt": 4,
+   "pb": 4,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Length": "75%"
+   },
+   "kids": [
+    {
+     "name": "Scrollbar",
+     "type": "FRAME",
+     "w": 1160,
+     "h": 8,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Thumb",
+       "type": "RECTANGLE",
+       "w": 876,
+       "h": 8,
+       "r": 9999,
+       "fill": [
+        "#EAECF0"
+       ],
+       "sw": 1
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

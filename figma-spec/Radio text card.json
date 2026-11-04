@@ -1,0 +1,1041 @@
+{
+ "component": "Radio text card",
+ "page": "✅ Radio button",
+ "node": "2:17",
+ "props": {
+  "Supporting text#2713:3": {
+   "type": "TEXT",
+   "defaultValue": "Supporting text"
+  },
+  "Text#2713:4": {
+   "type": "TEXT",
+   "defaultValue": "Text"
+  },
+  "Supporting#2713:5": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "State": {
+   "type": "VARIANT",
+   "defaultValue": "Default",
+   "variantOptions": [
+    "Default",
+    "Hover",
+    "Focused",
+    "Disabled"
+   ]
+  },
+  "Selected": {
+   "type": "VARIANT",
+   "defaultValue": "False",
+   "variantOptions": [
+    "False",
+    "True"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "name": "State=Default, Selected=False",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 81,
+   "pl": 16,
+   "pr": 16,
+   "pt": 16,
+   "pb": 16,
+   "gap": 16,
+   "r": 8,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "sw": 1,
+   "variant": {
+    "State": "Default",
+    "Selected": "False"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 208,
+     "h": 49,
+     "gap": 12,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "MIN",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Radio button",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "State": "Default",
+        "Selected": "False"
+       },
+       "component": "Radio button [State=Default, Selected=False]",
+       "kids": [
+        {
+         "name": "Surface",
+         "type": "ELLIPSE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 2
+        }
+       ]
+      },
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 176,
+       "h": 49,
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Text"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null
+         },
+         "text": "Supporting text"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Default, Selected=True",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 81,
+   "pl": 16,
+   "pr": 16,
+   "pt": 16,
+   "pb": 16,
+   "gap": 16,
+   "r": 8,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#A80689"
+   ],
+   "sw": 2,
+   "variant": {
+    "State": "Default",
+    "Selected": "True"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 208,
+     "h": 49,
+     "gap": 12,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "MIN",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Radio button",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "State": "Default",
+        "Selected": "True"
+       },
+       "component": "Radio button [State=Default, Selected=True]",
+       "kids": [
+        {
+         "name": "Surface with icon",
+         "type": "GROUP",
+         "w": 20,
+         "h": 20,
+         "kids": [
+          {
+           "name": "Surface",
+           "type": "ELLIPSE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "fill": [
+            "#A80689"
+           ],
+           "sw": 1.5
+          },
+          {
+           "name": "Icon",
+           "type": "ELLIPSE",
+           "w": 8,
+           "h": 8,
+           "r": 0,
+           "fill": [
+            "#FFFFFF"
+           ],
+           "sw": 1.5
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 176,
+       "h": 49,
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Text"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null
+         },
+         "text": "Supporting text"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Hover, Selected=False",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 81,
+   "pl": 16,
+   "pr": 16,
+   "pt": 16,
+   "pb": 16,
+   "gap": 16,
+   "r": 8,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#CF07AA"
+   ],
+   "sw": 1,
+   "variant": {
+    "State": "Hover",
+    "Selected": "False"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 208,
+     "h": 49,
+     "gap": 12,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "MIN",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Radio button",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "State": "Default",
+        "Selected": "False"
+       },
+       "component": "Radio button [State=Default, Selected=False]",
+       "kids": [
+        {
+         "name": "Surface",
+         "type": "ELLIPSE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 2
+        }
+       ]
+      },
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 176,
+       "h": 49,
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Text"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null
+         },
+         "text": "Supporting text"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Hover, Selected=True",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 81,
+   "pl": 16,
+   "pr": 16,
+   "pt": 16,
+   "pb": 16,
+   "gap": 16,
+   "r": 8,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#CF07AA"
+   ],
+   "sw": 2,
+   "variant": {
+    "State": "Hover",
+    "Selected": "True"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 208,
+     "h": 49,
+     "gap": 12,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "MIN",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Radio button",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "State": "Default",
+        "Selected": "True"
+       },
+       "component": "Radio button [State=Default, Selected=True]",
+       "kids": [
+        {
+         "name": "Surface with icon",
+         "type": "GROUP",
+         "w": 20,
+         "h": 20,
+         "kids": [
+          {
+           "name": "Surface",
+           "type": "ELLIPSE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "fill": [
+            "#A80689"
+           ],
+           "sw": 1.5
+          },
+          {
+           "name": "Icon",
+           "type": "ELLIPSE",
+           "w": 8,
+           "h": 8,
+           "r": 0,
+           "fill": [
+            "#FFFFFF"
+           ],
+           "sw": 1.5
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 176,
+       "h": 49,
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Text"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null
+         },
+         "text": "Supporting text"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Focused, Selected=False",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 81,
+   "pl": 16,
+   "pr": 16,
+   "pt": 16,
+   "pb": 16,
+   "gap": 16,
+   "r": 8,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#CF07AA"
+   ],
+   "sw": 1,
+   "variant": {
+    "State": "Focused",
+    "Selected": "False"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 208,
+     "h": 49,
+     "gap": 12,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "MIN",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Radio button",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "State": "Default",
+        "Selected": "False"
+       },
+       "component": "Radio button [State=Default, Selected=False]",
+       "kids": [
+        {
+         "name": "Surface",
+         "type": "ELLIPSE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 2
+        }
+       ]
+      },
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 176,
+       "h": 49,
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Text"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null
+         },
+         "text": "Supporting text"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Focused, Selected=True",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 81,
+   "pl": 16,
+   "pr": 16,
+   "pt": 16,
+   "pb": 16,
+   "gap": 16,
+   "r": 8,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#CF07AA"
+   ],
+   "sw": 2,
+   "variant": {
+    "State": "Focused",
+    "Selected": "True"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 208,
+     "h": 49,
+     "gap": 12,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "MIN",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Radio button",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "State": "Default",
+        "Selected": "True"
+       },
+       "component": "Radio button [State=Default, Selected=True]",
+       "kids": [
+        {
+         "name": "Surface with icon",
+         "type": "GROUP",
+         "w": 20,
+         "h": 20,
+         "kids": [
+          {
+           "name": "Surface",
+           "type": "ELLIPSE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "fill": [
+            "#A80689"
+           ],
+           "sw": 1.5
+          },
+          {
+           "name": "Icon",
+           "type": "ELLIPSE",
+           "w": 8,
+           "h": 8,
+           "r": 0,
+           "fill": [
+            "#FFFFFF"
+           ],
+           "sw": 1.5
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 176,
+       "h": 49,
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 24,
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Text"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null
+         },
+         "text": "Supporting text"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Disabled, Selected=False",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 81,
+   "pl": 16,
+   "pr": 16,
+   "pt": 16,
+   "pb": 16,
+   "gap": 16,
+   "r": 8,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "fill": [
+    "#F9FAFB"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "sw": 1,
+   "variant": {
+    "State": "Disabled",
+    "Selected": "False"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 208,
+     "h": 49,
+     "gap": 12,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "MIN",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Radio button",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "State": "Disabled",
+        "Selected": "False"
+       },
+       "component": "Radio button [State=Disabled, Selected=False]",
+       "kids": [
+        {
+         "name": "Container",
+         "type": "ELLIPSE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#EAECF0"
+         ],
+         "stroke": [
+          "#D0D5DD"
+         ],
+         "sw": 2
+        }
+       ]
+      },
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 176,
+       "h": 49,
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 24,
+         "fill": [
+          "#98A2B3"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Text"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "fill": [
+          "#98A2B3"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null
+         },
+         "text": "Supporting text"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "State=Disabled, Selected=True",
+   "type": "COMPONENT",
+   "w": 240,
+   "h": 81,
+   "pl": 16,
+   "pr": 16,
+   "pt": 16,
+   "pb": 16,
+   "gap": 16,
+   "r": 8,
+   "dir": "VERTICAL",
+   "align": "MIN",
+   "fill": [
+    "#F9FAFB"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "sw": 2,
+   "variant": {
+    "State": "Disabled",
+    "Selected": "True"
+   },
+   "kids": [
+    {
+     "name": "Content",
+     "type": "FRAME",
+     "w": 208,
+     "h": 49,
+     "gap": 12,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "MIN",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Radio button",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "State": "Disabled",
+        "Selected": "True"
+       },
+       "component": "Radio button [State=Disabled, Selected=True]",
+       "kids": [
+        {
+         "name": "Surface with icon",
+         "type": "GROUP",
+         "w": 20,
+         "h": 20,
+         "kids": [
+          {
+           "name": "Surface",
+           "type": "ELLIPSE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "fill": [
+            "#EAECF0"
+           ],
+           "stroke": [
+            "#D0D5DD"
+           ],
+           "sw": 2
+          },
+          {
+           "name": "Icon",
+           "type": "ELLIPSE",
+           "w": 8,
+           "h": 8,
+           "r": 0,
+           "fill": [
+            "#D0D5DD"
+           ],
+           "sw": 1.5
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Text and supporting text",
+       "type": "FRAME",
+       "w": 176,
+       "h": 49,
+       "gap": 4,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 24,
+         "fill": [
+          "#98A2B3"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 16,
+          "lh": null
+         },
+         "text": "Text"
+        },
+        {
+         "name": "Supporting text",
+         "type": "TEXT",
+         "w": 176,
+         "h": 21,
+         "fill": [
+          "#98A2B3"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null
+         },
+         "text": "Supporting text"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

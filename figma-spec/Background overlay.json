@@ -1,0 +1,30 @@
+{
+ "component": "Background overlay",
+ "page": "✅ Background overlay",
+ "node": "2428:4927",
+ "props": {},
+ "variants": [
+  {
+   "name": "Background overlay",
+   "type": "COMPONENT",
+   "w": 1440,
+   "h": 1024,
+   "r": 0,
+   "align": "MIN",
+   "sw": 1,
+   "kids": [
+    {
+     "name": "Background overlay",
+     "type": "RECTANGLE",
+     "w": 1440,
+     "h": 1024,
+     "r": 0,
+     "fill": [
+      "#000000"
+     ],
+     "sw": 1
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,41 @@
+# ต้นแบบบำรุงรักษาตามวาระ (Next.js) — เงื่อนไขการเขียนเว็บ
+
+> เจ้าของงานสั่ง 4 พ.ย. 2569: _"อยาก gen prototype ของงานบำรุงรักษา โดยลบของเดิมที่เคยทำไว้ และทำของใหม่ขึ้นมาโดยอิงจาก scenario ที่ทำแล้วเท่านั้น"_ · _"ใช้ NextJs Tailwind ในการสร้างขึ้นมา component ใช้ให้ตรง"_ · _"ต้นแบบที่เป็น HTML ไม่ใช้ อยากให้เขียนใหม่ โดยอ้างอิงจาก component จาก design figma และเขียนในเงื่อนไขการเขียนเว็บครั้งต่อไปด้วย"_ · _"แยกออกจากส่วนอื่นเลย ไม่ร่วมกับงานซ่อม"_
+
+## 🔴 เงื่อนไขบังคับทุกครั้งที่เขียนเว็บ
+
+1. **Stack:** Next.js (App Router · `src/`) + Tailwind CSS 4 + TypeScript · ส่งออก static (`output: "export"`) ขึ้น GitHub Pages ด้วย `.github/workflows/pages.yml` · ไม่มีไลบรารี UI อื่น (ไม่มี DaisyUI/shadcn/MUI)
+2. **component อ้างอิงไฟล์ Figma เท่านั้น** — ไลบรารี **(Component) VMS Plus** (`VmOC07pKEsDkHZagOgcSU2`) + หน้าจอจริง **(UI) VMS Plus – Release#2** (`fYD1yA1uzWsJSjHlcWKMNe`)
+   - **ไม่อ้างต้นแบบ HTML** (โฟลเดอร์ `mock/` `design-mock/` `maintainance-yearly/` ของรีโปงานซ่อม และ `components.css`) ไม่ก๊อปคลาส/ค่า/โครงจากที่นั่น
+   - ค่าทุกตัว (กว้าง สูง padding gap รัศมี สี ขอบ ฟอนต์) ยกจาก `figma-spec/<ชื่อ component>.json` ที่ดึงจากดัมป์ไฟล์ Component ด้วย `npm run figma-spec`
+   - ไฟล์ component React 1 ไฟล์ = 1 component ของไลบรารี **ชื่อเดียวกับใน Figma** หัวไฟล์เขียนว่ามาจาก component ไหน หน้าไหน (node) และ variant/property ที่รองรับ
+   - prop ของ component ใช้ชื่อ variant/property ของ Figma (เช่น `Size="md"` `Color="Success"` `State`) ไม่ตั้งชื่อเอง
+   - component ที่ไลบรารีไม่มี → หยุด ถามเจ้าของงานก่อน ห้ามออกแบบเอง · ต้องประกอบจากชิ้นไลบรารีให้จดไว้ใน `figma-spec/COMPOSED.md` พร้อมเหตุผล
+3. **สีและ token:** มาจาก `src/styles/tokens.css` (ก๊อปจาก design system ด้วย `npm run sync-tokens`) · Tailwind theme สร้างจาก token (`src/styles/theme.css`) palette ตั้งต้นของ Tailwind ถูกล้างทิ้ง · ห้าม hex ในไฟล์ `.tsx` · ห้าม `style=` ยกเว้นค่าที่คำนวณตอนรัน
+4. **หน้าจอ:** ทำเฉพาะ scenario ที่เคาะแล้วในไฟล์ userflow `Diagram/01-บำรุงรักษาตามวาระ/14-บำรุงรักษา-userflow.md` ของรีโป Maintenance-Request-Form · โครงจอ ข้อความ ปุ่ม toast ตรงกับจอ Figma ที่ปลั๊กอิน `figma-export/maintainance-plugin/screens.js` สร้าง (state ละจอ) · เงื่อนไขตามตาราง Condition ของ scenario นั้น · ไม่เพิ่มหน้า/ปุ่มที่ไม่มีใน scenario
+5. **ข้อมูลจำลอง:** อยู่ใน `src/lib/mock/` เก็บ `localStorage` คีย์ `mt-next-v1` · ค่าตัวอย่างชุดเดียวกับปลั๊กอิน Figma (แผน MR Z7000001 … รถ 82-6789 ขอนแก่น …) · ปุ่ม "ล้างข้อมูลจำลอง" กลับค่าตั้งต้น
+6. **มือถือ:** ตามแบบ Mobile ของจอ Figma (402 กว้าง) — ตารางเป็น `Mobile table` · popup เป็น bottom sheet · ปุ่มหัวหน้าอยู่ใต้หัวข้อ
+7. **บทบาท:** สลับบทบาทได้จากแถบต้นแบบบนสุด (กบค. · ผู้อนุมัติ · กบค. คลัง · กรย. · หน่วยงานเจ้าของรถ · ผู้รับจ้าง · หัวหน้า กบค.) เห็นเมนูและปุ่มตาม Permission ในไฟล์ userflow
+8. **ภาษา:** ข้อความบนจอเป็นภาษาไทยตามจอ Figma ตรงตัว · ไม่มีอีโมจิ
+9. **แยกจากงานซ่อม:** รีโปนี้เป็นของบำรุงรักษาตามวาระเท่านั้น ไม่ลิงก์หรือใช้โค้ดร่วมกับ Maintenance-Request-Form (งานซ่อม)
+
+## ตรวจก่อนบอกว่าเสร็จ
+
+```bash
+npm run typecheck
+NEXT_PUBLIC_BASE_PATH=/maintainance-yearly npm run build     # ต้องผ่าน · ได้ out/
+grep -rnE '#[0-9a-fA-F]{3,8}\b' src --include='*.tsx'        # ต้องว่าง (สีต้องมาจาก token)
+```
+
+แล้วเปิดดูจริงทั้ง desktop และมือถือ (Playwright + Chrome ที่ติดเครื่อง) ไม่มี error ใน console
+
+## โครงไฟล์
+
+| ที่ | อะไร |
+|---|---|
+| `figma-spec/` | สเปก component จากไฟล์ Figma (สร้างด้วยสคริปต์) · `components.json` รายชื่อที่ใช้ · `COMPOSED.md` ส่วนที่ต้องประกอบเอง |
+| `src/components/vms/` | component ตามไลบรารี ชื่อเดียวกับ Figma |
+| `src/components/shell/` | กรอบหน้า (Header navigation + Sidebar navigation) และแถบต้นแบบ (สลับบทบาท) |
+| `src/app/` | หน้าตาม scenario |
+| `src/lib/mock/` | ข้อมูลจำลอง |
+| `scripts/` | `sync-tokens.mjs` · `figma-spec.mjs` |

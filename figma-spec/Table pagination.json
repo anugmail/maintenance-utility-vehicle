@@ -1,0 +1,1029 @@
+{
+ "component": "Table pagination",
+ "page": "✅ Pagination",
+ "node": "2:15",
+ "props": {
+  "Breakpoint": {
+   "type": "VARIANT",
+   "defaultValue": "Desktop",
+   "variantOptions": [
+    "Desktop",
+    "Mobile"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "name": "Breakpoint=Desktop",
+   "type": "COMPONENT",
+   "w": 960,
+   "h": 40,
+   "gap": 24,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Breakpoint": "Desktop"
+   },
+   "kids": [
+    {
+     "name": "Container",
+     "type": "FRAME",
+     "w": 278,
+     "h": 40,
+     "gap": 8,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 178,
+       "h": 21,
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null
+       },
+       "text": "แสดง 1 ถึง 10  จาก 95 รายการ"
+      },
+      {
+       "name": "Items per page dropdown",
+       "type": "INSTANCE",
+       "w": 92,
+       "h": 40,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "variant": {
+        "State": "Default"
+       },
+       "component": "Items per page dropdown [State=Default]",
+       "kids": [
+        {
+         "name": "Input dropdown",
+         "type": "INSTANCE",
+         "w": 92,
+         "h": 40,
+         "gap": 8,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Cursor#3340:0": false,
+          "Leading icon swap#2011:39": "476:1742",
+          "Text#545:18": "10",
+          "Helper#2011:48": false,
+          "Supporting#3300:0": false,
+          "Helper text#2011:75": "Helper",
+          "Supporting text#3300:17": "Description",
+          "Leading icon#2011:21": false,
+          "Info icon#2011:12": true,
+          "Placeholder#545:12": true,
+          "Label#74:40": false,
+          "Optional#2147:29": true,
+          "Label text#74:30": "Label",
+          "State": "Selected",
+          "Size": "md"
+         },
+         "component": "Input dropdown [State=Selected, Size=md]",
+         "kids": [
+          {
+           "name": "Label",
+           "type": "FRAME",
+           "w": 352,
+           "h": 24,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1
+          },
+          {
+           "name": "Container",
+           "type": "FRAME",
+           "w": 92,
+           "h": 40,
+           "pl": 12,
+           "pr": 12,
+           "pt": 8,
+           "pb": 8,
+           "gap": 8,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#D0D5DD"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Helper",
+           "type": "TEXT",
+           "w": 352,
+           "h": 18,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null
+           },
+           "text": "Helper"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Pagination",
+     "type": "FRAME",
+     "w": 280,
+     "h": 40,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "stroke": [
+      "#D0D5DD"
+     ],
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Button groups pagination item",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "pl": 12,
+       "pr": 12,
+       "pt": 8,
+       "pb": 8,
+       "gap": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "variant": {
+        "Number#917:4": "1",
+        "Type": "Previous",
+        "State": "Disabled"
+       },
+       "component": "Button groups pagination item [Type=Previous, State=Disabled]",
+       "kids": [
+        {
+         "name": "keyboard_arrow_left-20-400-round",
+         "type": "INSTANCE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "keyboard_arrow_left-20-400-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 5,
+           "h": 9,
+           "r": 0,
+           "fill": [
+            "#98A2B3"
+           ],
+           "sw": 0.02083333395421505
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Button groups pagination item",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "pl": 12,
+       "pr": 12,
+       "pt": 8,
+       "pb": 8,
+       "gap": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "fill": [
+        "#EAECF0"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "variant": {
+        "Number#917:4": "1",
+        "Type": "Number",
+        "State": "Hover/Active"
+       },
+       "component": "Button groups pagination item [Type=Number, State=Hover/Active]",
+       "kids": [
+        {
+         "name": "Number",
+         "type": "TEXT",
+         "w": 9,
+         "h": 21,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null
+         },
+         "text": "1"
+        }
+       ]
+      },
+      {
+       "name": "Button groups pagination item",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "pl": 12,
+       "pr": 12,
+       "pt": 8,
+       "pb": 8,
+       "gap": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "variant": {
+        "Number#917:4": "2",
+        "Type": "Number",
+        "State": "Default"
+       },
+       "component": "Button groups pagination item [Type=Number, State=Default]",
+       "kids": [
+        {
+         "name": "Number",
+         "type": "TEXT",
+         "w": 9,
+         "h": 21,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null
+         },
+         "text": "2"
+        }
+       ]
+      },
+      {
+       "name": "Button groups pagination item",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "pl": 12,
+       "pr": 12,
+       "pt": 8,
+       "pb": 8,
+       "gap": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "variant": {
+        "Number#917:4": "...",
+        "Type": "Number",
+        "State": "Default"
+       },
+       "component": "Button groups pagination item [Type=Number, State=Default]",
+       "kids": [
+        {
+         "name": "Number",
+         "type": "TEXT",
+         "w": 12,
+         "h": 21,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null
+         },
+         "text": "..."
+        }
+       ]
+      },
+      {
+       "name": "Button groups pagination item",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "pl": 12,
+       "pr": 12,
+       "pt": 8,
+       "pb": 8,
+       "gap": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "variant": {
+        "Number#917:4": "9",
+        "Type": "Number",
+        "State": "Default"
+       },
+       "component": "Button groups pagination item [Type=Number, State=Default]",
+       "kids": [
+        {
+         "name": "Number",
+         "type": "TEXT",
+         "w": 9,
+         "h": 21,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null
+         },
+         "text": "9"
+        }
+       ]
+      },
+      {
+       "name": "Button groups pagination item",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "pl": 12,
+       "pr": 12,
+       "pt": 8,
+       "pb": 8,
+       "gap": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "variant": {
+        "Number#917:4": "10",
+        "Type": "Number",
+        "State": "Default"
+       },
+       "component": "Button groups pagination item [Type=Number, State=Default]",
+       "kids": [
+        {
+         "name": "Number",
+         "type": "TEXT",
+         "w": 17,
+         "h": 21,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null
+         },
+         "text": "10"
+        }
+       ]
+      },
+      {
+       "name": "Button groups pagination item",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "pl": 12,
+       "pr": 12,
+       "pt": 8,
+       "pb": 8,
+       "gap": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "variant": {
+        "Number#917:4": "1",
+        "Type": "Next",
+        "State": "Default"
+       },
+       "component": "Button groups pagination item [Type=Next, State=Default]",
+       "kids": [
+        {
+         "name": "keyboard_arrow_right-20-400-round",
+         "type": "INSTANCE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "keyboard_arrow_right-20-400-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 5,
+           "h": 9,
+           "r": 0,
+           "fill": [
+            "#667085"
+           ],
+           "sw": 0.02083333395421505
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Breakpoint=Mobile",
+   "type": "COMPONENT",
+   "w": 360,
+   "h": 96,
+   "gap": 16,
+   "r": 0,
+   "dir": "VERTICAL",
+   "align": "CENTER",
+   "sw": 1,
+   "variant": {
+    "Breakpoint": "Mobile"
+   },
+   "kids": [
+    {
+     "name": "Pagination",
+     "type": "FRAME",
+     "w": 280,
+     "h": 40,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "stroke": [
+      "#D0D5DD"
+     ],
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Button groups pagination item",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "pl": 12,
+       "pr": 12,
+       "pt": 8,
+       "pb": 8,
+       "gap": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "variant": {
+        "Number#917:4": "1",
+        "Type": "Previous",
+        "State": "Disabled"
+       },
+       "component": "Button groups pagination item [Type=Previous, State=Disabled]",
+       "kids": [
+        {
+         "name": "keyboard_arrow_left-20-400-round",
+         "type": "INSTANCE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "keyboard_arrow_left-20-400-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 5,
+           "h": 9,
+           "r": 0,
+           "fill": [
+            "#98A2B3"
+           ],
+           "sw": 0.02083333395421505
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Button groups pagination item",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "pl": 12,
+       "pr": 12,
+       "pt": 8,
+       "pb": 8,
+       "gap": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "fill": [
+        "#EAECF0"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "variant": {
+        "Number#917:4": "1",
+        "Type": "Number",
+        "State": "Hover/Active"
+       },
+       "component": "Button groups pagination item [Type=Number, State=Hover/Active]",
+       "kids": [
+        {
+         "name": "Number",
+         "type": "TEXT",
+         "w": 9,
+         "h": 21,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null
+         },
+         "text": "1"
+        }
+       ]
+      },
+      {
+       "name": "Button groups pagination item",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "pl": 12,
+       "pr": 12,
+       "pt": 8,
+       "pb": 8,
+       "gap": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "variant": {
+        "Number#917:4": "2",
+        "Type": "Number",
+        "State": "Default"
+       },
+       "component": "Button groups pagination item [Type=Number, State=Default]",
+       "kids": [
+        {
+         "name": "Number",
+         "type": "TEXT",
+         "w": 9,
+         "h": 21,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null
+         },
+         "text": "2"
+        }
+       ]
+      },
+      {
+       "name": "Button groups pagination item",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "pl": 12,
+       "pr": 12,
+       "pt": 8,
+       "pb": 8,
+       "gap": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "variant": {
+        "Number#917:4": "...",
+        "Type": "Number",
+        "State": "Default"
+       },
+       "component": "Button groups pagination item [Type=Number, State=Default]",
+       "kids": [
+        {
+         "name": "Number",
+         "type": "TEXT",
+         "w": 12,
+         "h": 21,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null
+         },
+         "text": "..."
+        }
+       ]
+      },
+      {
+       "name": "Button groups pagination item",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "pl": 12,
+       "pr": 12,
+       "pt": 8,
+       "pb": 8,
+       "gap": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "variant": {
+        "Number#917:4": "9",
+        "Type": "Number",
+        "State": "Default"
+       },
+       "component": "Button groups pagination item [Type=Number, State=Default]",
+       "kids": [
+        {
+         "name": "Number",
+         "type": "TEXT",
+         "w": 9,
+         "h": 21,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null
+         },
+         "text": "9"
+        }
+       ]
+      },
+      {
+       "name": "Button groups pagination item",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "pl": 12,
+       "pr": 12,
+       "pt": 8,
+       "pb": 8,
+       "gap": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "variant": {
+        "Number#917:4": "10",
+        "Type": "Number",
+        "State": "Default"
+       },
+       "component": "Button groups pagination item [Type=Number, State=Default]",
+       "kids": [
+        {
+         "name": "Number",
+         "type": "TEXT",
+         "w": 17,
+         "h": 21,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 14,
+          "lh": null
+         },
+         "text": "10"
+        }
+       ]
+      },
+      {
+       "name": "Button groups pagination item",
+       "type": "INSTANCE",
+       "w": 40,
+       "h": 40,
+       "pl": 12,
+       "pr": 12,
+       "pt": 8,
+       "pb": 8,
+       "gap": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "fill": [
+        "#FFFFFF"
+       ],
+       "stroke": [
+        "#D0D5DD"
+       ],
+       "variant": {
+        "Number#917:4": "1",
+        "Type": "Next",
+        "State": "Default"
+       },
+       "component": "Button groups pagination item [Type=Next, State=Default]",
+       "kids": [
+        {
+         "name": "keyboard_arrow_right-20-400-round",
+         "type": "INSTANCE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "keyboard_arrow_right-20-400-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 5,
+           "h": 9,
+           "r": 0,
+           "fill": [
+            "#667085"
+           ],
+           "sw": 0.02083333395421505
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Container",
+     "type": "FRAME",
+     "w": 278,
+     "h": 40,
+     "gap": 8,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 178,
+       "h": 21,
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 14,
+        "lh": null
+       },
+       "text": "แสดง 1 ถึง 10  จาก 95 รายการ"
+      },
+      {
+       "name": "Items per page dropdown",
+       "type": "INSTANCE",
+       "w": 92,
+       "h": 40,
+       "r": 0,
+       "dir": "VERTICAL",
+       "align": "MIN",
+       "sw": 1,
+       "variant": {
+        "State": "Default"
+       },
+       "component": "Items per page dropdown [State=Default]",
+       "kids": [
+        {
+         "name": "Input dropdown",
+         "type": "INSTANCE",
+         "w": 92,
+         "h": 40,
+         "gap": 8,
+         "r": 0,
+         "dir": "VERTICAL",
+         "align": "MIN",
+         "sw": 1,
+         "variant": {
+          "Cursor#3340:0": false,
+          "Leading icon swap#2011:39": "476:1742",
+          "Text#545:18": "10",
+          "Helper#2011:48": false,
+          "Supporting#3300:0": false,
+          "Helper text#2011:75": "Helper",
+          "Supporting text#3300:17": "Description",
+          "Leading icon#2011:21": false,
+          "Info icon#2011:12": true,
+          "Placeholder#545:12": true,
+          "Label#74:40": false,
+          "Optional#2147:29": true,
+          "Label text#74:30": "Label",
+          "State": "Selected",
+          "Size": "md"
+         },
+         "component": "Input dropdown [State=Selected, Size=md]",
+         "kids": [
+          {
+           "name": "Label",
+           "type": "FRAME",
+           "w": 352,
+           "h": 24,
+           "gap": 4,
+           "r": 0,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "sw": 1
+          },
+          {
+           "name": "Container",
+           "type": "FRAME",
+           "w": 92,
+           "h": 40,
+           "pl": 12,
+           "pr": 12,
+           "pt": 8,
+           "pb": 8,
+           "gap": 8,
+           "r": 8,
+           "dir": "HORIZONTAL",
+           "align": "CENTER",
+           "fill": [
+            "#FFFFFF"
+           ],
+           "stroke": [
+            "#D0D5DD"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Helper",
+           "type": "TEXT",
+           "w": 352,
+           "h": 18,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null
+           },
+           "text": "Helper"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

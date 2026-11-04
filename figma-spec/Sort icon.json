@@ -1,0 +1,162 @@
+{
+ "component": "Sort icon",
+ "page": "✅ Table",
+ "node": "2:14",
+ "props": {
+  "Icon": {
+   "type": "VARIANT",
+   "defaultValue": "Swap",
+   "variantOptions": [
+    "Down",
+    "Up",
+    "Swap"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "name": "Icon=Swap",
+   "type": "COMPONENT",
+   "w": 20,
+   "h": 20,
+   "r": 0,
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Icon": "Swap"
+   },
+   "kids": [
+    {
+     "name": "swap_vert-20-300-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "swap_vert-20-300-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 12,
+       "h": 15,
+       "r": 0,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Icon=Up",
+   "type": "COMPONENT",
+   "w": 20,
+   "h": 20,
+   "r": 0,
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Icon": "Up"
+   },
+   "kids": [
+    {
+     "name": "arrow_upward_alt-20-300-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "arrow_upward_alt-20-300-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 7,
+       "h": 8,
+       "r": 0,
+       "fill": [
+        "#000000"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Icon=Down",
+   "type": "COMPONENT",
+   "w": 20,
+   "h": 20,
+   "r": 0,
+   "align": "MIN",
+   "sw": 1,
+   "variant": {
+    "Icon": "Down"
+   },
+   "kids": [
+    {
+     "name": "arrow_downward_alt-20-300-round",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "arrow_downward_alt-20-300-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 7,
+       "h": 8,
+       "r": 0,
+       "fill": [
+        "#000000"
+       ],
+       "sw": 0.02083333395421505
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

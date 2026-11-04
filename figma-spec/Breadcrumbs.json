@@ -1,0 +1,572 @@
+{
+ "component": "Breadcrumbs",
+ "page": "✅ Breadcrumbs",
+ "node": "2:7",
+ "props": {},
+ "variants": [
+  {
+   "name": "Breadcrumbs",
+   "type": "COMPONENT",
+   "w": 300,
+   "h": 26,
+   "gap": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "kids": [
+    {
+     "name": "_Breadcrumbs item / Home",
+     "type": "INSTANCE",
+     "w": 20,
+     "h": 20,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "variant": {
+      "State": "Default"
+     },
+     "component": "_Breadcrumbs item / Home [State=Default]",
+     "kids": [
+      {
+       "name": "home-20-300-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "home-20-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 11,
+         "h": 13,
+         "r": 0,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Link 1",
+     "type": "FRAME",
+     "w": 54,
+     "h": 26,
+     "gap": 4,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "_Breadcrumbs item / Separator",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "_Breadcrumbs item / Separator",
+       "kids": [
+        {
+         "name": "keyboard_arrow_right-20-300-round",
+         "type": "INSTANCE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "keyboard_arrow_right-20-300-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 5,
+           "h": 9,
+           "r": 0,
+           "fill": [
+            "#D0D5DD"
+           ],
+           "sw": 0.02083333395421505
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "_Breadcrumbs item / Link",
+       "type": "INSTANCE",
+       "w": 30,
+       "h": 26,
+       "pl": 4,
+       "pr": 4,
+       "pt": 4,
+       "pb": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "Text#2065:2": "Link",
+        "Current": "False",
+        "State": "Default"
+       },
+       "component": "_Breadcrumbs item / Link [Current=False, State=Default]",
+       "kids": [
+        {
+         "name": "Link",
+         "type": "TEXT",
+         "w": 22,
+         "h": 18,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 12,
+          "lh": null
+         },
+         "text": "Link"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Link 2",
+     "type": "FRAME",
+     "w": 54,
+     "h": 26,
+     "gap": 4,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "_Breadcrumbs item / Separator",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "_Breadcrumbs item / Separator",
+       "kids": [
+        {
+         "name": "keyboard_arrow_right-20-300-round",
+         "type": "INSTANCE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "keyboard_arrow_right-20-300-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 5,
+           "h": 9,
+           "r": 0,
+           "fill": [
+            "#D0D5DD"
+           ],
+           "sw": 0.02083333395421505
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "_Breadcrumbs item / Link",
+       "type": "INSTANCE",
+       "w": 30,
+       "h": 26,
+       "pl": 4,
+       "pr": 4,
+       "pt": 4,
+       "pb": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "Text#2065:2": "Link",
+        "Current": "False",
+        "State": "Default"
+       },
+       "component": "_Breadcrumbs item / Link [Current=False, State=Default]",
+       "kids": [
+        {
+         "name": "Link",
+         "type": "TEXT",
+         "w": 22,
+         "h": 18,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 12,
+          "lh": null
+         },
+         "text": "Link"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Link 3",
+     "type": "FRAME",
+     "w": 54,
+     "h": 26,
+     "gap": 4,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "_Breadcrumbs item / Separator",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "_Breadcrumbs item / Separator",
+       "kids": [
+        {
+         "name": "keyboard_arrow_right-20-300-round",
+         "type": "INSTANCE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "keyboard_arrow_right-20-300-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 5,
+           "h": 9,
+           "r": 0,
+           "fill": [
+            "#D0D5DD"
+           ],
+           "sw": 0.02083333395421505
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "_Breadcrumbs item / Link",
+       "type": "INSTANCE",
+       "w": 30,
+       "h": 26,
+       "pl": 4,
+       "pr": 4,
+       "pt": 4,
+       "pb": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "Text#2065:2": "Link",
+        "Current": "False",
+        "State": "Default"
+       },
+       "component": "_Breadcrumbs item / Link [Current=False, State=Default]",
+       "kids": [
+        {
+         "name": "Link",
+         "type": "TEXT",
+         "w": 22,
+         "h": 18,
+         "fill": [
+          "#475467"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 12,
+          "lh": null
+         },
+         "text": "Link"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Truncate link",
+     "type": "FRAME",
+     "w": 44,
+     "h": 20,
+     "gap": 4,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "_Breadcrumbs item / Separator",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "_Breadcrumbs item / Separator",
+       "kids": [
+        {
+         "name": "keyboard_arrow_right-20-300-round",
+         "type": "INSTANCE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "keyboard_arrow_right-20-300-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 5,
+           "h": 9,
+           "r": 0,
+           "fill": [
+            "#D0D5DD"
+           ],
+           "sw": 0.02083333395421505
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "_Breadcrumbs item / Truncate link",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "gap": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "State": "Default"
+       },
+       "component": "_Breadcrumbs item / Truncate link [State=Default]",
+       "kids": [
+        {
+         "name": "more_horiz-20-400-round",
+         "type": "INSTANCE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "more_horiz-20-400-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 12,
+           "h": 3,
+           "r": 0,
+           "fill": [
+            "#475467"
+           ],
+           "sw": 0.02083333395421505
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Current link",
+     "type": "FRAME",
+     "w": 54,
+     "h": 26,
+     "gap": 4,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "_Breadcrumbs item / Separator",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "_Breadcrumbs item / Separator",
+       "kids": [
+        {
+         "name": "keyboard_arrow_right-20-300-round",
+         "type": "INSTANCE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "align": "MIN",
+         "sw": 1,
+         "component": "keyboard_arrow_right-20-300-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 20,
+           "h": 20,
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 5,
+           "h": 9,
+           "r": 0,
+           "fill": [
+            "#D0D5DD"
+           ],
+           "sw": 0.02083333395421505
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "_Breadcrumbs item / Link",
+       "type": "INSTANCE",
+       "w": 30,
+       "h": 26,
+       "pl": 4,
+       "pr": 4,
+       "pt": 4,
+       "pb": 4,
+       "r": 0,
+       "dir": "HORIZONTAL",
+       "align": "CENTER",
+       "sw": 1,
+       "variant": {
+        "Text#2065:2": "Link",
+        "Current": "True",
+        "State": "Default"
+       },
+       "component": "_Breadcrumbs item / Link [Current=True, State=Default]",
+       "kids": [
+        {
+         "name": "Link",
+         "type": "TEXT",
+         "w": 22,
+         "h": 18,
+         "fill": [
+          "#A80689"
+         ],
+         "sw": 1,
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "Regular",
+          "size": 12,
+          "lh": null
+         },
+         "text": "Link"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

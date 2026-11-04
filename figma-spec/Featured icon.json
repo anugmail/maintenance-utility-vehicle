@@ -1,0 +1,889 @@
+{
+ "component": "Featured icon",
+ "page": "Featured icon",
+ "node": "2861:54686",
+ "props": {
+  "Icon swap#2032:0": {
+   "type": "INSTANCE_SWAP",
+   "defaultValue": "522:18597",
+   "preferredValues": [
+    {
+     "type": "COMPONENT",
+     "key": "a2a51c1f870eac9f78166d8ff258c826d8b5ecf1"
+    }
+   ]
+  },
+  "Color": {
+   "type": "VARIANT",
+   "defaultValue": "Brand",
+   "variantOptions": [
+    "Gray",
+    "Info",
+    "Success",
+    "Warning",
+    "Error",
+    "Brand",
+    "Disabled",
+    "Purple"
+   ]
+  },
+  "Size": {
+   "type": "VARIANT",
+   "defaultValue": "md",
+   "variantOptions": [
+    "md",
+    "sm"
+   ]
+  }
+ },
+ "variants": [
+  {
+   "name": "Color=Brand, Size=md",
+   "type": "COMPONENT",
+   "w": 48,
+   "h": 48,
+   "r": 9999,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#FFF5FD"
+   ],
+   "sw": 1,
+   "variant": {
+    "Color": "Brand",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "info-24-300-round",
+     "type": "INSTANCE",
+     "w": 24,
+     "h": 24,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "info-24-300-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 19,
+       "h": 19,
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 0.02500000037252903
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Color=Gray, Size=md",
+   "type": "COMPONENT",
+   "w": 48,
+   "h": 48,
+   "r": 9999,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#F2F4F7"
+   ],
+   "sw": 1,
+   "variant": {
+    "Color": "Gray",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "info-24-300-round",
+     "type": "INSTANCE",
+     "w": 24,
+     "h": 24,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "info-24-300-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 19,
+       "h": 19,
+       "r": 0,
+       "fill": [
+        "#667085"
+       ],
+       "sw": 0.02500000037252903
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Color=Info, Size=md",
+   "type": "COMPONENT",
+   "w": 48,
+   "h": 48,
+   "r": 9999,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#EEF4FF"
+   ],
+   "sw": 1,
+   "variant": {
+    "Color": "Info",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "info-24-300-round",
+     "type": "INSTANCE",
+     "w": 24,
+     "h": 24,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "info-24-300-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 19,
+       "h": 19,
+       "r": 0,
+       "fill": [
+        "#6172F3"
+       ],
+       "sw": 0.02500000037252903
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Color=Success, Size=md",
+   "type": "COMPONENT",
+   "w": 48,
+   "h": 48,
+   "r": 9999,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#ECFDF3"
+   ],
+   "sw": 1,
+   "variant": {
+    "Color": "Success",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "info-24-300-round",
+     "type": "INSTANCE",
+     "w": 24,
+     "h": 24,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "info-24-300-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 19,
+       "h": 19,
+       "r": 0,
+       "fill": [
+        "#17B26A"
+       ],
+       "sw": 0.02500000037252903
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Color=Warning, Size=md",
+   "type": "COMPONENT",
+   "w": 48,
+   "h": 48,
+   "r": 9999,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#FFFAEB"
+   ],
+   "sw": 1,
+   "variant": {
+    "Color": "Warning",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "info-24-300-round",
+     "type": "INSTANCE",
+     "w": 24,
+     "h": 24,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "info-24-300-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 19,
+       "h": 19,
+       "r": 0,
+       "fill": [
+        "#F79009"
+       ],
+       "sw": 0.02500000037252903
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Color=Error, Size=md",
+   "type": "COMPONENT",
+   "w": 48,
+   "h": 48,
+   "r": 9999,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#FEF3F2"
+   ],
+   "sw": 1,
+   "variant": {
+    "Color": "Error",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "info-24-300-round",
+     "type": "INSTANCE",
+     "w": 24,
+     "h": 24,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "info-24-300-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 19,
+       "h": 19,
+       "r": 0,
+       "fill": [
+        "#F04438"
+       ],
+       "sw": 0.02500000037252903
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Color=Disabled, Size=md",
+   "type": "COMPONENT",
+   "w": 48,
+   "h": 48,
+   "r": 9999,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#F2F4F7"
+   ],
+   "sw": 1,
+   "variant": {
+    "Color": "Disabled",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "info-24-300-round",
+     "type": "INSTANCE",
+     "w": 24,
+     "h": 24,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "info-24-300-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 19,
+       "h": 19,
+       "r": 0,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 0.02500000037252903
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Color=Purple, Size=md",
+   "type": "COMPONENT",
+   "w": 48,
+   "h": 48,
+   "r": 9999,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#F5F3FF"
+   ],
+   "sw": 1,
+   "variant": {
+    "Color": "Purple",
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "info-24-300-round",
+     "type": "INSTANCE",
+     "w": 24,
+     "h": 24,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "info-24-300-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 19,
+       "h": 19,
+       "r": 0,
+       "fill": [
+        "#6927DA"
+       ],
+       "sw": 0.02500000037252903
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Color=Brand, Size=sm",
+   "type": "COMPONENT",
+   "w": 36,
+   "h": 36,
+   "r": 9999,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#FFF5FD"
+   ],
+   "sw": 1,
+   "variant": {
+    "Color": "Brand",
+    "Size": "sm"
+   },
+   "kids": [
+    {
+     "name": "info-24-300-round",
+     "type": "INSTANCE",
+     "w": 24,
+     "h": 24,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "info-24-300-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 19,
+       "h": 19,
+       "r": 0,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 0.02500000037252903
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Color=Gray, Size=sm",
+   "type": "COMPONENT",
+   "w": 36,
+   "h": 36,
+   "r": 9999,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#F2F4F7"
+   ],
+   "sw": 1,
+   "variant": {
+    "Color": "Gray",
+    "Size": "sm"
+   },
+   "kids": [
+    {
+     "name": "info-24-300-round",
+     "type": "INSTANCE",
+     "w": 24,
+     "h": 24,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "info-24-300-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 19,
+       "h": 19,
+       "r": 0,
+       "fill": [
+        "#667085"
+       ],
+       "sw": 0.02500000037252903
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Color=Info, Size=sm",
+   "type": "COMPONENT",
+   "w": 36,
+   "h": 36,
+   "r": 9999,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#EEF4FF"
+   ],
+   "sw": 1,
+   "variant": {
+    "Color": "Info",
+    "Size": "sm"
+   },
+   "kids": [
+    {
+     "name": "info-24-300-round",
+     "type": "INSTANCE",
+     "w": 24,
+     "h": 24,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "info-24-300-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 19,
+       "h": 19,
+       "r": 0,
+       "fill": [
+        "#6172F3"
+       ],
+       "sw": 0.02500000037252903
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Color=Success, Size=sm",
+   "type": "COMPONENT",
+   "w": 36,
+   "h": 36,
+   "r": 9999,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#ECFDF3"
+   ],
+   "sw": 1,
+   "variant": {
+    "Color": "Success",
+    "Size": "sm"
+   },
+   "kids": [
+    {
+     "name": "info-24-300-round",
+     "type": "INSTANCE",
+     "w": 24,
+     "h": 24,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "info-24-300-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 19,
+       "h": 19,
+       "r": 0,
+       "fill": [
+        "#17B26A"
+       ],
+       "sw": 0.02500000037252903
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Color=Warning, Size=sm",
+   "type": "COMPONENT",
+   "w": 36,
+   "h": 36,
+   "r": 9999,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#FFFAEB"
+   ],
+   "sw": 1,
+   "variant": {
+    "Color": "Warning",
+    "Size": "sm"
+   },
+   "kids": [
+    {
+     "name": "info-24-300-round",
+     "type": "INSTANCE",
+     "w": 24,
+     "h": 24,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "info-24-300-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 19,
+       "h": 19,
+       "r": 0,
+       "fill": [
+        "#F79009"
+       ],
+       "sw": 0.02500000037252903
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Color=Error, Size=sm",
+   "type": "COMPONENT",
+   "w": 36,
+   "h": 36,
+   "r": 9999,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#FEF3F2"
+   ],
+   "sw": 1,
+   "variant": {
+    "Color": "Error",
+    "Size": "sm"
+   },
+   "kids": [
+    {
+     "name": "info-24-300-round",
+     "type": "INSTANCE",
+     "w": 24,
+     "h": 24,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "info-24-300-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 19,
+       "h": 19,
+       "r": 0,
+       "fill": [
+        "#F04438"
+       ],
+       "sw": 0.02500000037252903
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Color=Disabled, Size=sm",
+   "type": "COMPONENT",
+   "w": 36,
+   "h": 36,
+   "r": 9999,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#F2F4F7"
+   ],
+   "sw": 1,
+   "variant": {
+    "Color": "Disabled",
+    "Size": "sm"
+   },
+   "kids": [
+    {
+     "name": "info-24-300-round",
+     "type": "INSTANCE",
+     "w": 24,
+     "h": 24,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "info-24-300-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 19,
+       "h": 19,
+       "r": 0,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 0.02500000037252903
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Color=Purple, Size=sm",
+   "type": "COMPONENT",
+   "w": 36,
+   "h": 36,
+   "r": 9999,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "fill": [
+    "#F5F3FF"
+   ],
+   "sw": 1,
+   "variant": {
+    "Color": "Purple",
+    "Size": "sm"
+   },
+   "kids": [
+    {
+     "name": "info-24-300-round",
+     "type": "INSTANCE",
+     "w": 24,
+     "h": 24,
+     "r": 0,
+     "align": "MIN",
+     "sw": 1,
+     "component": "info-24-300-round",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 19,
+       "h": 19,
+       "r": 0,
+       "fill": [
+        "#7839EE"
+       ],
+       "sw": 0.02500000037252903
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

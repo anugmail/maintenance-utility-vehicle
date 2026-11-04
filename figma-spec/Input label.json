@@ -1,0 +1,214 @@
+{
+ "component": "Input label",
+ "page": "✅ Inputs",
+ "node": "2:6",
+ "props": {},
+ "variants": [
+  {
+   "name": "Input label",
+   "type": "COMPONENT",
+   "w": 352,
+   "h": 24,
+   "gap": 4,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "align": "CENTER",
+   "sw": 1,
+   "kids": [
+    {
+     "name": "Left",
+     "type": "FRAME",
+     "w": 352,
+     "h": 24,
+     "gap": 4,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "kids": [
+      {
+       "name": "Label",
+       "type": "TEXT",
+       "w": 40,
+       "h": 24,
+       "fill": [
+        "#475467"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 16,
+        "lh": null
+       },
+       "text": "Label"
+      },
+      {
+       "name": "(ถ้ามี)",
+       "type": "TEXT",
+       "w": 38,
+       "h": 24,
+       "fill": [
+        "#98A2B3"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "Regular",
+        "size": 16,
+        "lh": null
+       },
+       "text": "(ถ้ามี)"
+      },
+      {
+       "name": "info-24-300-round",
+       "type": "INSTANCE",
+       "w": 24,
+       "h": 24,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "info-24-300-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 24,
+         "h": 24,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 19,
+         "h": 19,
+         "r": 0,
+         "fill": [
+          "#D0D5DD"
+         ],
+         "sw": 0.02500000037252903
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Tertiary brand button",
+     "type": "INSTANCE",
+     "w": 107,
+     "h": 24,
+     "pl": 8,
+     "pr": 8,
+     "pt": 8,
+     "pb": 8,
+     "gap": 4,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "align": "CENTER",
+     "sw": 1,
+     "variant": {
+      "Leading icon swap#133:10": "133:3719",
+      "Button text#1153:12": true,
+      "Trailing icon#105:4": false,
+      "Trailing icon swap#133:12": "133:3719",
+      "Leading icon#105:2": false,
+      "Text#105:0": "Button",
+      "State": "Default"
+     },
+     "component": "Tertiary brand button [State=Default]",
+     "kids": [
+      {
+       "name": "crop_free-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 14,
+         "h": 14,
+         "r": 0,
+         "fill": [
+          "#A80689"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      },
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 43,
+       "h": 21,
+       "fill": [
+        "#A80689"
+       ],
+       "sw": 1,
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 14,
+        "lh": null
+       },
+       "text": "Button"
+      },
+      {
+       "name": "crop_free-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "r": 0,
+       "align": "MIN",
+       "sw": 1,
+       "component": "crop_free-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 14,
+         "h": 14,
+         "r": 0,
+         "fill": [
+          "#A80689"
+         ],
+         "sw": 0.02083333395421505
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
