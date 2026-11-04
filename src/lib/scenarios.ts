@@ -1,6 +1,6 @@
 /* รายการ scenario ตามลำดับงาน (SCEN_SEQ ใน screens.js) · ชื่อ ช่วงงาน บทบาท จากตารางหัวข้อ 0 ของ Diagram/01-บำรุงรักษาตามวาระ/14-บำรุงรักษา-userflow.md
    href = หน้าที่ทำแล้ว · ไม่มี href = ยังไม่ทำ (เร็วๆ นี้)
-   ?sample=<ชุดตัวอย่าง> (S10 S12 S23 S11 S13 S14) · ?seed=S… (S4–S17 ชุด B) = ใส่ข้อมูลตั้งต้นของ scenario + สลับบทบาท (ของต้นแบบ)
+   ?sample=<ชุดตัวอย่าง> (S10 S12 S23 S11 S13 S14 S24) · ?seed=S… (S4–S17 ชุด B) = ใส่ข้อมูลตั้งต้นของ scenario + สลับบทบาท (ของต้นแบบ)
    S2 S19 S20 S21 S22 เปิดผ่าน /scenarios/sample/ (ใส่แผนตัวอย่าง MR Z7000004 ในสถานะที่ scenario เริ่ม + ตั้งบทบาท แล้วพาไปหน้าแรก) */
 const sample = (q: Record<string, string>) => "/scenarios/sample/?" + new URLSearchParams(q).toString();
 export interface Scenario { id: string; name: string; phase: string; role: string; href?: string }
@@ -27,4 +27,5 @@ export const SCENARIOS: Scenario[] = [
   { id: "S16", name: "หัวหน้า กบค. ตรวจสอบประวัติงานบำรุงรักษา", phase: "จัดทำรายงานการบำรุงรักษา", role: "หัวหน้า กบค.", href: "/head-review/?seed=S16" },
   { id: "S17", name: "กบค. ออกรายงานผลและปิดงาน", phase: "จัดทำรายงานการบำรุงรักษา", role: "กบค.", href: "/closeout/report/?id=Z7000001&seed=S17" },
   { id: "S18", name: "กบค. คำนวณต้นทุนการบำรุงรักษา", phase: "คำนวณต้นทุน", role: "กบค." },
+  { id: "S24", name: "กบค. ติดตามข้อมูลการบำรุงรักษารายคันและกำหนดครั้งถัดไป", phase: "หลังปิดงาน (ข้อมูลรถ)", role: "กบค. · หน่วยงานเจ้าของรถ", href: "/vehicles/maintenance/?sample=S24" },
 ];
