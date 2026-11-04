@@ -18,13 +18,14 @@ import {
 } from "@/lib/mock/jobs";
 import { notify } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
-import { badgeOf, ButtonRow, DataTable, jobCrumbs, KvBox, OilResultFields, Section, toUpload, tripHref, useBack } from "../_lib/ui";
+import { badgeOf, ButtonRow, DataTable, useCrumbs, KvBox, OilResultFields, Section, toUpload, tripHref, useBack } from "../_lib/ui";
 import { vehiclePairs } from "./JobPage";
 
 const WORK_COLS2: TableColumn[] = [{ head: "รายการงาน" }, { head: "อะไหล่ที่ใช้", width: 320 }, { head: "จำนวนตามแผน", width: 140 }, { head: "จำนวนที่ใช้จริง", width: 140 }, { head: "หน่วย", width: 110 }];
 const COST_COLS: TableColumn[] = [{ head: "พนักงาน กบค. ซ่อม", Style: "Lead text" }, { head: "ค่าเบี้ยเลี้ยง/วัน", width: 150 }, { head: "ค่าที่พัก/วัน", width: 150 }, { head: "จำนวนวัน", width: 120 }, { head: "รวม", width: 150 }];
 
 export function WorkDetail({ trip, car, job, kbk }: { trip: JobTrip; car: TripCar; job: Job; kbk: boolean }) {
+  const crumbs = useCrumbs();
   const back = useBack();
   const mob = useBreakpoint() === "Mobile";
   const f = job.close ?? emptyClose(job, trip, car);
@@ -51,7 +52,7 @@ export function WorkDetail({ trip, car, job, kbk }: { trip: JobTrip; car: TripCa
 
   return (
     <>
-      <PageHeader Title={car.plate} Badge={badgeOf(WSTAT[job.status])} crumbs={jobCrumbs(trip, car.plate)} onBack={() => back(tripHref(trip))} />
+      <PageHeader Title={car.plate} Badge={badgeOf(WSTAT[job.status])} crumbs={crumbs.job(trip, car.plate)} onBack={() => back(tripHref(trip))} />
       <VehicleAndReporterInfo Title="ข้อมูลยานพาหนะและงาน" pairs={pairs} />
       <IncidentPhotoGallery Title={"ภาพก่อนเริ่มงาน (" + photos.length + ")"} photos={photos.map((p) => ({ alt: p.name }))} />
       <Section>

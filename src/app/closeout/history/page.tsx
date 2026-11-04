@@ -57,13 +57,13 @@ function History() {
         <Section>
           <DisplayBox Title="ความคืบหน้ารายคัน" pairs={progress} />
           {!done && <Alert Color="Warning" Text={"ยังบำรุงรักษาไม่ครบทุกคันตามแผน (เหลือ " + (total - PROGRESS_DONE) + " คัน)"}
-            SupportingText={"บอร์ด: \"บำรุงรักษาเสร็จทั้งหมดหรือไม่?\" — ครบแล้วจึงบันทึกและส่งประวัติให้หัวหน้า กบค. ตรวจสอบได้"} />}
+            SupportingText="ครบแล้วจึงบันทึกและส่งประวัติให้หัวหน้า กบค. ตรวจสอบได้" />}
         </Section>
         <Section>
           <SectionLabel Title={done ? "ประวัติงานบำรุงรักษาทั้งหมด (" + total + ")" : "ประวัติงานบำรุงรักษา (" + HIST_ROWS.length + ")"} />
           <DataTable columns={HIST_COLS} rows={HIST_ROWS} pagination={done ? total : undefined} perPage={total} />
         </Section>
-        {sent && <Alert Color="Info" Text={"ส่งประวัติให้หัวหน้า กบค. ตรวจสอบแล้ว " + (c.sentAt ?? SENT_AT)} SupportingText="แก้ไขไม่ได้จนกว่าหัวหน้าจะตีกลับ (S16)" />}
+        {sent && <Alert Color="Info" Text={"ส่งประวัติให้หัวหน้า กบค. ตรวจสอบแล้ว " + (c.sentAt ?? SENT_AT)} SupportingText="แก้ไขไม่ได้จนกว่าหัวหน้าจะตีกลับ" />}
         <BtnRow>
           <SecondaryButton Text="ย้อนกลับ" Size="lg" onClick={back} />
           {!sent && <PrimaryButton Text="ส่งประวัติให้หัวหน้าตรวจสอบ" Size="lg" State={done && kbk ? "Default" : "Disabled"} onClick={() => setConfirm(true)} />}

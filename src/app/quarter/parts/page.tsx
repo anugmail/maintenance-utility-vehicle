@@ -19,7 +19,7 @@ import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionLabel } from "@/components/vms/SectionLabel";
 import type { TableColumn } from "@/components/vms/Table";
-import { NOW_CARS, WD, WH_ACK_AT, mrOf, partsSummary, planOf, putQuarter, quarterOf, shortOf } from "@/lib/mock/closeout";
+import { NOW_CARS, WD, WH_ACK_AT, mrOf, partsSummary, planOf, putQuarter, quarterOf, setPlanStatus, shortOf } from "@/lib/mock/closeout";
 import { PARTS } from "@/lib/mock/data";
 import { useSeed } from "@/lib/mock/seedB";
 import { useMock, useRole } from "@/lib/mock/store";
@@ -62,6 +62,7 @@ function PartsProgress() {
   const withdraw = () => {
     setConfirm(false);
     putQuarter(id, q, sum.short ? { result: "short", mount: mount.current } : { result: "ok" });
+    if (plan?.status === "approved") setPlanStatus(id, "active");   // เริ่มเบิกอะไหล่ไตรมาสแรก = แผนเข้าสู่ "ดำเนินการ" (PST.active)
   };
   const primary = st.result === "ok"
     ? <PrimaryButton Text="ไปทำแผนเดินทาง" Size="lg" onClick={() => router.push(tripsHref(id, q))} />

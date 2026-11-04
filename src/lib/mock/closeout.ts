@@ -15,7 +15,7 @@ const CREATOR = "นายวิชัย ทองดี (กบค.)";
 /* PLAN_KV — กล่องรายละเอียดแผน (10 คู่) · quarterNote = ต่อท้ายไตรมาส (หน้าแผนเดินทาง "ไตรมาส 1 (10 คัน)") */
 export const planKv = (p: Plan, quarterNote?: string): [string, string][] => [
   ["ชื่อแผน", p.name], ["ปีงบประมาณ", p.year], ["ภาค", p.region], ["ประเภทรถ", p.type], ["ไตรมาส", p.nowQ + (quarterNote ?? "")],
-  ["จำนวนรถ", p.cars + " คัน"], ["เลขที่ MR", p.mr], ["ผู้สร้างแผน", CREATOR], ["วันที่สร้าง", p.created], ["อนุมัติเมื่อ", APPROVED_AT[p.mr.slice(3)] ?? "-"],
+  ["จำนวนรถ", p.cars + " คัน"], ["เลขที่ MR", p.mr], ["ผู้สร้างแผน", CREATOR], ["วันที่สร้าง", p.created], ["อนุมัติเมื่อ", p.approvedAt ?? APPROVED_AT[p.mr.slice(3)] ?? "-"],
 ];
 
 /* ---------- S4 เบิก/จองอะไหล่ ---------- */
@@ -62,7 +62,7 @@ export const closeoutOf = (s: MockState, id: string): CloseoutState => s.closeou
 export function putCloseout(id: string, patch: Partial<CloseoutState>) {
   setMock((s) => ({ ...s, closeout: { ...s.closeout, [id]: { ...s.closeout?.[id], ...patch } } }));
 }
-/** ให้ S14 (batch C) เรียกเมื่อหน่วยงานยอมรับผลทั้งแผน */
+/** S14 (acceptance.ts acceptPlan) เรียกเมื่อหน่วยงานยอมรับผลทั้งแผน */
 export const markPlanAccepted = (id: string) => putCloseout(id, { accepted: true });
 
 export const ACC: Record<"wait" | "ok", [string, PillColor]> = { wait: ["รอหน่วยงานยอมรับ", "Warning"], ok: ["หน่วยงานยอมรับแล้ว", "Success"] };

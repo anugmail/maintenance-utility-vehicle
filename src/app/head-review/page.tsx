@@ -26,8 +26,11 @@ function HeadList() {
   const [query, setQuery] = useState("");
   const open = (id: string) => () => router.push("/head-review/detail/?id=" + id);
   const rows: TableValue[][] = [];
-  const p = planOf(mock, "Z7000001"), c = closeoutOf(mock, "Z7000001");
-  if (p && c.sentAt) rows.push([p.mr, p.name, CREATOR_SHORT, p.cars + " คัน", c.sentAt ?? SENT_AT, { pills: [HST[headStatusOf(p, c)]] }, go("เปิด " + p.mr, open("Z7000001"))]);
+  /* แผนที่ กบค. ส่งประวัติแล้ว (closeout.sentAt) — ทุกแผนใน store */
+  Object.keys(mock.closeout ?? {}).forEach((id) => {
+    const p = planOf(mock, id), c = closeoutOf(mock, id);
+    if (p && c.sentAt) rows.push([p.mr, p.name, CREATOR_SHORT, p.cars + " คัน", c.sentAt ?? SENT_AT, { pills: [HST[headStatusOf(p, c)]] }, go("เปิด " + p.mr, open(id))]);
+  });
   rows.push([HQ_OTHER.mr, HQ_OTHER.plan, HQ_OTHER.sender, HQ_OTHER.cars, HQ_OTHER.sentAt, { pills: [HST.ok] }, go("เปิด " + HQ_OTHER.mr, open(HQ_OTHER.id))]);
   const k = query.trim();
   const shown = k ? rows.filter((r) => String(r[0]).includes(k) || String(r[1]).includes(k)) : rows;

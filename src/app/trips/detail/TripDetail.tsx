@@ -25,7 +25,7 @@ import {
 } from "@/lib/mock/jobs";
 import { useSample, type SampleMap } from "@/lib/useSample";
 import { useBreakpoint } from "@/lib/useBreakpoint";
-import { DataTable, jobHref, Section, tripCrumbs, useBack, useTripCar } from "../_lib/ui";
+import { DataTable, jobHref, Section, useCrumbs, useBack, useTripCar } from "../_lib/ui";
 
 const SAMPLE_MAP: SampleMap = Object.fromEntries([...SAMPLES, ...Object.keys(SAMPLE_ALIAS)].map((k) => {
   const n = sampleOf(k)!;
@@ -38,6 +38,7 @@ const TRIP_JOB_COLS: TableColumn[] = [
 ];
 
 export function TripDetail() {
+  const crumbs = useCrumbs();
   const router = useRouter();
   const back = useBack();
   const mob = useBreakpoint() === "Mobile";
@@ -69,7 +70,7 @@ export function TripDetail() {
 
   return (
     <>
-      <PageHeader Title={trip.name} Badge={["อนุมัติแล้ว", "Success"]} crumbs={tripCrumbs(trip)} onBack={() => back()} />
+      <PageHeader Title={trip.name} Badge={["อนุมัติแล้ว", "Success"]} crumbs={crumbs.trip(trip)} onBack={() => back()} />
       <VehicleAndReporterInfo Title="รายละเอียดแผนเดินทาง" pairs={[...tripKv(trip), ["ความคืบหน้า", tripProgress(s, trip)]]} />
       <Section>
         <SectionLabel Title={"รถในแผนเดินทาง (" + cars.length + ")"} />

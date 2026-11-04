@@ -37,9 +37,19 @@ export const badgeOf = ([t, c]: readonly [string, PillColor]): [string, BadgeOut
 export const tripHref = (t: JobTrip) => "/trips/detail/?trip=" + t.id;
 export const jobHref = (t: JobTrip, carId: string, sub = "") => "/trips/job/" + sub + "?trip=" + t.id + "&car=" + carId;
 /* Breadcrumbs ตาม pageHead(): ชื่อเมนู + ระดับกลาง + หน้าปัจจุบัน (ไลบรารีมี 3 ช่องลิงก์ — ช่องที่ 4 ของหน้ารับรถ/ปิดงานไม่แสดงตามจอ Figma)
-   "แผน MR …" และ "แผนเดินทาง ไตรมาส n" เป็นหน้าของ batch อื่น — ยังไม่ผูกลิงก์ */
-export const tripCrumbs = (t: JobTrip): Crumb[] => [{ Text: MENU_NAME, href: "/" }, { Text: "แผน " + t.planMr }, { Text: "แผนเดินทาง " + t.quarter }, { Text: t.name }];
-export const jobCrumbs = (t: JobTrip, last: string): Crumb[] => [{ Text: MENU_NAME, href: "/" }, { Text: "แผนเดินทาง " + t.quarter }, { Text: t.name, href: tripHref(t) }, { Text: last }];
+   "แผน MR …" → หน้ารายละเอียดแผน /detail/ · "แผนเดินทาง ไตรมาส n" → หน้าแผนเดินทางของไตรมาส /quarter/trips/
+   ผู้รับจ้างไม่มีหน้ารายละเอียดแผน/รายการแผนเดินทาง (Q48) ⇒ สองช่องนี้เป็นข้อความเฉย ๆ */
+export const planHref = (t: JobTrip) => "/detail/?id=" + t.planId;
+export const quarterTripsHref = (t: JobTrip) => "/quarter/trips/?id=" + t.planId + "&q=" + t.q;
+export const tripCrumbs = (t: JobTrip, vendor = false): Crumb[] => [{ Text: MENU_NAME, href: "/" }, { Text: "แผน " + t.planMr, href: vendor ? undefined : planHref(t) },
+  { Text: "แผนเดินทาง " + t.quarter, href: vendor ? undefined : quarterTripsHref(t) }, { Text: t.name }];
+export const jobCrumbs = (t: JobTrip, last: string, vendor = false): Crumb[] => [{ Text: MENU_NAME, href: "/" }, { Text: "แผนเดินทาง " + t.quarter, href: vendor ? undefined : quarterTripsHref(t) },
+  { Text: t.name, href: tripHref(t) }, { Text: last }];
+/** Breadcrumbs ตามบทบาทที่เปิดอยู่ (เรียกบนสุดของ component) */
+export function useCrumbs() {
+  const vendor = useRole() === "ผู้รับจ้าง";
+  return { trip: (t: JobTrip) => tripCrumbs(t, vendor), job: (t: JobTrip, last: string) => jobCrumbs(t, last, vendor) };
+}
 
 /* อ่าน ?trip=&car= + บทบาท */
 export function useTripCar() {

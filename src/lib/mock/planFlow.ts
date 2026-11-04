@@ -8,7 +8,9 @@ import type { PillColor } from "@/components/vms/PillOutline";
 import { CAND, DISTRICTS, LAST_OIL, NEW_PLAN_DATE, OIL_OPTS, PARTS, PART_PRICE, PLAN_CREATOR, REGIONS, RETURN_REASON, WH_ACK, WH_LIST, dCode, type ManualPart, type Plan, type PlanStatus } from "./data";
 import { CAR_PICK } from "./data";
 import { carQty, inQuarter, quarterParts, type Draft } from "./plan";
-import { notify, setMock, useRole, type Role } from "./store";
+import { accPlans, accRows } from "./acceptance";
+import { notify, setMock, useRole, type MockState, type Role } from "./store";
+import { tripsOf } from "./trips";
 
 /* ---------- id ของแผนและรถใน query string ---------- */
 export const planId = (p: Plan) => p.mr.replace(/^MR /, "");
@@ -17,7 +19,19 @@ export const carParam = (i: number) => CAND[i].plate.split(" ")[0];
 export const carIndexOf = (param: string | null) => (param ? CAND.findIndex((c) => c.plate.split(" ")[0] === param) : -1);
 
 /* ---------- หน้าเริ่มของบทบาท (routes.md §2) · บทบาทที่ไม่มีสิทธิ์เปิดหน้า → กลับราก ---------- */
-export const ROLE_HOME: Partial<Record<Role, string>> = { "ผู้อนุมัติ": "/approvals/plans/", "กบค. คลัง": "/warehouse/" };
+export const ROLE_HOME: Partial<Record<Role, string>> = {
+  "ผู้อนุมัติ": "/approvals/plans/", "กบค. คลัง": "/warehouse/", "หัวหน้า กบค.": "/head-review/", "กรย.": "/trips-view/", "หน่วยงานเจ้าของรถ": "/trips-view/",
+};
+/* หน้าเริ่มที่ขึ้นกับข้อมูล (ต้นแบบ — sidebar เมนูอื่นยังไม่พาไปไหน ⇒ เข้ารากแล้วไปหน้าที่มีงานรอ · COMPOSED.md หัวข้อ ช.)
+   ผู้อนุมัติ: มีแผนเดินทางรออนุมัติ → /approvals/trips/ · หน่วยงานเจ้าของรถ: มีรถรอยอมรับผล / แผนพร้อมตรวจหลักฐาน → /acceptance/
+   ผู้รับจ้าง: ไม่มีหน้ารายการแผนเดินทาง (Q48) → แผนจ้างที่อนุมัติแล้วใบล่าสุด /trips/detail/ (ไม่มีใบ = อยู่ราก) */
+export function roleHome(role: Role, m: MockState): string | undefined {
+  const trips = tripsOf(m).filter((t) => !t.listOnly);
+  if (role === "ผู้อนุมัติ" && trips.some((t) => t.status === "review")) return "/approvals/trips/";
+  if (role === "หน่วยงานเจ้าของรถ" && (accRows(m).some((r) => !r.accepted) || accPlans(m).some((p) => p.ready && !p.done))) return "/acceptance/";
+  if (role === "ผู้รับจ้าง") { const t = trips.filter((x) => x.mode === "hire" && x.status === "approved").pop(); return t ? "/trips/detail/?trip=" + t.id : undefined; }
+  return ROLE_HOME[role];
+}
 
 /* ค่าจาก localStorage อ่านได้หลัง hydrate เท่านั้น (ส่งออก static) — ก่อนหน้านั้นยังไม่รู้ว่ามีแผนไหน/บทบาทอะไร */
 const noop = () => () => {};

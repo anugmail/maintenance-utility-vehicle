@@ -2,9 +2,12 @@
 /* ข้อมูลจำลองงานรายคัน (S10 S12 · ต่อยอด S23 S11) — เจ้าของ: batch C1
    ค่าตัวอย่างชุดเดียวกับปลั๊กอิน Figma (Maintenance-Request-Form/figma-export/maintainance-plugin/screens.js):
    TRIP_CARS · TRIP_1 / TRIP_V · WORK · JOB_START/JOB_END/JOB_BY · HIRE_* · CLOSE_PARTS · CLOSE_COST_BY · RECEIPT_* · INSPECT_* · OIL_TAG · JOB_OIL_OPTS
-   เก็บใน localStorage คีย์ mt-next-v1 (ฟิลด์ jobs ของ MockState — เพิ่มด้วย module augmentation ไม่แตะ store.ts) · "ล้างข้อมูลจำลอง" = กลับค่าตั้งต้น (SEED)
+   เก็บใน localStorage คีย์ mt-next-v1 (ฟิลด์ jobs ของ MockState — เพิ่มด้วย module augmentation ไม่แตะ store.ts) · "ล้างข้อมูลจำลอง" = ไม่มีงานรายคัน + แผนเดินทางตั้งต้นของ trips.ts
 
-   โครง: JobsState = { trips: แผนเดินทางที่อนุมัติแล้ว (T1 ตรวจเอง · TV จ้าง), jobs: งานรายคัน คีย์ "<trip>:<car>" }
+   โครง: JobsState = { trips: แผนเดินทางที่อนุมัติแล้ว (มุมมองจากที่เก็บแผนเดินทางของ trips.ts), jobs: งานรายคัน คีย์ "<trip>:<car>" }
+   แผนเดินทางมีที่เก็บเดียวคือ MockState.trips (trips.ts · S6 S9 สร้าง · S7 อนุมัติ) — ที่นี่อ่านใบที่อนุมัติแล้วมาแปลงเป็น JobTrip (เติม planMr planName ป้ายไตรมาส จากแผนใน store)
+   แก้เบอร์/สถานที่/เอารถออก (S10) และชุดตัวอย่าง เขียนกลับไปที่ MockState.trips ใบเดียวกัน · MockState.jobs เก็บเฉพาะงานรายคัน
+   รถ (TRIP_CARS) ก็มาจาก trips.ts ชุดเดียวกัน (เติมประเภทรถ + เปลี่ยนน้ำมันครั้งล่าสุด)
    งานที่ยังไม่มีในที่เก็บ = ยังไม่เริ่ม (getJob คืนค่าตั้งต้น) · เปลี่ยนสถานะผ่านฟังก์ชันท้ายไฟล์ (startJob closeJob cannotJob saveOilResult …)
    สถานะ hire (worked reported wait returned) มีใน JobStatus ครบ — การเปลี่ยนสถานะของแผนจ้าง (ส่งตรวจงาน อนุมัติ ส่งกลับ แก้อะไหล่) อยู่ที่ ./hire.ts (เรียก patchJob())
    ที่เก็บงานรายคันมีที่เดียวคือไฟล์นี้ (MockState.jobs) — S10 S12 S23 S11 ใช้ร่วมกัน */
@@ -12,11 +15,14 @@ import type { InspectionItem } from "@/components/maintain-d/InspectionChecklist
 import type { ReceiptItem } from "@/components/maintain-d/ReceiptChecklist";
 import type { UploadFile } from "@/components/vms/FileUpload";
 import type { PillColor } from "@/components/vms/PillOutline";
-import { setMock, useMock, type Role } from "./store";
+import { useMemo } from "react";
+import { PLANS, type Plan } from "./data";
+import { setMock, useMock, type MockState, type Role } from "./store";
+import { APPROVED_AT, TRIP_1, TRIP_CARS as CARS, TRIP_V, tripsOf, type Trip } from "./trips";
 
 /* ---------- เพิ่มฟิลด์ jobs ให้ MockState (store.ts) ---------- */
 declare module "./store" {
-  interface MockState { jobs?: JobsState }
+  interface MockState { jobs?: { jobs: Record<string, Job> } }
 }
 
 /* ---------- สถานะงานรายคัน WSTAT · ป้ายผลน้ำมัน OIL_TAG ---------- */
@@ -68,42 +74,38 @@ export const BEFORE = ["รูปรถ + ทะเบียน", "อะไห�
 
 /* ---------- รถของไตรมาส 1 แผน MR Z7000001 (TRIP_CARS + OWNER_PH + LAST_OIL) ---------- */
 export interface TripCar { id: string; plate: string; model: string; owner: string; ownerPhone: string; type: string; lastOil: string }
-const C = (id: string, prov: string, model: string, owner: string, ownerPhone: string, lastOil = "12/03/2568"): TripCar =>
-  ({ id, plate: id + " " + prov, model, owner, ownerPhone, type: "รถกระเช้า", lastOil });
-export const TRIP_CARS: TripCar[] = [
-  C("82-6789", "ขอนแก่น", "Isuzu FTR + กระเช้า Aichi SK17A", "กฟฉ.1 ขอนแก่น", "081-472-3365"),
-  C("82-1145", "ขอนแก่น", "Hino FC + กระเช้า Tadano AT-100", "กฟฉ.1 ขอนแก่น", "081-472-3365"),
-  C("80-5738", "น่าน", "Isuzu FRR + กระเช้า Aichi SK10A", "กฟน.2 น่าน", "054-710-224"),
-  C("81-2210", "เชียงใหม่", "Hino FG + กระเช้า Tadano AT-146", "กฟน.1 เชียงใหม่", "053-241-560"),
-  C("80-9981", "ลำปาง", "Isuzu FTR + กระเช้า Aichi SH15A", "กฟน.1 ลำปาง", "089-635-1172"),
-  C("82-3302", "อุดรธานี", "Hino FC + กระเช้า Tadano AT-100", "กฟฉ.1 อุดรธานี", "042-221-908", "05/02/2567"),
-  C("82-7720", "ขอนแก่น", "Isuzu FTR + กระเช้า Aichi SK17A", "กฟฉ.1 ขอนแก่น", "043-246-118"),
-  C("80-3316", "พะเยา", "Hino FC + กระเช้า Tadano AT-100", "กฟน.1 พะเยา", "054-411-737"),
-  C("81-6604", "เชียงราย", "Isuzu FRR + กระเช้า Aichi SK10A", "กฟน.1 เชียงราย", "053-711-402"),
-  C("80-4458", "แพร่", "Hino FG + กระเช้า Tadano AT-146", "กฟน.2 แพร่", "054-511-226"),
-];
+/* รถชุดเดียวกับ trips.ts (TRIP_CARS + OWNER_PH) · เปลี่ยนน้ำมันครั้งล่าสุด LAST_OIL (82-3302 = 05/02/2567 · คันอื่น 12/03/2568) */
+const LAST_OIL_OF: Record<string, string> = { "82-3302": "05/02/2567" };
+export const TRIP_CARS: TripCar[] = CARS.map((c) => ({ id: c.id, plate: c.plate, model: c.model, owner: c.owner, ownerPhone: c.phone, type: "รถกระเช้า", lastOil: LAST_OIL_OF[c.id] ?? "12/03/2568" }));
 export const carOf = (id: string) => TRIP_CARS.find((c) => c.id === id);
 
-/* ---------- แผนเดินทางที่อนุมัติแล้ว (TRIP_1 · TRIP_V — สถานะ approved ตาม tripAs()) ----------
-   ⚠ แผนเดินทางเป็นของ batch B (S6 S7 S9) — ตอนรวมงานให้ชี้ trips ไปที่ข้อมูลแผนเดินทางของ B (ฟิลด์ชุดเดียวกับ Trip ใน maintainance-yearly-specs/mock-data.ts) */
+/* ---------- แผนเดินทางที่อนุมัติแล้ว — มุมมองของ Trip (trips.ts) ที่สถานะ approved ----------
+   planMr planName จากแผนใน store · quarter = ป้าย "ไตรมาส n" · q = เลขไตรมาส */
 export interface JobTrip {
-  id: string; planId: string; planMr: string; planName: string; quarter: string;
+  id: string; planId: string; planMr: string; planName: string; quarter: string; q: number;
   name: string; mode: "self" | "hire"; vendor?: string; contract?: string;
   carIds: string[];
   /** สถานที่/เบอร์ที่แก้รายคัน (ไม่มี = สำนักงานเจ้าของรถ / เบอร์เจ้าของรถ) */
   locs: Record<string, string>; phones: Record<string, string>;
   d1: string; d2: string; staff: string[]; createdBy: string; sentAt: string;
-  status: "approved";
+  status: "approved"; approvedAt?: string;
 }
-const PLAN = { planId: "Z7000001", planMr: "MR Z7000001", planName: "บำรุงรักษารถกระเช้า ภาค 1 ปีงบประมาณ 2570", quarter: "ไตรมาส 1" };
-export const SEED_TRIPS: Record<string, JobTrip> = {
-  T1: { id: "T1", ...PLAN, name: "ตรวจรถ ขอนแก่น อุดรธานี ลำปาง", mode: "self", carIds: ["82-6789", "82-1145", "80-9981", "82-3302"],
-    locs: { "80-9981": "จุดรวมงาน กฟน.1 ลำปาง" }, phones: { "80-9981": "086-552-1904" }, d1: "03/11/2569", d2: "07/11/2569",
-    staff: PEOPLE.staff, createdBy: PEOPLE.kbk, sentAt: "03/11/2569", status: "approved" },
-  TV: { id: "TV", ...PLAN, name: "จ้างบำรุงรักษา น่าน เชียงใหม่ เชียงราย", mode: "hire", vendor: "บริษัท สยามไฮดรอลิก เซอร์วิส จำกัด", contract: "สจ.69-0142",
-    carIds: ["80-5738", "81-2210", "82-7720", "80-3316", "81-6604", "80-4458"],
-    locs: { "82-7720": "ศูนย์บริการผู้รับจ้าง สาขาขอนแก่น" }, phones: { "82-7720": "095-118-4420" }, d1: "17/11/2569", d2: "21/11/2569",
-    staff: [], createdBy: PEOPLE.kbk, sentAt: "03/11/2569", status: "approved" },
+export function toJobTrip(t: Trip, plans: Plan[]): JobTrip {
+  const p = plans.find((x) => x.mr === "MR " + t.planId);
+  return { id: t.id, planId: t.planId, planMr: "MR " + t.planId, planName: p?.name ?? "", quarter: "ไตรมาส " + t.quarter, q: t.quarter,
+    name: t.name, mode: t.mode, vendor: t.vendor, contract: t.contract, carIds: t.carIds, locs: t.locs, phones: t.phones,
+    d1: t.d1, d2: t.d2, staff: t.staff ?? [], createdBy: t.createdBy, sentAt: t.sentAt, status: "approved", approvedAt: t.approvedAt };
+}
+/* เขียนกลับเป็น Trip (คงค่าอื่นของใบเดิม) */
+const fromJobTrip = (j: JobTrip, prev?: Trip): Trip => ({
+  ...prev, id: j.id, planId: j.planId, quarter: j.q, name: j.name, mode: j.mode, vendor: j.vendor, contract: j.contract, carIds: j.carIds,
+  locs: j.locs, phones: j.phones, d1: j.d1, d2: j.d2, staff: j.mode === "self" ? j.staff : prev?.staff, createdBy: j.createdBy, sentAt: j.sentAt,
+  status: "approved", approvedAt: j.approvedAt ?? prev?.approvedAt ?? APPROVED_AT, returnReason: undefined, listOnly: undefined,
+});
+/* ชุดตัวอย่าง: TRIP_1 / TRIP_V ของ trips.ts ในสถานะอนุมัติแล้ว (tripAs() ของ screens.js) */
+export const SEED_TRIPS: Record<"T1" | "TV", JobTrip> = {
+  T1: toJobTrip({ ...TRIP_1, status: "approved", approvedAt: APPROVED_AT }, PLANS),
+  TV: toJobTrip({ ...TRIP_V, status: "approved", approvedAt: APPROVED_AT }, PLANS),
 };
 export const tripLoc = (t: JobTrip, c: TripCar) => t.locs[c.id] || "สำนักงาน " + c.owner;
 export const tripPhone = (t: JobTrip, c: TripCar) => t.phones[c.id] || c.ownerPhone;
@@ -176,6 +178,8 @@ export interface Job {
   sentAt?: string; sentBy?: string;
   returnReason?: string; returnedAt?: string;
   reviewedAt?: string; reviewedBy?: string;
+  /** หน่วยงานยอมรับผลรายคันแล้ว (S13 · acceptance.ts) */
+  acceptedAt?: string;
 }
 export interface JobsState { trips: Record<string, JobTrip>; jobs: Record<string, Job> }
 
@@ -224,12 +228,32 @@ function filledClose(job: Job, trip: JobTrip, car: TripCar): CloseForm {
 }
 
 /* ---------- ที่เก็บ ---------- */
-const SEED: JobsState = { trips: SEED_TRIPS, jobs: {} };
 export const jobKey = (tripId: string, carId: string) => tripId + ":" + carId;
-export function useJobs(): JobsState { return useMock().jobs ?? SEED; }
+/* อ่านจาก MockState: แผนเดินทางที่อนุมัติแล้วของ trips.ts + งานรายคัน */
+export function jobsOf(m: MockState): JobsState {
+  const trips = Object.fromEntries(tripsOf(m).filter((t) => t.status === "approved" && !t.listOnly).map((t) => [t.id, toJobTrip(t, m.plans)]));
+  return { trips, jobs: m.jobs?.jobs ?? {} };
+}
+export function useJobs(): JobsState { const m = useMock(); return useMemo(() => jobsOf(m), [m]); }
 export const getTrip = (s: JobsState, id: string | null | undefined): JobTrip | undefined => (id ? s.trips[id] : undefined);
 export const getJob = (s: JobsState, tripId: string, carId: string): Job => s.jobs[jobKey(tripId, carId)] ?? newJob(tripId, carId);
-function write(fn: (s: JobsState) => JobsState) { setMock((m) => ({ ...m, jobs: fn(m.jobs ?? SEED) })); }
+/* เขียน: งานรายคันลง MockState.jobs · แผนเดินทางที่เปลี่ยน (อ้างอิงคนละตัว) เขียนกลับ MockState.trips ใบเดียวกัน (ไม่มี = เพิ่มใบ) */
+function write(fn: (s: JobsState) => JobsState, base?: Trip[]) {
+  setMock((m0) => {
+    const m = base ? { ...m0, trips: base } : m0;
+    const cur = jobsOf(m), next = fn(cur);
+    let trips = tripsOf(m), changed = false;
+    for (const [id, jt] of Object.entries(next.trips)) {
+      if (jt === cur.trips[id]) continue;
+      const i = trips.findIndex((t) => t.id === id), t = fromJobTrip(jt, i < 0 ? undefined : trips[i]);
+      trips = i < 0 ? [...trips, t] : trips.map((x, k) => (k === i ? t : x));
+      changed = true;
+    }
+    return { ...m, jobs: { jobs: next.jobs }, ...(changed || base ? { trips } : {}) };
+  });
+}
+/** เขียนงานรายคัน/แผนเดินทางจากที่อื่น (acceptance.ts) · base = ตั้งรายการแผนเดินทางใหม่ก่อน (ชุดตัวอย่าง) */
+export const applyJobs = (fn: (s: JobsState) => JobsState, base?: Trip[]) => write(fn, base);
 export function patchJob(tripId: string, carId: string, fn: (j: Job) => Job) {
   write((s) => ({ ...s, jobs: { ...s.jobs, [jobKey(tripId, carId)]: fn(getJob(s, tripId, carId)) } }));
 }
@@ -327,6 +351,7 @@ function doing(t: JobTrip, carId: string, vendor: boolean): Job {
   return { ...newJob(t.id, carId), status: "doing", oilChoice: OIL_DEFAULT, receive: filledReceive(actorOf(vendor)), photos: samplePhotos(vendor),
     startedAt: vendor ? JOB_TIMES.hire.start : JOB_TIMES.self.start, startedBy: actorOf(vendor) };
 }
+export const closedSample = (t: JobTrip, carId: string, vendor: boolean, status: JobStatus) => closed(t, carId, vendor, status);
 function closed(t: JobTrip, carId: string, vendor: boolean, status: JobStatus): Job {
   const car = carOf(carId)!, d = doing(t, carId, vendor), f = filledClose(d, t, car), at = vendor ? JOB_TIMES.hire.end : JOB_TIMES.self.end, by = actorOf(vendor);
   return { ...d, status, close: f, closedAt: at, recordedBy: by, kmAfter: (vendor ? "176,090" : f.km) + " กม.", hoursAfter: (vendor ? "5,846" : f.hours) + " ชม.",

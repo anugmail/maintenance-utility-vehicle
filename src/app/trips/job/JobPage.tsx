@@ -26,7 +26,7 @@ import {
 } from "@/lib/mock/jobs";
 import { notify } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
-import { badgeOf, BeforePhotos, CannotPopup, DataTable, jobCrumbs, jobHref, LastOil, OilCards, PartAddModal, PartEditModal, Section, tripHref, useBack } from "../_lib/ui";
+import { badgeOf, BeforePhotos, CannotPopup, DataTable, useCrumbs, jobHref, LastOil, OilCards, PartAddModal, PartEditModal, Section, tripHref, useBack } from "../_lib/ui";
 
 const JOB_COLS: TableColumn[] = [{ head: "รายการงาน" }, { head: "อะไหล่ตามแผน", width: 320 }, { head: "จำนวนตามแผน", width: 140 }, { head: "หน่วย", width: 110 }, { head: "", width: 104, Style: "Action icons" }];
 
@@ -45,6 +45,7 @@ export const appointmentPairs = (t: JobTrip, c: TripCar, j?: Job): [string, stri
 const usedWhileDoing = (parts: PlanPart[]) => parts.map((p) => (p.part === WORK[0].part ? 30 : p.part === WORK[1].part ? 2 : 0));
 
 export function JobPage({ trip, car, job, actor, vendor, kbk }: { trip: JobTrip; car: TripCar; job: Job; actor: boolean; vendor: boolean; kbk: boolean }) {
+  const crumbs = useCrumbs();
   const router = useRouter();
   const back = useBack();
   const mob = useBreakpoint() === "Mobile";
@@ -90,7 +91,7 @@ export function JobPage({ trip, car, job, actor, vendor, kbk }: { trip: JobTrip;
 
   return (
     <>
-      <PageHeader Title={car.plate} Badge={badgeOf(WSTAT[job.status])} crumbs={jobCrumbs(trip, car.plate)} onBack={() => back(tripHref(trip))} Actions={actions} />
+      <PageHeader Title={car.plate} Badge={badgeOf(WSTAT[job.status])} crumbs={crumbs.job(trip, car.plate)} onBack={() => back(tripHref(trip))} Actions={actions} />
       <VehicleAndReporterInfo Title="ข้อมูลยานพาหนะ" pairs={vehiclePairs(trip, car)} />
       <VehicleAndReporterInfo Title="การนัดหมาย" pairs={appointmentPairs(trip, car, job)} />
       {doing && (vendor && actor

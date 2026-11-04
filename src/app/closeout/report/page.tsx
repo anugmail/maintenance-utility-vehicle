@@ -50,7 +50,7 @@ function Report() {
       <Content>
         <VehicleAndReporterInfo Title="รายละเอียดแผน" pairs={[...planKv(plan), ["หัวหน้า กบค. ตรวจประวัติ", "ผ่าน · " + (c.headAt ?? HEAD_AT)], ["ผู้ตรวจ", HEAD_REVIEWER]]} />
         <DisplayBox Title="สรุปรายงานผลการบำรุงรักษา" pairs={reportSummary(plan)} />
-        {closed && <Alert Color="Success" Text={"ปิดงานแล้ว " + (c.closedAt ?? CLOSED_AT)} SupportingText="ไปขั้นคำนวณต้นทุน (S18) ได้" />}
+        {closed && <Alert Color="Success" Text={"ปิดงานแล้ว " + (c.closedAt ?? CLOSED_AT)} SupportingText="ไปขั้นคำนวณต้นทุนได้" />}
         <BtnRow>
           <SecondaryButton Text="ย้อนกลับ" Size="lg" onClick={back} />
           {closed

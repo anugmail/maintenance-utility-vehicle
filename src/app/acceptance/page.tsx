@@ -1,7 +1,8 @@
 "use client";
 /* S13 L.1 L.5 · S14 M.1 · หน้า การตรวจบำรุงรถรอตรวจสอบ ของหน่วยงานเจ้าของรถ (/acceptance/) — roleList() + ACC_COLS + accRows() ใน screens.js
    Page header (ไม่มีปุ่มย้อนกลับ) → Section ช่องไฟ 24: Table header (ค้นหา "ค้นหาทะเบียน, เลขที่ MR" + ตัวกรอง) + Table + Table pagination (= จำนวนแถว)
-   แถวรถ: รอหน่วยงานยอมรับ / หน่วยงานยอมรับแล้ว · ยอมรับครบทุกคัน → แถว "ทั้งแผน (12 คัน)" ขึ้นบนสุด (ครบทุกคันแล้ว รอตรวจหลักฐาน → ยอมรับผลทั้งแผนแล้ว)
+   แถวรถ = งานรายคันที่เสร็จสิ้น/บำรุงรักษาไม่ได้ของแผนเดินทางที่อนุมัติแล้ว (S10 ปิดงาน · S11 อนุมัติงานผู้รับจ้าง) — รอหน่วยงานยอมรับ / หน่วยงานยอมรับแล้ว
+   รถทุกคันของแผนถึงขั้นนี้และยอมรับครบ → แถว "ทั้งแผน (n คัน)" ของแผนนั้นขึ้นบนสุด (ครบทุกคันแล้ว รอตรวจหลักฐาน → ยอมรับผลทั้งแผนแล้ว)
    "›" เปิดผลรายคัน (S13) / หลักฐานทั้งแผน (S14) · มือถือ: Mobile table การ์ดละแถว
    อ้างอิง: Table header · Table · Table pagination · Mobile table ของไฟล์ Component + หน้ารายการ (roleList) ของ UI Release#2 ผ่าน screens.js */
 import { useRouter } from "next/navigation";
@@ -12,9 +13,9 @@ import { PageHeader } from "@/components/vms/PageHeader";
 import { Table, type TableColumn, type TableValue } from "@/components/vms/Table";
 import { TableHeader } from "@/components/vms/TableHeader";
 import { TablePagination } from "@/components/vms/TablePagination";
-import {
-  ACCEPTANCE_CARS, ACCEPTANCE_PLAN_ROW, ACCEPT_SAMPLES, ACCEPT_STATUS, PLAN_ACCEPT_STATUS, accCar, allCarsAccepted, useAcceptance,
-} from "@/lib/mock/acceptance";
+import { ACCEPT_SAMPLES, ACCEPT_STATUS, PLAN_ACCEPT_STATUS, accCarHref, accPlans, accRows } from "@/lib/mock/acceptance";
+import { planOf } from "@/lib/mock/closeout";
+import { useMock } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useSample } from "@/lib/useSample";
 
@@ -29,21 +30,21 @@ function AcceptList() {
   const router = useRouter();
   const pending = useSample(ACCEPT_SAMPLES);
   const mob = useBreakpoint() === "Mobile";
-  const a = useAcceptance();
+  const mock = useMock();
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   if (pending) return null;
 
   const go = (href: string, label: string): TableValue => ({ actions: [{ IconSwap: "keyboard_arrow_right-20-400-round", label, onClick: () => router.push(href) }] });
-  const all: { key: string; search: string; row: TableValue[] }[] = ACCEPTANCE_CARS.map((r) => {
-    const car = accCar(r.carId)!;
-    const st = a.accepted.includes(r.carId) ? ACCEPT_STATUS.ok : ACCEPT_STATUS.wait;
-    return { key: r.carId, search: car.plate + " " + r.mr, row: [car.plate, r.date, r.by, r.mr, { pills: [[st[0], st[1]]] }, go("/acceptance/car/?trip=T1&car=" + r.carId, "เปิด " + car.plate)] };
+  const all: { key: string; search: string; row: TableValue[] }[] = accRows(mock).map((r) => {
+    const st = r.accepted ? ACCEPT_STATUS.ok : ACCEPT_STATUS.wait;
+    return { key: r.trip.id + ":" + r.car.id, search: r.car.plate + " " + r.mr, row: [r.car.plate, r.date, r.by, r.mr, { pills: [[st[0], st[1]]] }, go(accCarHref(r), "เปิด " + r.car.plate)] };
   });
-  if (allCarsAccepted(a)) {
-    const st = a.planDone ? PLAN_ACCEPT_STATUS.done : PLAN_ACCEPT_STATUS.wait;
-    all.unshift({ key: "plan", search: ACCEPTANCE_PLAN_ROW.join(" "), row: [...ACCEPTANCE_PLAN_ROW, { pills: [[st[0], st[1]]] }, go("/acceptance/plan/?id=Z7000001", "เปิด " + ACCEPTANCE_PLAN_ROW[3])] });
-  }
+  accPlans(mock).filter((p) => p.ready).reverse().forEach((p) => {
+    const st = p.done ? PLAN_ACCEPT_STATUS.done : PLAN_ACCEPT_STATUS.wait;
+    const row = ["ทั้งแผน (" + (planOf(mock, p.planId)?.cars ?? p.rows.length) + " คัน)", p.range, p.by, p.mr];
+    all.unshift({ key: "plan-" + p.planId, search: row.join(" "), row: [...row, { pills: [[st[0], st[1]]] }, go("/acceptance/plan/?id=" + p.planId, "เปิด " + p.mr)] });
+  });
   const q = query.trim();
   const rows = q ? all.filter((r) => r.search.includes(q)) : all;
   const shown = rows.slice((page - 1) * PER, page * PER);

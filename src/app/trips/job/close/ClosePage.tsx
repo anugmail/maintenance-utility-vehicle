@@ -30,7 +30,7 @@ import {
 } from "@/lib/mock/jobs";
 import { notify } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
-import { ButtonRow, DataTable, Grid, jobCrumbs, jobHref, KvBox, LastOil, OilCards, OilResultFields, PartAddModal, PartEditModal, Section, toUpload, tripHref, useBack, useTripCar, type PartEditValue } from "../../_lib/ui";
+import { ButtonRow, DataTable, Grid, useCrumbs, jobHref, KvBox, LastOil, OilCards, OilResultFields, PartAddModal, PartEditModal, Section, toUpload, tripHref, useBack, useTripCar, type PartEditValue } from "../../_lib/ui";
 
 const PART_COLS: TableColumn[] = ["ชื่ออะไหล่", "ราคาต่อหน่วย", "จำนวนที่ใช้", "ราคารวมที่ใช้", "จำนวนที่คืน", "ราคารวมที่คืน", "จำนวนอะไหล่เก่า", "หมายเหตุ"]
   .map((head, i) => ({ head, width: i === 0 ? 220 : i === 7 ? undefined : 118, Style: i === 0 ? "Lead text" : "Text" }));
@@ -42,6 +42,7 @@ const RETURN_SLOTS = [
 const digits = (v: string) => { const d = v.replace(/\D/g, ""); return d ? Number(d).toLocaleString("en-US") : ""; };
 
 export function ClosePage() {
+  const crumbs = useCrumbs();
   const router = useRouter();
   const back = useBack();
   const mob = useBreakpoint() === "Mobile";
@@ -123,7 +124,7 @@ export function ClosePage() {
 
   return (
     <>
-      <PageHeader Title={"ปิดงานบำรุงรักษา · " + car.plate} crumbs={jobCrumbs(trip, "ปิดงาน")} onBack={() => back(jobHref(trip, car.id))} />
+      <PageHeader Title={"ปิดงานบำรุงรักษา · " + car.plate} crumbs={crumbs.job(trip, "ปิดงาน")} onBack={() => back(jobHref(trip, car.id))} />
       <Section>
         <SectionHeader Title="ข้อมูลเอกสาร" />
         <KvBox pairs={[["เลขที่งาน", trip.planMr], ["หน่วยงานผู้ใช้บริการ", car.owner], ["ชื่องาน", "บำรุงรักษารถกระเช้า " + car.model + " ทะเบียน " + car.plate + " ณ " + loc],

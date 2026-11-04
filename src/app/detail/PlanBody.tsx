@@ -2,7 +2,9 @@
 /* เนื้อหน้ารายละเอียดแผน planBody() ใน screens.js — ใช้ร่วม S2 (ผู้อนุมัติ) · S19 S20 S22 (กบค.)
    1. VehicleAndReporterInfo "รายละเอียดแผน" (npKv 10 ช่อง · มือถือ = กล่องแสดงข้อมูลแถวละ 2)
    2. Section ช่องไฟ 16: Section label "รถในแผน (n)" · Tabs ไตรมาส 1–4 (ป้ายจำนวนรถ) · (wh) Alert สถานะคลังของไตรมาสที่เปิด · Table รถของไตรมาส ดูอย่างเดียว (CARP_COLS 6 คอลัมน์ ไม่มีไอคอน)
+   actions = ปุ่มใน Section label "รถในแผน" (Primary action Tertiary brand button · Secondary action Tertiary button) — หน้า กบค. ใส่ทางไปไตรมาสที่กำลังทำ
    ไตรมาสที่ไม่มีรถ: ตารางว่าง (spec S2 — ยังไม่เคาะว่าใช้ Empty state ของ S1 หรือไม่) · มือถือ: Mobile table */
+import type { ReactNode } from "react";
 import { VehicleAndReporterInfo } from "@/components/maintain-d/VehicleAndReporterInfo";
 import { Alert } from "@/components/vms/Alert";
 import { MobileCards } from "@/components/vms/MobileTable";
@@ -26,7 +28,7 @@ function WarehouseAlert({ plan, q }: { plan: Plan; q: number }) {
     : <Alert Color="Warning" Text={"รอคลังรับทราบรายการอะไหล่ไตรมาส " + q} SupportingText={"รับทราบ " + n + " จาก " + N + " ไตรมาส"} />;
 }
 
-export function PlanBody({ plan, q, onQ, wh }: { plan: Plan; q: number; onQ: (q: number) => void; wh?: boolean }) {
+export function PlanBody({ plan, q, onQ, wh, actions }: { plan: Plan; q: number; onQ: (q: number) => void; wh?: boolean; actions?: ReactNode }) {
   const mob = useBreakpoint() === "Mobile";
   const a = allocOf(plan);
   const rows = carsIn(a, q).map((i) => carRow(a, i));
@@ -34,7 +36,7 @@ export function PlanBody({ plan, q, onQ, wh }: { plan: Plan; q: number; onQ: (q:
     <>
       <VehicleAndReporterInfo Title="รายละเอียดแผน" pairs={planKv(plan)} />
       <section className="flex flex-col gap-4">
-        <SectionLabel Title={"รถในแผน (" + plan.cars + ")"} />
+        <SectionLabel Title={"รถในแผน (" + plan.cars + ")"} Actions={actions} />
         <Tabs>{QUARTERS.map((t, i) => <TabItem key={t} Text={t} Badge={quarterCount(plan, i + 1)} Active={q === i + 1} onClick={() => onQ(i + 1)} />)}</Tabs>
         {wh && plan.alloc && <WarehouseAlert plan={plan} q={q} />}
         {mob ? <MobileCards columns={COLS} rows={rows} /> : <Table columns={COLS} rows={rows} />}

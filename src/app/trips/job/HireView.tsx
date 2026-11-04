@@ -26,7 +26,7 @@ import { approveJob, hireAddPart, hireCannot, hireDeletePart, hireEditUsed, hire
 import { JOB_TIMES, OIL_DEFAULT, OIL_JOB_OPTS, PEOPLE, retRows, WSTAT, type Job, type JobTrip, type TripCar } from "@/lib/mock/jobs";
 import { notify } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
-import { badgeOf, BeforePhotos, ButtonRow, CannotPopup, DataTable, jobCrumbs, jobHref, PartAddModal, PartEditModal, RET_COLS, Section, tripHref, useBack } from "../_lib/ui";
+import { badgeOf, BeforePhotos, ButtonRow, CannotPopup, DataTable, useCrumbs, jobHref, PartAddModal, PartEditModal, RET_COLS, Section, tripHref, useBack } from "../_lib/ui";
 import { appointmentPairs, vehiclePairs } from "./JobPage";
 
 /* WORK_COLS2 (ใช้จริง) · คอลัมน์ไอคอนแก้ไข + ลบ กว้าง 104 */
@@ -40,6 +40,7 @@ const T = JOB_TIMES.hire;
 type Pending = { spec: ConfirmSpec; run: () => void };
 
 export function HireView({ trip, car, job, actor, kbk }: { trip: JobTrip; car: TripCar; job: Job; actor: boolean; kbk: boolean }) {
+  const crumbs = useCrumbs();
   const router = useRouter();
   const back = useBack();
   const mob = useBreakpoint() === "Mobile";
@@ -123,7 +124,7 @@ export function HireView({ trip, car, job, actor, kbk }: { trip: JobTrip; car: T
 
   return (
     <>
-      <PageHeader Title={car.plate} Badge={badgeOf(WSTAT[s])} crumbs={jobCrumbs(trip, car.plate)} onBack={() => back(tripHref(trip))} Actions={actions ?? undefined} />
+      <PageHeader Title={car.plate} Badge={badgeOf(WSTAT[s])} crumbs={crumbs.job(trip, car.plate)} onBack={() => back(tripHref(trip))} Actions={actions ?? undefined} />
       {s === "returned" && job.returnReason && <Alert Color="Error" Text="กบค. ส่งกลับให้แก้ไข" SupportingText={job.returnReason} />}
       <VehicleAndReporterInfo pairs={vehiclePairs(trip, car)} />
       <VehicleAndReporterInfo Title="การนัดหมาย" pairs={appt} />

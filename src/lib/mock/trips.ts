@@ -1,5 +1,6 @@
 /* ข้อมูลจำลองของแผนเดินทาง (S6 S9 S7 S8 — batch B) · ยกจาก screens.js (TRIP_CARS · OWNER_PH · TRIP_1 · TRIP_2 · TRIP_V · TRIP_OTHER · VENDORS · NOTI_*)
-   และ spec maintainance-yearly-specs/mock-data.ts (ชื่อ field ตาม Trip ใน spec — batch C ใช้ชุดเดียวกัน)
+   และ spec maintainance-yearly-specs/mock-data.ts (ชื่อ field ตาม Trip ใน spec)
+   ที่เก็บแผนเดินทางมีที่เดียว (MockState.trips) — หน้างานรายคัน (jobs.ts · /trips/*) อ่านใบที่อนุมัติแล้วจากที่นี่
    เก็บใน localStorage คีย์เดียวกับ store (mt-next-v1) ที่ field trips / notis — ค่าไม่มี = ค่าตั้งต้นของที่นี่ */
 import type { BadgeOutlineColor } from "@/components/vms/BadgeOutline";
 import type { PillColor } from "@/components/vms/PillOutline";
@@ -108,7 +109,12 @@ export const tripsOf = (s: MockState): Trip[] => s.trips ?? DEFAULT_TRIPS();
 export const quarterTrips = (s: MockState, planId = PLAN_ID, q = 1) => tripsOf(s).filter((t) => !t.listOnly && t.planId === planId && t.quarter === q);
 export const findTrip = (s: MockState, id: string | null) => tripsOf(s).find((t) => t.id === id);
 export function putTrip(t: Trip) {
-  setMock((s) => { const all = tripsOf(s); const i = all.findIndex((x) => x.id === t.id); return { ...s, trips: i < 0 ? [...all, t] : all.map((x, j) => (j === i ? t : x)) }; });
+  setMock((s) => {
+    const all = tripsOf(s); const i = all.findIndex((x) => x.id === t.id);
+    /* ใบใหม่: ล้างงานรายคันค้างของเลขใบเดียวกัน (jobs.ts · ชุดตัวอย่างก่อนหน้า) */
+    const jobs = i < 0 && s.jobs ? { jobs: Object.fromEntries(Object.entries(s.jobs.jobs).filter(([k]) => !k.startsWith(t.id + ":"))) } : s.jobs;
+    return { ...s, jobs, trips: i < 0 ? [...all, t] : all.map((x, j) => (j === i ? t : x)) };
+  });
 }
 /* เลขที่ใบในต้นแบบ: ใบแรก T1 · ใบจ้าง TV · ใบตรวจเองถัดไป T2 (ชุดเดียวกับ screens.js ให้ batch C ใช้ต่อ) · เกินนั้น T3 T4 … */
 export function nextTripId(all: Trip[], mode: "self" | "hire") {

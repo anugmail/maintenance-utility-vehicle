@@ -19,7 +19,7 @@ import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionHeader } from "@/components/vms/SectionHeader";
 import { BEFORE, emptyReceive, patchJob, PEOPLE, SIGN_DATE, startJob, tripLoc, tripPhone, type ReceiveForm } from "@/lib/mock/jobs";
 import { notify } from "@/lib/mock/store";
-import { ButtonRow, jobCrumbs, jobHref, Section, toUpload, useBack, useTripCar } from "../../_lib/ui";
+import { ButtonRow, useCrumbs, jobHref, Section, toUpload, useBack, useTripCar } from "../../_lib/ui";
 
 const SLOTS = [
   { LabelText: "ผู้ส่งมอบรถ (หน่วยงานเจ้าของรถ)", Placeholder: "เลือกผู้ส่งมอบรถ (หน่วยงานเจ้าของรถ)" },
@@ -27,6 +27,7 @@ const SLOTS = [
 ];
 
 export function ReceivePage() {
+  const crumbs = useCrumbs();
   const router = useRouter();
   const back = useBack();
   const { trip, car, job, actor, vendor } = useTripCar();
@@ -46,7 +47,7 @@ export function ReceivePage() {
 
   return (
     <>
-      <PageHeader Title={"รับรถเข้าบำรุงรักษา · " + car.plate} crumbs={jobCrumbs(trip, "รับรถ")} onBack={() => back(jobPage)} />
+      <PageHeader Title={"รับรถเข้าบำรุงรักษา · " + car.plate} crumbs={crumbs.job(trip, "รับรถ")} onBack={() => back(jobPage)} />
       <VehicleAndReporterInfo Title="ข้อมูลยานพาหนะ" pairs={[["ทะเบียน", car.plate], ["ยี่ห้อ/รุ่น", car.model], ["หน่วยงานเจ้าของรถ", car.owner],
         ["สถานที่บำรุงรักษา", tripLoc(trip, car)], ["เบอร์ติดต่อ", tripPhone(trip, car)], ["วันที่รับรถ", SIGN_DATE]]} />
       <ReceiptChecklist Title="รายการเอกสารรับรถ" items={f.items} readonly={!actor}

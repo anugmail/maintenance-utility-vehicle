@@ -4,7 +4,10 @@
      ปุ่มหัว (เฉพาะ กบค.): รออนุมัติ / ส่งกลับแก้ไข = Secondary danger button "ลบแผน" + Secondary button "แก้ไข" · อนุมัติแล้ว = "แก้ไข" อย่างเดียว · ดำเนินการแล้วขึ้นไป = ไม่มีปุ่ม (ซ่อน ไม่ disable)
      มือถือ: ปุ่มอยู่ใต้หัวข้อ แบ่งเท่ากัน
    เนื้อหา ช่องไฟ 32: (ส่งกลับแก้ไข) Alert Error "ผู้อนุมัติส่งกลับให้แก้ไข" + เหตุผล → PlanBody (อนุมัติแล้ว/ดำเนินการ: แถบสถานะคลังของไตรมาสที่เปิด S22 U.8)
-   ลบแผน → ยืนยันการลบแผน (S20 S.5) → กลับหน้ารายการ + toast "ลบแผนบำรุงรักษาสำเร็จ" · แก้ไข → /edit/ (S19) */
+   ลบแผน → ยืนยันการลบแผน (S20 S.5) → กลับหน้ารายการ + toast "ลบแผนบำรุงรักษาสำเร็จ" · แก้ไข → /edit/ (S19)
+   ทางไปขั้นถัดไป (เจ้าของงาน 4 พ.ย. 2569 · ประกอบจากชิ้นไลบรารี — figma-spec/COMPOSED.md หัวข้อ ช.) เฉพาะ กบค.:
+     แท็บไตรมาสที่กำลังทำ (plan.nowQ) ของแผนอนุมัติแล้ว/ดำเนินการ: Section label "รถในแผน" Secondary action "ความคืบหน้าอะไหล่" (S4) · Primary action "แผนเดินทาง" (S6)
+     ปุ่มหัว: ดำเนินการ + รถทุกคันในแผนเดินทางเสร็จสิ้น/บำรุงรักษาไม่ได้ → "ส่งประวัติ" (S15) · ประวัติผ่านแล้ว/ปิดงานแล้ว → "รายงานผลการบำรุงรักษา" (S17) */
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";
@@ -13,6 +16,10 @@ import { Alert } from "@/components/vms/Alert";
 import { PageHeader } from "@/components/vms/PageHeader";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SecondaryDangerButton } from "@/components/vms/SecondaryDangerButton";
+import { PrimaryButton } from "@/components/vms/PrimaryButton";
+import { TertiaryBrandButton } from "@/components/vms/TertiaryBrandButton";
+import { TertiaryButton } from "@/components/vms/TertiaryButton";
+import { planCarsFinished } from "@/lib/mock/acceptance";
 import { PST } from "@/lib/mock/data";
 import { DELETE_CONFIRM, badgeOf, deletePlan, findPlan, planId, startEdit, useHydrated } from "@/lib/mock/planFlow";
 import { useMock, useRole } from "@/lib/mock/store";
@@ -25,7 +32,8 @@ function Detail() {
   const mob = useBreakpoint() === "Mobile";
   const hydrated = useHydrated();
   const kbk = useRole() === "กบค.";
-  const plan = findPlan(useMock().plans, sp.get("id"));
+  const mock = useMock();
+  const plan = findPlan(mock.plans, sp.get("id"));
   const [q, setQ] = useState(1);
   const [del, setDel] = useState(false);
   const gone = hydrated && !plan;
@@ -36,10 +44,20 @@ function Detail() {
   const canDelete = kbk && (st === "review" || st === "returned");
   const canEdit = kbk && (st === "review" || st === "returned" || st === "approved");
   const size = mob ? "lg" : "md";
+  const id = planId(plan);
+  const nowQ = Number(plan.nowQ.replace(/\D/g, "")) || 1;
+  const canSend = kbk && st === "active" && planCarsFinished(mock, id);
+  const canReport = kbk && (st === "passed" || st === "closed");
   const actions = canEdit ? <>
     {canDelete && <SecondaryDangerButton Text="ลบแผน" LeadingIconSwap="delete-24-300-round" Size={size} onClick={() => setDel(true)} />}
-    <SecondaryButton Text="แก้ไข" LeadingIconSwap="stylus-24-300-round" Size={size} onClick={() => { startEdit(plan); router.push("/edit/?id=" + planId(plan) + "&from=detail"); }} />
-  </> : undefined;
+    <SecondaryButton Text="แก้ไข" LeadingIconSwap="stylus-24-300-round" Size={size} onClick={() => { startEdit(plan); router.push("/edit/?id=" + id + "&from=detail"); }} />
+  </> : canSend ? <PrimaryButton Text="ส่งประวัติ" Size={size} onClick={() => router.push("/closeout/history/?id=" + id)} />
+    : canReport ? <PrimaryButton Text="รายงานผลการบำรุงรักษา" Size={size} onClick={() => router.push("/closeout/report/?id=" + id)} /> : undefined;
+  /* แท็บไตรมาสที่กำลังทำ: ความคืบหน้าอะไหล่ (S4) · แผนเดินทางของไตรมาส (S6) */
+  const qActions = kbk && (st === "approved" || st === "active") && q === nowQ ? <div className="flex items-center gap-3">
+    <TertiaryButton Text="ความคืบหน้าอะไหล่" onClick={() => router.push("/quarter/parts/?id=" + id + "&q=" + q)} />
+    <TertiaryBrandButton Text="แผนเดินทาง" onClick={() => router.push("/quarter/trips/?id=" + id + "&q=" + q)} />
+  </div> : undefined;
 
   return (
     <>
@@ -47,7 +65,7 @@ function Detail() {
         crumbs={[{ Text: "บำรุงรักษาตามวาระ", href: "/" }, { Text: plan.name }]} Actions={actions} />
       <div className="flex flex-col gap-8">
         {st === "returned" && <Alert Color="Error" Text="ผู้อนุมัติส่งกลับให้แก้ไข" SupportingText={plan.returnReason} />}
-        <PlanBody plan={plan} q={q} onQ={setQ} wh={st === "approved" || st === "active"} />
+        <PlanBody plan={plan} q={q} onQ={setQ} wh={st === "approved" || st === "active"} actions={qActions} />
       </div>
       <ConfirmDialog spec={del ? DELETE_CONFIRM : null} onCancel={() => setDel(false)} onOk={() => { setDel(false); deletePlan(plan.mr); router.push("/"); }} />
     </>

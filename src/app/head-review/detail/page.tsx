@@ -60,7 +60,7 @@ function HeadHistory() {
           <SectionLabel Title={"ประวัติงานบำรุงรักษาทั้งหมด (" + total + ")"} />
           <DataTable columns={HIST_COLS} rows={HIST_ROWS} pagination={total} perPage={total} />
         </Section>
-        {st === "ok" && <Alert Color="Success" Text={"อนุมัติประวัติแล้ว" + (other ? "" : " " + (c.headAt ?? HEAD_AT)) + " — บันทึกเป็นประวัติทางการ"} SupportingText="กบค. ออกรายงานผลและปิดงานได้ (S17)" />}
+        {st === "ok" && <Alert Color="Success" Text={"อนุมัติประวัติแล้ว" + (other ? "" : " " + (c.headAt ?? HEAD_AT)) + " — บันทึกเป็นประวัติทางการ"} SupportingText="กบค. ออกรายงานผลและปิดงานได้" />}
         {st === "wait" && plan.status === "hist" && head && (
           <BtnRow>
             <SecondaryButton Text="ตีกลับ" Size="lg" onClick={() => { setReason(""); setAsk("back"); }} />
