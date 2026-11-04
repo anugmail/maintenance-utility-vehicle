@@ -41,7 +41,7 @@ function Picker({ pool, used, nowQ, onAdd, onCancel, title = "เพิ่มร
   const search = <TextInput Label={false} Size={mob ? "lg" : "md"} LeadingIconSwap="search-24-300-round" Text={q} Placeholder={SEARCH} onChange={setQ} aria-label={SEARCH} className={mob ? "w-full" : "w-80"} />;
 
   const body = !pool.length
-    ? (emptyText ? <EmptyStateDataEmpty Text={emptyText} /> : <EmptyStateDataEmpty Text={"รถทุกคันของ" + nowQ + "อยู่ในแผนเดินทางแล้ว"} SupportingText="ไม่มีรถที่เพิ่มเข้าแผนเดินทางนี้ได้" />)
+    ? (emptyText ? <EmptyStateDataEmpty Text={emptyText} Graphic="vehicle" /> : <EmptyStateDataEmpty Graphic="vehicle" Text={"รถทุกคันของ" + nowQ + "อยู่ในแผนเดินทางแล้ว"} SupportingText="ไม่มีรถที่เพิ่มเข้าแผนเดินทางนี้ได้" />)
     : mob
       ? <>{search}<ListWithCheckbox Title="ทะเบียน" options={shown.map((c) => ({ value: c.id, Text: c.plate }))} value={ticked} onChange={setTicked} /></>
       : (

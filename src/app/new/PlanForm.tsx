@@ -15,7 +15,7 @@ import { ConfirmDialog, type ConfirmSpec } from "@/components/patterns/ConfirmDi
 import { Alert } from "@/components/vms/Alert";
 import { DropdownList } from "@/components/vms/DropdownList";
 import { DropdownListItem } from "@/components/vms/DropdownListItem";
-import { EmptyStateDataEmpty } from "@/components/vms/EmptyStateDataEmpty";
+import { EmptyStateDataEmpty, type EmptyGraphic } from "@/components/vms/EmptyStateDataEmpty";
 import { InputDropdown } from "@/components/vms/InputDropdown";
 import { InputDropdownWithBadges } from "@/components/vms/InputDropdownWithBadges";
 import { MobileCards } from "@/components/vms/MobileTable";
@@ -135,7 +135,7 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
 
   const table = (cols: TableColumn[], rows: TableValue[][]) => (mob ? <MobileCards columns={cols} rows={rows} /> : <Table columns={cols} rows={rows} />);
   const row = (kids: ReactNode, n: number) => <div className={cx(mob ? "flex flex-col gap-4" : n === 3 ? "grid grid-cols-3 gap-6" : "grid grid-cols-2 gap-6")}>{kids}</div>;
-  const empty = (t: string, s: string) => <EmptyStateDataEmpty Text={t} SupportingText={s} />;
+  const empty = (t: string, s: string, g?: EmptyGraphic) => <EmptyStateDataEmpty Text={t} SupportingText={s} Graphic={g} />;
   /* S21 อะไหล่ของรถ: ?id=new (ฟอร์มสร้าง) หรือ id ของแผนที่แก้ · q = ไตรมาสที่เปิด · car = ทะเบียน */
   const toS21 = (car: number) => router.push("/car-parts/?id=" + (edit ? planId(plan) : "new") + "&q=" + d.q + "&car=" + carParam(car) + (from === "detail" ? "&from=detail" : ""));
   const firstWith = (r: QuarterRow) => inQ.find((c) => (r.pi != null ? (d.picks[c] || []).includes(r.pi) : (d.manual?.[c] || []).some((m) => "m" + m.name + "|" + m.code === r.key))) ?? inQ[0];
@@ -194,7 +194,7 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
               </>, 2)}
             </>
           ) : (
-            empty("ยังไม่มีรายการรถ", noCars ? "ไม่มีรถที่ตรงกับเขตและประเภทรถที่เลือก" : errors ? "กรุณาเลือกรถเข้าแผนอย่างน้อย 1 คัน — เลือกภาค เขต และประเภทรถก่อน" : "เลือกภาค เขต และประเภทรถเพื่อแสดงรายการรถในเขต")
+            empty("ยังไม่มีรายการรถ", noCars ? "ไม่มีรถที่ตรงกับเขตและประเภทรถที่เลือก" : errors ? "กรุณาเลือกรถเข้าแผนอย่างน้อย 1 คัน — เลือกภาค เขต และประเภทรถก่อน" : "เลือกภาค เขต และประเภทรถเพื่อแสดงรายการรถในเขต", "vehicle")
           )}
         </section>
 
@@ -204,7 +204,7 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
             {inQ.length
               ? table(CARP_COLS, inQ.map((i) => [...carRow(d, i),
                   { actions: [{ IconSwap: "stylus-24-300-round", label: "แก้ไขอะไหล่ " + CAND[i].plate, onClick: () => toS21(i) }, { IconSwap: "delete-24-300-round", label: "เอา " + CAND[i].plate + " ออกจากไตรมาส", onClick: () => put(without([i])) }] }]))
-              : empty("ยังไม่มีรถในไตรมาสนี้", "ค้นทะเบียนในช่องเลือกรถเพื่อเพิ่มรถเข้าไตรมาสนี้")}
+              : empty("ยังไม่มีรถในไตรมาสนี้", "ค้นทะเบียนในช่องเลือกรถเพื่อเพิ่มรถเข้าไตรมาสนี้", "vehicle")}
           </section>
         )}
 

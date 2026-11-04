@@ -166,7 +166,7 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
             ? <DataTable columns={TRIP_CAR_COLS} rows={carRows} rowKey={(r) => String(r[0])} />
             : <>
                 {errors && <Alert Color="Error" Text="กรุณาเพิ่มรถเข้าแผนเดินทางอย่างน้อย 1 คัน" />}
-                <EmptyStateDataEmpty Text="ยังไม่มีรถในแผนเดินทาง" SupportingText={"กดเพิ่มรถเพื่อเลือกรถของ" + nowQ + "ที่ยังไม่อยู่ในแผนเดินทางใด"} />
+                <EmptyStateDataEmpty Graphic="vehicle" Text="ยังไม่มีรถในแผนเดินทาง" SupportingText={"กดเพิ่มรถเพื่อเลือกรถของ" + nowQ + "ที่ยังไม่อยู่ในแผนเดินทางใด"} />
               </>}
         </Section>
 

@@ -73,8 +73,8 @@ export const VEHICLE_TYPES = ["รถกระเช้า", "รถเครน
 
 export type CarStatus = "ok" | "repair" | "transfer" | "dispose";
 export interface Car { plate: string; model: string; owner: string; status: CarStatus; type: string }
-/* CAND — รถที่เข้าเงื่อนไข ภาค 2 + รถกระเช้า (ทะเบียน · ยี่ห้อ/รุ่น · หน่วยงานเจ้าของรถ · สถานะรถ) */
-export const CAND: Car[] = [
+/* CAND_SEED — รถที่เข้าเงื่อนไข ภาค 2 + รถกระเช้า (ทะเบียน · ยี่ห้อ/รุ่น · หน่วยงานเจ้าของรถ · สถานะรถ) — ลำดับนี้ห้ามเปลี่ยน (plan.alloc อ้างลำดับใน CAND) */
+const CAND_SEED: Car[] = [
   { plate: "82-6789 ขอนแก่น", model: "Isuzu FTR + กระเช้า Aichi SK17A", owner: "กฟฉ.1 ขอนแก่น", status: "ok", type: "รถกระเช้า" },
   { plate: "82-1145 ขอนแก่น", model: "Hino FC + กระเช้า Tadano AT-100", owner: "กฟฉ.1 ขอนแก่น", status: "ok", type: "รถกระเช้า" },
   { plate: "82-3302 อุดรธานี", model: "Hino FC + กระเช้า Tadano AT-100", owner: "กฟฉ.1 อุดรธานี", status: "ok", type: "รถกระเช้า" },
@@ -83,11 +83,38 @@ export const CAND: Car[] = [
   { plate: "84-5521 นครราชสีมา", model: "Hino FG + กระเช้า Tadano AT-146", owner: "กฟฉ.3 นครราชสีมา", status: "ok", type: "รถกระเช้า" },
   { plate: "85-0918 อุบลราชธานี", model: "Isuzu FTR + กระเช้า Aichi SH15A", owner: "กฟฉ.2 อุบลราชธานี", status: "ok", type: "รถกระเช้า" },
 ];
+/* รถจำลองเพิ่ม (เจ้าของงาน 4 พ.ย. 2569 "จำลองรถที่เลือกเข้าซักประเภทละ 20 คัน") — เติมให้ครบ 20 คันต่อประเภทต่อภาค วนเขตและจังหวัดในภาค
+   ทะเบียนขึ้นต้น 6x กระเช้า · 7x เครน · 9x ขุด (ไม่ชนกับรถตัวอย่างของ screens.js ที่ขึ้นต้น 80–85) · ยี่ห้อ/รุ่นวนตามประเภท · ทุก 9 คันมีคันส่งซ่อม 1 คัน */
+const CARS_PER_TYPE = 20;
+const PROVINCES: Record<string, string[]> = {
+  "กฟน.1": ["เชียงใหม่", "ลำพูน", "เชียงราย"], "กฟน.2": ["ลำปาง", "แพร่", "น่าน"], "กฟน.3": ["นครสวรรค์", "ลพบุรี", "พิจิตร"],
+  "กฟฉ.1": ["ขอนแก่น", "อุดรธานี", "หนองคาย"], "กฟฉ.2": ["อุบลราชธานี", "ร้อยเอ็ด", "ยโสธร"], "กฟฉ.3": ["นครราชสีมา", "บุรีรัมย์", "ชัยภูมิ"],
+  "กฟก.1": ["พระนครศรีอยุธยา", "สระบุรี", "ปทุมธานี"], "กฟก.2": ["ชลบุรี", "ระยอง", "ฉะเชิงเทรา"], "กฟก.3": ["นครปฐม", "ราชบุรี", "สุพรรณบุรี"],
+  "กฟต.1": ["เพชรบุรี", "ประจวบคีรีขันธ์", "ชุมพร"], "กฟต.2": ["นครศรีธรรมราช", "สุราษฎร์ธานี", "พัทลุง"], "กฟต.3": ["สงขลา", "ตรัง", "ยะลา"],
+};
+const MODELS: Record<string, string[]> = {
+  "รถกระเช้า": ["Isuzu FTR + กระเช้า Aichi SK17A", "Hino FC + กระเช้า Tadano AT-100", "Isuzu FRR + กระเช้า Aichi SK10A", "Hino FG + กระเช้า Tadano AT-146", "Isuzu FTR + กระเช้า Aichi SH15A"],
+  "รถเครน": ["Hino FM + เครน Tadano TM-ZE304", "Isuzu FVM + เครน Unic URV554", "Hino FG + เครน Tadano TM-ZE364", "Isuzu FXZ + เครน Unic URV1006"],
+  "รถขุด": ["Komatsu PC70-8", "Hitachi ZX70-5G", "Kubota KX080-4", "Caterpillar 307.5"],
+};
+const fillCars = (seed: Car[]): Car[] => VEHICLE_TYPES.flatMap((type, t) => REGIONS.flatMap((region, r) => {
+  const ds = DISTRICTS[region];
+  const have = seed.filter((c) => c.type === type && ds.includes(c.owner.split(" ")[0])).length;
+  return Array.from({ length: Math.max(0, CARS_PER_TYPE - have) }, (_, k) => {
+    const d = ds[k % ds.length], prov = PROVINCES[d][Math.floor(k / ds.length) % PROVINCES[d].length];
+    const no = String(1000 + ((k * 397 + r * 131 + t * 53) % 9000));
+    return { plate: [60, 70, 90][t] + r + "-" + no + " " + prov, model: MODELS[type][k % MODELS[type].length], owner: d + " " + prov, status: k % 9 === 4 ? "repair" : "ok", type };
+  });
+}));
+export const CAND: Car[] = [...CAND_SEED, ...fillCars(CAND_SEED)];
 /* dCode — รหัสเขตของรถ จากหน่วยงานเจ้าของรถ */
 export const dCode = (c: Car) => c.owner.split(" ")[0];
 
 /* LAST_OIL — เปลี่ยนน้ำมันครั้งล่าสุดตามลำดับ CAND · OIL_OPTS */
-export const LAST_OIL = ["12/03/2568", "12/03/2568", "05/02/2567", "20/11/2566", "ไม่มีข้อมูล", "18/06/2568", "09/01/2566"];
+const LAST_OIL_SEED = ["12/03/2568", "12/03/2568", "05/02/2567", "20/11/2566", "ไม่มีข้อมูล", "18/06/2568", "09/01/2566"];
+/* รถจำลองเพิ่ม: วันที่วนปี 2566–2568 · ทุก 11 คันไม่มีข้อมูล */
+export const LAST_OIL = [...LAST_OIL_SEED, ...CAND.slice(LAST_OIL_SEED.length).map((_, k) => k % 11 === 5 ? "ไม่มีข้อมูล"
+  : String(1 + (k * 7) % 28).padStart(2, "0") + "/" + String(1 + (k * 5) % 12).padStart(2, "0") + "/" + (2566 + (k % 3)))];
 export const OIL_OPTS = ["เก็บตัวอย่าง", "เปลี่ยนน้ำมัน"];
 
 export const QUARTERS = ["ไตรมาส 1 (ต.ค.–ธ.ค.)", "ไตรมาส 2 (ม.ค.–มี.ค.)", "ไตรมาส 3 (เม.ย.–มิ.ย.)", "ไตรมาส 4 (ก.ค.–ก.ย.)"];
