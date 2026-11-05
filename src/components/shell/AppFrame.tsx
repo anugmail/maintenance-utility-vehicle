@@ -15,6 +15,7 @@ import { HeaderNavigation } from "@/components/vms/HeaderNavigation";
 import { SidebarNavigation } from "@/components/vms/SidebarNavigation";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useOutside } from "@/lib/useOutside";
+import { GuideBar } from "@/components/guide/GuideBar";
 import { PrototypeBar } from "./PrototypeBar";
 import { ToastHost } from "./ToastHost";
 
@@ -48,6 +49,7 @@ export function AppFrame({ children, bell }: { children: ReactNode; bell?: boole
           </div>
         )}
         <div className="flex min-w-0 flex-1 flex-col">
+          <GuideBar />{/* โหมดพาดูทีละเรื่อง (ของต้นแบบ · components/guide/GuideBar) */}
           <HeaderNavigation Breakpoint={mob ? "Mobile" : "Tablet"} bell={bell} onMenu={() => (mob ? setDrawer(true) : setPinned(true))} />
           <main className={mob ? "flex flex-col gap-6 p-4" : "flex flex-col gap-8 p-8"}>{children}</main>
         </div>
