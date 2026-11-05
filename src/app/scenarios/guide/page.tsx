@@ -15,7 +15,7 @@ import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionHeader } from "@/components/vms/SectionHeader";
 import type { TableColumn } from "@/components/vms/Table";
 import { cx } from "@/lib/cx";
-import { SHEET_PAGE, guideOf, sheetPagesOf, sheetText } from "@/lib/guide/scenarios";
+import { casePages, guideOf, sheetPagesOf, sheetText } from "@/lib/guide/scenarios";
 import { startHref } from "@/lib/guide/start";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 
@@ -38,7 +38,7 @@ function Guide() {
         <div className={cx("grid gap-4", !mob && "grid-cols-2")}>
           {g.cases.map((c) => (
             <MobileCards key={c.id} columns={COLS} rows={[[
-              { text: c.name, sub: c.about }, c.steps.length + " ขั้น", sheetText(SHEET_PAGE[c.id] != null ? [SHEET_PAGE[c.id]] : []),
+              { text: c.name, sub: c.about }, c.steps.length + " ขั้น", sheetText(casePages(c)),
               { actions: [], mobileButtons: <SecondaryButton Text="เริ่มเคสนี้" LeadingIconSwap="play_arrow-24-300-round" Size="lg" aria-label={"เริ่มเคสนี้ " + c.name} onClick={() => router.push(startHref(c.id))} /> },
             ]]} />
           ))}
