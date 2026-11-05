@@ -37,12 +37,13 @@ export const badgeOf = ([t, c]: readonly [string, PillColor]): [string, BadgeOut
 export const tripHref = (t: JobTrip) => "/trips/detail/?trip=" + t.id;
 export const jobHref = (t: JobTrip, carId: string, sub = "") => "/trips/job/" + sub + "?trip=" + t.id + "&car=" + carId;
 /* Breadcrumbs ตาม pageHead(): ชื่อเมนู + ระดับกลาง + หน้าปัจจุบัน (ไลบรารีมี 3 ช่องลิงก์ — ช่องที่ 4 ของหน้ารับรถ/ปิดงานไม่แสดงตามจอ Figma)
-   "แผน MR …" → หน้ารายละเอียดแผน /detail/ · "แผนเดินทาง ไตรมาส n" → หน้าแผนเดินทางของไตรมาส /quarter/trips/ (แผนจ้างก็เหมือนกัน) */
+   ชื่อแผน → หน้ารายละเอียดแผน /detail/ · "ไตรมาส n" → หน้าไตรมาส /quarter/trips/ (แผนจ้างก็เหมือนกัน) */
 export const planHref = (t: JobTrip) => "/detail/?id=" + t.planId;
 export const quarterTripsHref = (t: JobTrip) => "/quarter/trips/?id=" + t.planId + "&q=" + t.q;
-export const tripCrumbs = (t: JobTrip): Crumb[] => [{ Text: MENU_NAME, href: "/" }, { Text: "แผน " + t.planMr, href: planHref(t) },
-  { Text: "แผนเดินทาง " + t.quarter, href: quarterTripsHref(t) }, { Text: t.name }];
-export const jobCrumbs = (t: JobTrip, last: string): Crumb[] => [{ Text: MENU_NAME, href: "/" }, { Text: "แผนเดินทาง " + t.quarter, href: quarterTripsHref(t) },
+/* 5 พ.ย. 2569 ต่อจากหน้า "ไตรมาส n" (tripDetail crumbs [ชื่อแผน, ไตรมาส, ชื่อแผนเดินทาง] · jobPage [ไตรมาส, ชื่อแผนเดินทาง, ทะเบียน] ใน screens.js) */
+export const tripCrumbs = (t: JobTrip): Crumb[] => [{ Text: MENU_NAME, href: "/" }, { Text: t.planName || t.planMr, href: planHref(t) },
+  { Text: t.quarter, href: quarterTripsHref(t) }, { Text: t.name }];
+export const jobCrumbs = (t: JobTrip, last: string): Crumb[] => [{ Text: MENU_NAME, href: "/" }, { Text: t.quarter, href: quarterTripsHref(t) },
   { Text: t.name, href: tripHref(t) }, { Text: last }];
 /** Breadcrumbs ของหน้าแผนเดินทาง / งานรายคัน (ทุกบทบาทชุดเดียวกัน) */
 export const useCrumbs = () => ({ trip: tripCrumbs, job: jobCrumbs });

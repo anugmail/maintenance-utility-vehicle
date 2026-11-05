@@ -1,11 +1,13 @@
 "use client";
-/* S6 P1 · แผนเดินทางของไตรมาส (/quarter/trips/?id=Z7000001&q=1) — tripList() ใน screens.js · spec S6.md (E.1 E.9 E.11 E.13 E.15 · S9 H.7)
-   Page header "หมายเลขแผน MR Z7000001" + Badge สถานะแผน (ย้อนกลับ) → Content ช่องไฟ 32:
+/* S6 P1 · หน้า "ไตรมาส n" (/quarter/trips/?id=Z7000001&q=1) — tripList() ใน screens.js · spec S6.md (E.1 E.9 E.11 E.13 E.15 · S9 H.7)
+   ทางเข้า (รีวิว 5 พ.ย. 2569): เมนูบำรุงรักษาตามวาระ → รายการแผน → "…" ดูรายละเอียด (แผนอนุมัติแล้ว/ดำเนินการ) → รายละเอียดแผน → "ไปหน้าไตรมาส n" → หน้านี้
+   Page header "ไตรมาส n" + Badge สถานะแผน (ย้อนกลับ) · Breadcrumbs บำรุงรักษาตามวาระ › <ชื่อแผน> › ไตรมาส n → Content ช่องไฟ 32:
      รายละเอียดแผน (VehicleAndReporterInfo ของไฟล์ Maintain-D · มือถือ DisplayBox) — PLAN_KV ไตรมาส "(n คัน)" · รถของไตรมาส = quarterCars() (แผนจากฟอร์ม S1 = รถที่จัดลงไตรมาส · แผนตัวอย่าง = TRIP_CARS 10 คัน)
      Section label "รถในไตรมาส 1 (n)" + Secondary button "เพิ่มรถ" (กบค.) + Table (TRIP_Q_COLS + ไอคอนแก้ไข ลบ) — รถที่ยังไม่มีใบ = Pill Gray "ยังไม่มีแผนเดินทาง" · เกิน 10 คันแบ่งหน้า
      E.16–E.20 (เพิ่ม ลด แก้ไข รถในไตรมาส 4 พ.ย. 2569 · tripList o.added o.removed · Q_EXTRA · Q_REMOVE_CONFIRM · qAddModal): popup "เพิ่มรถเข้าไตรมาส n" (TripCarPicker)
        · ไอคอนแก้ไข = TripCarEditModal (คันที่อยู่ในแผนเดินทางแล้ว = แก้ที่ใบนั้น) · ไอคอนลบ = ConfirmDialog "ยืนยันการเอารถออกจากไตรมาส n" · ไม่ต้องส่งอนุมัติแผนใหม่
      Section label "แผนเดินทาง (n)" + Tertiary brand button "สร้างแผนเดินทาง" → Table (TRIP_COLS ไอคอน ›) / Empty state/Data empty + Primary button "สร้างแผนเดินทาง"
+       รถทุกคันอยู่ในแผนเดินทางแล้ว = ปุ่ม "สร้างแผนเดินทาง" Disabled (5 พ.ย. 2569 "สร้างแผนได้จนกว่าจะไม่เหลือรถ" · ตัด popup "รถทุกคันของไตรมาสอยู่ในแผนเดินทางแล้ว")
    ไอคอน ›: อนุมัติแล้ว → รายละเอียดแผนเดินทาง (/trips/detail/ · batch C) · ส่งกลับแก้ไข → แก้ไข (E.14) · รออนุมัติ = ไม่มีจอ (ไม่มีไอคอน) */
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
@@ -27,7 +29,7 @@ import { TST, addQuarterCars, badgeOf, editQuarterCar, phoneCell, putTrip, qEdit
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { TripCarEditModal } from "../_shared/TripCarEditModal";
 import { TripCarPicker } from "../_shared/TripCarPicker";
-import { Content, DataTable, MENU_HOME, PagedTable, Section, go, planDetailHref, quarterHref, useBack } from "../_shared/ui";
+import { Content, DataTable, PagedTable, Section, go, planDetailHref, quarterCrumbs, useBack } from "../_shared/ui";
 
 const TRIP_Q_COLS: TableColumn[] = [
   { head: "ทะเบียน", width: 170, Style: "Lead text" }, { head: "ยี่ห้อ/รุ่น" }, { head: "หน่วยงานเจ้าของรถ", width: 160 },
@@ -53,7 +55,7 @@ function TripList() {
   const [adding, setAdding] = useState(false);
   const [editCar, setEditCar] = useState<TripCar | null>(null);
   const [dropCar, setDropCar] = useState<TripCar | null>(null);
-  const back = useBack(quarterHref(id, q));
+  const back = useBack(planDetailHref(id));
   const newHref = "/quarter/trips/new/?id=" + id + "&q=" + q;
 
   /* E.1 เพิ่ม ลด แก้ไข รถในไตรมาส (กบค.) — ไอคอนแก้ไข = เบอร์ติดต่อและสถานที่ · ลบ = เอาออกจากไตรมาส (คันที่อยู่ในแผนเดินทางแล้วมีแค่แก้ไข) */
@@ -70,12 +72,12 @@ function TripList() {
   const open = (tid: string, st: string) => (st === "approved" ? router.push("/trips/detail/?trip=" + tid) : router.push("/quarter/trips/edit/?trip=" + tid));
   const tripRows: TableValue[][] = trips.map((t) => [{ text: t.name, sub: tripPlaces(t) }, tripRange(t), String(t.carIds.length), tripBy(t), { pills: [TST[t.status]] },
     t.status === "review" ? null : go("เปิด " + t.name, () => open(t.id, t.status))]);
-  const create = (Btn: typeof PrimaryButton | typeof TertiaryBrandButton) => kbk ? <Btn Text="สร้างแผนเดินทาง" LeadingIconSwap="add-24-300-round" onClick={() => router.push(newHref)} /> : undefined;
+  const free = cars.some((c) => !tripOf(c));   // รถที่ยังไม่อยู่ในแผนเดินทางใด
+  const create = (Btn: typeof PrimaryButton | typeof TertiaryBrandButton) => kbk ? <Btn Text="สร้างแผนเดินทาง" LeadingIconSwap="add-24-300-round" State={free ? "Default" : "Disabled"} onClick={() => free && router.push(newHref)} /> : undefined;
 
   return (
     <>
-      <PageHeader Title={"หมายเลขแผน " + mrOf(id)} Badge={badgeOf(PST[plan?.status ?? "active"])} onBack={back}
-        crumbs={[{ Text: MENU_HOME, href: "/" }, { Text: "แผน " + mrOf(id), onClick: () => router.push(planDetailHref(id)) }, { Text: nowQ, href: quarterHref(id, q) }, { Text: "แผนเดินทาง" }]} />
+      <PageHeader Title={nowQ} Badge={badgeOf(PST[plan?.status ?? "active"])} onBack={back} crumbs={quarterCrumbs(id, plan?.name ?? mrOf(id), q)} />
       <Content>
         {plan && <VehicleAndReporterInfo Title="รายละเอียดแผน" pairs={planKv(plan, " (" + cars.length + " คัน)")} />}
         <Section>
@@ -90,7 +92,7 @@ function TripList() {
             : <EmptyStateDataEmpty Text="ยังไม่มีแผนเดินทาง" SupportingText="สร้างแผนเดินทางเพื่อนัดวันเข้าตรวจ แจ้งเจ้าของรถและ กรย." Actions={create(PrimaryButton)} />}
         </Section>
       </Content>
-      <TripCarPicker open={adding} pool={quarterPool(mock, id, q)} used={0} nowQ={nowQ} title={"เพิ่มรถเข้า" + nowQ}
+      <TripCarPicker open={adding} pool={quarterPool(mock, id, q)} nowQ={nowQ} title={"เพิ่มรถเข้า" + nowQ}
         sub="รถในขอบเขตของแผน (ภาค เขต และประเภทรถเดียวกัน) ที่ยังไม่อยู่ในไตรมาสใด" okText={"เพิ่มเข้า" + nowQ} emptyText="ไม่มีรถที่เพิ่มเข้าไตรมาสนี้ได้"
         onCancel={() => setAdding(false)} onAdd={(ids) => { addQuarterCars(id, q, ids); setAdding(false); notify("เพิ่มรถเข้า" + nowQ + " สำเร็จ"); }} />
       <TripCarEditModal car={editCar} trip={editTrip ?? edits} onCancel={() => setEditCar(null)}

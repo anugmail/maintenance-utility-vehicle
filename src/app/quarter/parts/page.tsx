@@ -24,7 +24,7 @@ import { PARTS } from "@/lib/mock/data";
 import { useSeed } from "@/lib/mock/seedB";
 import { useMock, useRole } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
-import { BtnRow, Content, DataTable, MENU_HOME, Section, planDetailHref, quarterHref, tripsHref, useBack } from "../_shared/ui";
+import { BtnRow, Content, DataTable, MENU_HOME, Section, planDetailHref, quarterCrumbs, tripsHref, useBack } from "../_shared/ui";
 
 const PROG_COLS: TableColumn[] = [
   { head: "รายการอะไหล่", Style: "Lead text" }, { head: "รหัส", width: 110 }, { head: "ต้องเบิก", width: 110 }, { head: "หน่วย", width: 90 },
@@ -73,7 +73,7 @@ function PartsProgress() {
   return (
     <>
       <PageHeader Title={"ความคืบหน้าอะไหล่ · " + nowQ} onBack={back}
-        crumbs={[{ Text: MENU_HOME, href: "/" }, { Text: "แผน " + mrOf(id), onClick: () => router.push(planDetailHref(id)) }, { Text: nowQ, href: quarterHref(id, q) }, { Text: "ความคืบหน้าอะไหล่" }]} />
+        crumbs={quarterCrumbs(id, plan?.name ?? "", q, "ความคืบหน้าอะไหล่")} />
       <Content>
         <Alert Color="Info" Text={"คลังรับทราบรายการอะไหล่" + nowQ + "แล้ว"} SupportingText={"รถ " + NOW_CARS + " คันของไตรมาสนี้ · คลังรับทราบ " + WH_ACK_AT} />
         {down && <Alert Color="Error" Text="เชื่อมต่อ Smart Inventory ไม่ได้" SupportingText="ยังดูคงเหลือและเบิก/จองไม่ได้ ลองใหม่อีกครั้ง" />}
