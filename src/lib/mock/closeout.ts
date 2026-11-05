@@ -38,6 +38,8 @@ const BUYER_OF: Record<number, "Smart Inventory" | "ผพจ."> = { 1: "Smart I
    แผนตัวอย่าง (ไม่มีรถรายคัน) = PARTS ของ screens.js · pi = ลำดับใน PARTS (ไม่มี = รายการที่ระบุเอง ไม่มีคงเหลือในคลัง) · sub = บรรทัดรอง (S25 อะไหล่ของรถที่ย้ายมา) */
 export interface NeedRow { key: string; pi?: number; name: string; code: string; unit: string; qty: number; stock?: number; sub?: string }
 export const SAMPLE_NEED: NeedRow[] = PARTS.map((p, i) => ({ key: "p" + i, pi: i, name: p.name, code: p.code, unit: p.unit, qty: p.planQty, stock: p.stock }));
+/* ยอดของรถเดิมในไตรมาสอื่นของแผนตัวอย่าง (MOVE_Q2_BASE ของ screens.js · ค่าสมมติ) ตามลำดับ PARTS */
+export const SAMPLE_Q_NEED: Record<number, number[]> = { 2: [30, 6, 6, 6, 2] };
 export const lackOf = (r: NeedRow) => (r.stock == null ? 0 : Math.max(0, r.qty - r.stock));
 /* ยอดใน SummaryRequestedParts (partsSummary): เบิก = min(ตามแผน, คงเหลือ) × ราคา แยกคลัง · จัดซื้อ = ส่วนที่ขาด × ราคา แยกผู้จัดซื้อ · รายการที่ระบุเอง (ไม่มีราคาในคลัง) ไม่นับยอด */
 export function partsSummary(rows: NeedRow[] = SAMPLE_NEED) {

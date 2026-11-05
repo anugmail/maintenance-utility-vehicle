@@ -19,8 +19,11 @@ import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionLabel } from "@/components/vms/SectionLabel";
 import type { TableColumn } from "@/components/vms/Table";
-import { NOW_CARS, SAMPLE_NEED, WD, WH_ACK_AT, lackOf, mrOf, partsSummary, planOf, putQuarter, quarterOf, setPlanStatus, type NeedRow } from "@/lib/mock/closeout";
+import { NOW_CARS, SAMPLE_NEED, SAMPLE_Q_NEED, WD, WH_ACK_AT, lackOf, mrOf, partsSummary, planOf, putQuarter, quarterOf, setPlanStatus, type NeedRow } from "@/lib/mock/closeout";
 import { allocOf, carsIn, quarterRows } from "@/lib/mock/planFlow";
+import { PARTS } from "@/lib/mock/data";
+import { movedParts, partIndex } from "@/lib/mock/moves";
+import { quarterCars } from "@/lib/mock/trips";
 import { useSeed } from "@/lib/mock/seedB";
 import { useMock, useRole } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
@@ -49,9 +52,19 @@ function PartsProgress() {
   const plan = planOf(mock, id);
   /* แผนที่จัดรถรายคัน = ยอดรวมจากรถทีละคัน (ชุดเดียวกับฟอร์มแผนและหน้าคลัง S22 · BACKLOG ข้อ 11) · แผนตัวอย่าง = PARTS ของ screens.js */
   const alloc = plan?.alloc && Object.keys(plan.alloc).length ? allocOf(plan) : null;
-  const need: NeedRow[] = sim === "empty" ? [] : alloc ? quarterRows(alloc, q).map((r) => ({ key: r.key, pi: r.pi, name: r.name, code: r.code, unit: r.unit, qty: r.qty, stock: r.stock })) : SAMPLE_NEED;
-  const shownNeed = need;
-  const nCars = alloc ? carsIn(alloc, q).length : NOW_CARS;
+  /* S25: รถที่ย้ายมา — อะไหล่ตามแผนของรถคันนั้นรวมอยู่ในยอด + บรรทัดรอง "รวม n หน่วย ของ {ทะเบียน} ที่ย้ายมา" (MOVE_Q2_SUBS) · แผนตัวอย่าง: ไตรมาสอื่นใช้ยอดรถเดิม SAMPLE_Q_NEED แล้วบวกของรถที่ย้ายมา */
+  const nowQn = Number((plan?.nowQ ?? "ไตรมาส 1").replace(/\D/g, "")) || 1;
+  const base: NeedRow[] = sim === "empty" ? [] : alloc ? quarterRows(alloc, q).map((r) => ({ key: r.key, pi: r.pi, name: r.name, code: r.code, unit: r.unit, qty: r.qty, stock: r.stock }))
+    : q === nowQn ? SAMPLE_NEED : SAMPLE_NEED.map((r, i) => ({ ...r, qty: SAMPLE_Q_NEED[q]?.[i] ?? 0 }));
+  const need: NeedRow[] = base.map((r) => ({ ...r }));
+  if (sim !== "empty") movedParts(mock, id, q).forEach(({ move, parts }) => parts.forEach((p) => {
+    let r = need.find((x) => x.name === p.name);
+    if (!r) { const pi = partIndex(p.name); r = { key: "mv" + move.carId + p.name, pi: pi >= 0 ? pi : undefined, name: p.name, code: pi >= 0 ? PARTS[pi].code : "-", unit: p.unit, qty: 0, stock: pi >= 0 ? PARTS[pi].stock : undefined }; need.push(r); }
+    if (!alloc) r.qty += p.qty;
+    r.sub = (r.sub ? r.sub + " · " : "") + "รวม " + p.qty + " " + p.unit + " ของ " + move.plate + " ที่ย้ายมา";
+  }));
+  const shownNeed = need.filter((r) => r.qty > 0);
+  const nCars = alloc ? carsIn(alloc, q).length : q === nowQn ? NOW_CARS : quarterCars(mock, id, q).length;
 
   /* C.3 → C.4: ของที่รอจัดซื้อเข้าคลังแล้ว เมื่อกลับมาเปิดหน้าใหม่ (หน้าที่กดยืนยันยังเห็นผล "ไม่พอ") */
   useEffect(() => {

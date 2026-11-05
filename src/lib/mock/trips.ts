@@ -37,7 +37,17 @@ export const Q_EXTRA: TripCar[] = [
   { id: "82-4417", plate: "82-4417 น่าน", model: "Hino FC + กระเช้า Tadano AT-121", owner: "กฟน.2 น่าน", phone: "054-710-244" },
   { id: "80-6652", plate: "80-6652 ลำพูน", model: "Isuzu FRR + กระเช้า Aichi SK10A", owner: "กฟน.1 ลำพูน", phone: "053-511-090" },
 ];
-export const carOf = (id: string) => TRIP_CARS.find((c) => c.id === id) ?? PLAN_CARS.find((c) => c.id === id) ?? Q_EXTRA.find((c) => c.id === id);
+/* รถเดิมของไตรมาสอื่นในแผนตัวอย่าง (S25 · MOVE_Q2 · MOVE_Q3_OTHER ของ screens.js · ค่าสมมติ) — แผนตัวอย่างที่ไม่มีรถรายคัน: ไตรมาสที่กำลังทำ = TRIP_CARS · ไตรมาสอื่น = ชุดนี้ */
+export const SAMPLE_Q: Record<number, TripCar[]> = {
+  2: [
+    { id: "81-7702", plate: "81-7702 ลำปาง", model: "Isuzu FTR + กระเช้า Aichi SK12A", owner: "กฟน.1 ลำปาง", phone: "054-217-411" },
+    { id: "82-5530", plate: "82-5530 เชียงราย", model: "Hino FC + กระเช้า Tadano AT-100", owner: "กฟน.1 เชียงราย", phone: "053-711-930" },
+    { id: "80-1189", plate: "80-1189 น่าน", model: "Isuzu FRR + กระเช้า Aichi SK10A", owner: "กฟน.2 น่าน", phone: "054-710-551" },
+  ],
+  3: [{ id: "81-3348", plate: "81-3348 พะเยา", model: "Hino FG + กระเช้า Tadano AT-146", owner: "กฟน.1 พะเยา", phone: "054-411-206" }],
+};
+export const carOf = (id: string) => TRIP_CARS.find((c) => c.id === id) ?? PLAN_CARS.find((c) => c.id === id) ?? Q_EXTRA.find((c) => c.id === id)
+  ?? Object.values(SAMPLE_Q).flat().find((c) => c.id === id);
 /* ---------- รถในไตรมาส (S6 E.1 · เพิ่ม ลด แก้ไข รถในไตรมาส 4 พ.ย. 2569 · ไม่ต้องส่งอนุมัติแผนใหม่) ----------
    MockState.qcars คีย์ "<แผน>-<ไตรมาส>": added = คันที่เพิ่ม (ใหม่สุดก่อน · ขึ้นก่อนในตาราง) · removed = คันที่เอาออก · phones/locs = เบอร์/สถานที่ที่แก้ (ค่าตั้งต้นตอนสร้างแผนเดินทาง)
    แผนที่สร้างจากฟอร์ม (มี alloc): เพิ่ม/เอาออก เขียนที่ plan.alloc ด้วย ⇒ จำนวนรถของแผน รายการอะไหล่ของไตรมาส (S22) ตามทันที */
@@ -50,12 +60,13 @@ export const qEditOf = (s: Pick<MockState, "qcars">, planId: string, q: number):
 const planOfId = (plans: Plan[], planId: string) => plans.find((x) => x.mr === "MR " + planId);
 const hasAlloc = (p?: Plan): p is Plan & { alloc: Record<number, number> } => !!p?.alloc && Object.keys(p.alloc).length > 0;
 const candIndex = (id: string) => CAND.findIndex((c) => candId(c.plate) === id);
-/** รถของไตรมาส q ในแผน — แผนที่สร้างจากฟอร์ม (มี alloc) = รถที่จัดลงไตรมาสนั้น · แผนตัวอย่าง (ไม่มี alloc) = รถตัวอย่าง TRIP_CARS ของ screens.js · + คันที่เพิ่ม − คันที่เอาออก */
+/** รถของไตรมาส q ในแผน — แผนที่สร้างจากฟอร์ม (มี alloc) = รถที่จัดลงไตรมาสนั้น · แผนตัวอย่าง (ไม่มี alloc) = TRIP_CARS ของ screens.js (ไตรมาสที่กำลังทำ) / SAMPLE_Q (ไตรมาสอื่น) · + คันที่เพิ่ม − คันที่เอาออก */
 export function quarterCars(s: Pick<MockState, "plans" | "qcars">, planId: string, q: number): TripCar[] {
   const p = planOfId(s.plans, planId), e = qEditOf(s, planId, q);
+  const nowQ = Number((p?.nowQ ?? "ไตรมาส 1").replace(/\D/g, "")) || 1;
   const base = hasAlloc(p)
     ? Object.keys(p.alloc).map(Number).filter((i) => p.alloc[i] === q && CAND[i]).map((i) => carOf(candId(CAND[i].plate))).filter((c): c is TripCar => !!c)
-    : TRIP_CARS;
+    : q === nowQ ? TRIP_CARS : SAMPLE_Q[q] ?? [];
   const added = e.added.filter((id) => !e.removed.includes(id)).map(carOf).filter((c): c is TripCar => !!c);
   return [...added, ...base.filter((c) => !e.added.includes(c.id) && !e.removed.includes(c.id))];
 }

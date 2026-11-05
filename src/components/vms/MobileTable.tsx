@@ -28,7 +28,7 @@ export function MobileCards({ columns, rows, rowKey }: { columns: TableColumn[];
           else if (c.head && v && typeof v === "object" && "pills" in v) v.pills.forEach((p) => data.push({ head: c.head, v: { pills: [p] } }));
           else if (c.head) data.push({ head: c.head, v });
         });
-        const a = acts as { actions: CellAction[]; mobileActions?: CellAction[] } | null;
+        const a = acts as { actions: CellAction[]; mobileActions?: CellAction[]; mobileButtons?: ReactNode } | null;
         return (
           <MobileTable key={rowKey ? rowKey(r, ri) : ri}>
             {data.map(({ head, v }, i) => {
@@ -37,7 +37,7 @@ export function MobileCards({ columns, rows, rowKey }: { columns: TableColumn[];
               if (v && typeof v === "object" && "text" in v) return <MobileTableItem key={i} Style={i === 0 ? "Lead text" : "Text"} Header={head} Text={v.text} SupportingText={v.sub || undefined} last={last} />;
               return <MobileTableItem key={i} Style={i === 0 ? "Lead text" : "Text"} Header={head} Text={v == null ? "" : String(v)} last={last} />;
             })}
-            {a && <MobileTableItem Style="Action icons" Actions={a.mobileActions ?? a.actions} />}
+            {a && (a.mobileButtons ? <MobileTableItem Style="Action buttons" Buttons={a.mobileButtons} /> : <MobileTableItem Style="Action icons" Actions={a.mobileActions ?? a.actions} />)}
           </MobileTable>
         );
       })}
