@@ -19,10 +19,10 @@ import { SectionHeader } from "@/components/vms/SectionHeader";
 import { SectionLabel } from "@/components/vms/SectionLabel";
 import type { TableColumn } from "@/components/vms/Table";
 import {
-  addJobPart, cannotJob, deleteJobPart, editPartUsed, ODOMETER, OIL_DEFAULT, patchJob, startJob, thaiNow, tripLoc, tripPhone, tripRange, WORK, workShown, WSTAT,
+  addJobPart, cannotJob, deleteJobPart, editPartUsed, ODOMETER, OIL_DEFAULT, patchJob, plannedOil, startJob, thaiNow, tripLoc, tripPhone, tripRange, WORK, workShown, WSTAT,
   type Job, type JobTrip, type PlanPart, type TripCar,
 } from "@/lib/mock/jobs";
-import { notify } from "@/lib/mock/store";
+import { notify, useMock } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { badgeOf, CannotPopup, DataTable, useCrumbs, jobHref, LastOil, OilCards, PartAddModal, PartEditModal, Section, tripHref, useBack } from "../_lib/ui";
 
@@ -60,7 +60,9 @@ export function JobPage({ trip, car, job, actor }: { trip: JobTrip; car: TripCar
   const oil = job.oilChoice ?? OIL_DEFAULT;
   /* แก้ไข = popup แก้ไขอะไหล่ (partEditModal) · เพิ่ม = popup เพิ่มอะไหล่ที่ใช้จริง (partAddModal) · ลบ = ยืนยันการเอาอะไหล่ออก (PART_DEL_CONFIRM)
      ค่าที่แก้เก็บเป็นร่างของหน้าปิดงาน (workItems) ⇒ เป็นค่าตั้งต้นของตาราง "รายการสภาพวัสดุอะไหล่" ตอนปิดงาน (BACKLOG ข้อ 4) · ยังไม่เริ่ม = ตามแผน (เปลี่ยนน้ำมัน) */
-  const work = editParts ? workShown(job) : workShown({ ...job, close: undefined, oilChoice: doing ? oil : 1 });
+  /* ยังไม่เริ่ม: แถวงานตามน้ำมันที่วางแผนไว้ (S21 · plannedOil) · อยู่ระหว่างบำรุงรักษา (บทบาทอื่นดู): ตามที่เลือกหน้างาน */
+  const planned = plannedOil(useMock().plans, trip.planId, car.id);
+  const work = editParts ? workShown(doing ? job : { ...job, oilChoice: job.oilChoice ?? planned }) : workShown({ ...job, close: undefined, oilChoice: doing ? oil : planned });
   const cols = editParts ? JOB_COLS : JOB_COLS.slice(0, 4);
   const rows = work.map((w) => {
     const r = [w.task, w.part, String(w.planQty), w.unit];
@@ -84,13 +86,13 @@ export function JobPage({ trip, car, job, actor }: { trip: JobTrip; car: TripCar
     <SecondaryButton Text="บำรุงรักษาไม่ได้" Size={size} onClick={() => { setReason(""); setErr(false); setCannot(true); }} />
     {doing
       ? <PrimaryButton Text="ปิดงาน" Size={size} onClick={() => router.push(jobHref(trip, car.id, "close/"))} />
-      : <PrimaryButton Text="เริ่มงาน" Size={size} onClick={() => { startJob(trip, car.id); notify("เริ่มงานบำรุงรักษาแล้ว"); router.push(jobHref(trip, car.id, "receive/")); }} />}
+      : <PrimaryButton Text="เริ่มงาน" Size={size} onClick={() => { startJob(trip, car.id, planned); notify("เริ่มงานบำรุงรักษาแล้ว"); router.push(jobHref(trip, car.id, "receive/")); }} />}
   </> : undefined;
   const photos = job.photos ?? [];
 
   return (
     <>
-      <PageHeader Title={car.plate} Badge={badgeOf(WSTAT[job.status])} crumbs={crumbs.job(trip, car.plate)} onBack={() => back(tripHref(trip))} Actions={actions} />
+      <PageHeader Title={car.plate} Badge={badgeOf(WSTAT[job.status])} Pill={job.status === "doing" ? WSTAT.doing : undefined} crumbs={crumbs.job(trip, car.plate)} onBack={() => back(tripHref(trip))} Actions={actions} />
       <VehicleAndReporterInfo Title="ข้อมูลยานพาหนะ" pairs={vehiclePairs(trip, car)} />
       <VehicleAndReporterInfo Title="การนัดหมาย" pairs={appointmentPairs(trip, car, job)} />
       {doing && <IncidentPhotoGallery Title={"ภาพก่อนเริ่มงาน (" + photos.length + ")"} photos={photos.map((p) => ({ alt: p.name }))} />}

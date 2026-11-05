@@ -7,7 +7,7 @@
         _Date picker calendar item base 40×40 รัศมี 9999 ตัวเลข 14 Regular: Day (Hover พื้น gray-200) · Today พื้น gray-100 ตัวอักษร brand-900
           · Day in range พื้น gray-100 + connector ซ้าย/ขวา gray-100 (แถบต่อเนื่อง) · Selected day พื้น brand-900 ตัวอักษร white (Hover brand-800) · Disabled ตัวอักษร gray-400 (วันนอกเดือน)
         _Date picker footer: ขอบใน 16 เส้นบน gray-300 · Tertiary brand button (ล้าง) ซ้าย · Secondary + Primary button md ขวา ช่องไฟ 12
-   ข้อความตั้งต้นตามไลบรารี (Mo–Su · "Dec 2024" · Clear / Cancel / Apply) — จอ Figma ไม่ได้เปลี่ยน · ส่ง prop เพื่อเปลี่ยนได้ (COMPOSED.md ง.) */
+   ข้อความตั้งต้นตามไลบรารี (Mo–Su · "Dec 2024" · Clear / Cancel / Apply) · ส่ง prop เพื่อเปลี่ยนได้ (COMPOSED.md ง.) · ClearText="" = ซ่อนปุ่มล้าง (Tertiary brand button ซ่อนตาม thaiDatePicker() ใน screens.js 5 พ.ย. 2569) */
 import { useState } from "react";
 import { cx } from "@/lib/cx";
 import { PrimaryButton } from "./PrimaryButton";
@@ -61,7 +61,7 @@ export function DatePicker({ Type = "Dual", value, month, today = new Date(), on
         })}
       </div>
       <div className="flex items-center justify-between gap-3 border-t border-gray-300 p-4">
-        <TertiaryBrandButton Text={ClearText} onClick={() => setSel({})} />
+        {ClearText ? <TertiaryBrandButton Text={ClearText} onClick={() => setSel({})} /> : <span />}
         <div className="flex items-center gap-3">
           <SecondaryButton Text={CancelText} onClick={onCancel} />
           <PrimaryButton Text={ApplyText} onClick={() => onApply?.(sel)} />

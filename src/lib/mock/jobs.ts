@@ -74,13 +74,29 @@ export const BEFORE = ["รูปรถ + ทะเบียน", "อะไห�
 /* ---------- รถของไตรมาส 1 แผน MR Z7000001 (TRIP_CARS + OWNER_PH + LAST_OIL) ---------- */
 export interface TripCar { id: string; plate: string; model: string; owner: string; ownerPhone: string; type: string; lastOil: string }
 /* รถชุดเดียวกับ trips.ts (TRIP_CARS + OWNER_PH) · เปลี่ยนน้ำมันครั้งล่าสุด LAST_OIL (82-3302 = 05/02/2567 · คันอื่น 12/03/2568) */
-const LAST_OIL_OF: Record<string, string> = { "82-3302": "05/02/2567" };
+/* วันที่เปลี่ยนน้ำมันครั้งล่าสุด ค่าเดียวทุกจอ (lastOil() ใน screens.js 5 พ.ย. 2569 · ชีตลูกค้า "12/03/2568 กับ 18/10/2568 ปนกัน") — ยึดข้อมูล S24 (MA_ROWS ช่องเปลี่ยนน้ำมันล่าสุด)
+   ยกเว้น 82-6789 (คันตัวอย่าง S10) ก่อนงานนี้ = 12/03/2568 · ไม่มีใน S24 = LAST_OIL ตามลำดับ CAND · ไม่มีข้อมูล = "ไม่มีข้อมูล" */
+const LAST_OIL_OF: Record<string, string> = {
+  "82-6789": "12/03/2568", "82-1145": "12/03/2567", "80-5738": "14/10/2568", "81-2210": "ไม่มีข้อมูล", "80-9981": "10/01/2569", "82-3302": "05/02/2567",
+  "82-7720": "18/06/2568", "80-3316": "05/02/2567", "81-6604": "20/09/2569", "80-4458": "01/10/2568",
+};
 export const TRIP_CARS: TripCar[] = CARS.map((c) => ({ id: c.id, plate: c.plate, model: c.model, owner: c.owner, ownerPhone: c.phone, type: "รถกระเช้า", lastOil: LAST_OIL_OF[c.id] ?? "12/03/2568" }));
 /* รถจากแผนที่สร้างในฟอร์ม (PLAN_CARS ของ trips.ts) — ประเภทรถและเปลี่ยนน้ำมันครั้งล่าสุดตาม CAND / LAST_OIL ของ data.ts */
 export const PLAN_JOB_CARS: TripCar[] = PLAN_CARS.map((c) => { const i = CAND.findIndex((x) => candId(x.plate) === c.id);
   return { id: c.id, plate: c.plate, model: c.model, owner: c.owner, ownerPhone: c.phone, type: CAND[i]?.type ?? "รถกระเช้า", lastOil: LAST_OIL[i] ?? "-" }; });
 /* รถที่เพิ่มเข้าไตรมาสของแผนตัวอย่าง (Q_EXTRA · S6 E.1) — screens.js ไม่มีประเภท/น้ำมันครั้งล่าสุด ⇒ รถกระเช้า · "-" */
 const Q_EXTRA_JOB_CARS: TripCar[] = Q_EXTRA.map((c) => ({ id: c.id, plate: c.plate, model: c.model, owner: c.owner, ownerPhone: c.phone, type: "รถกระเช้า", lastOil: "-" }));
+/* น้ำมันไฮโดรลิกตามแผนของรถ (S21) = ค่าตั้งต้นของ Step 2 (TRIP_OIL ใน screens.js 5 พ.ย. 2569 · ชีตลูกค้า: เดิมเลือก เก็บตัวอย่างและเปลี่ยน ทุกคัน)
+   แผนตัวอย่าง: 82-6789 = เก็บตัวอย่างและเปลี่ยน · คันอื่นทุกคันที่ 3 = เปลี่ยนน้ำมัน ที่เหลือ = เก็บตัวอย่าง · แผนที่กำหนดอะไหล่รายคัน = ตัวเลือกที่กำหนดใน S21 */
+export const SAMPLE_OIL = (carId: string): OilChoice => { const i = CARS.findIndex((c) => c.id === carId); return i === 0 ? 2 : i >= 0 && i % 3 === 0 ? 1 : 0; };
+export function plannedOil(plans: Plan[], planId: string, carId: string): OilChoice {
+  const p = plans.find((x) => x.mr === "MR " + planId), i = CAND.findIndex((c) => candId(c.plate) === carId);
+  if (p?.alloc && i >= 0 && p.alloc[i] != null) {
+    const k = p.oils?.[i] ?? ((p.picks?.[i] ?? []).includes(0) ? 1 : 0);
+    return k as OilChoice;
+  }
+  return SAMPLE_OIL(carId);
+}
 export const carOf = (id: string) => TRIP_CARS.find((c) => c.id === id) ?? PLAN_JOB_CARS.find((c) => c.id === id) ?? Q_EXTRA_JOB_CARS.find((c) => c.id === id);
 
 /* ---------- แผนเดินทางที่อนุมัติแล้ว — มุมมองของ Trip (trips.ts) ที่สถานะ approved ----------
@@ -363,10 +379,10 @@ export function deleteJobPart(t: JobTrip, c: TripCar, k: number) {
 const timesOf = (t: JobTrip) => (t.mode === "hire" ? JOB_TIMES.hire : JOB_TIMES.self);
 /** S10 ยืนยันรับรถและเริ่มงาน → อยู่ระหว่างบำรุงรักษา (เวลา/ผู้เริ่มงานบันทึกเอง) */
 /** S10 กดเริ่มงาน = อยู่ระหว่างบำรุงรักษาทันที แล้วเข้า Step 1 (5 พ.ย. 2569 "เข้ามา step 1 ถือว่า อยู่ระหว่างบำรุงรักษา เลย") */
-export function startJob(t: JobTrip, carId: string) {
+export function startJob(t: JobTrip, carId: string, planned?: OilChoice) {
   patchJob(t.id, carId, (j) => ({
     ...j, status: "doing", step: 1, startedAt: timesOf(t).start, startedBy: PEOPLE.kbk,
-    oilChoice: j.oilChoice ?? OIL_DEFAULT, photos: (j.receive?.photos ?? []).flat(), cannot: undefined,
+    oilChoice: j.oilChoice ?? planned ?? OIL_DEFAULT, photos: (j.receive?.photos ?? []).flat(), cannot: undefined,
   }));
 }
 /** ขั้นที่ค้าง: มี step = ตามนั้น · ที่เก็บเก่า (ก่อน 5 พ.ย.) อยู่ระหว่างบำรุงรักษา = รับรถลงนามครบแล้ว ⇒ ขั้น 2 */
@@ -422,7 +438,7 @@ export type SampleName = (typeof SAMPLES)[number];
 export const SAMPLE_ROLE: Record<SampleName, Role> = { T1_start: "กบค.", T1_afterClose: "กบค.", T1_afterCannot: "กบค.", TV_start: "กบค.", TV_mid: "กบค." };
 function doing(t: JobTrip, carId: string): Job {
   const r = filledReceive(PEOPLE.kbk);
-  return { ...newJob(t.id, carId), status: "doing", oilChoice: OIL_DEFAULT, receive: r, photos: r.photos.flat(), startedAt: timesOf(t).start, startedBy: PEOPLE.kbk };
+  return { ...newJob(t.id, carId), status: "doing", step: 2, oilChoice: SAMPLE_OIL(carId), receive: r, photos: r.photos.flat(), startedAt: timesOf(t).start, startedBy: PEOPLE.kbk };
 }
 /** งานที่ปิดแล้ว (เสร็จสิ้น · ยังไม่มีผลตรวจน้ำมัน) — ใช้กับชุดตัวอย่างของ S13 S14 ด้วย (acceptance.ts) */
 export function closedSample(t: JobTrip, carId: string): Job {

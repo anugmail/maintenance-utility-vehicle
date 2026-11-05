@@ -16,6 +16,7 @@ import { DropdownList } from "@/components/vms/DropdownList";
 import { FileUpload } from "@/components/vms/FileUpload";
 import { DropdownListItem } from "@/components/vms/DropdownListItem";
 import { EmptyStateSearchNotFound } from "@/components/vms/EmptyStateSearchNotFound";
+import { TH_PICKER } from "@/lib/thaiDate";
 import { DatePicker } from "@/components/vms/DatePicker";
 import { HorizontalRadioGroups } from "@/components/vms/HorizontalRadioGroups";
 import { NumberInput } from "@/components/vms/NumberInput";
@@ -159,7 +160,8 @@ export function ClosePage() {
       </Section>
       <Section>
         <SectionHeader Title="รายการสภาพวัสดุอะไหล่" Badge={rows.length} />
-        {mob ? <DataTable cols={PART_COLS} rows={partRows} onRow={openEdit} /> : (
+        {/* มือถือ: การ์ด Mobile table (ไม่มีช่องกรอก) + ไอคอนแก้ไขบนการ์ด → popup แก้ไขอะไหล่ (จำนวนที่ใช้ อะไหล่เก่า หมายเหตุ · กติกา 14) */}
+        {mob ? <DataTable cols={[...PART_COLS, { head: "", Style: "Action icons" }]} rows={partRows.map((r, i) => [...r, actor ? { actions: [], mobileActions: [{ IconSwap: "stylus-24-300-round", label: "แก้ไข " + rows[i].part, onClick: () => openEdit(i) }] } : null])} /> : (
           /* desktop: ช่อง "จำนวนที่ใช้" = Number input (R74 · ReturnPart ของงานซ่อม — Table ของไลบรารีไม่มีช่องกรอก ⇒ Table header cell + Table cell เรียงเป็นตาราง) · กดชื่ออะไหล่ = popup แก้ไขอะไหล่เก่า หมายเหตุ */
           <div className="w-full overflow-x-auto">
             <table className="w-full min-w-[1100px] table-fixed border-collapse">
@@ -221,7 +223,7 @@ export function ClosePage() {
             onFocus={() => !mob && setDateOpen(true)} State={dateOpen ? "Focused" : undefined} /></Grid>
           {dateOpen && !mob && (
             <div className="absolute top-full left-0 z-30 mt-1">
-              <DatePicker Type="Single" value={{ start: fromThai(oilDate), end: fromThai(oilDate) }} onCancel={() => setDateOpen(false)}
+              <DatePicker Type="Single" {...TH_PICKER} value={{ start: fromThai(oilDate), end: fromThai(oilDate) }} onCancel={() => setDateOpen(false)}
                 onApply={(r) => { put((x) => ({ ...x, oilDate: r.start ? toThai(r.start) : "" })); setDateOpen(false); }} />
             </div>
           )}

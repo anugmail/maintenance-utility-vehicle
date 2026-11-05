@@ -15,6 +15,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Alert } from "@/components/vms/Alert";
+import { TH_PICKER } from "@/lib/thaiDate";
 import { DatePicker, type DateRange } from "@/components/vms/DatePicker";
 import { DropdownList } from "@/components/vms/DropdownList";
 import { DropdownListItem } from "@/components/vms/DropdownListItem";
@@ -184,7 +185,7 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
             </>, 3)}
             {dateOpen && !mob && (
               <div className="absolute top-full left-0 z-30 mt-1">
-                <DatePicker Type="Dual" value={range} onCancel={() => setDateOpen(false)}
+                <DatePicker Type="Dual" {...TH_PICKER} value={range} onCancel={() => setDateOpen(false)}
                   onApply={(r) => { put({ d1: r.start ? toThai(r.start) : "", d2: r.end ? toThai(r.end) : r.start ? toThai(r.start) : "" }); setDateOpen(false); }} />
               </div>
             )}

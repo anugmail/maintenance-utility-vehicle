@@ -35,7 +35,7 @@ export function StepFrame({ trip, car, job, step, used, actor, children }: { tri
   const actions = actor ? <SecondaryButton Text="บำรุงรักษาไม่ได้" Size={mob ? "lg" : "md"} onClick={() => { setReason(""); setErr(false); setCannot(true); }} /> : undefined;
   return (
     <>
-      <PageHeader Title={car.plate} Badge={badgeOf(WSTAT[job.status])} crumbs={crumbs.job(trip, car.plate)} onBack={() => back(tripHref(trip))} Actions={actions} />
+      <PageHeader Title={car.plate} Badge={badgeOf(WSTAT[job.status])} Pill={job.status === "doing" ? WSTAT.doing : undefined} crumbs={crumbs.job(trip, car.plate)} onBack={() => back(tripHref(trip))} Actions={actions} />
       {mob ? <MobileProgressSteps steps={MT_STEPS} current={step} /> : <ProgressSteps steps={MT_STEPS} current={step} />}
       <VehicleAndReporterInfo Title="ข้อมูลยานพาหนะ" pairs={vehiclePairs(trip, car)} />
       <VehicleAndReporterInfo Title="การนัดหมาย" pairs={appointmentPairs(trip, car, job)} />

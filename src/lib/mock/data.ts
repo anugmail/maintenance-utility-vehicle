@@ -127,7 +127,7 @@ export const shortRegion = (r: string) => r.split(" (")[0];
 export const uniq = <T,>(a: T[]) => [...new Set(a)];
 
 /* LAST_OIL — เปลี่ยนน้ำมันครั้งล่าสุดตามลำดับ CAND · OIL_OPTS */
-const LAST_OIL_SEED = ["12/03/2568", "12/03/2568", "05/02/2567", "20/11/2566", "ไม่มีข้อมูล", "18/06/2568", "09/01/2566"];
+const LAST_OIL_SEED = ["12/03/2568", "12/03/2567", "05/02/2567", "20/11/2566", "ไม่มีข้อมูล", "18/06/2568", "09/01/2566"];
 /* รถจำลองเพิ่ม: วันที่วนปี 2566–2568 · ทุก 11 คันไม่มีข้อมูล */
 export const LAST_OIL = [...LAST_OIL_SEED, ...CAND.slice(LAST_OIL_SEED.length).map((_, k) => k % 11 === 5 ? "ไม่มีข้อมูล"
   : String(1 + (k * 7) % 28).padStart(2, "0") + "/" + String(1 + (k * 5) % 12).padStart(2, "0") + "/" + (2566 + (k % 3)))];

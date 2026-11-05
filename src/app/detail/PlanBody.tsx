@@ -14,15 +14,14 @@ import { TabItem } from "@/components/vms/TabItem";
 import { Table } from "@/components/vms/Table";
 import { Tabs } from "@/components/vms/Tabs";
 import { CARP_COLS } from "@/app/new/PlanForm";
-import { OIL_OPTS, QUARTERS, type Plan } from "@/lib/mock/data";
+import { QUARTERS, type Plan } from "@/lib/mock/data";
+import { carOf as jobCar, OIL_JOB_OPTS, SAMPLE_OIL } from "@/lib/mock/jobs";
 import { allocOf, carRow, carsIn, planId, planKv, quarterCount, whQuarters } from "@/lib/mock/planFlow";
 import { useMock } from "@/lib/mock/store";
 import { quarterCars } from "@/lib/mock/trips";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 
 const COLS = CARP_COLS.slice(0, 6);
-/* LAST_OIL ของ screens.js ตามลำดับรถตัวอย่างของไตรมาส (planDetailQ) */
-const SAMPLE_LAST_OIL = ["12/03/2568", "12/03/2568", "05/02/2567", "20/11/2566", "ไม่มีข้อมูล", "18/06/2568", "09/01/2566", "14/10/2568", "02/12/2567", "ไม่มีข้อมูล"];
 
 /* แถบสถานะคลังรายไตรมาส (S20 S.6 · S22 U.8) — แผนอนุมัติแล้ว/ดำเนินการ · ไตรมาสที่เปิดมีรถ */
 function WarehouseAlert({ plan, q }: { plan: Plan; q: number }) {
@@ -41,7 +40,7 @@ export function PlanBody({ plan, q, onQ, wh, actions }: { plan: Plan; q: number;
   const sample = !plan.alloc ? quarterCars(mock, planId(plan), nowQ) : [];   // แผนตัวอย่าง: รถของไตรมาสที่กำลังทำ
   const count = (k: number) => (!plan.alloc && k === nowQ ? sample.length : quarterCount(plan, k));
   const rows = plan.alloc ? carsIn(a, q).map((i) => carRow(a, i))
-    : q === nowQ ? sample.map((c, i) => [c.plate, c.model, c.owner, OIL_OPTS[i % 3 === 0 ? 1 : 0], SAMPLE_LAST_OIL[i] ?? "ไม่มีข้อมูล", (i % 4) + 1 + " รายการ"]) : [];
+    : q === nowQ ? sample.map((c, i) => [c.plate, c.model, c.owner, OIL_JOB_OPTS[SAMPLE_OIL(c.id)], jobCar(c.id)?.lastOil ?? "ไม่มีข้อมูล", (i % 4) + 1 + " รายการ"]) : [];   // planDetailQ: TRIP_OIL · lastOil() (5 พ.ย. 2569)
   const total = plan.alloc ? plan.cars : [1, 2, 3, 4].reduce((n, k) => n + count(k), 0);
   return (
     <>
