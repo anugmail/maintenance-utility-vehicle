@@ -15,6 +15,7 @@ import type { GuideCase, GuideScenario } from "./types";
 import { TRIP_PLAN } from "./cases/trip-plan";
 import { HIRE_TRIP } from "./cases/hire-trip";
 import { APPROVE_TRIP } from "./cases/approve-trip";
+import { TRIP_NOTIFY } from "./cases/trip-notify";
 
 /** หน้าในชีตยืนยัน (MaintainD-Maintainance) ของแต่ละเคส (หัวหน้างาน 5 พ.ย. 2569) — หน้า 1 รายการแผน · หน้า 2 สร้างและแก้ไขแผน · หน้า 3 จัดการอะไหล่ของรถ · หน้า 4 รายละเอียดแผน · หน้า 5 แผนรออนุมัติ
     หน้าเรื่องแสดงทุกหน้าที่เคสของเรื่องนั้นใช้ (sheetPagesOf) · การ์ดเคสแสดงหน้าของเคส */
@@ -220,6 +221,7 @@ export const GUIDES: GuideScenario[] = [
   TRIP_PLAN,
   HIRE_TRIP,
   APPROVE_TRIP,
+  TRIP_NOTIFY,
 ];
 
 export const guideOf = (key: string | null) => GUIDES.find((g) => g.key === key);

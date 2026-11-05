@@ -35,7 +35,8 @@ export function NotificationPanel({ open, onClose, badge, items, onClearAll }: {
     <>
       {/* คลิกนอกแผง = ปิด (ไม่มีพื้นหลังทึบตามจอ Figma) */}
       <div aria-hidden="true" className="fixed inset-0 z-40" onClick={onClose} />
-      <div className="fixed top-18 right-6 z-50 animate-fade-in">
+      {/* top = ใต้แถบต้นแบบ 48 + 24 (เดิม top-18) · โหมดพาดู: ใต้แถบพาดู (--guide-bottom ของ GuideBar) + 24 ไม่ทับปุ่มของแถบ */}
+      <div className="fixed top-[calc(var(--guide-bottom,48px)+24px)] right-6 z-50 animate-fade-in">
         <NotificationCard Badge={badge} onFooter={onClearAll}>{rows}</NotificationCard>
       </div>
     </>
