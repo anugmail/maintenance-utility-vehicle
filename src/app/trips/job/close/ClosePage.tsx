@@ -4,14 +4,13 @@
    · ค่าใช้จ่ายของรถคันนี้ (บาท) (แถวละคน: Input dropdown พนักงาน · เบี้ยเลี้ยง/วัน · ที่พัก/วัน · Input dropdown จำนวนวัน · รวม · ปุ่มลบ + "เพิ่มพนักงาน" · ค่าเดินทาง · สรุป · ศูนย์ต้นทุน)
    · ผลการบำรุงรักษา (เลขไมล์ · ชั่วโมงเครื่องจักร บังคับ) · น้ำมันไฮโดรลิก (Radio text card 3 ใบ + ผลการทดสอบ (ถ้ามี) เมื่อมีเก็บตัวอย่าง)
    · (เฉพาะรถเครน/รถกระเช้า 4 พ.ย. 2569) Safety Inspection: File upload "เอกสาร Safety Inspection" (ถ้ามี) ไม่บังคับ — safetyDocs() ใน screens.js
-   · InspectionChecklist "ตรวจสภาพรถปิดงาน" (24) + HandoverSignature "ลงนามการส่งคืนรถ" · บันทึกตรวจสอบเอกสารปิดงาน (มี/ไม่มี/ไม่ต้องใช้ + "อัพโหลดเอกสาร")
+   · HandoverSignature "ลงนามการส่งคืนรถ" (5 พ.ย. 2569 ตัด InspectionChecklist "ตรวจสภาพรถปิดงาน" 24 รายการออก · R65 · inspectPanel() เหลือแค่ลงนาม) · บันทึกตรวจสอบเอกสารปิดงาน (มี/ไม่มี/ไม่ต้องใช้ + "อัพโหลดเอกสาร")
    → "ย้อนกลับ" · "ปิดงาน" (กดได้เมื่อลงนามส่งคืนรถครบ — Condition ของ userflow) → "เสร็จสิ้น" ทันที → หน้ารายละเอียดแผนเดินทาง + toast "บันทึกงานบำรุงรักษาสำเร็จ"
    แผนจ้างดำเนินการใช้หน้าเดียวกัน กบค. กรอกตามที่ผู้รับจ้างทำจริง (4 พ.ย. 2569 ตัด S23 S11 · ไม่มีส่งตรวจงาน) · ใบจ้างไม่มีพนักงานในใบ ⇒ ตัวเลือกพนักงาน = พนักงาน กบค. ทั้งหมด (staffOf · COMPOSED.md)
    ช่องในตารางอะไหล่เป็นข้อความตามจอ Figma (Table cell ไม่มีช่องกรอก) — กดแถวเปิด popup แก้ไขอะไหล่ (โครง partEditModal ของ screens.js) · "เพิ่มรายการ" = popup "เพิ่มอะไหล่ที่ใช้จริง" (partAddModal) */
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { HandoverSignature } from "@/components/maintain-d/HandoverSignature";
-import { InspectionChecklist } from "@/components/maintain-d/InspectionChecklist";
 import { ModalSignature } from "@/components/maintain-d/ModalSignature";
 import { DropdownList } from "@/components/vms/DropdownList";
 import { FileUpload } from "@/components/vms/FileUpload";
@@ -187,8 +186,6 @@ export function ClosePage() {
             onDelete={(i) => put((x) => ({ ...x, safetyFiles: (x.safetyFiles ?? []).filter((_, k) => k !== i) }))} />
         </Section>
       )}
-      <InspectionChecklist Title="ตรวจสภาพรถปิดงาน" items={f.inspect}
-        onChange={(i, p) => put((x) => ({ ...x, inspect: x.inspect.map((it, k) => (k === i ? { ...it, ...p } : it)) }))} />
       <HandoverSignature Title="ลงนามการส่งคืนรถ"
         slots={RETURN_SLOTS.map((s, i) => ({ ...s, options: i === 0 ? staffOptions : [PEOPLE.ownerSigner], value: f.signers[i].name, signed: !!f.signers[i].sig }))}
         onPick={(i, name) => put((x) => ({ ...x, signers: x.signers.map((s, k) => (k === i ? { name, sig: s.name === name ? s.sig : null } : s)) as CloseForm["signers"] }))}

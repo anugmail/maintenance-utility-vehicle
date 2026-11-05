@@ -13,7 +13,6 @@
    ⇒ แผนจ้างใช้ 4 สถานะเดียวกับแผนที่ กบค. ดำเนินการเอง · กบค. เริ่มงาน ปิดงาน บำรุงรักษาไม่ได้ แทนผู้รับจ้างด้วยหน้าเดียวกัน (จอ I.22 I.23 ของ screens.js) · ไม่มีส่งตรวจงานและตรวจรับรายคัน
    สถานะของงานผู้รับจ้างที่ค้างในที่เก็บเก่า (worked reported wait returned) แปลงเป็นสถานะที่ใกล้สุดตอนอ่าน (normJob)
    ที่เก็บงานรายคันมีที่เดียวคือไฟล์นี้ (MockState.jobs) — S10 S12 S13 S15 S24 ใช้ร่วมกัน */
-import type { InspectionItem } from "@/components/maintain-d/InspectionChecklist";
 import type { ReceiptItem } from "@/components/maintain-d/ReceiptChecklist";
 import type { UploadFile } from "@/components/vms/FileUpload";
 import type { PillColor } from "@/components/vms/PillOutline";
@@ -158,7 +157,8 @@ export interface CloseForm {
   parts: ClosePartRow[]; costs: CostRow[]; travel: string; costCenter: string | null;
   km: string; hours: string;
   oilChoice: OilChoice; oilSel: OilSel; oilFiles: UploadFile[];
-  inspect: InspectionItem[]; signers: [Signer, Signer]; docs: CloseDoc[];
+  /* ตรวจสภาพรถปิดงาน (InspectionChecklist 24 รายการ) ตัดออก 5 พ.ย. 2569 (เจ้าของงาน "s10 เอาตรวจสภาพปิดงาน ออกไปเลย" · R65) — ฟอร์มเก่าในที่เก็บที่มีฟิลด์ inspect ไม่ถูกอ่าน */
+  signers: [Signer, Signer]; docs: CloseDoc[];
   /** เอกสาร Safety Inspection (ถ้ามี) — เฉพาะรถเครน/รถกระเช้า (4 พ.ย. 2569 · JO 7.3.3) · ฟอร์มเก่าในที่เก็บไม่มีฟิลด์นี้ */
   safetyFiles?: UploadFile[];
 }
@@ -190,9 +190,6 @@ export interface JobsState { trips: Record<string, JobTrip>; jobs: Record<string
 /* ---------- ค่าตั้งต้น ---------- */
 export const RECEIPT_ITEMS = ["แผ่นป้ายทะเบียนหน้า - หลัง", "ป้ายทะเบียนติดกระจกและ พรบ.", "กระจกมองข้างซ้าย - ขวา, กระจกมองหลัง", "ยางอะไหล่", "แบตเตอรี่", "เครื่องมือประจำรถ, แม่แรง, ประแจถอดล้อ", "ฝาถังน้ำมัน",
   "อุปกรณ์บนหน้าปัด, แตร", "ใบปัดน้ำฝน", "วิทยุ, ลำโพง, เสาอากาศ, วิทยุรับ - ส่ง", "ระบบไฟแสงสว่าง", "สภาพยาง", "สภาพตัวถังและสี"];
-export const INSPECT_ITEMS = ["ชุดเกียร์ PTO", "ชุดกระบอกขาช้างหน้า ซ้าย ขวา", "ชุดกระบอกขาช้างหลัง ซ้าย ขวา", "ชุดวาร์ลคอนโทรลขาช้าง", "เพลาขับปั๊มน้ำมันไฮดรอลิค", "ปั๊มน้ำมันไฮดรอลิค", "ชุดยึดฐานเครน", "ชุดโรตารี่",
-  "ชุดมอเตอร์และเฟื่องหมุนฐานเครน", "ชุด CONTROL ล่าง", "ชุดกระบอก LOWER BOOM", "ชุดกระบอก UPPER BOOM", "ชุดกระบอก เทน้ำ-ปรับดิ่ง", "จุดเชื่อมต่อโครงสร้าง BOOM", "ชุดวาล์วล๊อคต่างๆ", "สายน้ำมันไฮดรอลิค",
-  "ชุด CONTROL บน", "กระบอกปรับบิด", "BUCKET, LINER, ชุดการ์ดครอบ", "ระบบ EMERGENCY", "ระบบเร่งเครื่องยนต์", "สายสัญญาณต่างๆ", "รอกและเชือกวินซ์", "ชุด LIFT รุ่น 115 kV"];
 export const CLOSE_DOCS = ["บันทึกใบสั่งการ"];
 const signer = (): Signer => ({ name: null, sig: null });
 export const emptyReceive = (): ReceiveForm => ({ items: RECEIPT_ITEMS.map((name) => ({ name, has: null, damaged: false, wrongModel: false, note: "" })), signers: [signer(), signer()], photos: BEFORE.map(() => []) });
@@ -203,7 +200,7 @@ export function emptyClose(job: Job, trip: JobTrip, car: TripCar): CloseForm {
     costs: (trip.staff.length ? trip.staff : [null]).map((name) => ({ name, perDiem: "", lodging: "", days: null })),
     travel: "", costCenter: ownerCostCenter(car), km: "", hours: "",
     oilChoice: job.oilChoice ?? OIL_DEFAULT, oilSel: -1, oilFiles: [],
-    inspect: INSPECT_ITEMS.map((name) => ({ name, ok: null, note: "" })), signers: [signer(), signer()],
+    signers: [signer(), signer()],
     docs: CLOSE_DOCS.map((name) => ({ name, sel: null, files: [] })),
   };
 }
@@ -225,7 +222,6 @@ function filledClose(job: Job, trip: JobTrip, car: TripCar): CloseForm {
     parts: f.parts.map((r) => { const v = CLOSE_FILLED_PARTS[r.part]; return v ? { ...r, used: v[0], old: v[1], note: v[2] } : r; }),
     costs: [["นายวิชัย ทองดี", 2], ["นางสาวกนกวรรณ ใจมั่น", 2], ["นายสมชาย พูลสุข", 1]].map(([name, days]) => ({ name: String(name), perDiem: "240", lodging: "800", days: Number(days) })),
     travel: "1,210", km: "182,640", hours: "6,131",
-    inspect: f.inspect.map((it, i) => (i === 15 ? { ...it, ok: false, note: "มีรอยซึม นัดเปลี่ยนรอบถัดไป" } : { ...it, ok: true })),
     signers: [{ name: PEOPLE.kbk.replace(" (กบค.)", ""), sig: "sample" }, { name: PEOPLE.ownerSigner, sig: "sample" }],
     docs: f.docs.map((d) => ({ ...d, sel: "มี" })),
   };
