@@ -7,7 +7,7 @@ import type { BadgeOutlineColor } from "@/components/vms/BadgeOutline";
 import type { PillColor } from "@/components/vms/PillOutline";
 import { CAND, DISTRICTS, LAST_OIL, NEW_PLAN_DATE, OIL_OPTS, PARTS, PART_PRICE, PLAN_CREATOR, REGIONS, RETURN_REASON, WH_ACK, WH_LIST, dCode, type ManualPart, type Plan, type PlanStatus } from "./data";
 import { CAR_PICK } from "./data";
-import { carQty, inQuarter, planScope, quarterParts, type Draft } from "./plan";
+import { allocScope, carQty, inQuarter, planScope, quarterParts, type Draft } from "./plan";
 import { accPlans, accRows } from "./acceptance";
 import { notify, setMock, useRole, type MockState, type Role } from "./store";
 import { tripsOf } from "./trips";
@@ -56,7 +56,7 @@ export const allocOf = (p: Plan): Alloc => ({ alloc: p.alloc ?? {}, picks: p.pic
 export function draftFromPlan(p: Plan): Draft {
   const regions = p.regions ?? REGIONS.filter((r) => p.region.split(", ").includes(r));
   return {
-    name: p.name, year: p.year, regions, districts: p.districts ?? [], types: p.types ?? p.type.split(", "),
+    name: p.name, year: p.year, regions, districts: p.districts ?? [], types: p.types ?? p.type.split(", ").filter(Boolean),
     alloc: { ...(p.alloc ?? {}) }, picks: { ...(p.picks ?? {}) }, qty: p.qty ? { ...p.qty } : undefined, manual: p.manual ? { ...p.manual } : undefined,
     q: 1, editOf: p.mr,
   };
@@ -70,7 +70,7 @@ export function planWithDraft(p: Plan, d: Draft, today: string): Plan {
   const { returnReason: _r, ...rest } = p;
   void _r;
   return {
-    ...rest, name: d.name.trim(), region: d.regions.join(", "), type: d.types.join(", "), cars: Object.keys(d.alloc).length,
+    ...rest, name: d.name.trim(), ...allocScope(d.alloc), cars: Object.keys(d.alloc).length,
     perQ: per.map((n, i) => "ไตรมาส " + (i + 1) + ": " + n).join(" · "), status: "review", sentAt: today,
     regions: d.regions, districts: d.districts, types: d.types, alloc: d.alloc, picks: d.picks, qty: d.qty, manual: d.manual,
   };

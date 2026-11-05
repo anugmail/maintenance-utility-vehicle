@@ -26,15 +26,17 @@ export interface TableCellProps {
   /** Lead checkbox */
   checked?: boolean;
   onCheck?: (next: boolean) => void;
+  /** Checkbox State=Disabled ของช่อง Lead checkbox (แถวที่ติ๊กไม่ได้ · headCheck() ใน screens.js 5 พ.ย. 2569) */
+  checkDisabled?: boolean;
   className?: string;
 }
 
-export function TableCell({ Style = "Text", AlternatingFills, Text, SupportingText, Pills, Actions, checked, onCheck, className }: TableCellProps) {
+export function TableCell({ Style = "Text", AlternatingFills, Text, SupportingText, Pills, Actions, checked, onCheck, checkDisabled, className }: TableCellProps) {
   const gap = Style === "Badge" ? "gap-2" : Style === "Action icons" || Style === "Multiple badges" ? "gap-1" : "gap-3";
   return (
     <td className={cx("h-14 border-b border-gray-200 px-4 py-2 align-middle", AlternatingFills ? "bg-gray-50" : "bg-white", className)}>
       <div className={cx("flex items-center", gap)}>
-        {Style === "Lead checkbox" && <Checkbox Type={checked ? "Selected" : "Unselected"} onChange={onCheck} label={typeof Text === "string" ? Text : undefined} />}
+        {Style === "Lead checkbox" && <Checkbox Type={checked ? "Selected" : "Unselected"} State={checkDisabled ? "Disabled" : "Default"} onChange={checkDisabled ? undefined : onCheck} label={typeof Text === "string" ? Text : undefined} />}
         {(Style === "Badge" || Style === "Multiple badges") && (Pills ?? []).map(([t, c], i) => <PillOutline key={i} Text={t} Color={c} />)}
         {Style === "Action icons" && (Actions ?? []).map((a) => <TertiaryButton key={a.label} LeadingIconSwap={a.IconSwap} ButtonText={false} aria-label={a.label} title={a.label} onClick={a.onClick} />)}
         {(Style === "Text" || Style === "Lead text" || Style === "Lead checkbox") && (

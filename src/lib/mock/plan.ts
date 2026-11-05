@@ -11,12 +11,12 @@ export interface Draft {
   types: string[];
   alloc: Record<number, number>;      // ลำดับรถใน CAND → ไตรมาส (1 คัน 1 ไตรมาส)
   picks: Record<number, number[]>;    // ลำดับรถ → ลำดับอะไหล่ใน PARTS
-  q: number;                          // แท็บไตรมาสที่เปิด
+  q: number;                          // แท็บที่เปิด (0 = ทั้งหมด · 1–4 = ไตรมาส · แบบ A 5 พ.ย. 2569)
   qty?: Record<number, Record<number, number>>;   // S21 จำนวนต่อคันที่แก้ไว้ (ไม่มี = CAR_QTY)
   manual?: Record<number, ManualPart[]>;          // S21 รายการเพิ่มเติม
   editOf?: string;                    // S19 ฟอร์มแก้ไข: เลขที่ MR ของแผนที่แก้
 }
-export const emptyDraft = (): Draft => ({ name: "", year: "", regions: [], districts: [], types: [], alloc: {}, picks: {}, q: 1 });
+export const emptyDraft = (): Draft => ({ name: "", year: "", regions: [], districts: [], types: [], alloc: {}, picks: {}, q: 0 });
 export const isDirty = (d: Draft) => !!(d.name || d.year || d.regions.length || d.districts.length || d.types.length || Object.keys(d.alloc).length);
 
 /* qCell — 4 ไตรมาสยาวเกินคอลัมน์ ⇒ 2 บรรทัด */
@@ -61,8 +61,21 @@ export function nextMr(plans: Plan[], year: string, retired: string[] = []) {
   return pre + String((n.length ? Math.max(...n) : 0) + 1).padStart(5, "0");
 }
 
-/* รถที่ตรงเขตและประเภทรถที่เลือก */
-export const carsFor = (d: Draft) => CAND.map((c, i) => [c, i] as const).filter(([c]) => d.districts.includes(dCode(c)) && d.types.includes(c.type));
+/* รถทุกคันของพื้นที่ที่เลือก (inArea ใน screens.js · แบบ A 5 พ.ย. 2569): ต้องเลือกภาคอย่างน้อย 1 ภาค · เขต / ประเภทรถ ว่าง = ทุกเขตของภาค / ทุกประเภท */
+export const inArea = (d: Pick<Draft, "regions" | "districts" | "types">, i: number) => {
+  const c = CAND[i];
+  return d.regions.includes(regionOf(c)) && (!d.districts.length || d.districts.includes(dCode(c))) && (!d.types.length || d.types.includes(c.type));
+};
+export const carsFor = (d: Pick<Draft, "regions" | "districts" | "types">) => d.regions.length ? CAND.map((_, i) => i).filter((i) => inArea(d, i)) : [];
+/* คำค้น "เลขทะเบียน, ยี่ห้อ, รุ่น" (inQuery) */
+export const matchQuery = (i: number, q: string) => !q || (CAND[i].plate + " " + CAND[i].model).includes(q);
+/* ภาค · ประเภทรถ ของรถที่จัดลงไตรมาสแล้ว (บันทึกเป็นภาค / ประเภทรถของแผน — สรุปจากรถในแผนจริง) */
+const allocScope = (alloc: Record<number, number>) => {
+  const cars = Object.keys(alloc).map((i) => CAND[Number(i)]).filter(Boolean);
+  const rs = new Set(cars.map(regionOf)), ts = new Set(cars.map((c) => c.type));
+  return { region: REGIONS.filter((r) => rs.has(r)).join(", "), type: VEHICLE_TYPES.filter((t) => ts.has(t)).join(", ") };
+};
+export { allocScope };
 export const inQuarter = (d: Draft, q = d.q) => Object.keys(d.alloc).map(Number).filter((i) => d.alloc[i] === q);
 /* quarterParts — อะไหล่ในไตรมาส = รวมจากรถของไตรมาสนั้น [ลำดับอะไหล่, จำนวน] */
 export const carQty = (d: Pick<Draft, "qty">, car: number, pi: number) => d.qty?.[car]?.[pi] ?? CAR_QTY[pi];
@@ -75,8 +88,8 @@ export const quarterParts = (d: Draft, q = d.q) => {
 export function planFromDraft(d: Draft, plans: Plan[], today: string, retired: string[] = []): Plan {
   const per = [1, 2, 3, 4].map((q) => inQuarter(d, q).length);
   return {
-    mr: nextMr(plans, d.year, retired), name: d.name.trim(), region: d.regions.join(", "), nowQ: "ไตรมาส 1", cars: Object.keys(d.alloc).length,
-    status: "review", created: today, type: d.types.join(", "), year: d.year,
+    mr: nextMr(plans, d.year, retired), name: d.name.trim(), ...allocScope(d.alloc), nowQ: "ไตรมาส 1", cars: Object.keys(d.alloc).length,
+    status: "review", created: today, year: d.year,
     perQ: per.map((n, i) => "ไตรมาส " + (i + 1) + ": " + n).join(" · "),
     regions: d.regions, districts: d.districts, types: d.types, alloc: d.alloc, picks: d.picks, qty: d.qty, manual: d.manual,
   };
