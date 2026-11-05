@@ -16,6 +16,7 @@ import { OIL_RESULT } from "./cases/oil-result";
 import { ACCEPT_CAR } from "./cases/accept-car";
 import { ACCEPT_PLAN } from "./cases/accept-plan";
 import { SEND_HISTORY } from "./cases/send-history";
+import { HEAD_REVIEW } from "./cases/head-review";
 
 /** หน้าในชีตยืนยัน (MaintainD-Maintainance) ของแต่ละเคส (หัวหน้างาน 5 พ.ย. 2569) — หน้า 1 รายการแผน · หน้า 2 สร้างและแก้ไขแผน · หน้า 3 จัดการอะไหล่ของรถ · หน้า 4 รายละเอียดแผน · หน้า 5 แผนรออนุมัติ
     หน้าเรื่องแสดงทุกหน้าที่เคสของเรื่องนั้นใช้ (sheetPagesOf) · การ์ดเคสแสดงหน้าของเคส */
@@ -220,6 +221,7 @@ export const GUIDES: GuideScenario[] = [
   ACCEPT_CAR,
   ACCEPT_PLAN,
   SEND_HISTORY,
+  HEAD_REVIEW,
 ];
 /* เคสในไฟล์ cases/ บอกหน้าชีตเอง (GuideCase.sheet) ⇒ เติมลง SHEET_PAGE ให้หน้าเรื่องอ่านที่เดียว */
 for (const g of GUIDES) for (const c of g.cases) if (c.sheet != null && SHEET_PAGE[c.id] == null) SHEET_PAGE[c.id] = c.sheet;
