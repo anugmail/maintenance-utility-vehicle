@@ -25,6 +25,8 @@ export interface GuideCase {
   /** ใส่ข้อมูลจำลองของเคส หลังล้างข้อมูลจำลองแล้ว — ต้องได้ค่าเดิมทุกครั้ง (ห้ามใช้วันที่ปัจจุบันหรือค่าสุ่ม) */
   seed: () => void;
   steps: GuideStep[];
+  /** หน้าในชีตยืนยันของเคสนี้ (เคสในไฟล์ cases/ ใส่ที่นี่แทนการเพิ่มแถวใน SHEET_PAGE ของ scenarios.ts) */
+  sheet?: number;
 }
 
 export interface GuideScenario {

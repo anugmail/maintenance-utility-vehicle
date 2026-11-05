@@ -12,6 +12,7 @@ import type { PlanStatus } from "@/lib/mock/data";
 import type { Draft } from "@/lib/mock/plan";
 import { setMock } from "@/lib/mock/store";
 import type { GuideCase, GuideScenario } from "./types";
+import { OIL_RESULT } from "./cases/oil-result";
 
 /** หน้าในชีตยืนยัน (MaintainD-Maintainance) ของแต่ละเคส (หัวหน้างาน 5 พ.ย. 2569) — หน้า 1 รายการแผน · หน้า 2 สร้างและแก้ไขแผน · หน้า 3 จัดการอะไหล่ของรถ · หน้า 4 รายละเอียดแผน · หน้า 5 แผนรออนุมัติ
     หน้าเรื่องแสดงทุกหน้าที่เคสของเรื่องนั้นใช้ (sheetPagesOf) · การ์ดเคสแสดงหน้าของเคส */
@@ -212,7 +213,10 @@ export const GUIDES: GuideScenario[] = [
     about: "เปิดแผนที่ กบค. ส่งมา ดูรายละเอียดและรถของแต่ละไตรมาส แล้วเลือกอนุมัติ หรือส่งกลับให้ กบค. แก้ไขพร้อมเหตุผล",
     cases: APPROVE,
   },
+  OIL_RESULT,
 ];
+/* เคสในไฟล์ cases/ บอกหน้าชีตเอง (GuideCase.sheet) ⇒ เติมลง SHEET_PAGE ให้หน้าเรื่องอ่านที่เดียว */
+for (const g of GUIDES) for (const c of g.cases) if (c.sheet != null && SHEET_PAGE[c.id] == null) SHEET_PAGE[c.id] = c.sheet;
 
 export const guideOf = (key: string | null) => GUIDES.find((g) => g.key === key);
 export const guideByCode = (code: string) => GUIDES.find((g) => g.code === code);
