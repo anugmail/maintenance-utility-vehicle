@@ -94,7 +94,7 @@
 |---|---|
 | Page header Desktop — Back action | variant Desktop ไม่มีปุ่มย้อนกลับ (มีใน Mobile) → desktop ย้อนกลับด้วย Breadcrumbs |
 | ขนาดตัวอักษร 24 (Empty state) | เพิ่ม `--text-xl: 24px / 36px` ใน `scripts/sync-tokens.mjs` (สเกลไลบรารี) |
-| ตำแหน่ง Notification | ตาม `notify()` ใน core.js — มุมล่างขวา (มือถือ ล่างเต็มกว้าง ขอบ 16) |
+| ตำแหน่ง Notification | มุมบนขวาเสมอ (เจ้าของงานยืนยัน 5 พ.ย. 2569 R60 · `notify()` ใน core.js) — desktop ขอบบน 24 ขวา 24 กว้าง 400 · มือถือ บนสุดเต็มกว้าง ขอบ 16 · z-[60] เหนือแถบต้นแบบและ Header navigation · กำหนดที่ `shell/ToastHost` ที่เดียว (เดิมมุมล่างขวา) |
 | Nav item แถวที่มี Show Description (แถวผู้ใช้) | instance สูง 40 แต่ Text + Description สูง 39 ⇒ ให้สูงตามเนื้อหา (ขั้นต่ำ 40) |
 | ป้าย Badge ใน Nav item / Nav list item | Sidebar ของ UI Release#2 ปิด Badge ทุกแถว ⇒ ต้นแบบไม่แสดง (component รองรับ `Badge` + Pill color) |
 | Mobile table item — Supporting text | ช่อง `{text, sub}` ของตาราง → `SupportingText` (12 gray-600) แทนการต่อท้าย Text ด้วย " · " (เจ้าของงาน 4 พ.ย. 2569) |
