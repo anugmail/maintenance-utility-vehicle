@@ -136,6 +136,16 @@ export function FilterPanel({ open, fields, value, onApply, onClose }: { open: b
   const mob = useBreakpoint() === "Mobile";
   const [draft, setDraft] = useState(value);
   useEffect(() => { if (open) setDraft(value); }, [open, value]);
+  return (
+    <FilterShell open={open} onClose={onClose} onClear={() => setDraft(fields.map(() => ALL))} onApply={() => onApply(draft)}>
+      {fields.map((f, i) => <Select key={f.label} f={f} mob={mob} value={draft[i] ?? ALL} onChange={(v) => setDraft(draft.map((x, j) => (j === i ? v : x)))} />)}
+    </FilterShell>
+  );
+}
+
+/** กรอบแผงตัวกรอง (desktop Side panel ชิดขวา · มือถือ Bottom sheet) — เนื้อหาช่องส่งเป็น children · ใช้ร่วม FilterPanel และฟอร์มสร้างแผน (ภาค เขต ประเภทรถ หลายค่า) */
+export function FilterShell({ open, onClose, onClear, onApply, children }: { open: boolean; onClose: () => void; onClear: () => void; onApply: () => void; children: ReactNode }) {
+  const mob = useBreakpoint() === "Mobile";
   useEffect(() => {
     if (!open || mob) return;
     const k = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
@@ -143,13 +153,11 @@ export function FilterPanel({ open, fields, value, onApply, onClose }: { open: b
     return () => document.removeEventListener("keydown", k);
   }, [open, mob, onClose]);
   if (!open) return null;
-  const clear = () => setDraft(fields.map(() => ALL));
-  const body = fields.map((f, i) => <Select key={f.label} f={f} mob={mob} value={draft[i] ?? ALL} onChange={(v) => setDraft(draft.map((x, j) => (j === i ? v : x)))} />);
   if (mob) {
     return (
-      <BottomSheet open onClose={onClose} Title="ตัวกรอง" ActionText="ล้างตัวกรอง" onAction={clear}
-        Footer={<BottomSheetFooter SecondaryAction={<SecondaryButton Text="ยกเลิก" Size="lg" onClick={onClose} />} PrimaryAction={<PrimaryButton Text="ตกลง" Size="lg" onClick={() => onApply(draft)} />} />}>
-        {body}
+      <BottomSheet open onClose={onClose} Title="ตัวกรอง" ActionText="ล้างตัวกรอง" onAction={onClear}
+        Footer={<BottomSheetFooter SecondaryAction={<SecondaryButton Text="ยกเลิก" Size="lg" onClick={onClose} />} PrimaryAction={<PrimaryButton Text="ตกลง" Size="lg" onClick={onApply} />} />}>
+        {children}
       </BottomSheet>
     );
   }
@@ -168,13 +176,13 @@ export function FilterPanel({ open, fields, value, onApply, onClose }: { open: b
           </div>
           <div className="absolute top-4 right-4"><TertiaryButton LeadingIconSwap="close-24-300-round" ButtonText={false} aria-label="ปิด" onClick={onClose} /></div>
         </div>
-        <div className="flex flex-1 flex-col gap-6 overflow-y-auto px-6">{body}</div>
+        <div className="flex flex-1 flex-col gap-6 overflow-y-auto px-6">{children}</div>
         {/* Side panel footer: ขอบใน 16/24 ช่องไฟ 12 เส้นบน gray-300 · Tertiary brand button ซ้าย · Secondary + Primary ขวา */}
         <div className="flex items-center justify-between gap-3 border-t border-gray-300 px-6 py-4">
-          <TertiaryBrandButton Text="ล้างตัวกรอง" onClick={clear} />
+          <TertiaryBrandButton Text="ล้างตัวกรอง" onClick={onClear} />
           <div className="flex gap-3">
             <SecondaryButton Text="ยกเลิก" onClick={onClose} />
-            <PrimaryButton Text="ตกลง" onClick={() => onApply(draft)} />
+            <PrimaryButton Text="ตกลง" onClick={onApply} />
           </div>
         </div>
       </div>

@@ -5,12 +5,14 @@
    Content ช่องไฟ 32:
      (แก้ไข) Alert — ส่งกลับแก้ไข: Error "ผู้อนุมัติส่งกลับให้แก้ไข" + เหตุผล · อนุมัติแล้ว: Warning "แผนนี้อนุมัติแล้ว"
      ข้อมูลแผน (Section header) — ชื่อแผน (Text input) · ปีงบประมาณ (สร้าง: Input dropdown · แก้ไข: Readonly)
-     เลือกรถเข้าแผนและจัดลงไตรมาส (Section header + ป้าย "ในแผน n คัน") — ภาค · เขต · ประเภทรถ (หลายค่า · ไม่มี Disabled เลือกช่องไหนก่อนก็ได้ R69 · เขต = เขตของภาคที่เลือก ยังไม่เลือกภาค = ทุกเขต)
-       เลือกช่องใดช่องหนึ่งแล้ว (หรือมีรถในแผน) — รถที่ตรงทุกช่องที่เลือก (ช่องว่าง = ทั้งหมด): Tabs ทั้งหมด n · ไตรมาส 1–4 n (Pill) → Table header (หัว "รถในพื้นที่ที่เลือก" / "รถในไตรมาส n" + Badge "n คัน" · ค้นหา "เลขทะเบียน, ยี่ห้อ, รุ่น"
+     เลือกรถเข้าแผนและจัดลงไตรมาส (Section header + ป้าย "ในแผน n คัน") — ภาค · เขต · ประเภทรถ อยู่ในแผงตัวกรอง (ปุ่ม "ตัวกรอง" ของ Table header · 5 พ.ย. 2569 ย้ายจากแถวบนสุด)
+       แผง = Side panel แบบ FilterPanel ของ S24 (มือถือ Bottom sheet) + Input dropdown with badges (Optional) ×3 ตาม "PEA Car Cost Filter" ของ UI Release#2 (ช่อง "ปี" หลายค่า)
+       (หลายค่า · ไม่มี Disabled เลือกช่องไหนก่อนก็ได้ R69 · เขต = เขตของภาคที่เลือกในแผง ยังไม่เลือกภาค = ทุกเขต · กดตกลงจึงใช้)
+       Tabs + Table header แสดงเสมอ — รถที่ตรงทุกช่องที่เลือก (ช่องว่าง = ทั้งหมด): Tabs ทั้งหมด n · ไตรมาส 1–4 n (Pill) → Table header (หัว "รถในพื้นที่ที่เลือก" / "รถในไตรมาส n" + Badge "n คัน" · ค้นหา "เลขทะเบียน, ยี่ห้อ, รุ่น"
        · ตัวกรอง + Pill จำนวนตัวกรอง · ปุ่ม "จัดลงไตรมาส (n)" Disabled เมื่อยังไม่ติ๊ก · ชิปตัวกรองกดเอาออกได้) → ตารางติ๊ก + Table pagination
        ทั้งหมด: ทะเบียน (ยี่ห้อ/รุ่น) · ประเภทรถ · เขต / หน่วยงานเจ้าของรถ · ไตรมาส (Pill "ไตรมาส n" Brand / "ยังไม่จัด" Gray)
        ไตรมาส n: Q_COLS (น้ำมันไฮโดรลิก · อะไหล่อื่นๆ · ไอคอนแก้ไข → S21 · ไม่มีคอลัมน์ไตรมาส) · มือถือ List with checkbox บรรทัดรอง "น้ำมัน … · อะไหล่อื่นๆ …" ไม่มีไอคอน (BACKLOG ข้อ 11)
-       ยังไม่เลือกช่องใด: Empty state "ยังไม่มีรายการรถ" / "เลือกภาค เขต หรือประเภทรถเพื่อแสดงรถทั้งหมดที่ตรงกัน"
+       ยังไม่เลือกช่องใด (แท็บทั้งหมด): Empty state "ยังไม่มีรายการรถ" / "กดตัวกรองเพื่อเลือกภาค เขต หรือประเภทรถ ตารางจะแสดงรถทั้งหมดที่ตรงกัน"
        · ไตรมาสว่าง: "ยังไม่มีรถในไตรมาสนี้" + ปุ่มหลัก "เพิ่มรถเข้าไตรมาส n" (R75 5 พ.ย. 2569 · noCarsInQ) → popup "เพิ่มรถเข้าไตรมาส n" (TripCarPicker แบบ S6 E.1 · รถของพื้นที่ที่เลือกที่ยังไม่อยู่ในไตรมาสใด · มือถือ bottom sheet)
          → ยืนยัน = อยู่แท็บเดิม รถขึ้นในตาราง ตัวเลขบนแท็บเปลี่ยน + toast "จัดรถ k คันลงไตรมาส n สำเร็จ" · ไม่ตรงคำค้น/ตัวกรอง: Search not found + "ล้างตัวกรอง"
      อะไหล่ในไตรมาส n (Section header + Badge) — ตั้งต้นว่าง รวมจากรถที่จัดการแล้วทีละคัน (qAgg: น้ำมันที่เปลี่ยน ลิตรต่อคัน + อะไหล่อื่นๆ + รายการที่ระบุเอง)
@@ -51,6 +53,7 @@ import { notify, setMock, useMock } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { CheckTable, type CheckRow } from "./CheckTable";
 import { TripCarPicker } from "@/app/quarter/_shared/TripCarPicker";
+import { FilterShell } from "@/app/vehicles/_lib/ui";
 
 /* CARP_COLS (หน้ารายละเอียดแผน PlanBody · ดูอย่างเดียว) · PART_COLS.slice(0, 5) + ไอคอน (screens.js) */
 export const CARP_COLS: TableColumn[] = [
@@ -95,12 +98,20 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
   };
   const reset = () => { setPage(1); setTicked([]); };
 
-  /* ---------- ภาค เขต ประเภทรถ — เปลี่ยนแค่แถวที่เห็น ไม่แตะรถที่จัดแล้ว ---------- */
-  const setArea = (patch: Partial<Pick<Draft, "regions" | "districts" | "types">>) => { put(patch); reset(); };
+  /* ---------- ภาค เขต ประเภทรถ — อยู่ในแผงตัวกรอง (เจ้าของงาน 5 พ.ย. 2569 "อยากย้ายสิ่งที่ filter ด้านบน มาไว้ที่เมนู filter ด้านล่างแทน")
+     เลือกในแผงเป็นค่าร่าง กดตกลงจึงใช้ · ยกเลิก/ปิด = ไม่เปลี่ยน · ล้างตัวกรอง = ล้างทั้งสามช่องในแผง · เปลี่ยนแค่แถวที่เห็น ไม่แตะรถที่จัดแล้ว ---------- */
+  type Area = Pick<Draft, "regions" | "districts" | "types">;
+  const [panel, setPanel] = useState(false);
+  const [fd, setFd] = useState<Area>({ regions: [], districts: [], types: [] });
+  const openPanel = () => { setFd({ regions: d.regions, districts: d.districts, types: d.types }); setOpen(""); setPanel(true); };
+  const closePanel = () => { setOpen(""); setPanel(false); };
+  const applyPanel = () => { setArea(fd); closePanel(); };
+  const fdFlip = (k: keyof Area, v: string) => setFd((f) => ({ ...f, [k]: f[k].includes(v) ? f[k].filter((x) => x !== v) : [...f[k], v] }));
+  const fdRemove = (k: keyof Area) => (v: string) => setFd((f) => ({ ...f, [k]: f[k].filter((x) => x !== v) }));
+  const setArea = (patch: Partial<Area>) => { put(patch); reset(); };
   const removeRegion = (r: string) => setArea({ regions: d.regions.filter((x) => x !== r) });   // R69: ช่องเป็นอิสระต่อกัน ไม่ล้างเขตตาม
   const removeDistrict = (x: string) => setArea({ districts: d.districts.filter((y) => y !== x) });
   const removeType = (t: string) => setArea({ types: d.types.filter((y) => y !== t) });
-  const flip = (list: string[], v: string, remove: (v: string) => void, add: (next: string[]) => void) => (list.includes(v) ? remove(v) : add([...list, v]));
   const chips = [...d.regions.map(shortRegion), ...d.districts, ...d.types];
   const removeChip = (c: string) => {
     const r = d.regions.find((x) => shortRegion(x) === c);
@@ -117,7 +128,6 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
   const last = Math.max(1, Math.ceil(shown.length / PER)), pg = Math.min(page, last);
   const rowsOnPage = shown.slice((pg - 1) * PER, pg * PER);
   const picked = areaPicked(d);
-  const showTable = picked || nIn > 0;
   const nTicked = ticked.length;
   const qPill = (i: number): [string, "Brand" | "Gray"] => (d.alloc[i] ? ["ไตรมาส " + d.alloc[i], "Brand"] : ["ยังไม่จัด", "Gray"]);
   const toS21 = (car: number) => router.push("/car-parts/?id=" + (edit ? planId(plan) : "new") + "&q=" + q + "&car=" + carParam(car) + (from === "detail" ? "&from=detail" : ""));
@@ -192,8 +202,8 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
   const nameErr = touched.name && !d.name.trim();
   const yearErr = touched.year && !d.year;
 
-  const carBody = !showTable || (!q && !picked)
-    ? empty("ยังไม่มีรายการรถ", "เลือกภาค เขต หรือประเภทรถเพื่อแสดงรถทั้งหมดที่ตรงกัน")
+  const carBody = !q && !picked
+    ? empty("ยังไม่มีรายการรถ", "กดตัวกรองเพื่อเลือกภาค เขต หรือประเภทรถ ตารางจะแสดงรถทั้งหมดที่ตรงกัน")
     : shown.length
       ? <CheckTable columns={q ? Q_COLS : PICK_COLS} rows={rows} ticked={ticked} onTicked={setTicked}
           Pagination={<TablePagination total={shown.length} page={pg} perPage={PER} onPage={setPage} />} />
@@ -224,26 +234,13 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
 
         <section className="flex flex-col gap-4">
           <SectionHeader Title="เลือกรถเข้าแผนและจัดลงไตรมาส" Badge={nIn ? "ในแผน " + nIn + " คัน" : null} />
-          {row(<>
-            <InputDropdownWithBadges LabelText="ภาค" values={d.regions} Placeholder="เลือกภาค" onRemove={removeRegion} open={open === "region"} onOpenChange={toggle("region")}>
-              <DropdownList>{REGIONS.map((r) => <DropdownListItem key={r} Text={r} State={d.regions.includes(r) ? "Selected" : "Default"} onClick={() => flip(d.regions, r, removeRegion, (regions) => setArea({ regions }))} />)}</DropdownList>
-            </InputDropdownWithBadges>
-            <InputDropdownWithBadges LabelText="เขต" values={d.districts} Placeholder="เลือกเขต" onRemove={removeDistrict} open={open === "district"} onOpenChange={toggle("district")}>
-              <DropdownList>{(d.regions.length ? d.regions : REGIONS).flatMap((r) => DISTRICTS[r]).map((x) => <DropdownListItem key={x} Text={x} State={d.districts.includes(x) ? "Selected" : "Default"} onClick={() => flip(d.districts, x, removeDistrict, (districts) => setArea({ districts }))} />)}</DropdownList>
-            </InputDropdownWithBadges>
-            <InputDropdownWithBadges LabelText="ประเภทรถ" values={d.types} Placeholder="เลือกประเภทรถ" onRemove={removeType} open={open === "type"} onOpenChange={toggle("type")}>
-              <DropdownList>{VEHICLE_TYPES.map((t) => <DropdownListItem key={t} Text={t} State={d.types.includes(t) ? "Selected" : "Default"} onClick={() => flip(d.types, t, removeType, (types) => setArea({ types }))} />)}</DropdownList>
-            </InputDropdownWithBadges>
-          </>, 3)}
-          {showTable && <>
-            <Tabs>
-              <TabItem Text="ทั้งหมด" Badge={area.length} Active={q === 0} onClick={() => { put({ q: 0 }); reset(); }} />
-              {QUARTERS.map((_, i) => <TabItem key={i} Text={"ไตรมาส " + (i + 1)} Badge={inQ(i + 1).length} Active={q === i + 1} onClick={() => { put({ q: i + 1 }); reset(); }} />)}
-            </Tabs>
-            <TableHeader Title={q ? "รถในไตรมาส " + q : "รถในพื้นที่ที่เลือก"} Badge={shown.length + " คัน"} Placeholder="เลขทะเบียน, ยี่ห้อ, รุ่น" query={query}
-              onQuery={(v) => { setQuery(v); setPage(1); }} FilterCount={chips.length} Filters={chips} onRemoveFilter={removeChip}
-              Actions={<SecondaryButton Text={"จัดลงไตรมาส" + (nTicked ? " (" + nTicked + ")" : "")} Size={mob ? "lg" : "md"} State={nTicked ? "Default" : "Disabled"} onClick={() => nTicked && setAssign("")} />} />
-          </>}
+          <Tabs>
+            <TabItem Text="ทั้งหมด" Badge={area.length} Active={q === 0} onClick={() => { put({ q: 0 }); reset(); }} />
+            {QUARTERS.map((_, i) => <TabItem key={i} Text={"ไตรมาส " + (i + 1)} Badge={inQ(i + 1).length} Active={q === i + 1} onClick={() => { put({ q: i + 1 }); reset(); }} />)}
+          </Tabs>
+          <TableHeader Title={q ? "รถในไตรมาส " + q : "รถในพื้นที่ที่เลือก"} Badge={shown.length + " คัน"} Placeholder="เลขทะเบียน, ยี่ห้อ, รุ่น" query={query}
+            onQuery={(v) => { setQuery(v); setPage(1); }} onFilter={openPanel} FilterCount={chips.length} Filters={chips} onRemoveFilter={removeChip}
+            Actions={<SecondaryButton Text={"จัดลงไตรมาส" + (nTicked ? " (" + nTicked + ")" : "")} Size={mob ? "lg" : "md"} State={nTicked ? "Default" : "Disabled"} onClick={() => nTicked && setAssign("")} />} />
           {carBody}
         </section>
 
@@ -269,6 +266,17 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
         sub={(picked ? "รถในพื้นที่ที่เลือก" : "รถทุกคัน") + "ที่ยังไม่อยู่ในไตรมาสใด · " + addPool.length + " คัน"}
         emptyText="รถในพื้นที่ที่เลือกจัดลงไตรมาสครบแล้ว" emptySub="ย้ายรถระหว่างไตรมาสได้ที่ปุ่ม จัดลงไตรมาส ในแท็บทั้งหมด"
         onCancel={() => setQAdd(false)} onAdd={addToQ} />
+      <FilterShell open={panel} onClose={closePanel} onClear={() => setFd({ regions: [], districts: [], types: [] })} onApply={applyPanel}>
+        <InputDropdownWithBadges LabelText="ภาค" Optional values={fd.regions} Placeholder="เลือกภาค" onRemove={fdRemove("regions")} open={open === "region"} onOpenChange={toggle("region")}>
+          <DropdownList>{REGIONS.map((r) => <DropdownListItem key={r} Text={r} State={fd.regions.includes(r) ? "Selected" : "Default"} onClick={() => fdFlip("regions", r)} />)}</DropdownList>
+        </InputDropdownWithBadges>
+        <InputDropdownWithBadges LabelText="เขต" Optional values={fd.districts} Placeholder="เลือกเขต" onRemove={fdRemove("districts")} open={open === "district"} onOpenChange={toggle("district")}>
+          <DropdownList>{(fd.regions.length ? fd.regions : REGIONS).flatMap((r) => DISTRICTS[r]).map((x) => <DropdownListItem key={x} Text={x} State={fd.districts.includes(x) ? "Selected" : "Default"} onClick={() => fdFlip("districts", x)} />)}</DropdownList>
+        </InputDropdownWithBadges>
+        <InputDropdownWithBadges LabelText="ประเภทรถ" Optional values={fd.types} Placeholder="เลือกประเภทรถ" onRemove={fdRemove("types")} open={open === "type"} onOpenChange={toggle("type")}>
+          <DropdownList>{VEHICLE_TYPES.map((t) => <DropdownListItem key={t} Text={t} State={fd.types.includes(t) ? "Selected" : "Default"} onClick={() => fdFlip("types", t)} />)}</DropdownList>
+        </InputDropdownWithBadges>
+      </FilterShell>
       <ConfirmDialog spec={pending?.spec ?? null} onCancel={() => setPending(null)} onOk={() => { pending?.run(); setPending(null); }} />
     </>
   );
