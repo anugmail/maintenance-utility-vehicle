@@ -151,8 +151,8 @@ export default function Kit() {
             <InputDropdownWithBadges State={st} LabelText="เขต" values={st === "Default" || st === "Disabled" ? [] : ["กฟฉ.1", "กฟฉ.2", "กฟฉ.3"]} Placeholder="เลือกเขต" HelperText={st.startsWith("Error") ? "กรุณาเลือกเขต" : undefined} className="w-[352px]" />
           </V>
         ))}
-        <V label="ใช้งานจริง (เอาชิปออกได้)">
-          <InputDropdownWithBadges LabelText="ภาค" values={multi} Placeholder="เลือกภาค" onRemove={(v) => setMulti(multi.filter((x) => x !== v))} className="w-[352px]" />
+        <V label="ใช้งานจริง แผงตัวกรองของฟอร์มแผน (Optional เอาชิปออกได้)">
+          <InputDropdownWithBadges LabelText="ภาค" Optional values={multi} Placeholder="เลือกภาค" onRemove={(v) => setMulti(multi.filter((x) => x !== v))} className="w-[352px]" />
         </V>
       </Block>
       <Block name="Checkbox" node="Checkbox (2:18)">
