@@ -2,10 +2,11 @@
 /* กรอบหน้าแบบจอ Figma (shell() ใน core.js) + เมนูแบบระบบจริง (เจ้าของงาน 4 พ.ย. 2569 "เป็นเมนูจาก sidebar กด แล้ว expand ออกมา")
    Desktop (≥ 768): Sidebar navigation ซ้าย ตั้งต้น State=Collapsed (80)
      · ชี้เมาส์ที่ Sidebar = State=Expanded (280) ลอยทับเนื้อหา · เลื่อนเมาส์ออก = กลับ Collapsed
-     · กดโลโก้หรือปุ่มใน Collapsed / กดปุ่ม keyboard_tab ใน Logo wrap / กดปุ่ม menu ของ Header navigation = ค้าง Expanded ไว้ (ลอยทับเหมือนกัน ไม่ดันเนื้อหา
+     · กดโลโก้หรือปุ่มใน Collapsed / กดปุ่ม keyboard_tab ใน Logo wrap = ค้าง Expanded ไว้ (ลอยทับเหมือนกัน ไม่ดันเนื้อหา
        ⇒ เนื้อหาวางตามจอ Figma ที่ Sidebar กว้าง 80 เสมอ) · ย่อด้วยปุ่ม keyboard_tab อีกครั้ง · คลิกนอก Sidebar · Esc
      · Sidebar ติดขอบบนตอนเลื่อนหน้า (สูงเท่าจอ เลื่อนในตัวเองเมื่อเมนูยาวกว่าจอ)
-     Header navigation Breakpoint=Tablet + Page ขอบใน 32 ช่องไฟ 32
+     Header navigation Breakpoint=Desktop (ไม่มีโลโก้และปุ่ม hamburger · ขอบใน 12/32 · ปุ่มขวาอย่างเดียว) + Page ขอบใน 32 ช่องไฟ 32
+       — เจ้าของงาน 5 พ.ย. 2569 _"เอาตรงที่เป็น hambuger ออก … อันนี้บนเว็บนะ"_ (ต่างจาก R1 ของปลั๊กอินที่ให้ desktop ใช้ Tablet · COMPOSED.md)
    Mobile (402 · < 768): ไม่มี Sidebar · ปุ่ม menu ของ Header navigation Breakpoint=Mobile เปิด Sidebar navigation State=Expanded จากซ้าย ทับ Background overlay (ประกอบ — ดู figma-spec/COMPOSED.md)
      Page ขอบใน 16 ช่องไฟ 24
    บนสุดมีแถบต้นแบบ (PrototypeBar) · toast ผ่าน ToastHost */
@@ -48,7 +49,7 @@ export function AppFrame({ children, bell }: { children: ReactNode; bell?: boole
           </div>
         )}
         <div className="flex min-w-0 flex-1 flex-col">
-          <HeaderNavigation Breakpoint={mob ? "Mobile" : "Tablet"} bell={bell} onMenu={() => (mob ? setDrawer(true) : setPinned(true))} />
+          <HeaderNavigation Breakpoint={mob ? "Mobile" : "Desktop"} bell={bell} onMenu={mob ? () => setDrawer(true) : undefined} />
           <main className={mob ? "flex flex-col gap-6 p-4" : "flex flex-col gap-8 p-8"}>{children}</main>
         </div>
       </div>
