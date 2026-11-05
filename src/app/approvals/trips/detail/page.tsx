@@ -1,32 +1,28 @@
 "use client";
 /* S7 P2 · ตรวจสอบแผนเดินทาง (/approvals/trips/detail/?trip=T1 · ผู้อนุมัติ) — tripReview() ใน screens.js · spec S7.md (F.2–F.7)
    Page header "ตรวจสอบแผนเดินทาง" + Badge (รออนุมัติ → Brand · อนุมัติแล้ว → Success) → Content ช่องไฟ 32:
+     (รออนุมัติ) ผลการพิจารณาบนสุด — approvals/_shared/Decision ไม่มีค่าเริ่มต้น (ปรับ 5 พ.ย. 2569 ตาม S2 · tripReview())
      รายละเอียดแผนเดินทาง (VehicleAndReporterInfo · tripKv — ใบจ้างแสดงผู้รับจ้าง เลขที่สัญญา ช่วงวันทำงาน แทนพนักงาน)
      Section label "รถในแผนเดินทาง (n)" + Table ดูอย่างเดียว (TRIP_VIEW_COLS ไม่มีเบอร์ติดต่อ)
-     รออนุมัติ: Section label "ผลการพิจารณา" + Radio text card 2 ใบ (อนุมัติ ค่าเริ่ม / ส่งกลับแก้ไข + Text area เหตุผล) + ปุ่ม ย้อนกลับ · ยืนยันผลการพิจารณา
-     อนุมัติแล้ว: Alert Success วันที่อนุมัติ
+     (รออนุมัติ) ปุ่ม ย้อนกลับ · ยืนยันผลการพิจารณา (Disabled จนกว่าจะเลือก และถ้าส่งกลับต้องมีเหตุผล)
+     อนุมัติแล้ว: ไม่มีผลการพิจารณา ไม่มีปุ่ม ไม่มี Alert — toast "อนุมัติแผนเดินทางสำเร็จ" อย่างเดียว
    อนุมัติ → ConfirmDialog → trip approved + แจ้งเตือน กรย./หน่วยงานเจ้าของรถ (S8) + toast · ส่งกลับ → ConfirmDialog → trip returned + เหตุผล → รายการ + toast */
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";
 import { VehicleAndReporterInfo } from "@/components/maintain-d/VehicleAndReporterInfo";
 import { ConfirmDialog, type ConfirmSpec } from "@/components/patterns/ConfirmDialog";
-import { Alert } from "@/components/vms/Alert";
 import { PageHeader } from "@/components/vms/PageHeader";
 import { PrimaryButton } from "@/components/vms/PrimaryButton";
-import { RadioTextCards } from "@/components/vms/RadioTextCard";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionLabel } from "@/components/vms/SectionLabel";
-import { TextArea } from "@/components/vms/TextArea";
 import { mrOf, planOf } from "@/lib/mock/closeout";
 import { notify, useMock, useRole } from "@/lib/mock/store";
 import { APPROVED_AT, TST, addNotis, approvalNotis, badgeOf, findTrip, locCell, putTrip, tripCars, tripKv } from "@/lib/mock/trips";
+import { DecisionSection, useDecision } from "../../_shared/Decision";
 import { BtnRow, Content, DataTable, MENU_HOME, Section, TRIP_VIEW_COLS, useBack } from "../../../quarter/_shared/ui";
 
-const DECISIONS = [
-  { Text: "อนุมัติ", SupportingText: "แผนเดินทางผ่านการตรวจสอบ แจ้งเจ้าของรถและ กรย." },
-  { Text: "ส่งกลับแก้ไข", SupportingText: "แจ้งเหตุผลให้ กบค. แก้ไขแผนเดินทางแล้วส่งใหม่" },
-];
+const APPROVE_SUB = "แผนเดินทางผ่านการตรวจสอบ แจ้งเจ้าของรถและ กรย.", RETURN_SUB = "แจ้งเหตุผลให้ กบค. แก้ไขแผนเดินทางแล้วส่งใหม่";
 
 function TripReview() {
   const router = useRouter();
@@ -34,19 +30,17 @@ function TripReview() {
   const mock = useMock();
   const approver = useRole() === "ผู้อนุมัติ";
   const t = findTrip(mock, sp.get("trip"));
-  const [decision, setDecision] = useState("อนุมัติ");
-  const [reason, setReason] = useState("");
-  const [errors, setErrors] = useState(false);
+  const dec = useDecision();
   const [pending, setPending] = useState<{ spec: ConfirmSpec; run: () => void } | null>(null);
   const back = useBack("/approvals/trips/");
   if (!t) return null;   // ก่อนอ่าน localStorage / ไม่มีใบนี้
   const plan = planOf(mock, t.planId);
   const planLabel = mrOf(t.planId) + " " + (plan?.name ?? "");
-  const ret = decision === "ส่งกลับแก้ไข";
+  const ret = dec.decision === "return", reason = dec.reason;
   const rows = tripCars(t).map((c) => [c.plate, c.model, c.owner, locCell(t, c)]);
 
   const confirm = () => {
-    if (ret && !reason.trim()) { setErrors(true); return; }
+    if (!dec.ok) return;
     if (!ret) setPending({
       spec: { title: "ยืนยันอนุมัติแผนเดินทาง", sub: t.name + " · " + t.carIds.length + " คัน · อนุมัติแล้วระบบแจ้งเตือน กรย. และหน่วยงานเจ้าของรถ", ok: "อนุมัติ" },
       run: () => {
@@ -71,25 +65,17 @@ function TripReview() {
       <PageHeader Title="ตรวจสอบแผนเดินทาง" Badge={badgeOf(TST[t.status])} onBack={back}
         crumbs={[{ Text: MENU_HOME, href: "/" }, { Text: "แผนเดินทางรออนุมัติ", href: "/approvals/trips/" }, { Text: t.name }]} />
       <Content>
+        {t.status === "review" && approver && <DecisionSection approveSub={APPROVE_SUB} returnSub={RETURN_SUB} {...dec} />}
         <VehicleAndReporterInfo Title="รายละเอียดแผนเดินทาง" pairs={tripKv(t, planLabel)} />
         <Section>
           <SectionLabel Title={"รถในแผนเดินทาง (" + rows.length + ")"} />
           <DataTable columns={TRIP_VIEW_COLS} rows={rows} />
         </Section>
-        {t.status === "approved" && <Alert Color="Success" Text={"อนุมัติแผนเดินทางแล้ว " + (t.approvedAt ?? APPROVED_AT)} SupportingText="แจ้งเตือนในแอปถึง กรย. และหน่วยงานเจ้าของรถแล้ว" />}
         {t.status === "review" && approver && (
-          <>
-            <Section>
-              <SectionLabel Title="ผลการพิจารณา" />
-              <RadioTextCards options={DECISIONS} value={decision} onChange={(d) => { setDecision(d); setErrors(false); }} />
-              {ret && <TextArea LabelText="เหตุผลที่ส่งกลับ" Text={reason} Placeholder="ระบุเหตุผลที่ส่งกลับ" onChange={setReason}
-                State={errors && !reason.trim() ? "Error" : undefined} HelperText={errors && !reason.trim() ? "กรุณาระบุเหตุผลที่ส่งกลับ" : undefined} />}
-            </Section>
-            <BtnRow>
-              <SecondaryButton Text="ย้อนกลับ" Size="lg" onClick={back} />
-              <PrimaryButton Text="ยืนยันผลการพิจารณา" Size="lg" onClick={confirm} />
-            </BtnRow>
-          </>
+          <BtnRow>
+            <SecondaryButton Text="ย้อนกลับ" Size="lg" onClick={back} />
+            <PrimaryButton Text="ยืนยันผลการพิจารณา" Size="lg" State={dec.ok ? "Default" : "Disabled"} onClick={confirm} />
+          </BtnRow>
         )}
       </Content>
       <ConfirmDialog spec={pending?.spec ?? null} onCancel={() => setPending(null)} onOk={() => { const p = pending; setPending(null); p?.run(); }} />

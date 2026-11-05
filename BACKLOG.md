@@ -69,5 +69,5 @@
 
 ### จุดพัก รอบรีวิว 5 พ.ย. 2569 (สาขา `review-5nov` · ยังไม่ push)
 
-- [x] 9.1 S1 รายการแผน · [x] 9.2 S1 ฟอร์มแบบ A · [x] 9.3 S1 รายละเอียดหลังส่งอนุมัติ · [ ] 9.4 S2 S7 ผลการพิจารณา · [ ] 9.5 S6 S9 · [ ] 10 S10 ตัดตรวจสภาพปิดงาน · [ ] 11 S1 S21 อะไหล่รายคัน · [ ] เทส review5.js + ชุดเดิม
+- [x] 9.1 S1 รายการแผน · [x] 9.2 S1 ฟอร์มแบบ A · [x] 9.3 S1 รายละเอียดหลังส่งอนุมัติ · [x] 9.4 S2 S7 ผลการพิจารณา · [ ] 9.5 S6 S9 · [ ] 10 S10 ตัดตรวจสภาพปิดงาน · [ ] 11 S1 S21 อะไหล่รายคัน · [ ] เทส review5.js + ชุดเดิม
 - ข้อ 9 แก้ `src/components/vms/` ได้เฉพาะเพิ่ม property ของ Figma ที่ยังไม่มี หน้าตาของเดิมไม่เปลี่ยน: `TableHeader` (Table title · Badge · ปุ่มใน Actions · Pill จำนวนตัวกรอง — ดัมป์ Table header 2096:36080) · `_button` (ชั้น Pill outline ของปุ่ม Filters ใน Table header) · `TableCell` (Checkbox State=Disabled ของ Lead checkbox)
