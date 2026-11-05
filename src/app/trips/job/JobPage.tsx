@@ -1,6 +1,7 @@
 "use client";
-/* S10 P2 · งานรายคัน ยังไม่เริ่ม / อยู่ระหว่างบำรุงรักษา — jobPage() ใน screens.js · แผนจ้างดำเนินการ = jobPage({ hire: true }) จอ I.23 (กบค. ปิดงานแทนผู้รับจ้าง 4 พ.ย. 2569)
-   Page header (ทะเบียน · ป้ายสถานะงาน · ปุ่ม "บำรุงรักษาไม่ได้" + "เริ่มงาน"/"ปิดงาน")
+/* S10 P2 · งานรายคัน ยังไม่เริ่ม — jobPage() ใน screens.js · แผนจ้างดำเนินการ = jobPage({ hire: true }) (กบค. ปิดงานแทนผู้รับจ้าง 4 พ.ย. 2569)
+   Page header (ทะเบียน · ป้ายสถานะงาน · ปุ่ม "บำรุงรักษาไม่ได้" + "เริ่มงาน") — กดเริ่มงาน = อยู่ระหว่างบำรุงรักษาทันที + toast "เริ่มงานบำรุงรักษาแล้ว" → Step 1 (5 พ.ย. 2569)
+   (อยู่ระหว่างบำรุงรักษา: กบค. เข้าขั้นที่ค้างจาก JobView · หน้านี้แบบอยู่ระหว่างบำรุงรักษาเหลือไว้ให้บทบาทอื่นดูอย่างเดียว)
    → VehicleAndReporterInfo "ข้อมูลยานพาหนะ" (6) · "การนัดหมาย" (+ เริ่มงาน ผู้เริ่มงาน เมื่ออยู่ระหว่างบำรุงรักษา · แผนจ้าง: ผู้รับจ้าง ช่วงวันทำงาน แทนช่วงวันเดินทาง)
    → (อยู่ระหว่างบำรุงรักษา) IncidentPhotoGallery "ภาพก่อนเริ่มงาน (n)" · Section header "น้ำมันไฮโดรลิก" + Radio text card 3 ใบ + เปลี่ยนน้ำมันครั้งล่าสุด
    → Section label "รายการงานและอะไหล่ตามแผน (n)" + Secondary button "เพิ่มอะไหล่" + Table JOB_COLS (ไอคอนแก้ไข → popup แก้ไขอะไหล่ · ลบ → ยืนยันเอาอะไหล่ออก · เพิ่ม → popup เพิ่มอะไหล่ที่ใช้จริง — BACKLOG ข้อ 4)
@@ -18,7 +19,7 @@ import { SectionHeader } from "@/components/vms/SectionHeader";
 import { SectionLabel } from "@/components/vms/SectionLabel";
 import type { TableColumn } from "@/components/vms/Table";
 import {
-  addJobPart, cannotJob, deleteJobPart, editPartUsed, ODOMETER, OIL_DEFAULT, patchJob, thaiNow, tripLoc, tripPhone, tripRange, WORK, workShown, WSTAT,
+  addJobPart, cannotJob, deleteJobPart, editPartUsed, ODOMETER, OIL_DEFAULT, patchJob, startJob, thaiNow, tripLoc, tripPhone, tripRange, WORK, workShown, WSTAT,
   type Job, type JobTrip, type PlanPart, type TripCar,
 } from "@/lib/mock/jobs";
 import { notify } from "@/lib/mock/store";
@@ -83,7 +84,7 @@ export function JobPage({ trip, car, job, actor }: { trip: JobTrip; car: TripCar
     <SecondaryButton Text="บำรุงรักษาไม่ได้" Size={size} onClick={() => { setReason(""); setErr(false); setCannot(true); }} />
     {doing
       ? <PrimaryButton Text="ปิดงาน" Size={size} onClick={() => router.push(jobHref(trip, car.id, "close/"))} />
-      : <PrimaryButton Text="เริ่มงาน" Size={size} onClick={() => router.push(jobHref(trip, car.id, "receive/"))} />}
+      : <PrimaryButton Text="เริ่มงาน" Size={size} onClick={() => { startJob(trip, car.id); notify("เริ่มงานบำรุงรักษาแล้ว"); router.push(jobHref(trip, car.id, "receive/")); }} />}
   </> : undefined;
   const photos = job.photos ?? [];
 

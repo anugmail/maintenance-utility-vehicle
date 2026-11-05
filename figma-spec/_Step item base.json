@@ -1,0 +1,353 @@
+{
+ "component": "_Step item base",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
+ "page": "✅ Progress steps",
+ "node": "2:10",
+ "props": {
+  "Number#2284:4": {
+   "type": "TEXT",
+   "defaultValue": "01"
+  },
+  "Property 1": {
+   "type": "VARIANT",
+   "defaultValue": "Error",
+   "variantOptions": [
+    "Error",
+    "Warning"
+   ]
+  },
+  "Property 2": {
+   "type": "VARIANT",
+   "defaultValue": "Medium",
+   "variantOptions": [
+    "Medium",
+    "Small"
+   ]
+  }
+ },
+ "set": {
+  "name": "_Step item base",
+  "type": "COMPONENT_SET",
+  "w": 224,
+  "h": 118,
+  "sizing": [
+   "FIXED",
+   "FIXED"
+  ],
+  "r": 5,
+  "justify": "MIN",
+  "align": "MIN",
+  "stroke": [
+   "#9747FF"
+  ],
+  "sw": 1,
+  "strokeAlign": "INSIDE"
+ },
+ "variants": [
+  {
+   "name": "Property 1=Error, Property 2=Medium",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "pl": 8,
+   "pr": 8,
+   "pt": 8,
+   "pb": 8,
+   "r": 9999,
+   "dir": "VERTICAL",
+   "justify": "CENTER",
+   "align": "CENTER",
+   "fill": [
+    "#FEF3F2"
+   ],
+   "stroke": [
+    "#FECDCA"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/none",
+    "paddingLeft": "Spacing/200",
+    "paddingTop": "Spacing/200",
+    "paddingRight": "Spacing/200",
+    "paddingBottom": "Spacing/200",
+    "topLeftRadius": "Radius/full",
+    "topRightRadius": "Radius/full",
+    "bottomLeftRadius": "Radius/full",
+    "bottomRightRadius": "Radius/full",
+    "fills": "Color/surface/error-secondary",
+    "strokes": "Color/border/error"
+   },
+   "variant": {
+    "Property 1": "Error",
+    "Property 2": "Medium"
+   },
+   "kids": [
+    {
+     "name": "01",
+     "type": "TEXT",
+     "w": 19,
+     "h": 24,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
+     "fill": [
+      "#D92D20"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/error",
+      "letterSpacing": "IBM/Label/02/letter-spacing",
+      "fontSize": "IBM/Label/02/font-size",
+      "fontFamily": "IBM/Label/02/font-family",
+      "paragraphSpacing": "IBM/Label/02/font-size",
+      "fontWeight": "IBM/Label/02/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 16,
+      "lh": null,
+      "ls": -0.20000000298023224
+     },
+     "text": "01"
+    }
+   ]
+  },
+  {
+   "name": "Property 1=Warning, Property 2=Medium",
+   "type": "COMPONENT",
+   "w": 40,
+   "h": 40,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "pl": 8,
+   "pr": 8,
+   "pt": 8,
+   "pb": 8,
+   "r": 9999,
+   "dir": "VERTICAL",
+   "justify": "CENTER",
+   "align": "CENTER",
+   "fill": [
+    "#FFFAEB"
+   ],
+   "stroke": [
+    "#FEDF89"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/none",
+    "paddingLeft": "Spacing/200",
+    "paddingTop": "Spacing/200",
+    "paddingRight": "Spacing/200",
+    "paddingBottom": "Spacing/200",
+    "topLeftRadius": "Radius/full",
+    "topRightRadius": "Radius/full",
+    "bottomLeftRadius": "Radius/full",
+    "bottomRightRadius": "Radius/full",
+    "fills": "Color/surface/warning-secondary",
+    "strokes": "Color/border/warning"
+   },
+   "variant": {
+    "Property 1": "Warning",
+    "Property 2": "Medium"
+   },
+   "kids": [
+    {
+     "name": "01",
+     "type": "TEXT",
+     "w": 19,
+     "h": 24,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
+     "fill": [
+      "#DC6803"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/warning",
+      "letterSpacing": "IBM/Label/02/letter-spacing",
+      "fontSize": "IBM/Label/02/font-size",
+      "fontFamily": "IBM/Label/02/font-family",
+      "paragraphSpacing": "IBM/Label/02/font-size",
+      "fontWeight": "IBM/Label/02/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 16,
+      "lh": null,
+      "ls": -0.20000000298023224
+     },
+     "text": "01"
+    }
+   ]
+  },
+  {
+   "name": "Property 1=Error, Property 2=Small",
+   "type": "COMPONENT",
+   "w": 32,
+   "h": 32,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "pl": 8,
+   "pr": 8,
+   "pt": 8,
+   "pb": 8,
+   "r": 9999,
+   "dir": "VERTICAL",
+   "justify": "CENTER",
+   "align": "CENTER",
+   "fill": [
+    "#FEF3F2"
+   ],
+   "stroke": [
+    "#FECDCA"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/none",
+    "paddingLeft": "Spacing/200",
+    "paddingTop": "Spacing/200",
+    "paddingRight": "Spacing/200",
+    "paddingBottom": "Spacing/200",
+    "topLeftRadius": "Radius/full",
+    "topRightRadius": "Radius/full",
+    "bottomLeftRadius": "Radius/full",
+    "bottomRightRadius": "Radius/full",
+    "fills": "Color/surface/error-secondary",
+    "strokes": "Color/border/error"
+   },
+   "variant": {
+    "Property 1": "Error",
+    "Property 2": "Small"
+   },
+   "kids": [
+    {
+     "name": "01",
+     "type": "TEXT",
+     "w": 15,
+     "h": 18,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
+     "fill": [
+      "#D92D20"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/error",
+      "letterSpacing": "IBM/Label/04/letter-spacing",
+      "fontSize": "IBM/Label/04/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Label/04/letter-spacing",
+      "fontWeight": "IBM/Label/04/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 12,
+      "lh": null,
+      "ls": -0.20000000298023224
+     },
+     "text": "01"
+    }
+   ]
+  },
+  {
+   "name": "Property 1=Warning, Property 2=Small",
+   "type": "COMPONENT",
+   "w": 32,
+   "h": 32,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "pl": 8,
+   "pr": 8,
+   "pt": 8,
+   "pb": 8,
+   "r": 9999,
+   "dir": "VERTICAL",
+   "justify": "CENTER",
+   "align": "CENTER",
+   "fill": [
+    "#FFFAEB"
+   ],
+   "stroke": [
+    "#FEDF89"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/none",
+    "paddingLeft": "Spacing/200",
+    "paddingTop": "Spacing/200",
+    "paddingRight": "Spacing/200",
+    "paddingBottom": "Spacing/200",
+    "topLeftRadius": "Radius/full",
+    "topRightRadius": "Radius/full",
+    "bottomLeftRadius": "Radius/full",
+    "bottomRightRadius": "Radius/full",
+    "fills": "Color/surface/warning-secondary",
+    "strokes": "Color/border/warning"
+   },
+   "variant": {
+    "Property 1": "Warning",
+    "Property 2": "Small"
+   },
+   "kids": [
+    {
+     "name": "01",
+     "type": "TEXT",
+     "w": 15,
+     "h": 18,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
+     "fill": [
+      "#DC6803"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/warning",
+      "letterSpacing": "IBM/Label/04/letter-spacing",
+      "fontSize": "IBM/Label/04/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Label/04/letter-spacing",
+      "fontWeight": "IBM/Label/04/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 12,
+      "lh": null,
+      "ls": -0.20000000298023224
+     },
+     "text": "01"
+    }
+   ]
+  }
+ ]
+}

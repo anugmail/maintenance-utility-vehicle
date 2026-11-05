@@ -83,7 +83,12 @@
   "Badge outline with leading icon",
   "Icon button",
   "_Notification header",
-  "_Notification footer"
+  "_Notification footer",
+  "Progress steps",
+  "Horizontal step item",
+  "_Step item base",
+  "Mobile progress steps",
+  "Step circles / 4 steps"
  ],
  "maintainD": [
   "ReceiptChecklist",

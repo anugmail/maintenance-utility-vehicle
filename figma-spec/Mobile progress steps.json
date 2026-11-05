@@ -1,0 +1,1395 @@
+{
+ "component": "Mobile progress steps",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
+ "page": "✅ Progress steps",
+ "node": "2:10",
+ "props": {
+  "Supporting text#591:31": {
+   "type": "TEXT",
+   "defaultValue": "Supporting text"
+  },
+  "Text#591:33": {
+   "type": "TEXT",
+   "defaultValue": "Text"
+  },
+  "Supporting#2284:14": {
+   "type": "BOOLEAN",
+   "defaultValue": true
+  },
+  "Stepper item swap#2297:29": {
+   "type": "INSTANCE_SWAP",
+   "defaultValue": "1062:855",
+   "preferredValues": [
+    {
+     "type": "COMPONENT_SET",
+     "key": "0f7d44fc243f30b72a22820516d70268b7caed2b"
+    }
+   ]
+  },
+  "Collapsed": {
+   "type": "VARIANT",
+   "defaultValue": "True",
+   "variantOptions": [
+    "True",
+    "False"
+   ]
+  }
+ },
+ "set": {
+  "name": "Mobile progress steps",
+  "type": "COMPONENT_SET",
+  "w": 360,
+  "h": 473,
+  "sizing": [
+   "FIXED",
+   "HUG"
+  ],
+  "pl": 16,
+  "pr": 16,
+  "pt": 16,
+  "pb": 16,
+  "gap": 16,
+  "r": 5,
+  "dir": "VERTICAL",
+  "justify": "MIN",
+  "align": "MIN",
+  "fill": [
+   "#FFFFFF"
+  ],
+  "stroke": [
+   "#9747FF"
+  ],
+  "sw": 1,
+  "strokeAlign": "INSIDE",
+  "vars": {
+   "fills": "Color/background/default"
+  }
+ },
+ "variants": [
+  {
+   "name": "Collapsed=True",
+   "type": "COMPONENT",
+   "w": 328,
+   "h": 104,
+   "sizing": [
+    "FILL",
+    "HUG"
+   ],
+   "gap": 16,
+   "r": 8,
+   "dir": "HORIZONTAL",
+   "justify": "MIN",
+   "align": "CENTER",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/400",
+    "topLeftRadius": "Radius/200",
+    "topRightRadius": "Radius/200",
+    "bottomLeftRadius": "Radius/200",
+    "bottomRightRadius": "Radius/200",
+    "fills": "Color/surface/primary",
+    "strokes": "Color/border/primary"
+   },
+   "variant": {
+    "Collapsed": "True"
+   },
+   "kids": [
+    {
+     "name": "Dropdown",
+     "type": "FRAME",
+     "w": 328,
+     "h": 104,
+     "sizing": [
+      "FILL",
+      "FILL"
+     ],
+     "pl": 16,
+     "pr": 16,
+     "pt": 16,
+     "pb": 16,
+     "gap": 16,
+     "r": 8,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "CENTER",
+     "fill": [
+      "#FFFFFF"
+     ],
+     "stroke": [
+      "#D0D5DD"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/400",
+      "paddingLeft": "Spacing/400",
+      "paddingTop": "Spacing/400",
+      "paddingRight": "Spacing/400",
+      "paddingBottom": "Spacing/400",
+      "topLeftRadius": "Radius/200",
+      "topRightRadius": "Radius/200",
+      "bottomLeftRadius": "Radius/200",
+      "bottomRightRadius": "Radius/200",
+      "fills": "Color/surface/primary",
+      "strokes": "Color/border/primary"
+     },
+     "kids": [
+      {
+       "name": "Step circles / 4 steps",
+       "type": "INSTANCE",
+       "w": 72,
+       "h": 72,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "variant": {
+        "Step": "2"
+       },
+       "component": "Step circles / 4 steps [Step=2]",
+       "kids": [
+        {
+         "name": "Circular Progress",
+         "type": "GROUP",
+         "w": 72,
+         "h": 72,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "kids": [
+          {
+           "name": "Track",
+           "type": "ELLIPSE",
+           "w": 72,
+           "h": 72,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 9999,
+           "fill": [
+            "#D0D5DD"
+           ],
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "cornerRadius": "Radius/full",
+            "fills": "Color/component/progress/track"
+           }
+          },
+          {
+           "name": "Progress",
+           "type": "ELLIPSE",
+           "w": 72,
+           "h": 72,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 9999,
+           "fill": [
+            "#A80689"
+           ],
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "cornerRadius": "Radius/full",
+            "fills": "Color/component/progress/progress"
+           }
+          }
+         ]
+        },
+        {
+         "name": "Steps",
+         "type": "FRAME",
+         "w": 29,
+         "h": 18,
+         "sizing": [
+          "HUG",
+          "HUG"
+         ],
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "CENTER",
+         "align": "CENTER",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/100"
+         },
+         "kids": [
+          {
+           "name": "Current",
+           "type": "TEXT",
+           "w": 8,
+           "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "fill": [
+            "#000000"
+           ],
+           "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/primary",
+            "letterSpacing": "IBM/Label/04/letter-spacing",
+            "fontSize": "IBM/Label/04/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Label/04/letter-spacing",
+            "fontWeight": "IBM/Label/04/font-weight"
+           },
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 12,
+            "lh": null,
+            "ls": -0.20000000298023224,
+            "align": "CENTER"
+           },
+           "text": "2"
+          },
+          {
+           "name": "/",
+           "type": "TEXT",
+           "w": 5,
+           "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "fill": [
+            "#98A2B3"
+           ],
+           "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/placeholder",
+            "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontSize": "IBM/Helper-text/02/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontWeight": "IBM/Helper-text/02/font-weight"
+           },
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null,
+            "ls": -0.20000000298023224,
+            "align": "CENTER"
+           },
+           "text": "/"
+          },
+          {
+           "name": "Total",
+           "type": "TEXT",
+           "w": 8,
+           "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "fill": [
+            "#000000"
+           ],
+           "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/primary",
+            "letterSpacing": "IBM/Label/04/letter-spacing",
+            "fontSize": "IBM/Label/04/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Label/04/letter-spacing",
+            "fontWeight": "IBM/Label/04/font-weight"
+           },
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 12,
+            "lh": null,
+            "ls": -0.20000000298023224,
+            "align": "CENTER"
+           },
+           "text": "4"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Content",
+       "type": "FRAME",
+       "w": 172,
+       "h": 72,
+       "sizing": [
+        "FILL",
+        "FILL"
+       ],
+       "gap": 8,
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "CENTER",
+       "align": "MAX",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/200"
+       },
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 172,
+         "h": 24,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/primary",
+          "letterSpacing": "IBM/Label/02/letter-spacing",
+          "fontSize": "IBM/Label/02/font-size",
+          "fontFamily": "IBM/Label/02/font-family",
+          "paragraphSpacing": "IBM/Label/02/font-size",
+          "fontWeight": "IBM/Label/02/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 16,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Text"
+        },
+        {
+         "name": "Next step and action",
+         "type": "FRAME",
+         "w": 172,
+         "h": 18,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "MIN",
+         "align": "CENTER",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/100"
+         },
+         "kids": [
+          {
+           "name": "Label",
+           "type": "TEXT",
+           "w": 30,
+           "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/secondary",
+            "letterSpacing": "IBM/Label/04/letter-spacing",
+            "fontSize": "IBM/Label/04/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Label/04/letter-spacing",
+            "fontWeight": "IBM/Label/04/font-weight"
+           },
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 12,
+            "lh": null,
+            "ls": -0.20000000298023224,
+            "align": "CENTER"
+           },
+           "text": "ถัดไป:"
+          },
+          {
+           "name": "Supporting text",
+           "type": "TEXT",
+           "w": 81,
+           "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/secondary",
+            "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontSize": "IBM/Helper-text/02/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontWeight": "IBM/Helper-text/02/font-weight"
+           },
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null,
+            "ls": -0.20000000298023224,
+            "align": "RIGHT"
+           },
+           "text": "Supporting text"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "keyboard_arrow_down-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "component": "keyboard_arrow_down-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE"
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 9,
+         "h": 5,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "fill": [
+          "#667085"
+         ],
+         "sw": 0.02083333395421505,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "fills": "Color/icon/secondary"
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Collapsed=False",
+   "type": "COMPONENT",
+   "w": 328,
+   "h": 321,
+   "sizing": [
+    "FILL",
+    "HUG"
+   ],
+   "r": 8,
+   "dir": "VERTICAL",
+   "justify": "MIN",
+   "align": "MIN",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "topLeftRadius": "Radius/200",
+    "topRightRadius": "Radius/200",
+    "bottomLeftRadius": "Radius/200",
+    "bottomRightRadius": "Radius/200",
+    "fills": "Color/surface/primary",
+    "strokes": "Color/border/primary"
+   },
+   "variant": {
+    "Collapsed": "False"
+   },
+   "kids": [
+    {
+     "name": "Dropdown",
+     "type": "FRAME",
+     "w": 328,
+     "h": 104,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
+     "pl": 16,
+     "pr": 16,
+     "pt": 16,
+     "pb": 16,
+     "gap": 16,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "CENTER",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/400",
+      "paddingLeft": "Spacing/400",
+      "paddingTop": "Spacing/400",
+      "paddingRight": "Spacing/400",
+      "paddingBottom": "Spacing/400"
+     },
+     "kids": [
+      {
+       "name": "Step circles / 4 steps",
+       "type": "INSTANCE",
+       "w": 72,
+       "h": 72,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "variant": {
+        "Step": "2"
+       },
+       "component": "Step circles / 4 steps [Step=2]",
+       "kids": [
+        {
+         "name": "Circular Progress",
+         "type": "GROUP",
+         "w": 72,
+         "h": 72,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "kids": [
+          {
+           "name": "Track",
+           "type": "ELLIPSE",
+           "w": 72,
+           "h": 72,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 9999,
+           "fill": [
+            "#D0D5DD"
+           ],
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "cornerRadius": "Radius/full",
+            "fills": "Color/component/progress/track"
+           }
+          },
+          {
+           "name": "Progress",
+           "type": "ELLIPSE",
+           "w": 72,
+           "h": 72,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 9999,
+           "fill": [
+            "#A80689"
+           ],
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "cornerRadius": "Radius/full",
+            "fills": "Color/component/progress/progress"
+           }
+          }
+         ]
+        },
+        {
+         "name": "Steps",
+         "type": "FRAME",
+         "w": 29,
+         "h": 18,
+         "sizing": [
+          "HUG",
+          "HUG"
+         ],
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "CENTER",
+         "align": "CENTER",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/100"
+         },
+         "kids": [
+          {
+           "name": "Current",
+           "type": "TEXT",
+           "w": 8,
+           "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "fill": [
+            "#000000"
+           ],
+           "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/primary",
+            "letterSpacing": "IBM/Label/04/letter-spacing",
+            "fontSize": "IBM/Label/04/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Label/04/letter-spacing",
+            "fontWeight": "IBM/Label/04/font-weight"
+           },
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 12,
+            "lh": null,
+            "ls": -0.20000000298023224,
+            "align": "CENTER"
+           },
+           "text": "2"
+          },
+          {
+           "name": "/",
+           "type": "TEXT",
+           "w": 5,
+           "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "fill": [
+            "#98A2B3"
+           ],
+           "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/placeholder",
+            "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontSize": "IBM/Helper-text/02/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontWeight": "IBM/Helper-text/02/font-weight"
+           },
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null,
+            "ls": -0.20000000298023224,
+            "align": "CENTER"
+           },
+           "text": "/"
+          },
+          {
+           "name": "Total",
+           "type": "TEXT",
+           "w": 8,
+           "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "fill": [
+            "#000000"
+           ],
+           "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/primary",
+            "letterSpacing": "IBM/Label/04/letter-spacing",
+            "fontSize": "IBM/Label/04/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Label/04/letter-spacing",
+            "fontWeight": "IBM/Label/04/font-weight"
+           },
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 12,
+            "lh": null,
+            "ls": -0.20000000298023224,
+            "align": "CENTER"
+           },
+           "text": "4"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Content",
+       "type": "FRAME",
+       "w": 172,
+       "h": 72,
+       "sizing": [
+        "FILL",
+        "FILL"
+       ],
+       "gap": 8,
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "CENTER",
+       "align": "MAX",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/200"
+       },
+       "kids": [
+        {
+         "name": "Text",
+         "type": "TEXT",
+         "w": 172,
+         "h": 24,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "fill": [
+          "#000000"
+         ],
+         "sw": 1,
+         "strokeAlign": "OUTSIDE",
+         "vars": {
+          "fills": "Color/text/primary",
+          "letterSpacing": "IBM/Label/02/letter-spacing",
+          "fontSize": "IBM/Label/02/font-size",
+          "fontFamily": "IBM/Label/02/font-family",
+          "paragraphSpacing": "IBM/Label/02/font-size",
+          "fontWeight": "IBM/Label/02/font-weight"
+         },
+         "font": {
+          "fam": "IBM Plex Sans Thai",
+          "style": "SemiBold",
+          "size": 16,
+          "lh": null,
+          "ls": -0.20000000298023224
+         },
+         "text": "Text"
+        },
+        {
+         "name": "Next step and action",
+         "type": "FRAME",
+         "w": 172,
+         "h": 18,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "gap": 4,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "MIN",
+         "align": "CENTER",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/100"
+         },
+         "kids": [
+          {
+           "name": "Label",
+           "type": "TEXT",
+           "w": 30,
+           "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/secondary",
+            "letterSpacing": "IBM/Label/04/letter-spacing",
+            "fontSize": "IBM/Label/04/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Label/04/letter-spacing",
+            "fontWeight": "IBM/Label/04/font-weight"
+           },
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "SemiBold",
+            "size": 12,
+            "lh": null,
+            "ls": -0.20000000298023224,
+            "align": "CENTER"
+           },
+           "text": "ถัดไป:"
+          },
+          {
+           "name": "Supporting text",
+           "type": "TEXT",
+           "w": 81,
+           "h": 18,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "fill": [
+            "#475467"
+           ],
+           "sw": 1,
+           "strokeAlign": "OUTSIDE",
+           "vars": {
+            "fills": "Color/text/secondary",
+            "letterSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontSize": "IBM/Helper-text/02/font-size",
+            "fontFamily": "IBM/font-family",
+            "paragraphSpacing": "IBM/Helper-text/02/letter-spacing",
+            "fontWeight": "IBM/Helper-text/02/font-weight"
+           },
+           "font": {
+            "fam": "IBM Plex Sans Thai",
+            "style": "Regular",
+            "size": 12,
+            "lh": null,
+            "ls": -0.20000000298023224,
+            "align": "RIGHT"
+           },
+           "text": "Supporting text"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "keyboard_arrow_up-20-400-round",
+       "type": "INSTANCE",
+       "w": 20,
+       "h": 20,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "component": "keyboard_arrow_up-20-400-round",
+       "kids": [
+        {
+         "name": "Bounding box",
+         "type": "RECTANGLE",
+         "w": 20,
+         "h": 20,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE"
+        },
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 9,
+         "h": 5,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "fill": [
+          "#667085"
+         ],
+         "sw": 0.02083333395421505,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "fills": "Color/icon/secondary"
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Stepper",
+     "type": "FRAME",
+     "w": 328,
+     "h": 217,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
+     "pl": 16,
+     "pr": 16,
+     "pb": 16,
+     "r": 0,
+     "dir": "VERTICAL",
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "paddingLeft": "Spacing/400",
+      "paddingRight": "Spacing/400",
+      "paddingBottom": "Spacing/400"
+     },
+     "kids": [
+      {
+       "name": "Progress steps",
+       "type": "INSTANCE",
+       "w": 296,
+       "h": 201,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
+       "r": 0,
+       "dir": "VERTICAL",
+       "justify": "MIN",
+       "align": "MIN",
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "itemSpacing": "Spacing/none",
+        "topLeftRadius": "Radius/none",
+        "topRightRadius": "Radius/none",
+        "bottomLeftRadius": "Radius/none",
+        "bottomRightRadius": "Radius/none"
+       },
+       "variant": {
+        "Step 4#3065:0": true,
+        "Step 2#2294:21": true,
+        "Step 3#2294:15": true,
+        "Type": "Vertical"
+       },
+       "component": "Progress steps [Type=Vertical]",
+       "kids": [
+        {
+         "name": "Vertical step item",
+         "type": "INSTANCE",
+         "w": 296,
+         "h": 52,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "gap": 8,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "MIN",
+         "align": "MIN",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/200",
+          "fills": "Color/surface/primary"
+         },
+         "variant": {
+          "Text#2294:10": "Text",
+          "Supporting text#2294:12": "Supporting text",
+          "Connector#2294:11": true,
+          "Supporting#2294:14": true,
+          "Status": "Completed"
+         },
+         "component": "Vertical step item [Status=Completed]",
+         "kids": [
+          {
+           "name": "Icon and connector",
+           "type": "FRAME",
+           "w": 24,
+           "h": 52,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "MIN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Text and supporting text",
+           "type": "FRAME",
+           "w": 264,
+           "h": 52,
+           "sizing": [
+            "FILL",
+            "FILL"
+           ],
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/none",
+            "paddingTop": "Spacing/none",
+            "paddingBottom": "Spacing/none"
+           }
+          }
+         ]
+        },
+        {
+         "name": "Vertical step item",
+         "type": "INSTANCE",
+         "w": 296,
+         "h": 52,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "gap": 8,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "MIN",
+         "align": "MIN",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/200",
+          "fills": "Color/surface/primary"
+         },
+         "variant": {
+          "Text#2294:10": "Text",
+          "Supporting text#2294:12": "Supporting text",
+          "Connector#2294:11": true,
+          "Supporting#2294:14": true,
+          "Status": "Current"
+         },
+         "component": "Vertical step item [Status=Current]",
+         "kids": [
+          {
+           "name": "Icon and connector",
+           "type": "FRAME",
+           "w": 24,
+           "h": 52,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "MIN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Text and supporting text",
+           "type": "FRAME",
+           "w": 264,
+           "h": 52,
+           "sizing": [
+            "FILL",
+            "FILL"
+           ],
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/none",
+            "paddingTop": "Spacing/none",
+            "paddingBottom": "Spacing/none"
+           }
+          }
+         ]
+        },
+        {
+         "name": "Vertical step item",
+         "type": "INSTANCE",
+         "w": 296,
+         "h": 52,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "gap": 8,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "MIN",
+         "align": "MIN",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/200",
+          "fills": "Color/surface/primary"
+         },
+         "variant": {
+          "Text#2294:10": "Text",
+          "Supporting text#2294:12": "Supporting text",
+          "Connector#2294:11": true,
+          "Supporting#2294:14": true,
+          "Status": "Incomplete"
+         },
+         "component": "Vertical step item [Status=Incomplete]",
+         "kids": [
+          {
+           "name": "Icon and connector",
+           "type": "FRAME",
+           "w": 24,
+           "h": 52,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "MIN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Text and supporting text",
+           "type": "FRAME",
+           "w": 264,
+           "h": 52,
+           "sizing": [
+            "FILL",
+            "FILL"
+           ],
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/none",
+            "paddingTop": "Spacing/none",
+            "paddingBottom": "Spacing/none"
+           }
+          }
+         ]
+        },
+        {
+         "name": "Vertical step item",
+         "type": "INSTANCE",
+         "w": 296,
+         "h": 45,
+         "sizing": [
+          "FILL",
+          "HUG"
+         ],
+         "gap": 8,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "MIN",
+         "align": "MIN",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/200",
+          "fills": "Color/surface/primary"
+         },
+         "variant": {
+          "Text#2294:10": "Text",
+          "Supporting text#2294:12": "Supporting text",
+          "Connector#2294:11": false,
+          "Supporting#2294:14": true,
+          "Status": "Incomplete"
+         },
+         "component": "Vertical step item [Status=Incomplete]",
+         "kids": [
+          {
+           "name": "Icon and connector",
+           "type": "FRAME",
+           "w": 24,
+           "h": 24,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "MIN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Text and supporting text",
+           "type": "FRAME",
+           "w": 264,
+           "h": 45,
+           "sizing": [
+            "FILL",
+            "FILL"
+           ],
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/none",
+            "paddingTop": "Spacing/none",
+            "paddingBottom": "Spacing/none"
+           }
+          }
+         ]
+        },
+        {
+         "name": "Vertical step item",
+         "type": "INSTANCE",
+         "visible": false,
+         "w": 992,
+         "h": 51,
+         "sizing": [
+          "FIXED",
+          "HUG"
+         ],
+         "gap": 8,
+         "r": 0,
+         "dir": "HORIZONTAL",
+         "justify": "MIN",
+         "align": "MIN",
+         "fill": [
+          "#FFFFFF"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "itemSpacing": "Spacing/200",
+          "fills": "Color/surface/primary"
+         },
+         "variant": {
+          "Text#2294:10": "Text",
+          "Supporting text#2294:12": "Supporting text",
+          "Connector#2294:11": false,
+          "Supporting#2294:14": true,
+          "Status": "Incomplete"
+         },
+         "component": "Vertical step item [Status=Incomplete]",
+         "kids": [
+          {
+           "name": "Icon and connector",
+           "type": "FRAME",
+           "w": 24,
+           "h": 24,
+           "sizing": [
+            "HUG",
+            "HUG"
+           ],
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "MIN",
+           "align": "CENTER",
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Text and supporting text",
+           "type": "FRAME",
+           "w": 960,
+           "h": 45,
+           "sizing": [
+            "FILL",
+            "FILL"
+           ],
+           "r": 0,
+           "dir": "VERTICAL",
+           "justify": "MIN",
+           "align": "MIN",
+           "sw": 1,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "itemSpacing": "Spacing/none",
+            "paddingTop": "Spacing/none",
+            "paddingBottom": "Spacing/none"
+           }
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

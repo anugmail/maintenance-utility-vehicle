@@ -272,3 +272,19 @@ screens.js ไม่ได้วาดปุ่มไปขั้นถัดไ
 |---|---|---|
 | Header navigation จอ ≥ 768 | Breakpoint=**Desktop** ของไลบรารี (ไม่มีโลโก้และปุ่ม menu · ขอบใน 12/32 · ปุ่มขวาอย่างเดียว) · ขยาย Sidebar ด้วยโลโก้/ปุ่มใน Sidebar Collapsed และปุ่ม keyboard_tab ของ Sidebar Expanded | เจ้าของงาน 5 พ.ย. 2569 _"เอาตรงที่เป็น hambuger ออก มันจะแสดงแค่ตอนที่เป็น mobile หรือเปล่า ถ้าย่อจอมาจะแสดงแบบนั้น อันนี้บนเว็บนะ"_ — **ต่างจาก R1 ของปลั๊กอิน** (รีวิวทีมออกแบบ 19 ต.ค. 2569: จอ desktop ใช้ Header navigation Tablet) · จอ Figma ยังเป็น Tablet |
 | มือถือ (< 768) | Breakpoint=Mobile เดิม (โลโก้ + ปุ่ม menu เปิด Sidebar ทับ) | ไม่เปลี่ยน |
+
+## ต. S10 ขั้นตอนบำรุงรักษา 2 ขั้น (BACKLOG ข้อ 16 · บล็อก I · 5 พ.ย. 2569)
+
+อ้างอิง: `stepPage` `mtStepper` `receiptPanel` `inspectPanel` `closeParts` `closeCosts` `budgetPick` `oilDateField` `cannotModal` `tripDetail` ใน screens.js + Progress steps · Horizontal step item · Mobile progress steps · Step circles / 4 steps · Number input ของไฟล์ Component + ReceiptChecklist · HandoverSignature · ReturnPart · Request Repair/Budget ของไฟล์ Maintain-D
+
+| จุด | ที่ทำ | เหตุผล |
+|---|---|---|
+| component ใหม่ `ProgressSteps` · `MobileProgressSteps` | ค่าจาก figma-spec (เพิ่มชื่อใน components.json แล้วรัน figma-spec) · เส้นคั่นรูป > ของช่องขั้นตอน = เส้น 2 เส้นเอียง (vector ของไลบรารีไม่มีในดัมป์) · วงความคืบหน้ามือถือ = conic-gradient ตามสัดส่วน + วงในสีพื้น หนา 6 (ดัมป์ไม่มี arc ของ ellipse) | ไลบรารีมี component แต่เว็บยังไม่มี |
+| เส้นทาง | Step 1 = `/trips/job/receive/` · Step 2 = `/trips/job/close/` · `/trips/job/` ของงานที่อยู่ระหว่างบำรุงรักษา (กบค.) พาไปขั้นที่ค้าง · บทบาทอื่นยังเห็นหน้างานรายคันแบบดูอย่างเดียว | คงที่อยู่เดิม ลิงก์เก่าไม่ 404 |
+| ขั้นที่ค้างในที่เก็บ | `job.step` · ที่เก็บเก่าที่ไม่มี = รับรถลงนามครบแล้ว ⇒ ขั้น 2 · ไม่ครบ ⇒ ขั้น 1 | หน้า "อยู่ระหว่างบำรุงรักษา" เดิมเอาออก |
+| ปุ่ม "ย้อนกลับ" | Step 1 → หน้ารายละเอียดแผนเดินทาง · Step 2 → Step 1 (ขั้นที่ค้างยังเป็น 2) | stepper ง.5 ปุ่มย้อนกลับซ้าย |
+| จำนวนที่ใช้จริง Step 2 | desktop = Number input ในช่อง (Table header cell + Table cell เรียงเป็นตาราง แบบ ReturnPart) · กดชื่ออะไหล่ = popup แก้ไขอะไหล่เก่า/หมายเหตุ · มือถือ = การ์ดกดแก้ไขแบบเดิม (Mobile table ไม่มีช่องกรอก) | closeParts() |
+| งบที่ตัด ประเภท WBS / PM Order / อื่น ๆ | ช่องขวาว่าง | budgetPick() ของ screens.js ยังไม่ออกแบบช่องของประเภทนี้ (**รอเคาะ**) |
+| ศูนย์ต้นทุนของหน่วยงานอื่น | ตัวเลือก = ศูนย์ต้นทุนของหน่วยงานเจ้าของรถคันอื่นในแผนเดินทาง + OTHER_CC | ข้อมูลจำลอง ไม่มีรายชื่อศูนย์ต้นทุนจริง |
+| วันที่เปลี่ยนน้ำมันครั้งล่าสุด | Text input (ถ้ามี) ตั้งต้นค่าในข้อมูลรถ · desktop ปฏิทิน Date picker Type=Single · เก็บในร่างปิดงาน (ยังไม่ส่งต่อไป S24) | R73 · S24 ใช้วันที่ปิดงาน (**รอเคาะ**) |
+| popup บำรุงรักษาไม่ได้ Step 2 | จำนวนที่ใช้ = ค่าที่กรอกในตาราง Step 2 | จอใช้ CANNOT_USED ตัวอย่าง |

@@ -1,26 +1,23 @@
 "use client";
-/* S10 P4 · รับรถเข้าบำรุงรักษา (กดเริ่มงาน) — receivePage() ใน screens.js
-   Page header "รับรถเข้าบำรุงรักษา · <ทะเบียน>" → VehicleAndReporterInfo "ข้อมูลยานพาหนะ" (6 คู่ + วันที่รับรถ)
-   → ReceiptChecklist "รายการเอกสารรับรถ" (13 รายการ · ไฟล์ Maintain-D) → HandoverSignature "ลงนามการรับมอบรถ" (ผู้ส่งมอบ หน่วยงานเจ้าของรถ · ผู้รับมอบ กบค.)
-   → Section header "ภาพก่อนเริ่มงาน" + File upload 2 ช่อง ("รูปรถ + ทะเบียน" · "อะไหล่ใหม่") → ปุ่ม "ย้อนกลับ" · "ยืนยันรับรถและเริ่มงาน" (กดได้เมื่อลงนามครบทั้งสองฝั่ง)
-   "เซ็นลงนาม" → Modal Signature "ลงนามการรับมอบรถ" (วาดลายเซ็นได้จริง) · ยืนยัน → อยู่ระหว่างบำรุงรักษา + toast "เริ่มงานบำรุงรักษาแล้ว"
-   ค่าที่กรอกเก็บเป็นร่างในข้อมูลจำลอง (ออกจากหน้าแล้วกลับมาไม่หาย)
+/* S10 Step 1 · ตรวจสภาพก่อนบำรุงรักษา (/trips/job/receive/) — stepPage({ step: 1 }) + receiptPanel() ใน screens.js (รีวิวทีมออกแบบ 5 พ.ย. 2569)
+   กรอบ StepFrame (แถบขั้นตอน 1/2 · ข้อมูลยานพาหนะ · การนัดหมาย · ปุ่ม "บำรุงรักษาไม่ได้" ที่หัว — คืนอะไหล่ตามแผนทั้งหมด)
+   → ReceiptChecklist "รายการเอกสารรับรถ" (13 รายการ · ไฟล์ Maintain-D) → HandoverSignature "ลงนามการตรวจสภาพ" (ผู้ส่งมอบรถ (หน่วยงานเจ้าของรถ) · ผู้รับมอบรถ (กบค.) · บังคับ "เรื่องลงนาม require")
+   → Section header "ภาพก่อนเริ่มงาน" + File upload 2 ช่อง → ปุ่ม "ย้อนกลับ" (หน้ารายละเอียดแผนเดินทาง) · "ยืนยันการตรวจสภาพ" (Disabled จนลงนามครบทั้งสองฝั่ง) → Step 2
+   "เซ็นลงนาม" → Modal Signature "ลงนามการตรวจสภาพ" (วาดลายเซ็นได้จริง) · ค่าที่กรอกเก็บเป็นร่าง (ออกจากหน้าแล้วกลับมาไม่หาย)
    แผนจ้างดำเนินการใช้หน้าเดียวกัน กบค. เป็นผู้รับมอบ (ใบจ้างไม่มีพนักงานในใบ ⇒ ตัวเลือก = พนักงาน กบค. ทั้งหมด staffOf · COMPOSED.md) */
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HandoverSignature } from "@/components/maintain-d/HandoverSignature";
 import { ModalSignature } from "@/components/maintain-d/ModalSignature";
 import { ReceiptChecklist } from "@/components/maintain-d/ReceiptChecklist";
-import { VehicleAndReporterInfo } from "@/components/maintain-d/VehicleAndReporterInfo";
 import { EmptyStateSearchNotFound } from "@/components/vms/EmptyStateSearchNotFound";
 import { FileUpload } from "@/components/vms/FileUpload";
-import { PageHeader } from "@/components/vms/PageHeader";
 import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionHeader } from "@/components/vms/SectionHeader";
-import { BEFORE, emptyReceive, patchJob, PEOPLE, SIGN_DATE, staffOf, startJob, tripLoc, tripPhone, type ReceiveForm } from "@/lib/mock/jobs";
-import { notify } from "@/lib/mock/store";
-import { ButtonRow, useCrumbs, jobHref, Section, toUpload, useBack, useTripCar } from "../../_lib/ui";
+import { BEFORE, confirmInspect, emptyReceive, patchJob, PEOPLE, staffOf, type ReceiveForm } from "@/lib/mock/jobs";
+import { ButtonRow, jobHref, Section, toUpload, tripHref, useTripCar } from "../../_lib/ui";
+import { StepFrame } from "../StepFrame";
 
 const SLOTS = [
   { LabelText: "ผู้ส่งมอบรถ (หน่วยงานเจ้าของรถ)", Placeholder: "เลือกผู้ส่งมอบรถ (หน่วยงานเจ้าของรถ)" },
@@ -28,32 +25,31 @@ const SLOTS = [
 ];
 
 export function ReceivePage() {
-  const crumbs = useCrumbs();
   const router = useRouter();
-  const back = useBack();
   const { trip, car, job, actor } = useTripCar();
   const [sign, setSign] = useState(-1);
+  const away = !!trip && !!car && !!job && job.status !== "doing";   // ยังไม่เริ่ม / ปิดแล้ว → หน้างานรายคัน
+  /* เปิดหน้านี้ตอนงานไม่ได้อยู่ระหว่างบำรุงรักษา → หน้างานรายคัน · ปิดงาน/บำรุงรักษาไม่ได้จากหน้านี้เอง (สถานะเปลี่ยนระหว่างอยู่หน้า) ไม่พาไปไหน ให้ปุ่มพากลับหน้าแผนเดินทาง */
+  const [awayAtOpen] = useState(() => ({ v: null as boolean | null }));
+  if (awayAtOpen.v === null && trip && car && job) awayAtOpen.v = away;
+  useEffect(() => { if (awayAtOpen.v && trip && car) router.replace(jobHref(trip, car.id)); }, [awayAtOpen, trip, car, router]);
   if (!trip || !car || !job) return <EmptyStateSearchNotFound />;
+  if (awayAtOpen.v) return null;
   const f: ReceiveForm = job.receive ?? emptyReceive();
   const put = (fn: (f: ReceiveForm) => ReceiveForm) => patchJob(trip.id, car.id, (j) => ({ ...j, receive: fn(j.receive ?? emptyReceive()) }));
   const options = [[PEOPLE.ownerSigner], staffOf(trip)];
   const signed = f.signers.every((x) => !!x.sig);
   const confirm = () => {
     if (!signed || !actor) return;
-    startJob(trip, car.id);
-    notify("เริ่มงานบำรุงรักษาแล้ว");
-    router.push(jobHref(trip, car.id));
+    confirmInspect(trip, car.id);
+    router.push(jobHref(trip, car.id, "close/"));
   };
-  const jobPage = jobHref(trip, car.id);
 
   return (
-    <>
-      <PageHeader Title={"รับรถเข้าบำรุงรักษา · " + car.plate} crumbs={crumbs.job(trip, "รับรถ")} onBack={() => back(jobPage)} />
-      <VehicleAndReporterInfo Title="ข้อมูลยานพาหนะ" pairs={[["ทะเบียน", car.plate], ["ยี่ห้อ/รุ่น", car.model], ["หน่วยงานเจ้าของรถ", car.owner],
-        ["สถานที่บำรุงรักษา", tripLoc(trip, car)], ["เบอร์ติดต่อ", tripPhone(trip, car)], ["วันที่รับรถ", SIGN_DATE]]} />
+    <StepFrame trip={trip} car={car} job={job} step={1} used={job.parts.map(() => 0)} actor={actor}>
       <ReceiptChecklist Title="รายการเอกสารรับรถ" items={f.items} readonly={!actor}
         onChange={(i, p) => put((x) => ({ ...x, items: x.items.map((it, k) => (k === i ? { ...it, ...p } : it)) }))} />
-      <HandoverSignature Title="ลงนามการรับมอบรถ"
+      <HandoverSignature Title="ลงนามการตรวจสภาพ"
         slots={SLOTS.map((s, i) => ({ ...s, options: options[i], value: f.signers[i].name, signed: !!f.signers[i].sig }))}
         onPick={(i, name) => put((x) => ({ ...x, signers: x.signers.map((s, k) => (k === i ? { name, sig: s.name === name ? s.sig : null } : s)) as ReceiveForm["signers"] }))}
         onSign={(i) => setSign(i)} />
@@ -66,13 +62,13 @@ export function ReceivePage() {
         ))}
       </Section>
       <ButtonRow>
-        <SecondaryButton Text="ย้อนกลับ" Size="lg" onClick={() => back(jobPage)} />
-        <PrimaryButton Text="ยืนยันรับรถและเริ่มงาน" Size="lg" State={signed && actor ? "Default" : "Disabled"} onClick={confirm} />
+        <SecondaryButton Text="ย้อนกลับ" Size="lg" onClick={() => router.push(tripHref(trip))} />
+        <PrimaryButton Text="ยืนยันการตรวจสภาพ" Size="lg" State={signed && actor ? "Default" : "Disabled"} onClick={confirm} />
       </ButtonRow>
-      <ModalSignature open={sign >= 0} Title="ลงนามการรับมอบรถ" signer={[SLOTS[Math.max(0, sign)].LabelText, f.signers[Math.max(0, sign)].name ?? ""]}
+      <ModalSignature open={sign >= 0} Title="ลงนามการตรวจสภาพ" signer={[SLOTS[Math.max(0, sign)].LabelText, f.signers[Math.max(0, sign)].name ?? ""]}
         value={sign >= 0 && f.signers[sign].sig !== "sample" ? f.signers[sign].sig : null}
         onSave={(url) => { const i = sign; put((x) => ({ ...x, signers: x.signers.map((s, k) => (k === i ? { ...s, sig: url } : s)) as ReceiveForm["signers"] })); setSign(-1); }}
         onClose={() => setSign(-1)} />
-    </>
+    </StepFrame>
   );
 }

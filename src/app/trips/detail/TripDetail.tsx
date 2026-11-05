@@ -16,11 +16,11 @@ import { EmptyStateSearchNotFound } from "@/components/vms/EmptyStateSearchNotFo
 import { MobileTable } from "@/components/vms/MobileTable";
 import { MobileTableItem } from "@/components/vms/MobileTableItem";
 import { PageHeader } from "@/components/vms/PageHeader";
-import { SectionLabel } from "@/components/vms/SectionLabel";
+import { SectionHeader } from "@/components/vms/SectionHeader";
 import type { TableColumn, TableValue } from "@/components/vms/Table";
 import { MENU } from "@/lib/mock/data";
 import {
-  applySample, carOf, editTripCar, getJob, menuCount, OIL_TAG, oilTag, phoneEdited, removeTripCar, SAMPLE_ROLE, SAMPLES, tripKv, tripLoc, tripPhone, tripProgress, WSTAT,
+  applySample, carOf, editTripCar, getJob, menuCount, OIL_TAG, oilTag, phoneEdited, tripCounter, removeTripCar, SAMPLE_ROLE, SAMPLES, tripKv, tripLoc, tripPhone, tripProgress, WSTAT,
   type TripCar,
 } from "@/lib/mock/jobs";
 import { useSample, type SampleMap } from "@/lib/useSample";
@@ -70,7 +70,8 @@ export function TripDetail() {
       <PageHeader Title={trip.name} Badge={["อนุมัติแล้ว", "Success"]} crumbs={crumbs.trip(trip)} onBack={() => back()} />
       <VehicleAndReporterInfo Title="รายละเอียดแผนเดินทาง" pairs={[...tripKv(trip), ["ความคืบหน้า", tripProgress(s, trip)]]} />
       <Section>
-        <SectionLabel Title={"รถในแผนเดินทาง (" + cars.length + ")"} />
+        {/* ตัวนับ "ตรวจแล้ว x/y" = Badge outline ใน Section header (R71 · แบบ "รายการยานพาหนะในสัญญา" หน้า 5.1 Rental Contract Management ของ UI Release#2 — Section label ไม่มีช่อง Badge) */}
+        <SectionHeader Title="รถในแผนเดินทาง" Badge={tripCounter(s, trip)} />
         {mob ? (
           <div className="flex flex-col gap-3">
             {cars.map((c) => {

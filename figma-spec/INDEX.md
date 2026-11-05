@@ -88,6 +88,11 @@
 | Icon button | (Component) VMS Plus | ✅ Button (2:5) | 4 |
 | _Notification header | (Component) VMS Plus | Header navigation (2:4) | 1 |
 | _Notification footer | (Component) VMS Plus | Header navigation (2:4) | 1 |
+| Progress steps | (Component) VMS Plus | ✅ Progress steps (2:10) | 2 |
+| Horizontal step item | (Component) VMS Plus | ✅ Progress steps (2:10) | 3 |
+| _Step item base | (Component) VMS Plus | ✅ Progress steps (2:10) | 4 |
+| Mobile progress steps | (Component) VMS Plus | ✅ Progress steps (2:10) | 2 |
+| Step circles / 4 steps | (Component) VMS Plus | ✅ Progress steps (2:10) | 5 |
 | ReceiptChecklist | Maintain-D | Design (0:1) | 4 |
 | HandoverSignature | Maintain-D | Design (0:1) | 3 |
 | Modal Signature | Maintain-D | Design (0:1) | 2 |

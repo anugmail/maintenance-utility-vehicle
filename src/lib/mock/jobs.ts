@@ -161,7 +161,16 @@ export interface CloseForm {
   signers: [Signer, Signer]; docs: CloseDoc[];
   /** เอกสาร Safety Inspection (ถ้ามี) — เฉพาะรถเครน/รถกระเช้า (4 พ.ย. 2569 · JO 7.3.3) · ฟอร์มเก่าในที่เก็บไม่มีฟิลด์นี้ */
   safetyFiles?: UploadFile[];
+  /** งบที่ตัด (ลำดับใน BUDGET_CUT · ไม่มี = 0 งบทำการ หน่วยงานต้นสังกัด) + costCenter = ศูนย์ต้นทุน (R72 5 พ.ย. 2569 แบบ Request Repair/Budget ของงานซ่อม) */
+  budgetType?: number;
+  /** วันที่เปลี่ยนน้ำมันครั้งล่าสุด (ถ้ามี) — ไม่มี = ค่าในข้อมูลรถ (R73) */
+  oilDate?: string;
 }
+/* งบที่ตัด — ค่า variant "งบที่ตัด" ของ Request Repair/Budget (ไฟล์ Maintain-D) · BUDGET_CUT ใน screens.js */
+export const BUDGET_CUT = ["งบทำการ หน่วยงานต้นสังกัด", "งบทำการ หน่วยงานอื่น", "งบโครงการ (ตาม WBS)", "งบซ่อมบำรุงตามใบสั่ง (PM Order)", "อื่น ๆ"];
+export const OTHER_CC = "E301020000 กฟฉ.2 อุบลราชธานี - บริหาร";   // ตัวอย่างศูนย์ต้นทุนของหน่วยงานอื่น (screens.js)
+/* ขั้นตอนบำรุงรักษา 2 ขั้น (S10 5 พ.ย. 2569 · mtStepper) */
+export const MT_STEPS = ["ตรวจสภาพก่อนบำรุงรักษา", "สรุปงานก่อนปิดงาน"];
 export interface OilResult { sel: OilSel; files: UploadFile[]; sampledAt: string; sampledBy: string; savedAt?: string; savedBy?: string }
 /** Safety Inspection ของงานรายคัน — แนบตอนปิดงาน (ถ้ามี) หรือเพิ่มภายหลังที่หน้างานรายคันที่เสร็จสิ้น (safetyDocs() ใน screens.js) */
 export interface SafetyDocs { files: UploadFile[]; savedAt?: string; savedBy?: string }
@@ -177,6 +186,8 @@ export interface Job {
   /** ภาพก่อนเริ่มงาน (จากหน้ารับรถ) */
   photos?: UploadFile[];
   startedAt?: string; startedBy?: string;
+  /** ขั้นที่ค้างของงานที่อยู่ระหว่างบำรุงรักษา (1 ตรวจสภาพก่อนบำรุงรักษา · 2 สรุปงานก่อนปิดงาน) — ที่เก็บเก่าไม่มี: รับรถลงนามครบแล้ว = 2 (stepOf) */
+  step?: 1 | 2;
   close?: CloseForm;
   closedAt?: string; recordedBy?: string; kmAfter?: string; hoursAfter?: string;
   cannot?: CannotInfo;
@@ -282,12 +293,16 @@ export function oilTag(j: Job): OilTag | undefined {
   return !r || r.sel < 0 ? "wait" : r.sel === 1 ? "fail" : undefined;
 }
 /** ความคืบหน้า "เสร็จสิ้น x จาก n คัน · อยู่ระหว่างบำรุงรักษา y · บำรุงรักษาไม่ได้ z" — แผนจ้างนับแบบเดียวกัน (รอตรวจรับ · ส่งกลับแก้ไข ตัดออกพร้อม S11 4 พ.ย. 2569) */
-export function tripProgress(s: JobsState, t: JobTrip) {
+/* ความคืบหน้า + ตัวนับ "ตรวจแล้ว x/y" (R71 5 พ.ย. 2569): x = เสร็จสิ้น · y = รถทั้งหมด − บำรุงรักษาไม่ได้ (เจ้าของงาน "ทั้งหมด 10 แล้วมีคันที่ไม่ได้บำรุงรักษา จะเหลือ 9") · ใบจ้างนับแบบเดียวกัน */
+export function tripCount(s: JobsState, t: JobTrip) {
   const st = t.carIds.map((c) => getJob(s, t.id, c).status);
   const n = (k: JobStatus) => st.filter((x) => x === k).length;
-  const extra = ([["doing", "อยู่ระหว่างบำรุงรักษา"], ["cannot", "บำรุงรักษาไม่ได้"]] as [JobStatus, string][])
-    .map(([k, l]) => (n(k) ? " · " + l + " " + n(k) : "")).join("");
-  return "เสร็จสิ้น " + n("done") + " จาก " + t.carIds.length + " คัน" + extra;
+  return { done: n("done"), doing: n("doing"), cannot: n("cannot"), total: t.carIds.length - n("cannot") };
+}
+export const tripCounter = (s: JobsState, t: JobTrip) => { const c = tripCount(s, t); return "ตรวจแล้ว " + c.done + "/" + c.total; };
+export function tripProgress(s: JobsState, t: JobTrip) {
+  const c = tripCount(s, t);
+  return "เสร็จสิ้น " + c.done + " จาก " + c.total + " คัน" + (c.doing ? " · อยู่ระหว่างบำรุงรักษา " + c.doing : "") + (c.cannot ? " · บำรุงรักษาไม่ได้ " + c.cannot + " (ไม่นับรวม)" : "");
 }
 /** จำนวนรายการเมนู "…" ของรถ (MENU = ดูรายละเอียด แก้ไข ลบ · JOB_MENU) — ยังไม่เริ่ม 3 · อยู่ระหว่างบำรุงรักษา 2 · อื่นๆ 1 · แผนจ้างชุดเดียวกัน (มุมผู้รับจ้างตัดออกพร้อม S23) */
 export const menuCount = (st: JobStatus) => (st === "todo" ? 3 : st === "doing" ? 2 : 1);
@@ -347,11 +362,18 @@ export function deleteJobPart(t: JobTrip, c: TripCar, k: number) {
 /* เวลาตัวอย่างตามใบ (ตรวจเอง JOB_START/JOB_END · จ้าง HIRE_START) · ผู้เริ่มงาน/ผู้บันทึก = กบค. ทั้งสองแบบ (แผนจ้าง กบค. บันทึกแทนผู้รับจ้าง 4 พ.ย. 2569) */
 const timesOf = (t: JobTrip) => (t.mode === "hire" ? JOB_TIMES.hire : JOB_TIMES.self);
 /** S10 ยืนยันรับรถและเริ่มงาน → อยู่ระหว่างบำรุงรักษา (เวลา/ผู้เริ่มงานบันทึกเอง) */
+/** S10 กดเริ่มงาน = อยู่ระหว่างบำรุงรักษาทันที แล้วเข้า Step 1 (5 พ.ย. 2569 "เข้ามา step 1 ถือว่า อยู่ระหว่างบำรุงรักษา เลย") */
 export function startJob(t: JobTrip, carId: string) {
   patchJob(t.id, carId, (j) => ({
-    ...j, status: "doing", startedAt: timesOf(t).start, startedBy: PEOPLE.kbk,
+    ...j, status: "doing", step: 1, startedAt: timesOf(t).start, startedBy: PEOPLE.kbk,
     oilChoice: j.oilChoice ?? OIL_DEFAULT, photos: (j.receive?.photos ?? []).flat(), cannot: undefined,
   }));
+}
+/** ขั้นที่ค้าง: มี step = ตามนั้น · ที่เก็บเก่า (ก่อน 5 พ.ย.) อยู่ระหว่างบำรุงรักษา = รับรถลงนามครบแล้ว ⇒ ขั้น 2 */
+export const stepOf = (j: Job): 1 | 2 => j.step ?? (j.receive?.signers.every((s) => !!s.sig) ? 2 : 1);
+/** Step 1 ยืนยันการตรวจสภาพ → Step 2 (ภาพก่อนเริ่มงานเก็บเป็นภาพของงาน) */
+export function confirmInspect(t: JobTrip, carId: string) {
+  patchJob(t.id, carId, (j) => ({ ...j, step: 2, photos: (j.receive?.photos ?? []).flat() }));
 }
 /** S10 ปิดงาน → "เสร็จสิ้น" ทันที ทั้งตรวจเองและแผนจ้าง (ไม่มีส่งตรวจงาน) · ใส่ผลน้ำมันมาแล้วเก็บเป็นผลการทดสอบ (S12) */
 export function closeJob(t: JobTrip, carId: string, f: CloseForm) {

@@ -106,7 +106,7 @@ export function CannotPopup({ open, car, parts, used, reason, error, onReason, o
   onReason: (v: string) => void; onOk: () => void; onCancel: () => void;
 }) {
   return (
-    <PopupModal open={open} title={"บำรุงรักษาไม่ได้ · " + car.plate} width={800} ok="ยืนยัน" onOk={onOk} onCancel={onCancel}>
+    <PopupModal open={open} title={"บำรุงรักษาไม่ได้ · " + car.plate} sub="ระบุสาเหตุ และตรวจรายการอะไหล่ของงานนี้เพื่อยืนยันการส่งคืน" width={800} ok="ยืนยัน" onOk={onOk} onCancel={onCancel}>
       <TextArea LabelText="สาเหตุที่บำรุงรักษาไม่ได้" Text={reason} Placeholder="ระบุสาเหตุที่บำรุงรักษาไม่ได้" onChange={onReason}
         State={error ? "Error" : undefined} HelperText={error ? "กรุณาระบุสาเหตุที่บำรุงรักษาไม่ได้" : undefined} />
       <Section>
