@@ -3,7 +3,8 @@
    1. VehicleAndReporterInfo "รายละเอียดแผน" (npKv 10 ช่อง · มือถือ = กล่องแสดงข้อมูลแถวละ 2)
    2. Section ช่องไฟ 16: Section label "รถในแผน (n)" · Tabs ไตรมาส 1–4 (ป้ายจำนวนรถ) · (wh) Alert สถานะคลังของไตรมาสที่เปิด · Table รถของไตรมาส ดูอย่างเดียว (CARP_COLS 6 คอลัมน์ ไม่มีไอคอน)
    actions = ปุ่มใน Section label "รถในแผน" (Primary action Tertiary brand button · Secondary action Tertiary button) — หน้า กบค. ใส่ทางไปไตรมาสที่กำลังทำ
-   ไตรมาสที่ไม่มีรถ: ตารางว่าง (spec S2 — ยังไม่เคาะว่าใช้ Empty state ของ S1 หรือไม่) · มือถือ: Mobile table */
+   ไตรมาสที่ไม่มีรถ: ตารางว่าง (spec S2 — ยังไม่เคาะว่าใช้ Empty state ของ S1 หรือไม่) · มือถือ: Mobile table
+   แผนตัวอย่างที่ไม่มีรถรายคัน (MR Z7000001 ฯลฯ): ไตรมาสที่กำลังทำ = รถของหน้า "ไตรมาส n" (quarterCars · 10 คันของ S6) ค่าน้ำมัน เปลี่ยนล่าสุด อะไหล่ ตาม planDetailQ() ใน screens.js (5 พ.ย. 2569) */
 import type { ReactNode } from "react";
 import { VehicleAndReporterInfo } from "@/components/maintain-d/VehicleAndReporterInfo";
 import { Alert } from "@/components/vms/Alert";
@@ -13,11 +14,15 @@ import { TabItem } from "@/components/vms/TabItem";
 import { Table } from "@/components/vms/Table";
 import { Tabs } from "@/components/vms/Tabs";
 import { CARP_COLS } from "@/app/new/PlanForm";
-import { QUARTERS, type Plan } from "@/lib/mock/data";
-import { allocOf, carRow, carsIn, planKv, quarterCount, whQuarters } from "@/lib/mock/planFlow";
+import { OIL_OPTS, QUARTERS, type Plan } from "@/lib/mock/data";
+import { allocOf, carRow, carsIn, planId, planKv, quarterCount, whQuarters } from "@/lib/mock/planFlow";
+import { useMock } from "@/lib/mock/store";
+import { quarterCars } from "@/lib/mock/trips";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 
 const COLS = CARP_COLS.slice(0, 6);
+/* LAST_OIL ของ screens.js ตามลำดับรถตัวอย่างของไตรมาส (planDetailQ) */
+const SAMPLE_LAST_OIL = ["12/03/2568", "12/03/2568", "05/02/2567", "20/11/2566", "ไม่มีข้อมูล", "18/06/2568", "09/01/2566", "14/10/2568", "02/12/2567", "ไม่มีข้อมูล"];
 
 /* แถบสถานะคลังรายไตรมาส (S20 S.6 · S22 U.8) — แผนอนุมัติแล้ว/ดำเนินการ · ไตรมาสที่เปิดมีรถ */
 function WarehouseAlert({ plan, q }: { plan: Plan; q: number }) {
@@ -30,14 +35,20 @@ function WarehouseAlert({ plan, q }: { plan: Plan; q: number }) {
 
 export function PlanBody({ plan, q, onQ, wh, actions }: { plan: Plan; q: number; onQ: (q: number) => void; wh?: boolean; actions?: ReactNode }) {
   const mob = useBreakpoint() === "Mobile";
+  const mock = useMock();
   const a = allocOf(plan);
-  const rows = carsIn(a, q).map((i) => carRow(a, i));
+  const nowQ = Number(plan.nowQ.replace(/\D/g, "")) || 1;
+  const sample = !plan.alloc ? quarterCars(mock, planId(plan), nowQ) : [];   // แผนตัวอย่าง: รถของไตรมาสที่กำลังทำ
+  const count = (k: number) => (!plan.alloc && k === nowQ ? sample.length : quarterCount(plan, k));
+  const rows = plan.alloc ? carsIn(a, q).map((i) => carRow(a, i))
+    : q === nowQ ? sample.map((c, i) => [c.plate, c.model, c.owner, OIL_OPTS[i % 3 === 0 ? 1 : 0], SAMPLE_LAST_OIL[i] ?? "ไม่มีข้อมูล", (i % 4) + 1 + " รายการ"]) : [];
+  const total = plan.alloc ? plan.cars : [1, 2, 3, 4].reduce((n, k) => n + count(k), 0);
   return (
     <>
       <VehicleAndReporterInfo Title="รายละเอียดแผน" pairs={planKv(plan)} />
       <section className="flex flex-col gap-4">
-        <SectionLabel Title={"รถในแผน (" + plan.cars + ")"} Actions={actions} />
-        <Tabs>{QUARTERS.map((t, i) => <TabItem key={t} Text={t} Badge={quarterCount(plan, i + 1)} Active={q === i + 1} onClick={() => onQ(i + 1)} />)}</Tabs>
+        <SectionLabel Title={"รถในแผน (" + total + ")"} Actions={actions} />
+        <Tabs>{QUARTERS.map((t, i) => <TabItem key={t} Text={t} Badge={count(i + 1)} Active={q === i + 1} onClick={() => onQ(i + 1)} />)}</Tabs>
         {wh && plan.alloc && <WarehouseAlert plan={plan} q={q} />}
         {mob ? <MobileCards columns={COLS} rows={rows} /> : <Table columns={COLS} rows={rows} />}
       </section>

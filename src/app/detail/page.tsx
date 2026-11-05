@@ -1,12 +1,15 @@
 "use client";
 /* S19 S20 S22 · หน้ารายละเอียดแผน ฝั่ง กบค. (/detail/?id=Z7000004) — planDetail() ใน screens.js
+   หลังส่งอนุมัติ 3 สถานะ (รีวิวทีมออกแบบ 5 พ.ย. 2569 · planDetail o.readonly · userflow S1 "หน้า รายละเอียดแผน หลังส่งอนุมัติ"):
    Page header: "เลขที่ MR …" · ย้อนกลับ · Breadcrumbs บำรุงรักษาตามวาระ › ชื่อแผน · Badge outline = สถานะแผน
-     ปุ่มหัว (เฉพาะ กบค.): รออนุมัติ / ส่งกลับแก้ไข = Secondary danger button "ลบแผน" + Secondary button "แก้ไข" · อนุมัติแล้ว = "แก้ไข" อย่างเดียว · ดำเนินการแล้วขึ้นไป = ไม่มีปุ่ม (ซ่อน ไม่ disable)
+     ปุ่มหัว (เฉพาะ กบค.): รออนุมัติ = ดูอย่างเดียว ไม่มีปุ่ม (ขัดกับ S19 S20 — Q53 · ลบ/แก้ไขแผนรออนุมัติยังทำได้จากเมนู "…" ของรายการ)
+       · ส่งกลับแก้ไข = Secondary danger button "ลบแผน" + Secondary button "แก้ไข" (→ S19) · อนุมัติแล้ว = "แก้ไข" อย่างเดียว · ดำเนินการแล้วขึ้นไป = ไม่มีปุ่ม (ซ่อน ไม่ disable)
      มือถือ: ปุ่มอยู่ใต้หัวข้อ แบ่งเท่ากัน
    เนื้อหา ช่องไฟ 32: (ส่งกลับแก้ไข) Alert Error "ผู้อนุมัติส่งกลับให้แก้ไข" + เหตุผล → PlanBody (อนุมัติแล้ว/ดำเนินการ: แถบสถานะคลังของไตรมาสที่เปิด S22 U.8)
    ลบแผน → ยืนยันการลบแผน (S20 S.5) → กลับหน้ารายการ + toast "ลบแผนบำรุงรักษาสำเร็จ" · แก้ไข → /edit/ (S19)
-   ทางไปขั้นถัดไป (เจ้าของงาน 4 พ.ย. 2569 · ประกอบจากชิ้นไลบรารี — figma-spec/COMPOSED.md หัวข้อ ช.) เฉพาะ กบค.:
-     แท็บไตรมาสที่กำลังทำ (plan.nowQ) ของแผนอนุมัติแล้ว/ดำเนินการ: Section label "รถในแผน" Secondary action "ความคืบหน้าอะไหล่" (S4) · Primary action "แผนเดินทาง" (S6)
+   ทางไปขั้นถัดไป เฉพาะ กบค. · แผนอนุมัติแล้ว/ดำเนินการ (planDetailQ ใน screens.js · S6 ทางเข้า 5 พ.ย. 2569):
+     Section label "รถในแผน" Primary action (Tertiary brand button) "ไปหน้าไตรมาส n" ตามแท็บที่เปิด (Q54) → หน้า "ไตรมาส n" (/quarter/trips/)
+     Secondary action (Tertiary button) "ความคืบหน้าอะไหล่" (S4) เฉพาะแท็บไตรมาสที่กำลังทำ — ทางเข้าเดิม 4 พ.ย. (จอ Figma รอบ 5 พ.ย. ไม่มีทางเข้า S4 · BACKLOG ค.)
      ปุ่มหัว: ดำเนินการ + หน่วยงานยอมรับผลทั้งแผนแล้ว (S14 · closeout.accepted · เงื่อนไข S15) → "ส่งประวัติ" (S15) · ประวัติผ่านแล้ว/ปิดงานแล้ว → "รายงานผลการบำรุงรักษา" (S17) */
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
@@ -41,8 +44,8 @@ function Detail() {
   if (!hydrated || !plan) return null;
 
   const st = plan.status;
-  const canDelete = kbk && (st === "review" || st === "returned");
-  const canEdit = kbk && (st === "review" || st === "returned" || st === "approved");
+  const canDelete = kbk && st === "returned";
+  const canEdit = kbk && (st === "returned" || st === "approved");
   const size = mob ? "lg" : "md";
   const id = planId(plan);
   const nowQ = Number(plan.nowQ.replace(/\D/g, "")) || 1;
@@ -53,10 +56,10 @@ function Detail() {
     <SecondaryButton Text="แก้ไข" LeadingIconSwap="stylus-24-300-round" Size={size} onClick={() => { startEdit(plan); router.push("/edit/?id=" + id + "&from=detail"); }} />
   </> : canSend ? <PrimaryButton Text="ส่งประวัติ" Size={size} onClick={() => router.push("/closeout/history/?id=" + id)} />
     : canReport ? <PrimaryButton Text="รายงานผลการบำรุงรักษา" Size={size} onClick={() => router.push("/closeout/report/?id=" + id)} /> : undefined;
-  /* แท็บไตรมาสที่กำลังทำ: ความคืบหน้าอะไหล่ (S4) · แผนเดินทางของไตรมาส (S6) */
-  const qActions = kbk && (st === "approved" || st === "active") && q === nowQ ? <div className="flex items-center gap-3">
-    <TertiaryButton Text="ความคืบหน้าอะไหล่" onClick={() => router.push("/quarter/parts/?id=" + id + "&q=" + q)} />
-    <TertiaryBrandButton Text="แผนเดินทาง" onClick={() => router.push("/quarter/trips/?id=" + id + "&q=" + q)} />
+  /* ไปหน้าไตรมาส n (S6 ทางเข้า) · ความคืบหน้าอะไหล่ (S4) เฉพาะไตรมาสที่กำลังทำ */
+  const qActions = kbk && (st === "approved" || st === "active") ? <div className="flex items-center gap-3">
+    {q === nowQ && <TertiaryButton Text="ความคืบหน้าอะไหล่" onClick={() => router.push("/quarter/parts/?id=" + id + "&q=" + q)} />}
+    <TertiaryBrandButton Text={"ไปหน้าไตรมาส " + q} LeadingIconSwap="keyboard_arrow_right-20-400-round" onClick={() => router.push("/quarter/trips/?id=" + id + "&q=" + q)} />
   </div> : undefined;
 
   return (
