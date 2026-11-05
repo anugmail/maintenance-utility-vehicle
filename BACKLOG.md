@@ -87,4 +87,8 @@
 - ข้อนี้แก้ `src/components/` ได้เฉพาะ: เพิ่มโฟลเดอร์ `src/components/guide/` + 1 บรรทัดใน `shell/AppFrame.tsx` · ไฟล์เดิมอื่นที่แตะ: `app/scenarios/page.tsx` (ปุ่มดูเคส) · ที่เหลือเป็นไฟล์ใหม่ ⇒ rebase บน `review-5nov` ง่าย
 - เสร็จเมื่อ: เคส S1 S2 เดินครบทุกขั้นด้วยการกด UI จริง desktop 1440 / mobile 402 (`guide.js` ใน scratchpad `final/guide/`) · ชุดเดิมผ่าน 0 fail
 
-- [x] G1.1 ข้อมูลเคส S1 S2 + เริ่มเคส · [x] G1.2 แถบพาดู · [x] G1.3 หน้าเรื่อง + ปุ่มดูเคส · [ ] เทส guide.js + ชุดเดิม desktop/mobile
+- [x] G1.1 ข้อมูลเคส S1 S2 + เริ่มเคส · [x] G1.2 แถบพาดู · [x] G1.3 หน้าเรื่อง + ปุ่มดูเคส · [x] เทส guide.js + ชุดเดิม desktop/mobile
+- ผล 5 พ.ย. 2569 (scratchpad `final/guide/` พอร์ต 8150 · `suites.sh` · `serve.py` คิวเชื่อมต่อ 128 กัน ERR_CONNECTION_RESET): guide 18/18 · journey 18 · s24 11 · e1 8 · parts 3 · history 5 · menu 4 (มือถือ 1) · hire 11 · review5 24 · s25 10 · crawl 0 404 0 error — desktop และ mobile 0 fail 0 pageerror
+  · `review5.js` 11c แก้ตัวเทส: มือถือมีปุ่ม "ย้อนกลับ" 2 ปุ่ม (หัวหน้า + ท้ายฟอร์ม) ⇒ `.last()` (ล้มตั้งแต่ก่อนสาขานี้)
+  · ทดสอบล้มกลางทาง "Target page … has been closed" = มีตัวอื่น pkill Chrome headless ระหว่างรัน ⇒ รันชุดนั้นใหม่
+- ขยายไป scenario อื่น: เพิ่มเรื่องใน `GUIDES` (`src/lib/guide/scenarios.ts`) + เลขหน้าชีตใน `SHEET_PAGE` · ปุ่มดูเคสขึ้นเองใน /scenarios/ · ไม่ต้องแก้แถบ
