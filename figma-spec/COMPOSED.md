@@ -308,3 +308,9 @@ screens.js ไม่ได้วาดปุ่มไปขั้นถัดไ
 | ตำแหน่ง | ใต้แถบต้นแบบ หัวคอลัมน์เนื้อหา เหนือ Header navigation · sticky top-0 z-20 (ต่ำกว่า Sidebar 30 · dropdown 40 · popup/bottom sheet 50) · scroll-padding-top เท่าความสูงแถบ | ไม่เลื่อนหน้า = อยู่ในโฟลว์ ไม่ทับปุ่มของหน้า · desktop ไม่ซ้อน Sidebar ที่ sticky ซ้าย |
 | หน้าเรื่อง `/scenarios/guide/` | `Page header` (ชื่อเรื่อง + สิ่งที่ทำได้) · กล่องแสดงข้อมูล (`patterns/DisplayBox`: ผู้ใช้งาน · ชีตยืนยัน ทุกหน้าที่เรื่องใช้) · `Section header` + Badge จำนวนเคส · การ์ด `Mobile table` 1 เคส = 1 การ์ด (Lead text + Supporting text · จำนวนขั้น · ชีตยืนยันหน้าของเคส · Mobile table item Style=Action buttons "เริ่มเคสนี้") desktop เรียง 2 คอลัมน์ | Table ของไลบรารีไม่มีช่องปุ่มข้อความ (Action icons มีแต่ไอคอน) |
 | ปุ่ม "ดูเคส" ในหน้า `/scenarios/` | ไอคอนที่ 2 ของช่อง Action icons (school) ข้างปุ่มเปิด เฉพาะ scenario ที่มีเคส | หน้า `/scenarios/` เป็นสารบัญของต้นแบบ (ข้อ ก.) |
+
+## ท. เพิ่มรถจากแท็บไตรมาสที่ยังไม่มีรถ (R75)
+
+| จุด | ที่ทำ | เหตุผล |
+|---|---|---|
+| popup "เพิ่มรถเข้าไตรมาส n" ในฟอร์มแผน | ใช้ `quarter/_shared/TripCarPicker` ตัวเดียวกับ popup เพิ่มรถเข้าไตรมาสของ S6 (รับ emptySub เพิ่ม) · ไม่เลือกพื้นที่ = รถทุกคันที่ยังไม่อยู่ในไตรมาสใด (ตารางยาว ไม่แบ่งหน้าใน popup) | planForm o.qAdd → tripCarModal ใน screens.js · popup ของไลบรารีไม่มี pagination |

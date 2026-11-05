@@ -21,13 +21,13 @@ const COLS = [{ head: "ทะเบียน", width: 240 }, { head: "ยี่�
 const SEARCH = "ค้นหาทะเบียน, ยี่ห้อ/รุ่น, หน่วยงาน";
 
 /* title / sub / okText / emptyText = popup "เพิ่มรถเข้าไตรมาส n" ของ E.1 (qAddModal() → tripCarModal(o.cars o.title o.sub o.okText)) · taken = รถที่อยู่ในแผนเดินทางอื่น (แสดงแต่เลือกไม่ได้) */
-interface PickerProps { pool: TripCar[]; taken?: Record<string, string>; nowQ: string; onAdd: (ids: string[]) => void; onCancel: () => void; title?: string; sub?: string; okText?: string; emptyText?: string }
+interface PickerProps { pool: TripCar[]; taken?: Record<string, string>; nowQ: string; onAdd: (ids: string[]) => void; onCancel: () => void; title?: string; sub?: string; okText?: string; emptyText?: string; emptySub?: string }
 export function TripCarPicker({ open, ...p }: PickerProps & { open: boolean }) {
   if (!open) return null;
   return <Picker {...p} />;
 }
 
-function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่มรถเข้าแผนเดินทาง", sub: subText, okText = "เพิ่มเข้าแผนเดินทาง", emptyText }: PickerProps) {
+function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่มรถเข้าแผนเดินทาง", sub: subText, okText = "เพิ่มเข้าแผนเดินทาง", emptyText, emptySub }: PickerProps) {
   const mob = useBreakpoint() === "Mobile";
   const [q, setQ] = useState("");
   const [ticked, setTicked] = useState<string[]>([]);
@@ -40,7 +40,7 @@ function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่
   const rows = shown.map((c) => ({ key: c.id, text: c.plate, sub: taken[c.id] ? "อยู่ในแผนเดินทาง " + taken[c.id] : undefined, disabled: !!taken[c.id], cells: [c.model, c.owner] }));
 
   const body = !pool.length
-    ? (emptyText ? <EmptyStateDataEmpty Text={emptyText} Graphic="vehicle" /> : <EmptyStateDataEmpty Graphic="vehicle" Text={"รถทุกคันของ" + nowQ + " อยู่ในแผนเดินทางแล้ว"} SupportingText="ไม่มีรถที่เพิ่มเข้าแผนเดินทางนี้ได้" />)
+    ? (emptyText ? <EmptyStateDataEmpty Text={emptyText} SupportingText={emptySub} Graphic="vehicle" /> : <EmptyStateDataEmpty Graphic="vehicle" Text={"รถทุกคันของ" + nowQ + " อยู่ในแผนเดินทางแล้ว"} SupportingText="ไม่มีรถที่เพิ่มเข้าแผนเดินทางนี้ได้" />)
     : <>{search}<CheckTable columns={COLS} rows={rows} ticked={ticked} onTicked={setTicked} /></>;
 
   return (
