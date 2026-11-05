@@ -58,11 +58,14 @@ function Bar() {
   useEffect(() => {
     const el = box.current;
     if (!el) return;
-    const set = () => { document.documentElement.style.scrollPaddingTop = el.offsetHeight + "px"; };
+    /* --guide-bottom = ขอบล่างของแถบบนจอ ⇒ ToastHost (มุมบนขวา R60) ขยับลงใต้แถบ ไม่บังปุ่มปิดของ toast */
+    const root = document.documentElement.style;
+    const set = () => { root.scrollPaddingTop = el.offsetHeight + "px"; root.setProperty("--guide-bottom", Math.max(0, Math.round(el.getBoundingClientRect().bottom)) + "px"); };
     set();
     const ro = new ResizeObserver(set);
     ro.observe(el);
-    return () => { ro.disconnect(); document.documentElement.style.scrollPaddingTop = ""; };
+    window.addEventListener("scroll", set, { passive: true });
+    return () => { ro.disconnect(); window.removeEventListener("scroll", set); root.scrollPaddingTop = ""; root.removeProperty("--guide-bottom"); };
   }, [found, mob]);
 
   if (!g || !found) return null;
