@@ -86,3 +86,18 @@
 - ข้อ 9 แก้ `src/components/vms/` ได้เฉพาะเพิ่ม property ของ Figma ที่ยังไม่มี หน้าตาของเดิมไม่เปลี่ยน: `TableHeader` (Table title · Badge · ปุ่มใน Actions · Pill จำนวนตัวกรอง — ดัมป์ Table header 2096:36080) · `_button` (ชั้น Pill outline ของปุ่ม Filters ใน Table header) · `TableCell` (Checkbox State=Disabled ของ Lead checkbox)
 - ชุดทดสอบ: scratchpad `final/s24/` — เพิ่ม `review5.js` (ข้อ 9–15 · ภาพ `shots/review5/`) · `s25.js` (ภาพ `shots/s25/`) · แก้ journey s24 hire e1 ตามโฟลว์ใหม่ (ฉบับเดิม `*-pre-5nov.js`) · รัน `EXTRA="parts history menu hire review5 s25" bash all.sh`
 - ข้อ 16 เทส `s10steps.js` (ภาพ `shots/s10steps/`) · ฉบับเดิมของเทสที่แก้ `*-pre-s10.js` · คำถามรอเคาะอยู่หมวด ค.
+
+### จุดพัก โหมดพาดูทีละเรื่อง (สาขา `guide-mode` จาก `review-5nov` 65146e9 · ยังไม่ push)
+
+**ข้อ G1 โหมดพาดูทีละเรื่อง (นำร่อง S1 S2)** — เจ้าของงาน 5 พ.ย. 2569 _"อยากให้ ตอนที่ไป cf ลูกค้า เข้าใจเหมือนกับที่เราทำไป ไม่อยากให้เล่นไปเรื่อย ประมาณว่าตอนนี้จะให้ cf scen a เป็นแบบนี้ เขาก็เล่นได้"_ (หัวหน้างานเสนอ เจ้าของงานเห็นชอบ)
+- หน้าเรื่อง `/scenarios/guide/?s=<เรื่อง>` (ปุ่ม "ดูเคส" ข้างปุ่มเปิดใน `/scenarios/`): ชื่อเรื่องภาษาคน · ผู้ใช้งาน · เรื่องนี้ทำอะไรได้ · "ข้อยืนยันอยู่ในชีต หน้า …" ทุกหน้าที่เรื่องใช้ + หน้าของแต่ละเคสบนการ์ด (`SHEET_PAGE` รายเคส ใน `src/lib/guide/scenarios.ts` · หัวหน้างานให้เลขหน้า 5 พ.ย.: 1 รายการแผน · 2 สร้างและแก้ไขแผน · 3 จัดการอะไหล่ของรถ · 4 รายละเอียดแผน · 5 แผนรออนุมัติ) · รายการเคส + ปุ่ม "เริ่มเคสนี้"
+- เริ่มเคส (`/scenarios/guide/start/?case=`): ล้างข้อมูลจำลอง → ข้อมูลของเคส (ชุดเดิมทุกครั้ง) → ตั้งบทบาท → หน้าแรกของเคส
+- แถบพาดู (`src/components/guide/GuideBar`) ทุกหน้าระหว่างเคส ใต้แถบต้นแบบ: กำลังดู · ขั้นที่ i จาก n · สิ่งที่ให้ทำ · ก่อนหน้า ถัดไป เริ่มเคสใหม่ ออก · หน้านอกเรื่อง "หน้านี้อยู่นอกเรื่องที่กำลังดู" + กลับไปหน้าของขั้นนี้ · ไม่บล็อกการเปลี่ยนหน้า · เก็บใน sessionStorage `mt-guide-v1`
+- ข้อนี้แก้ `src/components/` ได้เฉพาะ: เพิ่มโฟลเดอร์ `src/components/guide/` + 1 บรรทัดใน `shell/AppFrame.tsx` · ไฟล์เดิมอื่นที่แตะ: `app/scenarios/page.tsx` (ปุ่มดูเคส) · ที่เหลือเป็นไฟล์ใหม่ ⇒ rebase บน `review-5nov` ง่าย
+- เสร็จเมื่อ: เคส S1 S2 เดินครบทุกขั้นด้วยการกด UI จริง desktop 1440 / mobile 402 (`guide.js` ใน scratchpad `final/guide/`) · ชุดเดิมผ่าน 0 fail
+
+- [x] G1.1 ข้อมูลเคส S1 S2 + เริ่มเคส · [x] G1.2 แถบพาดู · [x] G1.3 หน้าเรื่อง + ปุ่มดูเคส · [x] เทส guide.js + ชุดเดิม desktop/mobile
+- ผล 5 พ.ย. 2569 (scratchpad `final/guide/` พอร์ต 8150 · `suites.sh` · `serve.py` คิวเชื่อมต่อ 128 กัน ERR_CONNECTION_RESET): guide 18/18 · journey 18 · s24 11 · e1 8 · parts 3 · history 5 · menu 4 (มือถือ 1) · hire 11 · review5 24 · s25 10 · crawl 0 404 0 error — desktop และ mobile 0 fail 0 pageerror
+  · `review5.js` 11c แก้ตัวเทส: มือถือมีปุ่ม "ย้อนกลับ" 2 ปุ่ม (หัวหน้า + ท้ายฟอร์ม) ⇒ `.last()` (ล้มตั้งแต่ก่อนสาขานี้)
+  · ทดสอบล้มกลางทาง "Target page … has been closed" = มีตัวอื่น pkill Chrome headless ระหว่างรัน ⇒ รันชุดนั้นใหม่
+- ขยายไป scenario อื่น: เพิ่มเรื่องใน `GUIDES` (`src/lib/guide/scenarios.ts`) + เลขหน้าชีตใน `SHEET_PAGE` · ปุ่มดูเคสขึ้นเองใน /scenarios/ · ไม่ต้องแก้แถบ

@@ -7,6 +7,8 @@ import { MobileCards } from "@/components/vms/MobileTable";
 import { PageHeader } from "@/components/vms/PageHeader";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { Table, type TableColumn, type TableValue } from "@/components/vms/Table";
+import { guideByCode } from "@/lib/guide/scenarios";
+import { scenarioHref } from "@/lib/guide/start";
 import { SCENARIOS } from "@/lib/scenarios";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 
@@ -16,17 +18,20 @@ const COLS: TableColumn[] = [
   { head: "ช่วงงาน", width: 220 },
   { head: "บทบาท", width: 200 },
   { head: "สถานะ", width: 130, Style: "Badge" },
-  { head: "", width: 72, Style: "Action icons" },
+  { head: "", width: 112, Style: "Action icons" },
 ];
 
 export default function Scenarios() {
   const router = useRouter();
   const mob = useBreakpoint() === "Mobile";
   /* แถวที่ตัดออก: ชื่อ + บรรทัดรองเหตุผล · ป้าย "ตัดออก" · ปุ่มเปิดพาไปหน้าที่ใช้แทน (S10 แผนจ้าง) */
+  /* โหมดพาดูทีละเรื่อง (นำร่อง S1 S2) — ปุ่ม "ดูเคส" ข้างปุ่มเปิด → หน้าเรื่อง /scenarios/guide/ */
+  const guideAction = (id: string) => { const g = guideByCode(id); return g ? [{ IconSwap: "school-24-300-round", label: "ดูเคส " + id, onClick: () => router.push(scenarioHref(g.key)) }] : []; };
   const rows: TableValue[][] = SCENARIOS.map((s) => [
     s.id, s.cut ? { text: s.name, sub: s.cut } : s.name, s.phase, s.role,
     { pills: [s.cut ? ["ตัดออก", "Error"] : s.href ? ["พร้อมใช้", "Success"] : ["เร็วๆ นี้", "Gray"]] },
-    { actions: [{ IconSwap: "quick_reference_all-24-300-round", label: s.cut ? "เปิด S10 แผนจ้าง (แทน " + s.id + ")" : "เปิด " + s.id, onClick: () => router.push(s.href ?? "/soon/?s=" + s.id) }] },
+    { actions: [{ IconSwap: "quick_reference_all-24-300-round", label: s.cut ? "เปิด S10 แผนจ้าง (แทน " + s.id + ")" : "เปิด " + s.id, onClick: () => router.push(s.href ?? "/soon/?s=" + s.id) },
+      ...guideAction(s.id)] },
   ]);
   return (
     <AppFrame>
