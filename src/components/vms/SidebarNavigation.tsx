@@ -7,6 +7,8 @@
              Menu = Nav item ช่องไฟ 8 · กลุ่มที่มีเมนูย่อย = Nav item (ลูกศร keyboard_arrow_down / เปิดแล้ว keyboard_arrow_up) + sub items (Nav list item ช่องไฟ 4) ห่างหัวกลุ่ม 4
              Footer menu = Nav item ช่องไฟ 8 (แถวผู้ใช้: Avatar + Show Description + ไอคอน logout)
    เมนูย่อย "บำรุงรักษาตามวาระ" ใต้ "งานซ่อมและบำรุงรักษา" เพิ่มตามเจ้าของงาน 4 พ.ย. 2569 (ทางเข้าหน้ารายการแผน = รากเว็บ) — ดู figma-spec/COMPOSED.md
+   เมนูย่อย "พาดูทีละเรื่อง" (/guide/ · ของต้นแบบ ไม่มีจอใน Figma) ต่อจาก "บำรุงรักษาตามวาระ" เพิ่มตามเจ้าของงาน 5 พ.ย. 2569 _"สร้างเป็นอีกเมนู เป็นเมนูย่อยของ บำรุงรักษาตามวาระก็ได้"_
+     ไลบรารีมีเมนู 2 ชั้น (Nav item → Nav list item) ไม่มีชั้นที่ 3 ⇒ เป็น Nav list item ตัวถัดไปในกลุ่มเดียวกัน ไม่ย่อหน้าเพิ่ม (COMPOSED.md ท.)
    เมนูอื่นแสดงให้เห็นแต่ไม่พาไปไหน (ต้นแบบมีเฉพาะงานบำรุงรักษาตามวาระ)
    Avatar: พื้นม่วงอ่อน + ภาพ ไม่ผูก Variable ไม่มี token ตรง → purple-200 ใกล้สุด (COMPOSED.md ข.) · เส้นขอบตาม sws: Collapsed ขวา/ล่าง/ซ้าย 1 · Expanded ขวา 1 (Color/border/secondary = gray-200) · Brand logo ใช้ pea-logo.svg (COMPOSED.md ค.) */
 import { useState } from "react";
@@ -22,6 +24,8 @@ export interface SideGroup { IconSwap: string; Text: string; items?: SideLink[];
 export interface SideFooter { IconSwap: string; Text: string; SupportingText?: string; TrailingIconSwap?: string; avatar?: boolean }
 
 export const MT_LABEL = "บำรุงรักษาตามวาระ";
+/** เมนูย่อยของต้นแบบ: เมนูพาดูทีละเรื่อง /guide/ (ต่อจาก บำรุงรักษาตามวาระ) */
+export const GUIDE_LABEL = "พาดูทีละเรื่อง";
 
 export const SIDEBAR_MENU: SideGroup[] = [
   { IconSwap: "home-24-300-round", Text: "หน้าหลัก" },
@@ -29,7 +33,7 @@ export const SIDEBAR_MENU: SideGroup[] = [
   { IconSwap: "traffic_jam-24-300-round", Text: "จัดการคำขอใช้ยานพาหนะ", items: [{ Text: "ตรวจสอบและจัดการคำขอ" }, { Text: "อนุมัติใช้ยานพาหนะ" }] },
   { IconSwap: "database-24-300-round", Text: "ข้อมูลพนักงานและยานพาหนะ", items: [{ Text: "ผู้ดูแลยานพาหนะ" }, { Text: "ข้อมูลพนักงานขับรถ" }, { Text: "ข้อมูลยานพาหนะ" }, { Text: "กลุ่มยานพาหนะ" }, { Text: "บริหารสัญญา" }] },
   { IconSwap: "ev_station", Text: "การอัดประจุไฟฟ้า", items: [{ Text: "สถานีอัดประจุไฟฟ้า" }, { Text: "อัตราค่าไฟฟ้า" }, { Text: "ค่าใช้จ่ายอัดประจุยานพาหนะ" }, { Text: "บันทึกการอัดประจุ Wall Charger" }, { Text: "ต้นทุนและค่าใช้จ่ายในการอัดประจุ" }] },
-  { IconSwap: "build", Text: "งานซ่อมและบำรุงรักษา", items: [{ Text: "ภาพรวมการซ่อมบำรุง" }, { Text: "ตารางบำรุงรักษา" }, { Text: "นัดหมายบำรุงรักษา" }, { Text: "งานซ่อม" }, { Text: "รถทดแทน" }, { Text: MT_LABEL, href: "/" }] },
+  { IconSwap: "build", Text: "งานซ่อมและบำรุงรักษา", items: [{ Text: "ภาพรวมการซ่อมบำรุง" }, { Text: "ตารางบำรุงรักษา" }, { Text: "นัดหมายบำรุงรักษา" }, { Text: "งานซ่อม" }, { Text: "รถทดแทน" }, { Text: MT_LABEL, href: "/" }, { Text: GUIDE_LABEL, href: "/guide/" }] },
   { IconSwap: "e911_emergency", Text: "จัดการเหตุการณ์", items: [{ Text: "จัดการเหตุรถเสีย" }, { Text: "จัดการเหตุอุบัติเหตุ" }] },
   { IconSwap: "news", Text: "รายงาน" },
 ];

@@ -9,11 +9,13 @@
        — เจ้าของงาน 5 พ.ย. 2569 _"เอาตรงที่เป็น hambuger ออก … อันนี้บนเว็บนะ"_ (ต่างจาก R1 ของปลั๊กอินที่ให้ desktop ใช้ Tablet · COMPOSED.md)
    Mobile (402 · < 768): ไม่มี Sidebar · ปุ่ม menu ของ Header navigation Breakpoint=Mobile เปิด Sidebar navigation State=Expanded จากซ้าย ทับ Background overlay (ประกอบ — ดู figma-spec/COMPOSED.md)
      Page ขอบใน 16 ช่องไฟ 24
+   เมนูที่ Active ใน Sidebar: "พาดูทีละเรื่อง" ที่ /guide/ และหน้าเรื่อง /scenarios/guide/ ที่เปิดจากเมนูนั้น (from=menu) · หน้าอื่น "บำรุงรักษาตามวาระ"
    บนสุดมีแถบต้นแบบ (PrototypeBar) · toast ผ่าน ToastHost */
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { BackgroundOverlay } from "@/components/vms/BackgroundOverlay";
 import { HeaderNavigation } from "@/components/vms/HeaderNavigation";
-import { SidebarNavigation } from "@/components/vms/SidebarNavigation";
+import { GUIDE_LABEL, MT_LABEL, SidebarNavigation } from "@/components/vms/SidebarNavigation";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useOutside } from "@/lib/useOutside";
 import { GuideBar } from "@/components/guide/GuideBar";
@@ -38,6 +40,12 @@ export function AppFrame({ children, bell }: { children: ReactNode; bell?: boole
   }, [drawer, pinned, unpin]);
   useEffect(() => { if (!mob) setDrawer(false); }, [mob]);
 
+  /* from=menu อ่านจาก location.search หลังโหลด (useSearchParams ต้องมี Suspense ครอบทุกหน้า) */
+  const path = (usePathname() || "/").replace(/\/$/, "");
+  const [fromMenu, setFromMenu] = useState(false);
+  useEffect(() => { setFromMenu(new URLSearchParams(window.location.search).get("from") === "menu"); }, [path]);
+  const sideActive = path === "/guide" || (path.startsWith("/scenarios/guide") && fromMenu) ? GUIDE_LABEL : MT_LABEL;
+
   const expanded = pinned || hover;
   return (
     <div className="flex min-h-screen flex-col bg-white">
@@ -45,7 +53,7 @@ export function AppFrame({ children, bell }: { children: ReactNode; bell?: boole
       <div className="flex flex-1">
         {!mob && (
           <div ref={side} className="relative z-30 w-20 shrink-0" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-            <SidebarNavigation State={expanded ? "Expanded" : "Collapsed"} onToggle={() => setPinned(!pinned)} toggleLabel={pinned ? "ย่อเมนู" : "ค้างเมนูไว้"}
+            <SidebarNavigation State={expanded ? "Expanded" : "Collapsed"} active={sideActive} onToggle={() => setPinned(!pinned)} toggleLabel={pinned ? "ย่อเมนู" : "ค้างเมนูไว้"}
               className="sticky top-0 h-screen overflow-y-auto" />
           </div>
         )}
@@ -59,7 +67,7 @@ export function AppFrame({ children, bell }: { children: ReactNode; bell?: boole
         <>
           <BackgroundOverlay onClick={() => setDrawer(false)} />
           <div role="dialog" aria-modal="true" aria-label="เมนูหลัก" className="fixed inset-y-0 left-0 z-50 flex max-w-full">
-            <SidebarNavigation State="Expanded" onToggle={() => setDrawer(false)} toggleLabel="ปิดเมนู" className="h-dvh overflow-y-auto" />
+            <SidebarNavigation State="Expanded" active={sideActive} onToggle={() => setDrawer(false)} toggleLabel="ปิดเมนู" className="h-dvh overflow-y-auto" />
           </div>
         </>
       )}

@@ -18,7 +18,7 @@ export function PrototypeBar() {
   return (
     <div data-proto-bar className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-gray-200 bg-gray-50 px-4 py-1">
       <Link href="/scenarios/" className="inline-flex items-center gap-1 text-xs font-semibold text-brand-900"><Ms name="home-20-300-round" size={16} />ต้นแบบบำรุงรักษาตามวาระ</Link>
-      {/* เมนูพาดูทีละเรื่อง (G1 · เจ้าของงาน 5 พ.ย. 2569 "อยากให้มีเมนูแยกออกมาเลย ว่า เป็นเรื่องที่แยก scen") — ของต้นแบบ จึงอยู่ที่แถบนี้ ไม่อยู่ใน Sidebar ของระบบ */}
+      {/* เมนูพาดูทีละเรื่อง (G1 · เจ้าของงาน 5 พ.ย. 2569 "อยากให้มีเมนูแยกออกมาเลย ว่า เป็นเรื่องที่แยก scen") — ของต้นแบบ อยู่ที่แถบนี้ และเป็นเมนูย่อยต่อจาก "บำรุงรักษาตามวาระ" ใน Sidebar ด้วย (เจ้าของงาน 5 พ.ย. 2569 "สร้างเป็นอีกเมนู เป็นเมนูย่อยของ บำรุงรักษาตามวาระก็ได้") */}
       <Link href="/guide/" data-guide-menu className="inline-flex items-center gap-1 text-xs font-semibold text-brand-900"><Ms name="school-20-300-round" size={16} />พาดูทีละเรื่อง</Link>
       <span className="text-xs text-gray-600">บทบาท</span>
       <InputDropdown Label={false} LabelText="บทบาท" Text={role} open={open} onOpenChange={setOpen} className="w-52">
