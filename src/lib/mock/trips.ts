@@ -75,7 +75,7 @@ function writeQuarter(planId: string, q: number, fn: (e: QuarterEdit) => Quarter
     const plans = s.plans.map((p) => {
       if (p.mr !== "MR " + planId || !allocFn || !hasAlloc(p)) return p;
       const alloc = allocFn({ ...p.alloc }), keep = (o?: Record<number, unknown>) => o && Object.fromEntries(Object.entries(o).filter(([k]) => alloc[Number(k)] != null));
-      return { ...p, alloc, picks: keep(p.picks) as Plan["picks"], qty: keep(p.qty) as Plan["qty"], manual: keep(p.manual) as Plan["manual"], cars: Object.keys(alloc).length, perQ: perQOf(alloc) };
+      return { ...p, alloc, picks: keep(p.picks) as Plan["picks"], qty: keep(p.qty) as Plan["qty"], manual: keep(p.manual) as Plan["manual"], oils: keep(p.oils) as Plan["oils"], oilSpec: keep(p.oilSpec) as Plan["oilSpec"], cars: Object.keys(alloc).length, perQ: perQOf(alloc) };
     });
     return { ...s, plans, qcars: { ...s.qcars, [qKey(planId, q)]: fn(qEditOf(s, planId, q)) } };
   });

@@ -19,8 +19,8 @@ import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionLabel } from "@/components/vms/SectionLabel";
 import type { TableColumn } from "@/components/vms/Table";
-import { NOW_CARS, WD, WH_ACK_AT, mrOf, partsSummary, planOf, putQuarter, quarterOf, setPlanStatus, shortOf } from "@/lib/mock/closeout";
-import { PARTS } from "@/lib/mock/data";
+import { NOW_CARS, SAMPLE_NEED, WD, WH_ACK_AT, lackOf, mrOf, partsSummary, planOf, putQuarter, quarterOf, setPlanStatus, type NeedRow } from "@/lib/mock/closeout";
+import { allocOf, carsIn, quarterRows } from "@/lib/mock/planFlow";
 import { useSeed } from "@/lib/mock/seedB";
 import { useMock, useRole } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
@@ -41,23 +41,28 @@ function PartsProgress() {
   const id = sp.get("id") ?? "Z7000001", q = Number(sp.get("q") ?? 1);
   const sim = sp.get("sim");
   const down = sim === "down";
-  const picked = sim === "empty" ? [] : PARTS.map((_, i) => i);
   const st = quarterOf(mock, id, q);
   const [confirm, setConfirm] = useState(false);
   const mount = useRef(Math.random().toString(36).slice(2));
   const back = useBack(planDetailHref(id));
   const nowQ = "ไตรมาส " + q;
   const plan = planOf(mock, id);
+  /* แผนที่จัดรถรายคัน = ยอดรวมจากรถทีละคัน (ชุดเดียวกับฟอร์มแผนและหน้าคลัง S22 · BACKLOG ข้อ 11) · แผนตัวอย่าง = PARTS ของ screens.js */
+  const alloc = plan?.alloc && Object.keys(plan.alloc).length ? allocOf(plan) : null;
+  const need: NeedRow[] = sim === "empty" ? [] : alloc ? quarterRows(alloc, q).map((r) => ({ key: r.key, pi: r.pi, name: r.name, code: r.code, unit: r.unit, qty: r.qty, stock: r.stock })) : SAMPLE_NEED;
+  const shownNeed = need;
+  const nCars = alloc ? carsIn(alloc, q).length : NOW_CARS;
 
   /* C.3 → C.4: ของที่รอจัดซื้อเข้าคลังแล้ว เมื่อกลับมาเปิดหน้าใหม่ (หน้าที่กดยืนยันยังเห็นผล "ไม่พอ") */
   useEffect(() => {
     if (st.result === "short" && st.mount && st.mount !== mount.current) putQuarter(id, q, { result: "ok" });
   }, [st.result, st.mount, id, q]);
 
-  const sum = partsSummary();
-  const status = (i: number) => (st.result === "ok" ? WD.taken : st.result === "short" ? (shortOf(i) > 0 ? WD.buy : WD.reserved) : WD.wait);
-  const rows = picked.map((i) => [PARTS[i].name, PARTS[i].code, String(PARTS[i].planQty), PARTS[i].unit, down ? "-" : String(PARTS[i].stock),
-    down || st.result === "ok" || !shortOf(i) ? "-" : String(shortOf(i)), { pills: [status(i)] }]);
+  const sum = partsSummary(shownNeed);
+  const status = (r: NeedRow) => (st.result === "ok" ? WD.taken : st.result === "short" ? (lackOf(r) > 0 ? WD.buy : WD.reserved) : WD.wait);
+  const rows = shownNeed.map((r) => [r.sub ? { text: r.name, sub: r.sub } : r.name, r.code, String(r.qty), r.unit, down || r.stock == null ? "-" : String(r.stock),
+    down || st.result === "ok" || !lackOf(r) ? "-" : String(lackOf(r)), { pills: [status(r)] }]);
+  const picked = shownNeed;
 
   const withdraw = () => {
     setConfirm(false);
@@ -75,10 +80,10 @@ function PartsProgress() {
       <PageHeader Title={"ความคืบหน้าอะไหล่ · " + nowQ} onBack={back}
         crumbs={quarterCrumbs(id, plan?.name ?? "", q, "ความคืบหน้าอะไหล่")} />
       <Content>
-        <Alert Color="Info" Text={"คลังรับทราบรายการอะไหล่" + nowQ + "แล้ว"} SupportingText={"รถ " + NOW_CARS + " คันของไตรมาสนี้ · คลังรับทราบ " + WH_ACK_AT} />
+        <Alert Color="Info" Text={"คลังรับทราบรายการอะไหล่" + nowQ + "แล้ว"} SupportingText={"รถ " + nCars + " คันของไตรมาสนี้ · คลังรับทราบ " + WH_ACK_AT} />
         {down && <Alert Color="Error" Text="เชื่อมต่อ Smart Inventory ไม่ได้" SupportingText="ยังดูคงเหลือและเบิก/จองไม่ได้ ลองใหม่อีกครั้ง" />}
         {st.result === "short" && <Alert Color="Warning" Text={"จองได้ " + sum.ok + " รายการ · คงเหลือไม่พอ " + sum.short + " รายการ"}
-          SupportingText={"ไส้กรองไฮโดรลิก ขาด " + shortOf(1) + " ชิ้น · ไส้กรองเชื้อเพลิง ขาด " + shortOf(4) + " ชิ้น — รอจัดซื้อแล้วเข้าคลัง"} />}
+          SupportingText={shownNeed.filter((r) => lackOf(r)).map((r) => r.name + " ขาด " + lackOf(r) + " " + r.unit).join(" · ") + " — รอจัดซื้อแล้วเข้าคลัง"} />}
         {st.result === "ok" && <Alert Color="Success" Text="เบิกอะไหล่ครบแล้ว" SupportingText={"เบิกจาก Smart Inventory " + picked.length + " รายการ · ไปทำแผนเดินทางของไตรมาสได้"} />}
         <Section>
           <SectionLabel Title={"อะไหล่ที่ต้องเบิกใน" + nowQ + (picked.length ? " (" + picked.length + ")" : "")} />
@@ -95,7 +100,7 @@ function PartsProgress() {
         ? <ConfirmDialog spec={confirm ? { title: "ยืนยันการเบิก/จองอะไหล่", sub: "เบิกจากคลัง " + sum.ok + " รายการ · คงเหลือไม่พอรอจัดซื้อ " + sum.short + " รายการ", ok: "ยืนยันเบิก/จอง" } : null}
             onCancel={() => setConfirm(false)} onOk={withdraw} />
         : <SummaryRequestedParts open={confirm} Title="สรุปรายการเบิก/จองอะไหล่" cancel="ยกเลิก" ok="ยืนยันเบิก/จอง" onCancel={() => setConfirm(false)} onOk={withdraw}
-            info={<ContentItemRow perRow={4} items={[["แผน", plan?.name ?? "-"], ["เลขที่ MR", mrOf(id)], ["ไตรมาส", nowQ], ["จำนวนรถ", NOW_CARS + " คัน"]]} />}
+            info={<ContentItemRow perRow={4} items={[["แผน", plan?.name ?? "-"], ["เลขที่ MR", mrOf(id)], ["ไตรมาส", nowQ], ["จำนวนรถ", nCars + " คัน"]]} />}
             groups={sum.groups} totals={sum.totals} />}
     </>
   );

@@ -35,6 +35,9 @@ export interface Plan {
   /* S21 อะไหล่ของรถ: จำนวนต่อคันที่แก้ไว้ (ไม่มี = CAR_QTY) · อะไหล่ที่ กบค. ระบุเอง (การ์ด "รายการเพิ่มเติม") */
   qty?: Record<number, Record<number, number>>;   // ลำดับรถ → ลำดับอะไหล่ → จำนวน
   manual?: Record<number, ManualPart[]>;          // ลำดับรถ → รายการเพิ่มเติม
+  /* S21 น้ำมันไฮโดรลิกรายคัน (5 พ.ย. 2569): ลำดับใน OIL_PLAN_OPTS (ไม่มี = ยังไม่กำหนด) · เบอร์ รหัส ลิตร เมื่อเปลี่ยนน้ำมัน (ลิตร = qty[รถ][0] · picks มี 0) */
+  oils?: Record<number, number>;
+  oilSpec?: Record<number, OilSpec>;
   /* S2 S19 S22 วันที่และผลการพิจารณา */
   sentAt?: string;          // วันที่ส่ง (ส่งอนุมัติใหม่หลังแก้ไข S19) · ไม่มี = created
   approvedAt?: string;      // วันที่อนุมัติ (S2)
@@ -42,8 +45,17 @@ export interface Plan {
   ack?: Record<number, string>;   // ไตรมาสที่คลังรับทราบแล้ว → วันที่ (S22) · ไม่มี = ใช้ค่าตัวอย่าง WH_ACK / WH_LIST
 }
 
-/* ManualPart — อะไหล่ที่ กบค. ระบุเอง (S21 · MANUAL ของ screens.js) · ราคาเก็บเป็นข้อความตามช่องกรอก */
-export interface ManualPart { name: string; code: string; price: string; qty: number }
+/* ManualPart — อะไหล่ที่ กบค. ระบุเอง (S21 · MANUAL + MANUAL_FIELDS ของ screens.js 5 พ.ย. 2569: ชื่อ · ยี่ห้อ · รุ่น · รหัส (ถ้ามี) · จำนวน · หน่วย)
+   price = ราคาของการ์ด "รายการเพิ่มเติม" แบบเดิม (ที่เก็บเก่า) — ฟอร์มใหม่ไม่มีช่องราคา */
+export interface ManualPart { name: string; code: string; qty: number; brand?: string; model?: string; unit?: string; price?: string }
+/* น้ำมันไฮโดรลิกของรถ (S21 · carPartsScreen) — JOB_OIL_OPTS · OIL_GRADES · OIL_SPEC ของ screens.js */
+export const OIL_PLAN_OPTS = ["เก็บตัวอย่าง", "เปลี่ยนน้ำมัน", "เก็บตัวอย่างและเปลี่ยน"];
+export const OIL_GRADES = ["ISO VG 32", "ISO VG 46", "ISO VG 68"];
+export interface OilSpec { grade: string; code: string; litre: string }
+export const OIL_SPEC: OilSpec = { grade: "ISO VG 46", code: "OL-0011", litre: "30" };
+export const oilChanges = (k?: number | null) => k === 1 || k === 2;
+/* PART_BM — ยี่ห้อ · รุ่น ตามลำดับ PARTS (ค่าสมมติของ screens.js) */
+export const PART_BM: [string, string][] = [["PTT", "Hydraulic AW 46"], ["Donaldson", "P550388"], ["Sakura", "C-1809"], ["Sakura", "A-1033"], ["Isuzu", "8-98159693-0"]];
 
 const P = (a: [string, string, string, string, string, PlanStatus, string, string, string, string]): Plan =>
   ({ mr: a[0], name: a[1], region: a[2], nowQ: a[3], cars: Number(a[4]), status: a[5], created: a[6], type: a[7], year: a[8], perQ: a[9] });

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useSyncExternalStore } from "react";
 import type { BadgeOutlineColor } from "@/components/vms/BadgeOutline";
 import type { PillColor } from "@/components/vms/PillOutline";
-import { CAND, DISTRICTS, LAST_OIL, NEW_PLAN_DATE, OIL_OPTS, PARTS, PART_PRICE, PLAN_CREATOR, REGIONS, RETURN_REASON, WH_ACK, WH_LIST, dCode, type ManualPart, type Plan, type PlanStatus } from "./data";
+import { CAND, DISTRICTS, LAST_OIL, NEW_PLAN_DATE, OIL_OPTS, OIL_PLAN_OPTS, OIL_SPEC, PARTS, PART_PRICE, PLAN_CREATOR, REGIONS, RETURN_REASON, WH_ACK, WH_LIST, dCode, type ManualPart, type Plan, type PlanStatus } from "./data";
 import { CAR_PICK } from "./data";
 import { allocScope, carQty, inQuarter, planScope, quarterParts, type Draft } from "./plan";
 import { accPlans, accRows } from "./acceptance";
@@ -50,19 +50,20 @@ export function useRoleGuard(allowed: readonly Role[]) {
 export const badgeOf = (c: PillColor): BadgeOutlineColor => (c === "Warning" || c === "Info" ? "Brand" : c === "Gray" || c === "Success" || c === "Error" || c === "Brand" ? c : "Gray");
 
 /* ---------- แผน ↔ ฟอร์ม ---------- */
-type Alloc = Pick<Draft, "alloc" | "picks" | "qty" | "manual">;
-export const allocOf = (p: Plan): Alloc => ({ alloc: p.alloc ?? {}, picks: p.picks ?? {}, qty: p.qty, manual: p.manual });
+type Alloc = Pick<Draft, "alloc" | "picks" | "qty" | "manual" | "oils" | "oilSpec">;
+export const allocOf = (p: Plan): Alloc => ({ alloc: p.alloc ?? {}, picks: p.picks ?? {}, qty: p.qty, manual: p.manual, oils: p.oils, oilSpec: p.oilSpec });
 
 export function draftFromPlan(p: Plan): Draft {
   const regions = p.regions ?? REGIONS.filter((r) => p.region.split(", ").includes(r));
   return {
     name: p.name, year: p.year, regions, districts: p.districts ?? [], types: p.types ?? p.type.split(", ").filter(Boolean),
     alloc: { ...(p.alloc ?? {}) }, picks: { ...(p.picks ?? {}) }, qty: p.qty ? { ...p.qty } : undefined, manual: p.manual ? { ...p.manual } : undefined,
+    oils: p.oils ? { ...p.oils } : undefined, oilSpec: p.oilSpec ? { ...p.oilSpec } : undefined,
     q: 1, editOf: p.mr,
   };
 }
 /* ค่าที่เทียบว่าแก้ไขแล้วหรือยัง (ไม่นับแท็บที่เปิด) */
-export const draftKey = (d: Draft) => JSON.stringify([d.name, d.year, d.regions, d.districts, d.types, d.alloc, d.picks, d.qty ?? {}, d.manual ?? {}]);
+export const draftKey = (d: Draft) => JSON.stringify([d.name, d.year, d.regions, d.districts, d.types, d.alloc, d.picks, d.qty ?? {}, d.manual ?? {}, d.oils ?? {}, d.oilSpec ?? {}]);
 
 /* บันทึกการแก้ไข (S19): กลับเป็นรออนุมัติทุกสถานะ เลขที่ MR เดิม */
 export function planWithDraft(p: Plan, d: Draft, today: string): Plan {
@@ -72,12 +73,27 @@ export function planWithDraft(p: Plan, d: Draft, today: string): Plan {
   return {
     ...rest, name: d.name.trim(), ...allocScope(d.alloc), cars: Object.keys(d.alloc).length,
     perQ: per.map((n, i) => "ไตรมาส " + (i + 1) + ": " + n).join(" · "), status: "review", sentAt: today,
-    regions: d.regions, districts: d.districts, types: d.types, alloc: d.alloc, picks: d.picks, qty: d.qty, manual: d.manual,
+    regions: d.regions, districts: d.districts, types: d.types, alloc: d.alloc, picks: d.picks, qty: d.qty, manual: d.manual, oils: d.oils, oilSpec: d.oilSpec,
   };
 }
 
 /* ---------- รถและอะไหล่ ---------- */
-export const oilOf = (a: Alloc, i: number) => OIL_OPTS[(a.picks[i] || []).includes(0) ? 1 : 0];
+/* น้ำมันไฮโดรลิกของรถ: กำหนดในหน้า S21 แล้ว (oils) = OIL_PLAN_OPTS · แผนตัวอย่าง/ที่เก็บเก่า = picks มี 0 → เปลี่ยนน้ำมัน */
+export const oilChoice = (a: Alloc, i: number): number | null => a.oils?.[i] ?? (a.picks[i] ? ((a.picks[i] || []).includes(0) ? 1 : 0) : null);
+export const oilOf = (a: Alloc, i: number) => (a.oils?.[i] != null ? OIL_PLAN_OPTS[a.oils[i]] : OIL_OPTS[(a.picks[i] || []).includes(0) ? 1 : 0]);
+/* ช่อง น้ำมันไฮโดรลิก · อะไหล่อื่นๆ ของแท็บไตรมาส n (oilCell · partList · partCell ใน screens.js 5 พ.ย. 2569) */
+export const TODO_NONE = "ยังไม่กำหนด";
+export const oilCellOf = (a: Alloc, i: number): string | { text: string; sub?: string } => {
+  const k = oilChoice(a, i);
+  if (k == null) return TODO_NONE;
+  const sp = a.oilSpec?.[i], grade = sp?.grade || OIL_SPEC.grade, litre = a.qty?.[i]?.[0] ?? (sp?.litre ? Number(sp.litre) : carQty(a, i, 0));
+  return { text: OIL_PLAN_OPTS[k], sub: k ? grade + " · " + litre + " ลิตร" : grade };
+};
+export const otherParts = (a: Alloc, i: number) => (a.picks[i] || []).filter((x) => x !== 0).map((x) => PARTS[x].name).concat((a.manual?.[i] || []).map((m) => m.name));
+export const otherCellOf = (a: Alloc, i: number): string | { text: string; sub: string } => {
+  const l = otherParts(a, i);
+  return l.length ? { text: l.length + " รายการ", sub: l[0] + (l.length > 1 ? " และอื่น ๆ" : "") } : TODO_NONE;
+};
 /* จำนวนรายการอะไหล่ของรถ = อะไหล่ที่เลือก + รายการเพิ่มเติม (screens.js count()) */
 export const partCount = (a: Alloc, i: number) => (a.picks[i] || []).length + (a.manual?.[i] || []).length;
 export const partCell = (a: Alloc, i: number) => (partCount(a, i) ? partCount(a, i) + " รายการ" : "ยังไม่เลือก");
@@ -91,9 +107,9 @@ export function quarterRows(a: Alloc, q: number): QuarterRow[] {
   const rows: QuarterRow[] = quarterParts(d, q).map(([pi, n]) => ({ key: "p" + pi, name: PARTS[pi].name, code: PARTS[pi].code, group: PARTS[pi].group, qty: n, unit: PARTS[pi].unit, pi, stock: PARTS[pi].stock }));
   const man = new Map<string, QuarterRow>();
   carsIn(a, q).forEach((c) => (a.manual?.[c] || []).forEach((m) => {
-    const k = "m" + m.name + "|" + m.code;
+    const k = "m" + m.name + "|" + m.code + "|" + (m.unit ?? "ชิ้น");
     const r = man.get(k);
-    if (r) r.qty += m.qty; else man.set(k, { key: k, name: m.name, code: m.code || "-", group: "เพิ่มเอง", qty: m.qty, unit: "ชิ้น" });
+    if (r) r.qty += m.qty; else man.set(k, { key: k, name: m.name, code: m.code || "-", group: "เพิ่มเอง", qty: m.qty, unit: m.unit || "ชิ้น" });
   }));
   return rows.concat([...man.values()]);
 }
@@ -108,7 +124,7 @@ export function dropQuarterRow(a: Alloc, q: number, r: QuarterRow): Pick<Draft, 
 }
 /* รวมค่าอะไหล่ของรถ 1 คัน (RequestedPartsPanel · เบิกจากคลัง = อะไหล่จากคลัง + รายการเพิ่มเติม) */
 export const carCost = (picks: number[], qty: Record<number, number> | undefined, manual: ManualPart[]) =>
-  picks.reduce((s, pi) => s + (qty?.[pi] ?? carQty({}, 0, pi)) * PART_PRICE[pi], 0) + manual.reduce((s, m) => s + (parseFloat(m.price.replace(/,/g, "")) || 0) * m.qty, 0);
+  picks.reduce((s, pi) => s + (qty?.[pi] ?? carQty({}, 0, pi)) * PART_PRICE[pi], 0) + manual.reduce((s, m) => s + (parseFloat((m.price ?? "").replace(/,/g, "")) || 0) * m.qty, 0);
 
 /* ---------- กล่องรายละเอียดแผน (npKv) ---------- */
 export function planKv(p: Plan): [string, string][] {

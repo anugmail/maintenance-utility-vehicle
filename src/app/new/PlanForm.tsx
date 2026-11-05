@@ -9,9 +9,10 @@
        เลือกภาคแล้ว (หรือมีรถในแผน): Tabs ทั้งหมด n · ไตรมาส 1–4 n (Pill) → Table header (หัว "รถในพื้นที่ที่เลือก" / "รถในไตรมาส n" + Badge "n คัน" · ค้นหา "เลขทะเบียน, ยี่ห้อ, รุ่น"
        · ตัวกรอง + Pill จำนวนตัวกรอง · ปุ่ม "จัดลงไตรมาส (n)" Disabled เมื่อยังไม่ติ๊ก · ชิปตัวกรองกดเอาออกได้) → ตารางติ๊ก + Table pagination
        ทั้งหมด: ทะเบียน (ยี่ห้อ/รุ่น) · ประเภทรถ · เขต / หน่วยงานเจ้าของรถ · ไตรมาส (Pill "ไตรมาส n" Brand / "ยังไม่จัด" Gray)
-       ไตรมาส n: Q_COLS (น้ำมันไฮโดรลิก · อะไหล่ · ไอคอนแก้ไข → S21) · มือถือ List with checkbox
+       ไตรมาส n: Q_COLS (น้ำมันไฮโดรลิก · อะไหล่อื่นๆ · ไอคอนแก้ไข → S21 · ไม่มีคอลัมน์ไตรมาส) · มือถือ List with checkbox บรรทัดรอง "น้ำมัน … · อะไหล่อื่นๆ …" ไม่มีไอคอน (BACKLOG ข้อ 11)
        ยังไม่เลือกภาค: Empty state "ยังไม่มีรายการรถ" · ไตรมาสว่าง: "ยังไม่มีรถในไตรมาสนี้" · ไม่ตรงคำค้น/ตัวกรอง: Search not found + "ล้างตัวกรอง"
-     อะไหล่ในไตรมาส n — (BACKLOG ข้อ 11 แทนที่ส่วนนี้)
+     อะไหล่ในไตรมาส n (Section header + Badge) — ตั้งต้นว่าง รวมจากรถที่จัดการแล้วทีละคัน (qAgg: น้ำมันที่เปลี่ยน ลิตรต่อคัน + อะไหล่อื่นๆ + รายการที่ระบุเอง)
+       Table รายการอะไหล่ · รหัส · หมวด · ตามแผน · หน่วย ไม่มีปุ่มเพิ่มอะไหล่และไอคอนแถว / Empty state ตามแท็บ
      ปุ่ม ย้อนกลับ (แก้ไข: ยกเลิก) · บันทึกและส่งอนุมัติ — Disabled จนกว่า ชื่อแผน · ปีงบประมาณ · รถในไตรมาสอย่างน้อย 1 คัน ครบ
    popup "จัดลงไตรมาส" (Radio text card ไตรมาส 1–4 เรียงลง ช่องไฟ 12 · ไม่มีตัวเลือกเอาออก) → toast "จัดรถ n คันลงไตรมาส k สำเร็จ" · มือถือ bottom sheet
    เอาภาค เขต ประเภทรถ ชิปตัวกรอง หรือคำค้นออก = เปลี่ยนแค่แถวที่เห็น รถที่จัดแล้วไม่หาย (ไม่มี confirm)
@@ -43,7 +44,7 @@ import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
 import { CAND, DISTRICTS, QUARTERS, REGIONS, VEHICLE_TYPES, YEARS, shortRegion, type Plan } from "@/lib/mock/data";
 import { carsFor, emptyDraft, inQuarter, isDirty, matchQuery, planFromDraft, thaiToday, type Draft } from "@/lib/mock/plan";
-import { carParam, draftFromPlan, draftKey, dropQuarterRow, oilOf, partCell, planId, planWithDraft, quarterRows, type QuarterRow } from "@/lib/mock/planFlow";
+import { TODO_NONE, carParam, draftFromPlan, draftKey, oilCellOf, otherCellOf, planId, planWithDraft, quarterRows } from "@/lib/mock/planFlow";
 import { notify, setMock, useMock } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { CheckTable, type CheckRow } from "./CheckTable";
@@ -55,11 +56,11 @@ export const CARP_COLS: TableColumn[] = [
 ];
 export const PART_COLS: TableColumn[] = [
   { head: "รายการอะไหล่", Style: "Lead text", SortIcon: "Swap" }, { head: "รหัส", width: 100 }, { head: "หมวด", width: 110 },
-  { head: "ตามแผน", width: 100 }, { head: "หน่วย", width: 90 }, { head: "", width: 104, Style: "Action icons" },
+  { head: "ตามแผน", width: 100 }, { head: "หน่วย", width: 90 },
 ];
 /* PICK_COLS — แท็บทั้งหมด · Q_COLS — แท็บไตรมาส n (screens.js) */
 const PICK_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 260 }, { head: "ประเภทรถ", width: 160 }, { head: "เขต / หน่วยงานเจ้าของรถ" }, { head: "ไตรมาส", width: 160, Style: "Badge" }];
-const Q_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 240 }, { head: "ประเภทรถ", width: 130 }, { head: "เขต / หน่วยงานเจ้าของรถ" }, { head: "น้ำมันไฮโดรลิก", width: 200 }, { head: "อะไหล่", width: 200 }, { head: "", width: 72, Style: "Action icons" }];
+const Q_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 240 }, { head: "ประเภทรถ", width: 130 }, { head: "เขต / หน่วยงานเจ้าของรถ" }, { head: "น้ำมันไฮโดรลิก", width: 200 }, { head: "อะไหล่อื่นๆ", width: 200 }, { head: "", width: 72, Style: "Action icons" }];
 const PER = 10;
 /* S19: Alert เหนือฟอร์มแก้ไข (ALERT_RETURNED · ALERT_APPROVED) */
 const ALERT_APPROVED = ["แผนนี้อนุมัติแล้ว", "เมื่อบันทึก แผนจะกลับเป็นสถานะรออนุมัติ และต้องให้ผู้อนุมัติตรวจสอบอีกครั้ง"] as const;
@@ -118,9 +119,9 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
   const rows: CheckRow[] = rowsOnPage.map((i) => {
     const c = CAND[i];
     if (!q) return { key: String(i), text: c.plate, sub: c.model, mobileSub: c.model + " · " + qPill(i)[0], cells: [c.type, c.owner, { pills: [qPill(i)] }] };
-    const oil = oilOf(d, i), parts = partCell(d, i);
-    return { key: String(i), text: c.plate, sub: c.model, mobileSub: "น้ำมัน " + oil + " · อะไหล่ " + parts,
-      cells: [c.type, c.owner, oil, parts, { actions: [{ IconSwap: "stylus-24-300-round", label: "แก้ไขอะไหล่ " + c.plate, onClick: () => toS21(i) }] }] };
+    const oil = oilCellOf(d, i), other = otherCellOf(d, i), txt = (v: typeof oil) => (typeof v === "string" ? v : v.text);
+    return { key: String(i), text: c.plate, sub: c.model, mobileSub: "น้ำมัน " + txt(oil) + " · อะไหล่อื่นๆ " + (typeof other === "string" ? TODO_NONE : other.text),
+      cells: [c.type, c.owner, oil, other, { actions: [{ IconSwap: "stylus-24-300-round", label: "แก้ไขอะไหล่ " + c.plate, onClick: () => toS21(i) }] }] };
   });
   const doAssign = () => {
     const kq = QUARTERS.indexOf(assign ?? "") + 1;
@@ -133,14 +134,9 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
   };
   const clearFilters = () => { setQuery(""); setArea({ districts: [], types: [] }); };
 
-  /* ---------- อะไหล่ในไตรมาส (เดิม · BACKLOG ข้อ 11 แทนที่) ---------- */
+  /* ---------- อะไหล่ในไตรมาส (รวมจากรถทีละคัน · ไม่มีปุ่มเพิ่ม/ไอคอนแถว — 5 พ.ย. 2569) ---------- */
   const qCars = q ? inQ(q) : [];
   const qRows = q ? quarterRows(d, q) : [];
-  const dropPart = (r: QuarterRow) => setPending({
-    spec: { danger: true, title: "ยืนยันการเอาอะไหล่ออก", sub: r.name + " จะถูกเอาออกจากรถทุกคันในไตรมาส " + q, cancel: "ยกเลิก", ok: "เอาออก" },
-    run: () => put(dropQuarterRow(d, q, r)),
-  });
-  const firstWith = (r: QuarterRow) => qCars.find((c) => (r.pi != null ? (d.picks[c] || []).includes(r.pi) : (d.manual?.[c] || []).some((m) => "m" + m.name + "|" + m.code === r.key))) ?? qCars[0];
 
   /* ---------- ออก / ตรวจและบันทึก ---------- */
   const back = from === "detail" && plan ? "/detail/?id=" + planId(plan) : "/";
@@ -237,12 +233,10 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
         </section>
 
         <section className="flex flex-col gap-4">
-          <SectionHeader Title={"อะไหล่ในไตรมาส" + (q ? " " + q : "")} Badge={qRows.length || null}
-            Actions={q ? <SecondaryButton Text="เพิ่มอะไหล่" LeadingIconSwap="add-24-300-round" State={qCars.length ? "Default" : "Disabled"} onClick={() => qCars.length && toS21(qCars[0])} /> : undefined} />
+          <SectionHeader Title={"อะไหล่ในไตรมาส" + (q ? " " + q : "")} Badge={qRows.length || null} />
           {qRows.length
-            ? table(PART_COLS, qRows.map((r) => [r.name, r.code, r.group, String(r.qty), r.unit,
-                { actions: [{ IconSwap: "stylus-24-300-round", label: "แก้ไข " + r.name, onClick: () => toS21(firstWith(r)) }, { IconSwap: "delete-24-300-round", label: "เอา " + r.name + " ออก", onClick: () => dropPart(r) }] }]))
-            : <EmptyStateDataEmpty Text="ยังไม่มีรายการอะไหล่" SupportingText={!q ? "เปิดแท็บไตรมาสเพื่อดูอะไหล่ของรถในไตรมาสนั้น" : qCars.length ? "กดเพิ่มอะไหล่เพื่อเลือกอะไหล่ของรถในไตรมาสนี้" : "เลือกรถเข้าไตรมาสนี้ก่อน แล้วจึงเพิ่มอะไหล่ได้"} />}
+            ? table(PART_COLS, qRows.map((r) => [r.name, r.code, r.group, String(r.qty), r.unit]))
+            : <EmptyStateDataEmpty Text="ยังไม่มีรายการอะไหล่" SupportingText={!q ? "เปิดแท็บไตรมาสเพื่อดูอะไหล่ของรถในไตรมาสนั้น" : qCars.length ? "จัดการอะไหล่ทีละคันจากไอคอนแก้ไขที่แถวรถ รายการจะรวมมาที่นี่" : "จัดรถลงไตรมาสนี้ก่อน แล้วจึงจัดการอะไหล่ทีละคันได้"} />}
         </section>
 
         <div className={cx("flex", mob ? "gap-4 [&>*]:flex-1 [&>*]:basis-0" : "justify-between gap-3")}>

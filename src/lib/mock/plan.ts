@@ -1,5 +1,5 @@
 /* ตัวช่วยของแผน — ยกจาก screens.js (qCell · whCell · planRow · quarterParts) + เลขที่ MR ตามเงื่อนไข S1 */
-import { CAND, CAR_QTY, PARTS, PST, REGIONS, VEHICLE_TYPES, WH_ACK, dCode, regionOf, shortRegion, type ManualPart, type Plan } from "./data";
+import { CAND, CAR_QTY, PARTS, PST, REGIONS, VEHICLE_TYPES, WH_ACK, dCode, regionOf, shortRegion, type ManualPart, type OilSpec, type Plan } from "./data";
 import type { TableValue } from "@/components/vms/Table";
 
 /* ฟอร์มสร้างแผน (planForm) */
@@ -14,6 +14,8 @@ export interface Draft {
   q: number;                          // แท็บที่เปิด (0 = ทั้งหมด · 1–4 = ไตรมาส · แบบ A 5 พ.ย. 2569)
   qty?: Record<number, Record<number, number>>;   // S21 จำนวนต่อคันที่แก้ไว้ (ไม่มี = CAR_QTY)
   manual?: Record<number, ManualPart[]>;          // S21 รายการเพิ่มเติม
+  oils?: Record<number, number>;                  // S21 น้ำมันไฮโดรลิกรายคัน (OIL_PLAN_OPTS)
+  oilSpec?: Record<number, OilSpec>;              // S21 เบอร์ รหัส ลิตร
   editOf?: string;                    // S19 ฟอร์มแก้ไข: เลขที่ MR ของแผนที่แก้
 }
 export const emptyDraft = (): Draft => ({ name: "", year: "", regions: [], districts: [], types: [], alloc: {}, picks: {}, q: 0 });
@@ -91,7 +93,7 @@ export function planFromDraft(d: Draft, plans: Plan[], today: string, retired: s
     mr: nextMr(plans, d.year, retired), name: d.name.trim(), ...allocScope(d.alloc), nowQ: "ไตรมาส 1", cars: Object.keys(d.alloc).length,
     status: "review", created: today, year: d.year,
     perQ: per.map((n, i) => "ไตรมาส " + (i + 1) + ": " + n).join(" · "),
-    regions: d.regions, districts: d.districts, types: d.types, alloc: d.alloc, picks: d.picks, qty: d.qty, manual: d.manual,
+    regions: d.regions, districts: d.districts, types: d.types, alloc: d.alloc, picks: d.picks, qty: d.qty, manual: d.manual, oils: d.oils, oilSpec: d.oilSpec,
   };
 }
 /* วันที่แบบไทย dd/mm/ปี พ.ศ. */

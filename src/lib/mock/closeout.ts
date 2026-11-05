@@ -34,14 +34,20 @@ export const WH_ACK_AT = "02/11/2569";
 const WH = ["Smart Inventory", "Smart Inventory", "Smart Inventory", "คลังสำรอง", "คลังสำรอง"];
 const PRICE = [120, 680, 250, 420, 350];
 const BUYER_OF: Record<number, "Smart Inventory" | "ผพจ."> = { 1: "Smart Inventory", 4: "ผพจ." };
-/* ยอดใน SummaryRequestedParts (partsSummary): เบิก = min(ตามแผน, คงเหลือ) × ราคา แยกคลัง · จัดซื้อ = ส่วนที่ขาด × ราคา แยกผู้จัดซื้อ */
-export function partsSummary() {
+/* แถวอะไหล่ที่ต้องเบิกของไตรมาส (S4) — แผนที่จัดรถรายคัน (alloc · S1/S21) = ยอดรวมจากรถทีละคันชุดเดียวกับฟอร์มแผนและหน้าคลัง S22 (quarterRows)
+   แผนตัวอย่าง (ไม่มีรถรายคัน) = PARTS ของ screens.js · pi = ลำดับใน PARTS (ไม่มี = รายการที่ระบุเอง ไม่มีคงเหลือในคลัง) · sub = บรรทัดรอง (S25 อะไหล่ของรถที่ย้ายมา) */
+export interface NeedRow { key: string; pi?: number; name: string; code: string; unit: string; qty: number; stock?: number; sub?: string }
+export const SAMPLE_NEED: NeedRow[] = PARTS.map((p, i) => ({ key: "p" + i, pi: i, name: p.name, code: p.code, unit: p.unit, qty: p.planQty, stock: p.stock }));
+export const lackOf = (r: NeedRow) => (r.stock == null ? 0 : Math.max(0, r.qty - r.stock));
+/* ยอดใน SummaryRequestedParts (partsSummary): เบิก = min(ตามแผน, คงเหลือ) × ราคา แยกคลัง · จัดซื้อ = ส่วนที่ขาด × ราคา แยกผู้จัดซื้อ · รายการที่ระบุเอง (ไม่มีราคาในคลัง) ไม่นับยอด */
+export function partsSummary(rows: NeedRow[] = SAMPLE_NEED) {
   const take = { "Smart Inventory": 0, "คลังสำรอง": 0 }, buy = { "Smart Inventory": 0, "ผพจ.": 0 };
-  PARTS.forEach((p, i) => { const st = Math.min(p.planQty, p.stock); take[WH[i] as keyof typeof take] += st * PRICE[i]; if (p.planQty > st) buy[BUYER_OF[i] ?? "Smart Inventory"] += (p.planQty - st) * PRICE[i]; });
-  const ok = PARTS.map((_, i) => i).filter((i) => !shortOf(i)), short = PARTS.map((_, i) => i).filter((i) => shortOf(i));
+  const stockRows = rows.filter((r) => r.pi != null) as (NeedRow & { pi: number })[];
+  stockRows.forEach((r) => { const st = Math.min(r.qty, r.stock ?? 0); take[WH[r.pi] as keyof typeof take] += st * PRICE[r.pi]; if (r.qty > st) buy[BUYER_OF[r.pi] ?? "Smart Inventory"] += (r.qty - st) * PRICE[r.pi]; });
+  const ok = stockRows.filter((r) => !lackOf(r)), short = stockRows.filter((r) => lackOf(r));
   const groups = [
-    { title: "เบิกจากคลัง Smart Inventory (" + ok.length + " รายการ)", subs: (["Smart Inventory", "คลังสำรอง"] as const).map((w) => ({ title: "เบิกที่ " + w, rows: ok.filter((i) => WH[i] === w).map((i) => [PARTS[i].name + " x" + PARTS[i].planQty, PARTS[i].planQty * PRICE[i]] as [string, number]) })).filter((x) => x.rows.length) },
-    { title: "คงเหลือไม่พอ — รอจัดซื้อ ผพจ. (" + short.length + " รายการ)", subs: (["Smart Inventory", "ผพจ."] as const).map((b) => ({ title: "จัดซื้ออะไหล่เพิ่มโดย " + b, rows: short.filter((i) => (BUYER_OF[i] ?? "Smart Inventory") === b).map((i) => [PARTS[i].name + " x" + shortOf(i), shortOf(i) * PRICE[i]] as [string, number]) })).filter((x) => x.rows.length) },
+    { title: "เบิกจากคลัง Smart Inventory (" + ok.length + " รายการ)", subs: (["Smart Inventory", "คลังสำรอง"] as const).map((w) => ({ title: "เบิกที่ " + w, rows: ok.filter((r) => WH[r.pi] === w).map((r) => [r.name + " x" + r.qty, r.qty * PRICE[r.pi]] as [string, number]) })).filter((x) => x.rows.length) },
+    { title: "คงเหลือไม่พอ — รอจัดซื้อ ผพจ. (" + short.length + " รายการ)", subs: (["Smart Inventory", "ผพจ."] as const).map((b) => ({ title: "จัดซื้ออะไหล่เพิ่มโดย " + b, rows: short.filter((r) => (BUYER_OF[r.pi] ?? "Smart Inventory") === b).map((r) => [r.name + " x" + lackOf(r), lackOf(r) * PRICE[r.pi]] as [string, number]) })).filter((x) => x.rows.length) },
   ];
   const totals: [string, number][] = [["เบิกจาก Smart Inventory", take["Smart Inventory"]], ["เบิกจากคลังสำรอง", take["คลังสำรอง"]], ["จัดซื้ออะไหล่เพิ่มโดย Smart Inventory", buy["Smart Inventory"]], ["จัดซื้ออะไหล่เพิ่มโดย ผพจ.", buy["ผพจ."]]];
   return { ok: ok.length, short: short.length, groups, totals };
