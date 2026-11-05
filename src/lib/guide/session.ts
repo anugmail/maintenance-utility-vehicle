@@ -4,7 +4,8 @@
 import { useSyncExternalStore } from "react";
 
 export const GUIDE_KEY = "mt-guide-v1";
-export interface GuideState { case: string; step: number }
+/** from = "menu" เมื่อเปิดเรื่องจากเมนูพาดูทีละเรื่อง (/guide/) ⇒ ออกแล้วหน้าเรื่องย้อนกลับไปเมนู */
+export interface GuideState { case: string; step: number; from?: "menu" }
 
 let cur: GuideState | null | undefined;
 const subs = new Set<() => void>();

@@ -12,6 +12,11 @@ import type { PlanStatus } from "@/lib/mock/data";
 import type { Draft } from "@/lib/mock/plan";
 import { setMock } from "@/lib/mock/store";
 import type { GuideCase, GuideScenario } from "./types";
+import { EDIT_PLAN } from "./cases/edit-plan";
+import { DELETE_PLAN } from "./cases/delete-plan";
+import { CAR_PARTS } from "./cases/car-parts";
+import { WAREHOUSE_ACK } from "./cases/warehouse-ack";
+import { PARTS_PROGRESS } from "./cases/parts-progress";
 
 /** หน้าในชีตยืนยัน (MaintainD-Maintainance) ของแต่ละเคส (หัวหน้างาน 5 พ.ย. 2569) — หน้า 1 รายการแผน · หน้า 2 สร้างและแก้ไขแผน · หน้า 3 จัดการอะไหล่ของรถ · หน้า 4 รายละเอียดแผน · หน้า 5 แผนรออนุมัติ
     หน้าเรื่องแสดงทุกหน้าที่เคสของเรื่องนั้นใช้ (sheetPagesOf) · การ์ดเคสแสดงหน้าของเคส */
@@ -28,7 +33,9 @@ export function sheetText(pages: number[]): string {
   if (!p.length) return "ข้อยืนยันอยู่ในชีต (ยังไม่ระบุหน้า)";
   return "ข้อยืนยันอยู่ในชีต หน้า " + (p.length === 1 ? p[0] : p.slice(0, -1).join(", ") + " และ " + p[p.length - 1]);
 }
-export const sheetPagesOf = (g: GuideScenario) => g.cases.map((c) => SHEET_PAGE[c.id]).filter((n): n is number => n != null);
+/** หน้าชีตของเคส: ช่อง sheet ของเคส (ไฟล์ cases/) หรือ SHEET_PAGE */
+export const sheetOf = (c: GuideCase): number | undefined => c.sheet ?? SHEET_PAGE[c.id];
+export const sheetPagesOf = (g: GuideScenario) => g.cases.map(sheetOf).filter((n): n is number => n != null);
 
 /* ---------- ข้อมูลตั้งต้น ---------- */
 const PLAN = "MR Z7000004";
@@ -223,6 +230,11 @@ export const GUIDES: GuideScenario[] = [
     about: "เปิดแผนที่ กบค. ส่งมา ดูรายละเอียดและรถของแต่ละไตรมาส แล้วเลือกอนุมัติ หรือส่งกลับให้ กบค. แก้ไขพร้อมเหตุผล",
     cases: APPROVE,
   },
+  EDIT_PLAN,
+  DELETE_PLAN,
+  CAR_PARTS,
+  WAREHOUSE_ACK,
+  PARTS_PROGRESS,
 ];
 
 export const guideOf = (key: string | null) => GUIDES.find((g) => g.key === key);
