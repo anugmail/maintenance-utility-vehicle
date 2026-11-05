@@ -17,6 +17,12 @@ import { DELETE_PLAN } from "./cases/delete-plan";
 import { CAR_PARTS } from "./cases/car-parts";
 import { WAREHOUSE_ACK } from "./cases/warehouse-ack";
 import { PARTS_PROGRESS } from "./cases/parts-progress";
+import { TRIP_PLAN } from "./cases/trip-plan";
+import { HIRE_TRIP } from "./cases/hire-trip";
+import { APPROVE_TRIP } from "./cases/approve-trip";
+import { TRIP_NOTIFY } from "./cases/trip-notify";
+import { JOB_RECORD } from "./cases/job-record";
+import { MOVE_CAR_GUIDE } from "./cases/move-car";
 
 /** หน้าในชีตยืนยัน (MaintainD-Maintainance) ของแต่ละเคส (หัวหน้างาน 5 พ.ย. 2569) — หน้า 1 รายการแผน · หน้า 2 สร้างและแก้ไขแผน · หน้า 3 จัดการอะไหล่ของรถ · หน้า 4 รายละเอียดแผน · หน้า 5 แผนรออนุมัติ
     หน้าเรื่องแสดงทุกหน้าที่เคสของเรื่องนั้นใช้ (sheetPagesOf) · การ์ดเคสแสดงหน้าของเคส */
@@ -33,9 +39,10 @@ export function sheetText(pages: number[]): string {
   if (!p.length) return "ข้อยืนยันอยู่ในชีต (ยังไม่ระบุหน้า)";
   return "ข้อยืนยันอยู่ในชีต หน้า " + (p.length === 1 ? p[0] : p.slice(0, -1).join(", ") + " และ " + p[p.length - 1]);
 }
-/** หน้าชีตของเคส: ช่อง sheet ของเคส (ไฟล์ cases/) หรือ SHEET_PAGE */
-export const sheetOf = (c: GuideCase): number | undefined => c.sheet ?? SHEET_PAGE[c.id];
-export const sheetPagesOf = (g: GuideScenario) => g.cases.map(sheetOf).filter((n): n is number => n != null);
+/** หน้าชีตของเคส (ตัวเดียวที่อ่านหน้าชีต): GuideCase.sheet (เลขเดียวหรือหลายหน้า · เคสในไฟล์ cases/) หรือ SHEET_PAGE[id] (เคสเดิม S1 S2) */
+export const casePages = (c: GuideCase): number[] =>
+  c.sheet != null ? (Array.isArray(c.sheet) ? c.sheet : [c.sheet]) : SHEET_PAGE[c.id] != null ? [SHEET_PAGE[c.id]] : [];
+export const sheetPagesOf = (g: GuideScenario) => g.cases.flatMap(casePages);
 
 /* ---------- ข้อมูลตั้งต้น ---------- */
 const PLAN = "MR Z7000004";
@@ -235,6 +242,12 @@ export const GUIDES: GuideScenario[] = [
   CAR_PARTS,
   WAREHOUSE_ACK,
   PARTS_PROGRESS,
+  TRIP_PLAN,
+  HIRE_TRIP,
+  APPROVE_TRIP,
+  TRIP_NOTIFY,
+  JOB_RECORD,
+  MOVE_CAR_GUIDE,
 ];
 
 export const guideOf = (key: string | null) => GUIDES.find((g) => g.key === key);

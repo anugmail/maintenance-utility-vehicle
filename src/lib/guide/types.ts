@@ -22,11 +22,12 @@ export interface GuideCase {
   /** 1 บรรทัด เคสนี้ให้เห็นอะไร */
   about: string;
   role: Role;
+  /** หน้าในชีตยืนยันของเคส: เลขเดียว หรือหลายหน้า (เคสที่ใช้หลายหน้าของชีต) · ไม่ใส่ = SHEET_PAGE[id] ของ scenarios.ts (เคสเดิม S1 S2)
+      อ่านผ่าน casePages() ของ scenarios.ts ที่เดียว */
+  sheet?: number | number[];
   /** ใส่ข้อมูลจำลองของเคส หลังล้างข้อมูลจำลองแล้ว — ต้องได้ค่าเดิมทุกครั้ง (ห้ามใช้วันที่ปัจจุบันหรือค่าสุ่ม) */
   seed: () => void;
   steps: GuideStep[];
-  /** หน้าในชีตยืนยันของเคสนี้ (เคสในไฟล์ cases/ ใส่ที่นี่ · เคสเดิม S1 S2 อยู่ใน SHEET_PAGE) */
-  sheet?: number;
 }
 
 export interface GuideScenario {
