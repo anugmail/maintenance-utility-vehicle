@@ -169,7 +169,7 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
             Actions={<SecondaryButton Text="เพิ่มรถ" LeadingIconSwap="add-24-300-round" onClick={() => setPicker(true)} />} />
           {cars.length
             ? <DataTable columns={TRIP_CAR_COLS} rows={carRows} rowKey={(r) => String(r[0])} />
-            : <EmptyStateDataEmpty Text="ยังไม่มีรถในแผนเดินทาง" SupportingText={"กดเพิ่มรถเพื่อเลือกรถของ" + nowQ + "ที่ยังไม่อยู่ในแผนเดินทางใด"} />}
+            : <EmptyStateDataEmpty Text="ยังไม่มีรถในแผนเดินทาง" SupportingText={"กดเพิ่มรถเพื่อเลือกรถของ" + nowQ + " ที่ยังไม่อยู่ในแผนเดินทางใด"} />}
         </Section>
 
         <Section>

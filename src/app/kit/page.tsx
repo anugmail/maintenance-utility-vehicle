@@ -66,7 +66,7 @@ const PCOLS: TableColumn[] = [
   { head: "", width: 60, Style: "Action icons" },
 ];
 const PROWS: TableValue[][] = [
-  ["MR Z7000001", { text: "บำรุงรักษารถกระเช้า ภาค 1 ปีงบประมาณ 2570", sub: "ปีงบประมาณ 2570" }, { pills: [["ดำเนินการ", "Info"]] }, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู" }] }],
+  ["MR Z7000001", { text: "บำรุงรักษารถกระเช้า ภาค 1 และภาค 2 ปีงบประมาณ 2570", sub: "ปีงบประมาณ 2570" }, { pills: [["ดำเนินการ", "Info"]] }, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู" }] }],
   ["MR Z7000002", { text: "บำรุงรักษารถเครน ภาค 2 ปีงบประมาณ 2570", sub: "ปีงบประมาณ 2570" }, { pills: [["อนุมัติแล้ว", "Brand"]] }, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู" }] }],
   ["MR Z7000003", { text: "บำรุงรักษารถขุด ภาค 3 ปีงบประมาณ 2570", sub: "ปีงบประมาณ 2570" }, { pills: [["รออนุมัติ", "Warning"]] }, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู" }] }],
 ];

@@ -130,7 +130,7 @@ function CarParts() {
 
   const leave = () => {
     if (!dirty) return router.push(formHref);
-    setPending({ spec: { title: "ยืนยันการออก", sub: "อะไหล่ที่แก้ไขไว้จะไม่ถูกบันทึก", cancel: "ปิด", ok: "ออก" }, run: () => router.push(formHref) });
+    setPending({ spec: { title: "ยืนยันการออก", sub: "อะไหล่ที่แก้ไขไว้จะไม่ถูกบันทึก", cancel: "ยกเลิก", ok: "ยืนยัน" }, run: () => router.push(formHref) });
   };
   const save = () => {
     if (mock.failSave) { notify("general error", "Error"); return; }

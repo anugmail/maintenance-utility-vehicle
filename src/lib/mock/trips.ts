@@ -167,7 +167,7 @@ export const tripPlaces = (t: Trip) => {
 };
 export const tripCars = (t: Trip, only?: string) => t.carIds.map(carOf).filter((c): c is TripCar => !!c && (!only || c.owner === only));
 
-/* tripKv — กล่องรายละเอียดแผนเดินทาง (S7 · ใช้ซ้ำใน batch C) · planLabel = "MR Z7000001 บำรุงรักษารถกระเช้า ภาค 1 ปีงบประมาณ 2570" */
+/* tripKv — กล่องรายละเอียดแผนเดินทาง (S7 · ใช้ซ้ำใน batch C) · planLabel = "MR Z7000001 บำรุงรักษารถกระเช้า ภาค 1 และภาค 2 ปีงบประมาณ 2570" */
 export const tripKv = (t: Trip, planLabel: string): [string, string][] => [
   ["ชื่อแผนเดินทาง", t.name], ["แผน", planLabel], ["ไตรมาส", "ไตรมาส " + t.quarter], ["รูปแบบดำเนินการ", t.mode === "hire" ? "จ้างดำเนินการ" : "กบค. ดำเนินการเอง"],
   ...(t.mode === "hire"

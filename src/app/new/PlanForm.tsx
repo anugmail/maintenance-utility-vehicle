@@ -146,11 +146,11 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
     if (edit) {
       const go = () => { setMock((s) => ({ ...s, edit: null })); router.push(back); };
       if (draftKey(d) === draftKey(draftFromPlan(plan))) return go();
-      return setPending({ spec: { title: "ยืนยันการออก", sub: "ข้อมูลที่แก้ไขไว้จะไม่ถูกบันทึก", cancel: "ปิด", ok: "ยืนยัน" }, run: go });
+      return setPending({ spec: { title: "ยืนยันการออก", sub: "ข้อมูลที่แก้ไขไว้จะไม่ถูกบันทึก", cancel: "ยกเลิก", ok: "ยืนยัน" }, run: go });
     }
     const go = () => { setMock((s) => ({ ...s, draft: null })); router.push("/"); };
     if (!isDirty(d)) return go();
-    setPending({ spec: { title: "ยืนยันการออก", sub: "ข้อมูลที่กรอกไว้จะไม่ถูกบันทึก", cancel: "ปิด", ok: "ออก" }, run: go });
+    setPending({ spec: { title: "ยืนยันการออก", sub: "ข้อมูลที่กรอกไว้จะไม่ถูกบันทึก", cancel: "ยกเลิก", ok: "ยืนยัน" }, run: go });
   };
   const save = () => {
     if (!complete) return;

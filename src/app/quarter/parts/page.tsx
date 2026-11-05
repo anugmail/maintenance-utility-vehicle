@@ -93,7 +93,7 @@ function PartsProgress() {
       <PageHeader Title={"ความคืบหน้าอะไหล่ · " + nowQ} onBack={back}
         crumbs={quarterCrumbs(id, plan?.name ?? "", q, "ความคืบหน้าอะไหล่")} />
       <Content>
-        <Alert Color="Info" Text={"คลังรับทราบรายการอะไหล่" + nowQ + "แล้ว"} SupportingText={"รถ " + nCars + " คันของไตรมาสนี้ · คลังรับทราบ " + WH_ACK_AT} />
+        <Alert Color="Info" Text={"คลังรับทราบรายการอะไหล่" + nowQ + " แล้ว"} SupportingText={"รถ " + nCars + " คันของไตรมาสนี้ · คลังรับทราบ " + WH_ACK_AT} />
         {down && <Alert Color="Error" Text="เชื่อมต่อ Smart Inventory ไม่ได้" SupportingText="ยังดูคงเหลือและเบิก/จองไม่ได้ ลองใหม่อีกครั้ง" />}
         {st.result === "short" && <Alert Color="Warning" Text={"จองได้ " + sum.ok + " รายการ · คงเหลือไม่พอ " + sum.short + " รายการ"}
           SupportingText={shownNeed.filter((r) => lackOf(r)).map((r) => r.name + " ขาด " + lackOf(r) + " " + r.unit).join(" · ") + " — รอจัดซื้อแล้วเข้าคลัง"} />}

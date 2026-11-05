@@ -40,7 +40,7 @@ function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่
   const rows = shown.map((c) => ({ key: c.id, text: c.plate, sub: taken[c.id] ? "อยู่ในแผนเดินทาง " + taken[c.id] : undefined, disabled: !!taken[c.id], cells: [c.model, c.owner] }));
 
   const body = !pool.length
-    ? (emptyText ? <EmptyStateDataEmpty Text={emptyText} Graphic="vehicle" /> : <EmptyStateDataEmpty Graphic="vehicle" Text={"รถทุกคันของ" + nowQ + "อยู่ในแผนเดินทางแล้ว"} SupportingText="ไม่มีรถที่เพิ่มเข้าแผนเดินทางนี้ได้" />)
+    ? (emptyText ? <EmptyStateDataEmpty Text={emptyText} Graphic="vehicle" /> : <EmptyStateDataEmpty Graphic="vehicle" Text={"รถทุกคันของ" + nowQ + " อยู่ในแผนเดินทางแล้ว"} SupportingText="ไม่มีรถที่เพิ่มเข้าแผนเดินทางนี้ได้" />)
     : <>{search}<CheckTable columns={COLS} rows={rows} ticked={ticked} onTicked={setTicked} /></>;
 
   return (

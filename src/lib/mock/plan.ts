@@ -39,7 +39,8 @@ export const PLAN_COLS = [
 ];
 /* ภาค / ประเภทรถ (scopeCell · เจ้าของงาน 5 พ.ย. 2569 "สรุปจากรถที่อยู่ในแผนจริง") — 2 บรรทัดในช่องเดียว: ภาคของรถในแผน · ประเภทรถของรถในแผน
    แผนที่จัดรถไว้ (alloc) = สรุปจากรถจริง เรียงตาม REGIONS / VEHICLE_TYPES · แผนตัวอย่าง = PLAN_SCOPE หรือภาคและประเภทเดียวของแผน */
-const PLAN_SCOPE: Record<string, [string, string]> = { "MR Z7000002": ["ภาค 2, ภาค 3", "รถกระเช้า, รถเครน"] };
+/* 5 พ.ย. 2569 ชีตลูกค้า: MR Z7000001 รถในแผนอยู่ทั้ง กฟน. และ กฟฉ. ⇒ ภาค 1 และภาค 2 (screens.js) */
+const PLAN_SCOPE: Record<string, [string, string]> = { "MR Z7000001": ["ภาค 1, ภาค 2", "รถกระเช้า"], "MR Z7000002": ["ภาค 2, ภาค 3", "รถกระเช้า, รถเครน"] };
 export const planScope = (p: Plan): [string, string] => {
   const cars = Object.keys(p.alloc ?? {}).map((i) => CAND[Number(i)]).filter(Boolean);
   if (cars.length) {
