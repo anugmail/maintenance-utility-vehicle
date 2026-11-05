@@ -28,7 +28,9 @@ export function sheetText(pages: number[]): string {
   if (!p.length) return "ข้อยืนยันอยู่ในชีต (ยังไม่ระบุหน้า)";
   return "ข้อยืนยันอยู่ในชีต หน้า " + (p.length === 1 ? p[0] : p.slice(0, -1).join(", ") + " และ " + p[p.length - 1]);
 }
-export const sheetPagesOf = (g: GuideScenario) => g.cases.map((c) => SHEET_PAGE[c.id]).filter((n): n is number => n != null);
+/** หน้าชีตของเคส: ช่อง sheet ของเคส (ไฟล์ cases/) หรือ SHEET_PAGE */
+export const sheetOf = (c: GuideCase): number | undefined => c.sheet ?? SHEET_PAGE[c.id];
+export const sheetPagesOf = (g: GuideScenario) => g.cases.map(sheetOf).filter((n): n is number => n != null);
 
 /* ---------- ข้อมูลตั้งต้น ---------- */
 const PLAN = "MR Z7000004";

@@ -10,7 +10,7 @@
    หน้าปัจจุบันเทียบกับหน้าของขั้น (match.ts):
      ตรงขั้นนี้ = ปกติ · ตรงขั้นอื่นของเคส = ปกติ + ปุ่ม "ไปหน้าของขั้นนี้" · ไม่ตรงขั้นไหนเลย = "หน้านี้อยู่นอกเรื่องที่กำลังดู" + "กลับไปหน้าของขั้นนี้"
      ไม่บล็อกการไปหน้าอื่น · เปลี่ยนหน้าแล้วหน้าใหม่ไม่ตรงขั้นนี้แต่ตรงขั้นถัดไป = เลื่อนไปขั้นถัดไปเอง (ลูกค้ากดปุ่มจริงที่พาไปหน้าใหม่)
-   ออก = ล้างโหมด แล้วกลับหน้าเรื่อง · เริ่มเคสใหม่ = เริ่มเคสเดิมจากขั้นแรกด้วยข้อมูลชุดเดิม */
+   ออก = ล้างโหมด แล้วกลับหน้าเรื่อง (เปิดมาจากเมนู /guide/ = หน้าเรื่องย้อนกลับไปเมนู) · เริ่มเคสใหม่ = เริ่มเคสเดิมจากขั้นแรกด้วยข้อมูลชุดเดิม */
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { Alert } from "@/components/vms/Alert";
@@ -77,8 +77,8 @@ function Bar() {
   const text = (mob && step.mobile) || step.text;
   const go = (k: number) => setGuide({ case: c.id, step: k });
   const toStep = () => router.push(hrefOf(step));
-  const restart = () => { setFull(false); router.push(startHref(c.id)); };
-  const exit = () => { setGuide(null); router.push(scenarioHref(sc.key)); };
+  const restart = () => { setFull(false); router.push(startHref(c.id, g.from)); };
+  const exit = () => { setGuide(null); router.push(scenarioHref(sc.key, g.from)); };
   const counter = "ขั้นที่ " + (i + 1) + " จาก " + n;
 
   const alert = state === "outside"
