@@ -87,4 +87,4 @@
 - ข้อนี้แก้ `src/components/` ได้เฉพาะ: เพิ่มโฟลเดอร์ `src/components/guide/` + 1 บรรทัดใน `shell/AppFrame.tsx` · ไฟล์เดิมอื่นที่แตะ: `app/scenarios/page.tsx` (ปุ่มดูเคส) · ที่เหลือเป็นไฟล์ใหม่ ⇒ rebase บน `review-5nov` ง่าย
 - เสร็จเมื่อ: เคส S1 S2 เดินครบทุกขั้นด้วยการกด UI จริง desktop 1440 / mobile 402 (`guide.js` ใน scratchpad `final/guide/`) · ชุดเดิมผ่าน 0 fail
 
-- [x] G1.1 ข้อมูลเคส S1 S2 + เริ่มเคส · [x] G1.2 แถบพาดู · [ ] G1.3 หน้าเรื่อง + ปุ่มดูเคส · [ ] เทส guide.js + ชุดเดิม desktop/mobile
+- [x] G1.1 ข้อมูลเคส S1 S2 + เริ่มเคส · [x] G1.2 แถบพาดู · [x] G1.3 หน้าเรื่อง + ปุ่มดูเคส · [ ] เทส guide.js + ชุดเดิม desktop/mobile
