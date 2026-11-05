@@ -63,12 +63,13 @@ export function nextMr(plans: Plan[], year: string, retired: string[] = []) {
   return pre + String((n.length ? Math.max(...n) : 0) + 1).padStart(5, "0");
 }
 
-/* รถทุกคันของพื้นที่ที่เลือก (inArea ใน screens.js · แบบ A 5 พ.ย. 2569): ต้องเลือกภาคอย่างน้อย 1 ภาค · เขต / ประเภทรถ ว่าง = ทุกเขตของภาค / ทุกประเภท */
+/* รถทุกคันของพื้นที่ที่เลือก (inArea ใน screens.js · R69 5 พ.ย. 2569 "ไม่ต้องมี disable เลือกตรงใหนก็ได้"): เลือกช่องใดช่องหนึ่งก็แสดงรถที่ตรงทุกเงื่อนไข · ช่องว่าง = ทั้งหมด · ไม่เลือกเลย = ไม่มีรถ */
+export const areaPicked = (d: Pick<Draft, "regions" | "districts" | "types">) => d.regions.length > 0 || d.districts.length > 0 || d.types.length > 0;
 export const inArea = (d: Pick<Draft, "regions" | "districts" | "types">, i: number) => {
   const c = CAND[i];
-  return d.regions.includes(regionOf(c)) && (!d.districts.length || d.districts.includes(dCode(c))) && (!d.types.length || d.types.includes(c.type));
+  return (!d.regions.length || d.regions.includes(regionOf(c))) && (!d.districts.length || d.districts.includes(dCode(c))) && (!d.types.length || d.types.includes(c.type));
 };
-export const carsFor = (d: Pick<Draft, "regions" | "districts" | "types">) => d.regions.length ? CAND.map((_, i) => i).filter((i) => inArea(d, i)) : [];
+export const carsFor = (d: Pick<Draft, "regions" | "districts" | "types">) => areaPicked(d) ? CAND.map((_, i) => i).filter((i) => inArea(d, i)) : [];
 /* คำค้น "เลขทะเบียน, ยี่ห้อ, รุ่น" (inQuery) */
 export const matchQuery = (i: number, q: string) => !q || (CAND[i].plate + " " + CAND[i].model).includes(q);
 /* ภาค · ประเภทรถ ของรถที่จัดลงไตรมาสแล้ว (บันทึกเป็นภาค / ประเภทรถของแผน — สรุปจากรถในแผนจริง) */
