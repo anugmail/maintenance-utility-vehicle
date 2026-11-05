@@ -11,7 +11,7 @@ import { DEFAULT_NOTIS, DEFAULT_TRIPS, TRIP_1, TRIP_OTHER, TRIP_V, approvalNotis
 const approved = (t: Trip): Trip => ({ ...t, status: "approved", approvedAt: "04/11/2569" });
 const closeout = (c: CloseoutState) => setMock((s) => ({ ...s, closeout: { ...s.closeout, Z7000001: c } }));
 
-const SEEDS: Record<string, { role: Role; run: () => void }> = {
+export const SEEDS: Record<string, { role: Role; run: () => void }> = {
   S4: { role: "กบค.", run: () => setMock((s) => ({ ...s, quarter: { ...s.quarter, "Z7000001-1": { result: "none" } } })) },
   /* ตั้งแผนเดินทางใหม่ทั้งชุด = ล้างงานรายคัน (jobs.ts) ของใบเดิมด้วย — ที่เก็บแผนเดินทางมีที่เดียว ใบที่อนุมัติแล้วเปิดหน้างานรายคันได้ทันที */
   S6: { role: "กบค.", run: () => setMock((s) => ({ ...s, trips: DEFAULT_TRIPS(), jobs: undefined })) },
