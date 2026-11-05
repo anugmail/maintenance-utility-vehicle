@@ -1,5 +1,5 @@
 /* ตัวช่วยของแผน — ยกจาก screens.js (qCell · whCell · planRow · quarterParts) + เลขที่ MR ตามเงื่อนไข S1 */
-import { CAND, CAR_QTY, PARTS, PST, WH_ACK, dCode, type ManualPart, type Plan } from "./data";
+import { CAND, CAR_QTY, PARTS, PST, REGIONS, VEHICLE_TYPES, WH_ACK, dCode, regionOf, shortRegion, type ManualPart, type Plan } from "./data";
 import type { TableValue } from "@/components/vms/Table";
 
 /* ฟอร์มสร้างแผน (planForm) */
@@ -28,15 +28,27 @@ export const whCell = (p: Plan) => p.status === "review" || p.status === "return
 export const PLAN_COLS = [
   { head: "เลขที่ MR", width: 150, Style: "Lead text" as const, SortIcon: "Down" as const },
   { head: "ชื่อแผน", Style: "Text" as const, SortIcon: "Swap" as const },
-  { head: "ภาค", width: 200 },
+  { head: "ภาค / ประเภทรถ", width: 200 },
   { head: "จำนวนรถ", width: 100 },
   { head: "รถรายไตรมาส", width: 210 },
   { head: "คลังรับทราบ", width: 130 },
   { head: "สถานะ", width: 150, Style: "Badge" as const, SortIcon: "Swap" as const },
   { head: "", width: 60, Style: "Action icons" as const },
 ];
+/* ภาค / ประเภทรถ (scopeCell · เจ้าของงาน 5 พ.ย. 2569 "สรุปจากรถที่อยู่ในแผนจริง") — 2 บรรทัดในช่องเดียว: ภาคของรถในแผน · ประเภทรถของรถในแผน
+   แผนที่จัดรถไว้ (alloc) = สรุปจากรถจริง เรียงตาม REGIONS / VEHICLE_TYPES · แผนตัวอย่าง = PLAN_SCOPE หรือภาคและประเภทเดียวของแผน */
+const PLAN_SCOPE: Record<string, [string, string]> = { "MR Z7000002": ["ภาค 2, ภาค 3", "รถกระเช้า, รถเครน"] };
+export const planScope = (p: Plan): [string, string] => {
+  const cars = Object.keys(p.alloc ?? {}).map((i) => CAND[Number(i)]).filter(Boolean);
+  if (cars.length) {
+    const rs = new Set(cars.map(regionOf)), ts = new Set(cars.map((c) => c.type));
+    return [REGIONS.filter((r) => rs.has(r)).map(shortRegion).join(", "), VEHICLE_TYPES.filter((t) => ts.has(t)).join(", ")];
+  }
+  return PLAN_SCOPE[p.mr] ?? [p.region.split(", ").map(shortRegion).join(", "), p.type];
+};
+export const scopeCell = (p: Plan) => { const [text, sub] = planScope(p); return { text: text || "-", sub }; };
 export const planRow = (p: Plan, menu: TableValue): TableValue[] =>
-  [p.mr, { text: p.name, sub: "ปีงบประมาณ " + p.year }, p.region, String(p.cars), qCell(p.perQ), whCell(p), { pills: [PST[p.status]] }, menu];
+  [p.mr, { text: p.name, sub: "ปีงบประมาณ " + p.year }, scopeCell(p), String(p.cars), qCell(p.perQ), whCell(p), { pills: [PST[p.status]] }, menu];
 
 /* เมนู "…" ตามสถานะแผน (S19 S20): ก่อนอนุมัติ ดูรายละเอียด แก้ไข ลบ · อนุมัติแล้ว ดูรายละเอียด แก้ไข · ดำเนินการแล้ว ดูรายละเอียดอย่างเดียว */
 export const menuCount = (p: Plan) => (p.status === "review" || p.status === "returned" ? 3 : p.status === "approved" ? 2 : 1);

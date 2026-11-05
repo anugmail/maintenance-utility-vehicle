@@ -109,6 +109,10 @@ const fillCars = (seed: Car[]): Car[] => VEHICLE_TYPES.flatMap((type, t) => REGI
 export const CAND: Car[] = [...CAND_SEED, ...fillCars(CAND_SEED)];
 /* dCode — รหัสเขตของรถ จากหน่วยงานเจ้าของรถ */
 export const dCode = (c: Car) => c.owner.split(" ")[0];
+/* regionOf · shortRegion · uniq (screens.js 5 พ.ย. 2569) — ภาคของรถจากรหัสเขต · "ภาค 2 (ตะวันออกเฉียงเหนือ)" → "ภาค 2" */
+export const regionOf = (c: Car) => REGIONS.find((r) => DISTRICTS[r].includes(dCode(c))) ?? "";
+export const shortRegion = (r: string) => r.split(" (")[0];
+export const uniq = <T,>(a: T[]) => [...new Set(a)];
 
 /* LAST_OIL — เปลี่ยนน้ำมันครั้งล่าสุดตามลำดับ CAND · OIL_OPTS */
 const LAST_OIL_SEED = ["12/03/2568", "12/03/2568", "05/02/2567", "20/11/2566", "ไม่มีข้อมูล", "18/06/2568", "09/01/2566"];

@@ -6,6 +6,7 @@
 import type { ButtonHTMLAttributes } from "react";
 import { cx } from "@/lib/cx";
 import { Ms } from "./Ms";
+import { PillOutline } from "./PillOutline";
 
 export type ButtonState = "Default" | "Hover" | "Focused" | "Disabled";
 export type ButtonSize = "md" | "lg";
@@ -23,6 +24,8 @@ export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
   TrailingIconSwap?: string;
   /** property Button text — false = ปุ่มไอคอนอย่างเดียว (ต้องส่ง aria-label) */
   ButtonText?: boolean;
+  /** Pill outline Color=Brand ต่อท้ายข้อความ — ชั้นของปุ่ม "Filters" ใน Table header (ดัมป์ 2096:36080 · จำนวนตัวกรองที่ใช้อยู่) · ไม่ใส่ = ไม่มี */
+  Pill?: string | number | null;
 }
 
 export interface Look {
@@ -42,7 +45,7 @@ const RING = {
   error: ["shadow-ring-error", "focus-visible:shadow-ring-error focus-visible:outline-none"],
 } as const;
 
-export function ButtonBase({ look, Text, State = "Default", Size = "md", LeadingIconSwap, TrailingIconSwap, ButtonText = true, className, disabled, type, ...rest }: ButtonProps & { look: Look }) {
+export function ButtonBase({ look, Text, State = "Default", Size = "md", LeadingIconSwap, TrailingIconSwap, ButtonText = true, Pill, className, disabled, type, ...rest }: ButtonProps & { look: Look }) {
   const off = disabled || State === "Disabled";
   const iconOnly = ButtonText === false || !Text;
   return (
@@ -61,6 +64,7 @@ export function ButtonBase({ look, Text, State = "Default", Size = "md", Leading
     >
       {LeadingIconSwap && <Ms name={LeadingIconSwap} size={20} />}
       {!iconOnly && <span className="truncate">{Text}</span>}
+      {Pill != null && Pill !== "" && <PillOutline Text={String(Pill)} Color="Brand" />}
       {TrailingIconSwap && <Ms name={TrailingIconSwap} size={20} />}
     </button>
   );

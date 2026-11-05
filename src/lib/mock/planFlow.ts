@@ -7,7 +7,7 @@ import type { BadgeOutlineColor } from "@/components/vms/BadgeOutline";
 import type { PillColor } from "@/components/vms/PillOutline";
 import { CAND, DISTRICTS, LAST_OIL, NEW_PLAN_DATE, OIL_OPTS, PARTS, PART_PRICE, PLAN_CREATOR, REGIONS, RETURN_REASON, WH_ACK, WH_LIST, dCode, type ManualPart, type Plan, type PlanStatus } from "./data";
 import { CAR_PICK } from "./data";
-import { carQty, inQuarter, quarterParts, type Draft } from "./plan";
+import { carQty, inQuarter, planScope, quarterParts, type Draft } from "./plan";
 import { accPlans, accRows } from "./acceptance";
 import { notify, setMock, useRole, type MockState, type Role } from "./store";
 import { tripsOf } from "./trips";
@@ -113,7 +113,8 @@ export const carCost = (picks: number[], qty: Record<number, number> | undefined
 /* ---------- กล่องรายละเอียดแผน (npKv) ---------- */
 export function planKv(p: Plan): [string, string][] {
   const dist = p.alloc && Object.keys(p.alloc).length ? [...new Set(Object.keys(p.alloc).map((i) => dCode(CAND[Number(i)])))].sort().join(", ") : (p.districts ?? []).join(", ") || "-";
-  return [["ชื่อแผน", p.name], ["ปีงบประมาณ", p.year], ["ภาค", p.region], ["เขต", dist], ["ประเภทรถ", p.type], ["รถรายไตรมาส", p.perQ],
+  const [rg, ty] = planScope(p);   // npKv 5 พ.ย. 2569: ภาค สรุปจากรถในแผน
+  return [["ชื่อแผน", p.name], ["ปีงบประมาณ", p.year], ["ภาค", rg || "-"], ["เขต", dist], ["ประเภทรถ", ty || "-"], ["รถรายไตรมาส", p.perQ],
     ["จำนวนรถ", p.cars + " คัน"], ["เลขที่ MR", p.mr], ["ผู้สร้างแผน", PLAN_CREATOR], ["วันที่ส่ง", p.sentAt ?? p.created]];
 }
 /* จำนวนรถรายไตรมาสจาก perQ (แผนตัวอย่างที่ไม่มีรายคัน) หรือจากการจัดรถ */
