@@ -52,7 +52,7 @@ function AcceptList() {
 
   return (
     <>
-      <PageHeader Title="การตรวจบำรุงรถรอตรวจสอบ" crumbs={[{ Text: "บำรุงรักษาตามวาระ" }]} />
+      <PageHeader Title="การตรวจบำรุงยานพาหนะรอตรวจสอบ" crumbs={[{ Text: "บำรุงรักษาตามวาระ" }]} />
       <section className="flex flex-col gap-6">
         <TableHeader Placeholder="ค้นหาทะเบียน, เลขที่ MR" query={query} onQuery={(v) => { setQuery(v); setPage(1); }} />
         {mob ? (

@@ -35,7 +35,7 @@ function PlanEvidence() {
   const sp = useSearchParams();
   const pending = useSample(ACCEPT_SAMPLES);
   const mob = useBreakpoint() === "Mobile";
-  const owner = useRole() === "หน่วยงานเจ้าของรถ";
+  const owner = useRole() === "หน่วยงานเจ้าของยานพาหนะ";
   const mock = useMock();
   const [confirm, setConfirm] = useState(false);
   if (pending) return null;
@@ -54,12 +54,12 @@ function PlanEvidence() {
   const accept = () => {
     acceptPlan(id);
     setConfirm(false);
-    notify("ยอมรับผลการตรวจบำรุงรถทั้งแผนสำเร็จ");
+    notify("ยอมรับผลการตรวจบำรุงยานพาหนะทั้งแผนสำเร็จ");
   };
 
   return (
     <>
-      <PageHeader Title={"หลักฐานการตรวจบำรุงรถ · " + plan.mr} Badge={badgeOf(done ? EVIDENCE_BADGE.done : EVIDENCE_BADGE.wait)} onBack={back}
+      <PageHeader Title={"หลักฐานการตรวจบำรุงยานพาหนะ · " + plan.mr} Badge={badgeOf(done ? EVIDENCE_BADGE.done : EVIDENCE_BADGE.wait)} onBack={back}
         crumbs={[{ Text: "บำรุงรักษาตามวาระ", href: "/" }, { Text: "รอตรวจสอบ", href: "/acceptance/" }, { Text: plan.mr }]} />
       <div className="flex flex-col gap-8">
         <VehicleAndReporterInfo Title="รายละเอียดแผน" pairs={planKv(plan)} />
@@ -72,15 +72,15 @@ function PlanEvidence() {
         <TextArea LabelText="ข้อเสนอแนะเพิ่มเติม" Optional Text={a.comment} Placeholder="ระบุข้อเสนอแนะ" readOnly={done || !owner}
           onChange={(v) => writeFeedback(id, { comment: v })} />
         {done ? (
-          <Alert Color="Success" Text={"ยอมรับผลการตรวจบำรุงรถทั้งแผนแล้ว " + ACCEPT_DATES.plan} SupportingText="แจ้ง กบค. แล้ว — ส่งประวัติให้หัวหน้า กบค. ได้" />
+          <Alert Color="Success" Text={"ยอมรับผลการตรวจบำรุงยานพาหนะทั้งแผนแล้ว " + ACCEPT_DATES.plan} SupportingText="แจ้ง กบค. แล้ว — ส่งประวัติให้หัวหน้า กบค. ได้" />
         ) : (
           <ButtonRow>
             <SecondaryButton Text="ย้อนกลับ" Size="lg" onClick={back} />
-            {owner && <PrimaryButton Text="ยอมรับผลการตรวจบำรุงรถ" Size="lg" State={a.score ? "Default" : "Disabled"} onClick={() => a.score && setConfirm(true)} />}
+            {owner && <PrimaryButton Text="ยอมรับผลการตรวจบำรุงยานพาหนะ" Size="lg" State={a.score ? "Default" : "Disabled"} onClick={() => a.score && setConfirm(true)} />}
           </ButtonRow>
         )}
       </div>
-      <ConfirmDialog spec={confirm ? { title: "ยืนยันยอมรับผลการตรวจบำรุงรถทั้งแผน", sub: plan.mr + " · " + plan.cars + " คัน · คะแนนความพึงพอใจ " + a.score + " · ระบบจะแจ้ง กบค.", ok: "ยอมรับผล" } : null}
+      <ConfirmDialog spec={confirm ? { title: "ยืนยันยอมรับผลการตรวจบำรุงยานพาหนะทั้งแผน", sub: plan.mr + " · " + plan.cars + " คัน · คะแนนความพึงพอใจ " + a.score + " · ระบบจะแจ้ง กบค.", ok: "ยอมรับผล" } : null}
         onOk={accept} onCancel={() => setConfirm(false)} />
     </>
   );

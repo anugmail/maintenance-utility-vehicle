@@ -44,7 +44,7 @@ export interface ReceiptChecklistProps {
   className?: string;
 }
 
-export function ReceiptChecklist({ Title = "รายการเอกสารรับรถ", Badge, items, onChange, onAdd, readonly, Breakpoint: bp, className }: ReceiptChecklistProps) {
+export function ReceiptChecklist({ Title = "รายการเอกสารรับยานพาหนะ", Badge, items, onChange, onAdd, readonly, Breakpoint: bp, className }: ReceiptChecklistProps) {
   const mob = useBreakpoint(bp) === "Mobile";
   const set = (i: number, p: Partial<ReceiptItem>) => !readonly && onChange?.(i, p);
   const head = <SectionHeader Title={Title} Badge={Badge ?? items.length} Breakpoint={bp} />;

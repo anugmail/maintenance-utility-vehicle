@@ -333,3 +333,13 @@ screens.js ไม่ได้วาดปุ่มไปขั้นถัดไ
 | ผู้ดูแลยานพาหนะ (S6 S9 S10) | ช่อง Table cell ข้อความ + Supporting text (ชื่อ · เบอร์) · popup Modal Type=Form 3 ช่อง | tripPhoneCell · tripCarEdit ใน screens.js · ชื่อของรถที่ screens.js ไม่มี (รถจากฟอร์ม S1) = ผู้ควบคุมรถของหน่วยงานเจ้าของรถเดียวกันใน TRIP_CARS แบบเดียวกับเบอร์ |
 | บทบาท | แถบต้นแบบ: "หน่วยงาน (กกฟ.1)" = ผู้สร้างแผนและผู้ดำเนินการ (เดิม "กบค.") · "กบค." = ดูแผนทุกหน่วยงานอย่างเดียว · คีย์บทบาทเปลี่ยนเป็น `mt-next-v1:role2` | เจ้าของงาน "กกฟ กรย สร้างแผนได้ ทำเอง … กบค แค่เห็นแผนทั้งหมด" · ข้อมูลตัวอย่างเป็นแผนของ กกฟ.1 (CREATOR) |
 
+
+## บ. S1 รอบ 2 เจ้าของงาน 6 พ.ย. 2569 (BACKLOG ข้อ 22 · สาขา `web-s1-6nov`)
+
+| จุด | ที่ทำ | เหตุผล |
+|---|---|---|
+| เมนู "…" ของยานพาหนะในแท็บไตรมาส (S1 S19) | ช่องท้ายแถว Table cell Style=Action icons ปุ่ม `more_horiz` (กว้าง 60) → `patterns/RowMenu` รายการ MENU (ดูรายละเอียด · แก้ไข · ลบ) ชุดเดียวกับรายการแผน · ลบ = ConfirmDialog danger (Q_OUT_CONFIRM) | Q_COLS · Q_MENU · planMenu ใน screens.js · มือถือ List with checkbox ยังไม่มีปุ่ม (แบบเดียวกับ Figma — BACKLOG ค.) |
+| ดูอะไหล่ของยานพาหนะ (`/car-parts/view/`) | Page header + Secondary button "แก้ไข" · VehicleAndReporterInfo "ข้อมูลยานพาหนะ" · Section label "อะไหล่อื่นๆ (n)" + Table CARP_PART_COLS 6 คอลัมน์ / Empty state | carPartsView ใน screens.js (หน้า Detail ⇒ Section label R3 + กล่องข้อมูล R12 แบบหน้ารายละเอียดแผน) · ไม่มีชิ้นใหม่ |
+| ตัวกรองรายการแผน | `FilterShell` ตัวเดียวกับฟอร์มแผน + Input dropdown with badges (Optional) ×2 เขต · หน่วยงานหน้างาน · ชิป Badge outline with remove icon ใต้แถวค้นหา | listScreen o.filter ใน screens.js · ไม่พบ = Empty state/Search not found + ล้างตัวกรอง (แบบฟอร์มแผน) |
+| ตารางอะไหล่รวม (R81) | `QPART_COLS` + `qpartRow` ใน `src/lib/mock/plan.ts` ชุดเดียว ใช้ที่อะไหล่ในไตรมาส n (S1 S19) และอะไหล่ในแผน (S2) · S4 ใช้ต่อได้ | QPART_COLS ของ screens.js "เพิ่ม/ลดคอลัมน์ที่นี่ที่เดียว" |
+| คำว่ายานพาหนะ (R80) | ข้อความทุกตัวใน `src/` (รวมข้อความตั้งต้นของ component ที่ยืมจากงานซ่อมและเมนู Sidebar) · ตรวจด้วย `npm run check-wording` | toVehicleWord / AFTER_SCREEN ของ screens.js เปลี่ยนข้อความตั้งต้นของ component ในจอเช่นกัน · ALLOW เพิ่ม "อะไรถ" (อะไร + ถูก) ในข้อความโหมดพาดู |

@@ -17,7 +17,7 @@ import type { ReceiptItem } from "@/components/maintain-d/ReceiptChecklist";
 import type { UploadFile } from "@/components/vms/FileUpload";
 import type { PillColor } from "@/components/vms/PillOutline";
 import { useMemo } from "react";
-import { CAND, LAST_OIL, PLANS, type Plan } from "./data";
+import { CAND, LAST_OIL, PLANS, typeOf, type Plan } from "./data";
 import { setMock, useMock, type MockState, type Role } from "./store";
 import { APPROVED_AT, PLAN_CARS, Q_EXTRA, TRIP_1, TRIP_CARS as CARS, TRIP_V, candId, tripsOf, type Trip } from "./trips";
 
@@ -59,17 +59,17 @@ export const JOB_TIMES = {
 };
 export const SIGN_DATE = "04/11/2569";
 /* Safety Inspection (JO 7.3.3) — แสดงเฉพาะรถประเภทนี้ (SAFETY_TYPES ใน screens.js) · เวลาบันทึกตามจอ "บันทึกเอกสาร Safety Inspection สำเร็จ" */
-export const SAFETY_TYPES = ["รถเครน", "รถกระเช้า"];
+export const SAFETY_TYPES = ["กระเช้าฮอทไลน์", "กระเช้าแก้ไฟ"];   // 6 พ.ย. 2569 ประเภทตามโค้ดจริงมีแต่กระเช้า (screens.js SAFETY_TYPES)
 export const SAFETY_SAVED = "12/11/2569 09:30 น.";
 export const safetyOn = (c: { type: string }) => SAFETY_TYPES.includes(c.type);
 /* เลขไมล์/ชั่วโมงเครื่องจักรสะสมของกล่องข้อมูลยานพาหนะ — jobPage() ใช้ค่าเดียวทั้งตรวจเองและใบจ้าง (จอ I.23 · ค่าเดิมของใบจ้างมาจาก hireJob() ที่ตัดออก) */
 export const ODOMETER = ["182,400 กม.", "6,120 ชม."] as const;
 export const JOB_TEXT = {
-  cannotSelf: "รถติดภารกิจซ่อมสายส่งฉุกเฉิน ไม่อยู่ที่จุดนัดในวันเดินทาง",   // JOB_CANNOT
+  cannotSelf: "ยานพาหนะติดภารกิจซ่อมสายส่งฉุกเฉิน ไม่อยู่ที่จุดนัดในวันเดินทาง",   // JOB_CANNOT
 };
 export const CANNOT_USED_SAMPLE = [30, 2, 0, 0];   // CANNOT_USED — เปลี่ยนน้ำมันและไส้กรองไฮโดรลิกแล้วพบปัญหา
 export const OIL_FILE: UploadFile = { name: "oil-test-82-6789.pdf", size: "420 KB", bar: true };
-export const BEFORE = ["รูปรถ + ทะเบียน", "อะไหล่ใหม่"];   // ภาพก่อนเริ่มงาน 2 ช่อง
+export const BEFORE = ["รูปยานพาหนะ + ทะเบียน", "อะไหล่ใหม่"];   // ภาพก่อนเริ่มงาน 2 ช่อง
 
 /* ---------- รถของไตรมาส 1 แผน MR Z7000001 (TRIP_CARS + OWNER_PH + LAST_OIL) ---------- */
 export interface TripCar { id: string; plate: string; model: string; owner: string; ownerPhone: string; ctrl: string; type: string; lastOil: string }   // ctrl = ผู้ควบคุมรถ (ผู้ดูแลยานพาหนะ ค่าเริ่มต้น · 6 พ.ย. 2569)
@@ -80,12 +80,12 @@ const LAST_OIL_OF: Record<string, string> = {
   "82-6789": "12/03/2568", "82-1145": "12/03/2567", "80-5738": "14/10/2568", "81-2210": "ไม่มีข้อมูล", "80-9981": "10/01/2569", "82-3302": "05/02/2567",
   "82-7720": "18/06/2568", "80-3316": "05/02/2567", "81-6604": "20/09/2569", "80-4458": "01/10/2568",
 };
-export const TRIP_CARS: TripCar[] = CARS.map((c) => ({ id: c.id, plate: c.plate, model: c.model, owner: c.owner, ownerPhone: c.phone, ctrl: c.ctrl, type: "รถกระเช้า", lastOil: LAST_OIL_OF[c.id] ?? "12/03/2568" }));
+export const TRIP_CARS: TripCar[] = CARS.map((c) => ({ id: c.id, plate: c.plate, model: c.model, owner: c.owner, ownerPhone: c.phone, ctrl: c.ctrl, type: typeOf(c.model), lastOil: LAST_OIL_OF[c.id] ?? "12/03/2568" }));
 /* รถจากแผนที่สร้างในฟอร์ม (PLAN_CARS ของ trips.ts) — ประเภทรถและเปลี่ยนน้ำมันครั้งล่าสุดตาม CAND / LAST_OIL ของ data.ts */
 export const PLAN_JOB_CARS: TripCar[] = PLAN_CARS.map((c) => { const i = CAND.findIndex((x) => candId(x.plate) === c.id);
-  return { id: c.id, plate: c.plate, model: c.model, owner: c.owner, ownerPhone: c.phone, ctrl: c.ctrl, type: CAND[i]?.type ?? "รถกระเช้า", lastOil: LAST_OIL[i] ?? "-" }; });
+  return { id: c.id, plate: c.plate, model: c.model, owner: c.owner, ownerPhone: c.phone, ctrl: c.ctrl, type: CAND[i]?.type ?? typeOf(c.model), lastOil: LAST_OIL[i] ?? "-" }; });
 /* รถที่เพิ่มเข้าไตรมาสของแผนตัวอย่าง (Q_EXTRA · S6 E.1) — screens.js ไม่มีประเภท/น้ำมันครั้งล่าสุด ⇒ รถกระเช้า · "-" */
-const Q_EXTRA_JOB_CARS: TripCar[] = Q_EXTRA.map((c) => ({ id: c.id, plate: c.plate, model: c.model, owner: c.owner, ownerPhone: c.phone, ctrl: c.ctrl, type: "รถกระเช้า", lastOil: "-" }));
+const Q_EXTRA_JOB_CARS: TripCar[] = Q_EXTRA.map((c) => ({ id: c.id, plate: c.plate, model: c.model, owner: c.owner, ownerPhone: c.phone, ctrl: c.ctrl, type: typeOf(c.model), lastOil: "-" }));
 /* น้ำมันไฮโดรลิกตามแผนของรถ (S21) = ค่าตั้งต้นของ Step 2 (TRIP_OIL ใน screens.js 5 พ.ย. 2569 · ชีตลูกค้า: เดิมเลือก เก็บตัวอย่างและเปลี่ยน ทุกคัน)
    แผนตัวอย่าง: 82-6789 = เก็บตัวอย่างและเปลี่ยน · คันอื่นทุกคันที่ 3 = เปลี่ยนน้ำมัน ที่เหลือ = เก็บตัวอย่าง · แผนที่กำหนดอะไหล่รายคัน = ตัวเลือกที่กำหนดใน S21 */
 export const SAMPLE_OIL = (carId: string): OilChoice => { const i = CARS.findIndex((c) => c.id === carId); return i === 0 ? 2 : i >= 0 && i % 3 === 0 ? 1 : 0; };
@@ -218,7 +218,7 @@ export interface Job {
 export interface JobsState { trips: Record<string, JobTrip>; jobs: Record<string, Job> }
 
 /* ---------- ค่าตั้งต้น ---------- */
-export const RECEIPT_ITEMS = ["แผ่นป้ายทะเบียนหน้า - หลัง", "ป้ายทะเบียนติดกระจกและ พรบ.", "กระจกมองข้างซ้าย - ขวา, กระจกมองหลัง", "ยางอะไหล่", "แบตเตอรี่", "เครื่องมือประจำรถ, แม่แรง, ประแจถอดล้อ", "ฝาถังน้ำมัน",
+export const RECEIPT_ITEMS = ["แผ่นป้ายทะเบียนหน้า - หลัง", "ป้ายทะเบียนติดกระจกและ พรบ.", "กระจกมองข้างซ้าย - ขวา, กระจกมองหลัง", "ยางอะไหล่", "แบตเตอรี่", "เครื่องมือประจำยานพาหนะ, แม่แรง, ประแจถอดล้อ", "ฝาถังน้ำมัน",
   "อุปกรณ์บนหน้าปัด, แตร", "ใบปัดน้ำฝน", "วิทยุ, ลำโพง, เสาอากาศ, วิทยุรับ - ส่ง", "ระบบไฟแสงสว่าง", "สภาพยาง", "สภาพตัวถังและสี"];
 export const CLOSE_DOCS = ["บันทึกใบสั่งการ"];
 const signer = (): Signer => ({ name: null, sig: null });
@@ -238,7 +238,7 @@ export const newJob = (tripId: string, carId: string): Job => ({ tripId, carId, 
 
 /* ข้อมูลกรอกครบตามจอ Figma (ใช้กับชุดตัวอย่าง) */
 const filledReceive = (by: string): ReceiveForm => ({
-  items: RECEIPT_ITEMS.map((name, i) => ({ name, has: true, damaged: i === 11, wrongModel: false, note: i === 11 ? "ยางหลังซ้ายสึก แจ้งเจ้าของรถแล้ว" : "" })),
+  items: RECEIPT_ITEMS.map((name, i) => ({ name, has: true, damaged: i === 11, wrongModel: false, note: i === 11 ? "ยางหลังซ้ายสึก แจ้งเจ้าของยานพาหนะแล้ว" : "" })),
   signers: [{ name: PEOPLE.ownerSigner, sig: "sample" }, { name: by.replace(/ \(.*\)$/, ""), sig: "sample" }],
   photos: BEFORE.map((b, i) => [{ name: b.replace(/\s|\+|\(|\)/g, "-") + "-" + (i + 1) + ".jpg", size: "2.4 MB", bar: true }]),
 });

@@ -18,7 +18,7 @@ import { useBreakpoint } from "@/lib/useBreakpoint";
 const PER = 10;
 /* WH_COLS */
 const COLS: TableColumn[] = [
-  { head: "เลขที่ MR", width: 150, Style: "Lead text" }, { head: "ชื่อแผน" }, { head: "ปีงบประมาณ", width: 120 }, { head: "จำนวนรถ", width: 100 },
+  { head: "เลขที่ MR", width: 150, Style: "Lead text" }, { head: "ชื่อแผน" }, { head: "ปีงบประมาณ", width: 120 }, { head: "จำนวนยานพาหนะ", width: 100 },
   { head: "วันที่อนุมัติ", width: 130 }, { head: "สถานะ", width: 150, Style: "Badge" }, { head: "", width: 60, Style: "Action icons" },
 ];
 

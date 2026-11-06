@@ -43,7 +43,7 @@ import { TripCarPicker } from "./TripCarPicker";
 import { BtnRow, Content, DataTable, Section, quarterCrumbs, tripsHref, useBack } from "./ui";
 
 const TRIP_CAR_COLS: TableColumn[] = [
-  { head: "ทะเบียน", width: 180, Style: "Lead text" }, { head: "ยี่ห้อ/รุ่น" }, { head: "หน่วยงานเจ้าของรถ", width: 160 },
+  { head: "ทะเบียน", width: 180, Style: "Lead text" }, { head: "ยี่ห้อ/รุ่น" }, { head: "หน่วยงานเจ้าของยานพาหนะ", width: 160 },
   { head: "ผู้ดูแลยานพาหนะ", width: 190 }, { head: "สถานที่บำรุงรักษา", width: 290 }, { head: "", width: 104, Style: "Action icons" },
 ];
 const MODES = ["ดำเนินการเอง", "จ้างดำเนินการ"];   // 6 พ.ย. 2569 เจ้าของงาน "เปลี่ยนคำ กบค ดำเนินการเอง เป็น ดำเนินการเอง"
@@ -210,11 +210,11 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
         )}
 
         <Section>
-          <SectionHeader Title="รถในแผนเดินทาง" Badge={cars.length || null}
-            Actions={<SecondaryButton Text="เพิ่มรถ" LeadingIconSwap="add-24-300-round" onClick={() => setPicker(true)} />} />
+          <SectionHeader Title="ยานพาหนะในแผนเดินทาง" Badge={cars.length || null}
+            Actions={<SecondaryButton Text="เพิ่มยานพาหนะ" LeadingIconSwap="add-24-300-round" onClick={() => setPicker(true)} />} />
           {cars.length
             ? <DataTable columns={TRIP_CAR_COLS} rows={carRows} rowKey={(r) => String(r[0])} />
-            : <EmptyStateDataEmpty Text="ยังไม่มีรถในแผนเดินทาง" SupportingText={"กดเพิ่มรถเพื่อเลือกรถของ" + nowQ + " ที่ยังไม่อยู่ในแผนเดินทางใด"} />}
+            : <EmptyStateDataEmpty Text="ยังไม่มียานพาหนะในแผนเดินทาง" SupportingText={"กดเพิ่มยานพาหนะเพื่อเลือกยานพาหนะของ" + nowQ + " ที่ยังไม่อยู่ในแผนเดินทางใด"} />}
         </Section>
 
         <BtnRow>

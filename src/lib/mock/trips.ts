@@ -136,24 +136,24 @@ export const CREATOR = "นายวิชัย ทองดี (กกฟ.1)";
 export const CREATOR_SHORT = "นายวิชัย ทองดี";
 export const SENT_AT = "03/11/2569", APPROVED_AT = "04/11/2569";
 export const VENDORS = [   // VENDORS: ชื่อ · ประเภทรถ (Supporting text)
-  { name: "บริษัท สยามไฮดรอลิก เซอร์วิส จำกัด", types: "รถกระเช้า · รถเครน" },
-  { name: "หจก. ช่างกลภาคอีสาน", types: "รถกระเช้า" },
-  { name: "บริษัท เครนเทค เอ็นจิเนียริ่ง จำกัด", types: "รถเครน" },
-  { name: "หจก. ล้านนาไฮดรอลิก", types: "รถกระเช้า · รถขุด" },
+  { name: "บริษัท สยามไฮดรอลิก เซอร์วิส จำกัด", types: "กระเช้าแก้ไฟ · กระเช้าฮอทไลน์" },   // 6 พ.ย. 2569 ประเภทตามโค้ดจริง (screens.js VENDORS)
+  { name: "หจก. ช่างกลภาคอีสาน", types: "กระเช้าแก้ไฟ" },
+  { name: "บริษัท เครนเทค เอ็นจิเนียริ่ง จำกัด", types: "รถพ่วงฉีดน้ำ" },
+  { name: "หจก. ล้านนาไฮดรอลิก", types: "กระเช้าแก้ไฟ · รถพ่วงฉีดน้ำ" },
 ];
 export const TRIP_RETURN_REASON = "ช่วงวันที่ 03 ถึง 07/11/2569 ตรงกับแผนดับไฟของ กฟฉ.1 ขอนแก่น กรุณาเลื่อนเป็นสัปดาห์ถัดไป";
 
 const base = { planId: PLAN_ID, quarter: 1, createdBy: CREATOR, sentAt: SENT_AT };
 /* ตัวอย่างของ screens.js — ใช้ตอนเปิด scenario จากหน้า /scenarios/ (seed) */
-export const TRIP_1: Trip = { ...base, id: "T1", name: "ตรวจรถ ขอนแก่น อุดรธานี ลำปาง", mode: "self", carIds: ["82-6789", "82-1145", "80-9981", "82-3302"],
+export const TRIP_1: Trip = { ...base, id: "T1", name: "ตรวจยานพาหนะ ขอนแก่น อุดรธานี ลำปาง", mode: "self", carIds: ["82-6789", "82-1145", "80-9981", "82-3302"],
   locs: { "80-9981": "จุดรวมงาน กฟน.1 ลำปาง" }, phones: { "80-9981": "086-552-1904" }, names: { "80-9981": "นายอนุชา ศรีสุข" }, d1: "03/11/2569", d2: "07/11/2569", status: "review", staff: STAFF };
-export const TRIP_2: Trip = { ...base, id: "T2", name: "ตรวจรถ น่าน เชียงใหม่ เชียงราย", mode: "self", carIds: ["80-5738", "81-2210", "82-7720", "80-3316", "81-6604", "80-4458"],
+export const TRIP_2: Trip = { ...base, id: "T2", name: "ตรวจยานพาหนะ น่าน เชียงใหม่ เชียงราย", mode: "self", carIds: ["80-5738", "81-2210", "82-7720", "80-3316", "81-6604", "80-4458"],
   locs: {}, phones: {}, d1: "17/11/2569", d2: "21/11/2569", status: "review", staff: STAFF };
 export const TRIP_V: Trip = { ...base, id: "TV", name: "จ้างบำรุงรักษา น่าน เชียงใหม่ เชียงราย", mode: "hire", vendor: VENDORS[0].name, contract: "สจ.69-0142",
   carIds: ["80-5738", "81-2210", "82-7720", "80-3316", "81-6604", "80-4458"], locs: { "82-7720": "ศูนย์บริการผู้รับจ้าง สาขาขอนแก่น" }, phones: { "82-7720": "095-118-4420" }, names: { "82-7720": "นายธนพล วงศ์ใหญ่" },
   d1: "17/11/2569", d2: "21/11/2569", status: "review" };
 /* TRIP_OTHER — อีกใบในรายการรออนุมัติ (แสดงในตาราง S7 อย่างเดียว) */
-export const TRIP_OTHER: Trip = { ...base, id: "TO", name: "ตรวจรถเครน นครราชสีมา บุรีรัมย์", mode: "self", carIds: ["82-6789", "82-1145", "80-5738"],
+export const TRIP_OTHER: Trip = { ...base, id: "TO", name: "ตรวจรถพ่วงฉีดน้ำ นครราชสีมา บุรีรัมย์", mode: "self", carIds: ["82-6789", "82-1145", "80-5738"],
   locs: {}, phones: {}, d1: "10/11/2569", d2: "12/11/2569", status: "review", staff: STAFF, listOnly: true };
 
 export const DEFAULT_TRIPS = (): Trip[] => [{ ...TRIP_OTHER }];   // E.1: ไตรมาสยังไม่มีแผนเดินทาง
@@ -165,13 +165,13 @@ export const tripPhone = (t: Pick<Trip, "phones">, c: TripCar) => t.phones[c.id]
 export const tripCtrl = (t: Pick<Trip, "names"> | null, c: TripCar) => t?.names?.[c.id] || c.ctrl || "-";
 /* ช่อง "ผู้ดูแลยานพาหนะ" (tripPhoneCell ของ screens.js 6 พ.ย. 2569) = ชื่อ (บรรทัดบน) + เบอร์ (บรรทัดรอง) */
 export const ctrlCell = (t: Pick<Trip, "phones" | "names"> | null, c: TripCar) => ({ text: tripCtrl(t, c), sub: (t && t.phones[c.id]) || c.phone || "-" });
-export const locCell = (t: Pick<Trip, "locs">, c: TripCar) => ({ text: tripLoc(t, c), sub: t.locs[c.id] ? "แก้จากสำนักงานเจ้าของรถ" : "ค่าเริ่มต้น สำนักงานที่รถอยู่" });
+export const locCell = (t: Pick<Trip, "locs">, c: TripCar) => ({ text: tripLoc(t, c), sub: t.locs[c.id] ? "แก้จากสำนักงานเจ้าของยานพาหนะ" : "ค่าเริ่มต้น สำนักงานที่ยานพาหนะอยู่" });
 export const tripRange = (t: Pick<Trip, "d1" | "d2">) => t.d1 + " – " + t.d2;
 /* tripPlaces — "<สถานที่ไม่ซ้ำ> แห่ง (สำนักงานเจ้าของรถ k คัน)" */
 export const tripPlaces = (t: Trip) => {
   const cars = t.carIds.map(carOf).filter((c): c is TripCar => !!c);
   const n = new Set(cars.map((c) => tripLoc(t, c))).size, own = cars.filter((c) => !t.locs[c.id]).length;
-  return n + " แห่ง" + (own ? " (สำนักงานเจ้าของรถ " + own + " คัน)" : "");
+  return n + " แห่ง" + (own ? " (สำนักงานเจ้าของยานพาหนะ " + own + " คัน)" : "");
 };
 export const tripCars = (t: Trip, only?: string) => t.carIds.map(carOf).filter((c): c is TripCar => !!c && (!only || c.owner === only));
 
@@ -215,7 +215,7 @@ export function nextTripId(all: Trip[], mode: "self" | "hire") {
 export type NotiRole = "kry" | "owner";
 export interface Noti { id: string; role: NotiRole; status: StatusState; text: string; time: string; tripId?: string; unread: boolean }
 export const OWN_UNIT = "กฟฉ.1 ขอนแก่น";   // หน่วยงานเจ้าของรถตัวอย่างที่เข้าระบบอยู่
-export const NOTI_OLD_TEXT = "กบค. บำรุงรักษารถ 82-3302 อุดรธานี ตามแผนเดินทางเดือนตุลาคมเสร็จแล้ว";
+export const NOTI_OLD_TEXT = "กบค. บำรุงรักษายานพาหนะ 82-3302 อุดรธานี ตามแผนเดินทางเดือนตุลาคมเสร็จแล้ว";
 export const DEFAULT_NOTIS = (): Noti[] => [
   { id: "old-kry", role: "kry", status: "Success", text: NOTI_OLD_TEXT, time: "2 วันที่แล้ว", unread: false },
   { id: "old-owner", role: "owner", status: "Success", text: NOTI_OLD_TEXT, time: "2 วันที่แล้ว", unread: false },
@@ -224,10 +224,10 @@ export const notisOf = (s: MockState): Noti[] => s.notis ?? DEFAULT_NOTIS();
 /* แจ้งเตือนเมื่อผู้อนุมัติอนุมัติแผนเดินทาง (NOTI_KRY · NOTI_OWN) — กรย. ทุกใบ · หน่วยงานเจ้าของรถเฉพาะใบที่มีรถของหน่วยงาน */
 export function approvalNotis(t: Trip): Noti[] {
   const out: Noti[] = [{ id: t.id + "-kry", role: "kry", status: "Brand", tripId: t.id, unread: true, time: "10 นาทีที่แล้ว",
-    text: "แผนเดินทาง " + t.name + " อนุมัติแล้ว กบค. จะเข้าบำรุงรักษารถ " + t.carIds.length + " คัน ระหว่างวันที่ " + t.d1 + " ถึง " + t.d2 }];
+    text: "แผนเดินทาง " + t.name + " อนุมัติแล้ว กบค. จะเข้าบำรุงรักษายานพาหนะ " + t.carIds.length + " คัน ระหว่างวันที่ " + t.d1 + " ถึง " + t.d2 }];
   const own = tripCars(t, OWN_UNIT);
   if (own.length) out.push({ id: t.id + "-owner", role: "owner", status: "Brand", tripId: t.id, unread: true, time: "10 นาทีที่แล้ว",
-    text: "กบค. จะเข้าบำรุงรักษารถของหน่วยงาน " + own.length + " คัน (" + own.map((c) => c.plate).join(", ") + ") ระหว่างวันที่ " + t.d1 + " ถึง " + t.d2 + " ที่ " + tripLoc(t, own[0]) });
+    text: "กบค. จะเข้าบำรุงรักษายานพาหนะของหน่วยงาน " + own.length + " คัน (" + own.map((c) => c.plate).join(", ") + ") ระหว่างวันที่ " + t.d1 + " ถึง " + t.d2 + " ที่ " + tripLoc(t, own[0]) });
   return out;
 }
 export function addNotis(list: Noti[]) {

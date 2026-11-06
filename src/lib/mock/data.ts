@@ -45,6 +45,8 @@ export interface Plan {
   ack?: Record<number, string>;   // ไตรมาสที่คลังรับทราบแล้ว → วันที่ (S22) · ไม่มี = ใช้ค่าตัวอย่าง WH_ACK / WH_LIST
   /* S21 การเบิกอะไหล่รายคัน (A_DRAW · 6 พ.ย. 2569): ลำดับรถ → "none" = ไม่เบิกอะไหล่ · ไม่มี = เบิก (ถ้ามีรายการ) / ยังไม่กำหนด */
   draw?: Record<number, "none">;
+  /* หน่วยงานเจ้าของแผน (แผนที่สร้างในต้นแบบ · 6 พ.ย. 2569 กบค. สร้างแผนได้) · ไม่มี = PLAN_UNIT */
+  unit?: string;
 }
 
 /* ManualPart — อะไหล่ที่ กบค. ระบุเอง (S21 · MANUAL + MANUAL_FIELDS ของ screens.js 5 พ.ย. 2569: ชื่อ · ยี่ห้อ · รุ่น · รหัส (ถ้ามี) · จำนวน · หน่วย)
@@ -63,12 +65,12 @@ const P = (a: [string, string, string, string, string, PlanStatus, string, strin
   ({ mr: a[0], name: a[1], region: a[2], nowQ: a[3], cars: Number(a[4]), status: a[5], created: a[6], type: a[7], year: a[8], perQ: a[9] });
 
 /* PLANS */
-export const PLANS: Plan[] = [
-  P(["MR Z7000001", "บำรุงรักษารถกระเช้า ภาค 1 และภาค 2 ปีงบประมาณ 2570", "ภาค 1, ภาค 2", "ไตรมาส 1", "12", "active", "03/10/2569", "รถกระเช้า", "2570", "ไตรมาส 1: 6 · ไตรมาส 2: 3 · ไตรมาส 3: 2 · ไตรมาส 4: 1"]),
-  P(["MR Z7000002", "บำรุงรักษารถเครน ภาค 2 ปีงบประมาณ 2570", "ภาค 2 (ตะวันออกเฉียงเหนือ)", "ไตรมาส 2", "8", "approved", "05/10/2569", "รถเครน", "2570", "ไตรมาส 1: 0 · ไตรมาส 2: 4 · ไตรมาส 3: 2 · ไตรมาส 4: 2"]),
-  P(["MR Z7000003", "บำรุงรักษารถขุด ภาค 3 ปีงบประมาณ 2570", "ภาค 3 (กลาง)", "ไตรมาส 1", "6", "review", "17/10/2569", "รถขุด", "2570", "ไตรมาส 1: 2 · ไตรมาส 2: 2 · ไตรมาส 3: 1 · ไตรมาส 4: 1"]),
-  P(["MR Z7100001", "บำรุงรักษารถกระเช้า ภาค 4 ปีงบประมาณ 2571", "ภาค 4 (ใต้)", "ไตรมาส 1", "9", "returned", "12/10/2569", "รถกระเช้า", "2571", "ไตรมาส 1: 3 · ไตรมาส 2: 2 · ไตรมาส 3: 2 · ไตรมาส 4: 2"]),
-  P(["MR Z6900011", "บำรุงรักษารถกระเช้า ภาค 1 ปีงบประมาณ 2569", "ภาค 1 (เหนือ)", "ไตรมาส 4", "10", "closed", "02/06/2568", "รถกระเช้า", "2569", "ไตรมาส 1: 3 · ไตรมาส 2: 3 · ไตรมาส 3: 2 · ไตรมาส 4: 2"]),
+export const PLANS: Plan[] = [   // 6 พ.ย. 2569 ประเภทยานพาหนะตามโค้ดจริง (screens.js เปลี่ยนชื่อแผนและประเภทตาม VTYPES)
+  P(["MR Z7000001", "บำรุงรักษากระเช้าแก้ไฟ ภาค 1 และภาค 2 ปีงบประมาณ 2570", "ภาค 1, ภาค 2", "ไตรมาส 1", "12", "active", "03/10/2569", "กระเช้าแก้ไฟ", "2570", "ไตรมาส 1: 6 · ไตรมาส 2: 3 · ไตรมาส 3: 2 · ไตรมาส 4: 1"]),
+  P(["MR Z7000002", "บำรุงรักษารถพ่วงฉีดน้ำ ภาค 2 ปีงบประมาณ 2570", "ภาค 2 (ตะวันออกเฉียงเหนือ)", "ไตรมาส 2", "8", "approved", "05/10/2569", "รถพ่วงฉีดน้ำ", "2570", "ไตรมาส 1: 0 · ไตรมาส 2: 4 · ไตรมาส 3: 2 · ไตรมาส 4: 2"]),
+  P(["MR Z7000003", "บำรุงรักษากระเช้าฮอทไลน์ ภาค 3 ปีงบประมาณ 2570", "ภาค 3 (กลาง)", "ไตรมาส 1", "6", "review", "17/10/2569", "กระเช้าฮอทไลน์", "2570", "ไตรมาส 1: 2 · ไตรมาส 2: 2 · ไตรมาส 3: 1 · ไตรมาส 4: 1"]),
+  P(["MR Z7100001", "บำรุงรักษากระเช้าแก้ไฟ ภาค 4 ปีงบประมาณ 2571", "ภาค 4 (ใต้)", "ไตรมาส 1", "9", "returned", "12/10/2569", "กระเช้าแก้ไฟ", "2571", "ไตรมาส 1: 3 · ไตรมาส 2: 2 · ไตรมาส 3: 2 · ไตรมาส 4: 2"]),
+  P(["MR Z6900011", "บำรุงรักษากระเช้าแก้ไฟ ภาค 1 ปีงบประมาณ 2569", "ภาค 1 (เหนือ)", "ไตรมาส 4", "10", "closed", "02/06/2568", "กระเช้าแก้ไฟ", "2569", "ไตรมาส 1: 3 · ไตรมาส 2: 3 · ไตรมาส 3: 2 · ไตรมาส 4: 2"]),
 ];
 
 /* NEW_PLAN — แผนที่บันทึกในจอ "บันทึกและส่งอนุมัติสำเร็จ" (วันที่สร้างในต้นแบบ = วันนี้) */
@@ -82,20 +84,23 @@ export const DISTRICTS: Record<string, string[]> = {
   [REGIONS[2]]: ["กฟก.1", "กฟก.2", "กฟก.3"],
   [REGIONS[3]]: ["กฟต.1", "กฟต.2", "กฟต.3"],
 };
-/* ประเภทรถ — ชุดที่ใช้ในชื่อแผนของ PLANS (Q29 ยังไม่รู้ว่าทะเบียนรถชุดไหน) */
-export const VEHICLE_TYPES = ["รถกระเช้า", "รถเครน", "รถขุด"];
+/* ประเภทยานพาหนะ (VTYPES · typeOf ของ screens.js 6 พ.ย. 2569) — ข้อมูลจาก API ตามโค้ดจริง resolveInspectionCarType ของ maintain-d-fe
+   (src/domains/shared/types/vehicle-inspection.types.ts: กระเช้าฮอทไลน์ · กระเช้าแก้ไฟ · รถพ่วงฉีดน้ำ) · ค่าสมมติจากยี่ห้อ/รุ่น: ถังฉีดน้ำ = รถพ่วงฉีดน้ำ · Tadano = กระเช้าฮอทไลน์ · ที่เหลือ = กระเช้าแก้ไฟ */
+export const VEHICLE_TYPES = ["กระเช้าฮอทไลน์", "กระเช้าแก้ไฟ", "รถพ่วงฉีดน้ำ"];
+export const typeOf = (model: string) => /ฉีดน้ำ/.test(model) ? VEHICLE_TYPES[2] : /Tadano/.test(model) ? VEHICLE_TYPES[0] : VEHICLE_TYPES[1];
 
 export type CarStatus = "ok" | "repair" | "transfer" | "dispose";
 export interface Car { plate: string; model: string; owner: string; status: CarStatus; type: string }
 /* CAND_SEED — รถที่เข้าเงื่อนไข ภาค 2 + รถกระเช้า (ทะเบียน · ยี่ห้อ/รุ่น · หน่วยงานเจ้าของรถ · สถานะรถ) — ลำดับนี้ห้ามเปลี่ยน (plan.alloc อ้างลำดับใน CAND) */
+const car = (plate: string, model: string, owner: string, status: CarStatus): Car => ({ plate, model, owner, status, type: typeOf(model) });
 const CAND_SEED: Car[] = [
-  { plate: "82-6789 ขอนแก่น", model: "Isuzu FTR + กระเช้า Aichi SK17A", owner: "กฟฉ.1 ขอนแก่น", status: "ok", type: "รถกระเช้า" },
-  { plate: "82-1145 ขอนแก่น", model: "Hino FC + กระเช้า Tadano AT-100", owner: "กฟฉ.1 ขอนแก่น", status: "ok", type: "รถกระเช้า" },
-  { plate: "82-3302 อุดรธานี", model: "Hino FC + กระเช้า Tadano AT-100", owner: "กฟฉ.1 อุดรธานี", status: "ok", type: "รถกระเช้า" },
-  { plate: "82-4410 ขอนแก่น", model: "Isuzu FTR + กระเช้า Aichi SK17A", owner: "กฟฉ.1 ขอนแก่น", status: "ok", type: "รถกระเช้า" },
-  { plate: "83-1207 อุดรธานี", model: "Isuzu FRR + กระเช้า Aichi SK10A", owner: "กฟฉ.1 อุดรธานี", status: "repair", type: "รถกระเช้า" },
-  { plate: "84-5521 นครราชสีมา", model: "Hino FG + กระเช้า Tadano AT-146", owner: "กฟฉ.3 นครราชสีมา", status: "ok", type: "รถกระเช้า" },
-  { plate: "85-0918 อุบลราชธานี", model: "Isuzu FTR + กระเช้า Aichi SH15A", owner: "กฟฉ.2 อุบลราชธานี", status: "ok", type: "รถกระเช้า" },
+  car("82-6789 ขอนแก่น", "Isuzu FTR + กระเช้า Aichi SK17A", "กฟฉ.1 ขอนแก่น", "ok"),
+  car("82-1145 ขอนแก่น", "Hino FC + กระเช้า Tadano AT-100", "กฟฉ.1 ขอนแก่น", "ok"),
+  car("82-3302 อุดรธานี", "Hino FC + กระเช้า Tadano AT-100", "กฟฉ.1 อุดรธานี", "ok"),
+  car("82-4410 ขอนแก่น", "Isuzu FTR + กระเช้า Aichi SK17A", "กฟฉ.1 ขอนแก่น", "ok"),
+  car("83-1207 อุดรธานี", "Isuzu FRR + กระเช้า Aichi SK10A", "กฟฉ.1 อุดรธานี", "repair"),
+  car("84-5521 นครราชสีมา", "Hino FG + กระเช้า Tadano AT-146", "กฟฉ.3 นครราชสีมา", "ok"),
+  car("85-0918 อุบลราชธานี", "Isuzu FTR + กระเช้า Aichi SH15A", "กฟฉ.2 อุบลราชธานี", "ok"),
 ];
 /* รถจำลองเพิ่ม (เจ้าของงาน 4 พ.ย. 2569 "จำลองรถที่เลือกเข้าซักประเภทละ 20 คัน") — เติมให้ครบ 20 คันต่อประเภทต่อภาค วนเขตและจังหวัดในภาค
    ทะเบียนขึ้นต้น 6x กระเช้า · 7x เครน · 9x ขุด (ไม่ชนกับรถตัวอย่างของ screens.js ที่ขึ้นต้น 80–85) · ยี่ห้อ/รุ่นวนตามประเภท · ทุก 9 คันมีคันส่งซ่อม 1 คัน */
@@ -107,9 +112,10 @@ const PROVINCES: Record<string, string[]> = {
   "กฟต.1": ["เพชรบุรี", "ประจวบคีรีขันธ์", "ชุมพร"], "กฟต.2": ["นครศรีธรรมราช", "สุราษฎร์ธานี", "พัทลุง"], "กฟต.3": ["สงขลา", "ตรัง", "ยะลา"],
 };
 const MODELS: Record<string, string[]> = {
-  "รถกระเช้า": ["Isuzu FTR + กระเช้า Aichi SK17A", "Hino FC + กระเช้า Tadano AT-100", "Isuzu FRR + กระเช้า Aichi SK10A", "Hino FG + กระเช้า Tadano AT-146", "Isuzu FTR + กระเช้า Aichi SH15A"],
-  "รถเครน": ["Hino FM + เครน Tadano TM-ZE304", "Isuzu FVM + เครน Unic URV554", "Hino FG + เครน Tadano TM-ZE364", "Isuzu FXZ + เครน Unic URV1006"],
-  "รถขุด": ["Komatsu PC70-8", "Hitachi ZX70-5G", "Kubota KX080-4", "Caterpillar 307.5"],
+  /* 6 พ.ย. 2569 ยี่ห้อ/รุ่นของ CAND ใน screens.js แยกตามประเภท (typeOf) — รถเครน รถขุด เดิมไม่มีในประเภทตามโค้ดจริง */
+  [VEHICLE_TYPES[0]]: ["Hino FC + กระเช้า Tadano AT-100", "Hino FG + กระเช้า Tadano AT-146"],
+  [VEHICLE_TYPES[1]]: ["Isuzu FTR + กระเช้า Aichi SK17A", "Isuzu FRR + กระเช้า Aichi SK10A", "Isuzu FTR + กระเช้า Aichi SH15A"],
+  [VEHICLE_TYPES[2]]: ["Hino FM + ถังฉีดน้ำ 6,000 ลิตร"],
 };
 const fillCars = (seed: Car[]): Car[] => VEHICLE_TYPES.flatMap((type, t) => REGIONS.flatMap((region, r) => {
   const ds = DISTRICTS[region];
@@ -122,9 +128,9 @@ const fillCars = (seed: Car[]): Car[] => VEHICLE_TYPES.flatMap((type, t) => REGI
 }));
 /* CAND_LATE — รถที่ screens.js ต่อท้าย CAND 5 พ.ย. 2569 (80-5738 น่าน · 81-2210 เชียงใหม่ · 82-9012 ขอนแก่น เครน) · ต่อท้ายสุดของ CAND ลำดับเดิมไม่เลื่อน */
 const CAND_LATE: Car[] = [
-  { plate: "80-5738 น่าน", model: "Isuzu FRR + กระเช้า Aichi SK10A", owner: "กฟน.2 น่าน", status: "repair", type: "รถกระเช้า" },
-  { plate: "81-2210 เชียงใหม่", model: "Hino FG + กระเช้า Tadano AT-146", owner: "กฟน.1 เชียงใหม่", status: "ok", type: "รถกระเช้า" },
-  { plate: "82-9012 ขอนแก่น", model: "Hino FM + เครน Tadano TM-ZE", owner: "กฟฉ.2 ขอนแก่น", status: "ok", type: "รถเครน" },
+  car("80-5738 น่าน", "Isuzu FRR + กระเช้า Aichi SK10A", "กฟน.2 น่าน", "repair"),
+  car("81-2210 เชียงใหม่", "Hino FG + กระเช้า Tadano AT-146", "กฟน.1 เชียงใหม่", "ok"),
+  car("82-9012 ขอนแก่น", "Hino FM + ถังฉีดน้ำ 6,000 ลิตร", "กฟฉ.2 ขอนแก่น", "ok"),   // 6 พ.ย. 2569 เดิมรถเครน · ประเภทตามโค้ดจริงไม่มีรถเครน (screens.js CAND)
 ];
 const GENERATED = fillCars(CAND_SEED);
 export const CAND: Car[] = [...CAND_SEED, ...GENERATED, ...CAND_LATE];
@@ -132,9 +138,10 @@ export const CAND: Car[] = [...CAND_SEED, ...GENERATED, ...CAND_LATE];
    ลำดับใน CAND ตามลำดับ CAND ของ screens.js: CAND_SEED 7 คัน + CAND_LATE 3 คัน · ฟอร์มสร้างแผนเห็นและต้องจัดรถชุดนี้ทุกคัน (รถจำลองเพิ่ม 20 คันต่อประเภทไม่อยู่ในหน่วยงาน — BACKLOG ข้อ 21) */
 export const UNIT_FLEET: number[] = [...CAND_SEED.map((_, i) => i), ...CAND_LATE.map((_, k) => CAND_SEED.length + GENERATED.length + k)];
 /* หน่วยงานที่ใช้ flow นี้ (UNITS · PLAN_UNIT ของ screens.js 6 พ.ย. 2569 · ค่าสมมติ) — ผู้สร้างแผนและผู้ดำเนินการ = หน่วยงาน · กบค. ดูแผนทุกหน่วยงานอย่างเดียว */
-export const UNITS = ["กกฟ.1", "กกฟ.2", "กรย."];
-export const PLAN_UNIT: Record<string, string> = { "MR Z7000004": "กกฟ.1", "MR Z7000001": "กกฟ.1", "MR Z7000002": "กกฟ.2", "MR Z7000003": "กรย.", "MR Z7100001": "กกฟ.2", "MR Z6900011": "กรย." };
-export const unitOf = (mr: string) => PLAN_UNIT[mr] ?? UNITS[0];
+export const UNITS = ["กกฟ.1", "กกฟ.2", "กรย.", "กบค."];   // 6 พ.ย. 2569 รอบ 2 "กบค จะทำแผนจะมีรถของ กฝช. ด้วย" ⇒ กบค. สร้างแผนได้อีกหน่วยงาน
+export const PLAN_UNIT: Record<string, string> = { "MR Z7000004": "กกฟ.1", "MR Z7000001": "กกฟ.1", "MR Z7000002": "กกฟ.2", "MR Z7000003": "กรย.", "MR Z7100001": "กบค.", "MR Z6900011": "กรย." };
+/* หน่วยงานเจ้าของแผน: แผนที่สร้างในต้นแบบเก็บ unit · แผนตัวอย่างใช้ PLAN_UNIT (MR Z7100001 = แผนของ กบค. ที่มีรถ กฝซ.) */
+export const unitOf = (mr: string, unit?: string) => unit ?? PLAN_UNIT[mr] ?? UNITS[0];
 /* dCode — รหัสเขตของรถ จากหน่วยงานเจ้าของรถ */
 export const dCode = (c: Car) => c.owner.split(" ")[0];
 /* regionOf · shortRegion · uniq (screens.js 5 พ.ย. 2569) — ภาคของรถจากรหัสเขต · "ภาค 2 (ตะวันออกเฉียงเหนือ)" → "ภาค 2" */
@@ -172,10 +179,12 @@ export const PART_WH = ["Smart Inventory", "Smart Inventory", "Smart Inventory",
 export const PART_PRICE = [120, 680, 250, 420, 350];
 
 /* RETURN_REASON — เหตุผลที่ผู้อนุมัติส่งกลับ (S2 B.7 · S19 R.2 R.3) */
-export const RETURN_REASON = "จำนวนไส้กรองไฮโดรลิกไม่ตรงกับรอบบำรุงรักษาของรถกระเช้า กรุณาตรวจสอบรถที่เลือกเข้าแผน";
+export const RETURN_REASON = "จำนวนไส้กรองไฮโดรลิกไม่ตรงกับรอบบำรุงรักษาของกระเช้าแก้ไฟ กรุณาตรวจสอบยานพาหนะที่เลือกเข้าแผน";
 /* ผู้สร้างแผน (CREATOR · 6 พ.ย. 2569 ผู้สร้างแผน = หน่วยงาน) — ช่อง "ผู้สร้างแผน" ของรายละเอียดแผน · "ผู้สร้าง" + บรรทัดรองหน่วยงาน ของรายการแผนรออนุมัติ */
 export const PLAN_CREATOR = "นายวิชัย ทองดี (กกฟ.1)";
 export const PLAN_CREATOR_SHORT = "นายวิชัย ทองดี";
+/* ผู้สร้างแผน = ชื่อ (หน่วยงานเจ้าของแผน) — แผนของ กกฟ.1 = CREATOR ของ screens.js · แผนของหน่วยงานอื่นใส่หน่วยงานของแผนนั้น */
+export const creatorOf = (p: Pick<Plan, "mr" | "unit">) => PLAN_CREATOR_SHORT + " (" + unitOf(p.mr, p.unit) + ")";
 
 /* WH_LIST — แถวตัวอย่างของหน้า "แผนที่ต้องเตรียมอะไหล่" (S22 U.1 · whRow ใน screens.js) สำหรับแผนที่ไม่มีข้อมูลรับทราบจริง: วันที่อนุมัติ · จำนวนไตรมาสที่รับทราบ
    (จอ S22 คิด Z7000002 = รับทราบ 1/3 · Z7000001 = ครบ ต่างจากคอลัมน์คลังรับทราบของ S1 ที่ใช้ WH_ACK — ข้อมูลตัวอย่างของ screens.js คนละชุด) */

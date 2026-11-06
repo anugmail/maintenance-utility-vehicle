@@ -40,11 +40,11 @@ import { TripCarPicker } from "../_shared/TripCarPicker";
 import { Content, DataTable, PagedTable, Section, go, planDetailHref, quarterCrumbs, useBack } from "../_shared/ui";
 
 const TRIP_Q_COLS: TableColumn[] = [
-  { head: "ทะเบียน", width: 170, Style: "Lead text" }, { head: "ยี่ห้อ/รุ่น" }, { head: "หน่วยงานเจ้าของรถ", width: 160 },
+  { head: "ทะเบียน", width: 170, Style: "Lead text" }, { head: "ยี่ห้อ/รุ่น" }, { head: "หน่วยงานเจ้าของยานพาหนะ", width: 160 },
   { head: "ผู้ดูแลยานพาหนะ", width: 190 }, { head: "ช่วงวันเดินทาง", width: 210 }, { head: "แผนเดินทาง", width: 240 },
 ];
 const TRIP_COLS: TableColumn[] = [
-  { head: "ชื่อแผนเดินทาง", Style: "Lead text" }, { head: "ช่วงวัน", width: 220 }, { head: "รถ (คัน)", width: 100 },
+  { head: "ชื่อแผนเดินทาง", Style: "Lead text" }, { head: "ช่วงวัน", width: 220 }, { head: "ยานพาหนะ (คัน)", width: 100 },
   { head: "ผู้ดำเนินการ", width: 260 }, { head: "สถานะ", width: 150, Style: "Badge" }, { head: "", width: 72, Style: "Action icons" },
 ];
 
@@ -107,27 +107,27 @@ function TripList() {
       <Content>
         {plan && <VehicleAndReporterInfo Title="รายละเอียดแผน" pairs={planKv(plan, " (" + cars.length + " คัน)")} />}
         <Section>
-          <SectionLabel Title={"รถใน" + nowQ + " (" + cars.length + ")"}
-            Actions={kbk ? <SecondaryButton Text="เพิ่มรถ" LeadingIconSwap="add-24-300-round" Size={mob ? "lg" : "md"} onClick={() => setAdding(true)} /> : undefined} />
+          <SectionLabel Title={"ยานพาหนะใน" + nowQ + " (" + cars.length + ")"}
+            Actions={kbk ? <SecondaryButton Text="เพิ่มยานพาหนะ" LeadingIconSwap="add-24-300-round" Size={mob ? "lg" : "md"} onClick={() => setAdding(true)} /> : undefined} />
           <PagedTable columns={kbk ? [...TRIP_Q_COLS, { head: "", width: 104, Style: "Action icons" }] : TRIP_Q_COLS} rows={carRows} rowKey={(r) => String(r[0])} />
         </Section>
         <Section>
           <SectionLabel Title={"แผนเดินทาง (" + trips.length + ")"} Actions={create(TertiaryBrandButton)} />
           {trips.length
             ? <DataTable columns={TRIP_COLS} rows={tripRows} />
-            : <EmptyStateDataEmpty Text="ยังไม่มีแผนเดินทาง" SupportingText="สร้างแผนเดินทางเพื่อนัดวันเข้าตรวจ แจ้งเจ้าของรถและ กรย." Actions={create(PrimaryButton)} />}
+            : <EmptyStateDataEmpty Text="ยังไม่มีแผนเดินทาง" SupportingText="สร้างแผนเดินทางเพื่อนัดวันเข้าตรวจ แจ้งเจ้าของยานพาหนะและ กรย." Actions={create(PrimaryButton)} />}
         </Section>
       </Content>
-      <TripCarPicker open={adding} pool={quarterPool(mock, id, q)} nowQ={nowQ} title={"เพิ่มรถเข้า" + nowQ}
-        sub="รถในขอบเขตของแผน (ภาค เขต และประเภทรถเดียวกัน) ที่ยังไม่อยู่ในไตรมาสใด" okText={"เพิ่มเข้า" + nowQ} emptyText="ไม่มีรถที่เพิ่มเข้าไตรมาสนี้ได้"
-        onCancel={() => setAdding(false)} onAdd={(ids) => { addQuarterCars(id, q, ids); setAdding(false); notify("เพิ่มรถเข้า" + nowQ + " สำเร็จ"); }} />
+      <TripCarPicker open={adding} pool={quarterPool(mock, id, q)} nowQ={nowQ} title={"เพิ่มยานพาหนะเข้า" + nowQ}
+        sub="ยานพาหนะในขอบเขตของแผน (ภาค เขต และประเภทยานพาหนะเดียวกัน) ที่ยังไม่อยู่ในไตรมาสใด" okText={"เพิ่มเข้า" + nowQ} emptyText="ไม่มียานพาหนะที่เพิ่มเข้าไตรมาสนี้ได้"
+        onCancel={() => setAdding(false)} onAdd={(ids) => { addQuarterCars(id, q, ids); setAdding(false); notify("เพิ่มยานพาหนะเข้า" + nowQ + " สำเร็จ"); }} />
       <RowMenu anchor={menu?.anchor ?? null} items={menu ? [{ Text: "ย้ายไปไตรมาสอื่น", IconSwap: MOVE_ICON, Disabled: lastQ, onClick: () => openMove(menu.car) }] : []} onClose={() => setMenu(null)} />
       <MoveModal target={moving} cur={q} counts={(k) => quarterCars(mock, id, k).length} onCancel={() => setMoving(null)}
         onMove={(k) => { if (moving) { const tid = cannotTrip(mock, id, q, moving.car.id)?.trip.id ?? ""; moveCar(id, moving.car, q, k, tid); } setMoving(null); }} />
       <TripCarEditModal car={editCar} trip={editTrip ?? edits} onCancel={() => setEditCar(null)}
         onSave={(o) => { if (editTrip) putTrip({ ...editTrip, ...o }); else editQuarterCar(id, q, o); setEditCar(null); }} />
-      <ConfirmDialog spec={dropCar ? { danger: true, title: "ยืนยันการเอารถออกจาก" + nowQ, sub: dropCar.plate + " จะถูกเอาออกจาก" + nowQ + " ของแผนนี้ และอะไหล่ของรถคันนี้ออกจากรายการเบิกของไตรมาส", cancel: "ยกเลิก", ok: "เอาออก" } : null}
-        onCancel={() => setDropCar(null)} onOk={() => { if (dropCar) { removeQuarterCar(id, q, dropCar.id); notify("เอารถออกจาก" + nowQ + " สำเร็จ"); } setDropCar(null); }} />
+      <ConfirmDialog spec={dropCar ? { danger: true, title: "ยืนยันการเอายานพาหนะออกจาก" + nowQ, sub: dropCar.plate + " จะถูกเอาออกจาก" + nowQ + " ของแผนนี้ และอะไหล่ของยานพาหนะคันนี้ออกจากรายการเบิกของไตรมาส", cancel: "ยกเลิก", ok: "เอาออก" } : null}
+        onCancel={() => setDropCar(null)} onOk={() => { if (dropCar) { removeQuarterCar(id, q, dropCar.id); notify("เอายานพาหนะออกจาก" + nowQ + " สำเร็จ"); } setDropCar(null); }} />
     </>
   );
 }

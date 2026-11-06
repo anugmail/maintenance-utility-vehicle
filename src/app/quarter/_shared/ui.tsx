@@ -65,7 +65,7 @@ export function PagedTable({ columns, rows, perPage = 10, rowKey }: { columns: T
 
 /* TRIP_VIEW_COLS — รถในแผนเดินทาง ดูอย่างเดียว (S7 S8 · สถานที่ + บรรทัดรอง · ไม่มีเบอร์ติดต่อ) */
 export const TRIP_VIEW_COLS: TableColumn[] = [
-  { head: "ทะเบียน", width: 200, Style: "Lead text" }, { head: "ยี่ห้อ/รุ่น" }, { head: "หน่วยงานเจ้าของรถ", width: 200 }, { head: "สถานที่บำรุงรักษา", width: 330 },
+  { head: "ทะเบียน", width: 200, Style: "Lead text" }, { head: "ยี่ห้อ/รุ่น" }, { head: "หน่วยงานเจ้าของยานพาหนะ", width: 200 }, { head: "สถานที่บำรุงรักษา", width: 330 },
 ];
 
 /* ช่อง "›" เปิดรายการ (GO ใน screens.js) */

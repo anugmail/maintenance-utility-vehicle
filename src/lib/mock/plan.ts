@@ -1,6 +1,14 @@
 /* ตัวช่วยของแผน — ยกจาก screens.js (qCell · whCell · planRow · quarterParts) + เลขที่ MR ตามเงื่อนไข S1 */
-import { CAND, CAR_QTY, PARTS, PST, REGIONS, UNIT_FLEET, VEHICLE_TYPES, WH_ACK, dCode, regionOf, shortRegion, unitOf, type ManualPart, type OilSpec, type Plan } from "./data";
-import type { TableValue } from "@/components/vms/Table";
+import { CAND, CAR_QTY, DISTRICTS, PARTS, PST, REGIONS, UNIT_FLEET, VEHICLE_TYPES, WH_ACK, dCode, regionOf, shortRegion, unitOf, type ManualPart, type OilSpec, type Plan } from "./data";
+import type { TableColumn, TableValue } from "@/components/vms/Table";
+
+/* QPART_COLS — ตารางอะไหล่รวมตามรายการ (R81 · 6 พ.ย. 2569 เจ้าของงาน "ถ้าเพิ่ม คอลัมน์ ก็ส่งผลกระทบกับ หน้าอื่นๆที่เป็นหน้าที่เหมือนกันด้วย ตอน export ก็เกี่ยวข้องด้วย")
+   ชุดเดียวใช้ทุกที่ที่แสดงอะไหล่รวมของไตรมาส/แผน: อะไหล่ในไตรมาส n (S1 S19 ฟอร์มแผน) · อะไหล่ในแผน (S2) · แดชบอร์ดแท็บรวมตามรายการ (S4) — QPART_COLS ของ screens.js
+   ตาม `Table` (Table header cell + Table cell Lead text) ของไฟล์ Component · แถว = qpartRow [ชนิด, รหัสอะไหล่, ประเภท, จำนวน, หน่วย] · เพิ่ม/ลดคอลัมน์ที่นี่ที่เดียว */
+export const QPART_COLS: TableColumn[] = [
+  { head: "ชนิด", Style: "Lead text" }, { head: "รหัสอะไหล่", width: 150 }, { head: "ประเภท", width: 160 }, { head: "จำนวน", width: 120 }, { head: "หน่วย", width: 110 },
+];
+export const qpartRow = (r: { name: string; code: string; group: string; qty: number; unit: string }): TableValue[] => [r.name, r.code, r.group, String(r.qty), r.unit];
 
 /* ฟอร์มสร้างแผน (planForm) */
 export interface Draft {
@@ -31,9 +39,9 @@ export const whCell = (p: Plan) => p.status === "review" || p.status === "return
 export const PLAN_COLS = [
   { head: "เลขที่ MR", width: 150, Style: "Lead text" as const, SortIcon: "Down" as const },
   { head: "ชื่อแผน", Style: "Text" as const, SortIcon: "Swap" as const },
-  { head: "ภาค / ประเภทรถ", width: 200 },
-  { head: "จำนวนรถ", width: 100 },
-  { head: "รถรายไตรมาส", width: 210 },
+  { head: "ภาค / ประเภทยานพาหนะ", width: 200 },
+  { head: "จำนวนยานพาหนะ", width: 100 },
+  { head: "ยานพาหนะรายไตรมาส", width: 210 },
   { head: "คลังรับทราบ", width: 130 },
   { head: "สถานะ", width: 150, Style: "Badge" as const, SortIcon: "Swap" as const },
   { head: "", width: 60, Style: "Action icons" as const },
@@ -41,7 +49,7 @@ export const PLAN_COLS = [
 /* ภาค / ประเภทรถ (scopeCell · เจ้าของงาน 5 พ.ย. 2569 "สรุปจากรถที่อยู่ในแผนจริง") — 2 บรรทัดในช่องเดียว: ภาคของรถในแผน · ประเภทรถของรถในแผน
    แผนที่จัดรถไว้ (alloc) = สรุปจากรถจริง เรียงตาม REGIONS / VEHICLE_TYPES · แผนตัวอย่าง = PLAN_SCOPE หรือภาคและประเภทเดียวของแผน */
 /* 5 พ.ย. 2569 ชีตลูกค้า: MR Z7000001 รถในแผนอยู่ทั้ง กฟน. และ กฟฉ. ⇒ ภาค 1 และภาค 2 (screens.js) */
-const PLAN_SCOPE: Record<string, [string, string]> = { "MR Z7000001": ["ภาค 1, ภาค 2", "รถกระเช้า"], "MR Z7000002": ["ภาค 2, ภาค 3", "รถกระเช้า, รถเครน"] };
+const PLAN_SCOPE: Record<string, [string, string]> = { "MR Z7000001": ["ภาค 1, ภาค 2", "กระเช้าแก้ไฟ"], "MR Z7000002": ["ภาค 2, ภาค 3", "กระเช้าแก้ไฟ, รถพ่วงฉีดน้ำ"] };
 export const planScope = (p: Plan): [string, string] => {
   const cars = Object.keys(p.alloc ?? {}).map((i) => CAND[Number(i)]).filter(Boolean);
   if (cars.length) {
@@ -50,10 +58,17 @@ export const planScope = (p: Plan): [string, string] => {
   }
   return PLAN_SCOPE[p.mr] ?? [p.region.split(", ").map(shortRegion).join(", "), p.type];
 };
+/* เขตของแผน (ตัวกรอง "เขต" ของรายการแผน · 6 พ.ย. 2569): แผนที่จัดรถรายคัน = เขตของรถในแผน · แผนตัวอย่าง = เขตที่เลือกไว้ หรือทุกเขตของภาคในแผน */
+export const planDistricts = (p: Plan): string[] => {
+  const cars = Object.keys(p.alloc ?? {}).map((i) => CAND[Number(i)]).filter(Boolean);
+  if (cars.length) return [...new Set(cars.map(dCode))];
+  if (p.districts?.length) return p.districts;
+  return REGIONS.filter((r) => p.region.split(", ").some((x) => r === x || shortRegion(r) === x)).flatMap((r) => DISTRICTS[r]);
+};
 export const scopeCell = (p: Plan) => { const [text, sub] = planScope(p); return { text: text || "-", sub }; };
 /* view = กบค. ดูแผนทุกหน่วยงาน (planRow(p, view) ของ screens.js 6 พ.ย. 2569): หน่วยงานเจ้าของแผนเป็นบรรทัดรองของเลขที่ MR */
 export const planRow = (p: Plan, menu: TableValue, view = false): TableValue[] =>
-  [view ? { text: p.mr, sub: unitOf(p.mr) } : p.mr, { text: p.name, sub: "ปีงบประมาณ " + p.year }, scopeCell(p), String(p.cars), qCell(p.perQ), whCell(p), { pills: [PST[p.status]] }, menu];
+  [view ? { text: p.mr, sub: unitOf(p.mr, p.unit) } : p.mr, { text: p.name, sub: "ปีงบประมาณ " + p.year }, scopeCell(p), String(p.cars), qCell(p.perQ), whCell(p), { pills: [PST[p.status]] }, menu];
 
 /* เมนู "…" ตามสถานะแผน (S19 S20): ก่อนอนุมัติ ดูรายละเอียด แก้ไข ลบ · อนุมัติแล้ว ดูรายละเอียด แก้ไข · ดำเนินการแล้ว ดูรายละเอียดอย่างเดียว */
 export const menuCount = (p: Plan) => (p.status === "review" || p.status === "returned" ? 3 : p.status === "approved" ? 2 : 1);
@@ -98,13 +113,15 @@ export const quarterParts = (d: Draft, q = d.q) => {
 };
 
 /* แผนใหม่จากฟอร์ม (บันทึกและส่งอนุมัติ → รออนุมัติ) */
-export function planFromDraft(d: Draft, plans: Plan[], today: string, retired: string[] = []): Plan {
+/* unit = หน่วยงานผู้สร้างแผน (บทบาทที่สร้าง · 6 พ.ย. 2569 กบค. สร้างแผนได้) */
+export function planFromDraft(d: Draft, plans: Plan[], today: string, retired: string[] = [], unit?: string): Plan {
   const per = [1, 2, 3, 4].map((q) => inQuarter(d, q).length);
   return {
     mr: nextMr(plans, d.year, retired), name: d.name.trim(), ...allocScope(d.alloc), nowQ: "ไตรมาส 1", cars: Object.keys(d.alloc).length,
     status: "review", created: today, year: d.year,
     perQ: per.map((n, i) => "ไตรมาส " + (i + 1) + ": " + n).join(" · "),
     regions: d.regions, districts: d.districts, types: d.types, alloc: d.alloc, picks: d.picks, qty: d.qty, manual: d.manual, oils: d.oils, oilSpec: d.oilSpec, draw: d.draw,
+    ...(unit ? { unit } : {}),
   };
 }
 /* วันที่แบบไทย dd/mm/ปี พ.ศ. */

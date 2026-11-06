@@ -4,7 +4,7 @@
    เนื้อหา ช่องไฟ 32 (planReview() ปรับ 5 พ.ย. 2569 รีวิวทีมออกแบบ):
      รออนุมัติ: ผลการพิจารณาบนสุด (approvals/_shared/Decision · ไม่มีค่าเริ่มต้น) → PlanBody (รายละเอียดแผน + รถในแผน แยกแท็บไตรมาส ดูอย่างเดียว)
        → อะไหล่ในแผน (planPartsSec · 6 พ.ย. 2569 เจ้าของงาน "อยากเพิ่ม section อะใหล่ โดย group ชนิด ประเภท จำนวน ไม่แยกรายคัน แต่ละไตรมาส"):
-         Section label "อะไหล่ในแผน" + Tabs ไตรมาส 1–4 (ตัวเลข = จำนวนรายการ) + Table ชนิด · ประเภท · จำนวน · หน่วย (รวมทุกคันของไตรมาส เรียงตามประเภท · คันที่ไม่เบิกไม่รวม)
+         Section label "อะไหล่ในแผน" + Tabs ไตรมาส 1–4 (ตัวเลข = จำนวนรายการ) + Table QPART_COLS ชนิด · รหัสอะไหล่ · ประเภท · จำนวน · หน่วย (R81 ชุดเดียวกับอะไหล่ในไตรมาสของ S1 · รวมทุกคันของไตรมาส เรียงตามประเภท · คันที่ไม่เบิกไม่รวม)
          ไม่มีอะไหล่ = Empty state "ยังไม่มีรายการอะไหล่" / "ไตรมาสนี้ไม่มีอะไหล่ที่ต้องเบิก" · ตาม Section label + Tabs + Table ของไฟล์ Component (แบบส่วนรถในแผนของหน้าเดียวกัน)
        → ปุ่ม ย้อนกลับ · ยืนยันผลการพิจารณา (lg · Disabled จนกว่าจะเลือก และถ้าส่งกลับต้องมีเหตุผล)
        อนุมัติ → ยืนยันอนุมัติแผนบำรุงรักษา → สถานะ อนุมัติแล้ว (ส่งรายการอะไหล่ให้ กบค. คลัง S22) + toast "อนุมัติแผนบำรุงรักษาสำเร็จ" อย่างเดียว · ส่งกลับ → ยืนยันส่งกลับแก้ไข → รายการ + toast
@@ -20,11 +20,11 @@ import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionLabel } from "@/components/vms/SectionLabel";
 import { TabItem } from "@/components/vms/TabItem";
-import { Table, type TableColumn } from "@/components/vms/Table";
+import { Table } from "@/components/vms/Table";
 import { Tabs } from "@/components/vms/Tabs";
 import { cx } from "@/lib/cx";
 import { PST, QUARTERS, type Plan } from "@/lib/mock/data";
-import { thaiToday } from "@/lib/mock/plan";
+import { QPART_COLS, qpartRow, thaiToday } from "@/lib/mock/plan";
 import { allocOf, badgeOf, findPlan, quarterRows, updatePlan, useRoleGuard } from "@/lib/mock/planFlow";
 import { notify, useMock } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
@@ -33,9 +33,8 @@ import { DecisionSection, useDecision } from "../../_shared/Decision";
 
 const LIST = "/approvals/plans/";
 const APPROVE_SUB = "แผนผ่านการตรวจสอบ หน่วยงานเริ่มงานรายไตรมาสได้", RETURN_SUB = "แจ้งเหตุผลให้ผู้สร้างแผนแก้ไขแล้วส่งใหม่";   // 6 พ.ย. 2569 ผู้สร้างแผน = หน่วยงาน
-/* PLAN_PART_COLS · planQParts (screens.js 6 พ.ย. 2569) — ประเภท = หมวด · ชนิด = รายการ · จำนวนรวมทุกคันของไตรมาส */
-const PLAN_PART_COLS: TableColumn[] = [{ head: "ชนิด", Style: "Lead text" }, { head: "ประเภท", width: 200 }, { head: "จำนวน", width: 140 }, { head: "หน่วย", width: 120 }];
-const planQParts = (p: Plan, k: number) => quarterRows(allocOf(p), k).map((r) => [r.name, r.group, String(r.qty), r.unit]).sort((a, b) => a[1].localeCompare(b[1], "th"));
+/* planQParts (screens.js 6 พ.ย. 2569) — ประเภท = หมวด · ชนิด = รายการ · จำนวนรวมทุกคันของไตรมาส เรียงตามประเภท · คอลัมน์ QPART_COLS (R81 ชุดเดียวทุกหน้า) */
+const planQParts = (p: Plan, k: number) => quarterRows(allocOf(p), k).sort((a, b) => a.group.localeCompare(b.group, "th")).map(qpartRow);
 function PlanParts({ plan, q, onQ, mob }: { plan: Plan; q: number; onQ: (q: number) => void; mob: boolean }) {
   const rows = planQParts(plan, q);
   return (
@@ -43,7 +42,7 @@ function PlanParts({ plan, q, onQ, mob }: { plan: Plan; q: number; onQ: (q: numb
       <SectionLabel Title="อะไหล่ในแผน" />
       <Tabs>{QUARTERS.map((t, i) => <TabItem key={t} Text={t} Badge={planQParts(plan, i + 1).length} Active={q === i + 1} onClick={() => onQ(i + 1)} />)}</Tabs>
       {!rows.length ? <EmptyStateDataEmpty Text="ยังไม่มีรายการอะไหล่" SupportingText="ไตรมาสนี้ไม่มีอะไหล่ที่ต้องเบิก" />
-        : mob ? <MobileCards columns={PLAN_PART_COLS} rows={rows} /> : <Table columns={PLAN_PART_COLS} rows={rows} />}
+        : mob ? <MobileCards columns={QPART_COLS} rows={rows} /> : <Table columns={QPART_COLS} rows={rows} />}
     </section>
   );
 }

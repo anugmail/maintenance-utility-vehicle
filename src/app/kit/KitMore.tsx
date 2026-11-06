@@ -57,19 +57,19 @@ const PARTS: SparePart[] = [
   { name: "ไส้กรองอากาศ", code: "FL-0040", unit: "ชิ้น", price: 420, warehouse: "คลังสำรอง", stock: 60 },
   { name: "ไส้กรองเชื้อเพลิง", code: "FL-0052", unit: "ชิ้น", price: 350, warehouse: "คลังสำรอง", stock: 1 },
 ];
-const RECEIPT: ReceiptItem[] = ["แผ่นป้ายทะเบียนหน้า - หลัง", "ป้ายทะเบียนติดกระจกและ พรบ.", "กระจกมองข้างซ้าย - ขวา, กระจกมองหลัง", "ยางอะไหล่", "แบตเตอรี่", "เครื่องมือประจำรถ, แม่แรง, ประแจถอดล้อ", "ฝาถังน้ำมัน", "อุปกรณ์บนหน้าปัด, แตร", "ใบปัดน้ำฝน", "วิทยุ, ลำโพง, เสาอากาศ, วิทยุรับ - ส่ง", "ระบบไฟแสงสว่าง", "สภาพยาง", "สภาพตัวถังและสี"]
+const RECEIPT: ReceiptItem[] = ["แผ่นป้ายทะเบียนหน้า - หลัง", "ป้ายทะเบียนติดกระจกและ พรบ.", "กระจกมองข้างซ้าย - ขวา, กระจกมองหลัง", "ยางอะไหล่", "แบตเตอรี่", "เครื่องมือประจำยานพาหนะ, แม่แรง, ประแจถอดล้อ", "ฝาถังน้ำมัน", "อุปกรณ์บนหน้าปัด, แตร", "ใบปัดน้ำฝน", "วิทยุ, ลำโพง, เสาอากาศ, วิทยุรับ - ส่ง", "ระบบไฟแสงสว่าง", "สภาพยาง", "สภาพตัวถังและสี"]
   .map((name, i) => ({ name, has: i === 1 ? false : i < 6 ? true : null, damaged: i === 0, battery: name === "แบตเตอรี่" ? { brand: "GS Yuasa", qty: "1", unit: "ลูก" } : undefined }));
 const INSPECT: InspectionItem[] = ["ชุดเกียร์ PTO", "ชุดกระบอกขาช้างหน้า ซ้าย ขวา", "ชุดกระบอกขาช้างหลัง ซ้าย ขวา", "ชุดวาร์ลคอนโทรลขาช้าง", "เพลาขับปั๊มน้ำมันไฮดรอลิค", "ปั๊มน้ำมันไฮดรอลิค"]
   .map((name, i) => ({ name, ok: i === 1 ? false : i < 4 ? true : null }));
 const FILES: UploadFile[] = [
-  { name: "ใบรับรถ-82-6789.pdf", size: "200 KB", bar: true },
+  { name: "ใบรับยานพาหนะ-82-6789.pdf", size: "200 KB", bar: true },
   { name: "ภาพก่อนเริ่มงาน-1.jpg", size: "1.2 MB", progress: 40 },
   { name: "ใบเสร็จ.png", size: "อัปโหลดไม่สำเร็จ — รับเฉพาะไฟล์ PDF หรือ JPG", err: true },
 ];
-const KV: [string, string][] = [["ชื่อแผนเดินทาง", "แผนเดินทาง 1 · กฟฉ.1 ขอนแก่น"], ["แผน", "MR Z7000001 บำรุงรักษารถกระเช้า ภาค 1 และภาค 2 ปีงบประมาณ 2570"], ["ไตรมาส", "ไตรมาส 1"], ["ช่วงวันเดินทาง", "03/11/2569 – 07/11/2569"], ["พนักงาน กบค. ซ่อม", "นายวิชัย ทองดี"], ["ผู้สร้าง", "นายวิชัย ทองดี (กบค.)"], ["อนุมัติเมื่อ", "04/11/2569"]];
+const KV: [string, string][] = [["ชื่อแผนเดินทาง", "แผนเดินทาง 1 · กฟฉ.1 ขอนแก่น"], ["แผน", "MR Z7000001 บำรุงรักษากระเช้าแก้ไฟ ภาค 1 และภาค 2 ปีงบประมาณ 2570"], ["ไตรมาส", "ไตรมาส 1"], ["ช่วงวันเดินทาง", "03/11/2569 – 07/11/2569"], ["พนักงาน กบค. ซ่อม", "นายวิชัย ทองดี"], ["ผู้สร้าง", "นายวิชัย ทองดี (กบค.)"], ["อนุมัติเมื่อ", "04/11/2569"]];
 const NOTI: { state: StatusState; text: string; time: string }[] = [
-  { state: "Brand", text: "แผนเดินทาง แผนเดินทาง 1 อนุมัติแล้ว กบค. จะเข้าบำรุงรักษารถ 4 คัน ระหว่างวันที่ 03/11/2569 ถึง 07/11/2569", time: "10 นาทีที่แล้ว" },
-  { state: "Success", text: "กบค. บำรุงรักษารถ 82-3302 อุดรธานี ตามแผนเดินทางเดือนตุลาคมเสร็จแล้ว", time: "2 วันที่แล้ว" },
+  { state: "Brand", text: "แผนเดินทาง แผนเดินทาง 1 อนุมัติแล้ว กบค. จะเข้าบำรุงรักษายานพาหนะ 4 คัน ระหว่างวันที่ 03/11/2569 ถึง 07/11/2569", time: "10 นาทีที่แล้ว" },
+  { state: "Success", text: "กบค. บำรุงรักษายานพาหนะ 82-3302 อุดรธานี ตามแผนเดินทางเดือนตุลาคมเสร็จแล้ว", time: "2 วันที่แล้ว" },
 ];
 
 export function KitMore() {
@@ -87,8 +87,8 @@ export function KitMore() {
   const [qty, setQty] = useState<Record<string, number>>({ "OL-0011": 30, "FL-0022": 2 });
   const [q, setQ] = useState("");
   const [slots, setSlots] = useState<SignerSlot[]>([
-    { LabelText: "ผู้ส่งมอบรถ (หน่วยงานเจ้าของรถ)", Placeholder: "เลือกผู้ส่งมอบรถ (หน่วยงานเจ้าของรถ)", options: ["นายสุรชัย แก้วมณี", "นางสาวกนกวรรณ ใจมั่น"], value: "นายสุรชัย แก้วมณี", signed: true },
-    { LabelText: "ผู้รับมอบรถ (กบค.)", Placeholder: "เลือกผู้รับมอบรถ (กบค.)", options: ["นายวิชัย ทองดี", "นายสมชาย พูลสุข"], value: null },
+    { LabelText: "ผู้ส่งมอบยานพาหนะ (หน่วยงานเจ้าของยานพาหนะ)", Placeholder: "เลือกผู้ส่งมอบยานพาหนะ (หน่วยงานเจ้าของยานพาหนะ)", options: ["นายสุรชัย แก้วมณี", "นางสาวกนกวรรณ ใจมั่น"], value: "นายสุรชัย แก้วมณี", signed: true },
+    { LabelText: "ผู้รับมอบยานพาหนะ (กบค.)", Placeholder: "เลือกผู้รับมอบยานพาหนะ (กบค.)", options: ["นายวิชัย ทองดี", "นายสมชาย พูลสุข"], value: null },
   ]);
   const [sigFor, setSigFor] = useState(0);
   const pick = (p: SparePart) => setPicked((x) => (x.includes(p.code!) ? x.filter((c) => c !== p.code) : [...x, p.code!]));
@@ -156,7 +156,7 @@ export function KitMore() {
         {STATES.map((st) => <V key={st} label={`Icon button State=${st}`}><IconButton IconSwap="keyboard_arrow_right-20-400-round" State={st} aria-label="ถัดไป" /></V>)}
       </Block>
       <Block name="List with checkbox" node="List (3285:58382)">
-        <V label="มือถือ — เลือกรถเข้าแผนเดินทาง (S6)"><div className="w-[348px]"><ListWithCheckbox Title="ทะเบียน" options={[{ value: "82-6789", Text: "82-6789 ขอนแก่น" }, { value: "82-1145", Text: "82-1145 ขอนแก่น" }, { value: "80-9981", Text: "80-9981 ลำปาง" }]} value={list} onChange={setList} /></div></V>
+        <V label="มือถือ — เลือกยานพาหนะเข้าแผนเดินทาง (S6)"><div className="w-[348px]"><ListWithCheckbox Title="ทะเบียน" options={[{ value: "82-6789", Text: "82-6789 ขอนแก่น" }, { value: "82-1145", Text: "82-1145 ขอนแก่น" }, { value: "80-9981", Text: "80-9981 ลำปาง" }]} value={list} onChange={setList} /></div></V>
       </Block>
       <Block name="Date picker" node="Date picker (855:376)">
         <V label="Type=Dual, Time picker=false (S6 ช่วงวันเดินทาง)"><DatePicker Type="Dual" month={new Date(2026, 10, 1)} today={new Date(2026, 10, 4)} value={{ start: new Date(2026, 10, 3), end: new Date(2026, 10, 7) }} /></V>
@@ -191,7 +191,7 @@ export function KitMore() {
         <V label="State=Filled" wide><ReceiptChecklist items={receipt} onChange={(i, p) => setReceipt((r) => r.map((x, j) => (j === i ? { ...x, ...p } : x)))} onAdd={() => undefined} /></V>
       </Block>
       <Block name="InspectionChecklist (Maintain-D)" node="Maintain-D Design (0:1)">
-        <V label="ตรวจสภาพรถปิดงาน (S10 · AfterRepair)" wide><InspectionChecklist Title="ตรวจสภาพรถปิดงาน" Badge={24} items={inspect} onChange={(i, p) => setInspect((r) => r.map((x, j) => (j === i ? { ...x, ...p } : x)))} onAdd={() => undefined} /></V>
+        <V label="ตรวจสภาพยานพาหนะปิดงาน (S10 · AfterRepair)" wide><InspectionChecklist Title="ตรวจสภาพยานพาหนะปิดงาน" Badge={24} items={inspect} onChange={(i, p) => setInspect((r) => r.map((x, j) => (j === i ? { ...x, ...p } : x)))} onAdd={() => undefined} /></V>
       </Block>
       <Block name="Spare Part Card Item · Selecte Spare Part (Maintain-D)" node="Maintain-D Local Component (8:133440)">
         {(["Add", "Checked"] as const).map((s) => <V key={s} label={`Selecte Spare Part State=${s}`}><SelecteSparePart State={s} /></V>)}
@@ -201,11 +201,11 @@ export function KitMore() {
         <V label="อะไหล่=เพิ่มอะไหล่"><div className="w-[560px]"><SparePartCardItem อะไหล่="เพิ่มอะไหล่" qty={2} manual={{ name: "ไส้กรองอากาศขนาดเล็ก", code: "", price: "750" }} onDelete={() => undefined} /></div></V>
       </Block>
       <Block name="PartRequestStepPanel · PartsInventoryPanel · RequestedPartsPanel (Maintain-D)" node="Maintain-D Design (0:1)">
-        <V label="S21 อะไหล่ของรถ (เลือกจากคลัง ↔ อะไหล่ของรถคันนี้)" wide>
+        <V label="S21 อะไหล่ของยานพาหนะ (เลือกจากคลัง ↔ อะไหล่ของยานพาหนะคันนี้)" wide>
           <PartRequestStepPanel
             Inventory={<PartsInventoryPanel parts={PARTS} picked={picked} onPick={pick} query={q} onQuery={setQ} />}
             Requested={
-              <RequestedPartsPanel Title="อะไหล่ของรถคันนี้" SupportingText="เลือกจากคลังหรือระบุเพิ่มเอง แก้จำนวนหรือเอาออกได้" Badge={chosen.length} costs={[["เบิกจากคลัง", take], ["ต้องจัดซื้อ", 0]]}>
+              <RequestedPartsPanel Title="อะไหล่ของยานพาหนะคันนี้" SupportingText="เลือกจากคลังหรือระบุเพิ่มเอง แก้จำนวนหรือเอาออกได้" Badge={chosen.length} costs={[["เบิกจากคลัง", take], ["ต้องจัดซื้อ", 0]]}>
                 {chosen.map((p) => <SparePartCardItem key={p.code} อะไหล่="V2 รายการที่เลือก" part={p} qty={qty[p.code!] ?? 1} onQty={(n) => setQty((x) => ({ ...x, [p.code!]: n }))} onDelete={() => pick(p)} />)}
               </RequestedPartsPanel>
             } />
@@ -225,11 +225,11 @@ export function KitMore() {
 
       <FormModal open={open === "form"} title="แก้ไขเบอร์ติดต่อและสถานที่ · 82-6789 ขอนแก่น" fields={[{ label: "เบอร์ติดต่อ", value: "081-472-3365" }, { label: "สถานที่บำรุงรักษา", value: "สำนักงาน กฟฉ.1 ขอนแก่น", area: true }]}
         onOk={() => setOpen("")} onCancel={() => setOpen("")} />
-      <PopupModal open={open === "popup"} title="เพิ่มรถเข้าแผนเดินทาง" sub="รถของไตรมาส 1ที่ยังไม่อยู่ในแผนเดินทางใด · อีก 4 คันอยู่ในแผนเดินทางอื่นแล้ว" ok="เพิ่มเข้าแผนเดินทาง (2)" onOk={() => setOpen("")} onCancel={() => setOpen("")}>
+      <PopupModal open={open === "popup"} title="เพิ่มยานพาหนะเข้าแผนเดินทาง" sub="ยานพาหนะของไตรมาส 1ที่ยังไม่อยู่ในแผนเดินทางใด · อีก 4 คันอยู่ในแผนเดินทางอื่นแล้ว" ok="เพิ่มเข้าแผนเดินทาง (2)" onOk={() => setOpen("")} onCancel={() => setOpen("")}>
         <FileUpload LabelText="เอกสารประกอบ" Optional files={FILES.slice(0, 1)} />
       </PopupModal>
       <NotificationPanel open={open === "noti"} onClose={() => setOpen("")} badge="1 แจ้งเตือนใหม่" items={NOTI.map((n) => ({ ...n, onClick: () => setOpen("") }))} onClearAll={() => setOpen("")} />
-      <ModalSignature open={open === "sig"} Title="ลงนามการรับมอบรถ" signer={[slots[sigFor].LabelText, slots[sigFor].value ?? "-"]} onClose={() => setOpen("")}
+      <ModalSignature open={open === "sig"} Title="ลงนามการรับมอบยานพาหนะ" signer={[slots[sigFor].LabelText, slots[sigFor].value ?? "-"]} onClose={() => setOpen("")}
         onSave={() => { setSlots((s) => s.map((x, j) => (j === sigFor ? { ...x, signed: true } : x))); setOpen(""); }} />
       <SummaryRequestedParts open={open === "sum"} Title="สรุปรายการเบิก/จองอะไหล่" cancel="ยกเลิก" ok="ยืนยันเบิก/จอง" onOk={() => setOpen("")} onCancel={() => setOpen("")}
         groups={[{ title: "อะไหล่ที่เบิก", subs: [{ title: "เบิกที่ Smart Inventory", rows: [["น้ำมันไฮโดรลิก ISO VG 46 x60", 7200], ["ไส้กรองน้ำมันเครื่อง x12", 3000]] }, { title: "เบิกที่คลังสำรอง", rows: [["ไส้กรองอากาศ x12", 5040]] }] },

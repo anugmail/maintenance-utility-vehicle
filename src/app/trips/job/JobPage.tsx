@@ -31,7 +31,7 @@ const JOB_COLS: TableColumn[] = [{ head: "รายการงาน" }, { head
 /* กล่อง "ข้อมูลยานพาหนะ" (6 คู่) — เลขไมล์/ชั่วโมงเครื่องจักรสะสมเป็นค่าคงที่ของจอ Figma (ค่าเดียวทั้งตรวจเองและใบจ้าง) */
 export const vehiclePairs = (t: JobTrip, c: TripCar): [string, string][] => {
   const [km, hr] = ODOMETER;
-  return [["ทะเบียน", c.plate], ["ยี่ห้อ/รุ่น", c.model], ["ประเภท", c.type], ["หน่วยงานเจ้าของรถ", c.owner], ["เลขไมล์สะสม", km], ["ชั่วโมงเครื่องจักรสะสม", hr]];
+  return [["ทะเบียน", c.plate], ["ยี่ห้อ/รุ่น", c.model], ["ประเภท", c.type], ["หน่วยงานเจ้าของยานพาหนะ", c.owner], ["เลขไมล์สะสม", km], ["ชั่วโมงเครื่องจักรสะสม", hr]];
 };
 /* กล่อง "การนัดหมาย" — ตรวจเอง: แผนเดินทาง ช่วงวันเดินทาง · จ้าง: แผนเดินทาง ผู้รับจ้าง ช่วงวันทำงาน · + สถานที่ ผู้ดูแลยานพาหนะ เบอร์ (+ เริ่มงาน ผู้เริ่มงาน = กบค. ทั้งสองแบบ) */
 export const appointmentPairs = (t: JobTrip, c: TripCar, j?: Job): [string, string][] => [
@@ -110,7 +110,7 @@ export function JobPage({ trip, car, job, actor }: { trip: JobTrip; car: TripCar
       </Section>
       <CannotPopup open={cannot} car={car} parts={job.parts} used={used} reason={reason} error={err}
         onReason={(v) => { setReason(v); if (v.trim()) setErr(false); }} onOk={confirmCannot} onCancel={() => setCannot(false)} />
-      <ConfirmDialog spec={del ? { danger: true, title: "ยืนยันการเอาอะไหล่ออก", sub: del.part + " จะถูกเอาออกจากรถคันนี้", cancel: "ยกเลิก", ok: "เอาออก" } : null}
+      <ConfirmDialog spec={del ? { danger: true, title: "ยืนยันการเอาอะไหล่ออก", sub: del.part + " จะถูกเอาออกจากยานพาหนะคันนี้", cancel: "ยกเลิก", ok: "เอาออก" } : null}
         onOk={() => { if (del) deleteJobPart(trip, car, del.k); setDel(null); }} onCancel={() => setDel(null)} />
       <PartEditModal item={editItem && { ...editItem, used: editItem.usedQty }} onCancel={() => setEditK(null)}
         onSave={(v) => { if (editItem) editPartUsed(trip, car, editItem.k, v.used); setEditK(null); }} />

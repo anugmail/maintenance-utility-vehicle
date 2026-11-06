@@ -8,7 +8,7 @@ import { APPROVED_AT, DEFAULT_TRIPS, TRIP_1, TRIP_OTHER, type Trip } from "@/lib
 
 export const PLAN_ID = "Z7000001";
 export const PLAN_MR = "MR Z7000001";
-export const PLAN_NAME = "บำรุงรักษารถกระเช้า ภาค 1 และภาค 2 ปีงบประมาณ 2570";
+export const PLAN_NAME = "บำรุงรักษากระเช้าแก้ไฟ ภาค 1 และภาค 2 ปีงบประมาณ 2570";
 
 /* ---------- หน้า ---------- */
 export const LIST = "/";
@@ -32,7 +32,7 @@ export const MOVE_CAR = "80-9981";
 export const MOVE_PLATE = "80-9981 ลำปาง";
 export const seedCannotIn = (q: number) => () => {
   const id = "T" + (q + 6);
-  const t: Trip = { ...approved(TRIP_1), id, quarter: q, name: "ตรวจรถ ลำปาง ไตรมาส " + q, carIds: [MOVE_CAR], locs: {}, phones: {} };
+  const t: Trip = { ...approved(TRIP_1), id, quarter: q, name: "ตรวจยานพาหนะ ลำปาง ไตรมาส " + q, carIds: [MOVE_CAR], locs: {}, phones: {} };
   const job: Job = { ...newJob(id, MOVE_CAR), status: "cannot", cannot: { reason: JOB_TEXT.cannotSelf, used: WORK.map(() => 0), by: PEOPLE.kbk, at: JOB_TIMES.self.start, whileDoing: false } };
   setMock((s) => ({
     ...s, trips: [{ ...TRIP_OTHER }, t], jobs: { jobs: { [id + ":" + MOVE_CAR]: job } },
@@ -50,6 +50,6 @@ export const openPlan = (what = "") => ({
 /** หน้ารายละเอียดแผนเดินทาง → เปิดหน้างานรายคันของรถ */
 export const openCar = (trip: string, plate: string, extra = "") => ({
   at: tripDetailAt(trip),
-  text: extra + "กดแถวของรถ " + plate + " เพื่อเปิดหน้างานรายคัน",
-  mobile: extra + "กดไอคอนดูรายละเอียดบนการ์ดของรถ " + plate + " เพื่อเปิดหน้างานรายคัน",
+  text: extra + "กดแถวของยานพาหนะ " + plate + " เพื่อเปิดหน้างานรายคัน",
+  mobile: extra + "กดไอคอนดูรายละเอียดบนการ์ดของยานพาหนะ " + plate + " เพื่อเปิดหน้างานรายคัน",
 });

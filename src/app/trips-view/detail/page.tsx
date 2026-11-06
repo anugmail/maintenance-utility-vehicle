@@ -30,7 +30,7 @@ function TripView() {
       <Content>
         <VehicleAndReporterInfo Title="รายละเอียดแผนเดินทาง" pairs={tripViewKv(t, mrOf(t.planId) + " " + (plan?.name ?? ""))} />
         <Section>
-          <SectionLabel Title={(own ? "รถของหน่วยงานในแผนเดินทาง" : "รถในแผนเดินทาง") + " (" + rows.length + ")"} />
+          <SectionLabel Title={(own ? "ยานพาหนะของหน่วยงานในแผนเดินทาง" : "ยานพาหนะในแผนเดินทาง") + " (" + rows.length + ")"} />
           <DataTable columns={TRIP_VIEW_COLS} rows={rows} />
         </Section>
       </Content>

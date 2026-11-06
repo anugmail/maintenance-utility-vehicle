@@ -20,8 +20,8 @@ import { ButtonRow, jobHref, Section, toUpload, tripHref, useTripCar } from "../
 import { StepFrame } from "../StepFrame";
 
 const SLOTS = [
-  { LabelText: "ผู้ส่งมอบรถ (หน่วยงานเจ้าของรถ)", Placeholder: "เลือกผู้ส่งมอบรถ (หน่วยงานเจ้าของรถ)" },
-  { LabelText: "ผู้รับมอบรถ (กบค.)", Placeholder: "เลือกผู้รับมอบรถ (กบค.)" },
+  { LabelText: "ผู้ส่งมอบยานพาหนะ (หน่วยงานเจ้าของยานพาหนะ)", Placeholder: "เลือกผู้ส่งมอบยานพาหนะ (หน่วยงานเจ้าของยานพาหนะ)" },
+  { LabelText: "ผู้รับมอบยานพาหนะ (กบค.)", Placeholder: "เลือกผู้รับมอบยานพาหนะ (กบค.)" },
 ];
 
 export function ReceivePage() {
@@ -47,7 +47,7 @@ export function ReceivePage() {
 
   return (
     <StepFrame trip={trip} car={car} job={job} step={1} used={job.parts.map(() => 0)} actor={actor}>
-      <ReceiptChecklist Title="รายการเอกสารรับรถ" items={f.items} readonly={!actor}
+      <ReceiptChecklist Title="รายการเอกสารรับยานพาหนะ" items={f.items} readonly={!actor}
         onChange={(i, p) => put((x) => ({ ...x, items: x.items.map((it, k) => (k === i ? { ...it, ...p } : it)) }))} />
       <HandoverSignature Title="ลงนามการตรวจสภาพ"
         slots={SLOTS.map((s, i) => ({ ...s, options: options[i], value: f.signers[i].name, signed: !!f.signers[i].sig }))}

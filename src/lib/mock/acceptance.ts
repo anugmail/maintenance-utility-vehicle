@@ -92,6 +92,6 @@ function acceptSample(all: boolean) {
   setMock((s) => { const f = { ...s.feedback }; delete f.Z7000001; return { ...s, feedback: f }; });
 }
 export const ACCEPT_SAMPLES = {
-  S13: { role: "หน่วยงานเจ้าของรถ" as const, apply: () => acceptSample(false) },
-  S14: { role: "หน่วยงานเจ้าของรถ" as const, apply: () => acceptSample(true) },
+  S13: { role: "หน่วยงานเจ้าของยานพาหนะ" as const, apply: () => acceptSample(false) },
+  S14: { role: "หน่วยงานเจ้าของยานพาหนะ" as const, apply: () => acceptSample(true) },
 };

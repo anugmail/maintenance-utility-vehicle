@@ -46,7 +46,7 @@ export function moveCar(planId: string, car: TripCar, from: number, to: number, 
   addQuarterCars(planId, to, [car.id]);
   removeQuarterCar(planId, from, car.id);
   setMock((s) => ({ ...s, moves: [...movesOf(s), { planId, carId: car.id, plate: car.plate, from, to, tripId }] }));
-  notify("ย้ายรถ " + car.plate + " ไป" + qLabel(to) + " สำเร็จ");
+  notify("ย้ายยานพาหนะ " + car.plate + " ไป" + qLabel(to) + " สำเร็จ");
 }
 
 /** S4: บรรทัดรอง "รวม {n} {หน่วย} ของ {ทะเบียน} ที่ย้ายมา" ต่อรายการอะไหล่ (MOVE_Q2_SUBS) + อะไหล่ของรถที่ย้ายมา */

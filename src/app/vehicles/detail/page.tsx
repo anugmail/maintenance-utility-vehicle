@@ -44,7 +44,7 @@ function MaDetail() {
   if (!ok || !c) return null;
 
   const l = c.latest, car = c.car;
-  const pairs: [string, string][] = [["ทะเบียน", car.plate], ["ยี่ห้อ/รุ่น", car.model], ["ประเภท", car.type], ["หน่วยงานเจ้าของรถ", car.owner],
+  const pairs: [string, string][] = [["ทะเบียน", car.plate], ["ยี่ห้อ/รุ่น", car.model], ["ประเภท", car.type], ["หน่วยงานเจ้าของยานพาหนะ", car.owner],
     ["เลขไมล์สะสม", l?.km ?? "-"], ["ชั่วโมงเครื่องจักรสะสม", l?.hours ?? "-"]];
   const next: MaValue[][] = (l ? c.items : MA_ITEMS.map((_, k) => ({ k, last: "-", dueText: "-", status: undefined }))).map((it) => [
     MA_ITEMS[it.k], it.last, MA_CYCLE[it.k],

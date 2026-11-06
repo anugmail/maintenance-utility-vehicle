@@ -17,7 +17,7 @@ import type { TripCar } from "@/lib/mock/trips";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { CheckTable } from "@/app/new/CheckTable";
 
-const COLS = [{ head: "ทะเบียน", width: 240 }, { head: "ยี่ห้อ/รุ่น" }, { head: "หน่วยงานเจ้าของรถ", width: 200 }];
+const COLS = [{ head: "ทะเบียน", width: 240 }, { head: "ยี่ห้อ/รุ่น" }, { head: "หน่วยงานเจ้าของยานพาหนะ", width: 200 }];
 const SEARCH = "ค้นหาทะเบียน, ยี่ห้อ/รุ่น, หน่วยงาน";
 
 /* title / sub / okText / emptyText = popup "เพิ่มรถเข้าไตรมาส n" ของ E.1 (qAddModal() → tripCarModal(o.cars o.title o.sub o.okText)) · taken = รถที่อยู่ในแผนเดินทางอื่น (แสดงแต่เลือกไม่ได้) */
@@ -27,7 +27,7 @@ export function TripCarPicker({ open, ...p }: PickerProps & { open: boolean }) {
   return <Picker {...p} />;
 }
 
-function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่มรถเข้าแผนเดินทาง", sub: subText, okText = "เพิ่มเข้าแผนเดินทาง", emptyText, emptySub }: PickerProps) {
+function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่มยานพาหนะเข้าแผนเดินทาง", sub: subText, okText = "เพิ่มเข้าแผนเดินทาง", emptyText, emptySub }: PickerProps) {
   const mob = useBreakpoint() === "Mobile";
   const [q, setQ] = useState("");
   const [ticked, setTicked] = useState<string[]>([]);
@@ -35,12 +35,12 @@ function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่
   const shown = k ? pool.filter((c) => c.plate.includes(k) || c.model.includes(k) || c.owner.includes(k)) : pool;
   const nTaken = pool.filter((c) => taken[c.id]).length;
   const n = ticked.length;
-  const sub = subText ?? "รถทุกคันของ" + nowQ + (nTaken ? " · " + nTaken + " คันอยู่ในแผนเดินทางอื่นแล้ว เลือกไม่ได้" : "");
+  const sub = subText ?? "ยานพาหนะทุกคันของ" + nowQ + (nTaken ? " · " + nTaken + " คันอยู่ในแผนเดินทางอื่นแล้ว เลือกไม่ได้" : "");
   const search = <TextInput Label={false} Size={mob ? "lg" : "md"} LeadingIconSwap="search-24-300-round" Text={q} Placeholder={SEARCH} onChange={setQ} aria-label={SEARCH} className={mob ? "w-full" : "w-80"} />;
   const rows = shown.map((c) => ({ key: c.id, text: c.plate, sub: taken[c.id] ? "อยู่ในแผนเดินทาง " + taken[c.id] : undefined, disabled: !!taken[c.id], cells: [c.model, c.owner] }));
 
   const body = !pool.length
-    ? (emptyText ? <EmptyStateDataEmpty Text={emptyText} SupportingText={emptySub} Graphic="vehicle" /> : <EmptyStateDataEmpty Graphic="vehicle" Text={"รถทุกคันของ" + nowQ + " อยู่ในแผนเดินทางแล้ว"} SupportingText="ไม่มีรถที่เพิ่มเข้าแผนเดินทางนี้ได้" />)
+    ? (emptyText ? <EmptyStateDataEmpty Text={emptyText} SupportingText={emptySub} Graphic="vehicle" /> : <EmptyStateDataEmpty Graphic="vehicle" Text={"ยานพาหนะทุกคันของ" + nowQ + " อยู่ในแผนเดินทางแล้ว"} SupportingText="ไม่มียานพาหนะที่เพิ่มเข้าแผนเดินทางนี้ได้" />)
     : <>{search}<CheckTable columns={COLS} rows={rows} ticked={ticked} onTicked={setTicked} /></>;
 
   return (

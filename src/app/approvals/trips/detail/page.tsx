@@ -22,7 +22,7 @@ import { APPROVED_AT, TST, addNotis, approvalNotis, badgeOf, findTrip, locCell, 
 import { DecisionSection, useDecision } from "../../_shared/Decision";
 import { BtnRow, Content, DataTable, MENU_HOME, Section, TRIP_VIEW_COLS, useBack } from "../../../quarter/_shared/ui";
 
-const APPROVE_SUB = "แผนเดินทางผ่านการตรวจสอบ แจ้งเจ้าของรถและ กรย.", RETURN_SUB = "แจ้งเหตุผลให้ กบค. แก้ไขแผนเดินทางแล้วส่งใหม่";
+const APPROVE_SUB = "แผนเดินทางผ่านการตรวจสอบ แจ้งเจ้าของยานพาหนะและ กรย.", RETURN_SUB = "แจ้งเหตุผลให้ กบค. แก้ไขแผนเดินทางแล้วส่งใหม่";
 
 function TripReview() {
   const router = useRouter();
@@ -42,7 +42,7 @@ function TripReview() {
   const confirm = () => {
     if (!dec.ok) return;
     if (!ret) setPending({
-      spec: { title: "ยืนยันอนุมัติแผนเดินทาง", sub: t.name + " · " + t.carIds.length + " คัน · อนุมัติแล้วระบบแจ้งเตือน กรย. และหน่วยงานเจ้าของรถ", ok: "อนุมัติ" },
+      spec: { title: "ยืนยันอนุมัติแผนเดินทาง", sub: t.name + " · " + t.carIds.length + " คัน · อนุมัติแล้วระบบแจ้งเตือน กรย. และหน่วยงานเจ้าของยานพาหนะ", ok: "อนุมัติ" },
       run: () => {
         const next = { ...t, status: "approved" as const, approvedAt: APPROVED_AT, returnReason: undefined };
         putTrip(next);
@@ -68,7 +68,7 @@ function TripReview() {
         {t.status === "review" && approver && <DecisionSection approveSub={APPROVE_SUB} returnSub={RETURN_SUB} {...dec} />}
         <VehicleAndReporterInfo Title="รายละเอียดแผนเดินทาง" pairs={tripKv(t, planLabel)} />
         <Section>
-          <SectionLabel Title={"รถในแผนเดินทาง (" + rows.length + ")"} />
+          <SectionLabel Title={"ยานพาหนะในแผนเดินทาง (" + rows.length + ")"} />
           <DataTable columns={TRIP_VIEW_COLS} rows={rows} />
         </Section>
         {t.status === "review" && approver && (

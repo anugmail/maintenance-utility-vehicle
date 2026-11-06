@@ -93,7 +93,7 @@ function PartsProgress() {
       <PageHeader Title={"ความคืบหน้าอะไหล่ · " + nowQ} onBack={back}
         crumbs={quarterCrumbs(id, plan?.name ?? "", q, "ความคืบหน้าอะไหล่")} />
       <Content>
-        <Alert Color="Info" Text={"คลังรับทราบรายการอะไหล่" + nowQ + " แล้ว"} SupportingText={"รถ " + nCars + " คันของไตรมาสนี้ · คลังรับทราบ " + WH_ACK_AT} />
+        <Alert Color="Info" Text={"คลังรับทราบรายการอะไหล่" + nowQ + " แล้ว"} SupportingText={"ยานพาหนะ " + nCars + " คันของไตรมาสนี้ · คลังรับทราบ " + WH_ACK_AT} />
         {down && <Alert Color="Error" Text="เชื่อมต่อ Smart Inventory ไม่ได้" SupportingText="ยังดูคงเหลือและเบิก/จองไม่ได้ ลองใหม่อีกครั้ง" />}
         {st.result === "short" && <Alert Color="Warning" Text={"จองได้ " + sum.ok + " รายการ · คงเหลือไม่พอ " + sum.short + " รายการ"}
           SupportingText={shownNeed.filter((r) => lackOf(r)).map((r) => r.name + " ขาด " + lackOf(r) + " " + r.unit).join(" · ") + " — รอจัดซื้อแล้วเข้าคลัง"} />}
@@ -113,7 +113,7 @@ function PartsProgress() {
         ? <ConfirmDialog spec={confirm ? { title: "ยืนยันการเบิก/จองอะไหล่", sub: "เบิกจากคลัง " + sum.ok + " รายการ · คงเหลือไม่พอรอจัดซื้อ " + sum.short + " รายการ", ok: "ยืนยันเบิก/จอง" } : null}
             onCancel={() => setConfirm(false)} onOk={withdraw} />
         : <SummaryRequestedParts open={confirm} Title="สรุปรายการเบิก/จองอะไหล่" cancel="ยกเลิก" ok="ยืนยันเบิก/จอง" onCancel={() => setConfirm(false)} onOk={withdraw}
-            info={<ContentItemRow perRow={4} items={[["แผน", plan?.name ?? "-"], ["เลขที่ MR", mrOf(id)], ["ไตรมาส", nowQ], ["จำนวนรถ", nCars + " คัน"]]} />}
+            info={<ContentItemRow perRow={4} items={[["แผน", plan?.name ?? "-"], ["เลขที่ MR", mrOf(id)], ["ไตรมาส", nowQ], ["จำนวนยานพาหนะ", nCars + " คัน"]]} />}
             groups={sum.groups} totals={sum.totals} />}
     </>
   );

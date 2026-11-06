@@ -11,12 +11,14 @@
        Tabs + Table header แสดงเสมอ — รถของหน่วยงานที่ตรงทุกช่องที่เลือก (ช่องว่าง = ทั้งหมด): Tabs ทั้งหมด n · ไตรมาส 1–4 n (Pill) → Table header (หัว "รถในพื้นที่ที่เลือก" + Badge "n คัน" / "รถในไตรมาส n" + Badge "กำหนดอะไหล่แล้ว x/y คัน" · ค้นหา "เลขทะเบียน, ยี่ห้อ, รุ่น"
        · ตัวกรอง + Pill จำนวนตัวกรอง · ปุ่ม "จัดลงไตรมาส (n)" Disabled เมื่อยังไม่ติ๊ก · ชิปตัวกรองกดเอาออกได้) → ตารางติ๊ก + Table pagination
        ทั้งหมด: ทะเบียน (ยี่ห้อ/รุ่น) · ประเภทรถ · เขต / หน่วยงานเจ้าของรถ · ไตรมาส (Pill "ไตรมาส n" Brand / "ยังไม่จัด" Gray)
-       ไตรมาส n: Q_COLS (น้ำมันไฮโดรลิก · อะไหล่อื่นๆ ("ไม่เบิกอะไหล่" เมื่อเลือกไม่เบิก) · ไอคอนแก้ไข → S21 · ไม่มีคอลัมน์ไตรมาส) · มือถือ List with checkbox บรรทัดรอง "น้ำมัน … · อะไหล่อื่นๆ …" ไม่มีไอคอน (BACKLOG ข้อ 11)
+       ไตรมาส n: Q_COLS (น้ำมันไฮโดรลิก · อะไหล่อื่นๆ ("ไม่เบิกอะไหล่" เมื่อเลือกไม่เบิก) · ปุ่ม "…" (Q_MENU · 6 พ.ย. 2569 เจ้าของงาน "เพิ่ม ... ดูรายละเอียด แก้ไข ลบ ของรถแต่ละคัน") · ไม่มีคอลัมน์ไตรมาส)
+         เมนู … ของยานพาหนะ (RowMenu · ชุด MENU เดียวกับรายการแผน): ดูรายละเอียด → /car-parts/view/ (carPartsView อะไหล่ของยานพาหนะคันนั้น ดูอย่างเดียว) · แก้ไข → /car-parts/ (S21)
+         · ลบ → ยืนยันการเอายานพาหนะออกจากไตรมาส (Q_OUT_CONFIRM) → กลับเป็นยังไม่จัด ปุ่มบันทึกและส่งอนุมัติกดไม่ได้อีกครั้ง + toast "เอายานพาหนะออกจากไตรมาส n สำเร็จ" · มือถือ List with checkbox บรรทัดรอง "น้ำมัน … · อะไหล่อื่นๆ …" ไม่มีไอคอน (BACKLOG ข้อ 11)
        ยังไม่เลือกช่องใด (แท็บทั้งหมด): Empty state "ยังไม่มีรายการรถ" / "กดตัวกรองเพื่อเลือกภาค เขต หรือประเภทรถ ตารางจะแสดงรถทั้งหมดที่ตรงกัน"
        · ไตรมาสว่าง: "ยังไม่มีรถในไตรมาสนี้" + ปุ่มหลัก "เพิ่มรถเข้าไตรมาส n" (R75 5 พ.ย. 2569 · noCarsInQ) → popup "เพิ่มรถเข้าไตรมาส n" (TripCarPicker แบบ S6 E.1 · รถของพื้นที่ที่เลือกที่ยังไม่อยู่ในไตรมาสใด · มือถือ bottom sheet)
          → ยืนยัน = อยู่แท็บเดิม รถขึ้นในตาราง ตัวเลขบนแท็บเปลี่ยน + toast "จัดรถ k คันลงไตรมาส n สำเร็จ" · ไม่ตรงคำค้น/ตัวกรอง: Search not found + "ล้างตัวกรอง"
      อะไหล่ในไตรมาส n (Section header + Badge) — ตั้งต้นว่าง รวมจากรถที่จัดการแล้วทีละคัน (qAgg: น้ำมันที่เปลี่ยน ลิตรต่อคัน + อะไหล่อื่นๆ + รายการที่ระบุเอง · คันที่ไม่เบิกอะไหล่ไม่รวม)
-       Table รายการอะไหล่ · รหัส · หมวด · ตามแผน · หน่วย ไม่มีปุ่มเพิ่มอะไหล่และไอคอนแถว / Empty state ตามแท็บ
+       Table QPART_COLS (R81: ชนิด · รหัสอะไหล่ · ประเภท · จำนวน · หน่วย — ชุดเดียวกับอะไหล่ในแผน S2) ไม่มีปุ่มเพิ่มอะไหล่และไอคอนแถว / Empty state ตามแท็บ
      ปุ่ม ย้อนกลับ (แก้ไข: ยกเลิก) · บันทึกและส่งอนุมัติ — Disabled จนกว่า ชื่อแผน · ปีงบประมาณ ครบ · รถทุกคันของหน่วยงานอยู่ในไตรมาส · ทุกคันกำหนดอะไหล่แล้ว (เบิกพร้อมรายการ หรือ ไม่เบิก) — 6 พ.ย. 2569 แบบ ก หน้าเดียว
    popup "จัดลงไตรมาส" (Radio text card ไตรมาส 1–4 เรียงลง ช่องไฟ 12 · ไม่มีตัวเลือกเอาออก) → toast "จัดรถ n คันลงไตรมาส k สำเร็จ" · มือถือ bottom sheet
    เอาภาค เขต ประเภทรถ ชิปตัวกรอง หรือคำค้นออก = เปลี่ยนแค่แถวที่เห็น รถที่จัดแล้วไม่หาย (ไม่มี confirm)
@@ -25,6 +27,7 @@
 import { useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { ConfirmDialog, type ConfirmSpec } from "@/components/patterns/ConfirmDialog";
+import { RowMenu, anchorOf, type MenuAnchor } from "@/components/patterns/RowMenu";
 import { PopupModal } from "@/components/patterns/PopupModal";
 import { Alert } from "@/components/vms/Alert";
 import { DropdownList } from "@/components/vms/DropdownList";
@@ -46,27 +49,23 @@ import { TablePagination } from "@/components/vms/TablePagination";
 import { Tabs } from "@/components/vms/Tabs";
 import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
-import { CAND, DISTRICTS, QUARTERS, REGIONS, UNIT_FLEET, VEHICLE_TYPES, YEARS, shortRegion, type Plan } from "@/lib/mock/data";
-import { areaPicked, carsFor, decided, draftComplete, emptyDraft, fleetAllocated, inQuarter, isDirty, matchQuery, planFromDraft, thaiToday, type Draft } from "@/lib/mock/plan";
-import { carParam, draftFromPlan, draftKey, oilCellOf, otherCellOf, planId, planWithDraft, quarterRows } from "@/lib/mock/planFlow";
-import { notify, setMock, useMock } from "@/lib/mock/store";
+import { CAND, DISTRICTS, MENU, QUARTERS, REGIONS, UNIT_FLEET, VEHICLE_TYPES, YEARS, shortRegion, type Plan } from "@/lib/mock/data";
+import { QPART_COLS, areaPicked, carsFor, decided, draftComplete, emptyDraft, fleetAllocated, inQuarter, isDirty, matchQuery, planFromDraft, qpartRow, thaiToday, type Draft } from "@/lib/mock/plan";
+import { carParam, roleUnit, draftFromPlan, draftKey, oilCellOf, otherCellOf, planId, planWithDraft, quarterRows } from "@/lib/mock/planFlow";
+import { notify, setMock, useMock, useRole } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { CheckTable, type CheckRow } from "./CheckTable";
 import { TripCarPicker } from "@/app/quarter/_shared/TripCarPicker";
 import { FilterShell } from "@/app/vehicles/_lib/ui";
 
-/* CARP_COLS (หน้ารายละเอียดแผน PlanBody · ดูอย่างเดียว) · PART_COLS.slice(0, 5) + ไอคอน (screens.js) */
+/* CARP_COLS (หน้ารายละเอียดแผน PlanBody · ดูอย่างเดียว) + ไอคอน (screens.js) · ตารางอะไหล่ในไตรมาสใช้ QPART_COLS (R81 · lib/mock/plan.ts) */
 export const CARP_COLS: TableColumn[] = [
-  { head: "ทะเบียน", width: 230, Style: "Lead text" }, { head: "ยี่ห้อ/รุ่น" }, { head: "หน่วยงานเจ้าของรถ", width: 180 },
+  { head: "ทะเบียน", width: 230, Style: "Lead text" }, { head: "ยี่ห้อ/รุ่น" }, { head: "หน่วยงานเจ้าของยานพาหนะ", width: 180 },
   { head: "น้ำมันไฮโดรลิก", width: 140 }, { head: "เปลี่ยนล่าสุด", width: 120 }, { head: "อะไหล่", width: 120 }, { head: "", width: 104, Style: "Action icons" },
 ];
-export const PART_COLS: TableColumn[] = [
-  { head: "รายการอะไหล่", Style: "Lead text", SortIcon: "Swap" }, { head: "รหัส", width: 100 }, { head: "หมวด", width: 110 },
-  { head: "ตามแผน", width: 100 }, { head: "หน่วย", width: 90 },
-];
 /* PICK_COLS — แท็บทั้งหมด · Q_COLS — แท็บไตรมาส n (screens.js) */
-const PICK_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 260 }, { head: "ประเภทรถ", width: 160 }, { head: "เขต / หน่วยงานเจ้าของรถ" }, { head: "ไตรมาส", width: 160, Style: "Badge" }];
-const Q_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 240 }, { head: "ประเภทรถ", width: 130 }, { head: "เขต / หน่วยงานเจ้าของรถ" }, { head: "น้ำมันไฮโดรลิก", width: 200 }, { head: "อะไหล่อื่นๆ", width: 200 }, { head: "", width: 72, Style: "Action icons" }];
+const PICK_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 260 }, { head: "ประเภทยานพาหนะ", width: 160 }, { head: "เขต / หน่วยงานเจ้าของยานพาหนะ" }, { head: "ไตรมาส", width: 160, Style: "Badge" }];
+const Q_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 240 }, { head: "ประเภทยานพาหนะ", width: 130 }, { head: "เขต / หน่วยงานเจ้าของยานพาหนะ" }, { head: "น้ำมันไฮโดรลิก", width: 200 }, { head: "อะไหล่อื่นๆ", width: 200 }, { head: "", width: 60, Style: "Action icons" }];   // 6 พ.ย. 2569 ท้ายแถว = ปุ่ม … (Q_MENU) แทนไอคอนแก้ไข
 const PER = 10;
 /* S19: Alert เหนือฟอร์มแก้ไข (ALERT_RETURNED · ALERT_APPROVED) */
 const ALERT_APPROVED = ["แผนนี้อนุมัติแล้ว", "เมื่อบันทึก แผนจะกลับเป็นสถานะรออนุมัติ และต้องให้ผู้อนุมัติตรวจสอบอีกครั้ง"] as const;
@@ -90,6 +89,8 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
   const [qAdd, setQAdd] = useState(false);   // popup เพิ่มรถเข้าไตรมาส n (R75)   // popup จัดลงไตรมาส: ตัวเลือกที่เลือก ("" = ยังไม่เลือก · null = ปิด)
   const [touched, setTouched] = useState<{ name?: boolean; year?: boolean }>({});
   const [pending, setPending] = useState<Pending | null>(null);
+  const [carMenu, setCarMenu] = useState<{ car: number; anchor: MenuAnchor } | null>(null);   // เมนู … ของยานพาหนะในแท็บไตรมาส
+  const role = useRole();
 
   const put = (patch: Partial<Draft>) => setMock((s) => (edit ? { ...s, edit: { ...(s.edit ?? base()), ...patch } } : { ...s, draft: { ...(s.draft ?? emptyDraft()), ...patch } }));
   const toggle = (k: Open) => (v: boolean) => {
@@ -129,13 +130,27 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
   const picked = areaPicked(d);
   const nTicked = ticked.length;
   const qPill = (i: number): [string, "Brand" | "Gray"] => (d.alloc[i] ? ["ไตรมาส " + d.alloc[i], "Brand"] : ["ยังไม่จัด", "Gray"]);
-  const toS21 = (car: number) => router.push("/car-parts/?id=" + (edit ? planId(plan) : "new") + "&q=" + q + "&car=" + carParam(car) + (from === "detail" ? "&from=detail" : ""));
+  const carQuery = (car: number) => "?id=" + (edit ? planId(plan) : "new") + "&q=" + q + "&car=" + carParam(car) + (from === "detail" ? "&from=detail" : "");
+  const toS21 = (car: number) => router.push("/car-parts/" + carQuery(car));
+  /* Q_MENU (MENU) ของยานพาหนะ: ดูรายละเอียด (carPartsView) · แก้ไข (S21) · ลบ = เอาออกจากไตรมาส (Q_OUT_CONFIRM) */
+  const outOfQ = (car: number) => setPending({
+    spec: { danger: true, title: "ยืนยันการเอายานพาหนะออกจากไตรมาส " + q, sub: CAND[car].plate + " จะกลับเป็นยังไม่จัด ต้องจัดลงไตรมาสอีกครั้งก่อนบันทึกและส่งอนุมัติ", cancel: "ยกเลิก", ok: "เอาออก" },
+    run: () => {
+      const alloc = { ...d.alloc };
+      delete alloc[car];
+      put({ alloc });
+      setTicked((t) => t.filter((x) => x !== String(car)));
+      notify("เอายานพาหนะออกจากไตรมาส " + q + " สำเร็จ");
+    },
+  });
+  const carActs = [(car: number) => router.push("/car-parts/view/" + carQuery(car)), toS21, outOfQ];
+  const carItems = carMenu ? MENU.map((m, k) => ({ ...m, onClick: () => carActs[k](carMenu.car) })) : [];
   const rows: CheckRow[] = rowsOnPage.map((i) => {
     const c = CAND[i];
     if (!q) return { key: String(i), text: c.plate, sub: c.model, mobileSub: c.model + " · " + qPill(i)[0], cells: [c.type, c.owner, { pills: [qPill(i)] }] };
     const oil = oilCellOf(d, i), other = otherCellOf(d, i), txt = (v: typeof oil) => (typeof v === "string" ? v : v.text);
     return { key: String(i), text: c.plate, sub: c.model, mobileSub: "น้ำมัน " + txt(oil) + " · อะไหล่อื่นๆ " + (typeof other === "string" ? other : other.text),
-      cells: [c.type, c.owner, oil, other, { actions: [{ IconSwap: "stylus-24-300-round", label: "แก้ไขอะไหล่ " + c.plate, onClick: () => toS21(i) }] }] };
+      cells: [c.type, c.owner, oil, other, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู " + c.plate, onClick: (e) => setCarMenu({ car: i, anchor: anchorOf(e.currentTarget) }) }] }] };
   });
   const doAssign = () => {
     const kq = QUARTERS.indexOf(assign ?? "") + 1;
@@ -143,7 +158,7 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
     const alloc = { ...d.alloc };
     ticked.forEach((x) => { alloc[Number(x)] = kq; });
     put({ alloc });
-    notify("จัดรถ " + ticked.length + " คันลงไตรมาส " + kq + " สำเร็จ");
+    notify("จัดยานพาหนะ " + ticked.length + " คันลงไตรมาส " + kq + " สำเร็จ");
     setTicked([]); setAssign(null);
   };
   /* R75 รถที่เพิ่มเข้าไตรมาสนี้ได้ = รถของพื้นที่ที่เลือก (ยังไม่เลือก = รถทุกคัน) ที่ยังไม่อยู่ในไตรมาสใด · รถในไตรมาสอื่นไม่แสดง (ย้ายไตรมาสใช้ จัดลงไตรมาส ในแท็บทั้งหมด) */
@@ -153,7 +168,7 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
     const alloc = { ...d.alloc };
     ids.forEach((x) => { alloc[Number(x)] = q; });
     put({ alloc });
-    notify("จัดรถ " + ids.length + " คันลงไตรมาส " + q + " สำเร็จ");
+    notify("จัดยานพาหนะ " + ids.length + " คันลงไตรมาส " + q + " สำเร็จ");
     setQAdd(false);
   };
   const clearFilters = () => { setQuery(""); setArea({ districts: [], types: [] }); };
@@ -191,7 +206,7 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
       });
     }
     if (mock.failSave) { notify("general error", "Error"); return; }
-    setMock((s) => ({ ...s, draft: null, plans: [planFromDraft(d, s.plans, thaiToday(), s.retiredMr), ...s.plans] }));
+    setMock((s) => ({ ...s, draft: null, plans: [planFromDraft(d, s.plans, thaiToday(), s.retiredMr, roleUnit(role)), ...s.plans] }));
     notify("ส่งแผนบำรุงรักษาเพื่ออนุมัติสำเร็จ");
     router.push("/");
   };
@@ -204,13 +219,13 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
   const yearErr = touched.year && !d.year;
 
   const carBody = !q && !picked
-    ? empty("ยังไม่มีรายการรถ", "กดตัวกรองเพื่อเลือกภาค เขต หรือประเภทรถ ตารางจะแสดงรถทั้งหมดที่ตรงกัน")
+    ? empty("ยังไม่มีรายการยานพาหนะ", "กดตัวกรองเพื่อเลือกภาค เขต หรือประเภทยานพาหนะ ตารางจะแสดงยานพาหนะทั้งหมดที่ตรงกัน")
     : shown.length
       ? <CheckTable columns={q ? Q_COLS : PICK_COLS} rows={rows} ticked={ticked} onTicked={setTicked}
           Pagination={<TablePagination total={shown.length} page={pg} perPage={PER} onPage={setPage} />} />
       : q && !k
-        ? <EmptyStateDataEmpty Text="ยังไม่มีรถในไตรมาสนี้" SupportingText="เลือกรถในพื้นที่ที่ยังไม่ได้จัดลงไตรมาสใด หรือติ๊กรถในแท็บทั้งหมดแล้วกดจัดลงไตรมาส" Graphic="vehicle"
-            Actions={<PrimaryButton Text={"เพิ่มรถเข้าไตรมาส " + q} LeadingIconSwap="add-24-300-round" Size={mob ? "lg" : "md"} onClick={() => setQAdd(true)} />} />
+        ? <EmptyStateDataEmpty Text="ยังไม่มียานพาหนะในไตรมาสนี้" SupportingText="เลือกยานพาหนะในพื้นที่ที่ยังไม่ได้จัดลงไตรมาสใด หรือติ๊กยานพาหนะในแท็บทั้งหมดแล้วกดจัดลงไตรมาส" Graphic="vehicle"
+            Actions={<PrimaryButton Text={"เพิ่มยานพาหนะเข้าไตรมาส " + q} LeadingIconSwap="add-24-300-round" Size={mob ? "lg" : "md"} onClick={() => setQAdd(true)} />} />
         : <EmptyStateSearchNotFound Actions={<SecondaryButton Text="ล้างตัวกรอง" Size={mob ? "lg" : "md"} onClick={clearFilters} />} />;
 
   return (
@@ -234,12 +249,12 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
         </section>
 
         <section className="flex flex-col gap-4">
-          <SectionHeader Title="เลือกรถเข้าแผนและจัดลงไตรมาส" Badge={"จัดลงไตรมาสแล้ว " + fleetAllocated(d) + "/" + UNIT_FLEET.length + " คัน"} />
+          <SectionHeader Title="เลือกยานพาหนะเข้าแผนและจัดลงไตรมาส" Badge={"จัดลงไตรมาสแล้ว " + fleetAllocated(d) + "/" + UNIT_FLEET.length + " คัน"} />
           <Tabs>
             <TabItem Text="ทั้งหมด" Badge={area.length} Active={q === 0} onClick={() => { put({ q: 0 }); reset(); }} />
             {QUARTERS.map((_, i) => <TabItem key={i} Text={"ไตรมาส " + (i + 1)} Badge={inQ(i + 1).length} Active={q === i + 1} onClick={() => { put({ q: i + 1 }); reset(); }} />)}
           </Tabs>
-          <TableHeader Title={q ? "รถในไตรมาส " + q : "รถในพื้นที่ที่เลือก"} Badge={q ? "กำหนดอะไหล่แล้ว " + qDone + "/" + inQ(q).length + " คัน" : shown.length + " คัน"} Placeholder="เลขทะเบียน, ยี่ห้อ, รุ่น" query={query}
+          <TableHeader Title={q ? "ยานพาหนะในไตรมาส " + q : "ยานพาหนะในพื้นที่ที่เลือก"} Badge={q ? "กำหนดอะไหล่แล้ว " + qDone + "/" + inQ(q).length + " คัน" : shown.length + " คัน"} Placeholder="เลขทะเบียน, ยี่ห้อ, รุ่น" query={query}
             onQuery={(v) => { setQuery(v); setPage(1); }} onFilter={openPanel} FilterCount={chips.length} Filters={chips} onRemoveFilter={removeChip}
             Actions={<SecondaryButton Text={"จัดลงไตรมาส" + (nTicked ? " (" + nTicked + ")" : "")} Size={mob ? "lg" : "md"} State={nTicked ? "Default" : "Disabled"} onClick={() => nTicked && setAssign("")} />} />
           {carBody}
@@ -248,8 +263,8 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
         <section className="flex flex-col gap-4">
           <SectionHeader Title={"อะไหล่ในไตรมาส" + (q ? " " + q : "")} Badge={qRows.length || null} />
           {qRows.length
-            ? table(PART_COLS, qRows.map((r) => [r.name, r.code, r.group, String(r.qty), r.unit]))
-            : <EmptyStateDataEmpty Text="ยังไม่มีรายการอะไหล่" SupportingText={!q ? "เปิดแท็บไตรมาสเพื่อดูอะไหล่ของรถในไตรมาสนั้น" : qCars.length ? "จัดการอะไหล่ทีละคันจากไอคอนแก้ไขที่แถวรถ รายการจะรวมมาที่นี่" : "จัดรถลงไตรมาสนี้ก่อน แล้วจึงจัดการอะไหล่ทีละคันได้"} />}
+            ? table(QPART_COLS, qRows.map(qpartRow))
+            : <EmptyStateDataEmpty Text="ยังไม่มีรายการอะไหล่" SupportingText={!q ? "เปิดแท็บไตรมาสเพื่อดูอะไหล่ของยานพาหนะในไตรมาสนั้น" : qCars.length ? "จัดการอะไหล่ทีละคันจากปุ่ม … ที่แถวยานพาหนะ รายการจะรวมมาที่นี่" : "จัดยานพาหนะลงไตรมาสนี้ก่อน แล้วจึงจัดการอะไหล่ทีละคันได้"} />}
         </section>
 
         <div className={cx("flex", mob ? "gap-4 [&>*]:flex-1 [&>*]:basis-0" : "justify-between gap-3")}>
@@ -257,15 +272,15 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
           <PrimaryButton Text="บันทึกและส่งอนุมัติ" Size="lg" State={complete ? "Default" : "Disabled"} onClick={save} />
         </div>
       </div>
-      <PopupModal open={assign !== null} title="จัดลงไตรมาส" sub={"รถที่เลือก " + nTicked + " คัน · รถที่จัดไว้แล้วจะย้ายไปไตรมาสที่เลือก"} ok="ยืนยัน" okDisabled={!assign}
+      <PopupModal open={assign !== null} title="จัดลงไตรมาส" sub={"ยานพาหนะที่เลือก " + nTicked + " คัน · ยานพาหนะที่จัดไว้แล้วจะย้ายไปไตรมาสที่เลือก"} ok="ยืนยัน" okDisabled={!assign}
         onCancel={() => setAssign(null)} onOk={doAssign}>
         <div role="radiogroup" className="flex flex-col gap-3">
           {QUARTERS.map((t) => <RadioTextCard key={t} Text={t} Selected={assign === t} onClick={() => setAssign(t)} />)}
         </div>
       </PopupModal>
-      <TripCarPicker open={qAdd} pool={addPool} nowQ={"ไตรมาส " + q} title={"เพิ่มรถเข้าไตรมาส " + q} okText={"เพิ่มเข้าไตรมาส " + q}
-        sub={(picked ? "รถในพื้นที่ที่เลือก" : "รถทุกคัน") + "ที่ยังไม่อยู่ในไตรมาสใด · " + addPool.length + " คัน"}
-        emptyText="รถในพื้นที่ที่เลือกจัดลงไตรมาสครบแล้ว" emptySub="ย้ายรถระหว่างไตรมาสได้ที่ปุ่ม จัดลงไตรมาส ในแท็บทั้งหมด"
+      <TripCarPicker open={qAdd} pool={addPool} nowQ={"ไตรมาส " + q} title={"เพิ่มยานพาหนะเข้าไตรมาส " + q} okText={"เพิ่มเข้าไตรมาส " + q}
+        sub={(picked ? "ยานพาหนะในพื้นที่ที่เลือก" : "ยานพาหนะทุกคัน") + "ที่ยังไม่อยู่ในไตรมาสใด · " + addPool.length + " คัน"}
+        emptyText="ยานพาหนะในพื้นที่ที่เลือกจัดลงไตรมาสครบแล้ว" emptySub="ย้ายยานพาหนะระหว่างไตรมาสได้ที่ปุ่ม จัดลงไตรมาส ในแท็บทั้งหมด"
         onCancel={() => setQAdd(false)} onAdd={addToQ} />
       <FilterShell open={panel} onClose={closePanel} onClear={() => setFd({ regions: [], districts: [], types: [] })} onApply={applyPanel}>
         <InputDropdownWithBadges LabelText="ภาค" Optional values={fd.regions} Placeholder="เลือกภาค" onRemove={fdRemove("regions")} open={open === "region"} onOpenChange={toggle("region")}>
@@ -274,10 +289,11 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
         <InputDropdownWithBadges LabelText="เขต" Optional values={fd.districts} Placeholder="เลือกเขต" onRemove={fdRemove("districts")} open={open === "district"} onOpenChange={toggle("district")}>
           <DropdownList>{(fd.regions.length ? fd.regions : REGIONS).flatMap((r) => DISTRICTS[r]).map((x) => <DropdownListItem key={x} Text={x} State={fd.districts.includes(x) ? "Selected" : "Default"} onClick={() => fdFlip("districts", x)} />)}</DropdownList>
         </InputDropdownWithBadges>
-        <InputDropdownWithBadges LabelText="ประเภทรถ" Optional values={fd.types} Placeholder="เลือกประเภทรถ" onRemove={fdRemove("types")} open={open === "type"} onOpenChange={toggle("type")}>
+        <InputDropdownWithBadges LabelText="ประเภทยานพาหนะ" Optional values={fd.types} Placeholder="เลือกประเภทยานพาหนะ" onRemove={fdRemove("types")} open={open === "type"} onOpenChange={toggle("type")}>
           <DropdownList>{VEHICLE_TYPES.map((t) => <DropdownListItem key={t} Text={t} State={fd.types.includes(t) ? "Selected" : "Default"} onClick={() => fdFlip("types", t)} />)}</DropdownList>
         </InputDropdownWithBadges>
       </FilterShell>
+      <RowMenu anchor={carMenu?.anchor ?? null} items={carItems} onClose={() => setCarMenu(null)} />
       <ConfirmDialog spec={pending?.spec ?? null} onCancel={() => setPending(null)} onOk={() => { pending?.run(); setPending(null); }} />
     </>
   );

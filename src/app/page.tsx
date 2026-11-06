@@ -5,23 +5,35 @@
    ยังไม่มีแผน (A.2) = Empty state/Data empty "ไม่มีแผนบำรุงรักษา" + Primary "สร้างแผน" ไม่มี Table header (Admin State=Empty ของ RP & MA Job)
    มือถือ: ตารางเป็น Mobile table (1 แผน = 1 การ์ด) · ปุ่มหัวหน้าอยู่ใต้หัวข้อ · เมนู "…" เป็น bottom sheet
    เมนู "…" ตามสถานะ (S19 S20 · planMenu): ดูรายละเอียด → /detail/ · แก้ไข → /edit/ (S19) · ลบ → ยืนยันการลบแผน (S20) แล้ว toast "ลบแผนบำรุงรักษาสำเร็จ"
-   สิทธิ์: สร้าง/แก้ไข/ลบ เฉพาะหน่วยงานผู้สร้างแผน (6 พ.ย. 2569 ผู้สร้างแผน = หน่วยงาน กกฟ.1 · กกฟ.2 · กรย. — เดิม กบค.)
-   กบค. (6 พ.ย. 2569 "กบค แค่เห็นแผนทั้งหมด" · listScreen view ของ screens.js): รายการแผนทุกหน่วยงาน ไม่มีปุ่มสร้างแผน · เลขที่ MR มีบรรทัดรอง = หน่วยงาน · เมนู … เหลือดูรายละเอียด → รายละเอียดแผนไม่มีปุ่ม · ผู้อนุมัติ / กบค. คลัง เข้ารากแล้วไปหน้าเริ่มของบทบาท (routes.md §2: /approvals/plans/ · /warehouse/) */
+   สิทธิ์: สร้าง/แก้ไข/ลบ เฉพาะหน่วยงานผู้สร้างแผน (6 พ.ย. 2569 ผู้สร้างแผน = หน่วยงาน กกฟ.1 · กกฟ.2 · กรย. · กบค. — UNITS)
+   กบค. (listScreen view ของ screens.js · 6 พ.ย. 2569 รอบ 2 "กบค จะทำแผนจะมีรถของ กฝช. ด้วย"): รายการแผนทุกหน่วยงาน มีปุ่มสร้างแผน · เลขที่ MR มีบรรทัดรอง = หน่วยงาน (PLAN_UNIT)
+     · แผนของ กบค. (MR Z7100001) เมนู … ตามสถานะแบบปกติ · แผนของหน่วยงานอื่น เมนูเหลือดูรายละเอียด → รายละเอียดแผนไม่มีปุ่ม (canManage)
+   ผู้อนุมัติ / กบค. คลัง เข้ารากแล้วไปหน้าเริ่มของบทบาท (routes.md §2: /approvals/plans/ · /warehouse/)
+   แผงตัวกรอง (listScreen o.filter · 6 พ.ย. 2569 รีวิว "filter หน้ารายการแผน เขต · หน่วยงานหน้างาน กรย. 12 เขต, กกฟ. 1and2" + "กบค. อยากเห็นทุกแผน"):
+     ปุ่ม "ตัวกรอง" ของ Table header เปิด FilterShell (แผงตัวกรองแบบเดียวกับฟอร์มแผน S1 · มือถือ Bottom sheet) ช่อง `Input dropdown with badges` (Optional) หลายค่า
+     เขต (12 เขต · DISTRICTS) · หน่วยงานหน้างาน (UNITS) · กดตกลงจึงใช้ → ชิปใต้แถวค้นหา (กดเอาออกทีละตัว) + Pill จำนวนบนปุ่มตัวกรอง · ไม่ตรง = Empty state/Search not found + ล้างตัวกรอง
+     ตามแผงตัวกรอง "PEA Car Cost Filter" ของ UI Release#2 (แบบเดียวกับ R77 ของฟอร์มแผน) */
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { ConfirmDialog } from "@/components/patterns/ConfirmDialog";
 import { AppFrame } from "@/components/shell/AppFrame";
 import { RowMenu, anchorOf, type MenuAnchor } from "@/components/patterns/RowMenu";
+import { DropdownList } from "@/components/vms/DropdownList";
+import { DropdownListItem } from "@/components/vms/DropdownListItem";
 import { EmptyStateDataEmpty } from "@/components/vms/EmptyStateDataEmpty";
+import { EmptyStateSearchNotFound } from "@/components/vms/EmptyStateSearchNotFound";
+import { InputDropdownWithBadges } from "@/components/vms/InputDropdownWithBadges";
 import { MobileCards } from "@/components/vms/MobileTable";
 import { PageHeader } from "@/components/vms/PageHeader";
 import { PrimaryButton } from "@/components/vms/PrimaryButton";
+import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { Table, type TableValue } from "@/components/vms/Table";
 import { TableHeader } from "@/components/vms/TableHeader";
 import { TablePagination } from "@/components/vms/TablePagination";
-import { MENU } from "@/lib/mock/data";
-import { PLAN_COLS, menuCount, planRow } from "@/lib/mock/plan";
-import { DELETE_CONFIRM, deletePlan, roleHome, planId, startEdit, useHydrated } from "@/lib/mock/planFlow";
+import { DISTRICTS, MENU, UNITS, unitOf } from "@/lib/mock/data";
+import { PLAN_COLS, menuCount, planDistricts, planRow } from "@/lib/mock/plan";
+import { DELETE_CONFIRM, PLAN_ROLES, canManage, deletePlan, roleHome, planId, startEdit, useHydrated } from "@/lib/mock/planFlow";
+import { FilterShell } from "@/app/vehicles/_lib/ui";
 import { useMock, useRole } from "@/lib/mock/store";
 import type { Plan } from "@/lib/mock/data";
 import { useBreakpoint } from "@/lib/useBreakpoint";
@@ -36,8 +48,8 @@ export default function PlanList() {
   const mock = useMock();
   const { plans } = mock;
   const role = useRole();
-  const kbk = role === "หน่วยงาน (กกฟ.1)";   // ผู้สร้างแผน (ชื่อตัวแปรเดิม)
-  const view = role === "กบค.";              // กบค. ดูแผนทุกหน่วยงานอย่างเดียว
+  const creator = PLAN_ROLES.includes(role);   // ผู้สร้างแผน: หน่วยงาน (กกฟ.1) · กบค. (6 พ.ย. 2569 รอบ 2)
+  const view = role === "กบค.";              // กบค. เห็นแผนทุกหน่วยงาน (หน่วยงานเป็นบรรทัดรองของเลขที่ MR)
   const hydrated = useHydrated();
   const home = hydrated ? roleHome(role, mock) : undefined;
   useEffect(() => { if (hydrated && home) router.replace(home); }, [hydrated, home, router]);
@@ -46,26 +58,42 @@ export default function PlanList() {
   const [page, setPage] = useState(1);
   const [menu, setMenu] = useState<{ mr: string; anchor: MenuAnchor } | null>(null);
 
+  /* แผงตัวกรอง: ค่าที่ใช้แล้ว (applied) · ค่าในแผง (fd · ยังไม่กดตกลง) */
+  type F = { districts: string[]; units: string[] };
+  const NONE: F = { districts: [], units: [] };
+  const [applied, setApplied] = useState<F>(NONE);
+  const [panel, setPanel] = useState(false);
+  const [fd, setFd] = useState<F>(NONE);
+  const [open, setOpen] = useState<"" | "district" | "unit">("");
+  const flip = (k: keyof F, v: string) => setFd((f) => ({ ...f, [k]: f[k].includes(v) ? f[k].filter((x) => x !== v) : [...f[k], v] }));
+  const drop = (k: keyof F) => (v: string) => setFd((f) => ({ ...f, [k]: f[k].filter((x) => x !== v) }));
+  const closePanel = () => { setOpen(""); setPanel(false); };
+  const chips = [...applied.districts, ...applied.units];
+  const removeChip = (c: string) => { setApplied((a) => ({ districts: a.districts.filter((x) => x !== c), units: a.units.filter((x) => x !== c) })); setPage(1); };
+
   const rows = useMemo(() => {
     const q = query.trim();
-    return q ? plans.filter((p) => p.mr.includes(q) || p.name.includes(q)) : plans;
-  }, [plans, query]);
+    return plans.filter((p) => (!q || p.mr.includes(q) || p.name.includes(q))
+      && (!applied.districts.length || planDistricts(p).some((d) => applied.districts.includes(d)))
+      && (!applied.units.length || applied.units.includes(unitOf(p.mr, p.unit))));
+  }, [plans, query, applied]);
   const shown = rows.slice((page - 1) * PER, page * PER);
-  const open = plans.find((p) => p.mr === menu?.mr);
+  const opened = plans.find((p) => p.mr === menu?.mr);
   /* ดูรายละเอียด → /detail/ · แก้ไข → เริ่มฟอร์มแก้ไขจากข้อมูลแผน แล้วไป /edit/ · ลบ → ยืนยัน (S20 S.2) */
   const act = (p: Plan, i: number) => {
     if (i === 0) router.push("/detail/?id=" + planId(p));
     else if (i === 1) { startEdit(p); router.push("/edit/?id=" + planId(p)); }
     else setDel(p);
   };
-  const items = open ? MENU.slice(0, kbk ? menuCount(open) : 1).map((m, i) => ({ ...m, onClick: () => act(open, i) })) : [];
+  const nMenu = (p: Plan) => (canManage(role, p) ? menuCount(p) : 1);   // แผนหน่วยงานอื่น (มุมมอง กบค.) ดูรายละเอียดอย่างเดียว
+  const items = opened ? MENU.slice(0, nMenu(opened)).map((m, i) => ({ ...m, onClick: () => act(opened, i) })) : [];
 
   const data = shown.map((p) => planRow(p, {
     actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู " + p.mr, onClick: (e) => setMenu({ mr: p.mr, anchor: anchorOf(e.currentTarget) }) }],
     // มือถือ: กางไอคอนดู แก้ไข ลบ ตามสถานะแผนบนการ์ดเลย (Mobile table item Style=Action icons · View Edit Delete · เจ้าของงาน 4 พ.ย. 2569)
-    mobileActions: MENU.slice(0, kbk ? menuCount(p) : 1).map((m, i) => ({ IconSwap: m.IconSwap, label: m.Text + " " + p.mr, onClick: () => act(p, i) })),
+    mobileActions: MENU.slice(0, nMenu(p)).map((m, i) => ({ IconSwap: m.IconSwap, label: m.Text + " " + p.mr, onClick: () => act(p, i) })),
   }, view));
-  const create = kbk ? <PrimaryButton Text="สร้างแผน" LeadingIconSwap="add-24-300-round" Size={mob ? "lg" : "md"} onClick={() => router.push("/new/")} /> : undefined;
+  const create = creator ? <PrimaryButton Text="สร้างแผน" LeadingIconSwap="add-24-300-round" Size={mob ? "lg" : "md"} onClick={() => router.push("/new/")} /> : undefined;
 
   return (
     <AppFrame>
@@ -74,8 +102,11 @@ export default function PlanList() {
         <EmptyStateDataEmpty Text="ไม่มีแผนบำรุงรักษา" SupportingText="เมื่อสร้างแผนบำรุงรักษา รายการแผนจะแสดงที่นี่" Actions={create} />
       ) : (
       <section className="flex flex-col gap-6">
-        <TableHeader Placeholder="ค้นหาเลขที่ MR, ชื่อแผน" query={query} onQuery={(q) => { setQuery(q); setPage(1); }} Actions={create} />
-        {mob ? (
+        <TableHeader Placeholder="ค้นหาเลขที่ MR, ชื่อแผน" query={query} onQuery={(q) => { setQuery(q); setPage(1); }} Actions={create}
+          onFilter={() => { setFd(applied); setOpen(""); setPanel(true); }} FilterCount={chips.length} Filters={chips} onRemoveFilter={removeChip} />
+        {!rows.length ? (
+          <EmptyStateSearchNotFound Actions={<SecondaryButton Text="ล้างตัวกรอง" Size={mob ? "lg" : "md"} onClick={() => { setQuery(""); setApplied(NONE); setPage(1); }} />} />
+        ) : mob ? (
           <div className="flex flex-col gap-5">
             <MobileCards columns={PLAN_COLS} rows={data} rowKey={mrKey} />
             <TablePagination total={rows.length} page={page} perPage={PER} onPage={setPage} />
@@ -86,6 +117,14 @@ export default function PlanList() {
       </section>
       )}
       <RowMenu anchor={menu?.anchor ?? null} items={items} onClose={() => setMenu(null)} />
+      <FilterShell open={panel} onClose={closePanel} onClear={() => setFd(NONE)} onApply={() => { setApplied(fd); setPage(1); closePanel(); }}>
+        <InputDropdownWithBadges LabelText="เขต" Optional values={fd.districts} Placeholder="เลือกเขต" onRemove={drop("districts")} open={open === "district"} onOpenChange={(v) => setOpen(v ? "district" : "")}>
+          <DropdownList>{Object.values(DISTRICTS).flat().map((x) => <DropdownListItem key={x} Text={x} State={fd.districts.includes(x) ? "Selected" : "Default"} onClick={() => flip("districts", x)} />)}</DropdownList>
+        </InputDropdownWithBadges>
+        <InputDropdownWithBadges LabelText="หน่วยงานหน้างาน" Optional values={fd.units} Placeholder="เลือกหน่วยงานหน้างาน" onRemove={drop("units")} open={open === "unit"} onOpenChange={(v) => setOpen(v ? "unit" : "")}>
+          <DropdownList>{UNITS.map((u) => <DropdownListItem key={u} Text={u} State={fd.units.includes(u) ? "Selected" : "Default"} onClick={() => flip("units", u)} />)}</DropdownList>
+        </InputDropdownWithBadges>
+      </FilterShell>
       <ConfirmDialog spec={del ? DELETE_CONFIRM : null} onCancel={() => setDel(null)} onOk={() => { const mr = del?.mr; setDel(null); if (mr) deletePlan(mr); }} />
     </AppFrame>
   );

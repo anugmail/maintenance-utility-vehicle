@@ -5,9 +5,9 @@ import { useRouter } from "next/navigation";
 import { useEffect, useSyncExternalStore } from "react";
 import type { BadgeOutlineColor } from "@/components/vms/BadgeOutline";
 import type { PillColor } from "@/components/vms/PillOutline";
-import { CAND, DISTRICTS, LAST_OIL, NEW_PLAN_DATE, OIL_OPTS, OIL_PLAN_OPTS, OIL_SPEC, PARTS, PART_PRICE, PLAN_CREATOR, REGIONS, RETURN_REASON, UNIT_FLEET, WH_ACK, WH_LIST, dCode, oilChanges, type ManualPart, type Plan, type PlanStatus } from "./data";
+import { CAND, DISTRICTS, LAST_OIL, NEW_PLAN_DATE, OIL_OPTS, OIL_PLAN_OPTS, OIL_SPEC, PARTS, PART_PRICE, REGIONS, RETURN_REASON, UNIT_FLEET, WH_ACK, WH_LIST, creatorOf, dCode, oilChanges, unitOf, type ManualPart, type Plan, type PlanStatus } from "./data";
 import { CAR_PICK } from "./data";
-import { allocScope, carQty, inQuarter, planScope, quarterParts, type Draft } from "./plan";
+import { allocScope, carQty, inQuarter, quarterParts, type Draft } from "./plan";
 import { accPlans, accRows } from "./acceptance";
 import { notify, setMock, useRole, type MockState, type Role } from "./store";
 import { tripsOf } from "./trips";
@@ -20,7 +20,7 @@ export const carIndexOf = (param: string | null) => (param ? CAND.findIndex((c) 
 
 /* ---------- หน้าเริ่มของบทบาท (routes.md §2) · บทบาทที่ไม่มีสิทธิ์เปิดหน้า → กลับราก ---------- */
 export const ROLE_HOME: Partial<Record<Role, string>> = {
-  "ผู้อนุมัติ": "/approvals/plans/", "กบค. คลัง": "/warehouse/", "หัวหน้า กบค.": "/head-review/", "กรย.": "/trips-view/", "หน่วยงานเจ้าของรถ": "/trips-view/",
+  "ผู้อนุมัติ": "/approvals/plans/", "กบค. คลัง": "/warehouse/", "หัวหน้า กบค.": "/head-review/", "กรย.": "/trips-view/", "หน่วยงานเจ้าของยานพาหนะ": "/trips-view/",
 };
 /* หน้าเริ่มที่ขึ้นกับข้อมูล (ต้นแบบ — sidebar เมนูอื่นยังไม่พาไปไหน ⇒ เข้ารากแล้วไปหน้าที่มีงานรอ · COMPOSED.md หัวข้อ ช.)
    ผู้อนุมัติ: มีแผนเดินทางรออนุมัติ → /approvals/trips/ · หน่วยงานเจ้าของรถ: มีรถรอยอมรับผล / แผนพร้อมตรวจหลักฐาน → /acceptance/
@@ -28,7 +28,7 @@ export const ROLE_HOME: Partial<Record<Role, string>> = {
 export function roleHome(role: Role, m: MockState): string | undefined {
   const trips = tripsOf(m).filter((t) => !t.listOnly);
   if (role === "ผู้อนุมัติ" && trips.some((t) => t.status === "review")) return "/approvals/trips/";
-  if (role === "หน่วยงานเจ้าของรถ" && (accRows(m).some((r) => !r.accepted) || accPlans(m).some((p) => p.ready && !p.done))) return "/acceptance/";
+  if (role === "หน่วยงานเจ้าของยานพาหนะ" && (accRows(m).some((r) => !r.accepted) || accPlans(m).some((p) => p.ready && !p.done))) return "/acceptance/";
   return ROLE_HOME[role];
 }
 
@@ -37,6 +37,11 @@ const noop = () => () => {};
 export function useHydrated() {
   return useSyncExternalStore(noop, () => true, () => false);
 }
+/* หน่วยงานของบทบาทผู้สร้างแผน (6 พ.ย. 2569 รอบ 2: กบค. สร้างแผนได้ · แผนของหน่วยงานอื่น กบค. ดูอย่างเดียว) — ไม่ใช่ผู้สร้างแผน = undefined */
+export const PLAN_ROLES: readonly Role[] = ["หน่วยงาน (กกฟ.1)", "กบค."];
+export const roleUnit = (r: Role) => (r === "หน่วยงาน (กกฟ.1)" ? "กกฟ.1" : r === "กบค." ? "กบค." : undefined);
+/* จัดการแผนนี้ได้ (แก้ไข ลบ ตามสถานะ): หน่วยงาน (กกฟ.1) = ทุกแผนในรายการ (listScreen ไม่มี view ของ screens.js) · กบค. = แผนของ กบค. เท่านั้น (planRow view) */
+export const canManage = (r: Role, p: Plan) => r === "หน่วยงาน (กกฟ.1)" || (r === "กบค." && unitOf(p.mr, p.unit) === "กบค.");
 export function useRoleGuard(allowed: readonly Role[]) {
   const router = useRouter();
   const role = useRole();
@@ -129,12 +134,14 @@ export const carCost = (picks: number[], qty: Record<number, number> | undefined
   picks.reduce((s, pi) => s + (qty?.[pi] ?? carQty({}, 0, pi)) * PART_PRICE[pi], 0) + manual.reduce((s, m) => s + (parseFloat((m.price ?? "").replace(/,/g, "")) || 0) * m.qty, 0);
 
 /* ---------- กล่องรายละเอียดแผน (npKv) ---------- */
+/* 6 พ.ย. 2569 รีวิว S6 "ภาค เปลี่ยน หน่วยงาน" + "ย้ายประเภท มาไว้ในคอลัมม์" (เจ้าของงานยืนยัน · npKv / PLAN_KV ของ screens.js)
+   ⇒ ช่องภาคเป็นหน่วยงานเจ้าของแผน · ไม่มีประเภทยานพาหนะในกล่อง (อยู่เป็นคอลัมน์รายคันของตารางยานพาหนะ) · 9 ช่อง */
 export function planKv(p: Plan): [string, string][] {
   const dist = p.alloc && Object.keys(p.alloc).length ? [...new Set(Object.keys(p.alloc).map((i) => dCode(CAND[Number(i)])))].sort().join(", ") : (p.districts ?? []).join(", ") || "-";
-  const [rg, ty] = planScope(p);   // npKv 5 พ.ย. 2569: ภาค สรุปจากรถในแผน
-  return [["ชื่อแผน", p.name], ["ปีงบประมาณ", p.year], ["ภาค", rg || "-"], ["เขต", dist], ["ประเภทรถ", ty || "-"], ["รถรายไตรมาส", p.perQ],
-    ["จำนวนรถ", p.cars + " คัน"], ["เลขที่ MR", p.mr], ["ผู้สร้างแผน", PLAN_CREATOR], ["วันที่ส่ง", p.sentAt ?? p.created]];
+  return [["ชื่อแผน", p.name], ["ปีงบประมาณ", p.year], ["หน่วยงาน", unitOf(p.mr, p.unit)], ["เขต", dist], ["ยานพาหนะรายไตรมาส", p.perQ],
+    ["จำนวนยานพาหนะ", p.cars + " คัน"], ["เลขที่ MR", p.mr], ["ผู้สร้างแผน", creatorOf(p)], ["วันที่ส่ง", p.sentAt ?? p.created]];
 }
+
 /* จำนวนรถรายไตรมาสจาก perQ (แผนตัวอย่างที่ไม่มีรายคัน) หรือจากการจัดรถ */
 export const quarterCount = (p: Plan, q: number) => (p.alloc ? carsIn(allocOf(p), q).length : Number((p.perQ.match(new RegExp("ไตรมาส " + q + ": (\\d+)")) || [])[1] || 0));
 
@@ -159,12 +166,13 @@ const A_OILS: Record<number, number> = Object.fromEntries(UNIT_FLEET.map((c, k) 
 const A_DRAW: Record<number, "none"> = Object.fromEntries(FIG_A_DRAW.map((k) => [UNIT_FLEET[k], "none" as const]));
 /* A_PICKS = CAR_PICK ทุกคันที่เบิก + น้ำมันไฮโดรลิก (ลำดับ 0) เมื่อเลือกเปลี่ยน (qAgg นับน้ำมันจาก A_OILS) */
 const A_PICKS: Record<number, number[]> = Object.fromEntries(UNIT_FLEET.filter((c) => !A_DRAW[c]).map((c) => [c, oilChanges(A_OILS[c]) ? [0, ...CAR_PICK] : [...CAR_PICK]]));
-export const SAMPLE_NAME = "บำรุงรักษารถ กกฟ.1 ปีงบประมาณ 2570";   // NEW_PLAN[1]
-export const R2 = { regions: [REGIONS[1]], districts: [...DISTRICTS[REGIONS[1]]], types: ["รถกระเช้า"] };
+export const SAMPLE_NAME = "บำรุงรักษายานพาหนะ กกฟ.1 ปีงบประมาณ 2570";   // NEW_PLAN[1]
+/* R2 ของ screens.js = ภาค 2 ทุกเขต (6 พ.ย. 2569 ไม่มีประเภทแล้ว — ประเภทรถกระเช้าเดิมไม่มีในโค้ดจริง) */
+export const R2 = { regions: [REGIONS[1]], districts: [...DISTRICTS[REGIONS[1]]], types: [] as string[] };
 export function samplePlan(status: PlanStatus, acked?: number[]): Plan {
   const p: Plan = {
     mr: "MR Z7000004", name: SAMPLE_NAME, region: REGIONS[0] + ", " + REGIONS[1], nowQ: "ไตรมาส 1", cars: UNIT_FLEET.length, status, created: NEW_PLAN_DATE,
-    type: "รถกระเช้า, รถเครน", year: "2570", perQ: "ไตรมาส 1: 3 · ไตรมาส 2: 3 · ไตรมาส 3: 2 · ไตรมาส 4: 2",
+    type: "กระเช้าแก้ไฟ, กระเช้าฮอทไลน์, รถพ่วงฉีดน้ำ", year: "2570", perQ: "ไตรมาส 1: 3 · ไตรมาส 2: 3 · ไตรมาส 3: 2 · ไตรมาส 4: 2",
     ...R2, alloc: { ...A_ALL }, picks: Object.fromEntries(Object.entries(A_PICKS).map(([i, v]) => [i, [...v]])), oils: { ...A_OILS }, draw: { ...A_DRAW },
   };
   if (status === "returned") p.returnReason = RETURN_REASON;

@@ -38,7 +38,7 @@ function CarResult() {
   const sp = useSearchParams();
   const pending = useSample(ACCEPT_SAMPLES);
   const mob = useBreakpoint() === "Mobile";
-  const owner = useRole() === "หน่วยงานเจ้าของรถ";
+  const owner = useRole() === "หน่วยงานเจ้าของยานพาหนะ";
   const mock = useMock();
   const [confirm, setConfirm] = useState(false);
   if (pending) return null;
@@ -52,22 +52,22 @@ function CarResult() {
   const accept = () => {
     acceptCar(rec);
     setConfirm(false);
-    notify("ยอมรับผลการตรวจบำรุงรถ " + car.plate + " สำเร็จ");
+    notify("ยอมรับผลการตรวจบำรุงยานพาหนะ " + car.plate + " สำเร็จ");
     back();
   };
 
   return (
     <>
-      <PageHeader Title={"ผลการตรวจบำรุงรถ · " + car.plate} Badge={badgeOf(cannot ? WSTAT.cannot : ok ? ACCEPT_STATUS.ok : ACCEPT_STATUS.wait)} onBack={back}
+      <PageHeader Title={"ผลการตรวจบำรุงยานพาหนะ · " + car.plate} Badge={badgeOf(cannot ? WSTAT.cannot : ok ? ACCEPT_STATUS.ok : ACCEPT_STATUS.wait)} onBack={back}
         crumbs={[{ Text: "บำรุงรักษาตามวาระ", href: "/" }, { Text: "รอตรวจสอบ", href: "/acceptance/" }, { Text: car.plate }]} />
       <div className="flex flex-col gap-8">
-        <VehicleAndReporterInfo pairs={[["ทะเบียน", car.plate], ["ยี่ห้อ/รุ่น", car.model], ["หน่วยงานเจ้าของรถ", car.owner], ["เลขที่ MR", rec.mr], ["วันที่บำรุง", rec.date], ["ผู้ทำ", rec.by]]} />
+        <VehicleAndReporterInfo pairs={[["ทะเบียน", car.plate], ["ยี่ห้อ/รุ่น", car.model], ["หน่วยงานเจ้าของยานพาหนะ", car.owner], ["เลขที่ MR", rec.mr], ["วันที่บำรุง", rec.date], ["ผู้ทำ", rec.by]]} />
         {cannot ? (
           <DisplayBox Title="สาเหตุที่บำรุงรักษาไม่ได้" pairs={[["สาเหตุ", job.cannot?.reason ?? "-"], ["ผู้บันทึก", rec.by], ["วันที่บันทึก", rec.date]]} />
         ) : (
           <>
             <section className="flex flex-col gap-4">
-              <SectionLabel Title="เอกสารการตรวจบำรุงรถ (2)" />
+              <SectionLabel Title="เอกสารการตรวจบำรุงยานพาหนะ (2)" />
               <DocList LabelText="ใบตรวจสภาพอะไหล่ · ใบตรวจสภาพงานบำรุงรักษา" files={ACCEPTANCE_DOCS(plateNo)} />
             </section>
             <IncidentPhotoGallery Title={"ภาพก่อนเริ่มงาน (" + BEFORE.length + ")"} photos={BEFORE.map((alt) => ({ alt }))} />
@@ -78,15 +78,15 @@ function CarResult() {
           </>
         )}
         {ok ? (
-          <Alert Color="Success" Text={"ยอมรับผลการตรวจบำรุงรถแล้ว " + ACCEPT_DATES.car} SupportingText="รอคันอื่นในแผนครบแล้วจึงตรวจหลักฐานทั้งแผน" />
+          <Alert Color="Success" Text={"ยอมรับผลการตรวจบำรุงยานพาหนะแล้ว " + ACCEPT_DATES.car} SupportingText="รอคันอื่นในแผนครบแล้วจึงตรวจหลักฐานทั้งแผน" />
         ) : (
           <ButtonRow>
             <SecondaryButton Text="ย้อนกลับ" Size="lg" onClick={back} />
-            {owner && <PrimaryButton Text="ยอมรับผลการตรวจบำรุงรถ" Size="lg" onClick={() => setConfirm(true)} />}
+            {owner && <PrimaryButton Text="ยอมรับผลการตรวจบำรุงยานพาหนะ" Size="lg" onClick={() => setConfirm(true)} />}
           </ButtonRow>
         )}
       </div>
-      <ConfirmDialog spec={confirm ? { title: "ยืนยันยอมรับผลการตรวจบำรุงรถ", sub: car.plate + " · บำรุงรักษาวันที่ " + rec.date, ok: "ยอมรับผล" } : null} onOk={accept} onCancel={() => setConfirm(false)} />
+      <ConfirmDialog spec={confirm ? { title: "ยืนยันยอมรับผลการตรวจบำรุงยานพาหนะ", sub: car.plate + " · บำรุงรักษาวันที่ " + rec.date, ok: "ยอมรับผล" } : null} onOk={accept} onCancel={() => setConfirm(false)} />
     </>
   );
 }

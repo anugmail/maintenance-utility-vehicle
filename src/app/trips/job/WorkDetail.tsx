@@ -71,10 +71,10 @@ export function WorkDetail({ trip, car, job, kbk }: { trip: JobTrip; car: TripCa
         <DataTable cols={WORK_COLS2} rows={work} />
       </Section>
       <Section>
-        <SectionLabel Title="ค่าใช้จ่ายของรถคันนี้ (บาท)" />
+        <SectionLabel Title="ค่าใช้จ่ายของยานพาหนะคันนี้ (บาท)" />
         <DataTable cols={COST_COLS} rows={costs} />
         <KvBox pairs={[["รวมค่าเบี้ยเลี้ยง", nf(sum.perDiem) + " บาท"], ["รวมค่าที่พัก", nf(sum.lodging) + " บาท"], ["ค่าเดินทาง (รวมทุกคน)", nf(sum.travel) + " บาท"],
-          ["รวมค่าใช้จ่ายของรถคันนี้", nf(sum.total) + " บาท"], ["งบที่ตัด", BUDGET_CUT[f.budgetType ?? 0]], ["ศูนย์ต้นทุน", f.costCenter ?? ownerCostCenter(car)]]} />
+          ["รวมค่าใช้จ่ายของยานพาหนะคันนี้", nf(sum.total) + " บาท"], ["งบที่ตัด", BUDGET_CUT[f.budgetType ?? 0]], ["ศูนย์ต้นทุน", f.costCenter ?? ownerCostCenter(car)]]} />
       </Section>
       {oilSampled(oil) && (
         <Section>

@@ -10,7 +10,7 @@ import { NotificationPanel } from "@/components/patterns/NotificationPanel";
 import { setMock, useMock, useRole } from "@/lib/mock/store";
 import { notisOf, type NotiRole } from "@/lib/mock/trips";
 
-export const useViewer = (): NotiRole => (useRole() === "หน่วยงานเจ้าของรถ" ? "owner" : "kry");
+export const useViewer = (): NotiRole => (useRole() === "หน่วยงานเจ้าของยานพาหนะ" ? "owner" : "kry");
 
 export function useBell() {
   const router = useRouter();

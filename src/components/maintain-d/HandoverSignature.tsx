@@ -22,7 +22,7 @@ export interface SignerSlot {
   HelperText?: string;
 }
 
-export function HandoverSignature({ Title = "ลงนามการรับมอบรถ", slots, onPick, onSign, Breakpoint: bp, className }: {
+export function HandoverSignature({ Title = "ลงนามการรับมอบยานพาหนะ", slots, onPick, onSign, Breakpoint: bp, className }: {
   Title?: string; slots: SignerSlot[]; onPick?: (i: number, name: string) => void; onSign?: (i: number) => void; Breakpoint?: Breakpoint; className?: string;
 }) {
   const mob = useBreakpoint(bp) === "Mobile";

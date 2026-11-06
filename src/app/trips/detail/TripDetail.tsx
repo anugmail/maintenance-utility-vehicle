@@ -72,7 +72,7 @@ export function TripDetail() {
       <VehicleAndReporterInfo Title="รายละเอียดแผนเดินทาง" pairs={[...tripKv(trip), ["ความคืบหน้า", tripProgress(s, trip)]]} />
       <Section>
         {/* ตัวนับ "ตรวจแล้ว x/y" = Badge outline ใน Section header (R71 · แบบ "รายการยานพาหนะในสัญญา" หน้า 5.1 Rental Contract Management ของ UI Release#2 — Section label ไม่มีช่อง Badge) */}
-        <SectionHeader Title="รถในแผนเดินทาง" Badge={tripCounter(s, trip)} />
+        <SectionHeader Title="ยานพาหนะในแผนเดินทาง" Badge={tripCounter(s, trip)} />
         {mob ? (
           <div className="flex flex-col gap-3">
             {cars.map((c) => {
@@ -100,7 +100,7 @@ export function TripDetail() {
         fields={edit ? [{ label: "ผู้ดูแลยานพาหนะ", value: edit.name }, { label: "เบอร์ติดต่อ", value: edit.phone }, { label: "สถานที่บำรุงรักษา", value: edit.loc }] : []}
         onField={(i, v) => setEdit((e) => (e ? (i === 0 ? { ...e, name: v } : i === 1 ? { ...e, phone: v } : { ...e, loc: v }) : e))}
         onOk={() => { if (edit) editTripCar(trip, edit.car, edit.name, edit.phone, edit.loc); setEdit(null); }} onCancel={() => setEdit(null)} />
-      <ConfirmDialog spec={del ? { danger: true, title: "ยืนยันการเอารถออกจากแผนเดินทาง", sub: del.plate + " จะถูกเอาออกจากแผนเดินทางนี้ และเลือกเข้าแผนเดินทางใบอื่นของไตรมาสได้อีก", cancel: "ยกเลิก", ok: "เอาออก" } : null}
+      <ConfirmDialog spec={del ? { danger: true, title: "ยืนยันการเอายานพาหนะออกจากแผนเดินทาง", sub: del.plate + " จะถูกเอาออกจากแผนเดินทางนี้ และเลือกเข้าแผนเดินทางใบอื่นของไตรมาสได้อีก", cancel: "ยกเลิก", ok: "เอาออก" } : null}
         onOk={() => { if (del) removeTripCar(trip, del.id); setDel(null); }} onCancel={() => setDel(null)} />
     </>
   );

@@ -16,7 +16,7 @@ import { DataTable, MENU_HOME, Section, go } from "../quarter/_shared/ui";
 import { useBell, useViewer } from "./_shared/Bell";
 
 const TRIP_SEEN_COLS: TableColumn[] = [
-  { head: "ชื่อแผนเดินทาง", Style: "Lead text" }, { head: "ช่วงวันเดินทาง", width: 220 }, { head: "รถ (คัน)", width: 100 },
+  { head: "ชื่อแผนเดินทาง", Style: "Lead text" }, { head: "ช่วงวันเดินทาง", width: 220 }, { head: "ยานพาหนะ (คัน)", width: 100 },
   { head: "สถานะ", width: 150, Style: "Badge" }, { head: "", width: 60, Style: "Action icons" },
 ];
 

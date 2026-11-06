@@ -19,8 +19,8 @@ import { useBreakpoint } from "@/lib/useBreakpoint";
 const PER = 10;
 /* REVIEW_COLS */
 const COLS: TableColumn[] = [
-  { head: "ชื่อแผน", Style: "Lead text", SortIcon: "Swap" }, { head: "ปีงบประมาณ", width: 120 }, { head: "ผู้สร้าง", width: 180 }, { head: "ภาค / ประเภทรถ", width: 200 },
-  { head: "จำนวนรถ", width: 100 }, { head: "วันที่ส่ง", width: 120, SortIcon: "Down" }, { head: "สถานะ", width: 150, Style: "Badge" }, { head: "", width: 60, Style: "Action icons" },
+  { head: "ชื่อแผน", Style: "Lead text", SortIcon: "Swap" }, { head: "ปีงบประมาณ", width: 120 }, { head: "ผู้สร้าง", width: 180 }, { head: "ภาค / ประเภทยานพาหนะ", width: 200 },
+  { head: "จำนวนยานพาหนะ", width: 100 }, { head: "วันที่ส่ง", width: 120, SortIcon: "Down" }, { head: "สถานะ", width: 150, Style: "Badge" }, { head: "", width: 60, Style: "Action icons" },
 ];
 
 export default function ApprovalList() {

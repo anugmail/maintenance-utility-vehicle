@@ -36,10 +36,10 @@ export const detailHref = (carId: string) => "/vehicles/detail/?car=" + carId;
 export const PER = 10;
 
 /* Permission ของ Scenario 24: กบค. เห็นทุกคัน · หน่วยงานเจ้าของรถ เห็นเฉพาะรถในสังกัด · บทบาทอื่นกลับราก (useRoleGuard) */
-export const MA_ROLES = ["หน่วยงาน (กกฟ.1)", "กบค.", "หน่วยงานเจ้าของรถ"] as const;   // 6 พ.ย. 2569 ผู้ดำเนินการ = หน่วยงาน · กบค. ยังเห็นข้อมูลทุกคัน
+export const MA_ROLES = ["หน่วยงาน (กกฟ.1)", "กบค.", "หน่วยงานเจ้าของยานพาหนะ"] as const;   // 6 พ.ย. 2569 ผู้ดำเนินการ = หน่วยงาน · กบค. ยังเห็นข้อมูลทุกคัน
 export function useMaAccess() {
   const ok = useRoleGuard(MA_ROLES);
-  const owner = useRole() === "หน่วยงานเจ้าของรถ";
+  const owner = useRole() === "หน่วยงานเจ้าของยานพาหนะ";
   return { ok, owner };
 }
 

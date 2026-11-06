@@ -32,16 +32,16 @@ export function MoveModal({ target, cur, counts, onCancel, onMove }: { target: M
   const close = () => { setSel(0); setAsk(false); onCancel(); };
   return (
     <>
-      <PopupModal open={!ask} title={"ย้ายไปไตรมาสอื่น · " + car.plate} sub="รถและอะไหล่ตามแผนของรถคันนี้จะย้ายไปไตรมาสที่เลือก" width={800} ok="ย้ายรถ" okDisabled={!sel}
+      <PopupModal open={!ask} title={"ย้ายไปไตรมาสอื่น · " + car.plate} sub="ยานพาหนะและอะไหล่ตามแผนของยานพาหนะคันนี้จะย้ายไปไตรมาสที่เลือก" width={800} ok="ย้ายยานพาหนะ" okDisabled={!sel}
         onCancel={close} onOk={() => sel && setAsk(true)}>
-        <ContentItemRow perRow={mob ? 1 : 2} items={[["ทะเบียน", car.plate], ["หน่วยงานเจ้าของรถ", car.owner], ["แผนเดินทาง", target.tripName], ["สาเหตุที่บำรุงรักษาไม่ได้", target.reason]]} />
+        <ContentItemRow perRow={mob ? 1 : 2} items={[["ทะเบียน", car.plate], ["หน่วยงานเจ้าของยานพาหนะ", car.owner], ["แผนเดินทาง", target.tripName], ["สาเหตุที่บำรุงรักษาไม่ได้", target.reason]]} />
         <section className="flex flex-col gap-4">
           <SectionHeader Title="เลือกไตรมาสที่จะย้ายไป" />
           <div role="radiogroup" className="flex flex-col gap-3">
             {QUARTERS.map((t, i) => {
               const k = i + 1;
               return <RadioTextCard key={t} Text={t} Selected={sel === k} State={k <= cur ? "Disabled" : "Default"} onClick={() => k > cur && setSel(k)}
-                SupportingText={k < cur ? "ไตรมาสก่อนหน้า" : k === cur ? "ไตรมาสปัจจุบัน" : "รถในไตรมาส " + counts(k) + " คัน"} />;
+                SupportingText={k < cur ? "ไตรมาสก่อนหน้า" : k === cur ? "ไตรมาสปัจจุบัน" : "ยานพาหนะในไตรมาส " + counts(k) + " คัน"} />;
             })}
           </div>
         </section>
@@ -50,7 +50,7 @@ export function MoveModal({ target, cur, counts, onCancel, onMove }: { target: M
           <DataTable columns={COLS} rows={target.parts.map((p) => [p.name, String(p.qty), p.unit])} />
         </section>
       </PopupModal>
-      <ConfirmDialog spec={ask && sel ? { title: "ยืนยันการย้ายรถไป" + qLabel(sel), sub: car.plate + " จะออกจาก" + qLabel(cur) + " ไปอยู่" + qLabel(sel) + " ของแผนนี้ พร้อมอะไหล่ตามแผนของรถคันนี้", cancel: "ยกเลิก", ok: "ยืนยัน" } : null}
+      <ConfirmDialog spec={ask && sel ? { title: "ยืนยันการย้ายยานพาหนะไป" + qLabel(sel), sub: car.plate + " จะออกจาก" + qLabel(cur) + " ไปอยู่" + qLabel(sel) + " ของแผนนี้ พร้อมอะไหล่ตามแผนของยานพาหนะคันนี้", cancel: "ยกเลิก", ok: "ยืนยัน" } : null}
         onCancel={() => setAsk(false)} onOk={() => { const k = sel; setSel(0); setAsk(false); onMove(k); }} />
     </>
   );

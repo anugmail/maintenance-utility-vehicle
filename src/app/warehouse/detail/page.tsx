@@ -68,7 +68,7 @@ function WarehouseDetail() {
           {done && <Alert Color="Success" Text={"รับทราบไตรมาส " + q + " แล้ว " + plan.ack?.[q]} SupportingText="กบค. เห็นสถานะนี้ในหน้ารายการและหน้ารายละเอียดแผน" />}
           {rows.length
             ? (mob ? <MobileCards columns={COLS} rows={rows} /> : <Table columns={COLS} rows={rows} />)
-            : <EmptyStateDataEmpty Text="ไม่มีอะไหล่ที่ต้องเบิก" SupportingText="ไตรมาสนี้ไม่มีรถในแผน ไม่ต้องรับทราบ" />}
+            : <EmptyStateDataEmpty Text="ไม่มีอะไหล่ที่ต้องเบิก" SupportingText="ไตรมาสนี้ไม่มียานพาหนะในแผน ไม่ต้องรับทราบ" />}
         </section>
         {wh && rows.length > 0 && !done && (
           <div className={cx("flex", mob ? "gap-4 [&>*]:flex-1 [&>*]:basis-0" : "justify-between gap-3")}>

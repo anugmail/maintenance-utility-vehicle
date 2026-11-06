@@ -58,7 +58,7 @@ export function planHistory(m: MockState, plan: Plan): PlanHistory {
 
 /* สรุปรายงานผลการบำรุงรักษา (S17 reportScreen) — 8 คู่ตามจอ */
 export const reportSummary = (h: PlanHistory): [string, string][] => [
-  ["รถตามแผน", h.total + " คัน"], ["บำรุงรักษาแล้ว", h.done + " คัน"], ["ทำไม่ได้", h.cannot + " คัน"], ["ใบเดินทาง", h.trips + " ใบ"],
+  ["ยานพาหนะตามแผน", h.total + " คัน"], ["บำรุงรักษาแล้ว", h.done + " คัน"], ["ทำไม่ได้", h.cannot + " คัน"], ["ใบเดินทาง", h.trips + " ใบ"],
   ["อะไหล่ที่ใช้", h.partsUsed + " รายการ · คืนคลัง " + h.partsReturned + " รายการ"], ["ผลน้ำมันไฮโดรลิก", "ผ่าน " + h.oilPass + " · ไม่ผ่าน " + h.oilFail],
   ["หน่วยงานยอมรับผล", h.accepted + " / " + h.total + " คัน"], ["ช่วงดำเนินการ", h.range],
 ];

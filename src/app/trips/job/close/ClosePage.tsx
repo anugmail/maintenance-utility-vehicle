@@ -43,8 +43,8 @@ import { StepFrame } from "../StepFrame";
 const PART_COLS: TableColumn[] = ["ชื่ออะไหล่", "ราคาต่อหน่วย", "จำนวนที่ใช้", "ราคารวมที่ใช้", "จำนวนที่คืน", "ราคารวมที่คืน", "จำนวนอะไหล่เก่า", "หมายเหตุ"]
   .map((head, i) => ({ head, width: i === 0 ? 220 : i === 7 ? undefined : 118, Style: i === 0 ? "Lead text" : "Text" }));
 const RETURN_SLOTS = [
-  { LabelText: "ผู้ส่งมอบรถ (กบค.)", Placeholder: "เลือกผู้ส่งมอบรถ (กบค.)" },
-  { LabelText: "ผู้รับมอบรถ (หน่วยงานเจ้าของรถ)", Placeholder: "เลือกผู้รับมอบรถ (หน่วยงานเจ้าของรถ)" },
+  { LabelText: "ผู้ส่งมอบยานพาหนะ (กบค.)", Placeholder: "เลือกผู้ส่งมอบยานพาหนะ (กบค.)" },
+  { LabelText: "ผู้รับมอบยานพาหนะ (หน่วยงานเจ้าของยานพาหนะ)", Placeholder: "เลือกผู้รับมอบยานพาหนะ (หน่วยงานเจ้าของยานพาหนะ)" },
 ];
 /* วันที่แบบไทย dd/mm/ปี พ.ศ. ↔ Date (ช่องวันที่เปลี่ยนน้ำมันครั้งล่าสุด) */
 const toThai = (d: Date) => String(d.getDate()).padStart(2, "0") + "/" + String(d.getMonth() + 1).padStart(2, "0") + "/" + (d.getFullYear() + 543);
@@ -150,7 +150,7 @@ export function ClosePage() {
     <StepFrame trip={trip} car={car} job={job} step={2} used={usedOfPlan} actor={actor}>
       <Section>
         <SectionHeader Title="ข้อมูลเอกสาร" />
-        <KvBox pairs={[["เลขที่งาน", trip.planMr], ["หน่วยงานผู้ใช้บริการ", car.owner], ["ชื่องาน", "บำรุงรักษารถกระเช้า " + car.model + " ทะเบียน " + car.plate + " ณ " + loc],
+        <KvBox pairs={[["เลขที่งาน", trip.planMr], ["หน่วยงานผู้ใช้บริการ", car.owner], ["ชื่องาน", "บำรุงรักษา" + car.type + " " + car.model + " ทะเบียน " + car.plate + " ณ " + loc],
           ["วันที่รับงาน", start.slice(0, 10) || "-"], ["วันที่เสร็จงาน", (trip.mode === "hire" ? JOB_TIMES.hire.end : JOB_TIMES.self.end).slice(0, 10)]]} />
       </Section>
       <Section>
@@ -183,12 +183,12 @@ export function ClosePage() {
           onClick={() => actor && setAdd(true)} /></div>
       </Section>
       <Section>
-        <SectionHeader Title="ค่าใช้จ่ายของรถคันนี้ (บาท)" Badge={f.costs.length + " คน"} />
+        <SectionHeader Title="ค่าใช้จ่ายของยานพาหนะคันนี้ (บาท)" Badge={f.costs.length + " คน"} />
         {f.costs.map(costRow)}
         <div className="flex"><SecondaryButton Text="เพิ่มพนักงาน" LeadingIconSwap="add-24-300-round" Size={mob ? "lg" : "md"} className={mob ? "w-full" : undefined}
           onClick={() => put((x) => ({ ...x, costs: [...x.costs, { name: null, perDiem: "", lodging: "", days: null }] }))} /></div>
         <Grid><TextInput LabelText="ค่าเดินทาง (รวมทุกคน)" Optional Text={f.travel} Placeholder="0" inputMode="numeric" onChange={(v) => put((x) => ({ ...x, travel: digits(v) }))} /></Grid>
-        <KvBox pairs={[["รวมค่าเบี้ยเลี้ยง", nf(sum.perDiem) + " บาท"], ["รวมค่าที่พัก", nf(sum.lodging) + " บาท"], ["ค่าเดินทาง", nf(sum.travel) + " บาท"], ["รวมค่าใช้จ่ายของรถคันนี้", nf(sum.total) + " บาท"]]} />
+        <KvBox pairs={[["รวมค่าเบี้ยเลี้ยง", nf(sum.perDiem) + " บาท"], ["รวมค่าที่พัก", nf(sum.lodging) + " บาท"], ["ค่าเดินทาง", nf(sum.travel) + " บาท"], ["รวมค่าใช้จ่ายของยานพาหนะคันนี้", nf(sum.total) + " บาท"]]} />
         {/* งบที่ตัด + ศูนย์ต้นทุน (R72 · Request Repair/Budget ของงานซ่อม): หน่วยงานต้นสังกัด = ศูนย์ต้นทุนของหน่วยงานเจ้าของรถ Readonly · หน่วยงานอื่น = Input dropdown "ระบุศูนย์ต้นทุน" · ประเภทอื่นยังไม่ออกแบบช่อง */}
         <Grid>
           <InputDropdown LabelText="งบที่ตัด" Text={BUDGET_CUT[budget]} Placeholder="เลือกงบที่ตัด" open={open === "cut"} onOpenChange={toggle("cut")}>
@@ -207,8 +207,8 @@ export function ClosePage() {
         <Section>
           <SectionHeader Title="ผลการบำรุงรักษา" />
           <Grid>
-            <TextInput LabelText="เลขไมล์รถ (กม.)" Text={f.km} Placeholder="0" inputMode="numeric" onChange={(v) => put((x) => ({ ...x, km: digits(v) }))} onBlur={() => setTouched((t) => ({ ...t, km: true }))}
-              State={E("km", "x", f.km) ? "Error" : undefined} HelperText={E("km", "กรุณาระบุเลขไมล์รถ", f.km)} />
+            <TextInput LabelText="เลขไมล์ยานพาหนะ (กม.)" Text={f.km} Placeholder="0" inputMode="numeric" onChange={(v) => put((x) => ({ ...x, km: digits(v) }))} onBlur={() => setTouched((t) => ({ ...t, km: true }))}
+              State={E("km", "x", f.km) ? "Error" : undefined} HelperText={E("km", "กรุณาระบุเลขไมล์ยานพาหนะ", f.km)} />
             <TextInput LabelText="ชั่วโมงเครื่องจักร (ชม.)" Text={f.hours} Placeholder="0" inputMode="numeric" onChange={(v) => put((x) => ({ ...x, hours: digits(v) }))} onBlur={() => setTouched((t) => ({ ...t, hours: true }))}
               State={E("hours", "x", f.hours) ? "Error" : undefined} HelperText={E("hours", "กรุณาระบุชั่วโมงเครื่องจักร", f.hours)} />
           </Grid>
@@ -243,7 +243,7 @@ export function ClosePage() {
             onDelete={(i) => put((x) => ({ ...x, safetyFiles: (x.safetyFiles ?? []).filter((_, k) => k !== i) }))} />
         </Section>
       )}
-      <HandoverSignature Title="ลงนามการส่งคืนรถ"
+      <HandoverSignature Title="ลงนามการส่งคืนยานพาหนะ"
         slots={RETURN_SLOTS.map((s, i) => ({ ...s, options: i === 0 ? staffOptions : [PEOPLE.ownerSigner], value: f.signers[i].name, signed: !!f.signers[i].sig }))}
         onPick={(i, name) => put((x) => ({ ...x, signers: x.signers.map((s, k) => (k === i ? { name, sig: s.name === name ? s.sig : null } : s)) as CloseForm["signers"] }))}
         onSign={setSign} />
@@ -268,7 +268,7 @@ export function ClosePage() {
         <PrimaryButton Text="ปิดงาน" Size="lg" State={complete && actor ? "Default" : "Disabled"} onClick={submit} />
       </ButtonRow>
 
-      <ModalSignature open={sign >= 0} Title="ลงนามการส่งคืนรถ" signer={[RETURN_SLOTS[Math.max(0, sign)].LabelText, f.signers[Math.max(0, sign)].name ?? ""]}
+      <ModalSignature open={sign >= 0} Title="ลงนามการส่งคืนยานพาหนะ" signer={[RETURN_SLOTS[Math.max(0, sign)].LabelText, f.signers[Math.max(0, sign)].name ?? ""]}
         value={sign >= 0 && f.signers[sign].sig !== "sample" ? f.signers[sign].sig : null}
         onSave={(url) => { const i = sign; put((x) => ({ ...x, signers: x.signers.map((s, k) => (k === i ? { ...s, sig: url } : s)) as CloseForm["signers"] })); setSign(-1); }}
         onClose={() => setSign(-1)} />

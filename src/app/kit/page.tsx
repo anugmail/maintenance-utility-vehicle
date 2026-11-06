@@ -66,9 +66,9 @@ const PCOLS: TableColumn[] = [
   { head: "", width: 60, Style: "Action icons" },
 ];
 const PROWS: TableValue[][] = [
-  ["MR Z7000001", { text: "บำรุงรักษารถกระเช้า ภาค 1 และภาค 2 ปีงบประมาณ 2570", sub: "ปีงบประมาณ 2570" }, { pills: [["ดำเนินการ", "Info"]] }, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู" }] }],
-  ["MR Z7000002", { text: "บำรุงรักษารถเครน ภาค 2 ปีงบประมาณ 2570", sub: "ปีงบประมาณ 2570" }, { pills: [["อนุมัติแล้ว", "Brand"]] }, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู" }] }],
-  ["MR Z7000003", { text: "บำรุงรักษารถขุด ภาค 3 ปีงบประมาณ 2570", sub: "ปีงบประมาณ 2570" }, { pills: [["รออนุมัติ", "Warning"]] }, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู" }] }],
+  ["MR Z7000001", { text: "บำรุงรักษากระเช้าแก้ไฟ ภาค 1 และภาค 2 ปีงบประมาณ 2570", sub: "ปีงบประมาณ 2570" }, { pills: [["ดำเนินการ", "Info"]] }, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู" }] }],
+  ["MR Z7000002", { text: "บำรุงรักษารถพ่วงฉีดน้ำ ภาค 2 ปีงบประมาณ 2570", sub: "ปีงบประมาณ 2570" }, { pills: [["อนุมัติแล้ว", "Brand"]] }, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู" }] }],
+  ["MR Z7000003", { text: "บำรุงรักษากระเช้าฮอทไลน์ ภาค 3 ปีงบประมาณ 2570", sub: "ปีงบประมาณ 2570" }, { pills: [["รออนุมัติ", "Warning"]] }, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู" }] }],
 ];
 
 export default function Kit() {
@@ -92,7 +92,7 @@ export default function Kit() {
         <V label="Button text=false"><TertiaryButton LeadingIconSwap="stylus-24-300-round" ButtonText={false} aria-label="แก้ไข" /></V>
       </Block>
       <Block name="Tertiary brand button" node="Button (2:5)">
-        {STATES.map((st) => <V key={st} label={`State=${st}`}><TertiaryBrandButton Text="เพิ่มรถ" LeadingIconSwap="add-24-300-round" State={st} /></V>)}
+        {STATES.map((st) => <V key={st} label={`State=${st}`}><TertiaryBrandButton Text="เพิ่มยานพาหนะ" LeadingIconSwap="add-24-300-round" State={st} /></V>)}
       </Block>
       <Block name="Primary danger button" node="Button (2:5)">
         {(["md", "lg"] as const).flatMap((sz) => STATES.map((st) => <V key={st + sz} label={`State=${st}, Size=${sz}`}><PrimaryDangerButton Text="เอาออก" State={st} Size={sz} /></V>))}
@@ -128,7 +128,7 @@ export default function Kit() {
       <Block name="Text input" node="Inputs (2:6)">
         {(["Default", "Filled", "Hover", "Focused", "Disabled", "Readonly", "Error", "Error Hover", "Error Focused", "Error Readonly"] as TextInputState[]).map((st) => (
           <V key={st} label={`State=${st}, Size=md`}>
-            <TextInput State={st} LabelText="ชื่อแผน" Text={st === "Default" ? "" : "บำรุงรักษารถกระเช้า ภาค 2 ปีงบประมาณ 2570"} Placeholder="ระบุชื่อแผน" HelperText={st.startsWith("Error") ? "กรุณาระบุชื่อแผน" : undefined} className="w-[352px]" />
+            <TextInput State={st} LabelText="ชื่อแผน" Text={st === "Default" ? "" : "บำรุงรักษายานพาหนะ กกฟ.1 ปีงบประมาณ 2570"} Placeholder="ระบุชื่อแผน" HelperText={st.startsWith("Error") ? "กรุณาระบุชื่อแผน" : undefined} className="w-[352px]" />
           </V>
         ))}
         <V label="State=Default, Size=lg · Leading icon"><TextInput Size="lg" Label={false} LeadingIconSwap="search-24-300-round" Placeholder="ค้นหาเลขที่ MR, ชื่อแผน" className="w-[352px]" /></V>
@@ -218,7 +218,7 @@ export default function Kit() {
         <div className="w-[370px]">
           <MobileTable>
             <MobileTableItem Style="Lead text" Header="เลขที่ MR" Text="MR Z7000004" />
-            <MobileTableItem Style="Text" Header="ชื่อแผน" Text="บำรุงรักษารถกระเช้า ภาค 2 ปีงบประมาณ 2570" SupportingText="ปีงบประมาณ 2570" />
+            <MobileTableItem Style="Text" Header="ชื่อแผน" Text="บำรุงรักษายานพาหนะ กกฟ.1 ปีงบประมาณ 2570" SupportingText="ปีงบประมาณ 2570" />
             <MobileTableItem Style="Badge" Header="สถานะ" Pill={["รออนุมัติ", "Warning"]} />
             <MobileTableItem Style="Action icons" Actions={[{ IconSwap: "more_horiz-20-400-round", label: "เมนู" }]} />
           </MobileTable>
@@ -230,7 +230,7 @@ export default function Kit() {
         <V label="Alternating fills=True"><div className="w-[370px]"><MobileTable AlternatingFills><MobileTableItem Style="Lead text" Header="เลขที่ MR" Text="MR Z7000001" last /></MobileTable></div></V>
       </Block>
       <Block name="Empty state/Data empty" node="Table (2:14)">
-        <V label="Actions ซ่อน (ตาม noCarsInQ)" wide><EmptyStateDataEmpty Text="ยังไม่มีรถในไตรมาสนี้" SupportingText="ค้นทะเบียนในช่องเลือกรถเพื่อเพิ่มรถเข้าไตรมาสนี้" /></V>
+        <V label="Actions ซ่อน (ตาม noCarsInQ)" wide><EmptyStateDataEmpty Text="ยังไม่มียานพาหนะในไตรมาสนี้" SupportingText="ค้นทะเบียนในช่องเลือกยานพาหนะเพื่อเพิ่มยานพาหนะเข้าไตรมาสนี้" /></V>
       </Block>
 
       <Block name="Breadcrumbs" node="Breadcrumbs (2:7)">
@@ -238,15 +238,15 @@ export default function Kit() {
       </Block>
       <Block name="Page header" node="Page headers (1983:21158)">
         <V label="Breakpoint=Desktop · Actions" wide><PageHeader Breakpoint="Desktop" Title="บำรุงรักษาตามวาระ" crumbs={[{ Text: "บำรุงรักษาตามวาระ" }]} Actions={<PrimaryButton Text="สร้างแผน" LeadingIconSwap="add-24-300-round" />} /></V>
-        <V label="Breakpoint=Desktop · Badge" wide><PageHeader Breakpoint="Desktop" Title="เลขที่ MR Z7000004" Badge={["รออนุมัติ", "Brand"]} crumbs={[{ Text: "บำรุงรักษาตามวาระ", href: "/kit/" }, { Text: "บำรุงรักษารถกระเช้า ภาค 2 ปีงบประมาณ 2570" }]} /></V>
+        <V label="Breakpoint=Desktop · Badge" wide><PageHeader Breakpoint="Desktop" Title="เลขที่ MR Z7000004" Badge={["รออนุมัติ", "Brand"]} crumbs={[{ Text: "บำรุงรักษาตามวาระ", href: "/kit/" }, { Text: "บำรุงรักษายานพาหนะ กกฟ.1 ปีงบประมาณ 2570" }]} /></V>
         <V label="Breakpoint=Mobile · Back action · Actions"><div className="w-[370px]"><PageHeader Breakpoint="Mobile" Title="สร้างแผนบำรุงรักษา" onBack={() => undefined} Actions={<PrimaryButton Text="สร้างแผน" Size="lg" LeadingIconSwap="add-24-300-round" />} /></div></V>
       </Block>
       <Block name="Section header" node="Section headers (2011:6955)">
         <V label="Breakpoint=Desktop · Badge · Actions" wide><SectionHeader Breakpoint="Desktop" Title="อะไหล่ในไตรมาส 1" Badge={3} Actions={<SecondaryButton Text="เพิ่มอะไหล่" LeadingIconSwap="add-24-300-round" />} /></V>
-        <V label="Breakpoint=Mobile"><div className="w-[370px]"><SectionHeader Breakpoint="Mobile" Title="รถในไตรมาส 1" Badge="3 คัน" Actions={<SecondaryButton Text="เพิ่มอะไหล่" LeadingIconSwap="add-24-300-round" />} /></div></V>
+        <V label="Breakpoint=Mobile"><div className="w-[370px]"><SectionHeader Breakpoint="Mobile" Title="ยานพาหนะในไตรมาส 1" Badge="3 คัน" Actions={<SecondaryButton Text="เพิ่มอะไหล่" LeadingIconSwap="add-24-300-round" />} /></div></V>
       </Block>
       <Block name="Section label" node="Section headers (2011:6955)">
-        <V label="Breakpoint=Desktop" wide><SectionLabel Title="รายการรถ (6)" SupportingText="Supporting text" Actions={<><TertiaryButton Text="ดูทั้งหมด" /><TertiaryBrandButton Text="เพิ่มรถ" LeadingIconSwap="add-24-300-round" /></>} /></V>
+        <V label="Breakpoint=Desktop" wide><SectionLabel Title="รายการยานพาหนะ (6)" SupportingText="Supporting text" Actions={<><TertiaryButton Text="ดูทั้งหมด" /><TertiaryBrandButton Text="เพิ่มยานพาหนะ" LeadingIconSwap="add-24-300-round" /></>} /></V>
       </Block>
       <Block name="Tab item" node="Tabs (2:9)">
         {(["Default", "Hover", "Focused"] as const).flatMap((st) => [true, false].map((a) => <V key={st + a} label={`State=${st}, Active=${a ? "True" : "False"}`}><TabItem Text="ไตรมาส 1 (ม.ค.–มี.ค.)" Badge={3} Active={a} State={st} /></V>))}
@@ -312,7 +312,7 @@ export default function Kit() {
         Header={<ModalHeader Title="ยืนยันการออก" SupportingText="ข้อมูลที่กรอกไว้จะไม่ถูกบันทึก" onClose={() => setModal("")} />}
         Footer={<ModalFooter SecondaryAction={<SecondaryButton Text="ปิด" onClick={() => setModal("")} />} PrimaryAction={<PrimaryButton Text="ออก" onClick={() => setModal("")} />} />} />
       <Modal open={modal === "danger"} onClose={() => setModal("")} Type="Destructive centered image with input"
-        Header={<ModalHeader Title="ยืนยันการเอาอะไหล่ออก" SupportingText="ไส้กรองไฮโดรลิก จะถูกเอาออกจากรถทุกคันในไตรมาส 2" onClose={() => setModal("")} />}
+        Header={<ModalHeader Title="ยืนยันการเอาอะไหล่ออก" SupportingText="ไส้กรองไฮโดรลิก จะถูกเอาออกจากยานพาหนะทุกคันในไตรมาส 2" onClose={() => setModal("")} />}
         Footer={<ModalFooter SecondaryAction={<SecondaryButton Text="ยกเลิก" onClick={() => setModal("")} />} PrimaryAction={<PrimaryDangerButton Text="เอาออก" onClick={() => setModal("")} />} />} />
       <Modal open={modal === "form"} onClose={() => setModal("")} Type="Form"
         Header={<ModalHeader Alignment="Left" FeaturedIcon={false} Title="แก้ไขเบอร์ติดต่อและสถานที่ · 82-6789 ขอนแก่น" onClose={() => setModal("")} />}

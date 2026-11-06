@@ -1,5 +1,5 @@
 "use client";
-/* S21 · หน้า จัดการอะไหล่ของรถ (/car-parts/?id=new|Z7000004&q=1&car=82-6789) — carPartsScreen() ใน screens.js (Figma เสร็จ 5 พ.ย. 2569 · BACKLOG ข้อ 11) · เฉพาะบทบาท กบค.
+/* S21 · หน้า จัดการอะไหล่ของรถ (/car-parts/?id=new|Z7000004&q=1&car=82-6789) — carPartsScreen() ใน screens.js (Figma เสร็จ 5 พ.ย. 2569 · BACKLOG ข้อ 11) · เฉพาะหน่วยงานผู้สร้างแผน (PLAN_ROLES)
    เปิดจากไอคอนแก้ไขที่แถวรถในแท็บไตรมาส n ของฟอร์มแผน (S1 สร้าง · S19 แก้ไข) · บันทึกแล้วกลับแท็บไตรมาสเดิม
    ตาม Page header · Input dropdown · Section header · Radio text card · Text input (Readonly) · Table · Empty state/Data empty · Modal Type=Form (Card form row Input 1/Input 2) ของไฟล์ Component
    + PartsInventoryPanel ของไฟล์ Maintain-D (คลังอะไหล่ของงานซ่อม) + หน้า Spare Part Request ของ RP & MA Job ใน UI Release#2
@@ -34,28 +34,26 @@ import { RadioTextCards } from "@/components/vms/RadioTextCard";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionHeader } from "@/components/vms/SectionHeader";
 import { SectionLabel } from "@/components/vms/SectionLabel";
-import { Table, type TableColumn, type TableValue } from "@/components/vms/Table";
+import { Table, type TableValue } from "@/components/vms/Table";
+import { CARP_PART_COLS } from "./cols";
 import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
 import { CAND, CAR_QTY, LAST_OIL, OIL_GRADES, OIL_PLAN_OPTS, OIL_SPEC, PARTS, PART_BM, PART_PRICE, PART_WH, oilChanges, type ManualPart, type OilSpec } from "@/lib/mock/data";
 import { inQuarter, type Draft } from "@/lib/mock/plan";
-import { carIndexOf, carParam, findPlan, oilChoice, useRoleGuard } from "@/lib/mock/planFlow";
+import { PLAN_ROLES, carIndexOf, carParam, findPlan, oilChoice, useRoleGuard } from "@/lib/mock/planFlow";
 import { notify, setMock, useMock } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 
 /* อะไหล่ในคลัง = ไส้กรองและอะไหล่ (PARTS 1–4 · น้ำมันไฮโดรลิกมีส่วนของตัวเอง — carWarehouse()) */
 const STOCK: SparePart[] = PARTS.map((p, i) => ({ name: p.name, code: p.code, unit: p.unit, price: PART_PRICE[i], warehouse: PART_WH[i], stock: p.stock }));
 const OTHER = PARTS.map((_, i) => i).filter((i) => i > 0);
-/* CARP_PART_COLS */
-const COLS: TableColumn[] = [
-  { head: "ชื่อ", Style: "Lead text" }, { head: "ยี่ห้อ", width: 140 }, { head: "รุ่น", width: 160 }, { head: "รหัส", width: 130 },
-  { head: "จำนวน", width: 90 }, { head: "หน่วย", width: 90 }, { head: "", width: 104, Style: "Action icons" },
-];
+/* CARP_PART_COLS (ใช้ร่วมกับหน้าดูอะไหล่ของยานพาหนะ /car-parts/view/) */
+const COLS = CARP_PART_COLS;
 
 /* ที่แก้ของรถแต่ละคันในหน้านี้ (ยังไม่บันทึกลงฟอร์ม) — picks/qty = อะไหล่จากคลัง (ไม่รวมน้ำมัน) */
 /* draw: "" = ยังไม่เลือก · take = เบิกอะไหล่ · none = ไม่เบิกอะไหล่ (6 พ.ย. 2569) */
 type Draw = "" | "take" | "none";
-const DRAW_OPTS = [{ Text: "เบิกอะไหล่", SupportingText: "เลือกอะไหล่ที่ต้องเบิกให้รถคันนี้" }, { Text: "ไม่เบิกอะไหล่", SupportingText: "รถคันนี้ไม่ใช้อะไหล่จากการเบิก" }];
+const DRAW_OPTS = [{ Text: "เบิกอะไหล่", SupportingText: "เลือกอะไหล่ที่ต้องเบิกให้ยานพาหนะคันนี้" }, { Text: "ไม่เบิกอะไหล่", SupportingText: "ยานพาหนะคันนี้ไม่ใช้อะไหล่จากการเบิก" }];
 interface CarEdit { oil: number; spec: OilSpec; picks: number[]; qty: Record<number, number>; manual: ManualPart[]; draw: Draw }
 type Buffer = Record<number, CarEdit>;
 const bufferOf = (d: Draft, cars: number[]): Buffer => Object.fromEntries(cars.map((c) => {
@@ -76,7 +74,7 @@ function CarParts() {
   const router = useRouter();
   const sp = useSearchParams();
   const mob = useBreakpoint() === "Mobile";
-  const ok = useRoleGuard(["หน่วยงาน (กกฟ.1)"]);
+  const ok = useRoleGuard(PLAN_ROLES);
   const mock = useMock();
   const id = sp.get("id") ?? "new";
   const plan = id === "new" ? undefined : findPlan(mock.plans, id);
@@ -163,7 +161,7 @@ function CarParts() {
       });
       return { ...s, [key]: { ...cur, picks, qty, manual, oils, oilSpec, draw, q } };
     });
-    notify("บันทึกอะไหล่ของรถ " + CAND[car].plate + " แล้ว");
+    notify("บันทึกอะไหล่ของยานพาหนะ " + CAND[car].plate + " แล้ว");
     router.push(formHref);
   };
 
@@ -186,11 +184,11 @@ function CarParts() {
 
   return (
     <>
-      <PageHeader Title={"จัดการอะไหล่ของรถ " + CAND[car].plate} onBack={leave}
-        crumbs={[{ Text: "บำรุงรักษาตามวาระ", onClick: leave }, { Text: formCrumb, onClick: leave }, { Text: "จัดการอะไหล่ของรถ" }]} />
+      <PageHeader Title={"จัดการอะไหล่ของยานพาหนะ " + CAND[car].plate} onBack={leave}
+        crumbs={[{ Text: "บำรุงรักษาตามวาระ", onClick: leave }, { Text: formCrumb, onClick: leave }, { Text: "จัดการอะไหล่ของยานพาหนะ" }]} />
       <div className="flex flex-col gap-8">
         {half(
-          <InputDropdown LabelText="รถ" Text={open === "car" ? query : CAND[car].plate} Placeholder="เลือกรถในไตรมาสนี้" LeadingIconSwap="search-24-300-round"
+          <InputDropdown LabelText="ยานพาหนะ" Text={open === "car" ? query : CAND[car].plate} Placeholder="เลือกยานพาหนะในไตรมาสนี้" LeadingIconSwap="search-24-300-round"
             onQuery={setQuery} open={open === "car"} onOpenChange={(v) => { setOpen(v ? "car" : ""); setQuery(""); }}>
             <DropdownList>{carList.map((i) => <DropdownListItem key={i} Text={CAND[i].plate} State={i === car ? "Selected" : "Default"} onClick={() => goCar(i)} />)}</DropdownList>
           </InputDropdown>,
@@ -222,7 +220,7 @@ function CarParts() {
         </section>}
         <div className={cx("flex", mob ? "gap-4 [&>*]:flex-1 [&>*]:basis-0" : "justify-between gap-3")}>
           <SecondaryButton Text="ย้อนกลับ" Size="lg" onClick={leave} />
-          <PrimaryButton Text="บันทึกอะไหล่ของรถ" Size="lg" State={canSave ? "Default" : "Disabled"} onClick={save} />
+          <PrimaryButton Text="บันทึกอะไหล่ของยานพาหนะ" Size="lg" State={canSave ? "Default" : "Disabled"} onClick={save} />
         </div>
       </div>
       <FormModal open={!!editing} title={editing?.kind === "new" ? "ระบุอะไหล่เพิ่มเติม" : "แก้ไขอะไหล่"} ok={editing?.kind === "new" ? "เพิ่ม" : "บันทึก"} cancel="ยกเลิก"

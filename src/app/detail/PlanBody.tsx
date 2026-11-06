@@ -46,7 +46,7 @@ export function PlanBody({ plan, q, onQ, wh, actions }: { plan: Plan; q: number;
     <>
       <VehicleAndReporterInfo Title="รายละเอียดแผน" pairs={planKv(plan)} />
       <section className="flex flex-col gap-4">
-        <SectionLabel Title={"รถในแผน (" + total + ")"} Actions={actions} />
+        <SectionLabel Title={"ยานพาหนะในแผน (" + total + ")"} Actions={actions} />
         <Tabs>{QUARTERS.map((t, i) => <TabItem key={t} Text={t} Badge={count(i + 1)} Active={q === i + 1} onClick={() => onQ(i + 1)} />)}</Tabs>
         {wh && plan.alloc && <WarehouseAlert plan={plan} q={q} />}
         {mob ? <MobileCards columns={COLS} rows={rows} /> : <Table columns={COLS} rows={rows} />}

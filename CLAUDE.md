@@ -33,12 +33,15 @@
 
 14. **มือถือ — ไอคอนดู แก้ไข ลบ กางบนการ์ด** (เจ้าของงาน 4 พ.ย. 2569 _"ส่วนที่เป็น mobile อยากให้ expand view edit delete icon ออกมาแบบตัวอย่างทั้งหมด"_) — ช่องเมนู "…" ของตารางต้องส่ง `mobileActions` ตามรายการที่ทำได้ในสถานะนั้น (Mobile table item Style=Action icons · View/Edit/Delete) · มือถือไม่เปิดเมนู … / bottom sheet เมนู · desktop คงปุ่ม "…" + Dropdown menu
 
+15. **คำว่า "ยานพาหนะ" แทน "รถ"** (R80 · เจ้าของงาน 6 พ.ย. 2569 _"คำว่า รถ ที่อยู่ใน โปรแกรม อยากให้เปลี่ยนเป็นคำว่า ยานพาหนะ แทน โดยถ้าเป็นข้อมูลที่ดึงมาจาก api จะไม่ต้องแก้ไข … ไล่แก้ และตั้งเป็นเงื่อนไข ในโปรแกรมให้ด้วย"_) — ทุกข้อความบนจอ (ป้าย หัวคอลัมน์ ปุ่ม หัวข้อ แท็บ toast ข้อความว่าง ข้อความยืนยัน) · ข้อมูลจาก API (ชื่อประเภทยานพาหนะ ชื่อแผนที่ผู้ใช้ตั้ง) คงเดิม · คำที่ยอมให้มี "รถ" อยู่ใน `ALLOW` ของ `scripts/check-wording.mjs` (ตรงกับ allow ของ R80 ใน `component-rules.json` ของรีโป Maintenance-Request-Form) · ตารางอะไหล่รวมของไตรมาส/แผนใช้ `QPART_COLS` ชุดเดียว (R81)
+
 ## ตรวจก่อนบอกว่าเสร็จ
 
 ```bash
 npm run typecheck
 NEXT_PUBLIC_BASE_PATH=/maintenance-utility-vehicle npm run build     # ต้องผ่าน · ได้ out/
 grep -rnE '#[0-9a-fA-F]{3,8}\b' src --include='*.tsx'        # ต้องว่าง (สีต้องมาจาก token)
+npm run check-wording                                        # R80 ข้อความบนจอใช้ "ยานพาหนะ" แทน "รถ" (ต้องผ่าน)
 ```
 
 แล้วเปิดดูจริงทั้ง desktop และมือถือ (Playwright + Chrome ที่ติดเครื่อง) ไม่มี error ใน console

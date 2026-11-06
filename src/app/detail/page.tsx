@@ -24,7 +24,7 @@ import { TertiaryBrandButton } from "@/components/vms/TertiaryBrandButton";
 import { TertiaryButton } from "@/components/vms/TertiaryButton";
 import { closeoutOf } from "@/lib/mock/closeout";
 import { PST } from "@/lib/mock/data";
-import { DELETE_CONFIRM, badgeOf, deletePlan, findPlan, planId, startEdit, useHydrated } from "@/lib/mock/planFlow";
+import { DELETE_CONFIRM, badgeOf, canManage, deletePlan, findPlan, planId, startEdit, useHydrated } from "@/lib/mock/planFlow";
 import { useMock, useRole } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { PlanBody } from "./PlanBody";
@@ -34,7 +34,8 @@ function Detail() {
   const sp = useSearchParams();
   const mob = useBreakpoint() === "Mobile";
   const hydrated = useHydrated();
-  const kbk = useRole() === "หน่วยงาน (กกฟ.1)";
+  const role = useRole();
+  const kbk = role === "หน่วยงาน (กกฟ.1)";
   const mock = useMock();
   const plan = findPlan(mock.plans, sp.get("id"));
   const [q, setQ] = useState(1);
@@ -44,8 +45,10 @@ function Detail() {
   if (!hydrated || !plan) return null;
 
   const st = plan.status;
-  const canDelete = kbk && st === "returned";
-  const canEdit = kbk && (st === "returned" || st === "approved");
+  /* แก้ไข ลบ: หน่วยงานผู้สร้างแผน · กบค. เฉพาะแผนของ กบค. (แผนหน่วยงานอื่นดูอย่างเดียว · planDetail readonly ของ screens.js 6 พ.ย. 2569 รอบ 2) */
+  const manage = canManage(role, plan);
+  const canDelete = manage && st === "returned";
+  const canEdit = manage && (st === "returned" || st === "approved");
   const size = mob ? "lg" : "md";
   const id = planId(plan);
   const nowQ = Number(plan.nowQ.replace(/\D/g, "")) || 1;

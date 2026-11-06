@@ -1,7 +1,7 @@
 /* ข้อมูลจำลองของ S4 (ความคืบหน้าอะไหล่ของไตรมาส) และ S15 S16 S17 (ประวัติ · หัวหน้าตรวจ · รายงานผลและปิดงาน) — batch B
    ยกจาก screens.js (partsProgress · partsSummary · PLAN_KV · HIST · hqRows · reportScreen) · ค่าสมมติทั้งหมด */
 import type { PillColor } from "@/components/vms/PillOutline";
-import { PARTS, type Plan, type PlanStatus } from "./data";
+import { PARTS, creatorOf, unitOf, type Plan, type PlanStatus } from "./data";
 import { setMock, type MockState } from "./store";
 
 /* ---------- แผนในข้อมูลจำลอง (store.plans · S1) ---------- */
@@ -11,11 +11,11 @@ export function setPlanStatus(id: string, status: PlanStatus) {
   setMock((s) => ({ ...s, plans: s.plans.map((p) => (p.mr === mrOf(id) ? { ...p, status } : p)) }));
 }
 const APPROVED_AT: Record<string, string> = { Z7000001: "08/10/2569" };
-const CREATOR = "นายวิชัย ทองดี (กบค.)";
-/* PLAN_KV — กล่องรายละเอียดแผน (10 คู่) · quarterNote = ต่อท้ายไตรมาส (หน้าแผนเดินทาง "ไตรมาส 1 (10 คัน)") */
+/* PLAN_KV — กล่องรายละเอียดแผน (9 คู่) · quarterNote = ต่อท้ายไตรมาส (หน้าแผนเดินทาง "ไตรมาส 1 (10 คัน)")
+   6 พ.ย. 2569 รีวิว S6 "ภาค เปลี่ยน หน่วยงาน" + "ย้ายประเภท มาไว้ในคอลัมม์" (PLAN_KV ของ screens.js): ภาค → หน่วยงานเจ้าของแผน · ไม่มีประเภทยานพาหนะ · ผู้สร้างแผน = CREATOR */
 export const planKv = (p: Plan, quarterNote?: string): [string, string][] => [
-  ["ชื่อแผน", p.name], ["ปีงบประมาณ", p.year], ["ภาค", p.region], ["ประเภทรถ", p.type], ["ไตรมาส", p.nowQ + (quarterNote ?? "")],
-  ["จำนวนรถ", p.cars + " คัน"], ["เลขที่ MR", p.mr], ["ผู้สร้างแผน", CREATOR], ["วันที่สร้าง", p.created], ["อนุมัติเมื่อ", p.approvedAt ?? APPROVED_AT[p.mr.slice(3)] ?? "-"],
+  ["ชื่อแผน", p.name], ["ปีงบประมาณ", p.year], ["หน่วยงาน", unitOf(p.mr, p.unit)], ["ไตรมาส", p.nowQ + (quarterNote ?? "")],
+  ["จำนวนยานพาหนะ", p.cars + " คัน"], ["เลขที่ MR", p.mr], ["ผู้สร้างแผน", creatorOf(p)], ["วันที่สร้าง", p.created], ["อนุมัติเมื่อ", p.approvedAt ?? APPROVED_AT[p.mr.slice(3)] ?? "-"],
 ];
 
 /* ---------- S4 เบิก/จองอะไหล่ ---------- */
@@ -82,7 +82,7 @@ export const HIST_COLS = [
 /* แถวประวัติ ความคืบหน้า และสรุปรายงาน อ่านจากงานรายคันจริง — lib/mock/history.ts (BACKLOG ข้อ 6 · แทน HIST_ROWS PROGRESS_DONE reportSummary คงที่) */
 export const SENT_AT = "12/11/2569", HEAD_AT = "13/11/2569", CLOSED_AT = "14/11/2569";
 export const HEAD_REVIEWER = "นายประเสริฐ มั่นคง";
-export const HQ_OTHER = { id: "Z6900011", mr: "MR Z6900011", plan: "บำรุงรักษารถกระเช้า ภาค 1 ปีงบประมาณ 2569", sender: "นางสาวกนกวรรณ ใจมั่น", cars: "10 คัน", sentAt: "28/06/2569" };
+export const HQ_OTHER = { id: "Z6900011", mr: "MR Z6900011", plan: "บำรุงรักษากระเช้าแก้ไฟ ภาค 1 ปีงบประมาณ 2569", sender: "นางสาวกนกวรรณ ใจมั่น", cars: "10 คัน", sentAt: "28/06/2569" };
 /* สถานะในรายการของหัวหน้า (HST) จากสถานะแผน */
 export const headStatusOf = (p: Plan, c: CloseoutState): "wait" | "ok" | "back" =>
   c.head === "back" && p.status === "active" ? "back" : p.status === "passed" || p.status === "closed" ? "ok" : "wait";
