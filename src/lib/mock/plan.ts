@@ -1,5 +1,5 @@
-/* ตัวช่วยของแผน — ยกจาก screens.js (qCell · whCell · planRow · quarterParts) + เลขที่ MR ตามเงื่อนไข S1 */
-import { CAND, CAR_QTY, DISTRICTS, PARTS, PST, REGIONS, UNIT_FLEET, VEHICLE_TYPES, WH_ACK, dCode, regionOf, shortRegion, unitOf, type ManualPart, type OilSpec, type Plan } from "./data";
+/* ตัวช่วยของแผน — ยกจาก screens.js (qCell · planRow · quarterParts) + เลขที่ MR ตามเงื่อนไข S1 */
+import { CAND, CAR_QTY, DISTRICTS, PARTS, PST, REGIONS, UNIT_FLEET, VEHICLE_TYPES, dCode, regionOf, shortRegion, unitOf, type ManualPart, type OilSpec, type Plan } from "./data";
 import type { TableColumn, TableValue } from "@/components/vms/Table";
 
 /* QPART_COLS — ตารางอะไหล่รวมตามรายการ (R81 · 6 พ.ย. 2569 เจ้าของงาน "ถ้าเพิ่ม คอลัมน์ ก็ส่งผลกระทบกับ หน้าอื่นๆที่เป็นหน้าที่เหมือนกันด้วย ตอน export ก็เกี่ยวข้องด้วย")
@@ -32,17 +32,14 @@ export const isDirty = (d: Draft) => !!(d.name || d.year || d.regions.length || 
 
 /* qCell — 4 ไตรมาสยาวเกินคอลัมน์ ⇒ 2 บรรทัด */
 export const qCell = (t: string) => { const q = t.split(" · "); return { text: q.slice(0, 2).join(" · "), sub: q.slice(2).join(" · ") }; };
-export const qWithCars = (p: Plan) => (p.perQ.match(/: (\d+)/g) || []).filter((x) => Number(x.slice(2)) > 0).length;
-/* whCell — คลังรับทราบ: ก่อนอนุมัติ "-" · หลังอนุมัติ x/n ไตรมาส */
-export const whCell = (p: Plan) => p.status === "review" || p.status === "returned" ? "-" : (p.status === "closed" ? qWithCars(p) : p.ack ? Object.keys(p.ack).length : WH_ACK[p.mr] || 0) + "/" + qWithCars(p) + " ไตรมาส";
 
+/* PLAN_COLS 7 คอลัมน์ (6 พ.ย. 2569 ตัดคอลัมน์คลังรับทราบ — S22 ตัดออก · ระบบแจ้ง Smart Inventory ตอนอนุมัติแทน) */
 export const PLAN_COLS = [
   { head: "เลขที่ MR", width: 150, Style: "Lead text" as const, SortIcon: "Down" as const },
   { head: "ชื่อแผน", Style: "Text" as const, SortIcon: "Swap" as const },
   { head: "ภาค / ประเภทยานพาหนะ", width: 200 },
   { head: "จำนวนยานพาหนะ", width: 100 },
   { head: "ยานพาหนะรายไตรมาส", width: 210 },
-  { head: "คลังรับทราบ", width: 130 },
   { head: "สถานะ", width: 150, Style: "Badge" as const, SortIcon: "Swap" as const },
   { head: "", width: 60, Style: "Action icons" as const },
 ];
@@ -68,7 +65,7 @@ export const planDistricts = (p: Plan): string[] => {
 export const scopeCell = (p: Plan) => { const [text, sub] = planScope(p); return { text: text || "-", sub }; };
 /* view = กบค. ดูแผนทุกหน่วยงาน (planRow(p, view) ของ screens.js 6 พ.ย. 2569): หน่วยงานเจ้าของแผนเป็นบรรทัดรองของเลขที่ MR */
 export const planRow = (p: Plan, menu: TableValue, view = false): TableValue[] =>
-  [view ? { text: p.mr, sub: unitOf(p.mr, p.unit) } : p.mr, { text: p.name, sub: "ปีงบประมาณ " + p.year }, scopeCell(p), String(p.cars), qCell(p.perQ), whCell(p), { pills: [PST[p.status]] }, menu];
+  [view ? { text: p.mr, sub: unitOf(p.mr, p.unit) } : p.mr, { text: p.name, sub: "ปีงบประมาณ " + p.year }, scopeCell(p), String(p.cars), qCell(p.perQ), { pills: [PST[p.status]] }, menu];
 
 /* เมนู "…" ตามสถานะแผน (S19 S20): ก่อนอนุมัติ ดูรายละเอียด แก้ไข ลบ · อนุมัติแล้ว ดูรายละเอียด แก้ไข · ดำเนินการแล้ว ดูรายละเอียดอย่างเดียว */
 export const menuCount = (p: Plan) => (p.status === "review" || p.status === "returned" ? 3 : p.status === "approved" ? 2 : 1);

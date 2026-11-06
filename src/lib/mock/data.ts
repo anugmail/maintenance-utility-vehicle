@@ -38,11 +38,11 @@ export interface Plan {
   /* S21 น้ำมันไฮโดรลิกรายคัน (5 พ.ย. 2569): ลำดับใน OIL_PLAN_OPTS (ไม่มี = ยังไม่กำหนด) · เบอร์ รหัส ลิตร เมื่อเปลี่ยนน้ำมัน (ลิตร = qty[รถ][0] · picks มี 0) */
   oils?: Record<number, number>;
   oilSpec?: Record<number, OilSpec>;
-  /* S2 S19 S22 วันที่และผลการพิจารณา */
+  /* S2 S19 วันที่และผลการพิจารณา */
   sentAt?: string;          // วันที่ส่ง (ส่งอนุมัติใหม่หลังแก้ไข S19) · ไม่มี = created
   approvedAt?: string;      // วันที่อนุมัติ (S2)
   returnReason?: string;    // เหตุผลที่ส่งกลับ (S2 → S19)
-  ack?: Record<number, string>;   // ไตรมาสที่คลังรับทราบแล้ว → วันที่ (S22) · ไม่มี = ใช้ค่าตัวอย่าง WH_ACK / WH_LIST
+  ack?: Record<number, string>;   // ไตรมาสที่คลังรับทราบแล้ว → วันที่ (S22 ตัดออก 6 พ.ย. 2569 · ไม่มีหน้าไหนอ่านแล้ว คงไว้ให้ samplePlan)
   /* S21 การเบิกอะไหล่รายคัน (A_DRAW · 6 พ.ย. 2569): ลำดับรถ → "none" = ไม่เบิกอะไหล่ · ไม่มี = เบิก (ถ้ามีรายการ) / ยังไม่กำหนด */
   draw?: Record<number, "none">;
   /* หน่วยงานเจ้าของแผน (แผนที่สร้างในต้นแบบ · 6 พ.ย. 2569 กบค. สร้างแผนได้) · ไม่มี = PLAN_UNIT */
@@ -185,16 +185,6 @@ export const PLAN_CREATOR = "นายวิชัย ทองดี (กกฟ
 export const PLAN_CREATOR_SHORT = "นายวิชัย ทองดี";
 /* ผู้สร้างแผน = ชื่อ (หน่วยงานเจ้าของแผน) — แผนของ กกฟ.1 = CREATOR ของ screens.js · แผนของหน่วยงานอื่นใส่หน่วยงานของแผนนั้น */
 export const creatorOf = (p: Pick<Plan, "mr" | "unit">) => PLAN_CREATOR_SHORT + " (" + unitOf(p.mr, p.unit) + ")";
-
-/* WH_LIST — แถวตัวอย่างของหน้า "แผนที่ต้องเตรียมอะไหล่" (S22 U.1 · whRow ใน screens.js) สำหรับแผนที่ไม่มีข้อมูลรับทราบจริง: วันที่อนุมัติ · จำนวนไตรมาสที่รับทราบ
-   (จอ S22 คิด Z7000002 = รับทราบ 1/3 · Z7000001 = ครบ ต่างจากคอลัมน์คลังรับทราบของ S1 ที่ใช้ WH_ACK — ข้อมูลตัวอย่างของ screens.js คนละชุด) */
-export const WH_LIST: Record<string, { approvedAt: string; acked: number }> = {
-  "MR Z7000002": { approvedAt: "08/10/2569", acked: 1 },
-  "MR Z7000001": { approvedAt: "06/10/2569", acked: 4 },
-};
-
-/* WH_ACK — จำนวนไตรมาสที่คลังรับทราบแล้วต่อเลขที่ MR (S22) */
-export const WH_ACK: Record<string, number> = { "MR Z7000004": 1, "MR Z7000001": 2 };
 
 /* MENU — เมนู "…" (core.js) */
 export const MENU = [

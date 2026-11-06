@@ -1,5 +1,5 @@
 "use client";
-/* เนื้อหน้ารายละเอียดแผน planBody() ใน screens.js — ใช้ร่วม S2 (ผู้อนุมัติ) · S19 S20 S22 (กบค.)
+/* เนื้อหน้ารายละเอียดแผน planBody() ใน screens.js — ใช้ร่วม S2 (ผู้อนุมัติ) · S19 S20 (หน่วยงาน · กบค.) · แถบสถานะคลังรับทราบ (o.wh) ตัดพร้อม S22 6 พ.ย. 2569
    1. VehicleAndReporterInfo "รายละเอียดแผน" (npKv 10 ช่อง · มือถือ = กล่องแสดงข้อมูลแถวละ 2)
    2. Section ช่องไฟ 16: Section label "รถในแผน (n)" · Tabs ไตรมาส 1–4 (ป้ายจำนวนรถ) · (wh) Alert สถานะคลังของไตรมาสที่เปิด · Table รถของไตรมาส ดูอย่างเดียว (CARP_COLS 6 คอลัมน์ ไม่มีไอคอน)
    actions = ปุ่มใน Section label "รถในแผน" (Primary action Tertiary brand button · Secondary action Tertiary button) — หน้า กบค. ใส่ทางไปไตรมาสที่กำลังทำ
@@ -7,7 +7,6 @@
    แผนตัวอย่างที่ไม่มีรถรายคัน (MR Z7000001 ฯลฯ): ไตรมาสที่กำลังทำ = รถของหน้า "ไตรมาส n" (quarterCars · 10 คันของ S6) ค่าน้ำมัน เปลี่ยนล่าสุด อะไหล่ ตาม planDetailQ() ใน screens.js (5 พ.ย. 2569) */
 import type { ReactNode } from "react";
 import { VehicleAndReporterInfo } from "@/components/maintain-d/VehicleAndReporterInfo";
-import { Alert } from "@/components/vms/Alert";
 import { MobileCards } from "@/components/vms/MobileTable";
 import { SectionLabel } from "@/components/vms/SectionLabel";
 import { TabItem } from "@/components/vms/TabItem";
@@ -16,23 +15,14 @@ import { Tabs } from "@/components/vms/Tabs";
 import { CARP_COLS } from "@/app/new/PlanForm";
 import { QUARTERS, type Plan } from "@/lib/mock/data";
 import { carOf as jobCar, OIL_JOB_OPTS, SAMPLE_OIL } from "@/lib/mock/jobs";
-import { allocOf, carRow, carsIn, planId, planKv, quarterCount, whQuarters } from "@/lib/mock/planFlow";
+import { allocOf, carRow, carsIn, planId, planKv, quarterCount } from "@/lib/mock/planFlow";
 import { useMock } from "@/lib/mock/store";
 import { quarterCars } from "@/lib/mock/trips";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 
 const COLS = CARP_COLS.slice(0, 6);
 
-/* แถบสถานะคลังรายไตรมาส (S20 S.6 · S22 U.8) — แผนอนุมัติแล้ว/ดำเนินการ · ไตรมาสที่เปิดมีรถ */
-function WarehouseAlert({ plan, q }: { plan: Plan; q: number }) {
-  const N = whQuarters(plan).length, ack = plan.ack ?? {}, n = Object.keys(ack).length;
-  if (!quarterCount(plan, q)) return null;
-  return ack[q]
-    ? <Alert Color="Success" Text={"คลังรับทราบรายการอะไหล่ไตรมาส " + q + " แล้ว"} SupportingText={"รับทราบ " + n + " จาก " + N + " ไตรมาส · " + ack[q]} />
-    : <Alert Color="Warning" Text={"รอคลังรับทราบรายการอะไหล่ไตรมาส " + q} SupportingText={"รับทราบ " + n + " จาก " + N + " ไตรมาส"} />;
-}
-
-export function PlanBody({ plan, q, onQ, wh, actions }: { plan: Plan; q: number; onQ: (q: number) => void; wh?: boolean; actions?: ReactNode }) {
+export function PlanBody({ plan, q, onQ, actions }: { plan: Plan; q: number; onQ: (q: number) => void; actions?: ReactNode }) {
   const mob = useBreakpoint() === "Mobile";
   const mock = useMock();
   const a = allocOf(plan);
@@ -48,7 +38,6 @@ export function PlanBody({ plan, q, onQ, wh, actions }: { plan: Plan; q: number;
       <section className="flex flex-col gap-4">
         <SectionLabel Title={"ยานพาหนะในแผน (" + total + ")"} Actions={actions} />
         <Tabs>{QUARTERS.map((t, i) => <TabItem key={t} Text={t} Badge={count(i + 1)} Active={q === i + 1} onClick={() => onQ(i + 1)} />)}</Tabs>
-        {wh && plan.alloc && <WarehouseAlert plan={plan} q={q} />}
         {mob ? <MobileCards columns={COLS} rows={rows} /> : <Table columns={COLS} rows={rows} />}
       </section>
     </>

@@ -1,5 +1,5 @@
 "use client";
-/* หน้า /scenarios/ ของต้นแบบ (เปิดจากลิงก์ "ต้นแบบบำรุงรักษาตามวาระ" ในแถบต้นแบบ · รากเว็บเป็นรายการแผนแบบระบบจริง): รายการ scenario ตามลำดับงาน (20 ที่ใช้ + S11 S23 ที่ตัดออกท้ายตาราง แบบ SCEN_CUT ของ screens.js) — Page header + Table (desktop) / Mobile table (มือถือ) ของไลบรารี
+/* หน้า /scenarios/ ของต้นแบบ (เปิดจากลิงก์ "ต้นแบบบำรุงรักษาตามวาระ" ในแถบต้นแบบ · รากเว็บเป็นรายการแผนแบบระบบจริง): รายการ scenario ตามลำดับงาน (ที่ใช้ + S11 S23 S22 ที่ตัดออกท้ายตาราง แบบ SCEN_CUT ของ screens.js) — Page header + Table (desktop) / Mobile table (มือถือ) ของไลบรารี
    ไม่ใช่จอใน Figma (เป็นสารบัญของต้นแบบ) · ดู figma-spec/COMPOSED.md */
 import { useRouter } from "next/navigation";
 import { AppFrame } from "@/components/shell/AppFrame";
@@ -24,13 +24,13 @@ const COLS: TableColumn[] = [
 export default function Scenarios() {
   const router = useRouter();
   const mob = useBreakpoint() === "Mobile";
-  /* แถวที่ตัดออก: ชื่อ + บรรทัดรองเหตุผล · ป้าย "ตัดออก" · ปุ่มเปิดพาไปหน้าที่ใช้แทน (S10 แผนจ้าง) */
+  /* แถวที่ตัดออก: ชื่อ + บรรทัดรองเหตุผล · ป้าย "ตัดออก" · ปุ่มเปิดพาไปหน้าที่ใช้แทน (alt · S10 แผนจ้าง / S2 อนุมัติแผน) */
   /* โหมดพาดูทีละเรื่อง (นำร่อง S1 S2) — ปุ่ม "ดูเคส" ข้างปุ่มเปิด → หน้าเรื่อง /scenarios/guide/ */
   const guideAction = (id: string) => { const g = guideByCode(id); return g ? [{ IconSwap: "school-24-300-round", label: "ดูเคส " + id, onClick: () => router.push(scenarioHref(g.key)) }] : []; };
   const rows: TableValue[][] = SCENARIOS.map((s) => [
     s.id, s.cut ? { text: s.name, sub: s.cut } : s.name, s.phase, s.role,
     { pills: [s.cut ? ["ตัดออก", "Error"] : s.href ? ["พร้อมใช้", "Success"] : ["เร็วๆ นี้", "Gray"]] },
-    { actions: [{ IconSwap: "quick_reference_all-24-300-round", label: s.cut ? "เปิด S10 แผนจ้าง (แทน " + s.id + ")" : "เปิด " + s.id, onClick: () => router.push(s.href ?? "/soon/?s=" + s.id) },
+    { actions: [{ IconSwap: "quick_reference_all-24-300-round", label: s.cut ? "เปิด " + (s.alt ?? s.id) + " (แทน " + s.id + ")" : "เปิด " + s.id, onClick: () => router.push(s.href ?? "/soon/?s=" + s.id) },
       ...guideAction(s.id)] },
   ]);
   return (
