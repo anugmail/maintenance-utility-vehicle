@@ -1,0 +1,485 @@
+{
+ "component": "Metric item",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
+ "page": "✅ Metrics",
+ "node": "2011:13829",
+ "props": {
+  "Number#1130:2": {
+   "type": "TEXT",
+   "defaultValue": "20"
+  },
+  "Text#1130:4": {
+   "type": "TEXT",
+   "defaultValue": "รออนุมัติ"
+  },
+  "Breakpoint": {
+   "type": "VARIANT",
+   "defaultValue": "Desktop",
+   "variantOptions": [
+    "Desktop",
+    "Mobile"
+   ]
+  }
+ },
+ "set": {
+  "name": "Metric item",
+  "type": "COMPONENT_SET",
+  "w": 451,
+  "h": 196,
+  "sizing": [
+   "FIXED",
+   "HUG"
+  ],
+  "pl": 20,
+  "pr": 20,
+  "pt": 20,
+  "pb": 20,
+  "gap": 20,
+  "r": 5,
+  "dir": "HORIZONTAL",
+  "justify": "MIN",
+  "align": "MIN",
+  "fill": [
+   "#FFFFFF"
+  ],
+  "stroke": [
+   "#9747FF"
+  ],
+  "sw": 1,
+  "strokeAlign": "INSIDE",
+  "vars": {
+   "fills": "Color/surface/primary"
+  }
+ },
+ "variants": [
+  {
+   "name": "Breakpoint=Desktop",
+   "type": "COMPONENT",
+   "w": 235,
+   "h": 156,
+   "sizing": [
+    "FILL",
+    "FIXED"
+   ],
+   "pl": 16,
+   "pr": 16,
+   "pt": 20,
+   "pb": 20,
+   "gap": 20,
+   "r": 12,
+   "dir": "VERTICAL",
+   "justify": "SPACE_BETWEEN",
+   "align": "MIN",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "paddingLeft": "Spacing/400",
+    "paddingTop": "Spacing/500",
+    "paddingRight": "Spacing/400",
+    "paddingBottom": "Spacing/500",
+    "topLeftRadius": "Radius/300",
+    "topRightRadius": "Radius/300",
+    "bottomLeftRadius": "Radius/300",
+    "bottomRightRadius": "Radius/300",
+    "fills": "Color/surface/primary",
+    "strokes": "Color/border/primary"
+   },
+   "variant": {
+    "Breakpoint": "Desktop"
+   },
+   "kids": [
+    {
+     "name": "Icon and text",
+     "type": "FRAME",
+     "w": 203,
+     "h": 48,
+     "sizing": [
+      "FILL",
+      "FIXED"
+     ],
+     "gap": 12,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "CENTER",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/300"
+     },
+     "kids": [
+      {
+       "name": "Featured icon",
+       "type": "INSTANCE",
+       "w": 48,
+       "h": 48,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 9999,
+       "dir": "HORIZONTAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "fill": [
+        "#EEF4FF"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/full",
+        "topRightRadius": "Radius/full",
+        "bottomLeftRadius": "Radius/full",
+        "bottomRightRadius": "Radius/full",
+        "fills": "Color/component/utility/info/50"
+       },
+       "variant": {
+        "Icon swap#2032:0": "522:18597",
+        "Color": "Info",
+        "Size": "md"
+       },
+       "component": "Featured icon [Color=Info, Size=md]",
+       "kids": [
+        {
+         "name": "info-24-300-round",
+         "type": "INSTANCE",
+         "w": 24,
+         "h": 24,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "justify": "MIN",
+         "align": "MIN",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "component": "info-24-300-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 24,
+           "h": 24,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 19,
+           "h": 19,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#6172F3"
+           ],
+           "sw": 0.02500000037252903,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/utility/info/500"
+           }
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 143,
+       "h": 24,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Label/02/letter-spacing",
+        "fontSize": "IBM/Label/02/font-size",
+        "fontFamily": "IBM/Label/02/font-family",
+        "paragraphSpacing": "IBM/Label/02/font-size",
+        "fontWeight": "IBM/Label/02/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 16,
+        "lh": null,
+        "ls": -0.20000000298023224
+       },
+       "text": "รออนุมัติ"
+      }
+     ]
+    },
+    {
+     "name": "Number",
+     "type": "TEXT",
+     "w": 203,
+     "h": 48,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
+     "fill": [
+      "#000000"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/primary",
+      "letterSpacing": "IBM/Headline/03/letter-spacing",
+      "fontSize": "IBM/Headline/03/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Headline/03/font-size",
+      "fontWeight": "IBM/Headline/03/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 32,
+      "lh": null
+     },
+     "text": "20"
+    }
+   ]
+  },
+  {
+   "name": "Breakpoint=Mobile",
+   "type": "COMPONENT",
+   "w": 156,
+   "h": 104,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "pl": 12,
+   "pr": 12,
+   "pt": 12,
+   "pb": 12,
+   "gap": 12,
+   "r": 12,
+   "dir": "VERTICAL",
+   "justify": "SPACE_BETWEEN",
+   "align": "MIN",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "vars": {
+    "paddingLeft": "Spacing/300",
+    "paddingTop": "Spacing/300",
+    "paddingRight": "Spacing/300",
+    "paddingBottom": "Spacing/300",
+    "topLeftRadius": "Radius/300",
+    "topRightRadius": "Radius/300",
+    "bottomLeftRadius": "Radius/300",
+    "bottomRightRadius": "Radius/300",
+    "fills": "Color/surface/primary",
+    "strokes": "Color/border/primary"
+   },
+   "variant": {
+    "Breakpoint": "Mobile"
+   },
+   "kids": [
+    {
+     "name": "Icon and text",
+     "type": "FRAME",
+     "w": 132,
+     "h": 44,
+     "sizing": [
+      "FILL",
+      "FIXED"
+     ],
+     "gap": 8,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "itemSpacing": "Spacing/200"
+     },
+     "kids": [
+      {
+       "name": "Text",
+       "type": "TEXT",
+       "w": 88,
+       "h": 21,
+       "sizing": [
+        "FILL",
+        "HUG"
+       ],
+       "fill": [
+        "#000000"
+       ],
+       "sw": 1,
+       "strokeAlign": "OUTSIDE",
+       "vars": {
+        "fills": "Color/text/primary",
+        "letterSpacing": "IBM/Label/03/letter-spacing",
+        "fontSize": "IBM/Label/03/font-size",
+        "fontFamily": "IBM/Label/03/font-family",
+        "paragraphSpacing": "IBM/Label/03/letter-spacing",
+        "fontWeight": "IBM/Label/03/font-weight"
+       },
+       "font": {
+        "fam": "IBM Plex Sans Thai",
+        "style": "SemiBold",
+        "size": 14,
+        "lh": null,
+        "ls": -0.20000000298023224
+       },
+       "text": "รออนุมัติ"
+      },
+      {
+       "name": "Featured icon",
+       "type": "INSTANCE",
+       "w": 36,
+       "h": 36,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 9999,
+       "dir": "HORIZONTAL",
+       "justify": "CENTER",
+       "align": "CENTER",
+       "fill": [
+        "#EEF4FF"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "topLeftRadius": "Radius/full",
+        "topRightRadius": "Radius/full",
+        "bottomLeftRadius": "Radius/full",
+        "bottomRightRadius": "Radius/full",
+        "fills": "Color/component/utility/info/50"
+       },
+       "variant": {
+        "Icon swap#2032:0": "522:18597",
+        "Color": "Info",
+        "Size": "sm"
+       },
+       "component": "Featured icon [Color=Info, Size=sm]",
+       "kids": [
+        {
+         "name": "info-24-300-round",
+         "type": "INSTANCE",
+         "w": 24,
+         "h": 24,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "justify": "MIN",
+         "align": "MIN",
+         "sw": 1,
+         "strokeAlign": "INSIDE",
+         "component": "info-24-300-round",
+         "kids": [
+          {
+           "name": "Bounding box",
+           "type": "RECTANGLE",
+           "w": 24,
+           "h": 24,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#D9D9D9"
+           ],
+           "sw": 1,
+           "strokeAlign": "INSIDE"
+          },
+          {
+           "name": "Vector",
+           "type": "VECTOR",
+           "w": 19,
+           "h": 19,
+           "sizing": [
+            "FIXED",
+            "FIXED"
+           ],
+           "r": 0,
+           "fill": [
+            "#6172F3"
+           ],
+           "sw": 0.02500000037252903,
+           "strokeAlign": "INSIDE",
+           "vars": {
+            "fills": "Color/component/utility/info/500"
+           }
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "Number",
+     "type": "TEXT",
+     "w": 132,
+     "h": 30,
+     "sizing": [
+      "FILL",
+      "HUG"
+     ],
+     "fill": [
+      "#000000"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/primary",
+      "letterSpacing": "IBM/Title/01/letter-spacing",
+      "fontSize": "IBM/Title/01/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Title/01/font-size",
+      "fontWeight": "IBM/Title/01/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 20,
+      "lh": null
+     },
+     "text": "20"
+    }
+   ]
+  }
+ ]
+}

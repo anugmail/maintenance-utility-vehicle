@@ -21,7 +21,6 @@ import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SecondaryDangerButton } from "@/components/vms/SecondaryDangerButton";
 import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { TertiaryBrandButton } from "@/components/vms/TertiaryBrandButton";
-import { TertiaryButton } from "@/components/vms/TertiaryButton";
 import { closeoutOf } from "@/lib/mock/closeout";
 import { PST } from "@/lib/mock/data";
 import { DELETE_CONFIRM, badgeOf, deletePlan, findPlan, planId, startEdit, useHydrated } from "@/lib/mock/planFlow";
@@ -56,9 +55,8 @@ function Detail() {
     <SecondaryButton Text="แก้ไข" LeadingIconSwap="stylus-24-300-round" Size={size} onClick={() => { startEdit(plan); router.push("/edit/?id=" + id + "&from=detail"); }} />
   </> : canSend ? <PrimaryButton Text="ส่งประวัติ" Size={size} onClick={() => router.push("/closeout/history/?id=" + id)} />
     : canReport ? <PrimaryButton Text="รายงานผลการบำรุงรักษา" Size={size} onClick={() => router.push("/closeout/report/?id=" + id)} /> : undefined;
-  /* ไปหน้าไตรมาส n (S6 ทางเข้า) · ความคืบหน้าอะไหล่ (S4) เฉพาะไตรมาสที่กำลังทำ */
+  /* ไปหน้าไตรมาส n (S6 ทางเข้า) · S4 เปลี่ยนเป็นแดชบอร์ดที่เข้าจากเมนู (/parts/ · 6 พ.ย. 2569) ไม่มีปุ่มที่นี่แล้ว */
   const qActions = kbk && (st === "approved" || st === "active") ? <div className="flex items-center gap-3">
-    {q === nowQ && <TertiaryButton Text="ความคืบหน้าอะไหล่" onClick={() => router.push("/quarter/parts/?id=" + id + "&q=" + q)} />}
     <TertiaryBrandButton Text={"ไปหน้าไตรมาส " + q} LeadingIconSwap="keyboard_arrow_right-20-400-round" onClick={() => router.push("/quarter/trips/?id=" + id + "&q=" + q)} />
   </div> : undefined;
 

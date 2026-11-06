@@ -93,6 +93,7 @@
 | _Step item base | (Component) VMS Plus | ✅ Progress steps (2:10) | 4 |
 | Mobile progress steps | (Component) VMS Plus | ✅ Progress steps (2:10) | 2 |
 | Step circles / 4 steps | (Component) VMS Plus | ✅ Progress steps (2:10) | 5 |
+| Metric item | (Component) VMS Plus | ✅ Metrics (2011:13829) | 2 |
 | ReceiptChecklist | Maintain-D | Design (0:1) | 4 |
 | HandoverSignature | Maintain-D | Design (0:1) | 3 |
 | Modal Signature | Maintain-D | Design (0:1) | 2 |
