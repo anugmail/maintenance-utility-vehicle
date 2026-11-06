@@ -18,6 +18,7 @@ import { DropdownMenu } from "@/components/vms/DropdownMenu";
 import { DropdownMenuItem } from "@/components/vms/DropdownMenuItem";
 import { EmptyStateDataEmpty } from "@/components/vms/EmptyStateDataEmpty";
 import { FeaturedIcon, type FeaturedIconColor } from "@/components/vms/FeaturedIcon";
+import { MetricItem } from "@/components/vms/MetricItem";
 import { HeaderNavigation } from "@/components/vms/HeaderNavigation";
 import { InputDropdown, type InputDropdownState } from "@/components/vms/InputDropdown";
 import { InputDropdownWithBadges, type InputDropdownWithBadgesState } from "@/components/vms/InputDropdownWithBadges";
@@ -118,6 +119,11 @@ export default function Kit() {
       </Block>
       <Block name="Featured icon" node="Featured icon (2861:54686)">
         {(["md", "sm"] as const).flatMap((sz) => (["Brand", "Gray", "Info", "Success", "Warning", "Error", "Disabled", "Purple"] as FeaturedIconColor[]).map((c) => <V key={c + sz} label={`Color=${c}, Size=${sz}`}><FeaturedIcon Color={c} Size={sz} /></V>))}
+      </Block>
+      <Block name="Metric item" node="Metrics (2011:13829)">
+        <V label="Breakpoint=Desktop" wide><MetricItem Breakpoint="Desktop" Number="20" Text="รออนุมัติ" className="w-[235px]" /></V>
+        <V label="Breakpoint=Mobile"><MetricItem Breakpoint="Mobile" Number="20" Text="รออนุมัติ" className="w-[156px]" /></V>
+        <V label="S4 Featured icon Color=Success"><MetricItem Breakpoint="Desktop" Number="4/30" Text="ยานพาหนะบำรุงรักษาแล้ว" FeaturedIconColor="Success" className="w-[235px]" /></V>
       </Block>
 
       <Block name="Input label" node="Inputs (2:6)">

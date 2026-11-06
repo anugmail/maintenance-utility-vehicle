@@ -14,10 +14,9 @@ import { useBreakpoint } from "@/lib/useBreakpoint";
 export const MENU_HOME = "บำรุงรักษาตามวาระ";
 /* หน้ารายละเอียดแผน (batch A) — ทางเข้า S4 และ S15 อยู่ที่หน้านั้น · รากเว็บไม่มี /plans/ (CLAUDE.md ข้อ 10) */
 export const planDetailHref = (id: string) => "/detail/?id=" + id;
-/* หน้า "ไตรมาส n" = หน้าแผนเดินทางของไตรมาส (/quarter/trips/ · รีวิว 5 พ.ย. 2569 "หน้านี้คือหน้า ไตรมาส 1") · S4 ความคืบหน้าอะไหล่อยู่ใต้หน้านี้ */
+/* หน้า "ไตรมาส n" = หน้าแผนเดินทางของไตรมาส (/quarter/trips/ · รีวิว 5 พ.ย. 2569 "หน้านี้คือหน้า ไตรมาส 1") · S4 เป็นแดชบอร์ด /parts/ แล้ว (6 พ.ย. 2569) */
 export const tripsHref = (id: string, q: number) => "/quarter/trips/?id=" + id + "&q=" + q;
 export const quarterHref = tripsHref;
-export const partsHref = (id: string, q: number) => "/quarter/parts/?id=" + id + "&q=" + q;
 /* Breadcrumbs ใต้หน้าไตรมาส (pageHead ใน core.js · 5 พ.ย. 2569): บำรุงรักษาตามวาระ › <ชื่อแผน> › ไตรมาส n [› ต่อท้าย]
    ชื่อแผน → หน้ารายละเอียดแผน · ไตรมาส n → หน้าไตรมาส (หน้าปัจจุบันไม่มีลิงก์) */
 export const quarterCrumbs = (id: string, planName: string, q: number, ...more: string[]): Crumb[] => [

@@ -341,3 +341,19 @@ screens.js ไม่ได้วาดปุ่มไปขั้นถัดไ
 | ตัวกรองรายการแผน | `FilterShell` ตัวเดียวกับฟอร์มแผน + Input dropdown with badges (Optional) ×2 เขต · หน่วยงานหน้างาน · ชิป Badge outline with remove icon ใต้แถวค้นหา | listScreen o.filter ใน screens.js · ไม่พบ = Empty state/Search not found + ล้างตัวกรอง (แบบฟอร์มแผน) |
 | ตารางอะไหล่รวม (R81) | `QPART_COLS` + `qpartRow` ใน `src/lib/mock/plan.ts` ชุดเดียว ใช้ที่อะไหล่ในไตรมาส n (S1 S19) และอะไหล่ในแผน (S2) · S4 ใช้ต่อได้ | QPART_COLS ของ screens.js "เพิ่ม/ลดคอลัมน์ที่นี่ที่เดียว" |
 | คำว่ายานพาหนะ (R80) | ข้อความทุกตัวใน `src/` (รวมข้อความตั้งต้นของ component ที่ยืมจากงานซ่อมและเมนู Sidebar) · ตรวจด้วย `npm run check-wording` | toVehicleWord / AFTER_SCREEN ของ screens.js เปลี่ยนข้อความตั้งต้นของ component ในจอเช่นกัน · ALLOW เพิ่ม "อะไรถ" (อะไร + ถูก) ในข้อความโหมดพาดู |
+
+## ป. S4 แดชบอร์ดอะไหล่ของแผนที่อนุมัติแล้ว (`/parts/` · BACKLOG ข้อ 22 · Figma 6 พ.ย. 2569 บล็อก C)
+
+ที่มา: `partsDash()` `metricRow()` `exportModal()` `dashPdf()` `dashXls()` ใน screens.js · โครงตาม MA Dashboard - Default ของหน้า "MA Overview" ใน UI Release#2 · ปุ่มส่งออกแบบปุ่มรายงานของ Vehicle list (5.2)
+
+| ส่วน | ประกอบจาก | เหตุผล |
+|---|---|---|
+| `vms/MetricItem` (ใหม่) | Metric item ของไลบรารี (Metrics 2011:13829 · `figma-spec/Metric item.json` เพิ่มใน components.json แล้วรัน `npm run figma-spec`) + Featured icon ที่ซ้อนอยู่ | component จริงของไลบรารี ไม่ได้ประกอบเอง · สี Featured icon ตั้งผ่าน prop `FeaturedIconColor` แบบ `metric()` ที่ setProps ของ instance ซ้อน (Brand 3 ใบ · Success ใบสุดท้าย) · ไอคอนคงค่าตั้งต้น info · ความสูง 156/104 ใช้เป็นค่าต่ำสุด (ข้อความยาวบนมือถือขึ้น 2 บรรทัดได้) |
+| แถว Metric (`parts/_lib/ui` Metrics) | Metric item 4 ใบ | metricRow(): desktop แถวเดียว ช่องไฟ 24 กว้างเท่ากัน · มือถือ 2 ใบต่อแถว ช่องไฟ 12 |
+| ตารางเรียงได้ (`parts/_lib/ui` SortTable) | Table header cell (Sort icon · กดได้) + Table cell + Table pagination · มือถือ Mobile table | `vms/Table` ไม่รับ onSort ⇒ ประกอบแบบ MaTable ของ S24 (ไม่แก้ component กลาง) · Sort icon ตั้งต้นตามจอ: คอลัมน์แรก Down ที่เหลือ Swap (sortAll) · กดคอลัมน์ = Down (น้อยไปมาก ก–ฮ) กดซ้ำ = Up · ตั้งต้นลำดับตามข้อมูลของจอ · มือถือไม่มีหัวคอลัมน์ให้กด (Mobile table ไม่มี Sort icon) |
+| ปุ่มส่งออก | Secondary button ไอคอน download-24-300-round ใน Actions ของ Table header ต่อจาก "ตัวกรอง" | tableHeader `more: [{ text: 'ส่งออก', icon: 'download-24-300-round' }]` · มือถือ Size=lg ครึ่งแถวคู่ปุ่มตัวกรอง |
+| popup ส่งออก | `patterns/PopupModal` (Modal header Left "ส่งออกรายงาน" + บรรทัดรอง) + 2 ชุด Section label + Radio text card (radioPick label) · มือถือ Bottom sheet (ไม่มีบรรทัดรองแบบ `sheet()`) | exportModal ของ S18 Overhaul (R32) · ตั้งต้น PDF + ตามตัวกรองที่ใช้อยู่ · บรรทัดรองนับจากแถวที่เห็นอยู่ / ทั้งหมดของแท็บ |
+| ไฟล์ที่ส่งออก (`parts/_lib/exportFile.ts`) | ไม่มี component (ไม่ใช่จอของระบบ) | ต้นแบบไม่มีเซิร์ฟเวอร์ ⇒ Excel = ดาวน์โหลด .csv (UTF-8 BOM) ของแท็บที่เปิดอยู่ · PDF = เปิดหน้าพิมพ์ในแท็บใหม่ (หัวเอกสาร หน่วยงานที่ออกเอกสาร · ตัวกรอง · พิมพ์เมื่อ · ผู้พิมพ์ แบบ DOC_HEAD + ตาราง) แล้วเรียกพิมพ์ · คอลัมน์ = คอลัมน์บนจอ ตัดช่อง › · **รอเคาะ** การ์ดบอก ".xlsx แยกชีตตามหัวข้อ" แต่ต้นแบบได้ .csv ชีตเดียว |
+| แผงตัวกรอง | `FilterShell` ของ S24 + Input dropdown (ปีงบประมาณ) + Input dropdown with badges ×3 (หน่วยงานผู้ขอเบิก · เขต · แผน — รายการแผน = เลขที่ MR + บรรทัดรองชื่อแผน แบบ comboAt) | filterPanel ของ partsDash · ชิปตัวกรอง = ค่าที่เลือก (ปี · หน่วยงาน · เขต · เลขที่ MR) · ปีงบประมาณตั้งต้นว่าง (จอ C.3 แสดง 2570 ที่เลือกแล้ว) |
+| เมนูย่อย "อะไหล่ของแผนที่อนุมัติแล้ว" ใน Sidebar | Nav list item ต่อจาก "บำรุงรักษาตามวาระ" (Active ที่ `/parts/`) | เจ้าของงาน "เข้าจากเมนู" · Sidebar Navigation ของ UI Release#2 ไม่มีเมนูนี้ · ชื่อเมนู = หัวหน้าของจอ · **รอเคาะชื่อและตำแหน่งเมนู** |
+| หัวคอลัมน์ที่ยาวกว่าช่อง | Table header cell (truncate) | กว้างคอลัมน์ตามจอ (แผนเดินทาง 120 · ยานพาหนะบำรุงรักษาแล้ว 200) + Sort icon ⇒ หัวคอลัมน์ถูกตัด "…" บน desktop 1440 · คงค่าตามจอ ไม่ขยายเอง |

@@ -9,13 +9,13 @@
        — เจ้าของงาน 5 พ.ย. 2569 _"เอาตรงที่เป็น hambuger ออก … อันนี้บนเว็บนะ"_ (ต่างจาก R1 ของปลั๊กอินที่ให้ desktop ใช้ Tablet · COMPOSED.md)
    Mobile (402 · < 768): ไม่มี Sidebar · ปุ่ม menu ของ Header navigation Breakpoint=Mobile เปิด Sidebar navigation State=Expanded จากซ้าย ทับ Background overlay (ประกอบ — ดู figma-spec/COMPOSED.md)
      Page ขอบใน 16 ช่องไฟ 24
-   เมนูที่ Active ใน Sidebar: "พาดูทีละเรื่อง" ที่ /guide/ และหน้าเรื่อง /scenarios/guide/ ที่เปิดจากเมนูนั้น (from=menu) · หน้าอื่น "บำรุงรักษาตามวาระ"
+   เมนูที่ Active ใน Sidebar: "พาดูทีละเรื่อง" ที่ /guide/ และหน้าเรื่อง /scenarios/guide/ ที่เปิดจากเมนูนั้น (from=menu) · "อะไหล่ของแผนที่อนุมัติแล้ว" ที่ /parts/ (S4) · หน้าอื่น "บำรุงรักษาตามวาระ"
    บนสุดมีแถบต้นแบบ (PrototypeBar) · toast ผ่าน ToastHost */
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { BackgroundOverlay } from "@/components/vms/BackgroundOverlay";
 import { HeaderNavigation } from "@/components/vms/HeaderNavigation";
-import { GUIDE_LABEL, MT_LABEL, SidebarNavigation } from "@/components/vms/SidebarNavigation";
+import { GUIDE_LABEL, MT_LABEL, PARTS_LABEL, SidebarNavigation } from "@/components/vms/SidebarNavigation";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useOutside } from "@/lib/useOutside";
 import { GuideBar } from "@/components/guide/GuideBar";
@@ -44,7 +44,7 @@ export function AppFrame({ children, bell }: { children: ReactNode; bell?: boole
   const path = (usePathname() || "/").replace(/\/$/, "");
   const [fromMenu, setFromMenu] = useState(false);
   useEffect(() => { setFromMenu(new URLSearchParams(window.location.search).get("from") === "menu"); }, [path]);
-  const sideActive = path === "/guide" || (path.startsWith("/scenarios/guide") && fromMenu) ? GUIDE_LABEL : MT_LABEL;
+  const sideActive = path === "/guide" || (path.startsWith("/scenarios/guide") && fromMenu) ? GUIDE_LABEL : path === "/parts" ? PARTS_LABEL : MT_LABEL;
 
   const expanded = pinned || hover;
   return (

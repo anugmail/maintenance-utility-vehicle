@@ -31,6 +31,7 @@ import { Table, type TableColumn } from "@/components/vms/Table";
 | `BadgeOutline` | Badge outline · Badge 2:13 | `Text` `Color` (Brand/Gray/Disabled/Success/Error) |
 | `BadgeOutlineWithRemoveIcon` | Badge outline with remove icon · Badge 2:13 | `Text` `Color` (Brand/Gray/Disabled) `onRemove` |
 | `FeaturedIcon` | Featured icon · 2861:54686 | `Color` (รวม Purple) `Size` (md/sm) `IconSwap` |
+| `MetricItem` | Metric item · Metrics 2011:13829 (S4 แดชบอร์ด 6 พ.ย. 2569) | `Breakpoint` `Number` `Text` `FeaturedIconColor` `IconSwap` (Featured icon ที่ซ้อนอยู่) |
 | `InputLabel` | Input label · Inputs 2:6 | `LabelText` `Optional` `InfoIcon` `Button` |
 | `TextInput` | Text input · Inputs 2:6 | `State` (10 ค่า) `Size` `Label` `LabelText` `Optional` `Text` `Placeholder` `LeadingIconSwap` `TrailingIconSwap` `HelperText` `onChange(v)` |
 | `InputDropdown` | Input dropdown · Dropdowns 2:8 | `State` `Size` `LabelText` `Text` `Placeholder` `SupportingText` `HelperText` `open` `onOpenChange` · children = `DropdownList` |

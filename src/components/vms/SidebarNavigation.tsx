@@ -26,6 +26,8 @@ export interface SideFooter { IconSwap: string; Text: string; SupportingText?: s
 export const MT_LABEL = "บำรุงรักษาตามวาระ";
 /** เมนูย่อยของต้นแบบ: เมนูพาดูทีละเรื่อง /guide/ (ต่อจาก บำรุงรักษาตามวาระ) */
 export const GUIDE_LABEL = "พาดูทีละเรื่อง";
+/** เมนูย่อย: แดชบอร์ดอะไหล่ของแผนที่อนุมัติแล้ว /parts/ (S4 · 6 พ.ย. 2569 "เข้าจากเมนู" · ชื่อ = หัวหน้าของจอ partsDash · ไม่มีใน Sidebar Navigation ของ UI Release#2 — COMPOSED.md บ.) */
+export const PARTS_LABEL = "อะไหล่ของแผนที่อนุมัติแล้ว";
 
 export const SIDEBAR_MENU: SideGroup[] = [
   { IconSwap: "home-24-300-round", Text: "หน้าหลัก" },
@@ -33,7 +35,7 @@ export const SIDEBAR_MENU: SideGroup[] = [
   { IconSwap: "traffic_jam-24-300-round", Text: "จัดการคำขอใช้ยานพาหนะ", items: [{ Text: "ตรวจสอบและจัดการคำขอ" }, { Text: "อนุมัติใช้ยานพาหนะ" }] },
   { IconSwap: "database-24-300-round", Text: "ข้อมูลพนักงานและยานพาหนะ", items: [{ Text: "ผู้ดูแลยานพาหนะ" }, { Text: "ข้อมูลพนักงานขับยานพาหนะ" }, { Text: "ข้อมูลยานพาหนะ" }, { Text: "กลุ่มยานพาหนะ" }, { Text: "บริหารสัญญา" }] },
   { IconSwap: "ev_station", Text: "การอัดประจุไฟฟ้า", items: [{ Text: "สถานีอัดประจุไฟฟ้า" }, { Text: "อัตราค่าไฟฟ้า" }, { Text: "ค่าใช้จ่ายอัดประจุยานพาหนะ" }, { Text: "บันทึกการอัดประจุ Wall Charger" }, { Text: "ต้นทุนและค่าใช้จ่ายในการอัดประจุ" }] },
-  { IconSwap: "build", Text: "งานซ่อมและบำรุงรักษา", items: [{ Text: "ภาพรวมการซ่อมบำรุง" }, { Text: "ตารางบำรุงรักษา" }, { Text: "นัดหมายบำรุงรักษา" }, { Text: "งานซ่อม" }, { Text: "ยานพาหนะทดแทน" }, { Text: MT_LABEL, href: "/" }, { Text: GUIDE_LABEL, href: "/guide/" }] },
+  { IconSwap: "build", Text: "งานซ่อมและบำรุงรักษา", items: [{ Text: "ภาพรวมการซ่อมบำรุง" }, { Text: "ตารางบำรุงรักษา" }, { Text: "นัดหมายบำรุงรักษา" }, { Text: "งานซ่อม" }, { Text: "ยานพาหนะทดแทน" }, { Text: MT_LABEL, href: "/" }, { Text: PARTS_LABEL, href: "/parts/" }, { Text: GUIDE_LABEL, href: "/guide/" }] },
   { IconSwap: "e911_emergency", Text: "จัดการเหตุการณ์", items: [{ Text: "จัดการเหตุยานพาหนะเสีย" }, { Text: "จัดการเหตุอุบัติเหตุ" }] },
   { IconSwap: "news", Text: "รายงาน" },
 ];
