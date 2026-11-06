@@ -41,7 +41,7 @@ const match = (c: MaCar, f: string[]) =>
 
 /* ?sample=S24 (ของต้นแบบ) — งานรายคันชุด T1_afterClose ของ S10 (82-6789 ปิดงานแล้ว 04/11/2569 รอผลตรวจน้ำมัน) + เอกสาร Safety Inspection ตอนปิดงาน (SAFETY_FILES[0] ของ screens.js) */
 const SAMPLES: SampleMap = {
-  S24: { role: "กบค.", apply: () => { applySample("T1_afterClose"); patchJob("T1", "82-6789", (j) => ({ ...j, safety: { files: [{ name: "Safety-Inspection-82-6789.pdf", size: "1.2 MB", bar: true }] } })); } },
+  S24: { role: "หน่วยงาน (กกฟ.1)", apply: () => { applySample("T1_afterClose"); patchJob("T1", "82-6789", (j) => ({ ...j, safety: { files: [{ name: "Safety-Inspection-82-6789.pdf", size: "1.2 MB", bar: true }] } })); } },
 };
 
 const maRow = (c: MaCar, open: (e: React.MouseEvent<HTMLButtonElement>) => void, view: () => void): MaValue[] => {

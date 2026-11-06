@@ -19,7 +19,7 @@ import { SectionHeader } from "@/components/vms/SectionHeader";
 import { SectionLabel } from "@/components/vms/SectionLabel";
 import type { TableColumn } from "@/components/vms/Table";
 import {
-  addJobPart, cannotJob, deleteJobPart, editPartUsed, ODOMETER, OIL_DEFAULT, patchJob, plannedOil, startJob, thaiNow, tripLoc, tripPhone, tripRange, WORK, workShown, WSTAT,
+  addJobPart, cannotJob, deleteJobPart, editPartUsed, ODOMETER, OIL_DEFAULT, patchJob, plannedOil, startJob, thaiNow, tripCtrl, tripLoc, tripPhone, tripRange, WORK, workShown, WSTAT,
   type Job, type JobTrip, type PlanPart, type TripCar,
 } from "@/lib/mock/jobs";
 import { notify, useMock } from "@/lib/mock/store";
@@ -33,10 +33,10 @@ export const vehiclePairs = (t: JobTrip, c: TripCar): [string, string][] => {
   const [km, hr] = ODOMETER;
   return [["ทะเบียน", c.plate], ["ยี่ห้อ/รุ่น", c.model], ["ประเภท", c.type], ["หน่วยงานเจ้าของรถ", c.owner], ["เลขไมล์สะสม", km], ["ชั่วโมงเครื่องจักรสะสม", hr]];
 };
-/* กล่อง "การนัดหมาย" — ตรวจเอง: แผนเดินทาง ช่วงวันเดินทาง · จ้าง: แผนเดินทาง ผู้รับจ้าง ช่วงวันทำงาน · + สถานที่ เบอร์ (+ เริ่มงาน ผู้เริ่มงาน = กบค. ทั้งสองแบบ) */
+/* กล่อง "การนัดหมาย" — ตรวจเอง: แผนเดินทาง ช่วงวันเดินทาง · จ้าง: แผนเดินทาง ผู้รับจ้าง ช่วงวันทำงาน · + สถานที่ ผู้ดูแลยานพาหนะ เบอร์ (+ เริ่มงาน ผู้เริ่มงาน = กบค. ทั้งสองแบบ) */
 export const appointmentPairs = (t: JobTrip, c: TripCar, j?: Job): [string, string][] => [
   ...((t.mode === "hire" ? [["แผนเดินทาง", t.name], ["ผู้รับจ้าง", t.vendor ?? "-"], ["ช่วงวันทำงาน", tripRange(t)]] : [["แผนเดินทาง", t.name], ["ช่วงวันเดินทาง", tripRange(t)]]) as [string, string][]),
-  ["สถานที่บำรุงรักษา", tripLoc(t, c)], ["เบอร์ติดต่อ", tripPhone(t, c)],
+  ["สถานที่บำรุงรักษา", tripLoc(t, c)], ["ผู้ดูแลยานพาหนะ", tripCtrl(t, c)], ["เบอร์ติดต่อ", tripPhone(t, c)],   // jobBoxes 6 พ.ย. 2569
   ...((j?.status === "doing" ? [["เริ่มงาน", j.startedAt ?? "-"], ["ผู้เริ่มงาน", j.startedBy ?? "-"]] : []) as [string, string][]),
 ];
 /* ใช้ไปแล้วตอนแจ้งบำรุงรักษาไม่ได้ระหว่างบำรุงรักษา — ตัวอย่างจอ I.16 (CANNOT_USED: น้ำมัน 30 ไส้กรองไฮโดรลิก 2) · ยังไม่เริ่ม = 0 */

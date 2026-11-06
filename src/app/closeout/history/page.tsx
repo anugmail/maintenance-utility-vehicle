@@ -30,7 +30,7 @@ function History() {
   const router = useRouter();
   const sp = useSearchParams();
   const mock = useMock();
-  const kbk = useRole() === "กบค.";
+  const kbk = useRole() === "หน่วยงาน (กกฟ.1)";
   const id = sp.get("id") ?? "Z7000001";
   const plan = planOf(mock, id);
   const c = closeoutOf(mock, id);

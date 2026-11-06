@@ -43,6 +43,8 @@ export interface Plan {
   approvedAt?: string;      // วันที่อนุมัติ (S2)
   returnReason?: string;    // เหตุผลที่ส่งกลับ (S2 → S19)
   ack?: Record<number, string>;   // ไตรมาสที่คลังรับทราบแล้ว → วันที่ (S22) · ไม่มี = ใช้ค่าตัวอย่าง WH_ACK / WH_LIST
+  /* S21 การเบิกอะไหล่รายคัน (A_DRAW · 6 พ.ย. 2569): ลำดับรถ → "none" = ไม่เบิกอะไหล่ · ไม่มี = เบิก (ถ้ามีรายการ) / ยังไม่กำหนด */
+  draw?: Record<number, "none">;
 }
 
 /* ManualPart — อะไหล่ที่ กบค. ระบุเอง (S21 · MANUAL + MANUAL_FIELDS ของ screens.js 5 พ.ย. 2569: ชื่อ · ยี่ห้อ · รุ่น · รหัส (ถ้ามี) · จำนวน · หน่วย)
@@ -118,7 +120,21 @@ const fillCars = (seed: Car[]): Car[] => VEHICLE_TYPES.flatMap((type, t) => REGI
     return { plate: [60, 70, 90][t] + r + "-" + no + " " + prov, model: MODELS[type][k % MODELS[type].length], owner: d + " " + prov, status: k % 9 === 4 ? "repair" : "ok", type };
   });
 }));
-export const CAND: Car[] = [...CAND_SEED, ...fillCars(CAND_SEED)];
+/* CAND_LATE — รถที่ screens.js ต่อท้าย CAND 5 พ.ย. 2569 (80-5738 น่าน · 81-2210 เชียงใหม่ · 82-9012 ขอนแก่น เครน) · ต่อท้ายสุดของ CAND ลำดับเดิมไม่เลื่อน */
+const CAND_LATE: Car[] = [
+  { plate: "80-5738 น่าน", model: "Isuzu FRR + กระเช้า Aichi SK10A", owner: "กฟน.2 น่าน", status: "repair", type: "รถกระเช้า" },
+  { plate: "81-2210 เชียงใหม่", model: "Hino FG + กระเช้า Tadano AT-146", owner: "กฟน.1 เชียงใหม่", status: "ok", type: "รถกระเช้า" },
+  { plate: "82-9012 ขอนแก่น", model: "Hino FM + เครน Tadano TM-ZE", owner: "กฟฉ.2 ขอนแก่น", status: "ok", type: "รถเครน" },
+];
+const GENERATED = fillCars(CAND_SEED);
+export const CAND: Car[] = [...CAND_SEED, ...GENERATED, ...CAND_LATE];
+/* UNIT_FLEET — รถทุกคันของหน่วยงานผู้สร้างแผน (FLEET = CAND ของ screens.js 10 คัน · 6 พ.ย. 2569 เจ้าของงาน "ต้องเอารถเข้า ไตรมาสทุกคัน")
+   ลำดับใน CAND ตามลำดับ CAND ของ screens.js: CAND_SEED 7 คัน + CAND_LATE 3 คัน · ฟอร์มสร้างแผนเห็นและต้องจัดรถชุดนี้ทุกคัน (รถจำลองเพิ่ม 20 คันต่อประเภทไม่อยู่ในหน่วยงาน — BACKLOG ข้อ 21) */
+export const UNIT_FLEET: number[] = [...CAND_SEED.map((_, i) => i), ...CAND_LATE.map((_, k) => CAND_SEED.length + GENERATED.length + k)];
+/* หน่วยงานที่ใช้ flow นี้ (UNITS · PLAN_UNIT ของ screens.js 6 พ.ย. 2569 · ค่าสมมติ) — ผู้สร้างแผนและผู้ดำเนินการ = หน่วยงาน · กบค. ดูแผนทุกหน่วยงานอย่างเดียว */
+export const UNITS = ["กกฟ.1", "กกฟ.2", "กรย."];
+export const PLAN_UNIT: Record<string, string> = { "MR Z7000004": "กกฟ.1", "MR Z7000001": "กกฟ.1", "MR Z7000002": "กกฟ.2", "MR Z7000003": "กรย.", "MR Z7100001": "กกฟ.2", "MR Z6900011": "กรย." };
+export const unitOf = (mr: string) => PLAN_UNIT[mr] ?? UNITS[0];
 /* dCode — รหัสเขตของรถ จากหน่วยงานเจ้าของรถ */
 export const dCode = (c: Car) => c.owner.split(" ")[0];
 /* regionOf · shortRegion · uniq (screens.js 5 พ.ย. 2569) — ภาคของรถจากรหัสเขต · "ภาค 2 (ตะวันออกเฉียงเหนือ)" → "ภาค 2" */
@@ -129,11 +145,12 @@ export const uniq = <T,>(a: T[]) => [...new Set(a)];
 /* LAST_OIL — เปลี่ยนน้ำมันครั้งล่าสุดตามลำดับ CAND · OIL_OPTS */
 const LAST_OIL_SEED = ["12/03/2568", "12/03/2567", "05/02/2567", "20/11/2566", "ไม่มีข้อมูล", "18/06/2568", "09/01/2566"];
 /* รถจำลองเพิ่ม: วันที่วนปี 2566–2568 · ทุก 11 คันไม่มีข้อมูล */
-export const LAST_OIL = [...LAST_OIL_SEED, ...CAND.slice(LAST_OIL_SEED.length).map((_, k) => k % 11 === 5 ? "ไม่มีข้อมูล"
-  : String(1 + (k * 7) % 28).padStart(2, "0") + "/" + String(1 + (k * 5) % 12).padStart(2, "0") + "/" + (2566 + (k % 3)))];
+export const LAST_OIL = [...LAST_OIL_SEED, ...GENERATED.map((_, k) => k % 11 === 5 ? "ไม่มีข้อมูล"
+  : String(1 + (k * 7) % 28).padStart(2, "0") + "/" + String(1 + (k * 5) % 12).padStart(2, "0") + "/" + (2566 + (k % 3))), "14/10/2568", "ไม่มีข้อมูล", "ไม่มีข้อมูล"];   // CAND_LATE ตาม LAST_OIL ของ screens.js
 export const OIL_OPTS = ["เก็บตัวอย่าง", "เปลี่ยนน้ำมัน"];
 
-export const QUARTERS = ["ไตรมาส 1 (ต.ค.–ธ.ค.)", "ไตรมาส 2 (ม.ค.–มี.ค.)", "ไตรมาส 3 (เม.ย.–มิ.ย.)", "ไตรมาส 4 (ก.ค.–ก.ย.)"];
+/* 6 พ.ย. 2569 เจ้าของงาน "ไตรเป็นตามปีปฎิทิน" (เดิมไตรมาส 1 = ต.ค.–ธ.ค. ตามปีงบ) · ป้ายช่อง "ปีงบประมาณ" คงเดิม */
+export const QUARTERS = ["ไตรมาส 1 (ม.ค.–มี.ค.)", "ไตรมาส 2 (เม.ย.–มิ.ย.)", "ไตรมาส 3 (ก.ค.–ก.ย.)", "ไตรมาส 4 (ต.ค.–ธ.ค.)"];
 /* YEARS — เจ้าของงาน "ไม่จำกัดปี" จำนวนปีที่แสดงยังไม่รู้ (Q31) */
 export const YEARS = ["2568", "2569", "2570", "2571", "2572"];
 
@@ -156,8 +173,8 @@ export const PART_PRICE = [120, 680, 250, 420, 350];
 
 /* RETURN_REASON — เหตุผลที่ผู้อนุมัติส่งกลับ (S2 B.7 · S19 R.2 R.3) */
 export const RETURN_REASON = "จำนวนไส้กรองไฮโดรลิกไม่ตรงกับรอบบำรุงรักษาของรถกระเช้า กรุณาตรวจสอบรถที่เลือกเข้าแผน";
-/* ผู้สร้างแผน — ช่อง "ผู้สร้างแผน" ของรายละเอียดแผน · "ผู้สร้าง (กบค.)" ของรายการแผนรออนุมัติ */
-export const PLAN_CREATOR = "นายวิชัย ทองดี (กบค.)";
+/* ผู้สร้างแผน (CREATOR · 6 พ.ย. 2569 ผู้สร้างแผน = หน่วยงาน) — ช่อง "ผู้สร้างแผน" ของรายละเอียดแผน · "ผู้สร้าง" + บรรทัดรองหน่วยงาน ของรายการแผนรออนุมัติ */
+export const PLAN_CREATOR = "นายวิชัย ทองดี (กกฟ.1)";
 export const PLAN_CREATOR_SHORT = "นายวิชัย ทองดี";
 
 /* WH_LIST — แถวตัวอย่างของหน้า "แผนที่ต้องเตรียมอะไหล่" (S22 U.1 · whRow ใน screens.js) สำหรับแผนที่ไม่มีข้อมูลรับทราบจริง: วันที่อนุมัติ · จำนวนไตรมาสที่รับทราบ

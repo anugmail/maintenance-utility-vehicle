@@ -9,6 +9,7 @@ import { cx } from "@/lib/cx";
 import { Checkbox } from "./Checkbox";
 import { PillOutline, type PillColor } from "./PillOutline";
 import { TertiaryButton } from "./TertiaryButton";
+import { linkPlate } from "@/components/patterns/PlateLink";
 
 export type TableCellStyle = "Text" | "Lead text" | "Badge" | "Action icons" | "Multiple badges" | "Lead checkbox";
 
@@ -41,7 +42,7 @@ export function TableCell({ Style = "Text", AlternatingFills, Text, SupportingTe
         {Style === "Action icons" && (Actions ?? []).map((a) => <TertiaryButton key={a.label} LeadingIconSwap={a.IconSwap} ButtonText={false} aria-label={a.label} title={a.label} onClick={a.onClick} />)}
         {(Style === "Text" || Style === "Lead text" || Style === "Lead checkbox") && (
           <div className="flex min-w-0 flex-col">
-            <span className={cx("text-sm text-black", Style === "Lead text" && "font-medium")}>{Text}</span>
+            <span className={cx("text-sm text-black", Style === "Lead text" && "font-medium")}>{linkPlate(Text)}</span>
             {SupportingText && <span className="text-xs text-gray-600">{SupportingText}</span>}
           </div>
         )}

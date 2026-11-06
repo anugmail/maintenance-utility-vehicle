@@ -58,7 +58,7 @@ export function useTripCar() {
   const car = trip && trip.carIds.includes(carId) ? carOf(carId) : undefined;
   const job = trip && car ? getJob(s, trip.id, car.id) : undefined;
   /* ทำงานในหน้างานได้: กบค. ทั้งแผนตรวจเอง และแผนจ้าง (กบค. บันทึกแทนผู้รับจ้าง 4 พ.ย. 2569) · บทบาทอื่นดูอย่างเดียว */
-  const kbk = role === "กบค.";
+  const kbk = role === "หน่วยงาน (กกฟ.1)";
   return { s, sp, role, trip, car, job, actor: !!trip && kbk, kbk };
 }
 

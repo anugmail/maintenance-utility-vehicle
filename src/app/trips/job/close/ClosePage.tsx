@@ -126,7 +126,7 @@ export function ClosePage() {
   const costRow = (r: CostRow, i: number) => {
     const k = "staff" + i, kd = "days" + i;
     const kids = [
-      <InputDropdown key="n" LabelText="พนักงาน กบค. ซ่อม" Text={open === k ? query : r.name ?? ""} Placeholder="ค้นหาชื่อ-นามสกุล, รหัสพนักงาน" LeadingIconSwap="search-24-300-round"
+      <InputDropdown key="n" LabelText="พนักงาน" Text={open === k ? query : r.name ?? ""} Placeholder="ค้นหาชื่อ-นามสกุล, รหัสพนักงาน" LeadingIconSwap="search-24-300-round"
         open={open === k} onOpenChange={toggle(k)} onQuery={setQuery}>
         <DropdownList emptyText="ไม่พบข้อมูล">
           {staffOptions.filter((o) => !query || o.includes(query)).map((o) => <DropdownListItem key={o} Text={o} State={o === r.name ? "Selected" : "Default"} onClick={() => { setCost(i, { name: o }); setOpen(""); }} />)}

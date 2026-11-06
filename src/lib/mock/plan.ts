@@ -1,5 +1,5 @@
 /* ตัวช่วยของแผน — ยกจาก screens.js (qCell · whCell · planRow · quarterParts) + เลขที่ MR ตามเงื่อนไข S1 */
-import { CAND, CAR_QTY, PARTS, PST, REGIONS, VEHICLE_TYPES, WH_ACK, dCode, regionOf, shortRegion, type ManualPart, type OilSpec, type Plan } from "./data";
+import { CAND, CAR_QTY, PARTS, PST, REGIONS, UNIT_FLEET, VEHICLE_TYPES, WH_ACK, dCode, regionOf, shortRegion, unitOf, type ManualPart, type OilSpec, type Plan } from "./data";
 import type { TableValue } from "@/components/vms/Table";
 
 /* ฟอร์มสร้างแผน (planForm) */
@@ -16,6 +16,7 @@ export interface Draft {
   manual?: Record<number, ManualPart[]>;          // S21 รายการเพิ่มเติม
   oils?: Record<number, number>;                  // S21 น้ำมันไฮโดรลิกรายคัน (OIL_PLAN_OPTS)
   oilSpec?: Record<number, OilSpec>;              // S21 เบอร์ รหัส ลิตร
+  draw?: Record<number, "none">;                  // S21 การเบิกอะไหล่ (6 พ.ย. 2569): "none" = ไม่เบิกอะไหล่
   editOf?: string;                    // S19 ฟอร์มแก้ไข: เลขที่ MR ของแผนที่แก้
 }
 export const emptyDraft = (): Draft => ({ name: "", year: "", regions: [], districts: [], types: [], alloc: {}, picks: {}, q: 0 });
@@ -50,8 +51,9 @@ export const planScope = (p: Plan): [string, string] => {
   return PLAN_SCOPE[p.mr] ?? [p.region.split(", ").map(shortRegion).join(", "), p.type];
 };
 export const scopeCell = (p: Plan) => { const [text, sub] = planScope(p); return { text: text || "-", sub }; };
-export const planRow = (p: Plan, menu: TableValue): TableValue[] =>
-  [p.mr, { text: p.name, sub: "ปีงบประมาณ " + p.year }, scopeCell(p), String(p.cars), qCell(p.perQ), whCell(p), { pills: [PST[p.status]] }, menu];
+/* view = กบค. ดูแผนทุกหน่วยงาน (planRow(p, view) ของ screens.js 6 พ.ย. 2569): หน่วยงานเจ้าของแผนเป็นบรรทัดรองของเลขที่ MR */
+export const planRow = (p: Plan, menu: TableValue, view = false): TableValue[] =>
+  [view ? { text: p.mr, sub: unitOf(p.mr) } : p.mr, { text: p.name, sub: "ปีงบประมาณ " + p.year }, scopeCell(p), String(p.cars), qCell(p.perQ), whCell(p), { pills: [PST[p.status]] }, menu];
 
 /* เมนู "…" ตามสถานะแผน (S19 S20): ก่อนอนุมัติ ดูรายละเอียด แก้ไข ลบ · อนุมัติแล้ว ดูรายละเอียด แก้ไข · ดำเนินการแล้ว ดูรายละเอียดอย่างเดียว */
 export const menuCount = (p: Plan) => (p.status === "review" || p.status === "returned" ? 3 : p.status === "approved" ? 2 : 1);
@@ -70,7 +72,14 @@ export const inArea = (d: Pick<Draft, "regions" | "districts" | "types">, i: num
   const c = CAND[i];
   return (!d.regions.length || d.regions.includes(regionOf(c))) && (!d.districts.length || d.districts.includes(dCode(c))) && (!d.types.length || d.types.includes(c.type));
 };
-export const carsFor = (d: Pick<Draft, "regions" | "districts" | "types">) => areaPicked(d) ? CAND.map((_, i) => i).filter((i) => inArea(d, i)) : [];
+/* รถที่ฟอร์มเห็น = รถทุกคันของหน่วยงาน (UNIT_FLEET · CAND ของ screens.js 6 พ.ย. 2569) */
+export const carsFor = (d: Pick<Draft, "regions" | "districts" | "types">) => areaPicked(d) ? UNIT_FLEET.filter((i) => inArea(d, i)) : [];
+/* กำหนดอะไหล่แล้ว (decided ของ planForm 6 พ.ย. 2569) = เลือกไม่เบิก หรือเบิกแล้วมีรายการ (อะไหล่จากคลังที่ไม่ใช่น้ำมัน หรือรายการที่ระบุเอง) */
+export const decided = (d: Pick<Draft, "picks" | "manual" | "draw">, i: number) =>
+  d.draw?.[i] === "none" || (d.picks[i] || []).some((x) => x !== 0) || (d.manual?.[i] || []).length > 0;
+/* ปุ่มบันทึกและส่งอนุมัติ: ชื่อแผน · ปีงบประมาณ · รถทุกคันของหน่วยงานอยู่ในไตรมาส · ทุกคันกำหนดอะไหล่แล้ว (complete ของ planForm 6 พ.ย. 2569) */
+export const fleetAllocated = (d: Pick<Draft, "alloc">) => UNIT_FLEET.filter((i) => d.alloc[i] != null).length;
+export const draftComplete = (d: Draft) => !!d.name.trim() && !!d.year && fleetAllocated(d) === UNIT_FLEET.length && Object.keys(d.alloc).every((i) => decided(d, Number(i)));
 /* คำค้น "เลขทะเบียน, ยี่ห้อ, รุ่น" (inQuery) */
 export const matchQuery = (i: number, q: string) => !q || (CAND[i].plate + " " + CAND[i].model).includes(q);
 /* ภาค · ประเภทรถ ของรถที่จัดลงไตรมาสแล้ว (บันทึกเป็นภาค / ประเภทรถของแผน — สรุปจากรถในแผนจริง) */
@@ -84,7 +93,7 @@ export const inQuarter = (d: Draft, q = d.q) => Object.keys(d.alloc).map(Number)
 /* quarterParts — อะไหล่ในไตรมาส = รวมจากรถของไตรมาสนั้น [ลำดับอะไหล่, จำนวน] */
 export const carQty = (d: Pick<Draft, "qty">, car: number, pi: number) => d.qty?.[car]?.[pi] ?? CAR_QTY[pi];
 export const quarterParts = (d: Draft, q = d.q) => {
-  const cars = inQuarter(d, q);
+  const cars = inQuarter(d, q).filter((c) => d.draw?.[c] !== "none");   // คันที่ไม่เบิกอะไหล่ไม่รวมในรายการ (6 พ.ย. 2569)
   return PARTS.map((_, i) => [i, cars.filter((c) => (d.picks[c] || []).includes(i)).reduce((a, c) => a + carQty(d, c, i), 0)] as const).filter(([, n]) => n > 0);
 };
 
@@ -95,7 +104,7 @@ export function planFromDraft(d: Draft, plans: Plan[], today: string, retired: s
     mr: nextMr(plans, d.year, retired), name: d.name.trim(), ...allocScope(d.alloc), nowQ: "ไตรมาส 1", cars: Object.keys(d.alloc).length,
     status: "review", created: today, year: d.year,
     perQ: per.map((n, i) => "ไตรมาส " + (i + 1) + ": " + n).join(" · "),
-    regions: d.regions, districts: d.districts, types: d.types, alloc: d.alloc, picks: d.picks, qty: d.qty, manual: d.manual, oils: d.oils, oilSpec: d.oilSpec,
+    regions: d.regions, districts: d.districts, types: d.types, alloc: d.alloc, picks: d.picks, qty: d.qty, manual: d.manual, oils: d.oils, oilSpec: d.oilSpec, draw: d.draw,
   };
 }
 /* วันที่แบบไทย dd/mm/ปี พ.ศ. */

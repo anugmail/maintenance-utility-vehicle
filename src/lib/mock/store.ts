@@ -1,5 +1,5 @@
 "use client";
-/* ที่เก็บข้อมูลจำลอง — localStorage คีย์ mt-next-v1 (กติกาข้อ 5) · บทบาทเก็บแยกคีย์ mt-next-v1:role (ล้างข้อมูลจำลองไม่เปลี่ยนบทบาท)
+/* ที่เก็บข้อมูลจำลอง — localStorage คีย์ mt-next-v1 (กติกาข้อ 5) · บทบาทเก็บแยกคีย์ mt-next-v1:role2 (ล้างข้อมูลจำลองไม่เปลี่ยนบทบาท · 6 พ.ย. 2569 เปลี่ยนจาก :role เพราะ "กบค." เดิม = ผู้สร้างแผน ตอนนี้ = ดูอย่างเดียว)
    อ่านด้วย useMock() · เขียนด้วย setMock() · ล้างด้วย resetMock() */
 import { useSyncExternalStore } from "react";
 import { PLANS, type Plan } from "./data";
@@ -8,7 +8,7 @@ import type { Noti, Trip } from "./trips";
 import type { CloseoutState, QuarterState } from "./closeout";
 
 export const KEY = "mt-next-v1";
-export const ROLE_KEY = "mt-next-v1:role";
+export const ROLE_KEY = "mt-next-v1:role2";
 
 export interface MockState {
   v: 1;
@@ -62,18 +62,20 @@ export function resetMock() { state = initial(); save(); }
 
 /* ---------- บทบาท (แถบต้นแบบ) ---------- */
 /* ผู้รับจ้าง เอาออก 4 พ.ย. 2569 พร้อม S23 (ใช้กับ S23 อย่างเดียว · userflow: ผู้รับจ้างยังไม่มีหน้าในระบบ Q13) — บทบาทเก่าในที่เก็บ = กลับเป็น กบค. (loadRole) */
-export const ROLES = ["กบค.", "ผู้อนุมัติ", "กบค. คลัง", "กรย.", "หน่วยงานเจ้าของรถ", "หัวหน้า กบค."] as const;
+/* 6 พ.ย. 2569 เจ้าของงาน "กกฟ กรย สร้างแผนได้ ทำเอง ไม่เกี่ยวกับ กบค เหมือนสร้างแผนแล้วก็ดำเนินการเอง กบค แค่เห็นแผนทั้งหมด"
+   ⇒ ผู้สร้างแผนและผู้ดำเนินการ = หน่วยงาน (ข้อมูลตัวอย่างเป็นของ กกฟ.1 · CREATOR ของ screens.js) · "กบค." = ดูแผนทุกหน่วยงานอย่างเดียว (รายการแผน + รายละเอียดแผน ไม่มีปุ่ม) */
+export const ROLES = ["หน่วยงาน (กกฟ.1)", "กบค.", "ผู้อนุมัติ", "กบค. คลัง", "กรย.", "หน่วยงานเจ้าของรถ", "หัวหน้า กบค."] as const;
 export type Role = (typeof ROLES)[number];
 
 let role: Role | null = null;
 const roleSubs = new Set<() => void>();
 function loadRole(): Role {
   if (role) return role;
-  try { const r = window.localStorage.getItem(ROLE_KEY) as Role | null; role = r && (ROLES as readonly string[]).includes(r) ? r : "กบค."; } catch { role = "กบค."; }
+  try { const r = window.localStorage.getItem(ROLE_KEY) as Role | null; role = r && (ROLES as readonly string[]).includes(r) ? r : "หน่วยงาน (กกฟ.1)"; } catch { role = "หน่วยงาน (กกฟ.1)"; }
   return role;
 }
 export function useRole(): Role {
-  return useSyncExternalStore((cb) => { roleSubs.add(cb); return () => roleSubs.delete(cb); }, loadRole, () => "กบค." as Role);
+  return useSyncExternalStore((cb) => { roleSubs.add(cb); return () => roleSubs.delete(cb); }, loadRole, () => "หน่วยงาน (กกฟ.1)" as Role);
 }
 export function setRole(r: Role) {
   role = r;

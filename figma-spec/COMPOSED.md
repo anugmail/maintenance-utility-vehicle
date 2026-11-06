@@ -51,6 +51,7 @@
 | ไอคอนลบในการ์ด Spare Part Card Item | delete 24 สี #1C1B1F | Tertiary button ไอคอนอย่างเดียว (gray-600) |
 | ข้อความว่างของ RequestedPartsPanel | #181D27 / #535862 ขนาด 12.6 | `black` / `gray-600` ขนาด 12 |
 | _Content item base Type=Attachment | ตัวอักษร #444CE7 | `info-700` (#3538CD ใกล้สุด) |
+| ลิงก์เลขทะเบียน (`patterns/PlateLink` · 6 พ.ย. 2569) | ค่าลิงก์ใน _Content item base ของ UI Release#2 หน้า Replacement Vehicle ("BRD005678") #444CE7 ขีดเส้นใต้ · Variable Color/text/info | `info-700` (#3538CD ใกล้สุด) + `underline` — ต้นทาง design-system tokens.css ยังไม่มี token #444CE7 (BACKLOG ค.) |
 | ปุ่มท้าย Notification card | Primary button สูง 36 (instance ย่อ) | Primary button md 40 |
 | พื้นหลังกรอบ Notification (520×240 · มือถือ 360×260) | paint GRADIENT_LINEAR ดำ 10% → 0% ที่ 95% · ดัมป์ไม่บอกทิศ (ไม่มี gradientTransform) | ยังไม่ทำ (มีแค่การ์ด) |
 
@@ -320,3 +321,15 @@ screens.js ไม่ได้วาดปุ่มไปขั้นถัดไ
 | จุด | ที่ทำ | เหตุผล |
 |---|---|---|
 | popup "เพิ่มรถเข้าไตรมาส n" ในฟอร์มแผน | ใช้ `quarter/_shared/TripCarPicker` ตัวเดียวกับ popup เพิ่มรถเข้าไตรมาสของ S6 (รับ emptySub เพิ่ม) · ไม่เลือกพื้นที่ = รถทุกคันที่ยังไม่อยู่ในไตรมาสใด (ตารางยาว ไม่แบ่งหน้าใน popup) | planForm o.qAdd → tripCarModal ใน screens.js · popup ของไลบรารีไม่มี pagination |
+
+## น. เจ้าของงาน 6 พ.ย. 2569 (BACKLOG ข้อ 21 · สาขา `owner-6nov`)
+
+| จุด | ที่ทำ | เหตุผล |
+|---|---|---|
+| ลิงก์เลขทะเบียน | `patterns/PlateLink` — `linkPlate()` เรียกใน Table cell · Mobile table item · _Content item base · List with checkbox item (ข้อความทั้งช่องตรง PLATE_RE เดียวกับปลั๊กอิน) · `<a target="_blank" rel="noopener">` ไป `/soon/?car=<ทะเบียน>` | AFTER_SCREEN ใน screens.js · ไลบรารีไม่มี Table cell แบบลิงก์ · ต้นแบบยังไม่มีหน้าข้อมูลยานพาหนะ (แท็บ "ข้อมูลยานพาหนะ" ของ Vehicle Management) ⇒ หน้าเร็วๆ นี้ · ช่องกรอก Dropdown Badge Pill Breadcrumb Page header ไม่เป็นลิงก์ (PLATE_SKIP) |
+| แถวพนักงานที่เดินทาง (S6) | Input dropdown ค้นหา "พนักงานคนที่ n" + Tertiary button ไอคอนลบอย่างเดียว (desktop ช่องครึ่งแถว ปุ่มชิดช่อง · มือถือเรียงลง) + Secondary button "เพิ่มพนักงาน" ใต้แถว | tripForm ใน screens.js "แบบเดียวกับแถวพนักงานในค่าใช้จ่ายตอนปิดงาน (closeCosts)" — ใช้แบบ costRow ของหน้าปิดงานในเว็บ · ลบจนเหลือน้อยกว่า 2 แถวเติมแถวว่างให้ครบ 2 (คนที่ 1 2 บังคับ) |
+| การเบิกอะไหล่ (S21) | Section label "การเบิกอะไหล่" + Radio text card 2 ใบ (บรรทัดรอง) ไม่มีค่าเริ่มต้น · ไม่เบิก = ซ่อนคลังอะไหล่และอะไหล่อื่นๆ | radioPick(…, { label: true }) ของ carPartsScreen · บันทึกไม่เบิก = เก็บน้ำมันไฮโดรลิกไว้ ล้างอะไหล่จากคลังและรายการเพิ่มเติมของคันนั้น |
+| อะไหล่ในแผน (S2) | Section label + Tabs ไตรมาส 1–4 (ตัวเลข = จำนวนรายการ) + Table ชนิด · ประเภท · จำนวน · หน่วย / Empty state "ยังไม่มีรายการอะไหล่" | planPartsSec ใน screens.js · ยอดจาก quarterRows ตัวเดียวกับอะไหล่ในไตรมาสของ S1 (คันที่ไม่เบิกไม่รวม) เรียงตามประเภท |
+| ผู้ดูแลยานพาหนะ (S6 S9 S10) | ช่อง Table cell ข้อความ + Supporting text (ชื่อ · เบอร์) · popup Modal Type=Form 3 ช่อง | tripPhoneCell · tripCarEdit ใน screens.js · ชื่อของรถที่ screens.js ไม่มี (รถจากฟอร์ม S1) = ผู้ควบคุมรถของหน่วยงานเจ้าของรถเดียวกันใน TRIP_CARS แบบเดียวกับเบอร์ |
+| บทบาท | แถบต้นแบบ: "หน่วยงาน (กกฟ.1)" = ผู้สร้างแผนและผู้ดำเนินการ (เดิม "กบค.") · "กบค." = ดูแผนทุกหน่วยงานอย่างเดียว · คีย์บทบาทเปลี่ยนเป็น `mt-next-v1:role2` | เจ้าของงาน "กกฟ กรย สร้างแผนได้ ทำเอง … กบค แค่เห็นแผนทั้งหมด" · ข้อมูลตัวอย่างเป็นแผนของ กกฟ.1 (CREATOR) |
+

@@ -6,11 +6,13 @@
    Page header "จัดการอะไหล่ของรถ {ทะเบียน}" · Breadcrumbs บำรุงรักษาตามวาระ › สร้างแผน (แก้ไข: แก้ไขแผน MR …) › จัดการอะไหล่ของรถ
    Content ช่องไฟ 32:
      1. Input dropdown "รถ" (ครึ่งกว้างบน desktop · ไอคอน search) — รถของไตรมาสที่เปิดมาเท่านั้น (สลับคันในหน้าเดิม ที่แก้ของทุกคันค้างไว้จนบันทึก)
+     1.5 Section label "การเบิกอะไหล่" + Radio text card 2 ใบ (6 พ.ย. 2569 เจ้าของงาน "อยากเพิ่มการเบิก โดยอยากให้มีการเลือกว่า ว่าเบิกอะใหล่ หรือไม่เบิก ด้วย" · radioPick label ของ carPartsScreen)
+        "เบิกอะไหล่" (เลือกอะไหล่ที่ต้องเบิกให้รถคันนี้) / "ไม่เบิกอะไหล่" (รถคันนี้ไม่ใช้อะไหล่จากการเบิก) · ไม่มีค่าเริ่มต้น (เลือกอะไหล่ไว้แล้ว = เบิก) · ไม่เบิก = ซ่อนข้อ 3 และ 4 คันนี้ไม่รวมในอะไหล่ในไตรมาส
      2. Section header "น้ำมันไฮโดรลิก" + Radio text card 3 ใบ (เก็บตัวอย่าง ค่าเริ่มต้น · เปลี่ยนน้ำมัน · เก็บตัวอย่างและเปลี่ยน)
         เปลี่ยนน้ำมัน: แถว Input dropdown "เบอร์น้ำมัน" (ISO VG 32/46/68) · Text input "รหัสน้ำมัน" · "จำนวน (ลิตร)" · แถว Text input Readonly "เปลี่ยนน้ำมันครั้งล่าสุด"
-     3. PartsInventoryPanel คลังอะไหล่ (ไส้กรองและอะไหล่ ไม่รวมน้ำมันไฮโดรลิก) — กดเลือก/เอาออก
-     4. Section header "อะไหล่อื่นๆ" (Badge จำนวน) + Secondary button "ระบุอะไหล่เพิ่มเติม" → Table ชื่อ · ยี่ห้อ · รุ่น · รหัส · จำนวน · หน่วย · ไอคอนแก้ไข ลบ / Empty state
-     5. ปุ่ม ย้อนกลับ · บันทึกอะไหล่ของรถ (lg) → toast "บันทึกอะไหล่ของรถ {ทะเบียน} แล้ว"
+     3. (เบิกอะไหล่) PartsInventoryPanel คลังอะไหล่ (ไส้กรองและอะไหล่ ไม่รวมน้ำมันไฮโดรลิก) — กดเลือก/เอาออก
+     4. (เบิกอะไหล่) Section header "อะไหล่อื่นๆ" (Badge จำนวน) + Secondary button "ระบุอะไหล่เพิ่มเติม" → Table ชื่อ · ยี่ห้อ · รุ่น · รหัส · จำนวน · หน่วย · ไอคอนแก้ไข ลบ / Empty state
+     5. ปุ่ม ย้อนกลับ · บันทึกอะไหล่ของรถ (lg · กดได้เมื่อเลือกไม่เบิก หรือเลือกเบิกแล้วมีอะไหล่อย่างน้อย 1 รายการ) → toast "บันทึกอะไหล่ของรถ {ทะเบียน} แล้ว"
    popup "ระบุอะไหล่เพิ่มเติม" (MANUAL_FIELDS): ชื่ออะไหล่ | ยี่ห้อ · รุ่น | รหัสอะไหล่ (ถ้ามี) · จำนวน | หน่วย · ปุ่ม ยกเลิก / เพิ่ม · มือถือ bottom sheet
    ย้อนกลับเมื่อมีการแก้ไข → ยืนยันการออก "อะไหล่ที่แก้ไขไว้จะไม่ถูกบันทึก" */
 import { useRouter, useSearchParams } from "next/navigation";
@@ -31,6 +33,7 @@ import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { RadioTextCards } from "@/components/vms/RadioTextCard";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionHeader } from "@/components/vms/SectionHeader";
+import { SectionLabel } from "@/components/vms/SectionLabel";
 import { Table, type TableColumn, type TableValue } from "@/components/vms/Table";
 import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
@@ -50,7 +53,10 @@ const COLS: TableColumn[] = [
 ];
 
 /* ที่แก้ของรถแต่ละคันในหน้านี้ (ยังไม่บันทึกลงฟอร์ม) — picks/qty = อะไหล่จากคลัง (ไม่รวมน้ำมัน) */
-interface CarEdit { oil: number; spec: OilSpec; picks: number[]; qty: Record<number, number>; manual: ManualPart[] }
+/* draw: "" = ยังไม่เลือก · take = เบิกอะไหล่ · none = ไม่เบิกอะไหล่ (6 พ.ย. 2569) */
+type Draw = "" | "take" | "none";
+const DRAW_OPTS = [{ Text: "เบิกอะไหล่", SupportingText: "เลือกอะไหล่ที่ต้องเบิกให้รถคันนี้" }, { Text: "ไม่เบิกอะไหล่", SupportingText: "รถคันนี้ไม่ใช้อะไหล่จากการเบิก" }];
+interface CarEdit { oil: number; spec: OilSpec; picks: number[]; qty: Record<number, number>; manual: ManualPart[]; draw: Draw }
 type Buffer = Record<number, CarEdit>;
 const bufferOf = (d: Draft, cars: number[]): Buffer => Object.fromEntries(cars.map((c) => {
   const sp = d.oilSpec?.[c], litre = d.qty?.[c]?.[0];
@@ -58,6 +64,7 @@ const bufferOf = (d: Draft, cars: number[]): Buffer => Object.fromEntries(cars.m
     oil: oilChoice(d, c) ?? 0, spec: { grade: sp?.grade ?? "", code: sp?.code ?? "", litre: sp?.litre ?? (litre != null ? String(litre) : "") },
     picks: (d.picks[c] || []).filter((x) => x !== 0), qty: Object.fromEntries(Object.entries(d.qty?.[c] ?? {}).filter(([k]) => k !== "0")),
     manual: (d.manual?.[c] ?? []).map((m) => ({ ...m })),
+    draw: d.draw?.[c] === "none" ? "none" : (d.picks[c] || []).some((x) => x !== 0) || (d.manual?.[c] ?? []).length ? "take" : "",
   }];
 }));
 type Manual = { name: string; brand: string; model: string; code: string; qty: string; unit: string };
@@ -69,7 +76,7 @@ function CarParts() {
   const router = useRouter();
   const sp = useSearchParams();
   const mob = useBreakpoint() === "Mobile";
-  const ok = useRoleGuard(["กบค."]);
+  const ok = useRoleGuard(["หน่วยงาน (กกฟ.1)"]);
   const mock = useMock();
   const id = sp.get("id") ?? "new";
   const plan = id === "new" ? undefined : findPlan(mock.plans, id);
@@ -110,6 +117,7 @@ function CarParts() {
   const setSpec = (p: Partial<OilSpec>) => set({ spec: { ...e.spec, ...p } });
   const qtyOf = (pi: number) => e.qty[pi] ?? CAR_QTY[pi];
   const dirty = JSON.stringify(buf) !== orig;
+  const canSave = e.draw === "none" || (e.draw === "take" && e.picks.length + e.manual.length > 0);
   const goCar = (i: number) => { setOpen(""); setQuery(""); router.replace("/car-parts/?id=" + id + "&q=" + q + "&car=" + carParam(i) + (sp.get("from") ? "&from=" + sp.get("from") : "")); };
 
   /* popup ระบุอะไหล่เพิ่มเติม / แก้ไขแถว */
@@ -133,14 +141,18 @@ function CarParts() {
     setPending({ spec: { title: "ยืนยันการออก", sub: "อะไหล่ที่แก้ไขไว้จะไม่ถูกบันทึก", cancel: "ยกเลิก", ok: "ยืนยัน" }, run: () => router.push(formHref) });
   };
   const save = () => {
+    if (!canSave) return;
     if (mock.failSave) { notify("general error", "Error"); return; }
     const key = id === "new" ? "draft" : "edit";
     setMock((s) => {
       const cur = s[key];
       if (!cur) return s;
-      const picks = { ...cur.picks }, qty = { ...(cur.qty ?? {}) }, manual = { ...(cur.manual ?? {}) }, oils = { ...(cur.oils ?? {}) }, oilSpec = { ...(cur.oilSpec ?? {}) };
-      Object.entries(buf).forEach(([c, v]) => {
-        const i = Number(c), change = oilChanges(v.oil), litre = Number(v.spec.litre) || 0;
+      const picks = { ...cur.picks }, qty = { ...(cur.qty ?? {}) }, manual = { ...(cur.manual ?? {}) }, oils = { ...(cur.oils ?? {}) }, oilSpec = { ...(cur.oilSpec ?? {}) }, draw = { ...(cur.draw ?? {}) };
+      Object.entries(buf).forEach(([c, b]) => {
+        const i = Number(c), change = oilChanges(b.oil), litre = Number(b.spec.litre) || 0;
+        /* ไม่เบิกอะไหล่ = เก็บแค่น้ำมันไฮโดรลิก ไม่มีอะไหล่จากคลังและรายการเพิ่มเติม */
+        const v = b.draw === "none" ? { ...b, picks: [], qty: {}, manual: [] } : b;
+        if (b.draw === "none") draw[i] = "none"; else delete draw[i];
         oils[i] = v.oil;
         oilSpec[i] = v.spec;
         picks[i] = change ? [0, ...v.picks] : v.picks;   // เปลี่ยนน้ำมัน = น้ำมันไฮโดรลิกเข้ารายการอะไหล่ (ลิตร = จำนวน)
@@ -149,7 +161,7 @@ function CarParts() {
         qty[i] = q2;
         manual[i] = v.manual;
       });
-      return { ...s, [key]: { ...cur, picks, qty, manual, oils, oilSpec, q } };
+      return { ...s, [key]: { ...cur, picks, qty, manual, oils, oilSpec, draw, q } };
     });
     notify("บันทึกอะไหล่ของรถ " + CAND[car].plate + " แล้ว");
     router.push(formHref);
@@ -184,6 +196,11 @@ function CarParts() {
           </InputDropdown>,
         )}
         <section className="flex flex-col gap-4">
+          <SectionLabel Title="การเบิกอะไหล่" />
+          <RadioTextCards options={DRAW_OPTS} value={e.draw === "take" ? DRAW_OPTS[0].Text : e.draw === "none" ? DRAW_OPTS[1].Text : null}
+            onChange={(v) => set({ draw: v === DRAW_OPTS[1].Text ? "none" : "take" })} />
+        </section>
+        <section className="flex flex-col gap-4">
           <SectionHeader Title="น้ำมันไฮโดรลิก" />
           <RadioTextCards options={OIL_PLAN_OPTS.map((t) => ({ Text: t }))} value={OIL_PLAN_OPTS[e.oil]} onChange={setOil} />
           {oilChanges(e.oil) && third(<>
@@ -195,17 +212,17 @@ function CarParts() {
           </>)}
           {third(<TextInput LabelText="เปลี่ยนน้ำมันครั้งล่าสุด" Text={LAST_OIL[car]} State="Readonly" readOnly />, 2)}
         </section>
-        <PartsInventoryPanel parts={OTHER.map((i) => STOCK[i])} picked={e.picks.map((pi) => PARTS[pi].code)} onPick={(p) => togglePart(PARTS.findIndex((x) => x.code === p.code))} query={invQuery} onQuery={setInvQuery} />
-        <section className="flex flex-col gap-4">
+        {e.draw === "take" && <PartsInventoryPanel parts={OTHER.map((i) => STOCK[i])} picked={e.picks.map((pi) => PARTS[pi].code)} onPick={(p) => togglePart(PARTS.findIndex((x) => x.code === p.code))} query={invQuery} onQuery={setInvQuery} />}
+        {e.draw === "take" && <section className="flex flex-col gap-4">
           <SectionHeader Title="อะไหล่อื่นๆ" Badge={rows.length || null}
             Actions={<SecondaryButton Text="ระบุอะไหล่เพิ่มเติม" LeadingIconSwap="add-24-300-round" Size={mob ? "lg" : "md"} onClick={openNew} />} />
           {rows.length
             ? (mob ? <MobileCards columns={COLS} rows={rows} /> : <Table columns={COLS} rows={rows} />)
             : <EmptyStateDataEmpty Text="ยังไม่มีรายการอะไหล่" SupportingText="เลือกไส้กรองหรืออะไหล่อื่นจากคลัง หรือกดระบุอะไหล่เพิ่มเติม" />}
-        </section>
+        </section>}
         <div className={cx("flex", mob ? "gap-4 [&>*]:flex-1 [&>*]:basis-0" : "justify-between gap-3")}>
           <SecondaryButton Text="ย้อนกลับ" Size="lg" onClick={leave} />
-          <PrimaryButton Text="บันทึกอะไหล่ของรถ" Size="lg" onClick={save} />
+          <PrimaryButton Text="บันทึกอะไหล่ของรถ" Size="lg" State={canSave ? "Default" : "Disabled"} onClick={save} />
         </div>
       </div>
       <FormModal open={!!editing} title={editing?.kind === "new" ? "ระบุอะไหล่เพิ่มเติม" : "แก้ไขอะไหล่"} ok={editing?.kind === "new" ? "เพิ่ม" : "บันทึก"} cancel="ยกเลิก"

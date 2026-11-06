@@ -34,7 +34,7 @@ function Detail() {
   const sp = useSearchParams();
   const mob = useBreakpoint() === "Mobile";
   const hydrated = useHydrated();
-  const kbk = useRole() === "กบค.";
+  const kbk = useRole() === "หน่วยงาน (กกฟ.1)";
   const mock = useMock();
   const plan = findPlan(mock.plans, sp.get("id"));
   const [q, setQ] = useState(1);

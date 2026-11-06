@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useSyncExternalStore } from "react";
 import type { BadgeOutlineColor } from "@/components/vms/BadgeOutline";
 import type { PillColor } from "@/components/vms/PillOutline";
-import { CAND, DISTRICTS, LAST_OIL, NEW_PLAN_DATE, OIL_OPTS, OIL_PLAN_OPTS, OIL_SPEC, PARTS, PART_PRICE, PLAN_CREATOR, REGIONS, RETURN_REASON, WH_ACK, WH_LIST, dCode, type ManualPart, type Plan, type PlanStatus } from "./data";
+import { CAND, DISTRICTS, LAST_OIL, NEW_PLAN_DATE, OIL_OPTS, OIL_PLAN_OPTS, OIL_SPEC, PARTS, PART_PRICE, PLAN_CREATOR, REGIONS, RETURN_REASON, UNIT_FLEET, WH_ACK, WH_LIST, dCode, oilChanges, type ManualPart, type Plan, type PlanStatus } from "./data";
 import { CAR_PICK } from "./data";
 import { allocScope, carQty, inQuarter, planScope, quarterParts, type Draft } from "./plan";
 import { accPlans, accRows } from "./acceptance";
@@ -50,20 +50,20 @@ export function useRoleGuard(allowed: readonly Role[]) {
 export const badgeOf = (c: PillColor): BadgeOutlineColor => (c === "Warning" || c === "Info" ? "Brand" : c === "Gray" || c === "Success" || c === "Error" || c === "Brand" ? c : "Gray");
 
 /* ---------- แผน ↔ ฟอร์ม ---------- */
-type Alloc = Pick<Draft, "alloc" | "picks" | "qty" | "manual" | "oils" | "oilSpec">;
-export const allocOf = (p: Plan): Alloc => ({ alloc: p.alloc ?? {}, picks: p.picks ?? {}, qty: p.qty, manual: p.manual, oils: p.oils, oilSpec: p.oilSpec });
+type Alloc = Pick<Draft, "alloc" | "picks" | "qty" | "manual" | "oils" | "oilSpec" | "draw">;
+export const allocOf = (p: Plan): Alloc => ({ alloc: p.alloc ?? {}, picks: p.picks ?? {}, qty: p.qty, manual: p.manual, oils: p.oils, oilSpec: p.oilSpec, draw: p.draw });
 
 export function draftFromPlan(p: Plan): Draft {
   const regions = p.regions ?? REGIONS.filter((r) => p.region.split(", ").includes(r));
   return {
     name: p.name, year: p.year, regions, districts: p.districts ?? [], types: p.types ?? p.type.split(", ").filter(Boolean),
     alloc: { ...(p.alloc ?? {}) }, picks: { ...(p.picks ?? {}) }, qty: p.qty ? { ...p.qty } : undefined, manual: p.manual ? { ...p.manual } : undefined,
-    oils: p.oils ? { ...p.oils } : undefined, oilSpec: p.oilSpec ? { ...p.oilSpec } : undefined,
+    oils: p.oils ? { ...p.oils } : undefined, oilSpec: p.oilSpec ? { ...p.oilSpec } : undefined, draw: p.draw ? { ...p.draw } : undefined,
     q: 1, editOf: p.mr,
   };
 }
 /* ค่าที่เทียบว่าแก้ไขแล้วหรือยัง (ไม่นับแท็บที่เปิด) */
-export const draftKey = (d: Draft) => JSON.stringify([d.name, d.year, d.regions, d.districts, d.types, d.alloc, d.picks, d.qty ?? {}, d.manual ?? {}, d.oils ?? {}, d.oilSpec ?? {}]);
+export const draftKey = (d: Draft) => JSON.stringify([d.name, d.year, d.regions, d.districts, d.types, d.alloc, d.picks, d.qty ?? {}, d.manual ?? {}, d.oils ?? {}, d.oilSpec ?? {}, d.draw ?? {}]);
 
 /* บันทึกการแก้ไข (S19): กลับเป็นรออนุมัติทุกสถานะ เลขที่ MR เดิม */
 export function planWithDraft(p: Plan, d: Draft, today: string): Plan {
@@ -73,7 +73,7 @@ export function planWithDraft(p: Plan, d: Draft, today: string): Plan {
   return {
     ...rest, name: d.name.trim(), ...allocScope(d.alloc), cars: Object.keys(d.alloc).length,
     perQ: per.map((n, i) => "ไตรมาส " + (i + 1) + ": " + n).join(" · "), status: "review", sentAt: today,
-    regions: d.regions, districts: d.districts, types: d.types, alloc: d.alloc, picks: d.picks, qty: d.qty, manual: d.manual, oils: d.oils, oilSpec: d.oilSpec,
+    regions: d.regions, districts: d.districts, types: d.types, alloc: d.alloc, picks: d.picks, qty: d.qty, manual: d.manual, oils: d.oils, oilSpec: d.oilSpec, draw: d.draw,
   };
 }
 
@@ -90,13 +90,15 @@ export const oilCellOf = (a: Alloc, i: number): string | { text: string; sub?: s
   return { text: OIL_PLAN_OPTS[k], sub: k ? grade + " · " + litre + " ลิตร" : grade };
 };
 export const otherParts = (a: Alloc, i: number) => (a.picks[i] || []).filter((x) => x !== 0).map((x) => PARTS[x].name).concat((a.manual?.[i] || []).map((m) => m.name));
+export const NO_DRAW = "ไม่เบิกอะไหล่";   // 6 พ.ย. 2569 คันที่เลือกไม่เบิกอะไหล่ (ช่องอะไหล่อื่นๆ ของแท็บไตรมาส · ช่องอะไหล่ของรายละเอียดแผน)
 export const otherCellOf = (a: Alloc, i: number): string | { text: string; sub: string } => {
+  if (a.draw?.[i] === "none") return NO_DRAW;
   const l = otherParts(a, i);
   return l.length ? { text: l.length + " รายการ", sub: l[0] + (l.length > 1 ? " และอื่น ๆ" : "") } : TODO_NONE;
 };
 /* จำนวนรายการอะไหล่ของรถ = อะไหล่ที่เลือก + รายการเพิ่มเติม (screens.js count()) */
 export const partCount = (a: Alloc, i: number) => (a.picks[i] || []).length + (a.manual?.[i] || []).length;
-export const partCell = (a: Alloc, i: number) => (partCount(a, i) ? partCount(a, i) + " รายการ" : "ยังไม่เลือก");
+export const partCell = (a: Alloc, i: number) => (a.draw?.[i] === "none" ? NO_DRAW : partCount(a, i) ? partCount(a, i) + " รายการ" : "ยังไม่เลือก");
 export const carsIn = (a: Alloc, q: number) => Object.keys(a.alloc).map(Number).filter((i) => a.alloc[i] === q);
 export const carRow = (a: Alloc, i: number) => [CAND[i].plate, CAND[i].model, CAND[i].owner, oilOf(a, i), LAST_OIL[i], partCell(a, i)];
 
@@ -106,7 +108,7 @@ export function quarterRows(a: Alloc, q: number): QuarterRow[] {
   const d = { ...a, name: "", year: "", regions: [], districts: [], types: [], q } as Draft;
   const rows: QuarterRow[] = quarterParts(d, q).map(([pi, n]) => ({ key: "p" + pi, name: PARTS[pi].name, code: PARTS[pi].code, group: PARTS[pi].group, qty: n, unit: PARTS[pi].unit, pi, stock: PARTS[pi].stock }));
   const man = new Map<string, QuarterRow>();
-  carsIn(a, q).forEach((c) => (a.manual?.[c] || []).forEach((m) => {
+  carsIn(a, q).filter((c) => a.draw?.[c] !== "none").forEach((c) => (a.manual?.[c] || []).forEach((m) => {
     const k = "m" + m.name + "|" + m.code + "|" + (m.unit ?? "ชิ้น");
     const r = man.get(k);
     if (r) r.qty += m.qty; else man.set(k, { key: k, name: m.name, code: m.code || "-", group: "เพิ่มเอง", qty: m.qty, unit: m.unit || "ชิ้น" });
@@ -146,21 +148,33 @@ export const whStatusOf = (p: Plan) => warehouseStatus(ackCount(p, "warehouse"),
 /* อะไหล่ที่ต้องเบิกของไตรมาส เทียบคงเหลือ (whParts) */
 export const whRows = (p: Plan, q: number) => quarterRows(allocOf(p), q).map((r) => [r.name, r.code, String(r.qty), r.unit, r.stock != null ? String(r.stock) : "-", r.stock != null && r.qty > r.stock ? String(r.qty - r.stock) : "-"]);
 
-/* ---------- แผนตัวอย่าง (NEW_PLAN + EDIT_FORM ของ screens.js) สำหรับเปิด scenario จาก /scenarios/ ---------- */
-const A_ALL: Record<number, number> = { 0: 1, 1: 1, 2: 1, 3: 2, 5: 2, 6: 3 };
+/* ---------- แผนตัวอย่าง (NEW_PLAN + EDIT_FORM ของ screens.js) สำหรับเปิด scenario จาก /scenarios/ ----------
+   6 พ.ย. 2569: รถทุกคันของหน่วยงาน (UNIT_FLEET 10 คัน) อยู่ในไตรมาส (A_ALL) · ทุกคันกำหนดอะไหล่แล้ว (A_PICKS · A_OILS) · 83-1207 ไม่เบิกอะไหล่ (A_DRAW)
+   ลำดับในตัวแปรเหล่านี้ = ลำดับใน CAND ของ screens.js → แปลงเป็นลำดับใน CAND ของเว็บด้วย UNIT_FLEET */
+const FIG_A_ALL: number[] = [1, 1, 1, 2, 2, 2, 3, 4, 4, 3];          // A_ALL
+const FIG_A_OILS: number[] = [2, 0, 2, 0, 0, 1, 0, 0, 1, 0];         // A_OILS (ลำดับใน OIL_PLAN_OPTS)
+const FIG_A_DRAW: number[] = [4];                                    // A_DRAW { 4: 'none' }
+const A_ALL: Record<number, number> = Object.fromEntries(UNIT_FLEET.map((c, k) => [c, FIG_A_ALL[k]]));
+const A_OILS: Record<number, number> = Object.fromEntries(UNIT_FLEET.map((c, k) => [c, FIG_A_OILS[k]]));
+const A_DRAW: Record<number, "none"> = Object.fromEntries(FIG_A_DRAW.map((k) => [UNIT_FLEET[k], "none" as const]));
+/* A_PICKS = CAR_PICK ทุกคันที่เบิก + น้ำมันไฮโดรลิก (ลำดับ 0) เมื่อเลือกเปลี่ยน (qAgg นับน้ำมันจาก A_OILS) */
+const A_PICKS: Record<number, number[]> = Object.fromEntries(UNIT_FLEET.filter((c) => !A_DRAW[c]).map((c) => [c, oilChanges(A_OILS[c]) ? [0, ...CAR_PICK] : [...CAR_PICK]]));
+export const SAMPLE_NAME = "บำรุงรักษารถ กกฟ.1 ปีงบประมาณ 2570";   // NEW_PLAN[1]
 export const R2 = { regions: [REGIONS[1]], districts: [...DISTRICTS[REGIONS[1]]], types: ["รถกระเช้า"] };
 export function samplePlan(status: PlanStatus, acked?: number[]): Plan {
   const p: Plan = {
-    mr: "MR Z7000004", name: "บำรุงรักษารถกระเช้า ภาค 2 ปีงบประมาณ 2570", region: REGIONS[1], nowQ: "ไตรมาส 1", cars: 6, status, created: NEW_PLAN_DATE,
-    type: "รถกระเช้า", year: "2570", perQ: "ไตรมาส 1: 3 · ไตรมาส 2: 2 · ไตรมาส 3: 1 · ไตรมาส 4: 0",
-    ...R2, alloc: { ...A_ALL }, picks: Object.fromEntries(Object.keys(A_ALL).map((i) => [i, [...CAR_PICK]])),
+    mr: "MR Z7000004", name: SAMPLE_NAME, region: REGIONS[0] + ", " + REGIONS[1], nowQ: "ไตรมาส 1", cars: UNIT_FLEET.length, status, created: NEW_PLAN_DATE,
+    type: "รถกระเช้า, รถเครน", year: "2570", perQ: "ไตรมาส 1: 3 · ไตรมาส 2: 3 · ไตรมาส 3: 2 · ไตรมาส 4: 2",
+    ...R2, alloc: { ...A_ALL }, picks: Object.fromEntries(Object.entries(A_PICKS).map(([i, v]) => [i, [...v]])), oils: { ...A_OILS }, draw: { ...A_DRAW },
   };
   if (status === "returned") p.returnReason = RETURN_REASON;
   if (status === "approved" || status === "active") { p.approvedAt = "31/10/2569"; p.ack = Object.fromEntries((acked ?? []).map((q) => [q, "02/11/2569"])); }
   return p;
 }
-/* ฟอร์มสร้างแผนของ S21 T.1: กรอกชื่อ ปี ตัวกรองครบ จัดรถ 6 คัน ยังไม่เลือกอะไหล่ */
-export const sampleDraft = (): Draft => ({ name: "บำรุงรักษารถกระเช้า ภาค 2 ปีงบประมาณ 2570", year: "2570", ...R2, alloc: { ...A_ALL }, picks: {}, q: 1 });
+/* อะไหล่ของแผนตัวอย่างที่กำหนดครบทุกคัน (A_PICKS · A_OILS · A_DRAW) — ฟอร์มที่กรอกครบ ส่งอนุมัติได้ (โหมดพาดู) */
+export const SAMPLE_PARTS = (): Pick<Draft, "picks" | "oils" | "draw"> => ({ picks: Object.fromEntries(Object.entries(A_PICKS).map(([i, v]) => [i, [...v]])), oils: { ...A_OILS }, draw: { ...A_DRAW } });
+/* ฟอร์มสร้างแผนของ S21 T.1: กรอกชื่อ ปี ตัวกรองครบ จัดรถทุกคันของหน่วยงาน (10 คัน) ยังไม่เลือกอะไหล่ */
+export const sampleDraft = (): Draft => ({ name: SAMPLE_NAME, year: "2570", ...R2, alloc: { ...A_ALL }, picks: {}, q: 1 });
 
 /* ---------- การกระทำกับแผน ---------- */
 export const DELETE_CONFIRM = { danger: true, title: "ยืนยันการลบแผน", sub: "เมื่อลบแล้วจะไม่สามารถกู้คืนข้อมูลได้ ต้องการลบใช่หรือไม่", cancel: "ยกเลิก", ok: "ยืนยัน" };

@@ -25,7 +25,7 @@ import { badgeOf, ButtonRow, DataTable, useCrumbs, KvBox, OilResultFields, Secti
 import { vehiclePairs } from "./JobPage";
 
 const WORK_COLS2: TableColumn[] = [{ head: "รายการงาน" }, { head: "อะไหล่ที่ใช้", width: 320 }, { head: "จำนวนตามแผน", width: 140 }, { head: "จำนวนที่ใช้จริง", width: 140 }, { head: "หน่วย", width: 110 }];
-const COST_COLS: TableColumn[] = [{ head: "พนักงาน กบค. ซ่อม", Style: "Lead text" }, { head: "ค่าเบี้ยเลี้ยง/วัน", width: 150 }, { head: "ค่าที่พัก/วัน", width: 150 }, { head: "จำนวนวัน", width: 120 }, { head: "รวม", width: 150 }];
+const COST_COLS: TableColumn[] = [{ head: "พนักงาน", Style: "Lead text" }, { head: "ค่าเบี้ยเลี้ยง/วัน", width: 150 }, { head: "ค่าที่พัก/วัน", width: 150 }, { head: "จำนวนวัน", width: 120 }, { head: "รวม", width: 150 }];
 
 export function WorkDetail({ trip, car, job, kbk }: { trip: JobTrip; car: TripCar; job: Job; kbk: boolean }) {
   const crumbs = useCrumbs();

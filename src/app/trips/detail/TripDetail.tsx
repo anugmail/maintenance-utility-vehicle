@@ -20,7 +20,7 @@ import { SectionHeader } from "@/components/vms/SectionHeader";
 import type { TableColumn, TableValue } from "@/components/vms/Table";
 import { MENU } from "@/lib/mock/data";
 import {
-  applySample, carOf, editTripCar, getJob, menuCount, OIL_TAG, oilTag, phoneEdited, tripCounter, removeTripCar, SAMPLE_ROLE, SAMPLES, tripKv, tripLoc, tripPhone, tripProgress, WSTAT,
+  applySample, carOf, editTripCar, getJob, menuCount, OIL_TAG, oilTag, tripCounter, tripCtrl, removeTripCar, SAMPLE_ROLE, SAMPLES, tripKv, tripLoc, tripPhone, tripProgress, WSTAT,
   type TripCar,
 } from "@/lib/mock/jobs";
 import { useSample, type SampleMap } from "@/lib/useSample";
@@ -30,7 +30,7 @@ import { DataTable, jobHref, Section, useCrumbs, useBack, useTripCar } from "../
 const SAMPLE_MAP: SampleMap = Object.fromEntries(SAMPLES.map((n) => [n, { role: SAMPLE_ROLE[n], apply: () => applySample(n) }]));
 
 const TRIP_JOB_COLS: TableColumn[] = [
-  { head: "ทะเบียน", width: 190, Style: "Lead text" }, { head: "ยี่ห้อ/รุ่น" }, { head: "เบอร์ติดต่อ", width: 150 },
+  { head: "ทะเบียน", width: 190, Style: "Lead text" }, { head: "ยี่ห้อ/รุ่น" }, { head: "ผู้ดูแลยานพาหนะ", width: 190 },
   { head: "สถานที่บำรุงรักษา", width: 260 }, { head: "สถานะงาน", width: 320, Style: "Badge" }, { head: "", width: 72, Style: "Action icons" },
 ];
 
@@ -42,25 +42,26 @@ export function TripDetail() {
   const { s, trip, kbk } = useTripCar();
   const pending = useSample(SAMPLE_MAP);
   const [menu, setMenu] = useState<{ car: string; anchor: MenuAnchor } | null>(null);
-  const [edit, setEdit] = useState<{ car: TripCar; phone: string; loc: string } | null>(null);
+  const [edit, setEdit] = useState<{ car: TripCar; name: string; phone: string; loc: string } | null>(null);
   const [del, setDel] = useState<TripCar | null>(null);
 
   if (pending) return null;
   if (!trip) return <EmptyStateSearchNotFound />;
   const cars = trip.carIds.map((id) => carOf(id)!).filter(Boolean);
   const open = (c: TripCar) => router.push(jobHref(trip, c.id));
-  /* รายการเมนูตามสถานะ: ดูรายละเอียด · แก้ไข (เบอร์ติดต่อและสถานที่) · ลบ (เอารถออกจากแผนเดินทาง) — แก้ไข ลบ เฉพาะ กบค. */
+  /* รายการเมนูตามสถานะ: ดูรายละเอียด · แก้ไข (ผู้ดูแลยานพาหนะและสถานที่) · ลบ (เอารถออกจากแผนเดินทาง) — แก้ไข ลบ เฉพาะ กบค. */
   const items = (c: TripCar) => {
     const st = getJob(s, trip.id, c.id).status;
-    const run = [() => open(c), () => setEdit({ car: c, phone: tripPhone(trip, c), loc: tripLoc(trip, c) }), () => setDel(c)];
+    const run = [() => open(c), () => setEdit({ car: c, name: tripCtrl(trip, c) === "-" ? "" : tripCtrl(trip, c), phone: tripPhone(trip, c), loc: tripLoc(trip, c) }), () => setDel(c)];
     return MENU.slice(0, kbk ? menuCount(st) : 1).map((m, i) => ({ ...m, onClick: run[i] }));
   };
   const status = (c: TripCar) => { const j = getJob(s, trip.id, c.id); const tag = oilTag(j); return { pill: WSTAT[j.status], tag: tag ? OIL_TAG[tag] : undefined }; };
-  const phoneCell = (c: TripCar) => (phoneEdited(trip, c) ? { text: tripPhone(trip, c), sub: "แก้จากเบอร์เจ้าของรถ" } : tripPhone(trip, c));
+  /* ผู้ดูแลยานพาหนะ = ชื่อ + เบอร์บรรทัดรอง (tripPhoneCell 6 พ.ย. 2569 · ค่าเริ่มต้นผู้ควบคุมรถ) */
+  const ctrlCell = (c: TripCar) => ({ text: tripCtrl(trip, c), sub: tripPhone(trip, c) });
 
   const rows: TableValue[][] = cars.map((c) => {
     const { pill, tag } = status(c);
-    return [{ text: c.plate, sub: c.owner }, c.model, phoneCell(c), tripLoc(trip, c), { pills: tag ? [pill, tag] : [pill] },
+    return [{ text: c.plate, sub: c.owner }, c.model, ctrlCell(c), tripLoc(trip, c), { pills: tag ? [pill, tag] : [pill] },
       { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู " + c.plate, onClick: (e) => setMenu({ car: c.id, anchor: anchorOf(e.currentTarget) }) }] }];
   });
   const menuCar = cars.find((c) => c.id === menu?.car);
@@ -76,12 +77,12 @@ export function TripDetail() {
           <div className="flex flex-col gap-3">
             {cars.map((c) => {
               const { pill, tag } = status(c);
-              const p = phoneCell(c);
+              const p = ctrlCell(c);
               return (
                 <MobileTable key={c.id}>
                   <MobileTableItem Style="Lead text" Header="ทะเบียน" Text={c.plate} SupportingText={c.owner} />
                   <MobileTableItem Header="ยี่ห้อ/รุ่น" Text={c.model} />
-                  <MobileTableItem Header="เบอร์ติดต่อ" Text={typeof p === "string" ? p : p.text} SupportingText={typeof p === "string" ? undefined : p.sub} />
+                  <MobileTableItem Header="ผู้ดูแลยานพาหนะ" Text={p.text} SupportingText={p.sub} />
                   <MobileTableItem Header="สถานที่บำรุงรักษา" Text={tripLoc(trip, c)} />
                   <MobileTableItem Style="Badge" Header="สถานะงาน" Pill={pill} />
                   {tag && <MobileTableItem Style="Badge" Header="ผลตรวจน้ำมัน" Pill={tag} />}
@@ -95,10 +96,10 @@ export function TripDetail() {
         )}
       </Section>
       <RowMenu anchor={menu?.anchor ?? null} items={menuCar ? items(menuCar) : []} onClose={() => setMenu(null)} />
-      <FormModal open={!!edit} title={"แก้ไขเบอร์ติดต่อและสถานที่ · " + (edit?.car.plate ?? "")}
-        fields={edit ? [{ label: "เบอร์ติดต่อ", value: edit.phone }, { label: "สถานที่บำรุงรักษา", value: edit.loc }] : []}
-        onField={(i, v) => setEdit((e) => (e ? (i === 0 ? { ...e, phone: v } : { ...e, loc: v }) : e))}
-        onOk={() => { if (edit) editTripCar(trip, edit.car, edit.phone, edit.loc); setEdit(null); }} onCancel={() => setEdit(null)} />
+      <FormModal open={!!edit} title={"แก้ไขผู้ดูแลยานพาหนะและสถานที่ · " + (edit?.car.plate ?? "")}
+        fields={edit ? [{ label: "ผู้ดูแลยานพาหนะ", value: edit.name }, { label: "เบอร์ติดต่อ", value: edit.phone }, { label: "สถานที่บำรุงรักษา", value: edit.loc }] : []}
+        onField={(i, v) => setEdit((e) => (e ? (i === 0 ? { ...e, name: v } : i === 1 ? { ...e, phone: v } : { ...e, loc: v }) : e))}
+        onOk={() => { if (edit) editTripCar(trip, edit.car, edit.name, edit.phone, edit.loc); setEdit(null); }} onCancel={() => setEdit(null)} />
       <ConfirmDialog spec={del ? { danger: true, title: "ยืนยันการเอารถออกจากแผนเดินทาง", sub: del.plate + " จะถูกเอาออกจากแผนเดินทางนี้ และเลือกเข้าแผนเดินทางใบอื่นของไตรมาสได้อีก", cancel: "ยกเลิก", ok: "เอาออก" } : null}
         onOk={() => { if (del) removeTripCar(trip, del.id); setDel(null); }} onCancel={() => setDel(null)} />
     </>

@@ -10,7 +10,7 @@ import { PageHeader } from "@/components/vms/PageHeader";
 import { Table, type TableColumn, type TableValue } from "@/components/vms/Table";
 import { TableHeader } from "@/components/vms/TableHeader";
 import { TablePagination } from "@/components/vms/TablePagination";
-import { PLAN_CREATOR_SHORT, PST } from "@/lib/mock/data";
+import { PLAN_CREATOR_SHORT, PST, unitOf } from "@/lib/mock/data";
 import { scopeCell } from "@/lib/mock/plan";
 import { planId, useRoleGuard } from "@/lib/mock/planFlow";
 import { useMock } from "@/lib/mock/store";
@@ -19,7 +19,7 @@ import { useBreakpoint } from "@/lib/useBreakpoint";
 const PER = 10;
 /* REVIEW_COLS */
 const COLS: TableColumn[] = [
-  { head: "ชื่อแผน", Style: "Lead text", SortIcon: "Swap" }, { head: "ปีงบประมาณ", width: 120 }, { head: "ผู้สร้าง (กบค.)", width: 180 }, { head: "ภาค / ประเภทรถ", width: 200 },
+  { head: "ชื่อแผน", Style: "Lead text", SortIcon: "Swap" }, { head: "ปีงบประมาณ", width: 120 }, { head: "ผู้สร้าง", width: 180 }, { head: "ภาค / ประเภทรถ", width: 200 },
   { head: "จำนวนรถ", width: 100 }, { head: "วันที่ส่ง", width: 120, SortIcon: "Down" }, { head: "สถานะ", width: 150, Style: "Badge" }, { head: "", width: 60, Style: "Action icons" },
 ];
 
@@ -36,7 +36,8 @@ export default function ApprovalList() {
   }, [plans, query]);
   if (!ok) return <AppFrame>{null}</AppFrame>;
   const data: TableValue[][] = rows.slice((page - 1) * PER, page * PER).map((p) => [
-    p.name, p.year, PLAN_CREATOR_SHORT, scopeCell(p), p.cars + " คัน", p.sentAt ?? p.created, { pills: [PST[p.status]] },
+    p.name, p.year, { text: PLAN_CREATOR_SHORT, sub: unitOf(p.mr) }, scopeCell(p),   // reviewRow 6 พ.ย. 2569: ชื่อ + หน่วยงานบรรทัดรอง
+    p.cars + " คัน", p.sentAt ?? p.created, { pills: [PST[p.status]] },
     { actions: [{ IconSwap: "keyboard_arrow_right-20-400-round", label: "เปิด " + p.name, onClick: () => router.push("/approvals/plans/detail/?id=" + planId(p)) }] },
   ]);
   const pager = <TablePagination total={rows.length} page={page} perPage={PER} onPage={setPage} />;

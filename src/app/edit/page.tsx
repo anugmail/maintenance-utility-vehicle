@@ -15,7 +15,7 @@ const EDITABLE = ["review", "returned", "approved"];
 function Edit() {
   const router = useRouter();
   const sp = useSearchParams();
-  const ok = useRoleGuard(["กบค."]);
+  const ok = useRoleGuard(["หน่วยงาน (กกฟ.1)"]);
   const mock = useMock();
   const plan = findPlan(mock.plans, sp.get("id"));
   const editable = !!plan && EDITABLE.includes(plan.status);

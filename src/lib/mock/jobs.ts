@@ -72,7 +72,7 @@ export const OIL_FILE: UploadFile = { name: "oil-test-82-6789.pdf", size: "420 K
 export const BEFORE = ["รูปรถ + ทะเบียน", "อะไหล่ใหม่"];   // ภาพก่อนเริ่มงาน 2 ช่อง
 
 /* ---------- รถของไตรมาส 1 แผน MR Z7000001 (TRIP_CARS + OWNER_PH + LAST_OIL) ---------- */
-export interface TripCar { id: string; plate: string; model: string; owner: string; ownerPhone: string; type: string; lastOil: string }
+export interface TripCar { id: string; plate: string; model: string; owner: string; ownerPhone: string; ctrl: string; type: string; lastOil: string }   // ctrl = ผู้ควบคุมรถ (ผู้ดูแลยานพาหนะ ค่าเริ่มต้น · 6 พ.ย. 2569)
 /* รถชุดเดียวกับ trips.ts (TRIP_CARS + OWNER_PH) · เปลี่ยนน้ำมันครั้งล่าสุด LAST_OIL (82-3302 = 05/02/2567 · คันอื่น 12/03/2568) */
 /* วันที่เปลี่ยนน้ำมันครั้งล่าสุด ค่าเดียวทุกจอ (lastOil() ใน screens.js 5 พ.ย. 2569 · ชีตลูกค้า "12/03/2568 กับ 18/10/2568 ปนกัน") — ยึดข้อมูล S24 (MA_ROWS ช่องเปลี่ยนน้ำมันล่าสุด)
    ยกเว้น 82-6789 (คันตัวอย่าง S10) ก่อนงานนี้ = 12/03/2568 · ไม่มีใน S24 = LAST_OIL ตามลำดับ CAND · ไม่มีข้อมูล = "ไม่มีข้อมูล" */
@@ -80,12 +80,12 @@ const LAST_OIL_OF: Record<string, string> = {
   "82-6789": "12/03/2568", "82-1145": "12/03/2567", "80-5738": "14/10/2568", "81-2210": "ไม่มีข้อมูล", "80-9981": "10/01/2569", "82-3302": "05/02/2567",
   "82-7720": "18/06/2568", "80-3316": "05/02/2567", "81-6604": "20/09/2569", "80-4458": "01/10/2568",
 };
-export const TRIP_CARS: TripCar[] = CARS.map((c) => ({ id: c.id, plate: c.plate, model: c.model, owner: c.owner, ownerPhone: c.phone, type: "รถกระเช้า", lastOil: LAST_OIL_OF[c.id] ?? "12/03/2568" }));
+export const TRIP_CARS: TripCar[] = CARS.map((c) => ({ id: c.id, plate: c.plate, model: c.model, owner: c.owner, ownerPhone: c.phone, ctrl: c.ctrl, type: "รถกระเช้า", lastOil: LAST_OIL_OF[c.id] ?? "12/03/2568" }));
 /* รถจากแผนที่สร้างในฟอร์ม (PLAN_CARS ของ trips.ts) — ประเภทรถและเปลี่ยนน้ำมันครั้งล่าสุดตาม CAND / LAST_OIL ของ data.ts */
 export const PLAN_JOB_CARS: TripCar[] = PLAN_CARS.map((c) => { const i = CAND.findIndex((x) => candId(x.plate) === c.id);
-  return { id: c.id, plate: c.plate, model: c.model, owner: c.owner, ownerPhone: c.phone, type: CAND[i]?.type ?? "รถกระเช้า", lastOil: LAST_OIL[i] ?? "-" }; });
+  return { id: c.id, plate: c.plate, model: c.model, owner: c.owner, ownerPhone: c.phone, ctrl: c.ctrl, type: CAND[i]?.type ?? "รถกระเช้า", lastOil: LAST_OIL[i] ?? "-" }; });
 /* รถที่เพิ่มเข้าไตรมาสของแผนตัวอย่าง (Q_EXTRA · S6 E.1) — screens.js ไม่มีประเภท/น้ำมันครั้งล่าสุด ⇒ รถกระเช้า · "-" */
-const Q_EXTRA_JOB_CARS: TripCar[] = Q_EXTRA.map((c) => ({ id: c.id, plate: c.plate, model: c.model, owner: c.owner, ownerPhone: c.phone, type: "รถกระเช้า", lastOil: "-" }));
+const Q_EXTRA_JOB_CARS: TripCar[] = Q_EXTRA.map((c) => ({ id: c.id, plate: c.plate, model: c.model, owner: c.owner, ownerPhone: c.phone, ctrl: c.ctrl, type: "รถกระเช้า", lastOil: "-" }));
 /* น้ำมันไฮโดรลิกตามแผนของรถ (S21) = ค่าตั้งต้นของ Step 2 (TRIP_OIL ใน screens.js 5 พ.ย. 2569 · ชีตลูกค้า: เดิมเลือก เก็บตัวอย่างและเปลี่ยน ทุกคัน)
    แผนตัวอย่าง: 82-6789 = เก็บตัวอย่างและเปลี่ยน · คันอื่นทุกคันที่ 3 = เปลี่ยนน้ำมัน ที่เหลือ = เก็บตัวอย่าง · แผนที่กำหนดอะไหล่รายคัน = ตัวเลือกที่กำหนดใน S21 */
 export const SAMPLE_OIL = (carId: string): OilChoice => { const i = CARS.findIndex((c) => c.id === carId); return i === 0 ? 2 : i >= 0 && i % 3 === 0 ? 1 : 0; };
@@ -107,19 +107,21 @@ export interface JobTrip {
   carIds: string[];
   /** สถานที่/เบอร์ที่แก้รายคัน (ไม่มี = สำนักงานเจ้าของรถ / เบอร์เจ้าของรถ) */
   locs: Record<string, string>; phones: Record<string, string>;
+  /** ชื่อผู้ดูแลยานพาหนะที่แก้รายคัน (ไม่มี = ผู้ควบคุมรถ · 6 พ.ย. 2569) */
+  names?: Record<string, string>;
   d1: string; d2: string; staff: string[]; createdBy: string; sentAt: string;
   status: "approved"; approvedAt?: string;
 }
 export function toJobTrip(t: Trip, plans: Plan[]): JobTrip {
   const p = plans.find((x) => x.mr === "MR " + t.planId);
   return { id: t.id, planId: t.planId, planMr: "MR " + t.planId, planName: p?.name ?? "", quarter: "ไตรมาส " + t.quarter, q: t.quarter,
-    name: t.name, mode: t.mode, vendor: t.vendor, contract: t.contract, carIds: t.carIds, locs: t.locs, phones: t.phones,
+    name: t.name, mode: t.mode, vendor: t.vendor, contract: t.contract, carIds: t.carIds, locs: t.locs, phones: t.phones, names: t.names,
     d1: t.d1, d2: t.d2, staff: t.staff ?? [], createdBy: t.createdBy, sentAt: t.sentAt, status: "approved", approvedAt: t.approvedAt };
 }
 /* เขียนกลับเป็น Trip (คงค่าอื่นของใบเดิม) */
 const fromJobTrip = (j: JobTrip, prev?: Trip): Trip => ({
   ...prev, id: j.id, planId: j.planId, quarter: j.q, name: j.name, mode: j.mode, vendor: j.vendor, contract: j.contract, carIds: j.carIds,
-  locs: j.locs, phones: j.phones, d1: j.d1, d2: j.d2, staff: j.mode === "self" ? j.staff : prev?.staff, createdBy: j.createdBy, sentAt: j.sentAt,
+  locs: j.locs, phones: j.phones, names: j.names, d1: j.d1, d2: j.d2, staff: j.mode === "self" ? j.staff : prev?.staff, createdBy: j.createdBy, sentAt: j.sentAt,
   status: "approved", approvedAt: j.approvedAt ?? prev?.approvedAt ?? APPROVED_AT, returnReason: undefined, listOnly: undefined,
 });
 /* ชุดตัวอย่าง: TRIP_1 / TRIP_V ของ trips.ts ในสถานะอนุมัติแล้ว (tripAs() ของ screens.js) */
@@ -130,6 +132,7 @@ export const SEED_TRIPS: Record<"T1" | "TV", JobTrip> = {
 export const tripLoc = (t: JobTrip, c: TripCar) => t.locs[c.id] || "สำนักงาน " + c.owner;
 export const tripPhone = (t: JobTrip, c: TripCar) => t.phones[c.id] || c.ownerPhone;
 export const phoneEdited = (t: JobTrip, c: TripCar) => !!t.phones[c.id] && t.phones[c.id] !== c.ownerPhone;
+export const tripCtrl = (t: JobTrip, c: TripCar) => t.names?.[c.id] || c.ctrl || "-";
 /* ช่วงวัน "03/11/2569 – 07/11/2569" · แบบย่อ "03–07/11/2569" (VEH_KV) */
 export const tripRange = (t: JobTrip) => t.d1 + " – " + t.d2;
 export const tripRangeShort = (t: JobTrip) => t.d1.slice(0, 2) + "–" + t.d2;
@@ -140,10 +143,10 @@ export function tripDays(t: JobTrip) {
 }
 /* tripKv — รายละเอียดแผนเดินทาง (ตรวจเอง 8 คู่ · จ้าง 9 คู่) */
 export const tripKv = (t: JobTrip): [string, string][] => [
-  ["ชื่อแผนเดินทาง", t.name], ["แผน", t.planMr + " " + t.planName], ["ไตรมาส", t.quarter], ["รูปแบบดำเนินการ", t.vendor ? "จ้างดำเนินการ" : "กบค. ดำเนินการเอง"],
+  ["ชื่อแผนเดินทาง", t.name], ["แผน", t.planMr + " " + t.planName], ["ไตรมาส", t.quarter], ["รูปแบบดำเนินการ", t.vendor ? "จ้างดำเนินการ" : "ดำเนินการเอง"],
   ...(t.vendor
     ? [["ผู้รับจ้าง", t.vendor], ["เลขที่สัญญา/ใบสั่งจ้าง", t.contract || "-"], ["ช่วงวันทำงาน", tripRange(t)]] as [string, string][]
-    : [["ช่วงวันเดินทาง", tripRange(t)], ["พนักงาน กบค. ซ่อม", t.staff.join(", ")]] as [string, string][]),
+    : [["ช่วงวันเดินทาง", tripRange(t)], ["พนักงานที่เดินทาง", t.staff.join(", ")]] as [string, string][]),
   ["ผู้สร้าง", t.createdBy], ["วันที่ส่ง", t.sentAt],
 ];
 /* ศูนย์ต้นทุนของหน่วยงานเจ้าของรถ (OWNER_CC) */
@@ -413,13 +416,14 @@ export function saveOilResult(t: JobTrip, carId: string, sel: OilSel, files: Upl
 export function saveSafetyDocs(t: JobTrip, carId: string, files: UploadFile[], by = PEOPLE.kbk) {
   patchJob(t.id, carId, (j) => ({ ...j, safety: { files, savedAt: SAFETY_SAVED, savedBy: by } }));
 }
-/** S10 เมนูแก้ไข — เบอร์ติดต่อและสถานที่ของรถในแผนเดินทาง (ค่าว่าง/เท่าค่าเริ่ม = ใช้ค่าเริ่ม) */
-export function editTripCar(t: JobTrip, c: TripCar, phone: string, loc: string) {
+/** S10 เมนูแก้ไข — ผู้ดูแลยานพาหนะ เบอร์ติดต่อ และสถานที่ของรถในแผนเดินทาง (ค่าว่าง/เท่าค่าเริ่ม = ใช้ค่าเริ่ม · tripCarEdit 6 พ.ย. 2569) */
+export function editTripCar(t: JobTrip, c: TripCar, name: string, phone: string, loc: string) {
   patchTrip(t.id, (x) => {
-    const phones = { ...x.phones }, locs = { ...x.locs };
+    const names = { ...(x.names ?? {}) }, phones = { ...x.phones }, locs = { ...x.locs };
+    if (name.trim() && name.trim() !== c.ctrl) names[c.id] = name.trim(); else delete names[c.id];
     if (phone.trim() && phone.trim() !== c.ownerPhone) phones[c.id] = phone.trim(); else delete phones[c.id];
     if (loc.trim() && loc.trim() !== "สำนักงาน " + c.owner) locs[c.id] = loc.trim(); else delete locs[c.id];
-    return { ...x, phones, locs };
+    return { ...x, names, phones, locs };
   });
 }
 /** S10 เมนูลบ — เอารถออกจากแผนเดินทาง (กลับไปให้แผนเดินทางใบอื่นของไตรมาสเลือกได้) */
@@ -435,7 +439,7 @@ export function removeTripCar(t: JobTrip, carId: string) {
 export const SAMPLES = ["T1_start", "T1_afterClose", "T1_afterCannot", "TV_start", "TV_mid"] as const;
 export type SampleName = (typeof SAMPLES)[number];
 /* บทบาทที่สลับให้ตอนเปิดชุดตัวอย่าง — ทุกชุดเป็นของ กบค. */
-export const SAMPLE_ROLE: Record<SampleName, Role> = { T1_start: "กบค.", T1_afterClose: "กบค.", T1_afterCannot: "กบค.", TV_start: "กบค.", TV_mid: "กบค." };
+export const SAMPLE_ROLE: Record<SampleName, Role> = { T1_start: "หน่วยงาน (กกฟ.1)", T1_afterClose: "หน่วยงาน (กกฟ.1)", T1_afterCannot: "หน่วยงาน (กกฟ.1)", TV_start: "หน่วยงาน (กกฟ.1)", TV_mid: "หน่วยงาน (กกฟ.1)" };
 function doing(t: JobTrip, carId: string): Job {
   const r = filledReceive(PEOPLE.kbk);
   return { ...newJob(t.id, carId), status: "doing", step: 2, oilChoice: SAMPLE_OIL(carId), receive: r, photos: r.photos.flat(), startedAt: timesOf(t).start, startedBy: PEOPLE.kbk };

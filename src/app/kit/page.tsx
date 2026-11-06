@@ -249,11 +249,11 @@ export default function Kit() {
         <V label="Breakpoint=Desktop" wide><SectionLabel Title="รายการรถ (6)" SupportingText="Supporting text" Actions={<><TertiaryButton Text="ดูทั้งหมด" /><TertiaryBrandButton Text="เพิ่มรถ" LeadingIconSwap="add-24-300-round" /></>} /></V>
       </Block>
       <Block name="Tab item" node="Tabs (2:9)">
-        {(["Default", "Hover", "Focused"] as const).flatMap((st) => [true, false].map((a) => <V key={st + a} label={`State=${st}, Active=${a ? "True" : "False"}`}><TabItem Text="ไตรมาส 1 (ต.ค.–ธ.ค.)" Badge={3} Active={a} State={st} /></V>))}
+        {(["Default", "Hover", "Focused"] as const).flatMap((st) => [true, false].map((a) => <V key={st + a} label={`State=${st}, Active=${a ? "True" : "False"}`}><TabItem Text="ไตรมาส 1 (ม.ค.–มี.ค.)" Badge={3} Active={a} State={st} /></V>))}
       </Block>
       <Block name="Tabs" node="Tabs (2:9)">
         <V label="Tabs (4 Tab item)" wide>
-          <Tabs>{["ไตรมาส 1 (ต.ค.–ธ.ค.)", "ไตรมาส 2 (ม.ค.–มี.ค.)", "ไตรมาส 3 (เม.ย.–มิ.ย.)", "ไตรมาส 4 (ก.ค.–ก.ย.)"].map((t, i) => <TabItem key={t} Text={t} Badge={[3, 2, 1, 0][i]} Active={tab === i} onClick={() => setTab(i)} />)}</Tabs>
+          <Tabs>{["ไตรมาส 1 (ม.ค.–มี.ค.)", "ไตรมาส 2 (เม.ย.–มิ.ย.)", "ไตรมาส 3 (ก.ค.–ก.ย.)", "ไตรมาส 4 (ต.ค.–ธ.ค.)"].map((t, i) => <TabItem key={t} Text={t} Badge={[3, 2, 1, 0][i]} Active={tab === i} onClick={() => setTab(i)} />)}</Tabs>
         </V>
       </Block>
 

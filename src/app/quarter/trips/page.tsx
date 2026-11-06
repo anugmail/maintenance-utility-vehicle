@@ -3,7 +3,7 @@
    ทางเข้า (รีวิว 5 พ.ย. 2569): เมนูบำรุงรักษาตามวาระ → รายการแผน → "…" ดูรายละเอียด (แผนอนุมัติแล้ว/ดำเนินการ) → รายละเอียดแผน → "ไปหน้าไตรมาส n" → หน้านี้
    Page header "ไตรมาส n" + Badge สถานะแผน (ย้อนกลับ) · Breadcrumbs บำรุงรักษาตามวาระ › <ชื่อแผน> › ไตรมาส n → Content ช่องไฟ 32:
      รายละเอียดแผน (VehicleAndReporterInfo ของไฟล์ Maintain-D · มือถือ DisplayBox) — PLAN_KV ไตรมาส "(n คัน)" · รถของไตรมาส = quarterCars() (แผนจากฟอร์ม S1 = รถที่จัดลงไตรมาส · แผนตัวอย่าง = TRIP_CARS 10 คัน)
-     Section label "รถในไตรมาส 1 (n)" + Secondary button "เพิ่มรถ" (กบค.) + Table (TRIP_Q_COLS + ไอคอนแก้ไข ลบ) — รถที่ยังไม่มีใบ = Pill Gray "ยังไม่มีแผนเดินทาง" · เกิน 10 คันแบ่งหน้า
+     Section label "รถในไตรมาส 1 (n)" + Secondary button "เพิ่มรถ" (หน่วยงาน) + Table (TRIP_Q_COLS + ไอคอนแก้ไข ลบ · คอลัมน์ "ผู้ดูแลยานพาหนะ" ชื่อ + เบอร์ 6 พ.ย. 2569) — รถที่ยังไม่มีใบ = Pill Gray "ยังไม่มีแผนเดินทาง" · เกิน 10 คันแบ่งหน้า
      E.16–E.20 (เพิ่ม ลด แก้ไข รถในไตรมาส 4 พ.ย. 2569 · tripList o.added o.removed · Q_EXTRA · Q_REMOVE_CONFIRM · qAddModal): popup "เพิ่มรถเข้าไตรมาส n" (TripCarPicker)
        · ไอคอนแก้ไข = TripCarEditModal (คันที่อยู่ในแผนเดินทางแล้ว = แก้ที่ใบนั้น) · ไอคอนลบ = ConfirmDialog "ยืนยันการเอารถออกจากไตรมาส n" · ไม่ต้องส่งอนุมัติแผนใหม่
      Section label "แผนเดินทาง (n)" + Tertiary brand button "สร้างแผนเดินทาง" → Table (TRIP_COLS ไอคอน ›) / Empty state/Data empty + Primary button "สร้างแผนเดินทาง"
@@ -33,7 +33,7 @@ import { useSample, type SampleMap } from "@/lib/useSample";
 import { RowMenu, anchorOf, type MenuAnchor } from "@/components/patterns/RowMenu";
 import { MoveModal, type MoveTarget } from "../_shared/MoveModal";
 import { notify, useMock, useRole } from "@/lib/mock/store";
-import { TST, addQuarterCars, badgeOf, editQuarterCar, phoneCell, putTrip, qEditOf, quarterCars, quarterPool, quarterTrips, removeQuarterCar, tripBy, tripPlaces, tripRange, type TripCar } from "@/lib/mock/trips";
+import { TST, addQuarterCars, badgeOf, ctrlCell, editQuarterCar, putTrip, qEditOf, quarterCars, quarterPool, quarterTrips, removeQuarterCar, tripBy, tripPlaces, tripRange, type TripCar } from "@/lib/mock/trips";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { TripCarEditModal } from "../_shared/TripCarEditModal";
 import { TripCarPicker } from "../_shared/TripCarPicker";
@@ -41,7 +41,7 @@ import { Content, DataTable, PagedTable, Section, go, planDetailHref, quarterCru
 
 const TRIP_Q_COLS: TableColumn[] = [
   { head: "ทะเบียน", width: 170, Style: "Lead text" }, { head: "ยี่ห้อ/รุ่น" }, { head: "หน่วยงานเจ้าของรถ", width: 160 },
-  { head: "เบอร์ติดต่อ", width: 150 }, { head: "ช่วงวันเดินทาง", width: 210 }, { head: "แผนเดินทาง", width: 240 },
+  { head: "ผู้ดูแลยานพาหนะ", width: 190 }, { head: "ช่วงวันเดินทาง", width: 210 }, { head: "แผนเดินทาง", width: 240 },
 ];
 const TRIP_COLS: TableColumn[] = [
   { head: "ชื่อแผนเดินทาง", Style: "Lead text" }, { head: "ช่วงวัน", width: 220 }, { head: "รถ (คัน)", width: 100 },
@@ -49,7 +49,7 @@ const TRIP_COLS: TableColumn[] = [
 ];
 
 /* ?sample=S25 (หน้า /scenarios/): ใบ T1 อนุมัติแล้ว 80-9981 ลำปาง บำรุงรักษาไม่ได้ (T1_afterCannot) · ล้างการย้ายและรถในไตรมาสที่แก้ของแผนตัวอย่าง */
-const SAMPLES: SampleMap = { S25: { role: "กบค.", apply: () => { applySample("T1_afterCannot"); setMock((s) => ({ ...s, moves: (s.moves ?? []).filter((m) => m.planId !== "Z7000001"), qcars: Object.fromEntries(Object.entries(s.qcars ?? {}).filter(([k]) => !k.startsWith("Z7000001-"))) })); } } };
+const SAMPLES: SampleMap = { S25: { role: "หน่วยงาน (กกฟ.1)", apply: () => { applySample("T1_afterCannot"); setMock((s) => ({ ...s, moves: (s.moves ?? []).filter((m) => m.planId !== "Z7000001"), qcars: Object.fromEntries(Object.entries(s.qcars ?? {}).filter(([k]) => !k.startsWith("Z7000001-"))) })); } } };
 const MOVE_ICON = "swap_driving_apps_wheel-24-300-round";
 
 function TripList() {
@@ -58,7 +58,7 @@ function TripList() {
   const router = useRouter();
   const sp = useSearchParams();
   const mock = useMock();
-  const kbk = useRole() === "กบค.";
+  const kbk = useRole() === "หน่วยงาน (กกฟ.1)";
   const id = sp.get("id") ?? "Z7000001", q = Number(sp.get("q") ?? 1);
   const nowQ = "ไตรมาส " + q;
   const plan = planOf(mock, id);
@@ -73,7 +73,7 @@ function TripList() {
   const back = useBack(planDetailHref(id));
   const newHref = "/quarter/trips/new/?id=" + id + "&q=" + q;
 
-  /* E.1 เพิ่ม ลด แก้ไข รถในไตรมาส (กบค.) — ไอคอนแก้ไข = เบอร์ติดต่อและสถานที่ · ลบ = เอาออกจากไตรมาส (คันที่อยู่ในแผนเดินทางแล้วมีแค่แก้ไข) */
+  /* E.1 เพิ่ม ลด แก้ไข รถในไตรมาส (กบค.) — ไอคอนแก้ไข = ผู้ดูแลยานพาหนะ เบอร์ติดต่อ และสถานที่ (6 พ.ย. 2569) · ลบ = เอาออกจากไตรมาส (คันที่อยู่ในแผนเดินทางแล้วมีแค่แก้ไข) */
   const edits = qEditOf(mock, id, q);
   const tripOf = (c: TripCar) => trips.find((x) => x.carIds.includes(c.id));
   const moved = new Map(movedInto(mock, id, q).map((m) => [m.carId, m]));
@@ -86,7 +86,7 @@ function TripList() {
     const t = tripOf(c), cannot = t ? cannotTrip(mock, id, q, c.id) : null, from = moved.get(c.id);
     const acts = [{ IconSwap: "stylus-24-300-round", label: "แก้ไข " + c.plate, onClick: () => setEditCar(c) },
       ...(t ? [] : [{ IconSwap: "delete-24-300-round", label: "ลบ " + c.plate, onClick: () => setDropCar(c) }])];
-    const r: TableValue[] = [from ? { text: c.plate, sub: "ย้ายมาจาก" + "ไตรมาส " + from.from } : c.plate, c.model, c.owner, phoneCell(t ?? edits, c), t ? tripRange(t) : "—",
+    const r: TableValue[] = [from ? { text: c.plate, sub: "ย้ายมาจาก" + "ไตรมาส " + from.from } : c.plate, c.model, c.owner, ctrlCell(t ?? edits, c), t ? tripRange(t) : "—",
       cannot ? { pills: [WSTAT.cannot] } : t ? t.name : { pills: [["ยังไม่มีแผนเดินทาง", "Gray"]] }];
     if (!kbk) return r;
     if (cannot) return [...r, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู " + c.plate, onClick: (e) => setMenu({ car: c, anchor: anchorOf(e.currentTarget) }) }],
