@@ -20,8 +20,8 @@
 | `patterns/ConfirmDialog` | Modal (Centered image / Destructive centered image with input) + Modal header Center + Modal footer · มือถือ Bottom sheet + Modal header + Bottom sheet footer | popup ยืนยันตาม `confirm()` ใน core.js ใช้ซ้ำทุก scenario |
 | `patterns/RowMenu` | Dropdown menu ลอยใต้ปุ่ม "…" · มือถือ Bottom sheet + Dropdown menu | เมนูท้ายแถวตาม `menuAt()` / `planMenu()` ใน core.js |
 | ช่อง "จำลองบันทึกไม่สำเร็จ" ในแถบต้นแบบ | Checkbox | ให้เปิดดูจอ "บันทึกไม่สำเร็จ" ของ S1 ได้ (ระบบจริงไม่มี) |
-| หน้า `/scenarios/sample/` (เปิด scenario จากรายการ scenario) | ข้อความ (ไม่มี component) แล้วพาไปหน้าแรกของ scenario | ของต้นแบบ — ใส่แผนตัวอย่าง MR Z7000004 (NEW_PLAN + EDIT_FORM ของ screens.js) ในสถานะที่ S2 S19 S20 S22 เริ่ม / ฟอร์มสร้างแผนที่จัดรถครบ (S21 T.1) + ตั้งบทบาท · แทนปุ่ม "ใส่อะไหล่ตัวอย่าง" ของ `/soon/?s=S21` เดิม (เอาออกแล้ว — S21 ทำแล้วที่ `/car-parts/`) |
-| หน้าเริ่มของบทบาท (S2 S22) | รากเว็บ `/` พาไป `/approvals/plans/` (ผู้อนุมัติ) · `/warehouse/` (กบค. คลัง) · หน้าที่บทบาทไม่มีสิทธิ์ (`/edit/` `/car-parts/` `/approvals/*` `/warehouse/*`) พากลับราก | routes.md §2 · Sidebar มีเมนู "บำรุงรักษาตามวาระ" อันเดียว (href `/`) ⇒ ต้นแบบให้รากพาไปหน้าเริ่มของบทบาท · **รอเคาะชื่อเมนูของแต่ละบทบาทใน Sidebar** |
+| หน้า `/scenarios/sample/` (เปิด scenario จากรายการ scenario) | ข้อความ (ไม่มี component) แล้วพาไปหน้าแรกของ scenario | ของต้นแบบ — ใส่แผนตัวอย่าง MR Z7000004 (NEW_PLAN + EDIT_FORM ของ screens.js) ในสถานะที่ S2 S19 S20 เริ่ม / ฟอร์มสร้างแผนที่จัดรถครบ (S21 T.1) + ตั้งบทบาท · แทนปุ่ม "ใส่อะไหล่ตัวอย่าง" ของ `/soon/?s=S21` เดิม (เอาออกแล้ว — S21 ทำแล้วที่ `/car-parts/`) |
+| หน้าเริ่มของบทบาท (S2) | รากเว็บ `/` พาไป `/approvals/plans/` (ผู้อนุมัติ) · หน้าที่บทบาทไม่มีสิทธิ์ (`/edit/` `/car-parts/` `/approvals/*`) พากลับราก · S22 และบทบาท กบค. คลัง ตัดออก 6 พ.ย. 2569 (หน้า `/warehouse/` เอาออก) | routes.md §2 · Sidebar มีเมนู "บำรุงรักษาตามวาระ" อันเดียว (href `/`) ⇒ ต้นแบบให้รากพาไปหน้าเริ่มของบทบาท · **รอเคาะชื่อเมนูของแต่ละบทบาทใน Sidebar** |
 | S21 อะไหล่ของรถ บนมือถือ | PartRequestStepPanel เรียงลง (PartsInventoryPanel บน · RequestedPartsPanel ล่าง) + การ์ด "รายการเพิ่มเติม" (Spare Part Card Item อะไหล่=เพิ่มอะไหล่) | จอ Figma มือถือใช้แบบสำรอง (Section header + ตาราง + popup "รายการเพิ่มเติม") ซึ่งเลือกอะไหล่จากคลังไม่ได้ — ต้นแบบใช้แผงของไฟล์ Maintain-D ทั้ง 2 ขนาดให้เลือกจากคลังได้ · **รอเคาะ** |
 | S21 ปุ่ม "บันทึกอะไหล่ของรถ" State=Disabled | Primary button | การ์ด "รายการเพิ่มเติม" ของไฟล์ Maintain-D ไม่มี Helper text/Error ⇒ ปิดปุ่มบันทึกจนกว่าจะกรอกชื่ออะไหล่และราคาต่อหน่วยครบ (Condition: ชื่อ ราคา บังคับ) แทนข้อความ error ที่ไม่มีในจอ |
 
@@ -107,9 +107,7 @@
 | Date picker วันนอกเดือน | แสดงเป็น Day State=Disabled ตามไลบรารี (ทั้งต้นและท้ายเดือน) · สัปดาห์เริ่มวันจันทร์ (Mo) ตามไลบรารี |
 | File upload ปุ่มในแถวไฟล์ | In progress = close (ยกเลิก) · Error = restart_alt (ลองใหม่) + close · Completed = download + delete ตาม _File upload item base |
 | S2 S19 แท็บไตรมาสที่ไม่มีรถ (รายละเอียดแผน) | ตารางว่าง (มีแต่หัวตาราง · มือถือไม่มีการ์ด) | จอ Figma วาดแค่ไตรมาส 1 · spec ให้ใช้ Empty state ของ S1 "ยังไม่มีรถในไตรมาสนี้" เมื่อเจ้าของงานเห็นด้วยเท่านั้น |
-| S22 แถวรายการเพิ่มเติมในอะไหล่ที่ต้องเบิก | รหัส "-" · คงเหลือในคลัง "-" · ไม่พอ "-" | อะไหล่ที่ กบค. ระบุเองไม่มีในคลัง — จอ Figma ไม่ได้วาดแถวนี้ |
 | S21 breadcrumb เมื่อเปิดจากฟอร์มแก้ไข | บำรุงรักษาตามวาระ › แก้ไขแผน MR … › อะไหล่ของรถ | จอ Figma วาดเฉพาะทางสร้างแผน ("สร้างแผน") |
-| S22 แถบสถานะคลังในรายละเอียดแผน | ข้อความตามแท็บไตรมาสที่เปิด ("…ไตรมาส n…") | screens.js เช็คเฉพาะไตรมาส 1 · userflow "แถบในแท็บไตรมาส" |
 
 ## ฉ. batch B — S4 S6 S9 S7 S8 S15 S16 S17 (4 พ.ย. 2569)
 

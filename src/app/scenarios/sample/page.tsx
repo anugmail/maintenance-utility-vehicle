@@ -1,7 +1,7 @@
 "use client";
 /* หน้าของต้นแบบ (ไม่ใช่จอของระบบ): เปิด scenario จากหน้า /scenarios/ ที่จุดเริ่มของ scenario นั้น — ใส่แผนตัวอย่าง MR Z7000004 (NEW_PLAN + EDIT_FORM ของ screens.js)
    ในสถานะที่ scenario ใช้ · ตั้งบทบาท · แล้วพาไปหน้าแรกของ scenario
-   ?plan=review|returned|approved (+ acked=1,2 ไตรมาสที่คลังรับทราบแล้ว) · ?draft=1 (ฟอร์มสร้างแผนที่จัดรถ 6 คันแล้ว ยังไม่เลือกอะไหล่ — S21 T.1) · ?role=<บทบาท> · ?go=<หน้า>
+   ?plan=review|returned|approved (acked= ของ S22 เอาออก 6 พ.ย. 2569) · ?draft=1 (ฟอร์มสร้างแผนที่จัดรถ 6 คันแล้ว ยังไม่เลือกอะไหล่ — S21 T.1) · ?role=<บทบาท> · ?go=<หน้า>
    แผน Z7000004 เดิม (ถ้ามี) ถูกแทนที่ · ดู figma-spec/COMPOSED.md */
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
@@ -14,11 +14,10 @@ function Sample() {
   const sp = useSearchParams();
   useEffect(() => {
     const st = sp.get("plan") as PlanStatus | null, role = sp.get("role") as Role | null;
-    const acked = (sp.get("acked") ?? "").split(",").map(Number).filter((n) => n >= 1 && n <= 4);
     if (role && (ROLES as readonly string[]).includes(role)) setRole(role);
     setMock((s) => {
       let n = { ...s };
-      if (st) { const p = samplePlan(st, acked); n = { ...n, plans: [p, ...n.plans.filter((x) => x.mr !== p.mr)], retiredMr: (n.retiredMr ?? []).filter((m) => m !== p.mr), edit: null }; }
+      if (st) { const p = samplePlan(st); n = { ...n, plans: [p, ...n.plans.filter((x) => x.mr !== p.mr)], retiredMr: (n.retiredMr ?? []).filter((m) => m !== p.mr), edit: null }; }
       if (sp.get("draft")) n = { ...n, draft: sampleDraft() };
       return n;
     });

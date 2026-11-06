@@ -1,13 +1,14 @@
 /* รายการ scenario ตามลำดับงาน (SCEN_SEQ ใน screens.js) · ชื่อ ช่วงงาน บทบาท จากตารางหัวข้อ 0 ของ Diagram/01-บำรุงรักษาตามวาระ/14-บำรุงรักษา-userflow.md
    href = หน้าที่ทำแล้ว · ไม่มี href = ยังไม่ทำ (เร็วๆ นี้)
    ?sample=<ชุดตัวอย่าง> (S10 S12 S13 S14 S24) · ?seed=S… (S4–S17 ชุด B) = ใส่ข้อมูลตั้งต้นของ scenario + สลับบทบาท (ของต้นแบบ)
-   S2 S19 S20 S21 S22 เปิดผ่าน /scenarios/sample/ (ใส่แผนตัวอย่าง MR Z7000004 ในสถานะที่ scenario เริ่ม + ตั้งบทบาท แล้วพาไปหน้าแรก)
+   S2 S19 S20 S21 เปิดผ่าน /scenarios/sample/ (ใส่แผนตัวอย่าง MR Z7000004 ในสถานะที่ scenario เริ่ม + ตั้งบทบาท แล้วพาไปหน้าแรก)
    cut = ตัดออกแล้ว (คงไว้ท้ายรายการแบบ SCEN_CUT ของ screens.js) · href ของแถวที่ตัด = หน้าที่ใช้แทน (S10 แผนจ้าง TV_mid = จอ I.22) */
 /* S10 แผนจ้างดำเนินการ (จอ I.22) — ทางที่ใช้แทน S11 S23 */
 const HIRE_S10 = "/trips/detail/?trip=TV&sample=TV_mid";
 const sample = (q: Record<string, string>) => "/scenarios/sample/?" + new URLSearchParams(q).toString();
 /* 6 พ.ย. 2569 ชื่อ S1 S6 S19 S20 S21 ตาม SCENARIOS ของ screens.js: ผู้สร้างแผน/ผู้ดำเนินการ = หน่วยงาน (เดิม กบค.) */
-export interface Scenario { id: string; name: string; phase: string; role: string; href?: string; cut?: string }
+/* alt = ชื่อหน้าที่ใช้แทนของแถวที่ตัดออก (ป้ายปุ่มเปิด "เปิด {alt} (แทน S…)") */
+export interface Scenario { id: string; name: string; phase: string; role: string; href?: string; cut?: string; alt?: string }
 
 export const SCENARIOS: Scenario[] = [
   { id: "S1", name: "หน่วยงาน สร้างแผนบำรุงรักษาประจำปี และจัดรถลงไตรมาส", phase: "เตรียมดำเนินการ", role: "หน่วยงาน (กกฟ.1)", href: sample({ role: "หน่วยงาน (กกฟ.1)", go: "/" }) },
@@ -15,7 +16,6 @@ export const SCENARIOS: Scenario[] = [
   { id: "S19", name: "หน่วยงาน แก้ไขแผนบำรุงรักษา แล้วส่งอนุมัติใหม่", phase: "เตรียมดำเนินการ", role: "หน่วยงาน (กกฟ.1)", href: sample({ plan: "returned", role: "หน่วยงาน (กกฟ.1)", go: "/" }) },
   { id: "S20", name: "หน่วยงาน ลบแผนบำรุงรักษาที่ยังไม่อนุมัติ", phase: "เตรียมดำเนินการ", role: "หน่วยงาน (กกฟ.1)", href: sample({ plan: "review", role: "หน่วยงาน (กกฟ.1)", go: "/" }) },
   { id: "S21", name: "หน่วยงาน กำหนดอะไหล่ของรถแต่ละคันในแผน", phase: "เตรียมดำเนินการ", role: "หน่วยงาน (กกฟ.1)", href: sample({ draft: "1", role: "หน่วยงาน (กกฟ.1)", go: "/new/" }) },
-  { id: "S22", name: "กบค. คลัง รับทราบรายการอะไหล่รายไตรมาส", phase: "เบิก จัดหาอะไหล่", role: "กบค. คลัง", href: sample({ plan: "approved", role: "กบค. คลัง", go: "/warehouse/" }) },
   { id: "S4", name: "กบค. ติดตามความคืบหน้าและเบิกอะไหล่ของไตรมาส", phase: "เบิก จัดหาอะไหล่", role: "หน่วยงาน (กกฟ.1)", href: "/quarter/parts/?id=Z7000001&q=1&seed=S4" },
   { id: "S6", name: "หน่วยงาน ทำแผนเดินทาง (ดำเนินการเอง)", phase: "จ้างดำเนินการ", role: "หน่วยงาน (กกฟ.1)", href: "/quarter/trips/?id=Z7000001&q=1&seed=S6" },
   { id: "S9", name: "กบค. สร้างแผนเดินทางจ้างดำเนินการ (vendor)", phase: "จ้างดำเนินการ", role: "หน่วยงาน (กกฟ.1)", href: "/quarter/trips/new/?id=Z7000001&q=1&mode=hire&seed=S9" },
@@ -33,6 +33,8 @@ export const SCENARIOS: Scenario[] = [
   { id: "S18", name: "กบค. คำนวณต้นทุนการบำรุงรักษา", phase: "คำนวณต้นทุน", role: "หน่วยงาน (กกฟ.1)" },
   { id: "S24", name: "กบค. ติดตามข้อมูลการบำรุงรักษารายคันและกำหนดครั้งถัดไป", phase: "หลังปิดงาน (ข้อมูลรถ)", role: "กบค. · หน่วยงานเจ้าของรถ", href: "/vehicles/maintenance/?sample=S24" },
   /* ตัดออก 4 พ.ย. 2569 เจ้าของงาน "อยากตัด scen ผู้รับจ้าง หรือ vendor ตรวจรับทีละคัน ออก คือ S23 และ S11" — กบค. ปิดงานแผนจ้างเองที่ S10 */
-  { id: "S11", name: "กบค. ตรวจรับงานรายคันของผู้รับจ้างและรับคืนอะไหล่", phase: "ตัดออกแล้ว", role: "-", cut: "ตัดออก 4 พ.ย. · กบค. ปิดงานแผนจ้างเองที่ S10", href: HIRE_S10 },
-  { id: "S23", name: "ผู้รับจ้าง บันทึกงานรายคันและส่งตรวจงาน", phase: "ตัดออกแล้ว", role: "-", cut: "ตัดออก 4 พ.ย. · กบค. ปิดงานแผนจ้างเองที่ S10", href: HIRE_S10 },
+  { id: "S11", name: "กบค. ตรวจรับงานรายคันของผู้รับจ้างและรับคืนอะไหล่", phase: "ตัดออกแล้ว", role: "-", cut: "ตัดออก 4 พ.ย. · กบค. ปิดงานแผนจ้างเองที่ S10", href: HIRE_S10, alt: "S10 แผนจ้าง" },
+  { id: "S23", name: "ผู้รับจ้าง บันทึกงานรายคันและส่งตรวจงาน", phase: "ตัดออกแล้ว", role: "-", cut: "ตัดออก 4 พ.ย. · กบค. ปิดงานแผนจ้างเองที่ S10", href: HIRE_S10, alt: "S10 แผนจ้าง" },
+  /* ตัดออก 6 พ.ย. 2569 เจ้าของงาน "ส่งจำนวนทั้งปีไปที่ smartinventory โดยยังไม่ส่งให้ตัด แค่ inform" — ระบบแจ้ง Smart Inventory ตอนผู้อนุมัติอนุมัติแผน (S2) · SCEN_CUT ของ screens.js */
+  { id: "S22", name: "กบค. คลัง รับทราบรายการอะไหล่รายไตรมาส", phase: "ตัดออกแล้ว", role: "-", cut: "ตัดออก 6 พ.ย. · ระบบแจ้ง Smart Inventory ตอนอนุมัติแผน (S2)", href: sample({ plan: "review", role: "ผู้อนุมัติ", go: "/approvals/plans/" }), alt: "S2 อนุมัติแผน" },
 ];

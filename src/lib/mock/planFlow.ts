@@ -1,11 +1,11 @@
 "use client";
-/* ตัวช่วยของวงจรแผน S2 S19 S20 S21 S22 — ยกจาก screens.js (npKv · planBody · quarterParts + MANUAL_ROW · wst · whParts · planAs · EDIT_FORM)
+/* ตัวช่วยของวงจรแผน S2 S19 S20 S21 — ยกจาก screens.js (npKv · planBody · quarterParts + MANUAL_ROW · planAs · EDIT_FORM) · S22 (wst · whParts) ตัดออก 6 พ.ย. 2569
    แผนอ้างด้วย id = เลขที่ MR ตัด "MR " (เช่น Z7000004) ตาม routes.md · รถอ้างด้วยทะเบียนไม่มีจังหวัด (เช่น 82-6789) */
 import { useRouter } from "next/navigation";
 import { useEffect, useSyncExternalStore } from "react";
 import type { BadgeOutlineColor } from "@/components/vms/BadgeOutline";
 import type { PillColor } from "@/components/vms/PillOutline";
-import { CAND, DISTRICTS, LAST_OIL, NEW_PLAN_DATE, OIL_OPTS, OIL_PLAN_OPTS, OIL_SPEC, PARTS, PART_PRICE, PLAN_CREATOR, REGIONS, RETURN_REASON, UNIT_FLEET, WH_ACK, WH_LIST, dCode, oilChanges, type ManualPart, type Plan, type PlanStatus } from "./data";
+import { CAND, DISTRICTS, LAST_OIL, NEW_PLAN_DATE, OIL_OPTS, OIL_PLAN_OPTS, OIL_SPEC, PARTS, PART_PRICE, PLAN_CREATOR, REGIONS, RETURN_REASON, UNIT_FLEET, dCode, oilChanges, type ManualPart, type Plan, type PlanStatus } from "./data";
 import { CAR_PICK } from "./data";
 import { allocScope, carQty, inQuarter, planScope, quarterParts, type Draft } from "./plan";
 import { accPlans, accRows } from "./acceptance";
@@ -20,7 +20,7 @@ export const carIndexOf = (param: string | null) => (param ? CAND.findIndex((c) 
 
 /* ---------- หน้าเริ่มของบทบาท (routes.md §2) · บทบาทที่ไม่มีสิทธิ์เปิดหน้า → กลับราก ---------- */
 export const ROLE_HOME: Partial<Record<Role, string>> = {
-  "ผู้อนุมัติ": "/approvals/plans/", "กบค. คลัง": "/warehouse/", "หัวหน้า กบค.": "/head-review/", "กรย.": "/trips-view/", "หน่วยงานเจ้าของรถ": "/trips-view/",
+  "ผู้อนุมัติ": "/approvals/plans/", "หัวหน้า กบค.": "/head-review/", "กรย.": "/trips-view/", "หน่วยงานเจ้าของรถ": "/trips-view/",
 };
 /* หน้าเริ่มที่ขึ้นกับข้อมูล (ต้นแบบ — sidebar เมนูอื่นยังไม่พาไปไหน ⇒ เข้ารากแล้วไปหน้าที่มีงานรอ · COMPOSED.md หัวข้อ ช.)
    ผู้อนุมัติ: มีแผนเดินทางรออนุมัติ → /approvals/trips/ · หน่วยงานเจ้าของรถ: มีรถรอยอมรับผล / แผนพร้อมตรวจหลักฐาน → /acceptance/
@@ -138,16 +138,6 @@ export function planKv(p: Plan): [string, string][] {
 /* จำนวนรถรายไตรมาสจาก perQ (แผนตัวอย่างที่ไม่มีรายคัน) หรือจากการจัดรถ */
 export const quarterCount = (p: Plan, q: number) => (p.alloc ? carsIn(allocOf(p), q).length : Number((p.perQ.match(new RegExp("ไตรมาส " + q + ": (\\d+)")) || [])[1] || 0));
 
-/* ---------- คลังรับทราบ (S22 wst) ---------- */
-export const whQuarters = (p: Plan) => [1, 2, 3, 4].filter((q) => quarterCount(p, q) > 0);
-export const warehouseStatus = (n: number, of: number): [string, PillColor] =>
-  n === 0 ? ["รอรับทราบ", "Warning"] : n < of ? ["รับทราบ " + n + "/" + of + " ไตรมาส", "Info"] : ["รับทราบครบแล้ว", "Success"];
-/* จำนวนที่รับทราบ: ข้อมูลจริง (ack) หรือค่าตัวอย่างของหน้า (WH_LIST สำหรับหน้าคลัง · WH_ACK สำหรับหน้า กบค.) */
-export const ackCount = (p: Plan, page: "warehouse" | "kbk") => (p.ack ? Object.keys(p.ack).length : page === "warehouse" ? WH_LIST[p.mr]?.acked ?? 0 : WH_ACK[p.mr] ?? 0);
-export const whStatusOf = (p: Plan) => warehouseStatus(ackCount(p, "warehouse"), whQuarters(p).length);
-/* อะไหล่ที่ต้องเบิกของไตรมาส เทียบคงเหลือ (whParts) */
-export const whRows = (p: Plan, q: number) => quarterRows(allocOf(p), q).map((r) => [r.name, r.code, String(r.qty), r.unit, r.stock != null ? String(r.stock) : "-", r.stock != null && r.qty > r.stock ? String(r.qty - r.stock) : "-"]);
-
 /* ---------- แผนตัวอย่าง (NEW_PLAN + EDIT_FORM ของ screens.js) สำหรับเปิด scenario จาก /scenarios/ ----------
    6 พ.ย. 2569: รถทุกคันของหน่วยงาน (UNIT_FLEET 10 คัน) อยู่ในไตรมาส (A_ALL) · ทุกคันกำหนดอะไหล่แล้ว (A_PICKS · A_OILS) · 83-1207 ไม่เบิกอะไหล่ (A_DRAW)
    ลำดับในตัวแปรเหล่านี้ = ลำดับใน CAND ของ screens.js → แปลงเป็นลำดับใน CAND ของเว็บด้วย UNIT_FLEET */
@@ -161,6 +151,7 @@ const A_DRAW: Record<number, "none"> = Object.fromEntries(FIG_A_DRAW.map((k) => 
 const A_PICKS: Record<number, number[]> = Object.fromEntries(UNIT_FLEET.filter((c) => !A_DRAW[c]).map((c) => [c, oilChanges(A_OILS[c]) ? [0, ...CAR_PICK] : [...CAR_PICK]]));
 export const SAMPLE_NAME = "บำรุงรักษารถ กกฟ.1 ปีงบประมาณ 2570";   // NEW_PLAN[1]
 export const R2 = { regions: [REGIONS[1]], districts: [...DISTRICTS[REGIONS[1]]], types: ["รถกระเช้า"] };
+/* acked (ไตรมาสที่คลังรับทราบ · S22) ไม่มีหน้าไหนอ่านแล้วหลังตัด S22 6 พ.ย. 2569 — คงไว้ให้เคสพาดู S4 (cases/parts-progress) ที่ยังส่งค่านี้ เอาออกหลังรวมงาน S4 */
 export function samplePlan(status: PlanStatus, acked?: number[]): Plan {
   const p: Plan = {
     mr: "MR Z7000004", name: SAMPLE_NAME, region: REGIONS[0] + ", " + REGIONS[1], nowQ: "ไตรมาส 1", cars: UNIT_FLEET.length, status, created: NEW_PLAN_DATE,

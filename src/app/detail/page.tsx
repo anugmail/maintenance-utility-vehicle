@@ -1,11 +1,11 @@
 "use client";
-/* S19 S20 S22 · หน้ารายละเอียดแผน ฝั่ง กบค. (/detail/?id=Z7000004) — planDetail() ใน screens.js
+/* S19 S20 · หน้ารายละเอียดแผน ฝั่ง กบค. (/detail/?id=Z7000004) — planDetail() ใน screens.js
    หลังส่งอนุมัติ 3 สถานะ (รีวิวทีมออกแบบ 5 พ.ย. 2569 · planDetail o.readonly · userflow S1 "หน้า รายละเอียดแผน หลังส่งอนุมัติ"):
    Page header: "เลขที่ MR …" · ย้อนกลับ · Breadcrumbs บำรุงรักษาตามวาระ › ชื่อแผน · Badge outline = สถานะแผน
      ปุ่มหัว (เฉพาะ กบค.): รออนุมัติ = ดูอย่างเดียว ไม่มีปุ่ม (ขัดกับ S19 S20 — Q53 · ลบ/แก้ไขแผนรออนุมัติยังทำได้จากเมนู "…" ของรายการ)
        · ส่งกลับแก้ไข = Secondary danger button "ลบแผน" + Secondary button "แก้ไข" (→ S19) · อนุมัติแล้ว = "แก้ไข" อย่างเดียว · ดำเนินการแล้วขึ้นไป = ไม่มีปุ่ม (ซ่อน ไม่ disable)
      มือถือ: ปุ่มอยู่ใต้หัวข้อ แบ่งเท่ากัน
-   เนื้อหา ช่องไฟ 32: (ส่งกลับแก้ไข) Alert Error "ผู้อนุมัติส่งกลับให้แก้ไข" + เหตุผล → PlanBody (อนุมัติแล้ว/ดำเนินการ: แถบสถานะคลังของไตรมาสที่เปิด S22 U.8)
+   เนื้อหา ช่องไฟ 32: (ส่งกลับแก้ไข) Alert Error "ผู้อนุมัติส่งกลับให้แก้ไข" + เหตุผล → PlanBody (แถบสถานะคลังรับทราบ S22 U.8 ตัดออก 6 พ.ย. 2569)
    ลบแผน → ยืนยันการลบแผน (S20 S.5) → กลับหน้ารายการ + toast "ลบแผนบำรุงรักษาสำเร็จ" · แก้ไข → /edit/ (S19)
    ทางไปขั้นถัดไป เฉพาะ กบค. · แผนอนุมัติแล้ว/ดำเนินการ (planDetailQ ใน screens.js · S6 ทางเข้า 5 พ.ย. 2569):
      Section label "รถในแผน" Primary action (Tertiary brand button) "ไปหน้าไตรมาส n" ตามแท็บที่เปิด (Q54) → หน้า "ไตรมาส n" (/quarter/trips/)
@@ -68,7 +68,7 @@ function Detail() {
         crumbs={[{ Text: "บำรุงรักษาตามวาระ", href: "/" }, { Text: plan.name }]} Actions={actions} />
       <div className="flex flex-col gap-8">
         {st === "returned" && <Alert Color="Error" Text="ผู้อนุมัติส่งกลับให้แก้ไข" SupportingText={plan.returnReason} />}
-        <PlanBody plan={plan} q={q} onQ={setQ} wh={st === "approved" || st === "active"} actions={qActions} />
+        <PlanBody plan={plan} q={q} onQ={setQ} actions={qActions} />
       </div>
       <ConfirmDialog spec={del ? DELETE_CONFIRM : null} onCancel={() => setDel(false)} onOk={() => { setDel(false); deletePlan(plan.mr); router.push("/"); }} />
     </>
