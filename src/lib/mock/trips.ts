@@ -173,8 +173,8 @@ export const tripBy = (t: Trip) => t.vendor || "ดำเนินการเ�
 export const tripLoc = (t: Pick<Trip, "locs">, c: TripCar) => t.locs[c.id] || "สำนักงาน " + c.owner;
 export const tripPhone = (t: Pick<Trip, "phones">, c: TripCar) => t.phones[c.id] || c.phone || "-";
 export const tripCtrl = (t: Pick<Trip, "names"> | null, c: TripCar) => t?.names?.[c.id] || c.ctrl || "-";
-/* ช่อง "ผู้ดูแลยานพาหนะ" (tripPhoneCell ของ screens.js 6 พ.ย. 2569) = ชื่อ (บรรทัดบน) + เบอร์ (บรรทัดรอง) */
-export const ctrlCell = (t: Pick<Trip, "phones" | "names"> | null, c: TripCar) => ({ text: tripCtrl(t, c), sub: (t && t.phones[c.id]) || c.phone || "-" });
+/* ช่อง "เบอร์ติดต่อ" (tripPhoneCell ของ screens.js 9 พ.ย. 2569 · R79) = เบอร์ (บรรทัดบน) + ชื่อผู้ดูแลยานพาหนะ (บรรทัดรอง) · เดิม 6 พ.ย. ชื่อบน เบอร์ล่าง */
+export const ctrlCell = (t: Pick<Trip, "phones" | "names"> | null, c: TripCar) => ({ text: (t && t.phones[c.id]) || c.phone || "-", sub: tripCtrl(t, c) });
 export const locCell = (t: Pick<Trip, "locs">, c: TripCar) => ({ text: tripLoc(t, c), sub: t.locs[c.id] ? "แก้จากสำนักงานเจ้าของยานพาหนะ" : "ค่าเริ่มต้น สำนักงานที่ยานพาหนะอยู่" });
 export const tripRange = (t: Pick<Trip, "d1" | "d2">) => t.d1 + " – " + t.d2;
 /* วันดำเนินการ + ตารางยานพาหนะของแผนเดินทาง ชุดเดียว (R82 R83) อยู่ที่ tripCols.ts · vTrip = ค่าของใบที่ตารางใช้ (แผนจ้าง = ช่วงวันทำงาน) */

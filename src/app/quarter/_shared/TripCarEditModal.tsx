@@ -1,10 +1,11 @@
 "use client";
 /* popup แก้ไขยานพาหนะในแผนเดินทาง — tripCarEdit() ใน screens.js (S6 E.5 E.24 E.25 · S9 · S10 เมนูแก้ไข)
    = patterns/FormModal (Modal Type=Form md · มือถือ Bottom sheet) · ปุ่ม ยกเลิก / บันทึก · ไม่มี toast
-   ยานพาหนะยังไม่อยู่ในแผนเดินทาง (หน้าไตรมาส · ไม่ส่ง work) = 3 ช่องเดิม หัว "แก้ไขผู้ดูแลยานพาหนะและสถานที่ · {ทะเบียน}" ("ผู้ดูแลยานพาหนะ" · "เบอร์ติดต่อ" · "สถานที่บำรุงรักษา")
+   ยานพาหนะยังไม่อยู่ในแผนเดินทาง (หน้าไตรมาส · ไม่ส่ง work) = 3 ช่องเดิม หัว "แก้ไขผู้ดูแลยานพาหนะและสถานที่ · {ทะเบียน}" ("เบอร์ติดต่อ" · "ผู้ดูแลยานพาหนะ" · "สถานที่บำรุงรักษา")
+   9 พ.ย. 2569 (Figma c28dd82 · R79) ทั้งสองแบบเรียงเบอร์ติดต่อก่อนผู้ดูแลยานพาหนะ ตามคอลัมน์ "เบอร์ติดต่อ" (เบอร์บรรทัดบน ชื่อบรรทัดรอง)
    ยานพาหนะอยู่ในแผนเดินทาง / ฟอร์มแผนเดินทาง (ส่ง work · R83 · 6 พ.ย. 2569 รีวิว S6 "เพิ่มการเลือกวันดำเนิน จาก icon แก้ไข ได้ด้วย"
    + "โดยเลือกได้ไม่เกิน range ของแผนที่กำหนดมาเท่านั้น" + "เลือกซ้ำวันกันได้ เลือกเป็นช่วงวัน") = หัว "แก้ไขยานพาหนะในแผนเดินทาง · {ทะเบียน}" Card form row 3 แถว:
-     แถว 1 ผู้ดูแลยานพาหนะ | เบอร์ติดต่อ (Input 1 + Input 2) · แถว 2 สถานที่บำรุงรักษา · แถว 3 วันดำเนินการ (Text input ไอคอน calendar_month "วว/ดด/ปปปป - วว/ดด/ปปปป")
+     แถว 1 เบอร์ติดต่อ | ผู้ดูแลยานพาหนะ (Input 1 + Input 2) · แถว 2 สถานที่บำรุงรักษา · แถว 3 วันดำเนินการ (Text input ไอคอน calendar_month "วว/ดด/ปปปป - วว/ดด/ปปปป")
      กดช่อง = Date picker Type=Single ใต้ช่อง (ภาษาไทยตาม TH_PICKER · ปุ่ม ปิด / ตกลง · ไม่มีปุ่มวันนี้) เลือกเป็นช่วง (Selected day + Day in range) · วันนอกช่วงวันเดินทาง (แผนจ้าง ช่วงวันทำงาน) = Disabled กดไม่ได้
      เลือกวันเดียวได้ · หลายคันซ้ำวันได้ · ไม่บังคับ (ค่าเริ่มต้นทั้งช่วง) · ช่วงวันในฟอร์มยังไม่เลือก = ช่องกดไม่ได้ (State Disabled)
      ปฏิทินวางใต้ช่องในเนื้อหาของ popup (Modal ของไลบรารีเลื่อนเนื้อหา overlay ทับขอบไม่ได้) · มือถือ: Figma ยังไม่มีจอ ⇒ ปฏิทินใต้ช่องใน Bottom sheet (COMPOSED.md หัวข้อ ผ.)
@@ -52,8 +53,8 @@ function Inner({ car, trip, work, onSave, onCancel }: TripCarEditProps & { car: 
   if (!work) {
     return (
       <FormModal open title={"แก้ไขผู้ดูแลยานพาหนะและสถานที่ · " + car.plate}
-        fields={[{ label: "ผู้ดูแลยานพาหนะ", value: name }, { label: "เบอร์ติดต่อ", value: phone }, { label: "สถานที่บำรุงรักษา", value: loc }]}
-        onField={(i, v) => (i === 0 ? setName(v) : i === 1 ? setPhone(v) : setLoc(v))}
+        fields={[{ label: "เบอร์ติดต่อ", value: phone }, { label: "ผู้ดูแลยานพาหนะ", value: name }, { label: "สถานที่บำรุงรักษา", value: loc }]}
+        onField={(i, v) => (i === 0 ? setPhone(v) : i === 1 ? setName(v) : setLoc(v))}
         onCancel={onCancel} onOk={() => onSave(applyCarEdit(trip, car, name, phone, loc))} />
     );
   }
@@ -76,9 +77,9 @@ function Inner({ car, trip, work, onSave, onCancel }: TripCarEditProps & { car: 
   return (
     <FormModal open title={"แก้ไขยานพาหนะในแผนเดินทาง · " + car.plate} onCancel={onCancel} onOk={save}>
       {mob
-        ? <div className="flex flex-col gap-4">{nameIn}{phoneIn}{locIn}{dateIn}{picker}</div>
+        ? <div className="flex flex-col gap-4">{phoneIn}{nameIn}{locIn}{dateIn}{picker}</div>
         : <>
-          <CardFormRow Input1={nameIn} Input2={phoneIn} />
+          <CardFormRow Input1={phoneIn} Input2={nameIn} />
           <CardFormRow Input1={locIn} />
           <CardFormRow Input1={dateIn} />
           {picker}

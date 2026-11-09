@@ -65,7 +65,7 @@ export function TripDetail() {
     return MENU.slice(0, kbk ? menuCount(st) : 1).map((m, i) => ({ ...m, onClick: run[i] }));
   };
   const status = (c: TripCar) => { const j = getJob(s, trip.id, c.id); const tag = oilTag(j); return { pill: WSTAT[j.status], tag: tag ? OIL_TAG[tag] : undefined }; };
-  /* ช่องตามชุดกลาง (R82): ผู้ดูแลยานพาหนะ = ชื่อ + เบอร์บรรทัดรอง · วันดำเนินการรายคัน (R83) */
+  /* ช่องตามชุดกลาง (R82): เบอร์ติดต่อ = เบอร์ + ชื่อผู้ดูแลยานพาหนะบรรทัดรอง (9 พ.ย. 2569) · วันดำเนินการรายคัน (R83) */
   const vt: VTrip = { d1: trip.d1, d2: trip.d2, works: trip.works, locs: trip.locs, phones: trip.phones, names: trip.names, hire: trip.mode === "hire" };
   const cells = (c: TripCar) => tripVCells(vcar(c), vt, UNIT_SUB);
   const parts = tripPartRows(mock, { planId: trip.planId, quarter: trip.q, carIds: trip.carIds });
