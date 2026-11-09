@@ -6,7 +6,10 @@
      (จ้าง) ผู้รับจ้าง (Section header) — Input dropdown ค้นหาผู้รับจ้าง + Dropdown list (ชื่อ · ประเภทรถ) · Text input เลขที่สัญญา/ใบสั่งจ้าง (ถ้ามี)
      ช่วงวันเดินทาง | ช่วงวันทำงาน (Section header) — Text input 2 ช่อง + ช่องว่าง (หนึ่งในสาม) · desktop โฟกัสแล้วเปิด Date picker Type=Dual ใต้ช่องเริ่ม
      (ตรวจเอง) พนักงานที่เดินทาง (Section header + Badge "n คน") — 6 พ.ย. 2569 เจ้าของงาน "เปลี่ยนคำของพนักงาน กบค" + "จำนวนคนเดินทาง เพิ่ม ได้ไม่จำกัด"
-       1 คน 1 แถว: Input dropdown ค้นหา "พนักงานคนที่ n" + Tertiary button ไอคอนลบอย่างเดียว · Secondary button "เพิ่มพนักงาน" (ไอคอน add) ใต้แถว
+       9 พ.ย. 2569 เจ้าของงาน "พนักงานสามารถเพิ่มได้ไม่จำกัด และ เป็น 1 คน 1 แถว เป็นชื่อ สกุล ตำแหน่ง เบอร์โทร" (Figma d5d40a2)
+       1 คน 1 แถว: Input dropdown ค้นหา "ชื่อ-สกุล" · Text input "ตำแหน่ง" State=Readonly (เติมจากข้อมูลพนักงาน STAFF_INFO เมื่อเลือกชื่อ · ว่าง "-")
+         · Text input "เบอร์โทร" (เติมจากข้อมูลพนักงาน แก้ได้ · "0XX-XXX-XXXX") · Tertiary button ไอคอนลบอย่างเดียวท้ายแถว · Secondary button "เพิ่มพนักงาน" (ไอคอน add) ใต้แถว
+         desktop 3 ช่องกว้างเท่ากัน + ปุ่มลบไม่ยืด ชิดล่าง · มือถือเรียงลง ช่องไฟ 16
        แบบเดียวกับแถวพนักงานในค่าใช้จ่ายตอนปิดงาน (closeCosts) · ฟอร์มว่างแสดง 2 แถว · คนที่ 1 และ 2 บังคับ ("กรุณาเลือกพนักงาน") · ลบจนเหลือน้อยกว่า 2 แถว = เติมแถวว่างให้ครบ 2
      รถในแผนเดินทาง (Section header + Badge จำนวน + Secondary button "เพิ่มรถ") — Table (TRIP_CAR_COLS ไอคอนแก้ไข/ลบ) / Empty state/Data empty
        คอลัมน์ "ผู้ดูแลยานพาหนะ" = ชื่อ + เบอร์ (บรรทัดรอง) ค่าเริ่มต้นผู้ควบคุมรถ (6 พ.ย. 2569)
@@ -42,7 +45,7 @@ import { tripPartRows } from "@/lib/mock/moves";
 import { QPART_COLS, qpartRow } from "@/lib/mock/plan";
 import { tripVCells, tripVCols, workOf } from "@/lib/mock/tripCols";
 import { notify, useMock, useRole } from "@/lib/mock/store";
-import { CREATOR, SENT_AT, STAFF, VENDORS, qEditOf, quarterCars, carOf, nextTripId, putTrip, quarterTrips, tripsOf, type Trip, type TripCar } from "@/lib/mock/trips";
+import { CREATOR, SENT_AT, STAFF, VENDORS, qEditOf, quarterCars, carOf, nextTripId, putTrip, quarterTrips, staffPos, staffTelOf, tripsOf, type Trip, type TripCar } from "@/lib/mock/trips";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useOutside } from "@/lib/useOutside";
 import { TripCarEditModal, fromThai, toThai, type CarOverrides } from "./TripCarEditModal";
@@ -55,12 +58,16 @@ const TRIP_PARTS_EMPTY = "เพิ่มยานพาหนะเข้าแ
 const MODES = ["ดำเนินการเอง", "จ้างดำเนินการ"];   // 6 พ.ย. 2569 เจ้าของงาน "เปลี่ยนคำ กบค ดำเนินการเอง เป็น ดำเนินการเอง"
 
 
-interface Values { name: string; mode: "self" | "hire"; vendor: string; contract: string; carIds: string[]; locs: Record<string, string>; phones: Record<string, string>; names: Record<string, string>; works: Record<string, [string, string]>; d1: string; d2: string; staff: string[] }
+/* staff = ชื่อ-สกุลรายแถว · tels = เบอร์โทรรายแถว (ลำดับเดียวกัน) */
+interface Values { name: string; mode: "self" | "hire"; vendor: string; contract: string; carIds: string[]; locs: Record<string, string>; phones: Record<string, string>; names: Record<string, string>; works: Record<string, [string, string]>; d1: string; d2: string; staff: string[]; tels: string[] }
 /* แถวพนักงานอย่างน้อย 2 แถว (ฟอร์มว่างแสดง 2 แถว) */
 const atLeast2 = (a: string[]) => (a.length >= 2 ? a : [...a, "", ""].slice(0, 2));
-const fromTrip = (t?: Trip, mode: "self" | "hire" = "self"): Values => t
-  ? { name: t.name, mode: t.mode, vendor: t.vendor ?? "", contract: t.contract ?? "", carIds: [...t.carIds], locs: { ...t.locs }, phones: { ...t.phones }, names: { ...(t.names ?? {}) }, works: { ...(t.works ?? {}) }, d1: t.d1, d2: t.d2, staff: atLeast2([...(t.staff ?? [])]) }
-  : { name: "", mode, vendor: "", contract: "", carIds: [], locs: {}, phones: {}, names: {}, works: {}, d1: "", d2: "", staff: ["", ""] };
+const fromTrip = (t?: Trip, mode: "self" | "hire" = "self"): Values => {
+  if (!t) return { name: "", mode, vendor: "", contract: "", carIds: [], locs: {}, phones: {}, names: {}, works: {}, d1: "", d2: "", staff: ["", ""], tels: ["", ""] };
+  const staff = atLeast2([...(t.staff ?? [])]);
+  return { name: t.name, mode: t.mode, vendor: t.vendor ?? "", contract: t.contract ?? "", carIds: [...t.carIds], locs: { ...t.locs }, phones: { ...t.phones }, names: { ...(t.names ?? {}) }, works: { ...(t.works ?? {}) }, d1: t.d1, d2: t.d2,
+    staff, tels: staff.map((n) => (n ? staffTelOf(t, n) : "")) };
+};
 
 /* ช่องเลือกแบบค้นหาได้ (Input dropdown property Cursor + Dropdown list) */
 function SearchPick({ label, placeholder, value, options, onPick, error, onLeave }: { label: string; placeholder: string; value: string; options: { Text: string; SupportingText?: string }[]; onPick: (v: string) => void; error?: string; onLeave?: () => void }) {
@@ -139,7 +146,8 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
       id: edit?.id ?? nextTripId(all, v.mode), planId, quarter: q, name: v.name.trim(), mode: v.mode,
       vendor: hire ? v.vendor : undefined, contract: hire ? v.contract.trim() || undefined : undefined,
       carIds: v.carIds, locs: v.locs, phones: v.phones, names: v.names, works: v.works, d1: v.d1.trim(), d2: v.d2.trim(), status: "review",
-      staff: hire ? undefined : v.staff.filter(Boolean), createdBy: edit?.createdBy ?? CREATOR, sentAt: edit?.sentAt ?? SENT_AT,
+      staff: hire ? undefined : v.staff.filter(Boolean), staffTel: hire ? undefined : Object.fromEntries(v.staff.flatMap((n, i) => (n ? [[n, v.tels[i]?.trim() ?? ""]] : []))),
+      createdBy: edit?.createdBy ?? CREATOR, sentAt: edit?.sentAt ?? SENT_AT,
     };
     putTrip(t);
     notify(edit ? "ส่งแผนเดินทางให้ผู้อนุมัติใหม่แล้ว" : "สร้างแผนเดินทางสำเร็จ · ส่งให้ผู้อนุมัติแล้ว");
@@ -148,18 +156,25 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
 
   const row = (kids: ReactNode, n: 2 | 3) => <div className={cx(mob ? "flex flex-col gap-4" : n === 3 ? "grid grid-cols-3 gap-6" : "grid grid-cols-2 gap-6")}>{kids}</div>;
   const range: DateRange = { start: fromThai(v.d1), end: fromThai(v.d2) };
-  /* แถวพนักงาน 1 คน = Input dropdown ค้นหา + ปุ่มลบไอคอนอย่างเดียว (แบบ costRow ของหน้าปิดงาน · desktop ช่องครึ่งแถว ปุ่มลบชิดช่อง) */
-  const dropStaff = (i: number) => { put({ staff: atLeast2(v.staff.filter((_, j) => j !== i)) }); setTouched((t) => ({ ...t, staff0: false, staff1: false })); };
+  /* แถวพนักงาน 1 คน = ชื่อ-สกุล (Input dropdown ค้นหา) · ตำแหน่ง (Readonly) · เบอร์โทร · ปุ่มลบไอคอนอย่างเดียวท้ายแถว (tripForm ของ screens.js 9 พ.ย. 2569) */
+  const dropStaff = (i: number) => {
+    const keep = (a: string[]) => atLeast2(a.filter((_, j) => j !== i));
+    put({ staff: keep(v.staff), tels: keep(v.tels) }); setTouched((t) => ({ ...t, staff0: false, staff1: false }));
+  };
   const staffRow = (i: number) => {
+    const no = "คนที่ " + (i + 1);
     const pick = (
-      <SearchPick label={"พนักงานคนที่ " + (i + 1)} placeholder="ค้นหาชื่อ-นามสกุล, รหัสพนักงาน" value={v.staff[i]}
+      <SearchPick label="ชื่อ-สกุล" placeholder="ค้นหาชื่อ-นามสกุล, รหัสพนักงาน" value={v.staff[i]}
         options={STAFF.filter((n) => !v.staff.some((s, j) => j !== i && s === n)).map((n) => ({ Text: n }))}
-        onPick={(n) => put({ staff: v.staff.map((s, j) => (j === i ? n : s)) })} error={i < 2 ? E("staff" + i, "กรุณาเลือกพนักงาน", !v.staff[i]) : undefined} onLeave={touch("staff" + i)} />
+        onPick={(n) => put({ staff: v.staff.map((s, j) => (j === i ? n : s)), tels: v.staff.map((_, j) => (j === i ? staffTelOf(edit, n) : v.tels[j] ?? "")) })}
+        error={i < 2 ? E("staff" + i, "กรุณาเลือกพนักงาน", !v.staff[i]) : undefined} onLeave={touch("staff" + i)} />
     );
-    const del = <TertiaryButton LeadingIconSwap="delete-24-300-round" ButtonText={false} aria-label={"ลบพนักงานคนที่ " + (i + 1)} title={"ลบพนักงานคนที่ " + (i + 1)} onClick={() => dropStaff(i)} />;
+    const pos = <TextInput LabelText="ตำแหน่ง" State="Readonly" readOnly Text={staffPos(v.staff[i])} Placeholder="-" aria-label={"ตำแหน่ง " + no} />;
+    const tel = <TextInput LabelText="เบอร์โทร" Text={v.tels[i] ?? ""} Placeholder="0XX-XXX-XXXX" onChange={(x) => put({ tels: v.staff.map((_, j) => (j === i ? x : v.tels[j] ?? "")) })} aria-label={"เบอร์โทร " + no} />;
+    const del = <TertiaryButton LeadingIconSwap="delete-24-300-round" ButtonText={false} aria-label={"ลบพนักงาน" + no} title={"ลบพนักงาน" + no} onClick={() => dropStaff(i)} />;
     return mob
-      ? <div key={i} className="flex flex-col gap-4">{pick}<div className="flex">{del}</div></div>
-      : <div key={i} className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-end gap-6">{pick}{del}<span /></div>;
+      ? <div key={i} className="flex flex-col gap-4">{pick}{pos}{tel}<div className="flex">{del}</div></div>
+      : <div key={i} className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_auto] items-end gap-6">{pick}{pos}{tel}{del}</div>;
   };
   const nStaff = v.staff.filter(Boolean).length;
 
@@ -213,7 +228,7 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
             <SectionHeader Title="พนักงานที่เดินทาง" Badge={nStaff ? nStaff + " คน" : null} />
             {v.staff.map((_, i) => staffRow(i))}
             <div className="flex"><SecondaryButton Text="เพิ่มพนักงาน" LeadingIconSwap="add-24-300-round" Size={mob ? "lg" : "md"} className={mob ? "w-full" : undefined}
-              onClick={() => put({ staff: [...v.staff, ""] })} /></div>
+              onClick={() => put({ staff: [...v.staff, ""], tels: [...v.staff.map((_, j) => v.tels[j] ?? ""), ""] })} /></div>
           </Section>
         )}
 

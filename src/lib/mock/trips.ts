@@ -127,6 +127,8 @@ export interface Trip {
   /** ชื่อผู้ดูแลยานพาหนะที่แก้รายคัน (6 พ.ย. 2569 · ไม่มี = ผู้ควบคุมรถ) */
   names?: Record<string, string>;
   d1: string; d2: string; status: TripStatus; staff?: string[];
+  /** เบอร์โทรของพนักงานที่เดินทาง { ชื่อ: เบอร์ } (9 พ.ย. 2569 · ไม่มี = เบอร์จากข้อมูลพนักงาน STAFF_INFO) */
+  staffTel?: Record<string, string>;
   /** วันดำเนินการรายคันที่แก้ { รถ: [ตั้งแต่, ถึง] } (works ของ screens.js · R83 · ไม่มี = ช่วงวันเดินทางทั้งช่วง) — แก้ใน popup "แก้ไขยานพาหนะในแผนเดินทาง" */
   works?: Record<string, [string, string]>;
   createdBy: string; sentAt: string; approvedAt?: string; returnReason?: string;
@@ -134,6 +136,11 @@ export interface Trip {
   listOnly?: boolean;
 }
 export const STAFF = ["นายวิชัย ทองดี", "นางสาวกนกวรรณ ใจมั่น", "นายสมชาย พูลสุข"];   // TRIP.staff
+/* ข้อมูลพนักงาน: ตำแหน่ง · เบอร์โทร (STAFF_INFO ของ screens.js · Figma d5d40a2 · ค่าสมมติ) — เจ้าของงาน 9 พ.ย. 2569 _"พนักงานสามารถเพิ่มได้ไม่จำกัด และ เป็น 1 คน 1 แถว เป็นชื่อ สกุล ตำแหน่ง เบอร์โทร"_
+   แถวพนักงานที่เดินทางของฟอร์มแผนเดินทาง: ตำแหน่ง Readonly เติมจากที่นี่เมื่อเลือกชื่อ · เบอร์โทรเติมจากที่นี่ แก้ได้ (เก็บที่ Trip.staffTel) */
+export const STAFF_INFO: Record<string, [string, string]> = { "นายวิชัย ทองดี": ["วศ.8", "081-472-1180"], "นางสาวกนกวรรณ ใจมั่น": ["ชก.6", "089-221-4407"], "นายสมชาย พูลสุข": ["ชก.5", "086-530-2291"] };
+export const staffPos = (name: string) => STAFF_INFO[name]?.[0] ?? "";
+export const staffTelOf = (t: Pick<Trip, "staffTel"> | null | undefined, name: string) => t?.staffTel?.[name] ?? STAFF_INFO[name]?.[1] ?? "";
 export const CREATOR = "นายวิชัย ทองดี (กกฟ.1)";   // CREATOR ของ screens.js (6 พ.ย. 2569 ผู้สร้าง = หน่วยงาน)
 export const CREATOR_SHORT = "นายวิชัย ทองดี";
 export const SENT_AT = "03/11/2569", APPROVED_AT = "04/11/2569";
