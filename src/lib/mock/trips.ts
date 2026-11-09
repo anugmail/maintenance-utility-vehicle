@@ -5,7 +5,7 @@
 import type { BadgeOutlineColor } from "@/components/vms/BadgeOutline";
 import type { PillColor } from "@/components/vms/PillOutline";
 import type { StatusState } from "@/components/vms/Status";
-import { CAND, DISTRICTS, UNIT_FLEET, dCode, type Plan } from "./data";
+import { CAND, DISTRICTS, PLANS, UNIT_FLEET, dCode, regionOf, type Plan } from "./data";
 import { setMock, type MockState } from "./store";
 
 export const NOW_Q = "ไตรมาส 1";
@@ -49,6 +49,26 @@ export const SAMPLE_Q: Record<number, TripCar[]> = {
   ],
   3: [{ id: "81-3348", plate: "81-3348 พะเยา", model: "Hino FG + กระเช้า Tadano AT-146", owner: "กฟน.1 พะเยา", phone: "054-411-206", ctrl: "นายเอกชัย พรหมมา" }],
 };
+/* ---------- ยานพาหนะรายไตรมาสของแผนตัวอย่าง (แผนที่ไม่มี alloc · PLANS ของ data.ts) ----------
+   9 พ.ย. 2569 เจ้าของงาน "ทำไมเลือกไตรมาส 3 แล้วแสดงไม่รถ" — เดิมแผนตัวอย่างทุกแผนมียานพาหนะแค่ไตรมาสที่กำลังทำ (TRIP_CARS ของ MRZ7000001) ไตรมาสอื่นว่าง
+   ทั้งที่ป้ายแท็บนับจาก perQ ⇒ ทุกแผน ทุกไตรมาส มียานพาหนะเท่าตัวเลขใน perQ (ป้ายแท็บ = แถวในตาราง = perQ · รวม = จำนวนยานพาหนะของแผน)
+   MRZ7000001: ไตรมาส 1 = TRIP_CARS (S6) · ไตรมาส 2 = SAMPLE_Q[2] (S25 MOVE_Q2) · ไตรมาส 3 = SAMPLE_Q[3] (MOVE_Q3_OTHER) + เติม · ไตรมาส 4 = เติม
+   แผนอื่น: เติมจากยานพาหนะจำลอง (PLAN_CARS = CAND) ที่ภาคและประเภทตรงกับแผน (ข้อมูลยานพาหนะไม่มีหน่วยงานผู้สร้างแผน ⇒ ใช้ขอบเขตภาค/ประเภทของแผนแทน)
+   เรียงตามลำดับ CAND · ไม่ซ้ำคันในแผนเดียวกันและไม่ซ้ำกับแผนตัวอย่างอื่น · ไม่ใช้คันของ TRIP_CARS SAMPLE_Q Q_EXTRA (ค่าเดิมทุกครั้ง) */
+const perQCounts = (p: Pick<Plan, "perQ">) => [1, 2, 3, 4].map((q) => Number((p.perQ.match(new RegExp("ไตรมาส " + q + ": (\\d+)")) || [])[1] || 0));
+const planRegions = (p: Pick<Plan, "region">) => p.region.split(", ").map((x) => x.split(" (")[0].trim());
+export const SAMPLE_PLAN_Q: Record<string, Record<number, TripCar[]>> = (() => {
+  const used = new Set([...TRIP_CARS, ...Q_EXTRA, ...Object.values(SAMPLE_Q).flat()].map((c) => c.id));
+  const out: Record<string, Record<number, TripCar[]>> = {};
+  for (const p of PLANS) {
+    const regions = planRegions(p), types = p.type.split(", ");
+    const pool = CAND.filter((c) => regions.includes(regionOf(c).split(" (")[0]) && types.includes(c.type)).map((c) => candId(c.plate));
+    const take = (n: number) => { const ids: string[] = []; for (const id of pool) { if (ids.length >= n) break; if (!used.has(id)) { used.add(id); ids.push(id); } } return ids.map((id) => PLAN_CARS.find((c) => c.id === id)).filter((c): c is TripCar => !!c); };
+    const base: Record<number, TripCar[]> = p.mr === "MR" + PLAN_ID ? { 1: TRIP_CARS, 2: SAMPLE_Q[2], 3: SAMPLE_Q[3] } : {};
+    out[p.mr] = Object.fromEntries(perQCounts(p).map((n, k) => { const have = base[k + 1] ?? []; return [k + 1, [...have, ...take(Math.max(0, n - have.length))]]; }));
+  }
+  return out;
+})();
 export const carOf = (id: string) => TRIP_CARS.find((c) => c.id === id) ?? PLAN_CARS.find((c) => c.id === id) ?? Q_EXTRA.find((c) => c.id === id)
   ?? Object.values(SAMPLE_Q).flat().find((c) => c.id === id);
 /* ---------- รถในไตรมาส (S6 E.1 · เพิ่ม ลด แก้ไข รถในไตรมาส 4 พ.ย. 2569 · ไม่ต้องส่งอนุมัติแผนใหม่) ----------
@@ -63,13 +83,13 @@ export const qEditOf = (s: Pick<MockState, "qcars">, planId: string, q: number):
 const planOfId = (plans: Plan[], planId: string) => plans.find((x) => x.mr === "MR" + planId);
 const hasAlloc = (p?: Plan): p is Plan & { alloc: Record<number, number> } => !!p?.alloc && Object.keys(p.alloc).length > 0;
 const candIndex = (id: string) => CAND.findIndex((c) => candId(c.plate) === id);
-/** รถของไตรมาส q ในแผน — แผนที่สร้างจากฟอร์ม (มี alloc) = รถที่จัดลงไตรมาสนั้น · แผนตัวอย่าง (ไม่มี alloc) = TRIP_CARS ของ screens.js (ไตรมาสที่กำลังทำ) / SAMPLE_Q (ไตรมาสอื่น) · + คันที่เพิ่ม − คันที่เอาออก */
+/** รถของไตรมาส q ในแผน — แผนที่สร้างจากฟอร์ม (มี alloc) = รถที่จัดลงไตรมาสนั้น · แผนตัวอย่าง (ไม่มี alloc) = SAMPLE_PLAN_Q · + คันที่เพิ่ม − คันที่เอาออก */
 export function quarterCars(s: Pick<MockState, "plans" | "qcars">, planId: string, q: number): TripCar[] {
   const p = planOfId(s.plans, planId), e = qEditOf(s, planId, q);
   const nowQ = Number((p?.nowQ ?? "ไตรมาส 1").replace(/\D/g, "")) || 1;
   const base = hasAlloc(p)
     ? Object.keys(p.alloc).map(Number).filter((i) => p.alloc[i] === q && CAND[i]).map((i) => carOf(candId(CAND[i].plate))).filter((c): c is TripCar => !!c)
-    : q === nowQ ? TRIP_CARS : SAMPLE_Q[q] ?? [];
+    : p ? SAMPLE_PLAN_Q[p.mr]?.[q] ?? [] : q === nowQ ? TRIP_CARS : [];   // แผนตัวอย่าง = SAMPLE_PLAN_Q (ทุกไตรมาสตาม perQ)
   const added = e.added.filter((id) => !e.removed.includes(id)).map(carOf).filter((c): c is TripCar => !!c);
   return [...added, ...base.filter((c) => !e.added.includes(c.id) && !e.removed.includes(c.id))];
 }
@@ -87,12 +107,17 @@ export function quarterPool(s: Pick<MockState, "plans" | "qcars">, planId: strin
 const perQOf = (alloc: Record<number, number>) => [1, 2, 3, 4].map((q) => "ไตรมาส " + q + ": " + Object.values(alloc).filter((x) => x === q).length).join(" · ");
 function writeQuarter(planId: string, q: number, fn: (e: QuarterEdit) => QuarterEdit, allocFn?: (a: Record<number, number>) => Record<number, number>) {
   setMock((s) => {
+    const qcars = { ...s.qcars, [qKey(planId, q)]: fn(qEditOf(s, planId, q)) };
     const plans = s.plans.map((p) => {
-      if (p.mr !== "MR" + planId || !allocFn || !hasAlloc(p)) return p;
+      if (p.mr !== "MR" + planId || !allocFn) return p;
+      if (!hasAlloc(p)) {   // แผนตัวอย่าง: จำนวนยานพาหนะและรายไตรมาสตามยานพาหนะหลังเพิ่ม/เอาออก (หน้ารายการ กล่องรายละเอียดแผน)
+        const n = [1, 2, 3, 4].map((k) => quarterCars({ plans: s.plans, qcars }, planId, k).length);
+        return { ...p, cars: n.reduce((a, b) => a + b, 0), perQ: n.map((x, k) => "ไตรมาส " + (k + 1) + ": " + x).join(" · ") };
+      }
       const alloc = allocFn({ ...p.alloc }), keep = (o?: Record<number, unknown>) => o && Object.fromEntries(Object.entries(o).filter(([k]) => alloc[Number(k)] != null));
       return { ...p, alloc, picks: keep(p.picks) as Plan["picks"], qty: keep(p.qty) as Plan["qty"], manual: keep(p.manual) as Plan["manual"], oils: keep(p.oils) as Plan["oils"], oilSpec: keep(p.oilSpec) as Plan["oilSpec"], cars: Object.keys(alloc).length, perQ: perQOf(alloc) };
     });
-    return { ...s, plans, qcars: { ...s.qcars, [qKey(planId, q)]: fn(qEditOf(s, planId, q)) } };
+    return { ...s, plans, qcars };
   });
 }
 /** E.17 เพิ่มรถเข้าไตรมาส (คันที่เพิ่มขึ้นก่อน) */
