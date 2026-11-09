@@ -24,6 +24,7 @@ import {
 } from "@/lib/mock/jobs";
 import { notify, useMock } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
+import { tripWork } from "@/lib/mock/tripCols";
 import { badgeOf, CannotPopup, DataTable, useCrumbs, jobHref, LastOil, OilCards, PartAddModal, PartEditModal, Section, tripHref, useBack } from "../_lib/ui";
 
 const JOB_COLS: TableColumn[] = [{ head: "รายการงาน" }, { head: "อะไหล่ตามแผน", width: 320 }, { head: "จำนวนตามแผน", width: 140 }, { head: "หน่วย", width: 110 }, { head: "", width: 104, Style: "Action icons" }];
@@ -35,8 +36,10 @@ export const vehiclePairs = (t: JobTrip, c: TripCar): [string, string][] => {
 };
 /* กล่อง "การนัดหมาย" — ตรวจเอง: แผนเดินทาง ช่วงวันเดินทาง · จ้าง: แผนเดินทาง ผู้รับจ้าง ช่วงวันทำงาน · + สถานที่ เบอร์ติดต่อ ผู้ดูแลยานพาหนะ (+ เริ่มงาน ผู้เริ่มงาน = กบค. ทั้งสองแบบ)
    9 พ.ย. 2569 เบอร์ก่อนชื่อผู้ดูแล ตามคอลัมน์เบอร์ติดต่อ (jobBoxes · Figma c28dd82) */
+/* + "วันดำเนินการ" ของคันนี้ต่อจากช่วงวันเดินทาง/ช่วงวันทำงาน (R83 · jobBoxes ของ screens.js Figma 5963d05 · 9 พ.ย. 2569 ค่ำ เจ้าของงาน "ในรายคันอยากให้เห็นว่าแต่ละคันจะดำเนินการเมื่อไร") */
 export const appointmentPairs = (t: JobTrip, c: TripCar, j?: Job): [string, string][] => [
   ...((t.mode === "hire" ? [["แผนเดินทาง", t.name], ["ผู้รับจ้าง", t.vendor ?? "-"], ["ช่วงวันทำงาน", tripRange(t)]] : [["แผนเดินทาง", t.name], ["ช่วงวันเดินทาง", tripRange(t)]]) as [string, string][]),
+  ["วันดำเนินการ", tripWork({ d1: t.d1, d2: t.d2, works: t.works }, c.id)],
   ["สถานที่บำรุงรักษา", tripLoc(t, c)], ["เบอร์ติดต่อ", tripPhone(t, c)], ["ผู้ดูแลยานพาหนะ", tripCtrl(t, c)],   // jobBoxes 9 พ.ย. 2569
   ...((j?.status === "doing" ? [["เริ่มงาน", j.startedAt ?? "-"], ["ผู้เริ่มงาน", j.startedBy ?? "-"]] : []) as [string, string][]),
 ];
