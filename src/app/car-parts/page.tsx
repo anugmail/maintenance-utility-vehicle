@@ -15,6 +15,7 @@
      5. ปุ่ม ย้อนกลับ · บันทึกอะไหล่ของรถ (lg · กดได้เมื่อเลือกไม่เบิก หรือเลือกเบิกแล้วมีอะไหล่อย่างน้อย 1 รายการ) → toast "บันทึกอะไหล่ของรถ {ทะเบียน} แล้ว"
    popup "ระบุอะไหล่เพิ่มเติม" (MANUAL_FIELDS): ชื่ออะไหล่ | ยี่ห้อ · รุ่น | รหัสอะไหล่ (ถ้ามี) · จำนวน | หน่วย · ปุ่ม ยกเลิก / เพิ่ม · มือถือ bottom sheet
    ย้อนกลับเมื่อมีการแก้ไข → ยืนยันการออก "อะไหล่ที่แก้ไขไว้จะไม่ถูกบันทึก" */
+import { PagedTable } from "@/app/quarter/_shared/ui";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState, type ReactNode } from "react";
 import { PartsInventoryPanel } from "@/components/maintain-d/PartsInventoryPanel";
@@ -27,14 +28,13 @@ import { DropdownList } from "@/components/vms/DropdownList";
 import { DropdownListItem } from "@/components/vms/DropdownListItem";
 import { EmptyStateDataEmpty } from "@/components/vms/EmptyStateDataEmpty";
 import { InputDropdown } from "@/components/vms/InputDropdown";
-import { MobileCards } from "@/components/vms/MobileTable";
 import { PageHeader } from "@/components/vms/PageHeader";
 import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { RadioTextCards } from "@/components/vms/RadioTextCard";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionHeader } from "@/components/vms/SectionHeader";
 import { SectionLabel } from "@/components/vms/SectionLabel";
-import { Table, type TableValue } from "@/components/vms/Table";
+import { type TableValue } from "@/components/vms/Table";
 import { CARP_PART_COLS } from "./cols";
 import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
@@ -217,7 +217,7 @@ function CarParts() {
           <SectionHeader Title="อะไหล่อื่นๆ" Badge={rows.length || null}
             Actions={<SecondaryButton Text="ระบุอะไหล่เพิ่มเติม" LeadingIconSwap="add-24-300-round" Size={mob ? "lg" : "md"} onClick={openNew} />} />
           {rows.length
-            ? (mob ? <MobileCards columns={COLS} rows={rows} /> : <Table columns={COLS} rows={rows} />)
+            ? <PagedTable columns={COLS} rows={rows} />
             : <EmptyStateDataEmpty Text="ยังไม่มีรายการอะไหล่" SupportingText="เลือกไส้กรองหรืออะไหล่อื่นจากคลัง หรือกดระบุอะไหล่เพิ่มเติม" />}
         </section>}
         <div className={cx("flex", mob ? "gap-4 [&>*]:flex-1 [&>*]:basis-0" : "justify-between gap-3")}>

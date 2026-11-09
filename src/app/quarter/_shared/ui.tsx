@@ -43,23 +43,27 @@ export function Content({ children }: { children: ReactNode }) {
   return <div className="flex flex-col gap-8">{children}</div>;
 }
 
-/* pagination = จำนวนรายการที่ Table pagination บอก (ไม่ส่ง = ไม่มี) · perPage ตามจอ (ประวัติ 12 รายการหน้าเดียว) */
+/* pagination = จำนวนรายการที่ Table pagination บอก (ตัวแบ่งหน้าของจอเอง) · ไม่ส่ง = แบ่งหน้าเองเมื่อเกิน 10 แถว (tblShort ของ screens.js f59001e · 9 พ.ย. 2569 เจ้าของงาน
+   "รายละเอียด ควรเป็นการ จอง section แบบได้แค่ 10 รายการ และถ้าเกินจะมี pagiation มา") · perPage ตามจอ (ประวัติ 12 รายการหน้าเดียว) */
 export function DataTable({ columns, rows, pagination, perPage = 10, rowKey }: { columns: TableColumn[]; rows: TableValue[][]; pagination?: number; perPage?: number; rowKey?: (r: TableValue[], i: number) => string }) {
   const mob = useBreakpoint() === "Mobile";
+  if (pagination == null) return <PagedTable columns={columns} rows={rows} rowKey={rowKey} />;
   const pg = pagination != null ? <TablePagination total={pagination} perPage={perPage} /> : undefined;
   if (mob) return <div className="flex flex-col gap-5"><MobileCards columns={columns} rows={rows} rowKey={rowKey} />{pg}</div>;
   return <Table columns={columns} rows={rows} rowKey={rowKey} Pagination={pg} />;
 }
 
-/* ตารางที่แบ่งหน้า (หน้าละ perPage · Table pagination กดเปลี่ยนหน้าได้) — รถในไตรมาสเกิน 10 คัน (E.1 · Table ของไลบรารี 10 แถว R8) */
+/* ตารางที่แบ่งหน้า (หน้าละ perPage · Table pagination กดเปลี่ยนหน้าได้) — ทุกตารางที่ไม่มีตัวแบ่งหน้าของตัวเอง (tblShort ของ screens.js f59001e · Table ของไลบรารี 10 แถว R8)
+   ไม่เกิน perPage = ไม่มี Table pagination · rowKey ได้ลำดับในรายการทั้งหมด (ไม่ใช่ลำดับในหน้า) · เปลี่ยนแท็บ/ข้อมูลชุดใหม่ ให้ผู้เรียกส่ง key ใหม่ ⇒ กลับหน้า 1 */
 export function PagedTable({ columns, rows, perPage = 10, rowKey }: { columns: TableColumn[]; rows: TableValue[][]; perPage?: number; rowKey?: (r: TableValue[], i: number) => string }) {
   const mob = useBreakpoint() === "Mobile";
   const [page, setPage] = useState(1);
   const last = Math.max(1, Math.ceil(rows.length / perPage)), p = Math.min(page, last);
   const shown = rows.slice((p - 1) * perPage, p * perPage);
   const pg = rows.length > perPage ? <TablePagination total={rows.length} page={p} perPage={perPage} onPage={setPage} /> : undefined;
-  if (mob) return <div className="flex flex-col gap-5"><MobileCards columns={columns} rows={shown} rowKey={rowKey} />{pg}</div>;
-  return <Table columns={columns} rows={shown} rowKey={rowKey} Pagination={pg} />;
+  const key = rowKey && ((r: TableValue[], i: number) => rowKey(r, (p - 1) * perPage + i));
+  if (mob) return <div className="flex flex-col gap-5"><MobileCards columns={columns} rows={shown} rowKey={key} />{pg}</div>;
+  return <Table columns={columns} rows={shown} rowKey={key} Pagination={pg} />;
 }
 
 /* ตารางยานพาหนะของแผนเดินทาง (S7 S8 เดิม TRIP_VIEW_COLS) ย้ายไปชุดกลาง TRIP_V_COLS ใน lib/mock/tripCols.ts (R82 · 9 พ.ย. 2569) */

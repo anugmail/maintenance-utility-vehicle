@@ -6,13 +6,12 @@
    actions = ปุ่มใน Section label "รถในแผน" (Primary action Tertiary brand button · Secondary action Tertiary button) — หน้า กบค. ใส่ทางไปไตรมาสที่กำลังทำ
    ไตรมาสที่ไม่มีรถ: ตารางว่าง (spec S2 — ยังไม่เคาะว่าใช้ Empty state ของ S1 หรือไม่) · มือถือ: Mobile table
    แผนตัวอย่างที่ไม่มีรถรายคัน (MRZ7000001 ฯลฯ): ทุกไตรมาส = รถของหน้า "ไตรมาส n" (quarterCars · SAMPLE_PLAN_Q ของ trips.ts · 9 พ.ย. 2569) ค่าน้ำมัน เปลี่ยนล่าสุด อะไหล่ ตาม planDetailQ() ใน screens.js */
+import { PagedTable } from "@/app/quarter/_shared/ui";
 import type { ReactNode } from "react";
 import { VehicleAndReporterInfo } from "@/components/maintain-d/VehicleAndReporterInfo";
 import { EmptyStateDataEmpty } from "@/components/vms/EmptyStateDataEmpty";
-import { MobileCards } from "@/components/vms/MobileTable";
 import { SectionLabel } from "@/components/vms/SectionLabel";
 import { TabItem } from "@/components/vms/TabItem";
-import { Table } from "@/components/vms/Table";
 import { Tabs } from "@/components/vms/Tabs";
 import { CARP_COLS } from "@/app/new/PlanForm";
 import { QUARTERS, type Plan } from "@/lib/mock/data";
@@ -20,13 +19,11 @@ import { carOf as jobCar, OIL_JOB_OPTS, SAMPLE_OIL } from "@/lib/mock/jobs";
 import { allocOf, carRow, carsIn, planId, planKv, quarterCount } from "@/lib/mock/planFlow";
 import { useMock } from "@/lib/mock/store";
 import { quarterCars } from "@/lib/mock/trips";
-import { useBreakpoint } from "@/lib/useBreakpoint";
 
 const COLS = CARP_COLS.slice(0, 6);
 
 /* kv = กล่องรายละเอียดแผนแทน npKv (planFlow.planKv) — E.2 planDetailQ ของ screens.js ใช้ PLAN_KV (closeout.planKv: ไตรมาส · วันที่สร้าง · อนุมัติเมื่อ) กับแผนที่ดำเนินการแล้ว */
 export function PlanBody({ plan, q, onQ, actions, kv }: { plan: Plan; q: number; onQ: (q: number) => void; actions?: ReactNode; kv?: [string, string][] }) {
-  const mob = useBreakpoint() === "Mobile";
   const mock = useMock();
   const a = allocOf(plan);
   /* แผนตัวอย่าง (ไม่มี alloc): ยานพาหนะของทุกไตรมาสจาก quarterCars (SAMPLE_PLAN_Q · ไตรมาสที่กำลังทำของ MRZ7000001 = 10 คันของ S6) + ที่เพิ่ม/เอาออกในหน้าไตรมาส
@@ -49,7 +46,7 @@ export function PlanBody({ plan, q, onQ, actions, kv }: { plan: Plan; q: number;
         <Tabs>{QUARTERS.map((t, i) => <TabItem key={t} Text={t} Badge={counts[i]} Active={q === i + 1} onClick={() => onQ(i + 1)} />)}</Tabs>
         {/* ไตรมาสที่ไม่มียานพาหนะ = Empty state/Data empty ภาพยานพาหนะ "ยังไม่มียานพาหนะในไตรมาสนี้" (หัวข้อของ noCarsInQ ใน screens.js · หน้านี้ดูอย่างเดียว ⇒ ไม่มีปุ่มเพิ่มและบรรทัดรองที่บอกวิธีจัดในฟอร์ม) */}
         {!rows.length ? <EmptyStateDataEmpty Graphic="vehicle" Text="ยังไม่มียานพาหนะในไตรมาสนี้" />
-          : mob ? <MobileCards columns={COLS} rows={rows} /> : <Table columns={COLS} rows={rows} />}
+          : <PagedTable key={q} columns={COLS} rows={rows} />}{/* เกิน 10 คัน = หน้าละ 10 + Table pagination (tblShort f59001e) · เปลี่ยนแท็บกลับหน้า 1 */}
       </section>
     </>
   );

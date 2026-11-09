@@ -26,6 +26,7 @@
    เอาภาค เขต ประเภทรถ ชิปตัวกรอง หรือคำค้นออก = เปลี่ยนแค่แถวที่เห็น รถที่จัดแล้วไม่หาย (ไม่มี confirm)
    Validation: ช่องบังคับที่ออกจากช่องโดยยังว่าง (Out of focus) แสดง "กรุณาระบุชื่อแผน" / "กรุณาเลือกปีงบประมาณ"
    popup ยืนยัน: ออกจากหน้าเมื่อมีการแก้ไข · (แก้ไข) ยืนยันการแก้ไข */
+import { PagedTable } from "@/app/quarter/_shared/ui";
 import { useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { ConfirmDialog, type ConfirmSpec } from "@/components/patterns/ConfirmDialog";
@@ -38,14 +39,13 @@ import { EmptyStateDataEmpty } from "@/components/vms/EmptyStateDataEmpty";
 import { EmptyStateSearchNotFound } from "@/components/vms/EmptyStateSearchNotFound";
 import { InputDropdown } from "@/components/vms/InputDropdown";
 import { InputDropdownWithBadges } from "@/components/vms/InputDropdownWithBadges";
-import { MobileCards } from "@/components/vms/MobileTable";
 import { PageHeader } from "@/components/vms/PageHeader";
 import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { RadioTextCard } from "@/components/vms/RadioTextCard";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionHeader } from "@/components/vms/SectionHeader";
 import { TabItem } from "@/components/vms/TabItem";
-import { Table, type TableColumn, type TableValue } from "@/components/vms/Table";
+import { type TableColumn, type TableValue } from "@/components/vms/Table";
 import { TableHeader } from "@/components/vms/TableHeader";
 import { TablePagination } from "@/components/vms/TablePagination";
 import { Tabs } from "@/components/vms/Tabs";
@@ -213,7 +213,8 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
     router.push("/");
   };
 
-  const table = (cols: TableColumn[], rs: TableValue[][]) => (mob ? <MobileCards columns={cols} rows={rs} /> : <Table columns={cols} rows={rs} />);
+  /* ตารางในฟอร์ม เกิน 10 แถว = หน้าละ 10 + Table pagination (tblShort ของ screens.js f59001e) · key = ไตรมาสที่เปิด ⇒ เปลี่ยนแท็บกลับหน้า 1 */
+  const table = (cols: TableColumn[], rs: TableValue[][]) => <PagedTable key={"t" + q} columns={cols} rows={rs} />;
   const row = (kids: ReactNode, n: number) => <div className={cx(mob ? "flex flex-col gap-4" : n === 3 ? "grid grid-cols-3 gap-6" : "grid grid-cols-2 gap-6")}>{kids}</div>;
   const empty = (t: string, s: string) => <EmptyStateDataEmpty Text={t} SupportingText={s} Graphic="vehicle" />;
   const heading = edit ? "แก้ไขแผน " + plan.mr : "สร้างแผนบำรุงรักษา";

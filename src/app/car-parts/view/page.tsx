@@ -8,16 +8,16 @@
    Content ช่องไฟ 32: กล่อง "ข้อมูลยานพาหนะ" (ทะเบียน · ยี่ห้อ/รุ่น · หน่วยงานเจ้าของยานพาหนะ · ไตรมาส · น้ำมันไฮโดรลิก · เปลี่ยนน้ำมันครั้งล่าสุด · การเบิกอะไหล่)
      → Section label "อะไหล่อื่นๆ (n)" + Table CARP_PART_COLS 6 คอลัมน์ ไม่มีไอคอนท้ายแถว / Empty state ("ยานพาหนะคันนี้เลือกไม่เบิกอะไหล่" · "ยังไม่ได้กำหนดอะไหล่ของยานพาหนะคันนี้")
    ข้อมูลชุดเดียวกับหน้าจัดการอะไหล่ (ฟอร์มที่กรอกค้าง mock.draft / mock.edit) · ดูอย่างเดียว ไม่มีปุ่มท้ายหน้า · มือถือ: Mobile table · ปุ่มแก้ไขใต้หัวข้อ */
+import { PagedTable } from "@/app/quarter/_shared/ui";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
 import { VehicleAndReporterInfo } from "@/components/maintain-d/VehicleAndReporterInfo";
 import { AppFrame } from "@/components/shell/AppFrame";
 import { EmptyStateDataEmpty } from "@/components/vms/EmptyStateDataEmpty";
-import { MobileCards } from "@/components/vms/MobileTable";
 import { PageHeader } from "@/components/vms/PageHeader";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionLabel } from "@/components/vms/SectionLabel";
-import { Table, type TableValue } from "@/components/vms/Table";
+import { type TableValue } from "@/components/vms/Table";
 import { CAND, LAST_OIL, PARTS, PART_BM } from "@/lib/mock/data";
 import { carQty } from "@/lib/mock/plan";
 import { NO_DRAW, PLAN_ROLES, TODO_NONE, carIndexOf, findPlan, oilCellOf, oilChoice, otherParts, useRoleGuard, usePlanGate } from "@/lib/mock/planFlow";
@@ -69,7 +69,7 @@ function CarPartsView() {
         <section className="flex flex-col gap-4">
           <SectionLabel Title={"อะไหล่อื่นๆ (" + rows.length + ")"} />
           {rows.length
-            ? (mob ? <MobileCards columns={COLS} rows={rows} /> : <Table columns={COLS} rows={rows} />)
+            ? <PagedTable columns={COLS} rows={rows} />
             : <EmptyStateDataEmpty Text="ยังไม่มีรายการอะไหล่" SupportingText={none ? "ยานพาหนะคันนี้เลือกไม่เบิกอะไหล่" : "ยังไม่ได้กำหนดอะไหล่ของยานพาหนะคันนี้"} />}
         </section>
       </div>

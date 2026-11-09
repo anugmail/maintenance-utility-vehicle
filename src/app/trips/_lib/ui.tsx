@@ -22,6 +22,7 @@ import type { PillColor } from "@/components/vms/PillOutline";
 import { RadioTextCards } from "@/components/vms/RadioTextCard";
 import { SectionHeader } from "@/components/vms/SectionHeader";
 import { Table, type TableColumn, type TableValue } from "@/components/vms/Table";
+import { TablePagination } from "@/components/vms/TablePagination";
 import { TextArea } from "@/components/vms/TextArea";
 import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
@@ -88,16 +89,22 @@ export function Section({ children, className }: { children: ReactNode; classNam
 export const KvBox = ({ pairs }: { pairs: KvPair[] }) => <DisplayBox pairs={pairs} />;
 
 /* ตาราง: desktop Table · มือถือ Mobile table (การ์ด) · onRow = กดแถวเปิดรายการ (ยกเว้นกดปุ่มในแถว) */
-export function DataTable({ cols, rows, onRow, rowKey }: { cols: TableColumn[]; rows: TableValue[][]; onRow?: (i: number) => void; rowKey?: (r: TableValue[], i: number) => string }) {
+/* เกิน 10 แถว = หน้าละ 10 + Table pagination (tblShort ของ screens.js f59001e · 9 พ.ย. 2569) · onRow / rowKey ได้ลำดับในรายการทั้งหมด */
+export function DataTable({ cols, rows: all, onRow, rowKey }: { cols: TableColumn[]; rows: TableValue[][]; onRow?: (i: number) => void; rowKey?: (r: TableValue[], i: number) => string }) {
   const mob = useBreakpoint() === "Mobile";
-  if (mob) return <MobileCards columns={cols} rows={rows} rowKey={rowKey} />;
+  const [page, setPage] = useState(1);
+  const last = Math.max(1, Math.ceil(all.length / 10)), pg0 = Math.min(page, last), off = (pg0 - 1) * 10;
+  const rows = all.slice(off, off + 10);
+  const pager = all.length > 10 ? <TablePagination total={all.length} page={pg0} perPage={10} onPage={setPage} /> : undefined;
+  const key = rowKey && ((r: TableValue[], i: number) => rowKey(r, off + i));
+  if (mob) return <div className="flex flex-col gap-5"><MobileCards columns={cols} rows={rows} rowKey={key} />{pager}</div>;
   const click = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = e.target as HTMLElement;
     if (!onRow || el.closest("button, a, input")) return;
     const tr = el.closest("tbody tr");
-    if (tr?.parentElement) onRow(Array.from(tr.parentElement.children).indexOf(tr));
+    if (tr?.parentElement) onRow(off + Array.from(tr.parentElement.children).indexOf(tr));
   };
-  return <div onClick={click} className={onRow ? "[&_tbody_tr]:cursor-pointer" : undefined}><Table columns={cols} rows={rows} rowKey={rowKey} /></div>;
+  return <div onClick={click} className={onRow ? "[&_tbody_tr]:cursor-pointer" : undefined}><Table columns={cols} rows={rows} rowKey={key} Pagination={pager} /></div>;
 }
 
 /* ---------- popup บำรุงรักษาไม่ได้ (cannotModal) — สาเหตุ + อะไหล่ส่งคืน (RET_COLS) ---------- */

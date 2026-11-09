@@ -7,6 +7,7 @@
    ตัดตามเจ้าของงาน 4 พ.ย. 2569: กล่องเตือน "(Q19)" ของกรณีบำรุงรักษาไม่ได้ออก (Q19 ตอบแล้ว: บำรุงรักษาไม่ได้ = สาเหตุ + อะไหล่ส่งคืน) · ตัดรหัสอ้างอิงภายใน "(S14)" ออกจากข้อความบนจอ
    อ้างอิง: Section label · _File upload item base · Images · Table · Alert ของไฟล์ Component + VehicleAndReporterInfo · IncidentPhotoGallery ของไฟล์ Maintain-D
             + จอ carResult ของ UI Release#2 ผ่าน screens.js */
+import { PagedTable } from "@/app/quarter/_shared/ui";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";
@@ -16,16 +17,14 @@ import { IncidentPhotoGallery } from "@/components/maintain-d/IncidentPhotoGalle
 import { VehicleAndReporterInfo } from "@/components/maintain-d/VehicleAndReporterInfo";
 import { Alert } from "@/components/vms/Alert";
 import { EmptyStateSearchNotFound } from "@/components/vms/EmptyStateSearchNotFound";
-import { MobileCards } from "@/components/vms/MobileTable";
 import { PageHeader } from "@/components/vms/PageHeader";
 import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionLabel } from "@/components/vms/SectionLabel";
-import { Table, type TableColumn } from "@/components/vms/Table";
+import { type TableColumn } from "@/components/vms/Table";
 import { ACCEPTANCE_DOCS, ACCEPT_DATES, ACCEPT_SAMPLES, ACCEPT_STATUS, acceptCar, accRecord, workRows } from "@/lib/mock/acceptance";
 import { BEFORE, WSTAT } from "@/lib/mock/jobs";
 import { notify, useMock, useRole } from "@/lib/mock/store";
-import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useSample } from "@/lib/useSample";
 import { badgeOf, ButtonRow } from "../../trips/_lib/ui";
 import { DocList } from "../_lib/ui";
@@ -37,7 +36,6 @@ function CarResult() {
   const router = useRouter();
   const sp = useSearchParams();
   const pending = useSample(ACCEPT_SAMPLES);
-  const mob = useBreakpoint() === "Mobile";
   const owner = useRole() === "หน่วยงานเจ้าของยานพาหนะ";
   const mock = useMock();
   const [confirm, setConfirm] = useState(false);
@@ -73,7 +71,7 @@ function CarResult() {
             <IncidentPhotoGallery Title={"ภาพก่อนเริ่มงาน (" + BEFORE.length + ")"} photos={BEFORE.map((alt) => ({ alt }))} />
             <section className="flex flex-col gap-4">
               <SectionLabel Title={"รายการงานและอะไหล่ที่ใช้จริง (" + work.length + ")"} />
-              {(() => { const rows = work.map((w) => [w.task, w.part, w.planQty, w.usedQty, w.unit]); return mob ? <MobileCards columns={WORK_COLS2} rows={rows} /> : <Table columns={WORK_COLS2} rows={rows} />; })()}
+              {(() => { const rows = work.map((w) => [w.task, w.part, w.planQty, w.usedQty, w.unit]); return <PagedTable columns={WORK_COLS2} rows={rows} />; })()}
             </section>
           </>
         )}
