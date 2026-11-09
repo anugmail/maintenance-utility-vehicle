@@ -10,7 +10,9 @@
    ทางไปขั้นถัดไป เฉพาะ กบค. · แผนอนุมัติแล้ว/ดำเนินการ (planDetailQ ใน screens.js · S6 ทางเข้า 5 พ.ย. 2569):
      Section label "รถในแผน" Primary action (Tertiary brand button) "ไปหน้าไตรมาส n" ตามแท็บที่เปิด (Q54) → หน้า "ไตรมาส n" (/quarter/trips/)
      Secondary action (Tertiary button) "ความคืบหน้าอะไหล่" (S4) เฉพาะแท็บไตรมาสที่กำลังทำ — ทางเข้าเดิม 4 พ.ย. (จอ Figma รอบ 5 พ.ย. ไม่มีทางเข้า S4 · BACKLOG ค.)
-     ปุ่มหัว: ดำเนินการ + หน่วยงานยอมรับผลทั้งแผนแล้ว (S14 · closeout.accepted · เงื่อนไข S15) → "ส่งประวัติ" (S15) · ประวัติผ่านแล้ว/ปิดงานแล้ว → "รายงานผลการบำรุงรักษา" (S17) */
+     ปุ่มหัว: ดำเนินการ + หน่วยงานยอมรับผลทั้งแผนแล้ว (S14 · closeout.accepted · เงื่อนไข S15) → "ส่งประวัติ" (S15) · ประวัติผ่านแล้ว/ปิดงานแล้ว → "รายงานผลการบำรุงรักษา" (S17)
+   A.32 กบค. ดูแผนของหน่วยงานอื่น (planDetail o.parts ของ screens.js · Figma 27aae0c): ต่อท้าย PlanBody ด้วยอะไหล่ในแผน (detail/PlanParts.tsx ชุดเดียวกับหน้าผู้อนุมัติ S2)
+     เจ้าของงาน 9 พ.ย. 2569 "A32 ต้องมี section อะใหล่เพิ่มเข้ามาด้วย เพราะตอนที่ หน้าอนุมัติก็ต้องมี section นี้ขึ้นมาด้วย" · หน้าของผู้สร้างแผนเองไม่มี (ฟอร์มมีอะไหล่รวมทุกไตรมาสแล้ว) */
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";
@@ -27,6 +29,7 @@ import { DELETE_CONFIRM, badgeOf, canManage, deletePlan, findPlan, planId, start
 import { useMock, useRole } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { PlanBody } from "./PlanBody";
+import { PlanParts } from "./PlanParts";
 
 function Detail() {
   const router = useRouter();
@@ -48,6 +51,7 @@ function Detail() {
   const manage = canManage(role, plan);
   const canDelete = manage && st === "returned";
   const canEdit = manage && (st === "returned" || st === "approved");
+  const otherUnit = role === "กบค." && !manage;   // A.32 แผนของหน่วยงานอื่น ⇒ มีอะไหล่ในแผน
   const size = mob ? "lg" : "md";
   const id = planId(plan);
   const nowQ = Number(plan.nowQ.replace(/\D/g, "")) || 1;
@@ -70,6 +74,7 @@ function Detail() {
       <div className="flex flex-col gap-8">
         {st === "returned" && <Alert Color="Error" Text="ผู้อนุมัติส่งกลับให้แก้ไข" SupportingText={plan.returnReason} />}
         <PlanBody plan={plan} q={q} onQ={setQ} actions={qActions} />
+        {otherUnit && <PlanParts plan={plan} />}
       </div>
       <ConfirmDialog spec={del ? DELETE_CONFIRM : null} onCancel={() => setDel(false)} onOk={() => { setDel(false); deletePlan(plan.mr); router.push("/"); }} />
     </>
