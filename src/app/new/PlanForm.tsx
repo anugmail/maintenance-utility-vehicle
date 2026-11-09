@@ -5,7 +5,7 @@
    Content ช่องไฟ 32:
      (แก้ไข) Alert — ส่งกลับแก้ไข: Error "ผู้อนุมัติส่งกลับให้แก้ไข" + เหตุผล · อนุมัติแล้ว: Warning "แผนนี้อนุมัติแล้ว"
      ข้อมูลแผน (Section header) — ชื่อแผน (Text input) · ปีงบประมาณ (สร้าง: Input dropdown · แก้ไข: Readonly)
-     เลือกรถเข้าแผนและจัดลงไตรมาส (Section header + ป้าย "จัดลงไตรมาสแล้ว n/N คัน" · N = รถทุกคันที่ฟอร์มเห็น UNIT_FLEET = รถจำลองครบชุด CAND · 6 พ.ย. 2569 "ต้องเอารถเข้า ไตรมาสทุกคัน" · 9 พ.ย. 2569 "รถตัวอย่างทำไมมีน้อยตอนแรกมี 250 คันป่ะ" + "ถ้าเลือกภาคแล้วต้องแสดงตามที่เลือกสิ") — ภาค · เขต · ประเภทรถ อยู่ในแผงตัวกรอง (ปุ่ม "ตัวกรอง" ของ Table header · 5 พ.ย. 2569 ย้ายจากแถวบนสุด)
+     เลือกรถเข้าแผนและจัดลงไตรมาส (Section header + ป้าย "จัดลงไตรมาสแล้ว n คัน" ไม่มีตัวหาร (Figma ff5f1f8 9 พ.ย. 2569) · เดิม n/N N = รถทุกคันที่ฟอร์มเห็น UNIT_FLEET = รถจำลองครบชุด CAND · 6 พ.ย. 2569 "ต้องเอารถเข้า ไตรมาสทุกคัน" · 9 พ.ย. 2569 "รถตัวอย่างทำไมมีน้อยตอนแรกมี 250 คันป่ะ" + "ถ้าเลือกภาคแล้วต้องแสดงตามที่เลือกสิ") — ภาค · เขต · ประเภทรถ อยู่ในแผงตัวกรอง (ปุ่ม "ตัวกรอง" ของ Table header · 5 พ.ย. 2569 ย้ายจากแถวบนสุด)
        แผง = Side panel แบบ FilterPanel ของ S24 (มือถือ Bottom sheet) + Input dropdown with badges (Optional) ×3 ตาม "PEA Car Cost Filter" ของ UI Release#2 (ช่อง "ปี" หลายค่า)
        (หลายค่า · ไม่มี Disabled เลือกช่องไหนก่อนก็ได้ R69 · เขต = เขตของภาคที่เลือกในแผง ยังไม่เลือกภาค = ทุกเขต · กดตกลงจึงใช้)
        Tabs + Table header แสดงเสมอ — รถของหน่วยงานที่ตรงทุกช่องที่เลือก (ช่องว่าง = ทั้งหมด): Tabs ทั้งหมด n · ไตรมาส 1–4 n (Pill) → Table header (หัว "รถในพื้นที่ที่เลือก" + Badge "n คัน" / "รถในไตรมาส n" + Badge "กำหนดอะไหล่แล้ว x/y คัน" · ค้นหา "เลขทะเบียน, ยี่ห้อ, รุ่น"
@@ -21,7 +21,7 @@
        Table QPART_COLS (R81: ชนิด · รหัสอะไหล่ · ประเภท · จำนวน · หน่วย — ชุดเดียวกับอะไหล่ในแผน S2) ไม่มีปุ่มเพิ่มอะไหล่และไอคอนแถว / Empty state ตามแท็บ
        แท็บ "ทั้งหมด" (เจ้าของงาน 9 พ.ย. 2569 "หน้าอะใหล่ทั้งไตรมาส ต้องรวมมาให้ด้วย ทั้งไตรมาส"): หัวข้อ "อะไหล่รวมทุกไตรมาส" + Badge จำนวนรายการ = ผลรวมไตรมาส 1–4 (allQuarterRows)
          ยานพาหนะทุกคันที่จัดลงไตรมาสแล้ว ไม่ขึ้นกับตัวกรอง/คำค้น · คันไม่เบิกไม่รวม · ว่าง = "ยังไม่มีรายการอะไหล่" / "จัดการอะไหล่ทีละคันจากปุ่ม … ที่แถวยานพาหนะในแท็บไตรมาส รายการจะรวมมาที่นี่"
-     ปุ่ม ย้อนกลับ (แก้ไข: ยกเลิก) · บันทึกและส่งอนุมัติ — Disabled จนกว่า ชื่อแผน · ปีงบประมาณ ครบ · รถทุกคันของหน่วยงานอยู่ในไตรมาส · ทุกคันกำหนดอะไหล่แล้ว (เบิกพร้อมรายการ หรือ ไม่เบิก) — 6 พ.ย. 2569 แบบ ก หน้าเดียว
+     ปุ่ม ย้อนกลับ (แก้ไข: ยกเลิก) · บันทึกและส่งอนุมัติ — Disabled จนกว่า ชื่อแผน · ปีงบประมาณ ครบ · ยานพาหนะในไตรมาสอย่างน้อย 1 คัน · ทุกคันที่จัดกำหนดอะไหล่แล้ว (เบิกพร้อมรายการ หรือ ไม่เบิก) — Figma ff5f1f8 9 พ.ย. 2569 (เดิมต้องจัดครบทุกคันของหน่วยงาน)
    popup "จัดลงไตรมาส" (Radio text card ไตรมาส 1–4 เรียงลง ช่องไฟ 12 · ไม่มีตัวเลือกเอาออก) → toast "จัดรถ n คันลงไตรมาส k สำเร็จ" · มือถือ bottom sheet
    เอาภาค เขต ประเภทรถ ชิปตัวกรอง หรือคำค้นออก = เปลี่ยนแค่แถวที่เห็น รถที่จัดแล้วไม่หาย (ไม่มี confirm)
    Validation: ช่องบังคับที่ออกจากช่องโดยยังว่าง (Out of focus) แสดง "กรุณาระบุชื่อแผน" / "กรุณาเลือกปีงบประมาณ"
@@ -52,7 +52,7 @@ import { Tabs } from "@/components/vms/Tabs";
 import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
 import { CAND, DISTRICTS, MENU, QUARTERS, REGIONS, UNIT_FLEET, VEHICLE_TYPES, YEARS, shortRegion, type Plan } from "@/lib/mock/data";
-import { QPART_COLS, areaPicked, carsFor, decided, draftComplete, emptyDraft, fleetAllocated, inQuarter, isDirty, matchQuery, planFromDraft, qpartRow, thaiToday, type Draft } from "@/lib/mock/plan";
+import { QPART_COLS, areaPicked, carsFor, decided, draftComplete, emptyDraft, inQuarter, isDirty, matchQuery, planFromDraft, qpartRow, thaiToday, type Draft } from "@/lib/mock/plan";
 import { allQuarterRows, carParam, roleUnit, draftFromPlan, draftKey, oilCellOf, otherCellOf, planId, planWithDraft, quarterRows } from "@/lib/mock/planFlow";
 import { notify, setMock, useMock, useRole } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
@@ -252,7 +252,7 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
         </section>
 
         <section className="flex flex-col gap-4">
-          <SectionHeader Title="เลือกยานพาหนะเข้าแผนและจัดลงไตรมาส" Badge={"จัดลงไตรมาสแล้ว " + fleetAllocated(d) + "/" + UNIT_FLEET.length + " คัน"} />
+          <SectionHeader Title="เลือกยานพาหนะเข้าแผนและจัดลงไตรมาส" Badge={"จัดลงไตรมาสแล้ว " + Object.keys(d.alloc).length + " คัน"} />
           <Tabs>
             <TabItem Text="ทั้งหมด" Badge={area.length} Active={q === 0} onClick={() => { put({ q: 0 }); reset(); }} />
             {QUARTERS.map((_, i) => <TabItem key={i} Text={"ไตรมาส " + (i + 1)} Badge={inQ(i + 1).length} Active={q === i + 1} onClick={() => { put({ q: i + 1 }); reset(); }} />)}

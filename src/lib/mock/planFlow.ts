@@ -10,7 +10,7 @@ import { CAR_PICK } from "./data";
 import { allocScope, carQty, inQuarter, quarterParts, type Draft } from "./plan";
 import { accPlans, accRows } from "./acceptance";
 import { notify, setMock, useRole, type MockState, type Role } from "./store";
-import { tripsOf } from "./trips";
+import { SAMPLE_PLAN_Q, candId, tripsOf } from "./trips";
 
 /* ---------- id ของแผนและรถใน query string ---------- */
 export const planId = (p: Plan) => p.mr.replace(/^MR/, "");
@@ -80,8 +80,23 @@ export const badgeOf = (c: PillColor): BadgeOutlineColor => (c === "Warning" || 
 type Alloc = Pick<Draft, "alloc" | "picks" | "qty" | "manual" | "oils" | "oilSpec" | "draw">;
 export const allocOf = (p: Plan): Alloc => ({ alloc: p.alloc ?? {}, picks: p.picks ?? {}, qty: p.qty, manual: p.manual, oils: p.oils, oilSpec: p.oilSpec, draw: p.draw });
 
+/* แผนตัวอย่าง (ไม่มี alloc) เปิดแก้ไข = ยานพาหนะรายไตรมาสชุดเดียวกับหน้ารายละเอียด (SAMPLE_PLAN_Q · ข้อ 38) กำหนดอะไหล่แล้วทุกคัน
+   (ไส้กรอง CAR_PICK · น้ำมันเก็บตัวอย่าง = ยอดเดียวกับ carParts ของแผนตัวอย่าง) — 9 พ.ย. 2569 เจ้าของงาน หน้าแก้ไขแผนที่ถูกส่งกลับ "จัดลงไตรมาสแล้ว 6/243 คัน" ส่งไม่ได้
+   ⇒ เปิดแล้วส่งอนุมัติใหม่ได้ทันที (MRZ7100001 = 9 คัน 3 · 2 · 2 · 2) */
+function sampleAlloc(p: Plan): Pick<Draft, "alloc" | "picks" | "oils"> {
+  const alloc: Record<number, number> = {}, picks: Record<number, number[]> = {}, oils: Record<number, number> = {};
+  [1, 2, 3, 4].forEach((q) => (SAMPLE_PLAN_Q[p.mr]?.[q] ?? []).forEach((c) => {
+    const i = CAND.findIndex((x) => candId(x.plate) === c.id);
+    if (i >= 0) { alloc[i] = q; picks[i] = [...CAR_PICK]; oils[i] = 0; }
+  }));
+  return { alloc, picks, oils };
+}
 export function draftFromPlan(p: Plan): Draft {
-  const regions = p.regions ?? REGIONS.filter((r) => p.region.split(", ").includes(r));
+  const regions = p.regions ?? REGIONS.filter((r) => p.region.split(", ").map((x) => x.split(" (")[0]).includes(r.split(" (")[0]));
+  if (!p.alloc || !Object.keys(p.alloc).length) {
+    const s = sampleAlloc(p);
+    return { name: p.name, year: p.year, regions, districts: p.districts ?? [], types: p.types ?? p.type.split(", ").filter(Boolean), ...s, q: 1, editOf: p.mr };
+  }
   return {
     name: p.name, year: p.year, regions, districts: p.districts ?? [], types: p.types ?? p.type.split(", ").filter(Boolean),
     alloc: { ...(p.alloc ?? {}) }, picks: { ...(p.picks ?? {}) }, qty: p.qty ? { ...p.qty } : undefined, manual: p.manual ? { ...p.manual } : undefined,
