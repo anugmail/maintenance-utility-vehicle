@@ -92,10 +92,12 @@ export const carsFor = (d: Pick<Draft, "regions" | "districts" | "types">) => ar
 /* กำหนดอะไหล่แล้ว (decided ของ planForm 6 พ.ย. 2569) = เลือกไม่เบิก หรือเบิกแล้วมีรายการ (อะไหล่จากคลังที่ไม่ใช่น้ำมัน หรือรายการที่ระบุเอง) */
 export const decided = (d: Pick<Draft, "picks" | "manual" | "draw">, i: number) =>
   d.draw?.[i] === "none" || (d.picks[i] || []).some((x) => x !== 0) || (d.manual?.[i] || []).length > 0;
-/* ปุ่มบันทึกและส่งอนุมัติ (complete ของ planForm · Figma ff5f1f8 · 9 พ.ย. 2569 เจ้าของงาน "คันที่เลือกไว้กำหนดอะไหล่ครบ"): ชื่อแผน · ปีงบประมาณ · ยานพาหนะในไตรมาสอย่างน้อย 1 คัน
-   · ทุกคันที่จัดลงไตรมาสกำหนดอะไหล่แล้ว (เบิกพร้อมรายการ หรือ ไม่เบิก) — ทั้งสร้างและแก้ไขแผนที่ถูกส่งกลับ · เลิกบังคับจัดครบทุกคันของหน่วยงาน (เดิม 6 พ.ย. 2569) */
+/* ปุ่มบันทึกและส่งอนุมัติ (complete ของ planForm · Figma de74711 · 9 พ.ย. 2569 ค่ำ เจ้าของงาน "ยังจัดอะใหล่ไม่เสร็จ ปุ่มอนุมัติต้อง disable" + เคาะ "ยานพาหนะในตารางต้องจัดครบ"):
+   ชื่อแผน · ปีงบประมาณ · ยานพาหนะในไตรมาสอย่างน้อย 1 คัน · ยานพาหนะทุกคันในตารางแท็บทั้งหมด (carsFor = ตรงตัวกรองภาค เขต ประเภท ไม่ขึ้นกับคำค้น · ไม่เลือกตัวกรอง = ไม่มีคัน) จัดลงไตรมาสแล้ว
+   · ทุกคันที่จัดกำหนดอะไหล่แล้ว (เบิกพร้อมรายการ หรือ ไม่เบิก) — ทั้งสร้างและแก้ไข · ไม่ใช่ทุกคันของหน่วยงาน (243 คัน)
+   ประวัติ: 6 พ.ย. ต้องจัดครบทุกคันของหน่วยงาน → 9 พ.ย. บ่าย (ff5f1f8) คันที่จัดกำหนดอะไหล่ครบพอ → 9 พ.ย. ค่ำ (de74711) ยานพาหนะในตารางต้องจัดครบด้วย */
 export const fleetAllocated = (d: Pick<Draft, "alloc">) => UNIT_FLEET.filter((i) => d.alloc[i] != null).length;
-export const draftComplete = (d: Draft) => !!d.name.trim() && !!d.year && Object.keys(d.alloc).length > 0 && Object.keys(d.alloc).every((i) => decided(d, Number(i)));
+export const draftComplete = (d: Draft) => !!d.name.trim() && !!d.year && Object.keys(d.alloc).length > 0 && carsFor(d).every((i) => d.alloc[i] != null) && Object.keys(d.alloc).every((i) => decided(d, Number(i)));
 /* คำค้น "เลขทะเบียน, ยี่ห้อ, รุ่น" (inQuery) */
 export const matchQuery = (i: number, q: string) => !q || (CAND[i].plate + " " + CAND[i].model).includes(q);
 /* ภาค · ประเภทรถ ของรถที่จัดลงไตรมาสแล้ว (บันทึกเป็นภาค / ประเภทรถของแผน — สรุปจากรถในแผนจริง) */
