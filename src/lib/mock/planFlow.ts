@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useSyncExternalStore } from "react";
 import type { BadgeOutlineColor } from "@/components/vms/BadgeOutline";
 import type { PillColor } from "@/components/vms/PillOutline";
-import { CAND, DISTRICTS, LAST_OIL, NEW_PLAN_DATE, OIL_OPTS, OIL_PLAN_OPTS, OIL_SPEC, PARTS, PART_PRICE, REGIONS, RETURN_REASON, UNIT_FLEET, creatorOf, dCode, oilChanges, unitOf, type ManualPart, type Plan, type PlanStatus } from "./data";
+import { FIG_FLEET, CAND, DISTRICTS, LAST_OIL, NEW_PLAN_DATE, OIL_OPTS, OIL_PLAN_OPTS, OIL_SPEC, PARTS, PART_PRICE, REGIONS, RETURN_REASON, UNIT_FLEET, creatorOf, dCode, oilChanges, unitOf, type ManualPart, type Plan, type PlanStatus } from "./data";
 import { CAR_PICK } from "./data";
 import { allocScope, carQty, inQuarter, quarterParts, type Draft } from "./plan";
 import { accPlans, accRows } from "./acceptance";
@@ -154,24 +154,28 @@ export function planKv(p: Plan): [string, string][] {
 export const quarterCount = (p: Plan, q: number) => (p.alloc ? carsIn(allocOf(p), q).length : Number((p.perQ.match(new RegExp("ไตรมาส " + q + ": (\\d+)")) || [])[1] || 0));
 
 /* ---------- แผนตัวอย่าง (NEW_PLAN + EDIT_FORM ของ screens.js) สำหรับเปิด scenario จาก /scenarios/ ----------
-   6 พ.ย. 2569: รถทุกคันของหน่วยงาน (UNIT_FLEET 10 คัน) อยู่ในไตรมาส (A_ALL) · ทุกคันกำหนดอะไหล่แล้ว (A_PICKS · A_OILS) · 83-1207 ไม่เบิกอะไหล่ (A_DRAW)
-   ลำดับในตัวแปรเหล่านี้ = ลำดับใน CAND ของ screens.js → แปลงเป็นลำดับใน CAND ของเว็บด้วย UNIT_FLEET */
+   6 พ.ย. 2569: รถทุกคันที่ฟอร์มเห็นต้องอยู่ในไตรมาส · ทุกคันกำหนดอะไหล่แล้ว (A_PICKS · A_OILS) · 83-1207 ไม่เบิกอะไหล่ (A_DRAW)
+   9 พ.ย. 2569 รถที่ฟอร์มเห็น = รถจำลองครบชุด (UNIT_FLEET = CAND 243 คัน) ⇒ แผนตัวอย่างจัดครบทุกคัน:
+     รถ 10 คันของ screens.js (FIG_FLEET) ไตรมาสและอะไหล่ตาม A_ALL A_OILS A_DRAW ของ Figma · คันอื่นวนไตรมาส 1–4 ตามลำดับ เก็บตัวอย่างน้ำมัน + ไส้กรอง CAR_PICK (ค่าสมมติ) */
 const FIG_A_ALL: number[] = [1, 1, 1, 2, 2, 2, 3, 4, 4, 3];          // A_ALL
 const FIG_A_OILS: number[] = [2, 0, 2, 0, 0, 1, 0, 0, 1, 0];         // A_OILS (ลำดับใน OIL_PLAN_OPTS)
 const FIG_A_DRAW: number[] = [4];                                    // A_DRAW { 4: 'none' }
-const A_ALL: Record<number, number> = Object.fromEntries(UNIT_FLEET.map((c, k) => [c, FIG_A_ALL[k]]));
-const A_OILS: Record<number, number> = Object.fromEntries(UNIT_FLEET.map((c, k) => [c, FIG_A_OILS[k]]));
-const A_DRAW: Record<number, "none"> = Object.fromEntries(FIG_A_DRAW.map((k) => [UNIT_FLEET[k], "none" as const]));
+const EXTRA = UNIT_FLEET.filter((i) => !FIG_FLEET.includes(i));
+const A_ALL: Record<number, number> = { ...Object.fromEntries(FIG_FLEET.map((c, k) => [c, FIG_A_ALL[k]])), ...Object.fromEntries(EXTRA.map((c, k) => [c, (k % 4) + 1])) };
+const A_OILS: Record<number, number> = { ...Object.fromEntries(FIG_FLEET.map((c, k) => [c, FIG_A_OILS[k]])), ...Object.fromEntries(EXTRA.map((c) => [c, 0])) };
+const A_DRAW: Record<number, "none"> = Object.fromEntries(FIG_A_DRAW.map((k) => [FIG_FLEET[k], "none" as const]));
 /* A_PICKS = CAR_PICK ทุกคันที่เบิก + น้ำมันไฮโดรลิก (ลำดับ 0) เมื่อเลือกเปลี่ยน (qAgg นับน้ำมันจาก A_OILS) */
 const A_PICKS: Record<number, number[]> = Object.fromEntries(UNIT_FLEET.filter((c) => !A_DRAW[c]).map((c) => [c, oilChanges(A_OILS[c]) ? [0, ...CAR_PICK] : [...CAR_PICK]]));
+/** จำนวนรถของแผนตัวอย่างในไตรมาส q (ใช้ในข้อความโหมดพาดู) */
+export const SAMPLE_Q_CARS = (q: number) => Object.values(A_ALL).filter((x) => x === q).length;
 export const SAMPLE_NAME = "บำรุงรักษายานพาหนะ กกฟ.1 ปีงบประมาณ 2570";   // NEW_PLAN[1]
 /* R2 ของ screens.js = ภาค 2 ทุกเขต (6 พ.ย. 2569 ไม่มีประเภทแล้ว — ประเภทรถกระเช้าเดิมไม่มีในโค้ดจริง) */
 export const R2 = { regions: [REGIONS[1]], districts: [...DISTRICTS[REGIONS[1]]], types: [] as string[] };
 /* acked (ไตรมาสที่คลังรับทราบ · S22) ไม่มีหน้าไหนอ่านแล้วหลังตัด S22 6 พ.ย. 2569 — คงไว้ให้เคสพาดู S4 (cases/parts-progress) ที่ยังส่งค่านี้ เอาออกหลังรวมงาน S4 */
 export function samplePlan(status: PlanStatus, acked?: number[]): Plan {
   const p: Plan = {
-    mr: "MR Z7000004", name: SAMPLE_NAME, region: REGIONS[0] + ", " + REGIONS[1], nowQ: "ไตรมาส 1", cars: UNIT_FLEET.length, status, created: NEW_PLAN_DATE,
-    type: "กระเช้าแก้ไฟ, กระเช้าฮอทไลน์, รถพ่วงฉีดน้ำ", year: "2570", perQ: "ไตรมาส 1: 3 · ไตรมาส 2: 3 · ไตรมาส 3: 2 · ไตรมาส 4: 2",
+    mr: "MR Z7000004", name: SAMPLE_NAME, ...allocScope(A_ALL), nowQ: "ไตรมาส 1", cars: UNIT_FLEET.length, status, created: NEW_PLAN_DATE,
+    year: "2570", perQ: [1, 2, 3, 4].map((q) => "ไตรมาส " + q + ": " + SAMPLE_Q_CARS(q)).join(" · "),
     ...R2, alloc: { ...A_ALL }, picks: Object.fromEntries(Object.entries(A_PICKS).map(([i, v]) => [i, [...v]])), oils: { ...A_OILS }, draw: { ...A_DRAW },
   };
   if (status === "returned") p.returnReason = RETURN_REASON;
@@ -180,7 +184,7 @@ export function samplePlan(status: PlanStatus, acked?: number[]): Plan {
 }
 /* อะไหล่ของแผนตัวอย่างที่กำหนดครบทุกคัน (A_PICKS · A_OILS · A_DRAW) — ฟอร์มที่กรอกครบ ส่งอนุมัติได้ (โหมดพาดู) */
 export const SAMPLE_PARTS = (): Pick<Draft, "picks" | "oils" | "draw"> => ({ picks: Object.fromEntries(Object.entries(A_PICKS).map(([i, v]) => [i, [...v]])), oils: { ...A_OILS }, draw: { ...A_DRAW } });
-/* ฟอร์มสร้างแผนของ S21 T.1: กรอกชื่อ ปี ตัวกรองครบ จัดรถทุกคันของหน่วยงาน (10 คัน) ยังไม่เลือกอะไหล่ */
+/* ฟอร์มสร้างแผนของ S21 T.1: กรอกชื่อ ปี ตัวกรองครบ จัดรถทุกคันที่ฟอร์มเห็น (UNIT_FLEET) ยังไม่เลือกอะไหล่ */
 export const sampleDraft = (): Draft => ({ name: SAMPLE_NAME, year: "2570", ...R2, alloc: { ...A_ALL }, picks: {}, q: 1 });
 
 /* ---------- การกระทำกับแผน ---------- */

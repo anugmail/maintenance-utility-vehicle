@@ -134,9 +134,11 @@ const CAND_LATE: Car[] = [
 ];
 const GENERATED = fillCars(CAND_SEED);
 export const CAND: Car[] = [...CAND_SEED, ...GENERATED, ...CAND_LATE];
-/* UNIT_FLEET — รถทุกคันของหน่วยงานผู้สร้างแผน (FLEET = CAND ของ screens.js 10 คัน · 6 พ.ย. 2569 เจ้าของงาน "ต้องเอารถเข้า ไตรมาสทุกคัน")
-   ลำดับใน CAND ตามลำดับ CAND ของ screens.js: CAND_SEED 7 คัน + CAND_LATE 3 คัน · ฟอร์มสร้างแผนเห็นและต้องจัดรถชุดนี้ทุกคัน (รถจำลองเพิ่ม 20 คันต่อประเภทไม่อยู่ในหน่วยงาน — BACKLOG ข้อ 21) */
-export const UNIT_FLEET: number[] = [...CAND_SEED.map((_, i) => i), ...CAND_LATE.map((_, k) => CAND_SEED.length + GENERATED.length + k)];
+/* FIG_FLEET — รถ 10 คันของ CAND ใน screens.js (CAND_SEED 7 คัน + CAND_LATE 3 คัน) ใช้จับคู่ค่าตัวอย่างรายคันของ Figma (A_ALL A_OILS A_DRAW ของ NEW_PLAN)
+   UNIT_FLEET — รถที่ฟอร์มสร้าง/แก้ไขแผนเห็นและต้องจัดลงไตรมาสครบทุกคัน = รถจำลองครบชุด CAND (ภาค 4 × ประเภท 3 × 20 คัน + รถของ screens.js · 243 คัน)
+   9 พ.ย. 2569 เจ้าของงาน _"รถตัวอย่างทำไมมีน้อยตอนแรกมี 250 คันป่ะ"_ + _"ถ้าเลือกภาคแล้วต้องแสดงตามที่เลือกสิ"_ (เดิม 6 พ.ย. 2569 = FIG_FLEET 10 คัน · BACKLOG ข้อ 21 ค.(ก) ปิด) */
+export const FIG_FLEET: number[] = [...CAND_SEED.map((_, i) => i), ...CAND_LATE.map((_, k) => CAND_SEED.length + GENERATED.length + k)];
+export const UNIT_FLEET: number[] = CAND.map((_, i) => i);
 /* หน่วยงานที่ใช้ flow นี้ (UNITS · PLAN_UNIT ของ screens.js 6 พ.ย. 2569 · ค่าสมมติ) — ผู้สร้างแผนและผู้ดำเนินการ = หน่วยงาน · กบค. ดูแผนทุกหน่วยงานอย่างเดียว */
 export const UNITS = ["กกฟ.1", "กกฟ.2", "กรย.", "กบค."];   // 6 พ.ย. 2569 รอบ 2 "กบค จะทำแผนจะมีรถของ กฝช. ด้วย" ⇒ กบค. สร้างแผนได้อีกหน่วยงาน
 export const PLAN_UNIT: Record<string, string> = { "MR Z7000004": "กกฟ.1", "MR Z7000001": "กกฟ.1", "MR Z7000002": "กกฟ.2", "MR Z7000003": "กรย.", "MR Z7100001": "กบค.", "MR Z6900011": "กรย." };

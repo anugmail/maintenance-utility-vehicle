@@ -84,12 +84,12 @@ export const inArea = (d: Pick<Draft, "regions" | "districts" | "types">, i: num
   const c = CAND[i];
   return (!d.regions.length || d.regions.includes(regionOf(c))) && (!d.districts.length || d.districts.includes(dCode(c))) && (!d.types.length || d.types.includes(c.type));
 };
-/* รถที่ฟอร์มเห็น = รถทุกคันของหน่วยงาน (UNIT_FLEET · CAND ของ screens.js 6 พ.ย. 2569) */
+/* รถที่ฟอร์มเห็น = รถจำลองครบชุด (UNIT_FLEET = CAND · 9 พ.ย. 2569 เจ้าของงาน "ถ้าเลือกภาคแล้วต้องแสดงตามที่เลือกสิ") · ตารางแท็บทั้งหมด = ทุกคันที่ตรงภาค เขต ประเภท (ช่องว่าง = ทั้งหมด · หลายภาค = ทุกภาคที่เลือก) */
 export const carsFor = (d: Pick<Draft, "regions" | "districts" | "types">) => areaPicked(d) ? UNIT_FLEET.filter((i) => inArea(d, i)) : [];
 /* กำหนดอะไหล่แล้ว (decided ของ planForm 6 พ.ย. 2569) = เลือกไม่เบิก หรือเบิกแล้วมีรายการ (อะไหล่จากคลังที่ไม่ใช่น้ำมัน หรือรายการที่ระบุเอง) */
 export const decided = (d: Pick<Draft, "picks" | "manual" | "draw">, i: number) =>
   d.draw?.[i] === "none" || (d.picks[i] || []).some((x) => x !== 0) || (d.manual?.[i] || []).length > 0;
-/* ปุ่มบันทึกและส่งอนุมัติ: ชื่อแผน · ปีงบประมาณ · รถทุกคันของหน่วยงานอยู่ในไตรมาส · ทุกคันกำหนดอะไหล่แล้ว (complete ของ planForm 6 พ.ย. 2569) */
+/* ปุ่มบันทึกและส่งอนุมัติ: ชื่อแผน · ปีงบประมาณ · รถทุกคันที่ฟอร์มเห็น (UNIT_FLEET) อยู่ในไตรมาส · ทุกคันกำหนดอะไหล่แล้ว (complete ของ planForm 6 พ.ย. 2569) */
 export const fleetAllocated = (d: Pick<Draft, "alloc">) => UNIT_FLEET.filter((i) => d.alloc[i] != null).length;
 export const draftComplete = (d: Draft) => !!d.name.trim() && !!d.year && fleetAllocated(d) === UNIT_FLEET.length && Object.keys(d.alloc).every((i) => decided(d, Number(i)));
 /* คำค้น "เลขทะเบียน, ยี่ห้อ, รุ่น" (inQuery) */

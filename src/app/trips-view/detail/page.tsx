@@ -2,7 +2,7 @@
 /* S8 P2 · แผนเดินทาง ดูอย่างเดียว (/trips-view/detail/?trip=T1 · กรย. · หน่วยงานเจ้าของรถ) — tripView() ใน screens.js · spec S8.md (G.3 G.5)
    Page header ชื่อแผนเดินทาง + Badge "อนุมัติแล้ว" (ย้อนกลับ) + Secondary button "ส่งออก" (R84 · ส่งออกไม่แก้ข้อมูล ฝั่งดูอย่างเดียวก็มี)
    → รายละเอียดแผนเดินทาง (7 คู่) + Section label "ยานพาหนะในแผนเดินทาง (n)" | "ยานพาหนะของหน่วยงานในแผนเดินทาง (n)" + Table ชุดกลาง TRIP_V_COLS 7 คอลัมน์ (R82)
-   → Section label "อะไหล่ของแผนเดินทาง (n)" (R84 · หน่วยงานเจ้าของรถรวมเฉพาะยานพาหนะของตน) · หน่วยงานเจ้าของรถเห็นเฉพาะรถของหน่วยงาน */
+   → Section label "อะไหล่ของแผนเดินทาง" (ไม่มีตัวเลขจำนวนชนิด 9 พ.ย. 2569) (R84 · หน่วยงานเจ้าของรถรวมเฉพาะยานพาหนะของตน) · หน่วยงานเจ้าของรถเห็นเฉพาะรถของหน่วยงาน */
 import { useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";

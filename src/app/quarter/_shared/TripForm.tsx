@@ -13,7 +13,7 @@
        TRIP_CAR_COLS = ชุดกลาง TRIP_V_COLS (R82 · lib/mock/tripCols.ts) + ไอคอนแก้ไข ลบ (Table 8 คอลัมน์เต็ม) · วันดำเนินการรายคัน ค่าเริ่มต้นทั้งช่วงวันเดินทาง (แผนจ้าง ช่วงวันทำงาน)
          บรรทัดรอง "ค่าเริ่มต้น ช่วงวันเดินทาง" / "แก้จากช่วงวันเดินทาง" · ยังไม่เลือกช่วงวัน = "—" · เปลี่ยนช่วงวันเดินทางแล้ววันดำเนินการทุกคันกลับเป็นทั้งช่วงใหม่
          ไอคอนแก้ไข = popup "แก้ไขยานพาหนะในแผนเดินทาง · {ทะเบียน}" (R83 · TripCarEditModal work)
-     อะไหล่ของแผนเดินทาง (Section header + Badge · R84 · tripPartsSec) — Table QPART_COLS ดูอย่างเดียว รวมจากยานพาหนะในใบ (tripPartRows) · ไม่มียานพาหนะ = Empty state
+     อะไหล่ของแผนเดินทาง (Section header ไม่มีตัวเลขจำนวนชนิด 9 พ.ย. 2569 · R84 · tripPartsSec) — Table QPART_COLS ดูอย่างเดียว รวมจากยานพาหนะในใบ (tripPartRows) · ไม่มียานพาหนะ = Empty state
        ไอคอนลบ = เอารถออกจากใบนี้ (soft delete · 5 พ.ย. 2569) กลับไปเลือกได้ใน popup · popup แสดงรถทุกคันของไตรมาส คันที่อยู่ในแผนเดินทางอื่น = ติ๊กไม่ได้
      ปุ่ม ย้อนกลับ · ยืนยันการสร้างแผนเดินทาง | ส่งอนุมัติใหม่ — Disabled จนกว่าช่องบังคับครบ (รีวิว 5 พ.ย. 2569 แทน E.7 · S9 ฟอร์มเดียวกัน)
      Validation: ช่องบังคับที่ออกจากช่องโดยยังว่าง (Out of focus) — "กรุณาระบุชื่อแผนเดินทาง" · "กรุณาเลือกผู้รับจ้าง" · "กรุณาเลือกวันที่เริ่ม" · "กรุณาเลือกวันที่สิ้นสุด" · "กรุณาเลือกพนักงาน"
@@ -226,7 +226,7 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
         </Section>
 
         <Section>
-          <SectionHeader Title="อะไหล่ของแผนเดินทาง" Badge={parts.length || null} />
+          <SectionHeader Title="อะไหล่ของแผนเดินทาง" />{/* 9 พ.ย. 2569 เจ้าของงาน "เอาเลขออกไปเลยได้ป่ะ ถ้าหมายถึงจำนวนชนิด" ⇒ หัวข้ออะไหล่รวมตามรายการไม่มีตัวเลขจำนวนชนิด */}
           {parts.length
             ? <DataTable columns={QPART_COLS} rows={parts.map(qpartRow)} rowKey={(_, i) => parts[i].key} />
             : <EmptyStateDataEmpty Text="ยังไม่มีรายการอะไหล่" SupportingText={TRIP_PARTS_EMPTY} />}
