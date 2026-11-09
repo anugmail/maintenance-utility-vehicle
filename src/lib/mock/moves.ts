@@ -2,6 +2,7 @@
    ที่เก็บ: MockState.moves (คีย์เดียวกับ store · mt-next-v1) — ที่เก็บเก่าไม่มีฟิลด์นี้ = ยังไม่มีการย้าย
    ย้าย = รถออกจากไตรมาสเดิม (qcars removed) + เข้าไตรมาสใหม่ขึ้นก่อน (qcars added) · แผนที่จัดรถรายคัน (alloc) เปลี่ยนไตรมาสของรถ อะไหล่ตามแผนของรถย้ายตาม
    แผนเดินทางเดิมยังมีรถคันนี้ (สถานะบำรุงรักษาไม่ได้) · ไม่ต้องอนุมัติใหม่ */
+import { SAMPLE_Q_NEED } from "./closeout";
 import { CAND, PARTS, QUARTERS } from "./data";
 import { getJob, jobsOf } from "./jobs";
 import { allocOf, quarterRows } from "./planFlow";
@@ -49,9 +50,30 @@ export function moveCar(planId: string, car: TripCar, from: number, to: number, 
   notify("ย้ายยานพาหนะ " + car.plate + " ไป" + qLabel(to) + " สำเร็จ");
 }
 
-/** S4: บรรทัดรอง "รวม {n} {หน่วย} ของ {ทะเบียน} ที่ย้ายมา" ต่อรายการอะไหล่ (MOVE_Q2_SUBS) + อะไหล่ของรถที่ย้ายมา */
+/** บรรทัดรอง "รวม {n} {หน่วย} ของ {ทะเบียน} ที่ย้ายมา" ต่อรายการอะไหล่ (MOVE_Q2_SUBS) + อะไหล่ของรถที่ย้ายมา · ใช้ที่หัวข้ออะไหล่ในไตรมาส n ของหน้าไตรมาส (quarterPartRows) */
 export function movedParts(s: MockState, planId: string, q: number) {
   return movedInto(s, planId, q).map((m) => ({ move: m, parts: carPlanParts(s, planId, m.carId, m.tripId) }));
 }
 export const partIndex = (name: string) => PARTS.findIndex((p) => p.name === name);
 export const carsInQuarter = quarterCars;
+
+/* อะไหล่ในไตรมาส n ของหน้าไตรมาส (tripList ของ screens.js 6 พ.ย. 2569 เจ้าของงาน "หน้าที่ รวมรถในไตรมาส จะเป็นรวมแยกตามรายการ ไม่ต้องมีจาก smart inventory" · แทนหน้าความคืบหน้าอะไหล่ S4 เดิม)
+   แถวรวมตามรายการ ชนิด · รหัสอะไหล่ · ประเภท · จำนวน · หน่วย (QPART_COLS R81) ไม่มีค่าจาก Smart Inventory · ดูอย่างเดียว
+   แผนที่จัดรถรายคัน (มี alloc) = quarterRows ชุดเดียวกับอะไหล่ในไตรมาสของฟอร์มแผน (S1) และอะไหล่ในแผน (S2) · คันที่ไม่เบิกอะไหล่ไม่รวม · รถที่ย้ายมา alloc ย้ายไตรมาสแล้ว ยอดรวมอยู่ในนั้น
+   แผนตัวอย่าง (ไม่มี alloc) = PARTS ของ screens.js (ยอดไตรมาสที่กำลังทำ · ทุกไตรมาสแบบ tripList) · ไตรมาส 2 ใช้ยอดรถเดิม MOVE_Q2_BASE (SAMPLE_Q_NEED) แล้วบวกอะไหล่ตามแผนของรถที่ย้ายมา
+   S25 รถที่ย้ายมา = บรรทัดรองใต้ชนิด "รวม {n} {หน่วย} ของ {ทะเบียน} ที่ย้ายมา" (o.parts.subs · MOVE_Q2_SUBS) */
+export interface QPartRow { key: string; name: string; code: string; group: string; qty: number; unit: string; sub?: string }
+export function quarterPartRows(s: MockState, planId: string, q: number): QPartRow[] {
+  const p = s.plans.find((x) => x.mr === "MR " + planId);
+  const alloc = p?.alloc && Object.keys(p.alloc).length ? allocOf(p) : null;
+  const rows: QPartRow[] = alloc
+    ? quarterRows(alloc, q).map((r) => ({ key: r.key, name: r.name, code: r.code, group: r.group, qty: r.qty, unit: r.unit }))
+    : PARTS.map((x, i) => ({ key: "p" + i, name: x.name, code: x.code, group: x.group, qty: SAMPLE_Q_NEED[q]?.[i] ?? x.planQty, unit: x.unit }));
+  movedParts(s, planId, q).forEach(({ move, parts }) => parts.forEach((m) => {
+    let r = rows.find((x) => x.name === m.name);
+    if (!r) { const pi = partIndex(m.name); r = { key: "mv" + move.carId + m.name, name: m.name, code: pi >= 0 ? PARTS[pi].code : "-", group: pi >= 0 ? PARTS[pi].group : "เพิ่มเอง", qty: 0, unit: m.unit }; rows.push(r); }
+    if (!alloc) r.qty += m.qty;
+    r.sub = (r.sub ? r.sub + " · " : "") + "รวม " + m.qty + " " + m.unit + " ของ " + move.plate + " ที่ย้ายมา";
+  }));
+  return rows.filter((r) => r.qty > 0);
+}

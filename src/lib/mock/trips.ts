@@ -127,6 +127,8 @@ export interface Trip {
   /** ชื่อผู้ดูแลยานพาหนะที่แก้รายคัน (6 พ.ย. 2569 · ไม่มี = ผู้ควบคุมรถ) */
   names?: Record<string, string>;
   d1: string; d2: string; status: TripStatus; staff?: string[];
+  /** วันดำเนินการรายคันที่แก้ { รถ: [ตั้งแต่, ถึง] } (works ของ screens.js 6 พ.ย. 2569 · ไม่มี = ช่วงวันเดินทางทั้งช่วง) — popup แก้วันดำเนินการยังไม่ทำ (Figma กำลังออกแบบ) */
+  works?: Record<string, [string, string]>;
   createdBy: string; sentAt: string; approvedAt?: string; returnReason?: string;
   /** แสดงเฉพาะในรายการรออนุมัติของผู้อนุมัติ (TRIP_OTHER) ไม่นับเป็นใบของไตรมาสในหน้า S6 */
   listOnly?: boolean;
@@ -167,6 +169,10 @@ export const tripCtrl = (t: Pick<Trip, "names"> | null, c: TripCar) => t?.names?
 export const ctrlCell = (t: Pick<Trip, "phones" | "names"> | null, c: TripCar) => ({ text: tripCtrl(t, c), sub: (t && t.phones[c.id]) || c.phone || "-" });
 export const locCell = (t: Pick<Trip, "locs">, c: TripCar) => ({ text: tripLoc(t, c), sub: t.locs[c.id] ? "แก้จากสำนักงานเจ้าของยานพาหนะ" : "ค่าเริ่มต้น สำนักงานที่ยานพาหนะอยู่" });
 export const tripRange = (t: Pick<Trip, "d1" | "d2">) => t.d1 + " – " + t.d2;
+/* วันดำเนินการรายคัน (tripWork · tripWorkCell ของ screens.js · 6 พ.ย. 2569 รีวิว S6 "เพิ่ม คอลัมม์ "วันดำเนินการ" โดยเลือกได้ไม่เกิน range ของแผนที่กำหนดมาเท่านั้น")
+   ค่าเริ่มต้น = ช่วงวันเดินทางทั้งช่วง · หน้าไตรมาสแสดงข้อความอย่างเดียว · ฟอร์มแผนเดินทางมีบรรทัดรอง "ค่าเริ่มต้น ช่วงวันเดินทาง" / "แก้จากช่วงวันเดินทาง" (แบบสถานที่บำรุงรักษา) */
+export const tripWork = (t: Pick<Trip, "d1" | "d2" | "works">, c: TripCar) => { const w = t.works?.[c.id]; return w ? w[0] + " – " + w[1] : tripRange(t); };
+export const workCell = (t: Pick<Trip, "d1" | "d2" | "works">, c: TripCar) => ({ text: tripWork(t, c), sub: t.works?.[c.id] ? "แก้จากช่วงวันเดินทาง" : "ค่าเริ่มต้น ช่วงวันเดินทาง" });
 /* tripPlaces — "<สถานที่ไม่ซ้ำ> แห่ง (สำนักงานเจ้าของรถ k คัน)" */
 export const tripPlaces = (t: Trip) => {
   const cars = t.carIds.map(carOf).filter((c): c is TripCar => !!c);

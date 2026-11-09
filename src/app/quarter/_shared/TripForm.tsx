@@ -10,6 +10,8 @@
        แบบเดียวกับแถวพนักงานในค่าใช้จ่ายตอนปิดงาน (closeCosts) · ฟอร์มว่างแสดง 2 แถว · คนที่ 1 และ 2 บังคับ ("กรุณาเลือกพนักงาน") · ลบจนเหลือน้อยกว่า 2 แถว = เติมแถวว่างให้ครบ 2
      รถในแผนเดินทาง (Section header + Badge จำนวน + Secondary button "เพิ่มรถ") — Table (TRIP_CAR_COLS ไอคอนแก้ไข/ลบ) / Empty state/Data empty
        คอลัมน์ "ผู้ดูแลยานพาหนะ" = ชื่อ + เบอร์ (บรรทัดรอง) ค่าเริ่มต้นผู้ควบคุมรถ (6 พ.ย. 2569)
+       6 พ.ย. 2569 (TRIP_CAR_COLS ของ screens.js · Table 8 คอลัมน์เต็ม): + "ประเภทยานพาหนะ" (typeOf) · + "วันดำเนินการ" รายคัน ค่าเริ่มต้น = ช่วงวันเดินทางทั้งช่วง
+         บรรทัดรอง "ค่าเริ่มต้น ช่วงวันเดินทาง" / "แก้จากช่วงวันเดินทาง" (tripWorkCell) · ยังไม่กรอกช่วงวัน = "—" · popup แก้วันดำเนินการยังไม่ทำ (Figma กำลังออกแบบ · ไอคอนแก้ไขยังเปิด popup ผู้ดูแลยานพาหนะและสถานที่)
        ไอคอนลบ = เอารถออกจากใบนี้ (soft delete · 5 พ.ย. 2569) กลับไปเลือกได้ใน popup · popup แสดงรถทุกคันของไตรมาส คันที่อยู่ในแผนเดินทางอื่น = ติ๊กไม่ได้
      ปุ่ม ย้อนกลับ · ยืนยันการสร้างแผนเดินทาง | ส่งอนุมัติใหม่ — Disabled จนกว่าช่องบังคับครบ (รีวิว 5 พ.ย. 2569 แทน E.7 · S9 ฟอร์มเดียวกัน)
      Validation: ช่องบังคับที่ออกจากช่องโดยยังว่าง (Out of focus) — "กรุณาระบุชื่อแผนเดินทาง" · "กรุณาเลือกผู้รับจ้าง" · "กรุณาเลือกวันที่เริ่ม" · "กรุณาเลือกวันที่สิ้นสุด" · "กรุณาเลือกพนักงาน"
@@ -34,17 +36,19 @@ import { TertiaryButton } from "@/components/vms/TertiaryButton";
 import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
 import { mrOf, planOf } from "@/lib/mock/closeout";
+import { typeOf } from "@/lib/mock/data";
 import { notify, useMock, useRole } from "@/lib/mock/store";
-import { CREATOR, SENT_AT, STAFF, VENDORS, qEditOf, quarterCars, carOf, ctrlCell, locCell, nextTripId, putTrip, quarterTrips, tripsOf, type Trip, type TripCar } from "@/lib/mock/trips";
+import { CREATOR, SENT_AT, STAFF, VENDORS, qEditOf, quarterCars, carOf, ctrlCell, locCell, nextTripId, putTrip, quarterTrips, tripsOf, workCell, type Trip, type TripCar } from "@/lib/mock/trips";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useOutside } from "@/lib/useOutside";
 import { TripCarEditModal, type CarOverrides } from "./TripCarEditModal";
 import { TripCarPicker } from "./TripCarPicker";
 import { BtnRow, Content, DataTable, Section, quarterCrumbs, tripsHref, useBack } from "./ui";
 
+/* TRIP_CAR_COLS ของ screens.js (6 พ.ย. 2569 + ประเภทยานพาหนะ + วันดำเนินการ · Table 8 คอลัมน์เต็ม) — กว้างตามจอ */
 const TRIP_CAR_COLS: TableColumn[] = [
-  { head: "ทะเบียน", width: 180, Style: "Lead text" }, { head: "ยี่ห้อ/รุ่น" }, { head: "หน่วยงานเจ้าของยานพาหนะ", width: 160 },
-  { head: "ผู้ดูแลยานพาหนะ", width: 190 }, { head: "สถานที่บำรุงรักษา", width: 290 }, { head: "", width: 104, Style: "Action icons" },
+  { head: "ทะเบียน", width: 160, Style: "Lead text" }, { head: "ประเภทยานพาหนะ", width: 130 }, { head: "ยี่ห้อ/รุ่น" }, { head: "หน่วยงานเจ้าของยานพาหนะ", width: 140 },
+  { head: "ผู้ดูแลยานพาหนะ", width: 170 }, { head: "สถานที่บำรุงรักษา", width: 200 }, { head: "วันดำเนินการ", width: 190 }, { head: "", width: 104, Style: "Action icons" },
 ];
 const MODES = ["ดำเนินการเอง", "จ้างดำเนินการ"];   // 6 พ.ย. 2569 เจ้าของงาน "เปลี่ยนคำ กบค ดำเนินการเอง เป็น ดำเนินการเอง"
 
@@ -116,7 +120,8 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
   const drop = (id: string) => { const locs = { ...v.locs }, phones = { ...v.phones }, names = { ...v.names }; delete locs[id]; delete phones[id]; delete names[id]; put({ carIds: v.carIds.filter((x) => x !== id), locs, phones, names }); };
   const carRows = cars.map((c) => {
     const acts = [{ IconSwap: "stylus-24-300-round", label: "แก้ไข " + c.plate, onClick: () => setEditCar(c) }, { IconSwap: "delete-24-300-round", label: "ลบ " + c.plate, onClick: () => drop(c.id) }];
-    return [c.plate, c.model, c.owner, ctrlCell(over, c), locCell(over, c), { actions: acts, mobileActions: acts }];
+    const work = v.d1.trim() && v.d2.trim() ? workCell({ d1: v.d1.trim(), d2: v.d2.trim(), works: edit?.works }, c) : "—";   // ยังไม่กรอกช่วงวัน = "—" (tripForm v.d1)
+    return [c.plate, typeOf(c.model), c.model, c.owner, ctrlCell(over, c), locCell(over, c), work, { actions: acts, mobileActions: acts }];
   });
 
   /* ตรวจและส่ง — ข้อความ error ขึ้นเมื่อออกจากช่องโดยยังว่าง (touched) · ปุ่มยืนยัน Disabled จนกว่าครบ */
@@ -131,7 +136,7 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
       id: edit?.id ?? nextTripId(all, v.mode), planId, quarter: q, name: v.name.trim(), mode: v.mode,
       vendor: hire ? v.vendor : undefined, contract: hire ? v.contract.trim() || undefined : undefined,
       carIds: v.carIds, locs: v.locs, phones: v.phones, names: v.names, d1: v.d1.trim(), d2: v.d2.trim(), status: "review",
-      staff: hire ? undefined : v.staff.filter(Boolean), createdBy: edit?.createdBy ?? CREATOR, sentAt: edit?.sentAt ?? SENT_AT,
+      staff: hire ? undefined : v.staff.filter(Boolean), createdBy: edit?.createdBy ?? CREATOR, sentAt: edit?.sentAt ?? SENT_AT, works: edit?.works,
     };
     putTrip(t);
     notify(edit ? "ส่งแผนเดินทางให้ผู้อนุมัติใหม่แล้ว" : "สร้างแผนเดินทางสำเร็จ · ส่งให้ผู้อนุมัติแล้ว");
