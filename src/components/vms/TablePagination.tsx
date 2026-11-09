@@ -19,6 +19,22 @@ export interface TablePaginationProps {
   className?: string;
 }
 
+/* เลขหน้าไม่เกิน 5 ช่อง ตามระบบจริง getPageNumbers() ใน maintain-d-fe/src/components/ui/table/pagination-control.tsx
+   หน้าแรก + รอบหน้าปัจจุบัน + หน้าสุดท้าย · ช่องว่างเป็น "..." (ไลบรารีมีช่อง Number "..." ใน Table pagination 1 2 ... 9 10)
+   เช่น 1 2 3 ... 25 · 1 ... 9 10 11 ... 25 · 1 ... 23 24 25 (เจ้าของงาน 9 พ.ย. 2569 "pagination น่าจะแสดงผิดนะ" ตอน 243 คัน 25 หน้า) */
+export function pageNumbers(page: number, pages: number): (number | "...")[] {
+  if (pages <= 5) return Array.from({ length: pages }, (_, i) => i + 1);
+  let start = Math.max(2, page - 1), end = Math.min(pages - 1, page + 1);
+  if (page <= 3) end = 3;
+  else if (page >= pages - 2) start = pages - 2;
+  const out: (number | "...")[] = [1];
+  if (start > 2) out.push("...");
+  for (let i = start; i <= end; i++) out.push(i);
+  if (end < pages - 1) out.push("...");
+  out.push(pages);
+  return out;
+}
+
 export function TablePagination({ Breakpoint: bp, total, page = 1, perPage = 10, onPage, className }: TablePaginationProps) {
   const b = useBreakpoint(bp);
   const pages = Math.max(1, Math.ceil(total / perPage));
@@ -32,9 +48,10 @@ export function TablePagination({ Breakpoint: bp, total, page = 1, perPage = 10,
   const group = (
     <div className="flex overflow-hidden rounded-md border border-gray-300">
       <ButtonGroupsPaginationItem Type="Previous" State={page <= 1 ? "Disabled" : "Default"} onClick={() => onPage?.(page - 1)} />
-      {Array.from({ length: pages }, (_, i) => i + 1).map((n) => (
-        <ButtonGroupsPaginationItem key={n} Type="Number" Number={String(n)} State={n === page ? "Hover/Active" : "Default"} onClick={() => onPage?.(n)} />
-      ))}
+      {pageNumbers(page, pages).map((n, i) => n === "..."
+        ? <ButtonGroupsPaginationItem key={"gap" + i} Type="Number" Number="..." />
+        : <ButtonGroupsPaginationItem key={n} Type="Number" Number={String(n)} State={n === page ? "Hover/Active" : "Default"} onClick={() => onPage?.(n)} />
+      )}
       <ButtonGroupsPaginationItem Type="Next" State={page >= pages ? "Disabled" : "Default"} onClick={() => onPage?.(page + 1)} last />
     </div>
   );
