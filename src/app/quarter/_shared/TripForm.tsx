@@ -45,6 +45,7 @@ import { tripPartRows } from "@/lib/mock/moves";
 import { QPART_COLS, qpartRow } from "@/lib/mock/plan";
 import { tripVCells, tripVCols, workOf } from "@/lib/mock/tripCols";
 import { notify, useMock, useRole } from "@/lib/mock/store";
+import { canManage } from "@/lib/mock/planFlow";
 import { CREATOR, SENT_AT, STAFF, VENDORS, qEditOf, quarterCars, carOf, nextTripId, putTrip, quarterTrips, staffPos, staffTelOf, tripsOf, type Trip, type TripCar } from "@/lib/mock/trips";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useOutside } from "@/lib/useOutside";
@@ -91,7 +92,10 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
   const router = useRouter();
   const mob = useBreakpoint() === "Mobile";
   const mock = useMock();
-  const kbk = useRole() === "หน่วยงาน (กกฟ.1)";
+  const role = useRole();
+  const owner = planOf(mock, planId);
+  /* ผู้ดำเนินการ = หน่วยงานเจ้าของแผน (canManage · กกฟ.1 กกฟ.2 กรย. กบค.) — 9 พ.ย. 2569 เดิมเฉพาะ กกฟ.1 ("แผนอนุมัติแล้ว แต่ไม่เจอแผนการเดินทางที่อนุมัติแล้ว") */
+  const kbk = !!owner && canManage(role, owner);
   const [v, setV] = useState<Values>(() => fromTrip(edit, initialMode));
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const touch = (k: string) => () => setTouched((t) => ({ ...t, [k]: true }));

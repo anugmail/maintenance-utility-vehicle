@@ -191,7 +191,16 @@ export const TRIP_V: Trip = { ...base, id: "TV", name: "จ้างบำรุ
 export const TRIP_OTHER: Trip = { ...base, id: "TO", name: "ตรวจรถพ่วงฉีดน้ำ นครราชสีมา บุรีรัมย์", mode: "self", carIds: ["82-6789", "82-1145", "80-5738"],
   locs: {}, phones: {}, d1: "10/11/2569", d2: "12/11/2569", status: "review", staff: STAFF, listOnly: true };
 
-export const DEFAULT_TRIPS = (): Trip[] => [{ ...TRIP_OTHER }];   // E.1: ไตรมาสยังไม่มีแผนเดินทาง
+/* แผนเดินทางตัวอย่างของ MRZ7000002 (กกฟ.2 · อนุมัติแล้ว · ไตรมาสที่กำลังทำ = ไตรมาส 2) — 9 พ.ย. 2569 เจ้าของงาน "แผนอนุมัติแล้ว แต่ไม่เจอแผนการเดินทางที่อนุมัติแล้ว"
+   ใช้เฉพาะยานพาหนะไตรมาส 2 ของแผนนั้น (SAMPLE_PLAN_Q · รถพ่วงฉีดน้ำ ภาค 2 · 4 คัน): ใบที่ 1 อนุมัติแล้ว 2 คัน (เปิดรายละเอียดแผนเดินทาง S10 ได้) · ใบที่ 2 รออนุมัติ 2 คัน
+   ผู้สร้าง = persona กกฟ.2 (UNIT_PERSONA) · ช่วงวันในไตรมาส 2 (เม.ย. 2570) · ค่าสมมติ */
+const U2_Q2 = SAMPLE_PLAN_Q["MRZ7000002"]?.[2] ?? [];
+const u2 = { planId: "Z7000002", quarter: 2, mode: "self" as const, locs: {}, phones: {}, staff: [STAFF[1], STAFF[2]], createdBy: "นายอนุชา บุญมา (กกฟ.2)", sentAt: "25/03/2570" };
+export const TRIP_U2: Trip[] = U2_Q2.length >= 4 ? [
+  { ...u2, id: "T20", name: "ตรวจรถพ่วงฉีดน้ำ ภาค 2 รอบที่ 1", carIds: U2_Q2.slice(0, 2).map((c) => c.id), d1: "06/04/2570", d2: "08/04/2570", status: "approved", approvedAt: "27/03/2570" },
+  { ...u2, id: "T21", name: "ตรวจรถพ่วงฉีดน้ำ ภาค 2 รอบที่ 2", carIds: U2_Q2.slice(2, 4).map((c) => c.id), d1: "20/04/2570", d2: "22/04/2570", status: "review" },
+] : [];
+export const DEFAULT_TRIPS = (): Trip[] => [{ ...TRIP_OTHER }, ...TRIP_U2.map((t) => ({ ...t }))];   // E.1: ไตรมาส 1 ของ MRZ7000001 ยังไม่มีแผนเดินทาง · MRZ7000002 ไตรมาส 2 มี 2 ใบ
 
 /* ---------- ตัวช่วยแสดงผล ---------- */
 export const tripBy = (t: Trip) => t.vendor || "ดำเนินการเอง";   // 6 พ.ย. 2569 เจ้าของงาน "เปลี่ยนคำ กบค ดำเนินการเอง เป็น ดำเนินการเอง"

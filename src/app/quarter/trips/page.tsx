@@ -40,6 +40,7 @@ import { useSample, type SampleMap } from "@/lib/useSample";
 import { RowMenu, anchorOf, type MenuAnchor } from "@/components/patterns/RowMenu";
 import { MoveModal, type MoveTarget } from "../_shared/MoveModal";
 import { notify, useMock, useRole } from "@/lib/mock/store";
+import { canManage } from "@/lib/mock/planFlow";
 import { TST, addQuarterCars, badgeOf, ctrlCell, editQuarterCar, putTrip, qEditOf, quarterCars, quarterPool, quarterTrips, removeQuarterCar, tripBy, tripPlaces, tripRange, vTrip, type TripCar } from "@/lib/mock/trips";
 import { tripVCells, tripVCols, workOf } from "@/lib/mock/tripCols";
 import { useBreakpoint } from "@/lib/useBreakpoint";
@@ -65,10 +66,12 @@ function TripList() {
   const router = useRouter();
   const sp = useSearchParams();
   const mock = useMock();
-  const kbk = useRole() === "หน่วยงาน (กกฟ.1)";
+  const role = useRole();
   const id = sp.get("id") ?? "Z7000001", q = Number(sp.get("q") ?? 1);
   const nowQ = "ไตรมาส " + q;
   const plan = planOf(mock, id);
+  /* ผู้ดำเนินการ = หน่วยงานเจ้าของแผน (canManage · กกฟ.1 กกฟ.2 กรย. กบค.) — 9 พ.ย. 2569 เดิมเฉพาะ กกฟ.1 ("แผนอนุมัติแล้ว แต่ไม่เจอแผนการเดินทางที่อนุมัติแล้ว") */
+  const kbk = !!plan && canManage(role, plan);   // อื่น (กบค. ดูแผนของหน่วยงานอื่น · A.32) = ดูอย่างเดียว ไม่มีปุ่มเพิ่ม แก้ไข สร้าง
   const trips = quarterTrips(mock, id, q);
   const cars = quarterCars(mock, id, q);
   const mob = useBreakpoint() === "Mobile";
@@ -104,8 +107,9 @@ function TripList() {
   });
   const editTrip = editCar ? tripOf(editCar) : undefined;
   const open = (tid: string, st: string) => (st === "approved" ? router.push("/trips/detail/?trip=" + tid) : router.push("/quarter/trips/edit/?trip=" + tid));
+  const canOpen = (st: string) => st === "approved" || (st === "returned" && kbk);   // ส่งกลับแก้ไข = ฟอร์มแก้ไขของผู้สร้างแผนเดินทางเท่านั้น
   const tripRows: TableValue[][] = trips.map((t) => [{ text: t.name, sub: tripPlaces(t) }, tripRange(t), String(t.carIds.length), tripBy(t), { pills: [TST[t.status]] },
-    t.status === "review" ? null : go("เปิด " + t.name, () => open(t.id, t.status))]);
+    !canOpen(t.status) ? null : go("เปิด " + t.name, () => open(t.id, t.status))]);
   const qparts = quarterPartRows(mock, id, q);
   const partRows: TableValue[][] = qparts.map((r) => { const v = qpartRow(r); return r.sub ? [{ text: r.name, sub: r.sub }, ...v.slice(1)] : v; });
   const free = cars.some((c) => !tripOf(c));   // รถที่ยังไม่อยู่ในแผนเดินทางใด

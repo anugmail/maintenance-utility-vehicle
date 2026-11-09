@@ -44,10 +44,9 @@ function Detail() {
   const mob = useBreakpoint() === "Mobile";
   const hydrated = useHydrated();
   const role = useRole();
-  const kbk = role === "หน่วยงาน (กกฟ.1)";   // ทางไปขั้นถัดไป (ไตรมาส · ส่งประวัติ · รายงานผล) เฉพาะ กกฟ.1 — จอ S6 ขึ้นไปของ Figma มีแต่ข้อมูลของ กกฟ.1 · กกฟ.2 กรย. (persona 9 พ.ย. 2569) มีจอแค่รายการแผน A.39 A.40
   const mock = useMock();
   const plan = findPlan(mock.plans, sp.get("id"));
-  const [q, setQ] = useState(1);
+  const [qSel, setQ] = useState<number | null>(null);   // แท็บที่เลือก · ยังไม่เลือก = ไตรมาสที่กำลังทำของแผน (9 พ.ย. 2569 MRZ7000002 ไตรมาส 2)
   const [del, setDel] = useState(false);
   const gone = hydrated && !plan;
   useEffect(() => { if (gone) router.replace("/"); }, [gone, router]);   // แผนไม่มีแล้ว (ลบ) → หน้ารายการ
@@ -61,15 +60,19 @@ function Detail() {
   const size = mob ? "lg" : "md";
   const id = planId(plan);
   const nowQ = Number(plan.nowQ.replace(/\D/g, "")) || 1;
-  const canSend = kbk && st === "active" && !!closeoutOf(mock, id).accepted;
-  const canReport = kbk && (st === "passed" || st === "closed");
+  const q = qSel ?? nowQ;
+  const canSend = manage && st === "active" && !!closeoutOf(mock, id).accepted;
+  const canReport = manage && (st === "passed" || st === "closed");
   const actions = canEdit ? <>
     {canDelete && <SecondaryDangerButton Text="ลบแผน" LeadingIconSwap="delete-24-300-round" Size={size} onClick={() => setDel(true)} />}
     <SecondaryButton Text="แก้ไข" LeadingIconSwap="stylus-24-300-round" Size={size} onClick={() => { startEdit(plan); router.push("/edit/?id=" + id + "&from=detail"); }} />
   </> : canSend ? <PrimaryButton Text="ส่งประวัติ" Size={size} onClick={() => router.push("/closeout/history/?id=" + id)} />
     : canReport ? <PrimaryButton Text="รายงานผลการบำรุงรักษา" Size={size} onClick={() => router.push("/closeout/report/?id=" + id)} /> : undefined;
   /* ไปหน้าไตรมาส n (S6 ทางเข้า) · S4 เปลี่ยนเป็นแดชบอร์ดที่เข้าจากเมนู (/parts/ · 6 พ.ย. 2569) ไม่มีปุ่มที่นี่แล้ว */
-  const qActions = kbk && (st === "approved" || st === "active") ? <div className="flex items-center gap-3">
+  /* ไปหน้าไตรมาส n: แผนอนุมัติแล้ว/ดำเนินการ ของทุกหน่วยงาน (9 พ.ย. 2569 เจ้าของงาน "แผนอนุมัติแล้ว แต่ไม่เจอแผนการเดินทางที่อนุมัติแล้ว")
+     planBody({ qBtn: st === 'approved' || st === 'active' }) ของ screens.js ไม่ขึ้นกับบทบาท — A.32 กบค. ดูแผนของหน่วยงานอื่น (planDetail readonly) ก็มีปุ่มนี้ (readonly ซ่อนแค่ปุ่มหัว)
+     ⇒ หน่วยงานเจ้าของแผน + กบค. · หน้าไตรมาสของแผนที่ไม่ใช่ของตัวเอง = ดูอย่างเดียว */
+  const qActions = (manage || role === "กบค.") && (st === "approved" || st === "active") ? <div className="flex items-center gap-3">
     <TertiaryBrandButton Text={"ไปหน้าไตรมาส " + q} LeadingIconSwap="keyboard_arrow_right-20-400-round" onClick={() => router.push("/quarter/trips/?id=" + id + "&q=" + q)} />
   </div> : undefined;
 

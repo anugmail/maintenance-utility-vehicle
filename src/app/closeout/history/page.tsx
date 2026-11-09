@@ -22,6 +22,7 @@ import { PST } from "@/lib/mock/data";
 import { planHistory } from "@/lib/mock/history";
 import { useSeed } from "@/lib/mock/seedB";
 import { notify, useMock, useRole } from "@/lib/mock/store";
+import { canManage } from "@/lib/mock/planFlow";
 import { badgeOf } from "@/lib/mock/trips";
 import { BtnRow, Content, DataTable, MENU_HOME, Section, planDetailHref, useBack } from "../../quarter/_shared/ui";
 
@@ -30,9 +31,11 @@ function History() {
   const router = useRouter();
   const sp = useSearchParams();
   const mock = useMock();
-  const kbk = useRole() === "หน่วยงาน (กกฟ.1)";
+  const role = useRole();
   const id = sp.get("id") ?? "Z7000001";
   const plan = planOf(mock, id);
+  /* ผู้ดำเนินการ = หน่วยงานเจ้าของแผน (canManage · กกฟ.1 กกฟ.2 กรย. กบค.) — 9 พ.ย. 2569 เดิมเฉพาะ กกฟ.1 ("แผนอนุมัติแล้ว แต่ไม่เจอแผนการเดินทางที่อนุมัติแล้ว") */
+  const kbk = !!plan && canManage(role, plan);
   const c = closeoutOf(mock, id);
   const [confirm, setConfirm] = useState(false);
   const back = useBack(planDetailHref(id));

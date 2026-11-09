@@ -23,10 +23,12 @@ function ReviewList() {
   useSeed();
   const router = useRouter();
   const mock = useMock();
+  /* ผู้สร้างแผนเดินทาง = ชื่อในใบ (ไม่มีวงเล็บหน่วยงาน) · ใบตัวอย่างของหน่วยงานอื่น (MRZ7000002 กกฟ.2) ไม่ใช่ CREATOR_SHORT */
+  const creatorOf = (t: { createdBy?: string }) => t.createdBy?.replace(/ \(.*\)$/, "") ?? CREATOR_SHORT;
   const [query, setQuery] = useState("");
   const k = query.trim();
-  const trips = tripsOf(mock).filter((t) => t.status === "review" && (!k || t.name.includes(k) || CREATOR_SHORT.includes(k)));
-  const rows = trips.map((t) => [{ text: t.name, sub: mrOf(t.planId) + " · ไตรมาส " + t.quarter }, tripRange(t), String(t.carIds.length), CREATOR_SHORT, t.sentAt, { pills: [TST[t.status]] },
+  const trips = tripsOf(mock).filter((t) => t.status === "review" && (!k || t.name.includes(k) || creatorOf(t).includes(k)));
+  const rows = trips.map((t) => [{ text: t.name, sub: mrOf(t.planId) + " · ไตรมาส " + t.quarter }, tripRange(t), String(t.carIds.length), creatorOf(t), t.sentAt, { pills: [TST[t.status]] },
     go("เปิด " + t.name, () => router.push("/approvals/trips/detail/?trip=" + t.id))]);
   return (
     <>
