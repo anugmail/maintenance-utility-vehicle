@@ -13,13 +13,13 @@
    ⇒ แผนจ้างใช้ 4 สถานะเดียวกับแผนที่ กบค. ดำเนินการเอง · กบค. เริ่มงาน ปิดงาน บำรุงรักษาไม่ได้ แทนผู้รับจ้างด้วยหน้าเดียวกัน (จอ I.22 I.23 ของ screens.js) · ไม่มีส่งตรวจงานและตรวจรับรายคัน
    สถานะของงานผู้รับจ้างที่ค้างในที่เก็บเก่า (worked reported wait returned) แปลงเป็นสถานะที่ใกล้สุดตอนอ่าน (normJob)
    ที่เก็บงานรายคันมีที่เดียวคือไฟล์นี้ (MockState.jobs) — S10 S12 S13 S15 S24 ใช้ร่วมกัน */
-import type { ReceiptItem } from "@/components/maintain-d/ReceiptChecklist";
+import type { CheckRow } from "@/components/patterns/CheckTable";
 import type { UploadFile } from "@/components/vms/FileUpload";
 import type { PillColor } from "@/components/vms/PillOutline";
 import { useMemo } from "react";
 import { CAND, LAST_OIL, PLANS, typeOf, type Plan } from "./data";
 import { setMock, useMock, type MockState, type Role } from "./store";
-import { APPROVED_AT, PLAN_CARS, Q_EXTRA, TRIP_1, TRIP_CARS as CARS, TRIP_V, candId, tripsOf, type Trip } from "./trips";
+import { APPROVED_AT, PLAN_CARS, PLAN_ID, Q_EXTRA, TRIP_1, TRIP_CARS as CARS, TRIP_V, candId, tripsOf, type Trip } from "./trips";
 
 /* ---------- เพิ่มฟิลด์ jobs ให้ MockState (store.ts) ---------- */
 declare module "./store" {
@@ -166,8 +166,9 @@ export const OIL_PART = WORK[0].part;
 
 /* ---------- ฟอร์ม ---------- */
 export interface Signer { name: string | null; /** ลายเซ็น (data URL) · มีค่า = ลงนามแล้ว */ sig: string | null }
-/** หน้ารับรถ (receivePage) — เก็บร่างระหว่างกรอก · ยืนยันแล้วคงไว้เป็นข้อมูลของงาน */
-export interface ReceiveForm { items: ReceiptItem[]; signers: [Signer, Signer]; /** ไฟล์ต่อช่อง BEFORE */ photos: UploadFile[][] }
+/** Step 1 ตรวจสภาพก่อนบำรุงรักษา — เก็บร่างระหว่างกรอก · ยืนยันแล้วคงไว้เป็นข้อมูลของงาน
+    items = รายการตรวจของแบบตรวจตามประเภทยานพาหนะ (R86 · sel 0 ปกติ · 1 แก้ไข) · signers = [ผู้ตรวจ (กบค.), ผู้รับการตรวจ (หน่วยงานเจ้าของยานพาหนะ)] (SIGN_IN 9 พ.ย. 2569) */
+export interface ReceiveForm { items: CheckRow[]; signers: [Signer, Signer]; /** ไฟล์ต่อช่อง BEFORE */ photos: UploadFile[][] }
 /** แถวรายการสภาพวัสดุอะไหล่ (หน้าปิดงาน) — จำนวนที่คืน = ตามแผน − ที่ใช้ · ราคารวมคำนวณ */
 export interface ClosePartRow { part: string; code?: string; unit: string; unitPrice: number; planQty: number; used: number; old: number; note: string; /** เพิ่มเองหน้างาน (ไม่อยู่ในแผน) */ added?: boolean }
 export interface CostRow { name: string | null; perDiem: string; lodging: string; days: number | null }
@@ -219,12 +220,43 @@ export interface Job {
 }
 export interface JobsState { trips: Record<string, JobTrip>; jobs: Record<string, Job> }
 
+/* ---------- แบบตรวจสภาพตามประเภทยานพาหนะ (S10 Step 1 · R86 · inspectForm() ใน screens.js · Figma bc2571f) ----------
+   เจ้าของงาน 9 พ.ย. 2569 (ไฟล์ "04 ใบตรวจสภาพ-ซ่อม รถกระเช้าแก้ไฟ ฮอทไลน์ รถ.xlsx") _"อยากให้การตรวจรถถ้าเลือกมาเป็นกระเช้า จะใช้แบบการตรวจ แท็บ ตรวจสภาพรถกระเช้า แต่ถ้าเป็นรถพ่วงฉีดน้ำก็จะใช้แบบประเมิน แท็ป ตรวจสภาพรถพ่วงฉีดน้ำ โดยข้อมูลที่เป็น display ก็คือข้อมูล ด้านบนของการตรวจ"_
+   + เคาะ: แทนรายการเอกสารรับยานพาหนะใน Step 1 · ลงนาม ผู้ตรวจ / ผู้รับการตรวจ
+   กระเช้าแก้ไฟ กระเช้าฮอทไลน์ = 30 รายการ (BUCKET_ITEMS) · รถพ่วงฉีดน้ำ = 19 รายการ (WATER_ITEMS) · ผลรายข้อ ปกติ / แก้ไข / หมายเหตุ · เลือกจากประเภทของยานพาหนะ (TripCar.type)
+   ข้อมูลส่วนบนของใบตรวจ = กล่องแสดงข้อมูล · รหัส SERIAL No. หมายเลข HC เครื่องยนต์ ระยะทาง/ระยะเวลาการใช้งาน = ค่าสมมติของ screens.js */
+export const BUCKET_ITEMS = ["น้ำมันไฮดรอลิค", "กรองน้ำมันไฮดรอลิค", "แรงดันน้ำมันไฮดรอลิค MAIN 2400-2600 PSI", "ชุดเกียร์ PTO", "ปั๊มน้ำมันไฮดรอลิค", "เพลาขับปั๊มน้ำมันไฮดรอลิค",
+  "ชุดกระบอกขาช้างหน้าซ้าย-ขวา", "ชุดกระบอกขาช้างหลังซ้าย-ขวา", "น้ำมันหล่อลื่นชุดเฟืองหมุนฐานเครน", "ชุดมอเตอร์และเฟืองหมุนฐานเครน", "ชุดกระบอก LOWER BOOM", "ชุดกระบอก UPPER BOOM",
+  "ชุดกระบอก EXTENSION", "ชุดโรตารี่", "ระบบ EMERGENCY", "ชุด CONTROL ล่าง", "ชุด CONTROL บน", "สายน้ำมันไฮดรอลิค", "สายสัญญาณต่างๆ", "เกจวัดต่างๆ", "ชุดวาล์วล๊อคต่างๆ",
+  "ชุดปรับการหมุนและปรับดิ่งใบกระเช้า", "BUCKET, LINER", "ชุดการ์ดครอบป้องกันกระแสไฟ", "รอกและเชือกวินซ์", "ชุด LIFT รุ่น 115 KV", "การอัดและเคลือบจารบีตามจุดต่างๆ", "ชุดยึดฐานเครน",
+  "ท่อนบูม, สลัก, จุดยึด", "PLATE ซองบูม, SLIDE PAD ADJ."];
+export const WATER_ITEMS = ["น้ำมันเครื่องยนต์", "น้ำมันเกียร์ชุดเฟืองเกียร์ทดรอบ", "น้ำมันดุมล้อ", "กรองอากาศ", "กรองน้ำมันเครื่องยนต์", "กรองน้ำมันเชื้อเพลิง", "กรองดักน้ำ",
+  "สภาพเครื่องยนต์รอบเครื่อง 2400 RPM", "น้ำ, หม้อน้ำ, ท่อน้ำ, ฝาปิดหม้อน้ำ", "สภาพและความตึงของสายพานพัดลม/ไดชาร์ท", "แบตเตอรี่, ขั้วแบตเตอรี่และน้ำกลั่น",
+  "รอยรั่วน้ำมันเชื้อเพลิง, น้ำมันเครื่อง, น้ำระบายความร้อน", "แรงดันน้ำ MAIN 800 PSI", "แรงดันน้ำปลายปืน 1-2 กระบอก 400 PSI", "ระบบไฟควบคุมอุปกรณ์ต่าง ๆ", "มาตรวัดต่าง ๆ",
+  "ข้อต่อ, วาล์วน้ำ", "สายฉีดน้ำ", "ชุดอุปกรณ์ REEL เก็บสายฉีดน้ำ"];
+/** ตัวเลือกรายข้อ (หัวคอลัมน์ตาราง · Radio text card บนมือถือ) */
+export const INSPECT_OPTS = ["ปกติ", "แก้ไข"];
+/** ข้อมูลจำลองตอนตรวจครบ (INSPECT_NOTE / INSPECT_FIX): ทุกรายการ "ปกติ" ยกเว้นข้อ 18 "แก้ไข" + หมายเหตุ */
+export const INSPECT_FIX = 17, INSPECT_NOTE = "สายน้ำมันไฮดรอลิคซึมที่ข้อต่อ เปลี่ยนแล้ว";
+const WATER_TYPE = "รถพ่วงฉีดน้ำ";
+/* "Isuzu FTR" → ["Isuzu", "FTR"] (brandModel ของ screens.js) */
+const brandModel = (s: string): [string, string] => { const w = s.trim().split(" "); return [w[0] ?? "", w.slice(1).join(" ")]; };
+/** แบบตรวจของยานพาหนะตามประเภท: ชื่อแบบ (หัวกล่องแสดงข้อมูล) · ข้อมูลส่วนบนของใบตรวจ · รายการตรวจ */
+export function inspectForm(c: Pick<TripCar, "plate" | "model" | "owner" | "type">, jobNo: string): { title: string; kv: [string, string][]; items: string[] } {
+  const [car, body = ""] = c.model.split(" + "), [vb, vm] = brandModel(car);
+  if (c.type === WATER_TYPE) return { title: "แบบฟอร์มการตรวจสภาพรถพ่วงฉีดน้ำ", items: WATER_ITEMS, kv: [["งานเลขที่", jobNo], ["ยี่ห้อยานพาหนะ", vb], ["รุ่นยานพาหนะ", vm], ["ทะเบียน", c.plate],
+    ["รหัส", "W-2565-0218"], ["ใช้งานประจำที่", c.owner], ["SERIAL No.", "FM8JN-71245"], ["ยี่ห้อเครื่องยนต์", "Kubota"], ["รุ่นเครื่องยนต์", "V2203"], ["SERIAL No. เครื่องยนต์", "2B4471"], ["ระยะเวลาการใช้งาน (Hr)", "2,840"]] };
+  const [cb, cm] = brandModel(body.replace(/^กระเช้า /, ""));
+  return { title: "แบบฟอร์มการตรวจสภาพกระเช้าแก้ไฟและกระเช้าฮอทไลน์", items: BUCKET_ITEMS, kv: [["งานเลขที่", jobNo], ["ยี่ห้อกระเช้า", cb], ["รุ่นกระเช้า", cm], ["ทะเบียน", c.plate],
+    ["รหัส", "B-2563-0412"], ["ใช้งานประจำที่", c.owner], ["SERIAL No.", cm + "-11873"], ["หมายเลข HC", "HC-0412"], ["ยี่ห้อยานพาหนะ", vb], ["รุ่นยานพาหนะ", vm], ["ระยะทางการใช้งานยานพาหนะ (Km)", "182,400"], ["ระยะเวลาการใช้งานเครน (Hr)", "6,120"]] };
+}
+/** รายการตรวจตั้งต้นของยานพาหนะ (ยังไม่เลือก) */
+export const inspectRows = (c: Pick<TripCar, "type">): CheckRow[] => (c.type === WATER_TYPE ? WATER_ITEMS : BUCKET_ITEMS).map((name) => ({ name, sel: null, note: "" }));
+
 /* ---------- ค่าตั้งต้น ---------- */
-export const RECEIPT_ITEMS = ["แผ่นป้ายทะเบียนหน้า - หลัง", "ป้ายทะเบียนติดกระจกและ พรบ.", "กระจกมองข้างซ้าย - ขวา, กระจกมองหลัง", "ยางอะไหล่", "แบตเตอรี่", "เครื่องมือประจำยานพาหนะ, แม่แรง, ประแจถอดล้อ", "ฝาถังน้ำมัน",
-  "อุปกรณ์บนหน้าปัด, แตร", "ใบปัดน้ำฝน", "วิทยุ, ลำโพง, เสาอากาศ, วิทยุรับ - ส่ง", "ระบบไฟแสงสว่าง", "สภาพยาง", "สภาพตัวถังและสี"];
 export const CLOSE_DOCS = ["บันทึกใบสั่งการ"];
 const signer = (): Signer => ({ name: null, sig: null });
-export const emptyReceive = (): ReceiveForm => ({ items: RECEIPT_ITEMS.map((name) => ({ name, has: null, damaged: false, wrongModel: false, note: "" })), signers: [signer(), signer()], photos: BEFORE.map(() => []) });
+export const emptyReceive = (c: Pick<TripCar, "type">): ReceiveForm => ({ items: inspectRows(c), signers: [signer(), signer()], photos: BEFORE.map(() => []) });
 /* ฟอร์มปิดงานตั้งต้น: อะไหล่จากอะไหล่ตามแผน (ใช้ = ตามแผน · อะไหล่เก่า 0) · พนักงานตามแผนเดินทาง (เงินว่าง) · ศูนย์ต้นทุนของเจ้าของรถ */
 export function emptyClose(job: Job, trip: JobTrip, car: TripCar): CloseForm {
   return {
@@ -238,10 +270,10 @@ export function emptyClose(job: Job, trip: JobTrip, car: TripCar): CloseForm {
 }
 export const newJob = (tripId: string, carId: string): Job => ({ tripId, carId, status: "todo", parts: WORK.map((p) => ({ ...p })) });
 
-/* ข้อมูลกรอกครบตามจอ Figma (ใช้กับชุดตัวอย่าง) */
-const filledReceive = (by: string): ReceiveForm => ({
-  items: RECEIPT_ITEMS.map((name, i) => ({ name, has: true, damaged: i === 11, wrongModel: false, note: i === 11 ? "ยางหลังซ้ายสึก แจ้งเจ้าของยานพาหนะแล้ว" : "" })),
-  signers: [{ name: PEOPLE.ownerSigner, sig: "sample" }, { name: by.replace(/ \(.*\)$/, ""), sig: "sample" }],
+/* ข้อมูลกรอกครบตามจอ Figma (ใช้กับชุดตัวอย่าง) — ตรวจครบ (INSPECT_FIX) + ลงนาม ผู้ตรวจ (กบค.) / ผู้รับการตรวจ (SIGN_IN) */
+const filledReceive = (by: string, c: Pick<TripCar, "type">): ReceiveForm => ({
+  items: inspectRows(c).map((r, i) => (i === INSPECT_FIX ? { ...r, sel: 1, note: INSPECT_NOTE } : { ...r, sel: 0 })),
+  signers: [{ name: by.replace(/ \(.*\)$/, ""), sig: "sample" }, { name: PEOPLE.ownerSigner, sig: "sample" }],
   photos: BEFORE.map((b, i) => [{ name: b.replace(/\s|\+|\(|\)/g, "-") + "-" + (i + 1) + ".jpg", size: "2.4 MB", bar: true }]),
 });
 const CLOSE_FILLED_PARTS: Record<string, [number, number, string]> = {   // CLOSE_PARTS: ใช้ · อะไหล่เก่า · หมายเหตุ
@@ -438,13 +470,21 @@ export function removeTripCar(t: JobTrip, carId: string) {
 /* ---------- ชุดตัวอย่าง (JOB_SETS) — เปิดจาก /scenarios/ ด้วย ?sample=<ชื่อ> ให้เห็นจอตามลำดับของ Figma โดยไม่ต้องกดไล่ ----------
    T1_afterClose = JOB_MIX (82-6789 เสร็จสิ้น + รอผลตรวจน้ำมัน · 82-1145 อยู่ระหว่างบำรุงรักษา · 80-9981 บำรุงรักษาไม่ได้ · 82-3302 ยังไม่เริ่ม)
    T1_afterCannot (80-9981 บำรุงรักษาไม่ได้) · TV_start ใบจ้างยังไม่เริ่ม · TV_mid = HIRE_ST (จอ I.22: คันแรก 80-5738 กบค. เริ่มงานแทนผู้รับจ้างแล้ว · คันที่ 2 81-2210 ปิดงานแล้ว · ที่เหลือยังไม่เริ่ม)
-   ชุด TV_vendor (S23) TV_kbk (S11) ตัดออก 4 พ.ย. 2569 */
-export const SAMPLES = ["T1_start", "T1_afterClose", "T1_afterCannot", "TV_start", "TV_mid"] as const;
+   ชุด TV_vendor (S23) TV_kbk (S11) ตัดออก 4 พ.ย. 2569
+   T1_water / T1_waterSigned (R86 · 9 พ.ย. 2569 จอต่อท้าย S10 "ยานพาหนะประเภทรถพ่วงฉีดน้ำ — Step 1 ใช้แบบตรวจสภาพรถพ่วงฉีดน้ำ" · "… — ตรวจรายการและลงนามครบ"):
+     ใบ T1 + ยานพาหนะรถพ่วงฉีดน้ำ 82-9012 ขอนแก่น (WATER_CAR = CAND[9] ของ screens.js) อยู่ระหว่างบำรุงรักษา Step 1 · ยังไม่ตรวจ / ตรวจรายการและลงนามครบ
+     จอ Figma วางคันนี้ในใบ JOB_T (T1) กล่องการนัดหมายใช้ค่าของคันแรก (JOB_I) ⇒ เบอร์ติดต่อ/ผู้ดูแลยานพาหนะของคันนี้ในใบ = ค่าของ 82-6789 ตามจอ (ข้อมูลยานพาหนะไม่มีผู้ควบคุมของ กฟฉ.2)
+     คันนี้เพิ่มเข้า "ยานพาหนะในไตรมาส 1" ของแผนตัวอย่างด้วย (qcars) ให้หน้าไตรมาสตรงกับใบ · ชุด T1 อื่นเอาออก */
+export const SAMPLES = ["T1_start", "T1_afterClose", "T1_afterCannot", "TV_start", "TV_mid", "T1_water", "T1_waterSigned"] as const;
 export type SampleName = (typeof SAMPLES)[number];
 /* บทบาทที่สลับให้ตอนเปิดชุดตัวอย่าง — ทุกชุดเป็นของ กบค. */
-export const SAMPLE_ROLE: Record<SampleName, Role> = { T1_start: "หน่วยงาน (กกฟ.1)", T1_afterClose: "หน่วยงาน (กกฟ.1)", T1_afterCannot: "หน่วยงาน (กกฟ.1)", TV_start: "หน่วยงาน (กกฟ.1)", TV_mid: "หน่วยงาน (กกฟ.1)" };
+export const SAMPLE_ROLE: Record<SampleName, Role> = { T1_start: "หน่วยงาน (กกฟ.1)", T1_afterClose: "หน่วยงาน (กกฟ.1)", T1_afterCannot: "หน่วยงาน (กกฟ.1)", TV_start: "หน่วยงาน (กกฟ.1)", TV_mid: "หน่วยงาน (กกฟ.1)",
+  T1_water: "หน่วยงาน (กกฟ.1)", T1_waterSigned: "หน่วยงาน (กกฟ.1)" };
+/** ยานพาหนะรถพ่วงฉีดน้ำของชุดตัวอย่าง (WATER_CAR) · เบอร์/ผู้ดูแลในใบ = ค่าของคันแรก JOB_I ตามจอ Figma */
+export const WATER_CAR = "82-9012";
+const WATER_Q = PLAN_ID + "-1";
 function doing(t: JobTrip, carId: string): Job {
-  const r = filledReceive(PEOPLE.kbk);
+  const r = filledReceive(PEOPLE.kbk, carOf(carId) ?? { type: "" });
   return { ...newJob(t.id, carId), status: "doing", step: 2, oilChoice: SAMPLE_OIL(carId), receive: r, photos: r.photos.flat(), startedAt: timesOf(t).start, startedBy: PEOPLE.kbk };
 }
 /** งานที่ปิดแล้ว (เสร็จสิ้น · ยังไม่มีผลตรวจน้ำมัน) — ใช้กับชุดตัวอย่างของ S13 S14 ด้วย (acceptance.ts) */
@@ -458,8 +498,25 @@ function cannotSample(t: JobTrip, carId: string): Job {
 }
 /* จอ I.22 ไม่มีป้ายผลตรวจน้ำมันของคันที่ปิดแล้ว ⇒ คันนี้เลือก "เปลี่ยนน้ำมัน" (ไม่เก็บตัวอย่าง) */
 const changedOnly = (j: Job): Job => ({ ...j, oilChoice: 1, close: j.close && { ...j.close, oilChoice: 1 }, oilResult: undefined });
+/** Step 1 อยู่ระหว่างบำรุงรักษา (เริ่มงานแล้ว) · filled = ตรวจรายการและลงนามครบ */
+function step1(t: JobTrip, carId: string, filled: boolean): Job {
+  const c = carOf(carId) ?? { type: "" }, r = filled ? filledReceive(PEOPLE.kbk, c) : emptyReceive(c);
+  return { ...newJob(t.id, carId), status: "doing", step: 1, oilChoice: SAMPLE_OIL(carId), receive: r, startedAt: timesOf(t).start, startedBy: PEOPLE.kbk };
+}
+/* รถพ่วงฉีดน้ำในยานพาหนะของไตรมาส 1 แผนตัวอย่าง — ชุด T1_water* เพิ่ม · ชุด T1 อื่นเอาออก (ไม่แตะค่าที่แก้อื่นของไตรมาส) */
+function waterInQuarter(on: boolean) {
+  setMock((m) => {
+    const e = m.qcars?.[WATER_Q];
+    if (!on && !e?.added.includes(WATER_CAR)) return m;
+    const base = e ?? { added: [], removed: [], phones: {}, locs: {} };
+    const added = on ? [WATER_CAR, ...base.added.filter((x) => x !== WATER_CAR)] : base.added.filter((x) => x !== WATER_CAR);
+    return { ...m, qcars: { ...m.qcars, [WATER_Q]: { ...base, added, removed: base.removed.filter((x) => x !== WATER_CAR) } } };
+  });
+}
 export function applySample(name: SampleName) {
   const T1 = SEED_TRIPS.T1, TV = SEED_TRIPS.TV;
+  const T1W: JobTrip = { ...T1, carIds: [...T1.carIds, WATER_CAR], phones: { ...T1.phones, [WATER_CAR]: TRIP_CARS[0].ownerPhone }, names: { ...T1.names, [WATER_CAR]: TRIP_CARS[0].ctrl } };
+  if (name.startsWith("T1_")) waterInQuarter(name.startsWith("T1_water"));
   const put = (list: Job[]) => Object.fromEntries(list.map((j) => [jobKey(j.tripId, j.carId), j]));
   write((s) => {
     const keep = (tid: string) => Object.fromEntries(Object.entries(s.jobs).filter(([k]) => !k.startsWith(tid + ":")));
@@ -469,6 +526,8 @@ export function applySample(name: SampleName) {
       case "T1_afterCannot": return { trips: { ...s.trips, T1 }, jobs: { ...keep("T1"), ...put([cannotSample(T1, "80-9981")]) } };
       case "TV_start": return { trips: { ...s.trips, TV }, jobs: keep("TV") };
       case "TV_mid": return { trips: { ...s.trips, TV }, jobs: { ...keep("TV"), ...put([doing(TV, TV.carIds[0]), changedOnly(closedSample(TV, TV.carIds[1]))]) } };
+      case "T1_water": return { trips: { ...s.trips, T1: T1W }, jobs: { ...keep("T1"), ...put([step1(T1W, WATER_CAR, false)]) } };
+      case "T1_waterSigned": return { trips: { ...s.trips, T1: T1W }, jobs: { ...keep("T1"), ...put([step1(T1W, WATER_CAR, true)]) } };
     }
   });
 }

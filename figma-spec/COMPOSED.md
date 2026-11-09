@@ -365,3 +365,15 @@ screens.js ไม่ได้วาดปุ่มไปขั้นถัดไ
   - `vms/DatePicker` เพิ่มพฤติกรรม (หน้าตาตามไลบรารีเดิม · rangeDays ของ screens.js): `min` `max` วันนอกช่วง = _Date picker calendar item base State=Disabled กดไม่ได้ · `range` = Type=Single เลือกเป็นช่วง (Selected day + Day in range) · `Today={false}` ไม่ทำเครื่องหมายวันนี้
 - **อะไหล่ของแผนเดินทาง (R84)** — ฟอร์ม Section header + Badge · หน้า S7 S8 S10 Section label "(n)" · Table QPART_COLS · Empty state/Data empty (`trips/_lib/TripExport.tsx` TripPartsSection)
 - **ส่งออกแผนเดินทาง (R84)** — Secondary button "ส่งออก" ไอคอน download ใน Actions ของ Page header (S8 S10) → patterns/PopupModal + Radio text card "รูปแบบไฟล์" ชุดเดียวกับส่งออกของ S4 (`EXPORT_CARDS`) ไม่มีการ์ดขอบเขต · ไฟล์ = `openPrintPages` (PDF 2 หน้า) / `downloadCsvSheets` (.csv ชีตต่อกันลงมา แทน .xlsx หลายชีต) ใน `parts/_lib/exportFile.ts`
+
+## พ. S10 Step 1 แบบตรวจสภาพตามประเภทยานพาหนะ (R86 · BACKLOG ข้อ 33 · 9 พ.ย. 2569)
+
+อ้างอิง: `inspectForm` `inspectStep` `checkTable` `checkCard` `radioCell` `noteCell` `signSection` `SIGN_IN` `BUCKET_ITEMS` `WATER_ITEMS` `WATER_CAR` ใน screens.js (Figma `bc2571f`) · component-rules R86 §5.16 · userflow 14 S10
+
+| จุด | ที่ทำ | เหตุผล |
+|---|---|---|
+| `patterns/CheckTable` (ตาราง "รายการตรวจสภาพ") | Section header (Title + Badge) + Table header cell + Table cell วางเป็นคอลัมน์ (ค่าเดียวกับ `_checklist` ของ ReceiptChecklist/InspectionChecklist) · คอลัมน์ รายการ (ยืด) · ปกติ 100 · แก้ไข 100 (Radio button) · หมายเหตุ 448 (Text input ไม่มีป้าย) · แถวท้าย Secondary button md "เพิ่มรายการ" · มือถือ การ์ดรายข้อ (กรอบ/พื้นของ Mobile table มุม 12) + Section label + Radio text card 2 ใบ + ปุ่ม lg เต็มกว้าง | InspectionChecklist ของไฟล์ Maintain-D มี 25 แถวตายตัว + ส่วนสาเหตุส่งซ่อม (เพิ่มแถวไม่ได้) จอ Figma จึงประกอบเองด้วย checkTable/checkCard · การ์ดมือถือไม่มีช่องหมายเหตุตามจอ |
+| กล่องข้อมูลส่วนบนของใบตรวจ | VehicleAndReporterInfo (มือถือ DisplayBox) หัว = ชื่อแบบ | vehicleInfo(fm.kv, fm.title) |
+| เลือกแบบตามประเภท | `inspectForm(car)` ใน `lib/mock/jobs.ts` อ่าน `TripCar.type` (รถพ่วงฉีดน้ำ = แบบรถพ่วงฉีดน้ำ · อื่น = แบบกระเช้า) ⇒ แผนที่สร้างจากฟอร์มที่มีรถพ่วงฉีดน้ำได้แบบรถพ่วงฉีดน้ำจริง | typeOf ของ screens.js |
+| ตัวอย่างรถพ่วงฉีดน้ำ | ชุดตัวอย่าง `T1_water` / `T1_waterSigned` (`/trips/detail/?trip=T1&sample=T1_water`) + เคสพาดู "ตรวจสภาพยานพาหนะประเภทรถพ่วงฉีดน้ำ" — ใบ T1 + 82-9012 ขอนแก่น อยู่ระหว่างบำรุงรักษา Step 1 · คันนี้เพิ่มเข้ายานพาหนะในไตรมาส 1 ของแผนตัวอย่าง · เบอร์ติดต่อ/ผู้ดูแลยานพาหนะในใบ = ค่าของ 82-6789 | จอต่อท้าย S10 ของ screens.js (stepPage `car: WATER_CAR` ในใบ JOB_T ใช้กล่องการนัดหมายของ JOB_I) · ข้อมูลยานพาหนะไม่มีผู้ควบคุมของ กฟฉ.2 |
+| ปุ่ม "เพิ่มรายการ" | แสดงตามจอ ยังไม่ทำงาน | จอ Figma ไม่ได้บอกว่ารายการที่เพิ่มเองตั้งชื่ออย่างไร (แบบเดียวกับรายการเอกสารรับรถเดิม · หัวข้อ ก.) |

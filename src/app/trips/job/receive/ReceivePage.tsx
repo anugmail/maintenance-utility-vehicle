@@ -1,7 +1,9 @@
 "use client";
-/* S10 Step 1 · ตรวจสภาพก่อนบำรุงรักษา (/trips/job/receive/) — stepPage({ step: 1 }) + receiptPanel() ใน screens.js (รีวิวทีมออกแบบ 5 พ.ย. 2569)
+/* S10 Step 1 · ตรวจสภาพก่อนบำรุงรักษา (/trips/job/receive/) — stepPage({ step: 1 }) + inspectStep() ใน screens.js (รีวิวทีมออกแบบ 5 พ.ย. 2569 · R86 9 พ.ย. 2569 Figma bc2571f)
    กรอบ StepFrame (แถบขั้นตอน 1/2 · ข้อมูลยานพาหนะ · การนัดหมาย · ปุ่ม "บำรุงรักษาไม่ได้" ที่หัว — คืนอะไหล่ตามแผนทั้งหมด)
-   → ReceiptChecklist "รายการเอกสารรับรถ" (13 รายการ · ไฟล์ Maintain-D) → HandoverSignature "ลงนามการตรวจสภาพ" (ผู้ส่งมอบรถ (หน่วยงานเจ้าของรถ) · ผู้รับมอบรถ (กบค.) · บังคับ "เรื่องลงนาม require")
+   → แบบตรวจสภาพตามประเภทยานพาหนะ (R86 · แทนรายการเอกสารรับยานพาหนะ ReceiptChecklist เดิม): กระเช้าแก้ไฟ/กระเช้าฮอทไลน์ = แบบกระเช้า 30 รายการ · รถพ่วงฉีดน้ำ = แบบรถพ่วงฉีดน้ำ 19 รายการ (inspectForm)
+     VehicleAndReporterInfo ชื่อแบบเป็นหัว + ข้อมูลส่วนบนของใบตรวจ (มือถือ DisplayBox) → patterns/CheckTable "รายการตรวจสภาพ" + Badge จำนวน (รายการ · ปกติ · แก้ไข · หมายเหตุ + เพิ่มรายการ · มือถือการ์ดรายข้อ)
+   → HandoverSignature "ลงนามการตรวจสภาพ" (ผู้ตรวจ (กบค.) · ผู้รับการตรวจ (หน่วยงานเจ้าของยานพาหนะ) — SIGN_IN 9 พ.ย. 2569 · บังคับ "เรื่องลงนาม require")
    → Section header "ภาพก่อนเริ่มงาน" + File upload 2 ช่อง → ปุ่ม "ย้อนกลับ" (หน้ารายละเอียดแผนเดินทาง) · "ยืนยันการตรวจสภาพ" (Disabled จนลงนามครบทั้งสองฝั่ง) → Step 2
    "เซ็นลงนาม" → Modal Signature "ลงนามการตรวจสภาพ" (วาดลายเซ็นได้จริง) · ค่าที่กรอกเก็บเป็นร่าง (ออกจากหน้าแล้วกลับมาไม่หาย)
    แผนจ้างดำเนินการใช้หน้าเดียวกัน กบค. เป็นผู้รับมอบ (ใบจ้างไม่มีพนักงานในใบ ⇒ ตัวเลือก = พนักงาน กบค. ทั้งหมด staffOf · COMPOSED.md) */
@@ -9,19 +11,21 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { HandoverSignature } from "@/components/maintain-d/HandoverSignature";
 import { ModalSignature } from "@/components/maintain-d/ModalSignature";
-import { ReceiptChecklist } from "@/components/maintain-d/ReceiptChecklist";
+import { VehicleAndReporterInfo } from "@/components/maintain-d/VehicleAndReporterInfo";
+import { CheckTable } from "@/components/patterns/CheckTable";
 import { EmptyStateSearchNotFound } from "@/components/vms/EmptyStateSearchNotFound";
 import { FileUpload } from "@/components/vms/FileUpload";
 import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionHeader } from "@/components/vms/SectionHeader";
-import { BEFORE, confirmInspect, emptyReceive, patchJob, PEOPLE, staffOf, type ReceiveForm } from "@/lib/mock/jobs";
+import { BEFORE, confirmInspect, emptyReceive, INSPECT_OPTS, inspectForm, patchJob, PEOPLE, staffOf, type ReceiveForm } from "@/lib/mock/jobs";
 import { ButtonRow, jobHref, Section, toUpload, tripHref, useTripCar } from "../../_lib/ui";
 import { StepFrame } from "../StepFrame";
 
+/* SIGN_IN ของ screens.js (9 พ.ย. 2569 ตามท้ายใบตรวจ · เดิม ผู้ส่งมอบ / ผู้รับมอบ) · ช่องเลือกชื่อ placeholder "เลือก" + ป้าย (signSection) */
 const SLOTS = [
-  { LabelText: "ผู้ส่งมอบยานพาหนะ (หน่วยงานเจ้าของยานพาหนะ)", Placeholder: "เลือกผู้ส่งมอบยานพาหนะ (หน่วยงานเจ้าของยานพาหนะ)" },
-  { LabelText: "ผู้รับมอบยานพาหนะ (กบค.)", Placeholder: "เลือกผู้รับมอบยานพาหนะ (กบค.)" },
+  { LabelText: "ผู้ตรวจ (กบค.)", Placeholder: "เลือกผู้ตรวจ (กบค.)" },
+  { LabelText: "ผู้รับการตรวจ (หน่วยงานเจ้าของยานพาหนะ)", Placeholder: "เลือกผู้รับการตรวจ (หน่วยงานเจ้าของยานพาหนะ)" },
 ];
 
 export function ReceivePage() {
@@ -35,9 +39,10 @@ export function ReceivePage() {
   useEffect(() => { if (awayAtOpen.v && trip && car) router.replace(jobHref(trip, car.id)); }, [awayAtOpen, trip, car, router]);
   if (!trip || !car || !job) return <EmptyStateSearchNotFound />;
   if (awayAtOpen.v) return null;
-  const f: ReceiveForm = job.receive ?? emptyReceive();
-  const put = (fn: (f: ReceiveForm) => ReceiveForm) => patchJob(trip.id, car.id, (j) => ({ ...j, receive: fn(j.receive ?? emptyReceive()) }));
-  const options = [[PEOPLE.ownerSigner], staffOf(trip)];
+  const f: ReceiveForm = job.receive ?? emptyReceive(car);
+  const put = (fn: (f: ReceiveForm) => ReceiveForm) => patchJob(trip.id, car.id, (j) => ({ ...j, receive: fn(j.receive ?? emptyReceive(car)) }));
+  const options = [staffOf(trip), [PEOPLE.ownerSigner]];
+  const fm = inspectForm(car, trip.planMr);
   const signed = f.signers.every((x) => !!x.sig);
   const confirm = () => {
     if (!signed || !actor) return;
@@ -47,7 +52,8 @@ export function ReceivePage() {
 
   return (
     <StepFrame trip={trip} car={car} job={job} step={1} used={job.parts.map(() => 0)} actor={actor}>
-      <ReceiptChecklist Title="รายการเอกสารรับยานพาหนะ" items={f.items} readonly={!actor}
+      <VehicleAndReporterInfo Title={fm.title} pairs={fm.kv} />
+      <CheckTable Title="รายการตรวจสภาพ" options={INSPECT_OPTS} items={f.items} readonly={!actor}
         onChange={(i, p) => put((x) => ({ ...x, items: x.items.map((it, k) => (k === i ? { ...it, ...p } : it)) }))} />
       <HandoverSignature Title="ลงนามการตรวจสภาพ"
         slots={SLOTS.map((s, i) => ({ ...s, options: options[i], value: f.signers[i].name, signed: !!f.signers[i].sig }))}
