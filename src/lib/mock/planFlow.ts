@@ -120,6 +120,14 @@ export function quarterRows(a: Alloc, q: number): QuarterRow[] {
   }));
   return rows.concat([...man.values()]);
 }
+/* อะไหล่ทุกไตรมาส (แท็บ "ทั้งหมด" ของฟอร์มแผน · เจ้าของงาน 9 พ.ย. 2569 "หน้าอะใหล่ทั้งไตรมาส ต้องรวมมาให้ด้วย ทั้งไตรมาส")
+   = ผลรวมแถวของ quarterRows ไตรมาส 1–4 ตามรายการ (คีย์เดียวกัน) · รถทุกคันที่จัดลงไตรมาสแล้ว ไม่ขึ้นกับตัวกรอง/คำค้น · คันที่ไม่เบิกไม่รวม · อะไหล่จากคลังเรียงตาม PARTS แล้วตามด้วยรายการที่ระบุเอง */
+export function allQuarterRows(a: Alloc): QuarterRow[] {
+  const m = new Map<string, QuarterRow>();
+  [1, 2, 3, 4].forEach((q) => quarterRows(a, q).forEach((r) => { const x = m.get(r.key); if (x) x.qty += r.qty; else m.set(r.key, { ...r }); }));
+  const rows = [...m.values()];
+  return rows.filter((r) => r.pi != null).sort((x, y) => (x.pi ?? 0) - (y.pi ?? 0)).concat(rows.filter((r) => r.pi == null));
+}
 /* เอาอะไหล่แถวนี้ออกจากรถทุกคันในไตรมาส (ยืนยันการเอาอะไหล่ออก ของ S1) */
 export function dropQuarterRow(a: Alloc, q: number, r: QuarterRow): Pick<Draft, "picks" | "manual" | "qty"> {
   const picks = { ...a.picks }, manual = { ...(a.manual ?? {}) }, qty = { ...(a.qty ?? {}) };

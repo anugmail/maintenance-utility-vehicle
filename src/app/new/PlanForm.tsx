@@ -19,6 +19,8 @@
          → ยืนยัน = อยู่แท็บเดิม รถขึ้นในตาราง ตัวเลขบนแท็บเปลี่ยน + toast "จัดรถ k คันลงไตรมาส n สำเร็จ" · ไม่ตรงคำค้น/ตัวกรอง: Search not found + "ล้างตัวกรอง"
      อะไหล่ในไตรมาส n (Section header + Badge) — ตั้งต้นว่าง รวมจากรถที่จัดการแล้วทีละคัน (qAgg: น้ำมันที่เปลี่ยน ลิตรต่อคัน + อะไหล่อื่นๆ + รายการที่ระบุเอง · คันที่ไม่เบิกอะไหล่ไม่รวม)
        Table QPART_COLS (R81: ชนิด · รหัสอะไหล่ · ประเภท · จำนวน · หน่วย — ชุดเดียวกับอะไหล่ในแผน S2) ไม่มีปุ่มเพิ่มอะไหล่และไอคอนแถว / Empty state ตามแท็บ
+       แท็บ "ทั้งหมด" (เจ้าของงาน 9 พ.ย. 2569 "หน้าอะใหล่ทั้งไตรมาส ต้องรวมมาให้ด้วย ทั้งไตรมาส"): หัวข้อ "อะไหล่ทุกไตรมาส" + Badge จำนวนรายการ = ผลรวมไตรมาส 1–4 (allQuarterRows)
+         ยานพาหนะทุกคันที่จัดลงไตรมาสแล้ว ไม่ขึ้นกับตัวกรอง/คำค้น · คันไม่เบิกไม่รวม · ว่าง = "ยังไม่มีรายการอะไหล่" / "จัดการอะไหล่ทีละคันจากปุ่ม … ที่แถวยานพาหนะในแท็บไตรมาส รายการจะรวมมาที่นี่"
      ปุ่ม ย้อนกลับ (แก้ไข: ยกเลิก) · บันทึกและส่งอนุมัติ — Disabled จนกว่า ชื่อแผน · ปีงบประมาณ ครบ · รถทุกคันของหน่วยงานอยู่ในไตรมาส · ทุกคันกำหนดอะไหล่แล้ว (เบิกพร้อมรายการ หรือ ไม่เบิก) — 6 พ.ย. 2569 แบบ ก หน้าเดียว
    popup "จัดลงไตรมาส" (Radio text card ไตรมาส 1–4 เรียงลง ช่องไฟ 12 · ไม่มีตัวเลือกเอาออก) → toast "จัดรถ n คันลงไตรมาส k สำเร็จ" · มือถือ bottom sheet
    เอาภาค เขต ประเภทรถ ชิปตัวกรอง หรือคำค้นออก = เปลี่ยนแค่แถวที่เห็น รถที่จัดแล้วไม่หาย (ไม่มี confirm)
@@ -51,7 +53,7 @@ import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
 import { CAND, DISTRICTS, MENU, QUARTERS, REGIONS, UNIT_FLEET, VEHICLE_TYPES, YEARS, shortRegion, type Plan } from "@/lib/mock/data";
 import { QPART_COLS, areaPicked, carsFor, decided, draftComplete, emptyDraft, fleetAllocated, inQuarter, isDirty, matchQuery, planFromDraft, qpartRow, thaiToday, type Draft } from "@/lib/mock/plan";
-import { carParam, roleUnit, draftFromPlan, draftKey, oilCellOf, otherCellOf, planId, planWithDraft, quarterRows } from "@/lib/mock/planFlow";
+import { allQuarterRows, carParam, roleUnit, draftFromPlan, draftKey, oilCellOf, otherCellOf, planId, planWithDraft, quarterRows } from "@/lib/mock/planFlow";
 import { notify, setMock, useMock, useRole } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { CheckTable, type CheckRow } from "./CheckTable";
@@ -175,7 +177,7 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
 
   /* ---------- อะไหล่ในไตรมาส (รวมจากรถทีละคัน · ไม่มีปุ่มเพิ่ม/ไอคอนแถว — 5 พ.ย. 2569) ---------- */
   const qCars = q ? inQ(q) : [];
-  const qRows = q ? quarterRows(d, q) : [];
+  const qRows = q ? quarterRows(d, q) : allQuarterRows(d);   // แท็บทั้งหมด = รวมทุกไตรมาส (9 พ.ย. 2569)
 
   /* ---------- ออก / ตรวจและบันทึก ---------- */
   const back = from === "detail" && plan ? "/detail/?id=" + planId(plan) : "/";
@@ -261,10 +263,10 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
         </section>
 
         <section className="flex flex-col gap-4">
-          <SectionHeader Title={"อะไหล่ในไตรมาส" + (q ? " " + q : "")} Badge={qRows.length || null} />
+          <SectionHeader Title={q ? "อะไหล่ในไตรมาส " + q : "อะไหล่ทุกไตรมาส"} Badge={qRows.length || null} />
           {qRows.length
             ? table(QPART_COLS, qRows.map(qpartRow))
-            : <EmptyStateDataEmpty Text="ยังไม่มีรายการอะไหล่" SupportingText={!q ? "เปิดแท็บไตรมาสเพื่อดูอะไหล่ของยานพาหนะในไตรมาสนั้น" : qCars.length ? "จัดการอะไหล่ทีละคันจากปุ่ม … ที่แถวยานพาหนะ รายการจะรวมมาที่นี่" : "จัดยานพาหนะลงไตรมาสนี้ก่อน แล้วจึงจัดการอะไหล่ทีละคันได้"} />}
+            : <EmptyStateDataEmpty Text="ยังไม่มีรายการอะไหล่" SupportingText={!q ? "จัดการอะไหล่ทีละคันจากปุ่ม … ที่แถวยานพาหนะในแท็บไตรมาส รายการจะรวมมาที่นี่" : qCars.length ? "จัดการอะไหล่ทีละคันจากปุ่ม … ที่แถวยานพาหนะ รายการจะรวมมาที่นี่" : "จัดยานพาหนะลงไตรมาสนี้ก่อน แล้วจึงจัดการอะไหล่ทีละคันได้"} />}
         </section>
 
         <div className={cx("flex", mob ? "gap-4 [&>*]:flex-1 [&>*]:basis-0" : "justify-between gap-3")}>
