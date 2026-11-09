@@ -5,7 +5,7 @@
    อะไหล่ในแผน (detail/PlanParts.tsx) วางต่อจาก PlanBody ทุกหน้ารายละเอียดแผน — ผู้อนุมัติ S2 · ผู้สร้างแผนทุกสถานะ · A.32 กบค. ดูแผนของหน่วยงานอื่น · E.2 แผนที่ดำเนินการ (เจ้าของงาน 9 พ.ย. 2569 · Figma e3040ff ee5e68c)
    actions = ปุ่มใน Section label "รถในแผน" (Primary action Tertiary brand button · Secondary action Tertiary button) — หน้า กบค. ใส่ทางไปไตรมาสที่กำลังทำ
    ไตรมาสที่ไม่มีรถ: ตารางว่าง (spec S2 — ยังไม่เคาะว่าใช้ Empty state ของ S1 หรือไม่) · มือถือ: Mobile table
-   แผนตัวอย่างที่ไม่มีรถรายคัน (MR Z7000001 ฯลฯ): ไตรมาสที่กำลังทำ = รถของหน้า "ไตรมาส n" (quarterCars · 10 คันของ S6) ค่าน้ำมัน เปลี่ยนล่าสุด อะไหล่ ตาม planDetailQ() ใน screens.js (5 พ.ย. 2569) */
+   แผนตัวอย่างที่ไม่มีรถรายคัน (MRZ7000001 ฯลฯ): ไตรมาสที่กำลังทำ = รถของหน้า "ไตรมาส n" (quarterCars · 10 คันของ S6) ค่าน้ำมัน เปลี่ยนล่าสุด อะไหล่ ตาม planDetailQ() ใน screens.js (5 พ.ย. 2569) */
 import type { ReactNode } from "react";
 import { VehicleAndReporterInfo } from "@/components/maintain-d/VehicleAndReporterInfo";
 import { MobileCards } from "@/components/vms/MobileTable";

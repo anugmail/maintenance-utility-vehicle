@@ -71,7 +71,7 @@ export const CANNOT_USED_SAMPLE = [30, 2, 0, 0];   // CANNOT_USED — เปล�
 export const OIL_FILE: UploadFile = { name: "oil-test-82-6789.pdf", size: "420 KB", bar: true };
 export const BEFORE = ["รูปยานพาหนะ + ทะเบียน", "อะไหล่ใหม่"];   // ภาพก่อนเริ่มงาน 2 ช่อง
 
-/* ---------- รถของไตรมาส 1 แผน MR Z7000001 (TRIP_CARS + OWNER_PH + LAST_OIL) ---------- */
+/* ---------- รถของไตรมาส 1 แผน MRZ7000001 (TRIP_CARS + OWNER_PH + LAST_OIL) ---------- */
 export interface TripCar { id: string; plate: string; model: string; owner: string; ownerPhone: string; ctrl: string; type: string; lastOil: string }   // ctrl = ผู้ควบคุมรถ (ผู้ดูแลยานพาหนะ ค่าเริ่มต้น · 6 พ.ย. 2569)
 /* รถชุดเดียวกับ trips.ts (TRIP_CARS + OWNER_PH) · เปลี่ยนน้ำมันครั้งล่าสุด LAST_OIL (82-3302 = 05/02/2567 · คันอื่น 12/03/2568) */
 /* วันที่เปลี่ยนน้ำมันครั้งล่าสุด ค่าเดียวทุกจอ (lastOil() ใน screens.js 5 พ.ย. 2569 · ชีตลูกค้า "12/03/2568 กับ 18/10/2568 ปนกัน") — ยึดข้อมูล S24 (MA_ROWS ช่องเปลี่ยนน้ำมันล่าสุด)
@@ -90,7 +90,7 @@ const Q_EXTRA_JOB_CARS: TripCar[] = Q_EXTRA.map((c) => ({ id: c.id, plate: c.pla
    แผนตัวอย่าง: 82-6789 = เก็บตัวอย่างและเปลี่ยน · คันอื่นทุกคันที่ 3 = เปลี่ยนน้ำมัน ที่เหลือ = เก็บตัวอย่าง · แผนที่กำหนดอะไหล่รายคัน = ตัวเลือกที่กำหนดใน S21 */
 export const SAMPLE_OIL = (carId: string): OilChoice => { const i = CARS.findIndex((c) => c.id === carId); return i === 0 ? 2 : i >= 0 && i % 3 === 0 ? 1 : 0; };
 export function plannedOil(plans: Plan[], planId: string, carId: string): OilChoice {
-  const p = plans.find((x) => x.mr === "MR " + planId), i = CAND.findIndex((c) => candId(c.plate) === carId);
+  const p = plans.find((x) => x.mr === "MR" + planId), i = CAND.findIndex((c) => candId(c.plate) === carId);
   if (p?.alloc && i >= 0 && p.alloc[i] != null) {
     const k = p.oils?.[i] ?? ((p.picks?.[i] ?? []).includes(0) ? 1 : 0);
     return k as OilChoice;
@@ -115,8 +115,8 @@ export interface JobTrip {
   works?: Record<string, [string, string]>;
 }
 export function toJobTrip(t: Trip, plans: Plan[]): JobTrip {
-  const p = plans.find((x) => x.mr === "MR " + t.planId);
-  return { id: t.id, planId: t.planId, planMr: "MR " + t.planId, planName: p?.name ?? "", quarter: "ไตรมาส " + t.quarter, q: t.quarter,
+  const p = plans.find((x) => x.mr === "MR" + t.planId);
+  return { id: t.id, planId: t.planId, planMr: "MR" + t.planId, planName: p?.name ?? "", quarter: "ไตรมาส " + t.quarter, q: t.quarter,
     name: t.name, mode: t.mode, vendor: t.vendor, contract: t.contract, carIds: t.carIds, locs: t.locs, phones: t.phones, names: t.names,
     d1: t.d1, d2: t.d2, staff: t.staff ?? [], createdBy: t.createdBy, sentAt: t.sentAt, status: "approved", approvedAt: t.approvedAt, works: t.works };
 }

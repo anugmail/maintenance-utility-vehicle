@@ -31,7 +31,7 @@ export function cannotTrip(s: MockState, planId: string, q: number, carId: strin
 
 /** อะไหล่ตามแผนของรถคันนี้ (ย้ายไปด้วย): แผนที่จัดรถรายคัน = อะไหล่ที่ กบค. กำหนดให้รถ (S21) · แผนตัวอย่าง = อะไหล่ตามแผนของงานรายคัน (WORK) */
 export function carPlanParts(s: MockState, planId: string, carId: string, tripId?: string): { name: string; qty: number; unit: string }[] {
-  const p = s.plans.find((x) => x.mr === "MR " + planId);
+  const p = s.plans.find((x) => x.mr === "MR" + planId);
   const i = CAND.findIndex((c) => candId(c.plate) === carId);
   if (p?.alloc && i >= 0 && p.alloc[i] != null) {
     const a = allocOf(p);
@@ -70,7 +70,7 @@ const PICK_QTY = PARTS.map((_, x) => (CAR_PICK.includes(x) ? CAR_QTY[x] : 0));
 const WORK_QTY = PARTS.map((p) => WORK.find((w) => w.part === p.name)?.planQty ?? 0);
 const qtyRows = (qty: number[]): QPartRow[] => PARTS.map((x, i) => ({ key: "p" + i, name: x.name, code: x.code, group: x.group, qty: qty[i] ?? 0, unit: x.unit }));
 export function carParts(s: MockState, planId: string, q: number, carId: string): QPartRow[] {
-  const p = s.plans.find((x) => x.mr === "MR " + planId);
+  const p = s.plans.find((x) => x.mr === "MR" + planId);
   if (p?.alloc && Object.keys(p.alloc).length) {
     const i = CAND.findIndex((c) => candId(c.plate) === carId);
     if (i < 0 || p.alloc[i] == null) return [];
@@ -100,7 +100,7 @@ export const tripPartRows = (s: MockState, t: { planId: string; quarter: number;
    S25 รถที่ย้ายมา = บรรทัดรองใต้ชนิด "รวม {n} {หน่วย} ของ {ทะเบียน} ที่ย้ายมา" (MOVE_Q2_SUBS) */
 export interface QPartRow { key: string; name: string; code: string; group: string; qty: number; unit: string; sub?: string }
 export function quarterPartRows(s: MockState, planId: string, q: number): QPartRow[] {
-  const p = s.plans.find((x) => x.mr === "MR " + planId);
+  const p = s.plans.find((x) => x.mr === "MR" + planId);
   const alloc = p?.alloc && Object.keys(p.alloc).length ? allocOf(p) : null;
   const rows = alloc ? sumParts([quarterRows(alloc, q).map((r) => ({ key: r.key, name: r.name, code: r.code, group: r.group, qty: r.qty, unit: r.unit }))])
     : sumParts(quarterCars(s, planId, q).map((c) => carParts(s, planId, q, c.id)));

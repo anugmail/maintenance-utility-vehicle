@@ -10,8 +10,12 @@ import type { CloseoutState, QuarterState } from "./closeout";
 export const KEY = "mt-next-v1";
 export const ROLE_KEY = "mt-next-v1:role2";
 
+/* MOCK_V — รุ่นของข้อมูลจำลองในที่เก็บ · รุ่นไม่ตรง = เริ่มจากค่าตั้งต้นใหม่ (load)
+   2 = 9 พ.ย. 2569 เลขที่ MR ติดกันไม่เว้นวรรค (MR Z7000001 → MRZ7000001 · Figma e6e02d0) + แผนจำลองเพิ่มของหน่วยงาน (UNIT_PLANS) — ที่เก็บรุ่น 1 มีเลขแบบเว้นวรรคค้างอยู่ จึงไม่ใช้ต่อ */
+export const MOCK_V = 2;
+
 export interface MockState {
-  v: 1;
+  v: typeof MOCK_V;
   plans: Plan[];
   /** ฟอร์มสร้างแผนที่กรอกค้างไว้ (ไปหน้า S21 แล้วกลับมาไม่หาย) */
   draft?: Draft | null;
@@ -32,7 +36,7 @@ export interface MockState {
   closeout?: Record<string, CloseoutState>;
 }
 
-const initial = (): MockState => ({ v: 1, plans: PLANS.map((p) => ({ ...p })) });
+const initial = (): MockState => ({ v: MOCK_V, plans: PLANS.map((p) => ({ ...p })) });
 
 let state: MockState | null = null;
 const subs = new Set<() => void>();
@@ -42,7 +46,7 @@ function load(): MockState {
   try {
     const raw = window.localStorage.getItem(KEY);
     const j = raw ? (JSON.parse(raw) as MockState) : null;
-    state = j && j.v === 1 && Array.isArray(j.plans) ? j : initial();
+    state = j && j.v === MOCK_V && Array.isArray(j.plans) ? j : initial();
   } catch {
     state = initial();
   }

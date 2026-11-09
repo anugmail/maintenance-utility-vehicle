@@ -46,7 +46,7 @@ function TripView() {
         <TripPartsSection parts={parts} />
       </Content>
       <TripExportPopup open={exp} onClose={() => setExp(false)}
-        doc={{ name: t.name, unit: unitOf("MR " + t.planId, plan?.unit), planLabel, printer: CREATOR, kv, cars, trip: vTrip(t), parts }} />
+        doc={{ name: t.name, unit: unitOf("MR" + t.planId, plan?.unit), planLabel, printer: CREATOR, kv, cars, trip: vTrip(t), parts }} />
     </>
   );
 }

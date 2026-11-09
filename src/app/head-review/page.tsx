@@ -1,7 +1,7 @@
 "use client";
 /* S16 P1 · ประวัติรอตรวจสอบ (/head-review/ · หัวหน้า กบค.) — roleList() + hqRows() ใน screens.js · spec S16.md (O.1)
    Page header (ไม่มีย้อนกลับ) → Section ช่องไฟ 24: Table header (ค้นหาเลขที่ MR, ชื่อแผน + ตัวกรอง) + Table (HQ_COLS) + pagination
-   แผนที่ กบค. ส่งประวัติแล้ว (S15) + MR Z6900011 (ผ่านแล้ว ตัวอย่าง) · สถานะ HST: รอหัวหน้าตรวจสอบ · ผ่านแล้ว · ตีกลับ */
+   แผนที่ กบค. ส่งประวัติแล้ว (S15) + MRZ6900011 (ผ่านแล้ว ตัวอย่าง) · สถานะ HST: รอหัวหน้าตรวจสอบ · ผ่านแล้ว · ตีกลับ */
 import { useRouter } from "next/navigation";
 import { Suspense, useState } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";

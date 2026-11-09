@@ -67,9 +67,9 @@ const PCOLS: TableColumn[] = [
   { head: "", width: 60, Style: "Action icons" },
 ];
 const PROWS: TableValue[][] = [
-  ["MR Z7000001", { text: "บำรุงรักษากระเช้าแก้ไฟ ภาค 1 และภาค 2 ปีงบประมาณ 2570", sub: "ปีงบประมาณ 2570" }, { pills: [["ดำเนินการ", "Info"]] }, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู" }] }],
-  ["MR Z7000002", { text: "บำรุงรักษารถพ่วงฉีดน้ำ ภาค 2 ปีงบประมาณ 2570", sub: "ปีงบประมาณ 2570" }, { pills: [["อนุมัติแล้ว", "Brand"]] }, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู" }] }],
-  ["MR Z7000003", { text: "บำรุงรักษากระเช้าฮอทไลน์ ภาค 3 ปีงบประมาณ 2570", sub: "ปีงบประมาณ 2570" }, { pills: [["รออนุมัติ", "Warning"]] }, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู" }] }],
+  ["MRZ7000001", { text: "บำรุงรักษากระเช้าแก้ไฟ ภาค 1 และภาค 2 ปีงบประมาณ 2570", sub: "ปีงบประมาณ 2570" }, { pills: [["ดำเนินการ", "Info"]] }, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู" }] }],
+  ["MRZ7000002", { text: "บำรุงรักษารถพ่วงฉีดน้ำ ภาค 2 ปีงบประมาณ 2570", sub: "ปีงบประมาณ 2570" }, { pills: [["อนุมัติแล้ว", "Brand"]] }, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู" }] }],
+  ["MRZ7000003", { text: "บำรุงรักษากระเช้าฮอทไลน์ ภาค 3 ปีงบประมาณ 2570", sub: "ปีงบประมาณ 2570" }, { pills: [["รออนุมัติ", "Warning"]] }, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู" }] }],
 ];
 
 export default function Kit() {
@@ -193,7 +193,7 @@ export default function Kit() {
           <V key={String(alt)} label={`Alternating fills=${alt ? "True" : "False"}`} wide>
             <div className="overflow-x-auto"><table className="w-full min-w-[900px] table-fixed border-collapse"><tbody><tr>
               <TableCell Style="Text" AlternatingFills={alt} Text="ภาค 2 (ตะวันออกเฉียงเหนือ)" />
-              <TableCell Style="Lead text" AlternatingFills={alt} Text="MR Z7000004" />
+              <TableCell Style="Lead text" AlternatingFills={alt} Text="MRZ7000004" />
               <TableCell Style="Text" AlternatingFills={alt} Text="ไตรมาส 1: 3 · ไตรมาส 2: 2" SupportingText="ไตรมาส 3: 1 · ไตรมาส 4: 0" />
               <TableCell Style="Badge" AlternatingFills={alt} Pills={[["รออนุมัติ", "Warning"]]} />
               <TableCell Style="Multiple badges" AlternatingFills={alt} Pills={[["ดำเนินการ", "Info"], ["+2", "Gray"]]} />
@@ -223,7 +223,7 @@ export default function Kit() {
       <Block name="Mobile table item" node="Table (2:14)">
         <div className="w-[370px]">
           <MobileTable>
-            <MobileTableItem Style="Lead text" Header="เลขที่ MR" Text="MR Z7000004" />
+            <MobileTableItem Style="Lead text" Header="เลขที่ MR" Text="MRZ7000004" />
             <MobileTableItem Style="Text" Header="ชื่อแผน" Text="บำรุงรักษายานพาหนะ กกฟ.1 ปีงบประมาณ 2570" SupportingText="ปีงบประมาณ 2570" />
             <MobileTableItem Style="Badge" Header="สถานะ" Pill={["รออนุมัติ", "Warning"]} />
             <MobileTableItem Style="Action icons" Actions={[{ IconSwap: "more_horiz-20-400-round", label: "เมนู" }]} />
@@ -233,7 +233,7 @@ export default function Kit() {
       </Block>
       <Block name="Mobile table" node="Table (2:14)">
         <V label="Alternating fills=False (1 แถวตาราง = 1 การ์ด)"><div className="w-[370px]"><MobileCards columns={PCOLS} rows={PROWS.slice(0, 2)} /></div></V>
-        <V label="Alternating fills=True"><div className="w-[370px]"><MobileTable AlternatingFills><MobileTableItem Style="Lead text" Header="เลขที่ MR" Text="MR Z7000001" last /></MobileTable></div></V>
+        <V label="Alternating fills=True"><div className="w-[370px]"><MobileTable AlternatingFills><MobileTableItem Style="Lead text" Header="เลขที่ MR" Text="MRZ7000001" last /></MobileTable></div></V>
       </Block>
       <Block name="Empty state/Data empty" node="Table (2:14)">
         <V label="Actions ซ่อน (ตาม noCarsInQ)" wide><EmptyStateDataEmpty Text="ยังไม่มียานพาหนะในไตรมาสนี้" SupportingText="ค้นทะเบียนในช่องเลือกยานพาหนะเพื่อเพิ่มยานพาหนะเข้าไตรมาสนี้" /></V>
@@ -244,7 +244,7 @@ export default function Kit() {
       </Block>
       <Block name="Page header" node="Page headers (1983:21158)">
         <V label="Breakpoint=Desktop · Actions" wide><PageHeader Breakpoint="Desktop" Title="บำรุงรักษาตามวาระ" crumbs={[{ Text: "บำรุงรักษาตามวาระ" }]} Actions={<PrimaryButton Text="สร้างแผน" LeadingIconSwap="add-24-300-round" />} /></V>
-        <V label="Breakpoint=Desktop · Badge" wide><PageHeader Breakpoint="Desktop" Title="เลขที่ MR Z7000004" Badge={["รออนุมัติ", "Brand"]} crumbs={[{ Text: "บำรุงรักษาตามวาระ", href: "/kit/" }, { Text: "บำรุงรักษายานพาหนะ กกฟ.1 ปีงบประมาณ 2570" }]} /></V>
+        <V label="Breakpoint=Desktop · Badge" wide><PageHeader Breakpoint="Desktop" Title="เลขที่ MRZ7000004" Badge={["รออนุมัติ", "Brand"]} crumbs={[{ Text: "บำรุงรักษาตามวาระ", href: "/kit/" }, { Text: "บำรุงรักษายานพาหนะ กกฟ.1 ปีงบประมาณ 2570" }]} /></V>
         <V label="Breakpoint=Mobile · Back action · Actions"><div className="w-[370px]"><PageHeader Breakpoint="Mobile" Title="สร้างแผนบำรุงรักษา" onBack={() => undefined} Actions={<PrimaryButton Text="สร้างแผน" Size="lg" LeadingIconSwap="add-24-300-round" />} /></div></V>
       </Block>
       <Block name="Section header" node="Section headers (2011:6955)">

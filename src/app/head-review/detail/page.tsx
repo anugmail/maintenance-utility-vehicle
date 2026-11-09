@@ -1,6 +1,6 @@
 "use client";
 /* S16 P2 · ประวัติงานบำรุงรักษาของแผน (/head-review/detail/?id=Z7000001 · หัวหน้า กบค.) — headHistory() ใน screens.js · spec S16.md (O.2–O.5)
-   Page header "หมายเลขแผน MR Z7000001" + Badge HST (รอหัวหน้าตรวจสอบ → Brand · ผ่านแล้ว → Success · ตีกลับ → Error)
+   Page header "หมายเลขแผน MRZ7000001" + Badge HST (รอหัวหน้าตรวจสอบ → Brand · ผ่านแล้ว → Success · ตีกลับ → Error)
    Content ช่องไฟ 32: รายละเอียดแผน · ความคืบหน้ารายคัน (DisplayBox 4 คู่ + ผู้ส่ง) · ประวัติงานบำรุงรักษาทั้งหมด (12) + Table pagination 12
    รอตรวจ: ปุ่ม ตีกลับ (FormModal เหตุผลที่ตีกลับ · ว่าง = กดตีกลับไม่ได้) · อนุมัติประวัติ (ConfirmDialog) · อนุมัติแล้ว: Alert Success ไม่มีปุ่ม
    ตีกลับ → แผนกลับไป กบค. (S15 ส่งใหม่) → กลับรายการ (จอผลตีกลับ/toast ยังไม่ออกแบบ) · อนุมัติ → ประวัติผ่านแล้ว + toast → S17 */

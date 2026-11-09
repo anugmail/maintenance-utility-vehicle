@@ -1,5 +1,5 @@
 "use client";
-/* หน้าของต้นแบบ (ไม่ใช่จอของระบบ): เปิด scenario จากหน้า /scenarios/ ที่จุดเริ่มของ scenario นั้น — ใส่แผนตัวอย่าง MR Z7000004 (NEW_PLAN + EDIT_FORM ของ screens.js)
+/* หน้าของต้นแบบ (ไม่ใช่จอของระบบ): เปิด scenario จากหน้า /scenarios/ ที่จุดเริ่มของ scenario นั้น — ใส่แผนตัวอย่าง MRZ7000004 (NEW_PLAN + EDIT_FORM ของ screens.js)
    ในสถานะที่ scenario ใช้ · ตั้งบทบาท · แล้วพาไปหน้าแรกของ scenario
    ?plan=review|returned|approved (acked= ของ S22 เอาออก 6 พ.ย. 2569) · ?draft=1 (ฟอร์มสร้างแผนที่จัดรถ 6 คันแล้ว ยังไม่เลือกอะไหล่ — S21 T.1) · ?role=<บทบาท> · ?go=<หน้า>
    แผน Z7000004 เดิม (ถ้ามี) ถูกแทนที่ · ดู figma-spec/COMPOSED.md */

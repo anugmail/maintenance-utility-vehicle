@@ -5,7 +5,7 @@ import { PARTS, creatorOf, unitOf, type Plan, type PlanStatus } from "./data";
 import { setMock, type MockState } from "./store";
 
 /* ---------- แผนในข้อมูลจำลอง (store.plans · S1) ---------- */
-export const mrOf = (id: string) => "MR " + id;
+export const mrOf = (id: string) => "MR" + id;
 export const planOf = (s: MockState, id: string): Plan | undefined => s.plans.find((p) => p.mr === mrOf(id));
 export function setPlanStatus(id: string, status: PlanStatus) {
   setMock((s) => ({ ...s, plans: s.plans.map((p) => (p.mr === mrOf(id) ? { ...p, status } : p)) }));
@@ -82,7 +82,7 @@ export const HIST_COLS = [
 /* แถวประวัติ ความคืบหน้า และสรุปรายงาน อ่านจากงานรายคันจริง — lib/mock/history.ts (BACKLOG ข้อ 6 · แทน HIST_ROWS PROGRESS_DONE reportSummary คงที่) */
 export const SENT_AT = "12/11/2569", HEAD_AT = "13/11/2569", CLOSED_AT = "14/11/2569";
 export const HEAD_REVIEWER = "นายประเสริฐ มั่นคง";
-export const HQ_OTHER = { id: "Z6900011", mr: "MR Z6900011", plan: "บำรุงรักษากระเช้าแก้ไฟ ภาค 1 ปีงบประมาณ 2569", sender: "นางสาวกนกวรรณ ใจมั่น", cars: "10 คัน", sentAt: "28/06/2569" };
+export const HQ_OTHER = { id: "Z6900011", mr: "MRZ6900011", plan: "บำรุงรักษากระเช้าแก้ไฟ ภาค 1 ปีงบประมาณ 2569", sender: "นางสาวกนกวรรณ ใจมั่น", cars: "10 คัน", sentAt: "28/06/2569" };
 /* สถานะในรายการของหัวหน้า (HST) จากสถานะแผน */
 export const headStatusOf = (p: Plan, c: CloseoutState): "wait" | "ok" | "back" =>
   c.head === "back" && p.status === "active" ? "back" : p.status === "passed" || p.status === "closed" ? "ok" : "wait";

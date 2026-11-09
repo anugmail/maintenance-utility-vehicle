@@ -31,7 +31,7 @@ export interface DashPlan { mr: string; name: string; unit: string; year: string
 const regionsOf = (region: string) => REGIONS.filter((r) => region.split(",").map((s) => shortRegion(s.trim())).includes(shortRegion(r)));
 const dashPlan = (mr: string, name: string, region: string, year: string): DashPlan => ({ mr, name, unit: PLAN_UNIT[mr] ?? UNITS[0], year, districts: regionsOf(region).flatMap((r) => DISTRICTS[r]) });
 export const DASH_PLANS: DashPlan[] = [
-  dashPlan("MR Z7000004", SAMPLE_NAME, REGIONS[0] + ", " + REGIONS[1], DASH_YEAR),
+  dashPlan("MRZ7000004", SAMPLE_NAME, REGIONS[0] + ", " + REGIONS[1], DASH_YEAR),
   ...PLANS.slice(0, 2).map((p) => dashPlan(p.mr, p.name, p.region, p.year)),
 ];
 const planOf = (mr: string) => DASH_PLANS.find((p) => p.mr === mr);
@@ -44,12 +44,12 @@ export const DASH_AGG: AggRow[] = [
   ["ไส้กรองอากาศขนาดเล็ก", "-", "เพิ่มเอง", "4", "ชิ้น"],
 ];
 
-/* แยกรายคัน — รถ 3 คันแรกของแผน MR Z7000004 (CAND 0–2 · ไตรมาส A_ALL = 1 · น้ำมันไฮโดรลิกเมื่อ A_OILS เปลี่ยนน้ำมัน (1, 2) + ไส้กรอง CAR_PICK)
+/* แยกรายคัน — รถ 3 คันแรกของแผน MRZ7000004 (CAND 0–2 · ไตรมาส A_ALL = 1 · น้ำมันไฮโดรลิกเมื่อ A_OILS เปลี่ยนน้ำมัน (1, 2) + ไส้กรอง CAR_PICK)
    จำนวน: น้ำมัน OIL_SPEC.litre · ไส้กรอง CAR_QTY · จอ Figma บอกยอดทั้งหมด 214 รายการ (ค่าสมมติ) แต่มีแถวตัวอย่าง 11 แถว ⇒ เว็บนับจากแถวจริง (BACKLOG ข้อ 22 หมวด ค.) */
 export interface CarRow { plate: string; mr: string; q: number; part: number; qty: string; district: string }
 const CAR_SRC: { car: number; q: number; oil: boolean }[] = [{ car: 0, q: 1, oil: true }, { car: 1, q: 1, oil: false }, { car: 2, q: 1, oil: true }];
 export const DASH_CARS: CarRow[] = CAR_SRC.flatMap(({ car, q, oil }) => [...(oil ? [0] : []), ...CAR_PICK].map((x) => ({
-  plate: CAND[car].plate, mr: "MR Z7000004", q, part: x, qty: x === 0 ? OIL_SPEC.litre : String(CAR_QTY[x]), district: dCode(CAND[car]),
+  plate: CAND[car].plate, mr: "MRZ7000004", q, part: x, qty: x === 0 ? OIL_SPEC.litre : String(CAR_QTY[x]), district: dCode(CAND[car]),
 })));
 
 /* ความคืบหน้าของแผน — 1 แถว = 1 ไตรมาสของ 1 แผน [เลขที่ MR, ไตรมาส, แผนเดินทาง (ใบ), บำรุงรักษาแล้ว, ยานพาหนะในไตรมาส, สถานะ] */
@@ -57,9 +57,9 @@ export type QStatus = "todo" | "doing" | "done";
 export const QST: Record<QStatus, [string, PillColor]> = { todo: ["ยังไม่เริ่ม", "Gray"], doing: ["กำลังดำเนินการ", "Info"], done: ["เสร็จแล้ว", "Success"] };
 export type ProgRow = [string, number, number, number, number, QStatus];
 export const DASH_PROG: ProgRow[] = [
-  ["MR Z7000001", 1, 2, 4, 6, "doing"], ["MR Z7000001", 2, 0, 0, 3, "todo"], ["MR Z7000001", 3, 0, 0, 2, "todo"], ["MR Z7000001", 4, 0, 0, 1, "todo"],
-  ["MR Z7000004", 1, 1, 0, 3, "doing"], ["MR Z7000004", 2, 0, 0, 3, "todo"], ["MR Z7000004", 3, 0, 0, 2, "todo"], ["MR Z7000004", 4, 0, 0, 2, "todo"],
-  ["MR Z7000002", 2, 1, 0, 4, "doing"], ["MR Z7000002", 3, 0, 0, 2, "todo"],
+  ["MRZ7000001", 1, 2, 4, 6, "doing"], ["MRZ7000001", 2, 0, 0, 3, "todo"], ["MRZ7000001", 3, 0, 0, 2, "todo"], ["MRZ7000001", 4, 0, 0, 1, "todo"],
+  ["MRZ7000004", 1, 1, 0, 3, "doing"], ["MRZ7000004", 2, 0, 0, 3, "todo"], ["MRZ7000004", 3, 0, 0, 2, "todo"], ["MRZ7000004", 4, 0, 0, 2, "todo"],
+  ["MRZ7000002", 2, 1, 0, 4, "doing"], ["MRZ7000002", 3, 0, 0, 2, "todo"],
 ];
 
 /* Metric item 4 ใบ [Text, Number, สี Featured icon] — ค่าคงที่ของจอ */
@@ -98,6 +98,6 @@ export const progRows = (query: string, f: DashFilter) => {
 };
 export const dashPlanOf = planOf;
 
-/* ?seed=S4 / โหมดพาดู: ใส่แผนตัวอย่าง MR Z7000004 สถานะอนุมัติแล้ว (samplePlan เดียวกับ /scenarios/sample/) ⇒ ปุ่ม › ของแผนนี้เปิดหน้าไตรมาสของแผนจริงได้
-   ไม่แตะแผนอื่น (MR Z7000001 ดำเนินการ · MR Z7000002 อนุมัติแล้ว อยู่ใน PLANS ตั้งต้นแล้ว) */
-export const seedDash = () => setMock((s) => ({ ...s, plans: [samplePlan("approved"), ...s.plans.filter((p) => p.mr !== "MR Z7000004")] }));
+/* ?seed=S4 / โหมดพาดู: ใส่แผนตัวอย่าง MRZ7000004 สถานะอนุมัติแล้ว (samplePlan เดียวกับ /scenarios/sample/) ⇒ ปุ่ม › ของแผนนี้เปิดหน้าไตรมาสของแผนจริงได้
+   ไม่แตะแผนอื่น (MRZ7000001 ดำเนินการ · MRZ7000002 อนุมัติแล้ว อยู่ใน PLANS ตั้งต้นแล้ว) */
+export const seedDash = () => setMock((s) => ({ ...s, plans: [samplePlan("approved"), ...s.plans.filter((p) => p.mr !== "MRZ7000004")] }));

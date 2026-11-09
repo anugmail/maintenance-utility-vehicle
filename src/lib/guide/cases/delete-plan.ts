@@ -4,13 +4,13 @@
    ใน Diagram/01-บำรุงรักษาตามวาระ/14-บำรุงรักษา-userflow.md · ขั้นเขียนตามที่เว็บทำจริง (app/page.tsx เมนู … ลบ · app/detail ปุ่มลบแผน · planFlow.deletePlan)
    หน้ารายละเอียดของเว็บมีปุ่มลบแผนเฉพาะแผนที่ถูกส่งกลับ (แผนรออนุมัติดูอย่างเดียว ยังไม่เคาะ Q53) ⇒ เคสลบจากหน้ารายละเอียดใช้แผนที่ถูกส่งกลับ
    ชีตยืนยัน หน้า 1 (ลบจากรายการแผน) · หน้า 4 (หน้ารายละเอียดแผน)
-   ข้อมูลตั้งต้น: ล้างข้อมูลจำลองแล้วใส่แผนตัวอย่าง MR Z7000004 (samplePlan) ในสถานะที่เคสใช้ — ได้ค่าเดิมทุกครั้ง */
+   ข้อมูลตั้งต้น: ล้างข้อมูลจำลองแล้วใส่แผนตัวอย่าง MRZ7000004 (samplePlan) ในสถานะที่เคสใช้ — ได้ค่าเดิมทุกครั้ง */
 import type { PlanStatus } from "@/lib/mock/data";
 import { samplePlan } from "@/lib/mock/planFlow";
 import { setMock } from "@/lib/mock/store";
 import type { GuideScenario, GuideStep } from "../types";
 
-const PLAN = "MR Z7000004", ID = "Z7000004";
+const PLAN = "MRZ7000004", ID = "Z7000004";
 const LIST = "/", DETAIL = "/detail/?id=" + ID;
 const withPlan = (st: PlanStatus) => () => setMock((s) => ({ ...s, plans: [samplePlan(st), ...s.plans.filter((p) => p.mr !== PLAN)] }));
 const openDetail: GuideStep = { at: LIST, text: "ที่รายการแผน กดปุ่มสามจุดท้ายแถวของแผน " + PLAN + " แล้วเลือกดูรายละเอียด", mobile: "ที่การ์ดของแผน " + PLAN + " กดไอคอนดูรายละเอียด" };

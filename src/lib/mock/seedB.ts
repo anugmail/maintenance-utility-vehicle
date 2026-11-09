@@ -13,7 +13,7 @@ const approved = (t: Trip): Trip => ({ ...t, status: "approved", approvedAt: "04
 const closeout = (c: CloseoutState) => setMock((s) => ({ ...s, closeout: { ...s.closeout, Z7000001: c } }));
 
 export const SEEDS: Record<string, { role: Role; run: () => void }> = {
-  S4: { role: "กบค.", run: seedDash },   // แดชบอร์ด /parts/ (6 พ.ย. 2569) ตัวเลขเป็นค่าสมมติของจอ (lib/mock/partsDash.ts) · ใส่แผน MR Z7000004 อนุมัติแล้วให้ปุ่ม › เปิดหน้าไตรมาสได้
+  S4: { role: "กบค.", run: seedDash },   // แดชบอร์ด /parts/ (6 พ.ย. 2569) ตัวเลขเป็นค่าสมมติของจอ (lib/mock/partsDash.ts) · ใส่แผน MRZ7000004 อนุมัติแล้วให้ปุ่ม › เปิดหน้าไตรมาสได้
   /* ตั้งแผนเดินทางใหม่ทั้งชุด = ล้างงานรายคัน (jobs.ts) ของใบเดิมด้วย — ที่เก็บแผนเดินทางมีที่เดียว ใบที่อนุมัติแล้วเปิดหน้างานรายคันได้ทันที */
   S6: { role: "หน่วยงาน (กกฟ.1)", run: () => setMock((s) => ({ ...s, trips: DEFAULT_TRIPS(), jobs: undefined })) },
   S9: { role: "หน่วยงาน (กกฟ.1)", run: () => setMock((s) => ({ ...s, trips: [approved(TRIP_1), { ...TRIP_OTHER }], jobs: undefined })) },

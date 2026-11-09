@@ -45,8 +45,8 @@ export const PLAN_COLS = [
 ];
 /* ภาค / ประเภทรถ (scopeCell · เจ้าของงาน 5 พ.ย. 2569 "สรุปจากรถที่อยู่ในแผนจริง") — 2 บรรทัดในช่องเดียว: ภาคของรถในแผน · ประเภทรถของรถในแผน
    แผนที่จัดรถไว้ (alloc) = สรุปจากรถจริง เรียงตาม REGIONS / VEHICLE_TYPES · แผนตัวอย่าง = PLAN_SCOPE หรือภาคและประเภทเดียวของแผน */
-/* 5 พ.ย. 2569 ชีตลูกค้า: MR Z7000001 รถในแผนอยู่ทั้ง กฟน. และ กฟฉ. ⇒ ภาค 1 และภาค 2 (screens.js) */
-const PLAN_SCOPE: Record<string, [string, string]> = { "MR Z7000001": ["ภาค 1, ภาค 2", "กระเช้าแก้ไฟ"], "MR Z7000002": ["ภาค 2, ภาค 3", "กระเช้าแก้ไฟ, รถพ่วงฉีดน้ำ"] };
+/* 5 พ.ย. 2569 ชีตลูกค้า: MRZ7000001 รถในแผนอยู่ทั้ง กฟน. และ กฟฉ. ⇒ ภาค 1 และภาค 2 (screens.js) */
+const PLAN_SCOPE: Record<string, [string, string]> = { "MRZ7000001": ["ภาค 1, ภาค 2", "กระเช้าแก้ไฟ"], "MRZ7000002": ["ภาค 2, ภาค 3", "กระเช้าแก้ไฟ, รถพ่วงฉีดน้ำ"] };
 export const planScope = (p: Plan): [string, string] => {
   const cars = Object.keys(p.alloc ?? {}).map((i) => CAND[Number(i)]).filter(Boolean);
   if (cars.length) {
@@ -70,10 +70,10 @@ export const planRow = (p: Plan, menu: TableValue, view = false): TableValue[] =
 /* เมนู "…" ตามสถานะแผน (S19 S20): ก่อนอนุมัติ ดูรายละเอียด แก้ไข ลบ · อนุมัติแล้ว ดูรายละเอียด แก้ไข · ดำเนินการแล้ว ดูรายละเอียดอย่างเดียว */
 export const menuCount = (p: Plan) => (p.status === "review" || p.status === "returned" ? 3 : p.status === "approved" ? 2 : 1);
 
-/* เลขที่ MR: "MR Z" + ปีที่เลือก 2 หลัก + ลำดับ 5 หลักนับต่อในปีนั้น */
+/* เลขที่ MR: "MRZ" + ปีที่เลือก 2 หลัก + ลำดับ 5 หลักนับต่อในปีนั้น */
 /* retired = เลขที่ MR ของแผนที่ลบไปแล้ว (S20: ไม่นำเลขกลับมาใช้ซ้ำ) */
 export function nextMr(plans: Plan[], year: string, retired: string[] = []) {
-  const yy = year.slice(-2), pre = "MR Z" + yy;
+  const yy = year.slice(-2), pre = "MRZ" + yy;
   const n = plans.map((p) => p.mr).concat(retired).filter((mr) => mr.startsWith(pre)).map((mr) => Number(mr.slice(pre.length)) || 0);
   return pre + String((n.length ? Math.max(...n) : 0) + 1).padStart(5, "0");
 }

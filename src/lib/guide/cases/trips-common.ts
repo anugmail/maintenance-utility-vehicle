@@ -1,13 +1,13 @@
 "use client";
 /* ของใช้ร่วมของเรื่องชุดแผนเดินทางและงานรายคัน (S6 S9 S7 S8 S10 S25) ในโหมดพาดูทีละเรื่อง
-   แผนตัวอย่าง MR Z7000001 "บำรุงรักษารถกระเช้า ภาค 1 และภาค 2 ปีงบประมาณ 2570" (สถานะดำเนินการ · ไตรมาส 1 มีรถ 10 คัน TRIP_CARS)
+   แผนตัวอย่าง MRZ7000001 "บำรุงรักษารถกระเช้า ภาค 1 และภาค 2 ปีงบประมาณ 2570" (สถานะดำเนินการ · ไตรมาส 1 มีรถ 10 คัน TRIP_CARS)
    ข้อมูลตั้งต้นใช้ตัวช่วยเดิม (SEEDS ของ seedB.ts · TRIP_1 TRIP_V TRIP_OTHER · applySample ของ jobs.ts) ⇒ ได้ค่าเดิมทุกครั้ง ไม่มีวันที่ปัจจุบัน */
 import { applySample, JOB_TEXT, JOB_TIMES, newJob, PEOPLE, WORK, type Job } from "@/lib/mock/jobs";
 import { setMock } from "@/lib/mock/store";
 import { APPROVED_AT, DEFAULT_TRIPS, TRIP_1, TRIP_OTHER, type Trip } from "@/lib/mock/trips";
 
 export const PLAN_ID = "Z7000001";
-export const PLAN_MR = "MR Z7000001";
+export const PLAN_MR = "MRZ7000001";
 export const PLAN_NAME = "บำรุงรักษากระเช้าแก้ไฟ ภาค 1 และภาค 2 ปีงบประมาณ 2570";
 
 /* ---------- หน้า ---------- */
@@ -41,7 +41,7 @@ export const seedCannotIn = (q: number) => () => {
 };
 
 /* ---------- ขั้นที่ใช้บ่อย ---------- */
-/** รายการแผน → ดูรายละเอียดแผน MR Z7000001 */
+/** รายการแผน → ดูรายละเอียดแผน MRZ7000001 */
 export const openPlan = (what = "") => ({
   at: LIST,
   text: "ที่รายการแผน กดปุ่มสามจุดท้ายแถวของแผน " + PLAN_MR + " แล้วเลือกดูรายละเอียด" + what,

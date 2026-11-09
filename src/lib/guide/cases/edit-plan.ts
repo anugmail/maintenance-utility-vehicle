@@ -3,7 +3,7 @@
    เคสยกจากรายการสถานะของจอ S19 (R.1–R.11) ใน SCENARIOS ของ figma-export/maintainance-plugin/screens.js + ตาราง Condition ของ Scenario 19
    ใน Diagram/01-บำรุงรักษาตามวาระ/14-บำรุงรักษา-userflow.md · ขั้นเขียนตามที่เว็บทำจริง (app/page.tsx เมนู … · app/detail · app/edit + app/new/PlanForm)
    ชีตยืนยัน หน้า 2 (ฟอร์มสร้างและแก้ไขแผน) · เคสที่ดูแผนที่ถูกส่งกลับจากหน้ารายละเอียด = หน้า 4
-   ข้อมูลตั้งต้น: ล้างข้อมูลจำลองแล้วใส่แผนตัวอย่าง MR Z7000004 (samplePlan) ในสถานะที่เคสใช้ — ได้ค่าเดิมทุกครั้ง
+   ข้อมูลตั้งต้น: ล้างข้อมูลจำลองแล้วใส่แผนตัวอย่าง MRZ7000004 (samplePlan) ในสถานะที่เคสใช้ — ได้ค่าเดิมทุกครั้ง
    ข้อความที่ลูกค้าเห็น: ภาษาคนพูด ไม่มีรหัส scenario/สถานะ ไม่มี "·" ลูกศร อีโมจิ (types.ts) */
 import { DISTRICTS, REGIONS, UNIT_FLEET, type PlanStatus } from "@/lib/mock/data";
 import { carsFor } from "@/lib/mock/plan";
@@ -11,7 +11,7 @@ import { SAMPLE_Q_CARS, samplePlan } from "@/lib/mock/planFlow";
 import { setMock } from "@/lib/mock/store";
 import type { GuideScenario, GuideStep } from "../types";
 
-const PLAN = "MR Z7000004", ID = "Z7000004";
+const PLAN = "MRZ7000004", ID = "Z7000004";
 /* จำนวนในข้อความ (9 พ.ย. 2569 รถจำลองครบชุด): ตัวกรองของแผนตัวอย่าง = ภาค 2 ทุกเขต (R2) · เอาชิป กฟฉ.3 ออก */
 const N = UNIT_FLEET.length, R2_ALL = DISTRICTS[REGIONS[1]];
 const AREA = carsFor({ regions: [REGIONS[1]], districts: R2_ALL, types: [] }).length;
@@ -85,8 +85,8 @@ export const EDIT_PLAN: GuideScenario = {
       id: "edit-active", name: "แผนที่ดำเนินการแล้วแก้ไขไม่ได้", about: "แผนที่เริ่มงานแล้วเปิดดูรายละเอียดได้อย่างเดียว ไม่มีแก้ไขและลบ", role: "หน่วยงาน (กกฟ.1)", sheet: 4,
       seed: () => {},
       steps: [
-        { at: LIST, text: "ที่รายการแผน กดปุ่มสามจุดท้ายแถวของแผน MR Z7000001 ซึ่งอยู่ในสถานะดำเนินการ เมนูมีดูรายละเอียดอย่างเดียว เลือกดูรายละเอียด",
-          mobile: "การ์ดของแผน MR Z7000001 ซึ่งอยู่ในสถานะดำเนินการ มีไอคอนดูรายละเอียดอย่างเดียว กดไอคอนนั้น" },
+        { at: LIST, text: "ที่รายการแผน กดปุ่มสามจุดท้ายแถวของแผน MRZ7000001 ซึ่งอยู่ในสถานะดำเนินการ เมนูมีดูรายละเอียดอย่างเดียว เลือกดูรายละเอียด",
+          mobile: "การ์ดของแผน MRZ7000001 ซึ่งอยู่ในสถานะดำเนินการ มีไอคอนดูรายละเอียดอย่างเดียว กดไอคอนนั้น" },
         { at: "/detail/?id=Z7000001", text: "ส่วนหัวของหน้ารายละเอียดไม่มีปุ่มแก้ไขหรือลบแผน แผนที่เริ่มดำเนินการแล้วจึงแก้ไม่ได้" },
       ],
     },

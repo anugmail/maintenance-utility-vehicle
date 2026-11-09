@@ -32,7 +32,7 @@ function workText(j: Job): string {
 }
 
 export function planHistory(m: MockState, plan: Plan): PlanHistory {
-  const s = jobsOf(m), planId = plan.mr.replace(/^MR /, "");
+  const s = jobsOf(m), planId = plan.mr.replace(/^MR/, "");
   const trips = Object.values(s.trips).filter((t) => t.planId === planId);
   const cars = trips.flatMap((t) => t.carIds.map((id) => ({ t, id, j: getJob(s, t.id, id) })));
   const fin = cars.filter((x) => x.j.status === "done" || x.j.status === "cannot");

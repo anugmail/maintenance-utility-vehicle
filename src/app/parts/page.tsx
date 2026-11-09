@@ -74,7 +74,7 @@ function PartsDash() {
   const [exp, setExp] = useState<{ format: string; scope: string } | null>(null);
 
   const progRow = (r: ProgRow): TableValue[] => {
-    const p = dashPlanOf(r[0]), id = r[0].replace(/^MR /, "");
+    const p = dashPlanOf(r[0]), id = r[0].replace(/^MR/, "");
     return [{ text: r[0], sub: p?.unit }, p?.name ?? "", "ไตรมาส " + r[1], r[2] + " ใบ", r[3] + "/" + r[4] + " คัน", { pills: [QST[r[5]]] },
       go("ไปหน้าไตรมาส " + r[1] + " ของ " + r[0], () => router.push(tripsHref(id, r[1])))];
   };

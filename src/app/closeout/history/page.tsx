@@ -1,6 +1,6 @@
 "use client";
 /* S15 · กบค. บันทึกและส่งประวัติงานบำรุงรักษา (/closeout/history/?id=Z7000001) — progressScreen() / historyScreen() ใน screens.js · spec S15.md (N.1–N.4)
-   Page header "หมายเลขแผน MR Z7000001" + Badge สถานะแผน (ดำเนินการ → รอหัวหน้าตรวจสอบ) → Content ช่องไฟ 32:
+   Page header "หมายเลขแผน MRZ7000001" + Badge สถานะแผน (ดำเนินการ → รอหัวหน้าตรวจสอบ) → Content ช่องไฟ 32:
      รายละเอียดแผน (VehicleAndReporterInfo) · ความคืบหน้ารายคัน (DisplayBox 4 คู่ · ยังไม่ครบ + Alert Warning)
      ประวัติงานบำรุงรักษา (n) / ประวัติงานบำรุงรักษาทั้งหมด (12) + Table (HIST_COLS · ครบแล้วมี pagination 12)
      ปุ่ม ย้อนกลับ · ส่งประวัติให้หัวหน้าตรวจสอบ (ยังไม่ครบ = Disabled) → ConfirmDialog → แผนรอหัวหน้าตรวจสอบ + toast · ส่งแล้ว = Alert Info + ย้อนกลับ

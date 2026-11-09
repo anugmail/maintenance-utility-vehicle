@@ -17,7 +17,7 @@ import { Table, type TableColumn } from "@/components/vms/Table";
 
 <PrimaryButton Text="สร้างแผน" LeadingIconSwap="add-24-300-round" onClick={go} />
 <TextInput LabelText="ชื่อแผน" Text={name} Placeholder="ระบุชื่อแผน" onChange={setName} State={err ? "Error" : undefined} HelperText={err ? "กรุณาระบุชื่อแผน" : undefined} />
-<Table columns={[{ head: "เลขที่ MR", width: 150, Style: "Lead text" }]} rows={[["MR Z7000001"]]} />
+<Table columns={[{ head: "เลขที่ MR", width: 150, Style: "Lead text" }]} rows={[["MRZ7000001"]]} />
 ```
 
 ## รายการ

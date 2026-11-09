@@ -62,7 +62,7 @@ export function planAcc(m: MockState, planId: string): PlanAcc {
   const dates = rows.map((r) => r.date).filter(Boolean).sort((a, b) => dkey(a).localeCompare(dkey(b)));
   const range = !dates.length ? "-" : dates[0] === dates[dates.length - 1] ? dates[0] : dates[0].slice(0, 2) + "–" + dates[dates.length - 1];
   const by = [...new Set(trips.map((t) => (t.mode === "hire" ? t.vendor ?? "-" : "กบค. (ตรวจเอง)")))].join(", ");
-  return { planId, mr: "MR " + planId, rows, ready: total > 0 && rows.length === total && rows.every((r) => r.accepted), done: !!closeoutOf(m, planId).accepted, range, by };
+  return { planId, mr: "MR" + planId, rows, ready: total > 0 && rows.length === total && rows.every((r) => r.accepted), done: !!closeoutOf(m, planId).accepted, range, by };
 }
 /** แผนที่มีรถถึงขั้นยอมรับผล */
 export const accPlans = (m: MockState) => [...new Set(accRows(m).map((r) => r.trip.planId))].map((id) => planAcc(m, id));

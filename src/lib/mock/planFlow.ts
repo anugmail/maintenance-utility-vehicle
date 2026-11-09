@@ -1,6 +1,6 @@
 "use client";
 /* ตัวช่วยของวงจรแผน S2 S19 S20 S21 — ยกจาก screens.js (npKv · planBody · quarterParts + MANUAL_ROW · planAs · EDIT_FORM) · S22 (wst · whParts) ตัดออก 6 พ.ย. 2569
-   แผนอ้างด้วย id = เลขที่ MR ตัด "MR " (เช่น Z7000004) ตาม routes.md · รถอ้างด้วยทะเบียนไม่มีจังหวัด (เช่น 82-6789) */
+   แผนอ้างด้วย id = เลขที่ MR ตัด "MR" (เช่น Z7000004) ตาม routes.md · รถอ้างด้วยทะเบียนไม่มีจังหวัด (เช่น 82-6789) */
 import { useRouter } from "next/navigation";
 import { useEffect, useSyncExternalStore } from "react";
 import type { BadgeOutlineColor } from "@/components/vms/BadgeOutline";
@@ -13,7 +13,7 @@ import { notify, setMock, useRole, type MockState, type Role } from "./store";
 import { tripsOf } from "./trips";
 
 /* ---------- id ของแผนและรถใน query string ---------- */
-export const planId = (p: Plan) => p.mr.replace(/^MR /, "");
+export const planId = (p: Plan) => p.mr.replace(/^MR/, "");
 export const findPlan = (plans: Plan[], id: string | null) => (id ? plans.find((p) => planId(p) === id) : undefined);
 export const carParam = (i: number) => CAND[i].plate.split(" ")[0];
 export const carIndexOf = (param: string | null) => (param ? CAND.findIndex((c) => c.plate.split(" ")[0] === param) : -1);
@@ -174,7 +174,7 @@ export const R2 = { regions: [REGIONS[1]], districts: [...DISTRICTS[REGIONS[1]]]
 /* acked (ไตรมาสที่คลังรับทราบ · S22) ไม่มีหน้าไหนอ่านแล้วหลังตัด S22 6 พ.ย. 2569 — คงไว้ให้เคสพาดู S4 (cases/parts-progress) ที่ยังส่งค่านี้ เอาออกหลังรวมงาน S4 */
 export function samplePlan(status: PlanStatus, acked?: number[]): Plan {
   const p: Plan = {
-    mr: "MR Z7000004", name: SAMPLE_NAME, ...allocScope(A_ALL), nowQ: "ไตรมาส 1", cars: UNIT_FLEET.length, status, created: NEW_PLAN_DATE,
+    mr: "MRZ7000004", name: SAMPLE_NAME, ...allocScope(A_ALL), nowQ: "ไตรมาส 1", cars: UNIT_FLEET.length, status, created: NEW_PLAN_DATE,
     year: "2570", perQ: [1, 2, 3, 4].map((q) => "ไตรมาส " + q + ": " + SAMPLE_Q_CARS(q)).join(" · "),
     ...R2, alloc: { ...A_ALL }, picks: Object.fromEntries(Object.entries(A_PICKS).map(([i, v]) => [i, [...v]])), oils: { ...A_OILS }, draw: { ...A_DRAW },
   };

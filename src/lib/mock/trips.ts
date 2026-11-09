@@ -11,7 +11,7 @@ import { setMock, type MockState } from "./store";
 export const NOW_Q = "ไตรมาส 1";
 export const PLAN_ID = "Z7000001";
 
-/* ---------- รถของไตรมาส 1 แผน MR Z7000001 (TRIP_CARS + OWNER_PH + CTRL_NAME) — ลำดับตาม screens.js ----------
+/* ---------- รถของไตรมาส 1 แผน MRZ7000001 (TRIP_CARS + OWNER_PH + CTRL_NAME) — ลำดับตาม screens.js ----------
    ผู้ดูแลยานพาหนะ (6 พ.ย. 2569 เจ้าของงาน "เพิ่มชื่อผู้ดูแลยานพาหนะ ตรงเบอร์โทร ดึงจากผู้ควบคุมรถ"): ctrl = ชื่อผู้ควบคุมรถ (BE controller ของ /api/vehicles · ค่าสมมติ CTRL_NAME) · phone = เบอร์ผู้ควบคุมรถ (OWNER_PH) */
 export interface TripCar { id: string; plate: string; model: string; owner: string; phone: string; ctrl: string }
 export const TRIP_CARS: TripCar[] = [
@@ -60,7 +60,7 @@ declare module "./store" {
 }
 const qKey = (planId: string, q: number) => planId + "-" + q;
 export const qEditOf = (s: Pick<MockState, "qcars">, planId: string, q: number): QuarterEdit => s.qcars?.[qKey(planId, q)] ?? { added: [], removed: [], phones: {}, locs: {} };
-const planOfId = (plans: Plan[], planId: string) => plans.find((x) => x.mr === "MR " + planId);
+const planOfId = (plans: Plan[], planId: string) => plans.find((x) => x.mr === "MR" + planId);
 const hasAlloc = (p?: Plan): p is Plan & { alloc: Record<number, number> } => !!p?.alloc && Object.keys(p.alloc).length > 0;
 const candIndex = (id: string) => CAND.findIndex((c) => candId(c.plate) === id);
 /** รถของไตรมาส q ในแผน — แผนที่สร้างจากฟอร์ม (มี alloc) = รถที่จัดลงไตรมาสนั้น · แผนตัวอย่าง (ไม่มี alloc) = TRIP_CARS ของ screens.js (ไตรมาสที่กำลังทำ) / SAMPLE_Q (ไตรมาสอื่น) · + คันที่เพิ่ม − คันที่เอาออก */
@@ -88,7 +88,7 @@ const perQOf = (alloc: Record<number, number>) => [1, 2, 3, 4].map((q) => "ไ�
 function writeQuarter(planId: string, q: number, fn: (e: QuarterEdit) => QuarterEdit, allocFn?: (a: Record<number, number>) => Record<number, number>) {
   setMock((s) => {
     const plans = s.plans.map((p) => {
-      if (p.mr !== "MR " + planId || !allocFn || !hasAlloc(p)) return p;
+      if (p.mr !== "MR" + planId || !allocFn || !hasAlloc(p)) return p;
       const alloc = allocFn({ ...p.alloc }), keep = (o?: Record<number, unknown>) => o && Object.fromEntries(Object.entries(o).filter(([k]) => alloc[Number(k)] != null));
       return { ...p, alloc, picks: keep(p.picks) as Plan["picks"], qty: keep(p.qty) as Plan["qty"], manual: keep(p.manual) as Plan["manual"], oils: keep(p.oils) as Plan["oils"], oilSpec: keep(p.oilSpec) as Plan["oilSpec"], cars: Object.keys(alloc).length, perQ: perQOf(alloc) };
     });
@@ -180,7 +180,7 @@ export const tripPlaces = (t: Trip) => {
 };
 export const tripCars = (t: Trip, only?: string) => t.carIds.map(carOf).filter((c): c is TripCar => !!c && (!only || c.owner === only));
 
-/* tripKv — กล่องรายละเอียดแผนเดินทาง (S7 · ใช้ซ้ำใน batch C) · planLabel = "MR Z7000001 บำรุงรักษารถกระเช้า ภาค 1 และภาค 2 ปีงบประมาณ 2570" */
+/* tripKv — กล่องรายละเอียดแผนเดินทาง (S7 · ใช้ซ้ำใน batch C) · planLabel = "MRZ7000001 บำรุงรักษารถกระเช้า ภาค 1 และภาค 2 ปีงบประมาณ 2570" */
 export const tripKv = (t: Trip, planLabel: string): [string, string][] => [
   ["ชื่อแผนเดินทาง", t.name], ["แผน", planLabel], ["ไตรมาส", "ไตรมาส " + t.quarter], ["รูปแบบดำเนินการ", t.mode === "hire" ? "จ้างดำเนินการ" : "ดำเนินการเอง"],
   ...(t.mode === "hire"
