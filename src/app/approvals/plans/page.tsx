@@ -13,7 +13,7 @@ import { TablePagination } from "@/components/vms/TablePagination";
 import { PST, creatorName, unitOf } from "@/lib/mock/data";
 import { scopeCell } from "@/lib/mock/plan";
 import { planId, useRoleGuard } from "@/lib/mock/planFlow";
-import { useMock } from "@/lib/mock/store";
+import { useMock, ROLES } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 
 const PER = 10;
@@ -26,7 +26,7 @@ const COLS: TableColumn[] = [
 export default function ApprovalList() {
   const router = useRouter();
   const mob = useBreakpoint() === "Mobile";
-  const ok = useRoleGuard(["ผู้อนุมัติ"]);
+  const ok = useRoleGuard(ROLES);   // ทุกบทบาทของต้นแบบอนุมัติได้ (9 พ.ย. 2569 เจ้าของงาน "ตอนอนุมัติให้เห็น เมนูของทุกคนไปเลย" · ระบบจริงหาผู้อนุมัติจากสายบังคับบัญชา upper/lower)
   const { plans } = useMock();
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);

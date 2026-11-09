@@ -29,7 +29,7 @@ import { cx } from "@/lib/cx";
 import { PST, QUARTERS, type Plan } from "@/lib/mock/data";
 import { QPART_COLS, qpartRow, thaiToday } from "@/lib/mock/plan";
 import { allocOf, badgeOf, findPlan, quarterRows, updatePlan, useRoleGuard } from "@/lib/mock/planFlow";
-import { notify, useMock } from "@/lib/mock/store";
+import { notify, useMock, ROLES } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { PlanBody } from "@/app/detail/PlanBody";
 import { PlanParts } from "@/app/detail/PlanParts";
@@ -43,7 +43,7 @@ function Review() {
   const router = useRouter();
   const sp = useSearchParams();
   const mob = useBreakpoint() === "Mobile";
-  const ok = useRoleGuard(["ผู้อนุมัติ"]);
+  const ok = useRoleGuard(ROLES);   // ทุกบทบาทของต้นแบบอนุมัติได้ (9 พ.ย. 2569 เจ้าของงาน "ตอนอนุมัติให้เห็น เมนูของทุกคนไปเลย" · ระบบจริงหาผู้อนุมัติจากสายบังคับบัญชา upper/lower)
   const plan = findPlan(useMock().plans, sp.get("id"));
   const [q, setQ] = useState(1);
   const dec = useDecision();

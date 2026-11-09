@@ -32,7 +32,7 @@ function TripReview() {
   const router = useRouter();
   const sp = useSearchParams();
   const mock = useMock();
-  const approver = useRole() === "ผู้อนุมัติ";
+  const approver = !!useRole();   // ทุกบทบาทของต้นแบบพิจารณาได้ (9 พ.ย. 2569 เจ้าของงาน "ตอนอนุมัติให้เห็น เมนูของทุกคนไปเลย" · ระบบจริงหาผู้อนุมัติจากสายบังคับบัญชา upper/lower)
   const t = findTrip(mock, sp.get("trip"));
   const dec = useDecision();
   const [pending, setPending] = useState<{ spec: ConfirmSpec; run: () => void } | null>(null);

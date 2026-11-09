@@ -19,7 +19,7 @@ import { NavItem } from "./NavItem";
 import { NavListItem } from "./NavListItem";
 import { TertiaryButton } from "./TertiaryButton";
 
-export interface SideLink { Text: string; href?: string }
+export interface SideLink { Text: string; href?: string; /** property Badge ของ Nav list item (Pill color) — จำนวนที่รอ */ badge?: string }
 export interface SideGroup { IconSwap: string; Text: string; items?: SideLink[]; href?: string }
 export interface SideFooter { IconSwap: string; Text: string; SupportingText?: string; TrailingIconSwap?: string; avatar?: boolean }
 
@@ -28,6 +28,10 @@ export const MT_LABEL = "บำรุงรักษาตามวาระ";
 export const GUIDE_LABEL = "พาดูทีละเรื่อง";
 /** เมนูย่อย: แดชบอร์ดอะไหล่ของแผนที่อนุมัติแล้ว /parts/ (S4 · 6 พ.ย. 2569 "เข้าจากเมนู" · ชื่อ = หัวหน้าของจอ partsDash · ไม่มีใน Sidebar Navigation ของ UI Release#2 — COMPOSED.md บ.) */
 export const PARTS_LABEL = "อะไหล่ของแผนที่อนุมัติแล้ว";
+/** เมนูย่อยอนุมัติ (9 พ.ย. 2569 เจ้าของงาน "ตอนอนุมัติให้เห็น เมนูของทุกคนไปเลย … อันนี้ในเวปนะ แต่จริงๆเงื่อนไขคือยิงเส้น upper lower ในการหาคนอนุมัติ")
+    ทุกบทบาทของต้นแบบเห็นและอนุมัติได้ · ชื่อ = หัวหน้าของจอ S2 S7 · ไม่มีใน Sidebar Navigation ของ UI Release#2 (COMPOSED.md บ.) · Badge = จำนวนที่รออนุมัติ */
+export const APPROVE_PLANS_LABEL = "แผนรออนุมัติ";
+export const APPROVE_TRIPS_LABEL = "แผนเดินทางรออนุมัติ";
 
 export const SIDEBAR_MENU: SideGroup[] = [
   { IconSwap: "home-24-300-round", Text: "หน้าหลัก" },
@@ -35,7 +39,7 @@ export const SIDEBAR_MENU: SideGroup[] = [
   { IconSwap: "traffic_jam-24-300-round", Text: "จัดการคำขอใช้ยานพาหนะ", items: [{ Text: "ตรวจสอบและจัดการคำขอ" }, { Text: "อนุมัติใช้ยานพาหนะ" }] },
   { IconSwap: "database-24-300-round", Text: "ข้อมูลพนักงานและยานพาหนะ", items: [{ Text: "ผู้ดูแลยานพาหนะ" }, { Text: "ข้อมูลพนักงานขับยานพาหนะ" }, { Text: "ข้อมูลยานพาหนะ" }, { Text: "กลุ่มยานพาหนะ" }, { Text: "บริหารสัญญา" }] },
   { IconSwap: "ev_station", Text: "การอัดประจุไฟฟ้า", items: [{ Text: "สถานีอัดประจุไฟฟ้า" }, { Text: "อัตราค่าไฟฟ้า" }, { Text: "ค่าใช้จ่ายอัดประจุยานพาหนะ" }, { Text: "บันทึกการอัดประจุ Wall Charger" }, { Text: "ต้นทุนและค่าใช้จ่ายในการอัดประจุ" }] },
-  { IconSwap: "build", Text: "งานซ่อมและบำรุงรักษา", items: [{ Text: "ภาพรวมการซ่อมบำรุง" }, { Text: "ตารางบำรุงรักษา" }, { Text: "นัดหมายบำรุงรักษา" }, { Text: "งานซ่อม" }, { Text: "ยานพาหนะทดแทน" }, { Text: MT_LABEL, href: "/" }, { Text: PARTS_LABEL, href: "/parts/" }, { Text: GUIDE_LABEL, href: "/guide/" }] },
+  { IconSwap: "build", Text: "งานซ่อมและบำรุงรักษา", items: [{ Text: "ภาพรวมการซ่อมบำรุง" }, { Text: "ตารางบำรุงรักษา" }, { Text: "นัดหมายบำรุงรักษา" }, { Text: "งานซ่อม" }, { Text: "ยานพาหนะทดแทน" }, { Text: MT_LABEL, href: "/" }, { Text: PARTS_LABEL, href: "/parts/" }, { Text: APPROVE_PLANS_LABEL, href: "/approvals/plans/" }, { Text: APPROVE_TRIPS_LABEL, href: "/approvals/trips/" }, { Text: GUIDE_LABEL, href: "/guide/" }] },
   { IconSwap: "e911_emergency", Text: "จัดการเหตุการณ์", items: [{ Text: "จัดการเหตุยานพาหนะเสีย" }, { Text: "จัดการเหตุอุบัติเหตุ" }] },
   { IconSwap: "news", Text: "รายงาน" },
 ];
@@ -100,7 +104,7 @@ export function SidebarNavigation({ State = "Collapsed", menu = SIDEBAR_MENU, fo
               <NavItem Text={g.Text} LeadingIconSwap={g.IconSwap} TrailingIcon TrailingIconSwap={on ? "keyboard_arrow_up-20-outline-300-round" : "keyboard_arrow_down-20-400-round"} expanded={on} onClick={() => flip(g.Text)} />
               {on && (
                 <div className="flex flex-col gap-1">
-                  {g.items.map((s) => <NavListItem key={s.Text} Text={s.Text} href={s.href} State={s.Text === active ? "Active" : "Default"} />)}
+                  {g.items.map((s) => <NavListItem key={s.Text} Text={s.Text} href={s.href} State={s.Text === active ? "Active" : "Default"} Badge={!!s.badge} BadgeText={s.badge} />)}
                 </div>
               )}
             </div>
