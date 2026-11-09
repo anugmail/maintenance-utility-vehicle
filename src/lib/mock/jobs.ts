@@ -111,17 +111,19 @@ export interface JobTrip {
   names?: Record<string, string>;
   d1: string; d2: string; staff: string[]; createdBy: string; sentAt: string;
   status: "approved"; approvedAt?: string;
+  /** วันดำเนินการรายคันที่แก้ (R83 · ไม่มี = ช่วงวันเดินทางทั้งช่วง) */
+  works?: Record<string, [string, string]>;
 }
 export function toJobTrip(t: Trip, plans: Plan[]): JobTrip {
   const p = plans.find((x) => x.mr === "MR " + t.planId);
   return { id: t.id, planId: t.planId, planMr: "MR " + t.planId, planName: p?.name ?? "", quarter: "ไตรมาส " + t.quarter, q: t.quarter,
     name: t.name, mode: t.mode, vendor: t.vendor, contract: t.contract, carIds: t.carIds, locs: t.locs, phones: t.phones, names: t.names,
-    d1: t.d1, d2: t.d2, staff: t.staff ?? [], createdBy: t.createdBy, sentAt: t.sentAt, status: "approved", approvedAt: t.approvedAt };
+    d1: t.d1, d2: t.d2, staff: t.staff ?? [], createdBy: t.createdBy, sentAt: t.sentAt, status: "approved", approvedAt: t.approvedAt, works: t.works };
 }
 /* เขียนกลับเป็น Trip (คงค่าอื่นของใบเดิม) */
 const fromJobTrip = (j: JobTrip, prev?: Trip): Trip => ({
   ...prev, id: j.id, planId: j.planId, quarter: j.q, name: j.name, mode: j.mode, vendor: j.vendor, contract: j.contract, carIds: j.carIds,
-  locs: j.locs, phones: j.phones, names: j.names, d1: j.d1, d2: j.d2, staff: j.mode === "self" ? j.staff : prev?.staff, createdBy: j.createdBy, sentAt: j.sentAt,
+  locs: j.locs, phones: j.phones, names: j.names, works: j.works, d1: j.d1, d2: j.d2, staff: j.mode === "self" ? j.staff : prev?.staff, createdBy: j.createdBy, sentAt: j.sentAt,
   status: "approved", approvedAt: j.approvedAt ?? prev?.approvedAt ?? APPROVED_AT, returnReason: undefined, listOnly: undefined,
 });
 /* ชุดตัวอย่าง: TRIP_1 / TRIP_V ของ trips.ts ในสถานะอนุมัติแล้ว (tripAs() ของ screens.js) */
@@ -417,13 +419,14 @@ export function saveSafetyDocs(t: JobTrip, carId: string, files: UploadFile[], b
   patchJob(t.id, carId, (j) => ({ ...j, safety: { files, savedAt: SAFETY_SAVED, savedBy: by } }));
 }
 /** S10 เมนูแก้ไข — ผู้ดูแลยานพาหนะ เบอร์ติดต่อ และสถานที่ของรถในแผนเดินทาง (ค่าว่าง/เท่าค่าเริ่ม = ใช้ค่าเริ่ม · tripCarEdit 6 พ.ย. 2569) */
-export function editTripCar(t: JobTrip, c: TripCar, name: string, phone: string, loc: string) {
+export function editTripCar(t: JobTrip, c: TripCar, name: string, phone: string, loc: string, work?: [string, string] | null) {
   patchTrip(t.id, (x) => {
-    const names = { ...(x.names ?? {}) }, phones = { ...x.phones }, locs = { ...x.locs };
+    const names = { ...(x.names ?? {}) }, phones = { ...x.phones }, locs = { ...x.locs }, works = { ...(x.works ?? {}) };
     if (name.trim() && name.trim() !== c.ctrl) names[c.id] = name.trim(); else delete names[c.id];
     if (phone.trim() && phone.trim() !== c.ownerPhone) phones[c.id] = phone.trim(); else delete phones[c.id];
     if (loc.trim() && loc.trim() !== "สำนักงาน " + c.owner) locs[c.id] = loc.trim(); else delete locs[c.id];
-    return { ...x, names, phones, locs };
+    if (work && !(work[0] === x.d1 && work[1] === x.d2)) works[c.id] = work; else if (work !== undefined) delete works[c.id];   // R83 วันดำเนินการ ทั้งช่วง = ไม่นับว่าแก้
+    return { ...x, names, phones, locs, works };
   });
 }
 /** S10 เมนูลบ — เอารถออกจากแผนเดินทาง (กลับไปให้แผนเดินทางใบอื่นของไตรมาสเลือกได้) */

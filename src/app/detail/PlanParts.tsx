@@ -1,0 +1,44 @@
+"use client";
+/* อะไหล่ในแผน — planPartsSec() ใน planBody ของ screens.js (S2 6 พ.ย. 2569 · 9 พ.ย. 2569 เจ้าของงาน "อยากให้มี tab รวมทุกไตรมาส และแยกไตรมาส ทั้งก่อนอนุมัติ และ ผู้อนุมัติ")
+   ใช้เฉพาะหน้าตรวจสอบของผู้อนุมัติ (S2) — เจ้าของงาน 9 พ.ย. 2569 "หน้ารวมมีแล้ว ขาดแค่ของผู้อนุมัติ" ⇒ หน้ารายละเอียดแผนของผู้สร้างยังไม่มีหัวข้อนี้ (รอยืนยัน · Figma วางใน planBody ทั้งสองหน้า)
+   Section label "อะไหล่ในแผน" + Tabs 5 ช่อง (ของไลบรารีพอดี): "รวมทุกไตรมาส" (แท็บแรก เปิดเป็นค่าเริ่มต้น · ยอด = ผลรวมไตรมาส 1–4) + ไตรมาส 1–4 · ป้ายบนแท็บ = จำนวนรายการ
+   Table QPART_COLS (R81) ดูอย่างเดียว เรียงตามประเภท · คันที่ไม่เบิกอะไหล่ไม่นับ · ยอดรายไตรมาส = quarterPartRows (ชุดเดียวกับหัวข้ออะไหล่ในไตรมาส n ของหน้าไตรมาส · แผนตัวอย่างใช้ยอดรายคันสมมติ)
+   ว่าง: แท็บรวม = "ยังไม่มีรายการอะไหล่" / "จัดการอะไหล่ทีละคันจากปุ่ม … ที่แถวยานพาหนะในแท็บไตรมาส รายการจะรวมมาที่นี่" · แท็บไตรมาส = "ไตรมาสนี้ไม่มีอะไหล่ที่ต้องเบิก" · มือถือ Mobile table */
+import { useState } from "react";
+import { EmptyStateDataEmpty } from "@/components/vms/EmptyStateDataEmpty";
+import { MobileCards } from "@/components/vms/MobileTable";
+import { SectionLabel } from "@/components/vms/SectionLabel";
+import { TabItem } from "@/components/vms/TabItem";
+import { Table } from "@/components/vms/Table";
+import { Tabs } from "@/components/vms/Tabs";
+import { QUARTERS, type Plan } from "@/lib/mock/data";
+import { quarterPartRows, sumParts, type QPartRow } from "@/lib/mock/moves";
+import { QPART_COLS, qpartRow } from "@/lib/mock/plan";
+import { planId } from "@/lib/mock/planFlow";
+import { useMock } from "@/lib/mock/store";
+import { useBreakpoint } from "@/lib/useBreakpoint";
+
+export const ALL_Q_LABEL = "รวมทุกไตรมาส";
+const byGroup = (rows: QPartRow[]) => rows.map(({ sub: _s, ...r }) => (void _s, r)).sort((a, b) => a.group.localeCompare(b.group, "th"));
+
+export function PlanParts({ plan }: { plan: Plan }) {
+  const mob = useBreakpoint() === "Mobile";
+  const mock = useMock();
+  const [q, setQ] = useState(0);   // 0 = รวมทุกไตรมาส (ค่าเริ่มต้น)
+  const per = [1, 2, 3, 4].map((k) => byGroup(quarterPartRows(mock, planId(plan), k)));
+  const all = byGroup(sumParts(per));
+  const shown = q ? per[q - 1] : all;
+  const rows = shown.map(qpartRow);
+  return (
+    <section className="flex flex-col gap-4">
+      <SectionLabel Title="อะไหล่ในแผน" />
+      <Tabs>
+        <TabItem Text={ALL_Q_LABEL} Badge={all.length} Active={q === 0} onClick={() => setQ(0)} />
+        {QUARTERS.map((t, i) => <TabItem key={t} Text={t} Badge={per[i].length} Active={q === i + 1} onClick={() => setQ(i + 1)} />)}
+      </Tabs>
+      {!rows.length
+        ? <EmptyStateDataEmpty Text="ยังไม่มีรายการอะไหล่" SupportingText={q ? "ไตรมาสนี้ไม่มีอะไหล่ที่ต้องเบิก" : "จัดการอะไหล่ทีละคันจากปุ่ม … ที่แถวยานพาหนะในแท็บไตรมาส รายการจะรวมมาที่นี่"} />
+        : mob ? <MobileCards columns={QPART_COLS} rows={rows} rowKey={(_, i) => shown[i].key} /> : <Table columns={QPART_COLS} rows={rows} rowKey={(_, i) => shown[i].key} />}
+    </section>
+  );
+}

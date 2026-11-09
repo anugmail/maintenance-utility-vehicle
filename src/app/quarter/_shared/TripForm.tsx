@@ -10,8 +10,10 @@
        แบบเดียวกับแถวพนักงานในค่าใช้จ่ายตอนปิดงาน (closeCosts) · ฟอร์มว่างแสดง 2 แถว · คนที่ 1 และ 2 บังคับ ("กรุณาเลือกพนักงาน") · ลบจนเหลือน้อยกว่า 2 แถว = เติมแถวว่างให้ครบ 2
      รถในแผนเดินทาง (Section header + Badge จำนวน + Secondary button "เพิ่มรถ") — Table (TRIP_CAR_COLS ไอคอนแก้ไข/ลบ) / Empty state/Data empty
        คอลัมน์ "ผู้ดูแลยานพาหนะ" = ชื่อ + เบอร์ (บรรทัดรอง) ค่าเริ่มต้นผู้ควบคุมรถ (6 พ.ย. 2569)
-       6 พ.ย. 2569 (TRIP_CAR_COLS ของ screens.js · Table 8 คอลัมน์เต็ม): + "ประเภทยานพาหนะ" (typeOf) · + "วันดำเนินการ" รายคัน ค่าเริ่มต้น = ช่วงวันเดินทางทั้งช่วง
-         บรรทัดรอง "ค่าเริ่มต้น ช่วงวันเดินทาง" / "แก้จากช่วงวันเดินทาง" (tripWorkCell) · ยังไม่กรอกช่วงวัน = "—" · popup แก้วันดำเนินการยังไม่ทำ (Figma กำลังออกแบบ · ไอคอนแก้ไขยังเปิด popup ผู้ดูแลยานพาหนะและสถานที่)
+       TRIP_CAR_COLS = ชุดกลาง TRIP_V_COLS (R82 · lib/mock/tripCols.ts) + ไอคอนแก้ไข ลบ (Table 8 คอลัมน์เต็ม) · วันดำเนินการรายคัน ค่าเริ่มต้นทั้งช่วงวันเดินทาง (แผนจ้าง ช่วงวันทำงาน)
+         บรรทัดรอง "ค่าเริ่มต้น ช่วงวันเดินทาง" / "แก้จากช่วงวันเดินทาง" · ยังไม่เลือกช่วงวัน = "—" · เปลี่ยนช่วงวันเดินทางแล้ววันดำเนินการทุกคันกลับเป็นทั้งช่วงใหม่
+         ไอคอนแก้ไข = popup "แก้ไขยานพาหนะในแผนเดินทาง · {ทะเบียน}" (R83 · TripCarEditModal work)
+     อะไหล่ของแผนเดินทาง (Section header + Badge · R84 · tripPartsSec) — Table QPART_COLS ดูอย่างเดียว รวมจากยานพาหนะในใบ (tripPartRows) · ไม่มียานพาหนะ = Empty state
        ไอคอนลบ = เอารถออกจากใบนี้ (soft delete · 5 พ.ย. 2569) กลับไปเลือกได้ใน popup · popup แสดงรถทุกคันของไตรมาส คันที่อยู่ในแผนเดินทางอื่น = ติ๊กไม่ได้
      ปุ่ม ย้อนกลับ · ยืนยันการสร้างแผนเดินทาง | ส่งอนุมัติใหม่ — Disabled จนกว่าช่องบังคับครบ (รีวิว 5 พ.ย. 2569 แทน E.7 · S9 ฟอร์มเดียวกัน)
      Validation: ช่องบังคับที่ออกจากช่องโดยยังว่าง (Out of focus) — "กรุณาระบุชื่อแผนเดินทาง" · "กรุณาเลือกผู้รับจ้าง" · "กรุณาเลือกวันที่เริ่ม" · "กรุณาเลือกวันที่สิ้นสุด" · "กรุณาเลือกพนักงาน"
@@ -36,32 +38,29 @@ import { TertiaryButton } from "@/components/vms/TertiaryButton";
 import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
 import { mrOf, planOf } from "@/lib/mock/closeout";
-import { typeOf } from "@/lib/mock/data";
+import { tripPartRows } from "@/lib/mock/moves";
+import { QPART_COLS, qpartRow } from "@/lib/mock/plan";
+import { tripVCells, tripVCols, workOf } from "@/lib/mock/tripCols";
 import { notify, useMock, useRole } from "@/lib/mock/store";
-import { CREATOR, SENT_AT, STAFF, VENDORS, qEditOf, quarterCars, carOf, ctrlCell, locCell, nextTripId, putTrip, quarterTrips, tripsOf, workCell, type Trip, type TripCar } from "@/lib/mock/trips";
+import { CREATOR, SENT_AT, STAFF, VENDORS, qEditOf, quarterCars, carOf, nextTripId, putTrip, quarterTrips, tripsOf, type Trip, type TripCar } from "@/lib/mock/trips";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useOutside } from "@/lib/useOutside";
-import { TripCarEditModal, type CarOverrides } from "./TripCarEditModal";
+import { TripCarEditModal, fromThai, toThai, type CarOverrides } from "./TripCarEditModal";
 import { TripCarPicker } from "./TripCarPicker";
 import { BtnRow, Content, DataTable, Section, quarterCrumbs, tripsHref, useBack } from "./ui";
 
-/* TRIP_CAR_COLS ของ screens.js (6 พ.ย. 2569 + ประเภทยานพาหนะ + วันดำเนินการ · Table 8 คอลัมน์เต็ม) — กว้างตามจอ */
-const TRIP_CAR_COLS: TableColumn[] = [
-  { head: "ทะเบียน", width: 160, Style: "Lead text" }, { head: "ประเภทยานพาหนะ", width: 130 }, { head: "ยี่ห้อ/รุ่น" }, { head: "หน่วยงานเจ้าของยานพาหนะ", width: 140 },
-  { head: "ผู้ดูแลยานพาหนะ", width: 170 }, { head: "สถานที่บำรุงรักษา", width: 200 }, { head: "วันดำเนินการ", width: 190 }, { head: "", width: 104, Style: "Action icons" },
-];
+/* TRIP_CAR_COLS ของ screens.js = tripVCols() + ไอคอนแก้ไข ลบ (R82 ชุดกลาง) */
+const TRIP_CAR_COLS: TableColumn[] = [...tripVCols(), { head: "", width: 104, Style: "Action icons" }];
+const TRIP_PARTS_EMPTY = "เพิ่มยานพาหนะเข้าแผนเดินทางแล้ว อะไหล่ของยานพาหนะแต่ละคันจะรวมมาที่นี่";
 const MODES = ["ดำเนินการเอง", "จ้างดำเนินการ"];   // 6 พ.ย. 2569 เจ้าของงาน "เปลี่ยนคำ กบค ดำเนินการเอง เป็น ดำเนินการเอง"
 
-/* วันที่แบบไทย dd/mm/ปี พ.ศ. ↔ Date */
-const toThai = (d: Date) => String(d.getDate()).padStart(2, "0") + "/" + String(d.getMonth() + 1).padStart(2, "0") + "/" + (d.getFullYear() + 543);
-const fromThai = (s: string) => { const m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/); return m ? new Date(Number(m[3]) - 543, Number(m[2]) - 1, Number(m[1])) : null; };
 
-interface Values { name: string; mode: "self" | "hire"; vendor: string; contract: string; carIds: string[]; locs: Record<string, string>; phones: Record<string, string>; names: Record<string, string>; d1: string; d2: string; staff: string[] }
+interface Values { name: string; mode: "self" | "hire"; vendor: string; contract: string; carIds: string[]; locs: Record<string, string>; phones: Record<string, string>; names: Record<string, string>; works: Record<string, [string, string]>; d1: string; d2: string; staff: string[] }
 /* แถวพนักงานอย่างน้อย 2 แถว (ฟอร์มว่างแสดง 2 แถว) */
 const atLeast2 = (a: string[]) => (a.length >= 2 ? a : [...a, "", ""].slice(0, 2));
 const fromTrip = (t?: Trip, mode: "self" | "hire" = "self"): Values => t
-  ? { name: t.name, mode: t.mode, vendor: t.vendor ?? "", contract: t.contract ?? "", carIds: [...t.carIds], locs: { ...t.locs }, phones: { ...t.phones }, names: { ...(t.names ?? {}) }, d1: t.d1, d2: t.d2, staff: atLeast2([...(t.staff ?? [])]) }
-  : { name: "", mode, vendor: "", contract: "", carIds: [], locs: {}, phones: {}, names: {}, d1: "", d2: "", staff: ["", ""] };
+  ? { name: t.name, mode: t.mode, vendor: t.vendor ?? "", contract: t.contract ?? "", carIds: [...t.carIds], locs: { ...t.locs }, phones: { ...t.phones }, names: { ...(t.names ?? {}) }, works: { ...(t.works ?? {}) }, d1: t.d1, d2: t.d2, staff: atLeast2([...(t.staff ?? [])]) }
+  : { name: "", mode, vendor: "", contract: "", carIds: [], locs: {}, phones: {}, names: {}, works: {}, d1: "", d2: "", staff: ["", ""] };
 
 /* ช่องเลือกแบบค้นหาได้ (Input dropdown property Cursor + Dropdown list) */
 function SearchPick({ label, placeholder, value, options, onPick, error, onLeave }: { label: string; placeholder: string; value: string; options: { Text: string; SupportingText?: string }[]; onPick: (v: string) => void; error?: string; onLeave?: () => void }) {
@@ -117,11 +116,15 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
   const pool = qCars.filter((c) => !v.carIds.includes(c.id));
   const cars = v.carIds.map(carOf).filter((c): c is TripCar => !!c);
   const over: CarOverrides = { locs: v.locs, phones: v.phones, names: v.names };
-  const drop = (id: string) => { const locs = { ...v.locs }, phones = { ...v.phones }, names = { ...v.names }; delete locs[id]; delete phones[id]; delete names[id]; put({ carIds: v.carIds.filter((x) => x !== id), locs, phones, names }); };
+  const drop = (id: string) => { const locs = { ...v.locs }, phones = { ...v.phones }, names = { ...v.names }, works = { ...v.works }; delete locs[id]; delete phones[id]; delete names[id]; delete works[id]; put({ carIds: v.carIds.filter((x) => x !== id), locs, phones, names, works }); };
+  /* ค่าในฟอร์ม = ใบแผนเดินทาง (R82 tripVCells) · ยังไม่เลือกช่วงวัน = วันดำเนินการ "—" */
+  const vt = { d1: v.d1.trim() && v.d2.trim() ? v.d1.trim() : "", d2: v.d2.trim(), works: v.works, locs: v.locs, phones: v.phones, names: v.names, hire: v.mode === "hire" };
+  /* วันที่เดินทางเปลี่ยน = วันดำเนินการทุกคันกลับเป็นทั้งช่วงใหม่ (R83) */
+  const putDates = (p: Partial<Pick<Values, "d1" | "d2">>) => put({ ...p, works: {} });
+  const parts = tripPartRows(mock, { planId, quarter: q, carIds: v.carIds });
   const carRows = cars.map((c) => {
     const acts = [{ IconSwap: "stylus-24-300-round", label: "แก้ไข " + c.plate, onClick: () => setEditCar(c) }, { IconSwap: "delete-24-300-round", label: "ลบ " + c.plate, onClick: () => drop(c.id) }];
-    const work = v.d1.trim() && v.d2.trim() ? workCell({ d1: v.d1.trim(), d2: v.d2.trim(), works: edit?.works }, c) : "—";   // ยังไม่กรอกช่วงวัน = "—" (tripForm v.d1)
-    return [c.plate, typeOf(c.model), c.model, c.owner, ctrlCell(over, c), locCell(over, c), work, { actions: acts, mobileActions: acts }];
+    return [...tripVCells(c, vt), { actions: acts, mobileActions: acts }];
   });
 
   /* ตรวจและส่ง — ข้อความ error ขึ้นเมื่อออกจากช่องโดยยังว่าง (touched) · ปุ่มยืนยัน Disabled จนกว่าครบ */
@@ -135,8 +138,8 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
     const t: Trip = {
       id: edit?.id ?? nextTripId(all, v.mode), planId, quarter: q, name: v.name.trim(), mode: v.mode,
       vendor: hire ? v.vendor : undefined, contract: hire ? v.contract.trim() || undefined : undefined,
-      carIds: v.carIds, locs: v.locs, phones: v.phones, names: v.names, d1: v.d1.trim(), d2: v.d2.trim(), status: "review",
-      staff: hire ? undefined : v.staff.filter(Boolean), createdBy: edit?.createdBy ?? CREATOR, sentAt: edit?.sentAt ?? SENT_AT, works: edit?.works,
+      carIds: v.carIds, locs: v.locs, phones: v.phones, names: v.names, works: v.works, d1: v.d1.trim(), d2: v.d2.trim(), status: "review",
+      staff: hire ? undefined : v.staff.filter(Boolean), createdBy: edit?.createdBy ?? CREATOR, sentAt: edit?.sentAt ?? SENT_AT,
     };
     putTrip(t);
     notify(edit ? "ส่งแผนเดินทางให้ผู้อนุมัติใหม่แล้ว" : "สร้างแผนเดินทางสำเร็จ · ส่งให้ผู้อนุมัติแล้ว");
@@ -190,16 +193,16 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
           <SectionHeader Title={hire ? "ช่วงวันทำงาน" : "ช่วงวันเดินทาง"} />
           <div ref={dateRef} className="relative">
             {row(<>
-              <TextInput LabelText={hire ? "วันที่เริ่มงาน" : "วันที่เดินทาง ตั้งแต่"} Text={v.d1} Placeholder="วว/ดด/ปปปป" onChange={(d1) => put({ d1 })} onFocus={() => !mob && setDateOpen(true)} onBlur={() => !dateOpen && touch("d1")()}
+              <TextInput LabelText={hire ? "วันที่เริ่มงาน" : "วันที่เดินทาง ตั้งแต่"} Text={v.d1} Placeholder="วว/ดด/ปปปป" onChange={(d1) => putDates({ d1 })} onFocus={() => !mob && setDateOpen(true)} onBlur={() => !dateOpen && touch("d1")()}
                 State={E("d1", "x", !v.d1.trim()) ? "Error" : dateOpen ? "Focused" : undefined} HelperText={E("d1", "กรุณาเลือกวันที่เริ่ม", !v.d1.trim())} />
-              <TextInput LabelText="ถึงวันที่" Text={v.d2} Placeholder="วว/ดด/ปปปป" onChange={(d2) => put({ d2 })} onFocus={() => !mob && setDateOpen(true)} onBlur={() => !dateOpen && touch("d2")()}
+              <TextInput LabelText="ถึงวันที่" Text={v.d2} Placeholder="วว/ดด/ปปปป" onChange={(d2) => putDates({ d2 })} onFocus={() => !mob && setDateOpen(true)} onBlur={() => !dateOpen && touch("d2")()}
                 State={E("d2", "x", !v.d2.trim()) ? "Error" : undefined} HelperText={E("d2", "กรุณาเลือกวันที่สิ้นสุด", !v.d2.trim())} />
               {!mob && <span />}
             </>, 3)}
             {dateOpen && !mob && (
               <div className="absolute top-full left-0 z-30 mt-1">
                 <DatePicker Type="Dual" {...TH_PICKER} value={range} onCancel={() => setDateOpen(false)}
-                  onApply={(r) => { put({ d1: r.start ? toThai(r.start) : "", d2: r.end ? toThai(r.end) : r.start ? toThai(r.start) : "" }); setDateOpen(false); }} />
+                  onApply={(r) => { putDates({ d1: r.start ? toThai(r.start) : "", d2: r.end ? toThai(r.end) : r.start ? toThai(r.start) : "" }); setDateOpen(false); }} />
               </div>
             )}
           </div>
@@ -222,6 +225,13 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
             : <EmptyStateDataEmpty Text="ยังไม่มียานพาหนะในแผนเดินทาง" SupportingText={"กดเพิ่มยานพาหนะเพื่อเลือกยานพาหนะของ" + nowQ + " ที่ยังไม่อยู่ในแผนเดินทางใด"} />}
         </Section>
 
+        <Section>
+          <SectionHeader Title="อะไหล่ของแผนเดินทาง" Badge={parts.length || null} />
+          {parts.length
+            ? <DataTable columns={QPART_COLS} rows={parts.map(qpartRow)} rowKey={(_, i) => parts[i].key} />
+            : <EmptyStateDataEmpty Text="ยังไม่มีรายการอะไหล่" SupportingText={TRIP_PARTS_EMPTY} />}
+        </Section>
+
         <BtnRow>
           <SecondaryButton Text="ย้อนกลับ" Size="lg" onClick={back} />
           <PrimaryButton Text={edit ? "ส่งอนุมัติใหม่" : "ยืนยันการสร้างแผนเดินทาง"} Size="lg" State={kbk && valid ? "Default" : "Disabled"} onClick={submit} />
@@ -230,7 +240,8 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
       <TripCarPicker open={picker} pool={pool} taken={taken} nowQ={nowQ} onCancel={() => setPicker(false)}
         onAdd={(ids) => { const e = qEditOf(mock, planId, q), pick = (o: Record<string, string>) => Object.fromEntries(ids.filter((x) => o[x]).map((x) => [x, o[x]]));
           put({ carIds: [...v.carIds, ...ids], phones: { ...v.phones, ...pick(e.phones) }, locs: { ...v.locs, ...pick(e.locs) }, names: { ...v.names, ...pick(e.names ?? {}) } }); setPicker(false); }} />
-      <TripCarEditModal car={editCar} trip={over} onCancel={() => setEditCar(null)} onSave={(o) => { put(o); setEditCar(null); }} />
+      <TripCarEditModal car={editCar} trip={over} work={editCar ? { d1: vt.d1, d2: vt.d2, value: vt.d1 ? workOf(vt, editCar.id) : ["", ""] } : undefined} onCancel={() => setEditCar(null)}
+        onSave={(o, w) => { const works = { ...v.works }; if (editCar) { if (w) works[editCar.id] = w; else delete works[editCar.id]; } put({ ...o, works }); setEditCar(null); }} />
     </>
   );
 }

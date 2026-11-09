@@ -127,7 +127,7 @@ export interface Trip {
   /** ชื่อผู้ดูแลยานพาหนะที่แก้รายคัน (6 พ.ย. 2569 · ไม่มี = ผู้ควบคุมรถ) */
   names?: Record<string, string>;
   d1: string; d2: string; status: TripStatus; staff?: string[];
-  /** วันดำเนินการรายคันที่แก้ { รถ: [ตั้งแต่, ถึง] } (works ของ screens.js 6 พ.ย. 2569 · ไม่มี = ช่วงวันเดินทางทั้งช่วง) — popup แก้วันดำเนินการยังไม่ทำ (Figma กำลังออกแบบ) */
+  /** วันดำเนินการรายคันที่แก้ { รถ: [ตั้งแต่, ถึง] } (works ของ screens.js · R83 · ไม่มี = ช่วงวันเดินทางทั้งช่วง) — แก้ใน popup "แก้ไขยานพาหนะในแผนเดินทาง" */
   works?: Record<string, [string, string]>;
   createdBy: string; sentAt: string; approvedAt?: string; returnReason?: string;
   /** แสดงเฉพาะในรายการรออนุมัติของผู้อนุมัติ (TRIP_OTHER) ไม่นับเป็นใบของไตรมาสในหน้า S6 */
@@ -148,7 +148,8 @@ export const TRIP_RETURN_REASON = "ช่วงวันที่ 03 ถึง 0
 const base = { planId: PLAN_ID, quarter: 1, createdBy: CREATOR, sentAt: SENT_AT };
 /* ตัวอย่างของ screens.js — ใช้ตอนเปิด scenario จากหน้า /scenarios/ (seed) */
 export const TRIP_1: Trip = { ...base, id: "T1", name: "ตรวจยานพาหนะ ขอนแก่น อุดรธานี ลำปาง", mode: "self", carIds: ["82-6789", "82-1145", "80-9981", "82-3302"],
-  locs: { "80-9981": "จุดรวมงาน กฟน.1 ลำปาง" }, phones: { "80-9981": "086-552-1904" }, names: { "80-9981": "นายอนุชา ศรีสุข" }, d1: "03/11/2569", d2: "07/11/2569", status: "review", staff: STAFF };
+  locs: { "80-9981": "จุดรวมงาน กฟน.1 ลำปาง" }, phones: { "80-9981": "086-552-1904" }, names: { "80-9981": "นายอนุชา ศรีสุข" }, d1: "03/11/2569", d2: "07/11/2569", status: "review", staff: STAFF,
+  works: { "82-6789": ["03/11/2569", "04/11/2569"], "82-1145": ["03/11/2569", "04/11/2569"], "80-9981": ["05/11/2569", "06/11/2569"] } };   // TRIP_WORKS (R83 · 82-6789 กับ 82-1145 วันเดียวกัน)
 export const TRIP_2: Trip = { ...base, id: "T2", name: "ตรวจยานพาหนะ น่าน เชียงใหม่ เชียงราย", mode: "self", carIds: ["80-5738", "81-2210", "82-7720", "80-3316", "81-6604", "80-4458"],
   locs: {}, phones: {}, d1: "17/11/2569", d2: "21/11/2569", status: "review", staff: STAFF };
 export const TRIP_V: Trip = { ...base, id: "TV", name: "จ้างบำรุงรักษา น่าน เชียงใหม่ เชียงราย", mode: "hire", vendor: VENDORS[0].name, contract: "สจ.69-0142",
@@ -169,10 +170,8 @@ export const tripCtrl = (t: Pick<Trip, "names"> | null, c: TripCar) => t?.names?
 export const ctrlCell = (t: Pick<Trip, "phones" | "names"> | null, c: TripCar) => ({ text: tripCtrl(t, c), sub: (t && t.phones[c.id]) || c.phone || "-" });
 export const locCell = (t: Pick<Trip, "locs">, c: TripCar) => ({ text: tripLoc(t, c), sub: t.locs[c.id] ? "แก้จากสำนักงานเจ้าของยานพาหนะ" : "ค่าเริ่มต้น สำนักงานที่ยานพาหนะอยู่" });
 export const tripRange = (t: Pick<Trip, "d1" | "d2">) => t.d1 + " – " + t.d2;
-/* วันดำเนินการรายคัน (tripWork · tripWorkCell ของ screens.js · 6 พ.ย. 2569 รีวิว S6 "เพิ่ม คอลัมม์ "วันดำเนินการ" โดยเลือกได้ไม่เกิน range ของแผนที่กำหนดมาเท่านั้น")
-   ค่าเริ่มต้น = ช่วงวันเดินทางทั้งช่วง · หน้าไตรมาสแสดงข้อความอย่างเดียว · ฟอร์มแผนเดินทางมีบรรทัดรอง "ค่าเริ่มต้น ช่วงวันเดินทาง" / "แก้จากช่วงวันเดินทาง" (แบบสถานที่บำรุงรักษา) */
-export const tripWork = (t: Pick<Trip, "d1" | "d2" | "works">, c: TripCar) => { const w = t.works?.[c.id]; return w ? w[0] + " – " + w[1] : tripRange(t); };
-export const workCell = (t: Pick<Trip, "d1" | "d2" | "works">, c: TripCar) => ({ text: tripWork(t, c), sub: t.works?.[c.id] ? "แก้จากช่วงวันเดินทาง" : "ค่าเริ่มต้น ช่วงวันเดินทาง" });
+/* วันดำเนินการ + ตารางยานพาหนะของแผนเดินทาง ชุดเดียว (R82 R83) อยู่ที่ tripCols.ts · vTrip = ค่าของใบที่ตารางใช้ (แผนจ้าง = ช่วงวันทำงาน) */
+export const vTrip = (t: Pick<Trip, "d1" | "d2" | "works" | "locs" | "phones" | "names" | "mode">) => ({ d1: t.d1, d2: t.d2, works: t.works, locs: t.locs, phones: t.phones, names: t.names, hire: t.mode === "hire" });
 /* tripPlaces — "<สถานที่ไม่ซ้ำ> แห่ง (สำนักงานเจ้าของรถ k คัน)" */
 export const tripPlaces = (t: Trip) => {
   const cars = t.carIds.map(carOf).filter((c): c is TripCar => !!c);

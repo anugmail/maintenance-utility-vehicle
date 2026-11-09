@@ -79,7 +79,7 @@ import { Table, type TableColumn } from "@/components/vms/Table";
 | `Images` | Images · 2648:43267 | `Size` (md/sm) `src` (ไม่ส่ง = Type Empty) `alt` `className` (กว้าง/สูง) |
 | `IconButton` | Icon button · Button 2:5 | `IconSwap` `State` + ปุ่ม HTML |
 | `ListWithCheckbox` / `ListWithCheckboxItem` / `ListHeaderItem` | List with checkbox (+ item, header) · List 3285:58382 | list: `Title` `Badge` `options[{value, Text, SupportingText, Disabled}]` `value[]` `onChange(next[])` · item: `Text` `SupportingText` `Selected` `State` `onChange` |
-| `DatePicker` | Date picker · 855:376 | `Type` (Dual/Single) `value{start,end}` `month` `today` `onApply(v)` `onCancel` `weekdays` `monthLabel` `ClearText` `CancelText` `ApplyText` |
+| `DatePicker` | Date picker · 855:376 | `Type` (Dual/Single) `value{start,end}` `month` `today` `onApply(v)` `onCancel` `weekdays` `monthLabel` `ClearText` `CancelText` `ApplyText` · `min` `max` (นอกช่วง = Disabled) `range` (Single เลือกเป็นช่วง) `Today` (R83 · 9 พ.ย. 2569) |
 | `Status` | Status · Header navigation 2:4 | `State` (Success/Warning/Error/Brand/Info) |
 | `NotificationItemBase` / `NotificationCard` | _Notification item base · Notification card · 2:4 | item: `Text` `SupportingText` `StatusState` `Button` `onClick` · card: `Badge` children `Header` `Footer` `FooterText` `onFooter` |
 | `BadgeOutlineWithLeadingIcon` | Badge outline with leading icon · Badge 2:13 | `Text` `Color` `LeadingIconSwap` |

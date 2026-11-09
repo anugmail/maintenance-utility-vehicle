@@ -62,10 +62,7 @@ export function PagedTable({ columns, rows, perPage = 10, rowKey }: { columns: T
   return <Table columns={columns} rows={shown} rowKey={rowKey} Pagination={pg} />;
 }
 
-/* TRIP_VIEW_COLS — รถในแผนเดินทาง ดูอย่างเดียว (S7 S8 · สถานที่ + บรรทัดรอง · ไม่มีเบอร์ติดต่อ) */
-export const TRIP_VIEW_COLS: TableColumn[] = [
-  { head: "ทะเบียน", width: 200, Style: "Lead text" }, { head: "ยี่ห้อ/รุ่น" }, { head: "หน่วยงานเจ้าของยานพาหนะ", width: 200 }, { head: "สถานที่บำรุงรักษา", width: 330 },
-];
+/* ตารางยานพาหนะของแผนเดินทาง (S7 S8 เดิม TRIP_VIEW_COLS) ย้ายไปชุดกลาง TRIP_V_COLS ใน lib/mock/tripCols.ts (R82 · 9 พ.ย. 2569) */
 
 /* ช่อง "›" เปิดรายการ (GO ใน screens.js) */
 export const go = (label: string, onClick: () => void): TableValue => ({ actions: [{ IconSwap: "keyboard_arrow_right-20-400-round", label, onClick }] });

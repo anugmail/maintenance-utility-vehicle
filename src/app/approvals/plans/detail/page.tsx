@@ -4,7 +4,7 @@
    เนื้อหา ช่องไฟ 32 (planReview() ปรับ 5 พ.ย. 2569 รีวิวทีมออกแบบ):
      รออนุมัติ: ผลการพิจารณาบนสุด (approvals/_shared/Decision · ไม่มีค่าเริ่มต้น) → PlanBody (รายละเอียดแผน + รถในแผน แยกแท็บไตรมาส ดูอย่างเดียว)
        → อะไหล่ในแผน (planPartsSec · 6 พ.ย. 2569 เจ้าของงาน "อยากเพิ่ม section อะใหล่ โดย group ชนิด ประเภท จำนวน ไม่แยกรายคัน แต่ละไตรมาส"):
-         Section label "อะไหล่ในแผน" + Tabs ไตรมาส 1–4 (ตัวเลข = จำนวนรายการ) + Table QPART_COLS ชนิด · รหัสอะไหล่ · ประเภท · จำนวน · หน่วย (R81 ชุดเดียวกับอะไหล่ในไตรมาสของ S1 · รวมทุกคันของไตรมาส เรียงตามประเภท · คันที่ไม่เบิกไม่รวม)
+         Section label "อะไหล่ในแผน" + Tabs รวมทุกไตรมาส (ค่าเริ่มต้น · 9 พ.ย. 2569) + ไตรมาส 1–4 (ตัวเลข = จำนวนรายการ · detail/PlanParts.tsx เฉพาะหน้าผู้อนุมัติ) + Table QPART_COLS ชนิด · รหัสอะไหล่ · ประเภท · จำนวน · หน่วย (R81 ชุดเดียวกับอะไหล่ในไตรมาสของ S1 · รวมทุกคันของไตรมาส เรียงตามประเภท · คันที่ไม่เบิกไม่รวม)
          ไม่มีอะไหล่ = Empty state "ยังไม่มีรายการอะไหล่" / "ไตรมาสนี้ไม่มีอะไหล่ที่ต้องเบิก" · ตาม Section label + Tabs + Table ของไฟล์ Component (แบบส่วนรถในแผนของหน้าเดียวกัน)
        → ปุ่ม ย้อนกลับ · ยืนยันผลการพิจารณา (lg · Disabled จนกว่าจะเลือก และถ้าส่งกลับต้องมีเหตุผล)
        อนุมัติ → ยืนยันอนุมัติแผนบำรุงรักษา → สถานะ อนุมัติแล้ว + toast "อนุมัติแผนบำรุงรักษาสำเร็จ" อย่างเดียว · ส่งกลับ → ยืนยันส่งกลับแก้ไข → รายการ + toast
@@ -32,23 +32,12 @@ import { allocOf, badgeOf, findPlan, quarterRows, updatePlan, useRoleGuard } fro
 import { notify, useMock } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { PlanBody } from "@/app/detail/PlanBody";
+import { PlanParts } from "@/app/detail/PlanParts";
 import { DecisionSection, useDecision } from "../../_shared/Decision";
 
 const LIST = "/approvals/plans/";
 const APPROVE_SUB = "แผนผ่านการตรวจสอบ หน่วยงานเริ่มงานรายไตรมาสได้", RETURN_SUB = "แจ้งเหตุผลให้ผู้สร้างแผนแก้ไขแล้วส่งใหม่";   // 6 พ.ย. 2569 ผู้สร้างแผน = หน่วยงาน
-/* planQParts (screens.js 6 พ.ย. 2569) — ประเภท = หมวด · ชนิด = รายการ · จำนวนรวมทุกคันของไตรมาส เรียงตามประเภท · คอลัมน์ QPART_COLS (R81 ชุดเดียวทุกหน้า) */
-const planQParts = (p: Plan, k: number) => quarterRows(allocOf(p), k).sort((a, b) => a.group.localeCompare(b.group, "th")).map(qpartRow);
-function PlanParts({ plan, q, onQ, mob }: { plan: Plan; q: number; onQ: (q: number) => void; mob: boolean }) {
-  const rows = planQParts(plan, q);
-  return (
-    <section className="flex flex-col gap-4">
-      <SectionLabel Title="อะไหล่ในแผน" />
-      <Tabs>{QUARTERS.map((t, i) => <TabItem key={t} Text={t} Badge={planQParts(plan, i + 1).length} Active={q === i + 1} onClick={() => onQ(i + 1)} />)}</Tabs>
-      {!rows.length ? <EmptyStateDataEmpty Text="ยังไม่มีรายการอะไหล่" SupportingText="ไตรมาสนี้ไม่มีอะไหล่ที่ต้องเบิก" />
-        : mob ? <MobileCards columns={QPART_COLS} rows={rows} /> : <Table columns={QPART_COLS} rows={rows} />}
-    </section>
-  );
-}
+/* อะไหล่ในแผน = detail/PlanParts.tsx (9 พ.ย. 2569 แท็บรวมทุกไตรมาส ค่าเริ่มต้น + ไตรมาส 1–4 · เฉพาะหน้านี้ ผู้สร้างยังไม่มี) */
 
 function Review() {
   const router = useRouter();
@@ -57,7 +46,6 @@ function Review() {
   const ok = useRoleGuard(["ผู้อนุมัติ"]);
   const plan = findPlan(useMock().plans, sp.get("id"));
   const [q, setQ] = useState(1);
-  const [pq, setPq] = useState(1);   // แท็บไตรมาสของอะไหล่ในแผน
   const dec = useDecision();
   const [pending, setPending] = useState<{ spec: ConfirmSpec; run: () => void } | null>(null);
   const gone = ok && !plan;
@@ -84,7 +72,7 @@ function Review() {
       <div className="flex flex-col gap-8">
         {plan.status === "review" && <DecisionSection approveSub={APPROVE_SUB} returnSub={RETURN_SUB} {...dec} />}
         <PlanBody plan={plan} q={q} onQ={setQ} />
-        <PlanParts plan={plan} q={pq} onQ={setPq} mob={mob} />
+        <PlanParts plan={plan} />
         {plan.status === "review" && (
           <div className={cx("flex", mob ? "gap-4 [&>*]:flex-1 [&>*]:basis-0" : "justify-between gap-3")}>
             <SecondaryButton Text="ย้อนกลับ" Size="lg" onClick={() => router.push(LIST)} />

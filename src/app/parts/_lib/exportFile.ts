@@ -48,3 +48,41 @@ export function openPrint(d: ExportDoc) {
   w.print();
   return true;
 }
+
+/* ---------- เอกสารหลายหน้า / หลายชีต (ส่งออกแผนเดินทาง R84 · tripPdf / tripXls ของ screens.js) ----------
+   PDF: หน้าละหัวเอกสาร (heading + info) แล้วตามด้วยหัวข้อของหน้านั้น ขึ้นหน้าใหม่ทุกหน้า (A4 · หน้าพิมพ์ของเบราว์เซอร์)
+   Excel: ต้นแบบทำ .xlsx หลายชีตไม่ได้ ⇒ .csv ไฟล์เดียว ชีตต่อกันลงมา คั่นด้วยชื่อชีต (BACKLOG หมวด ค.) */
+export interface DocSection { title: string; cols?: TableColumn[]; rows?: TableValue[][]; pairs?: [string, string][] }
+export interface DocPage { heading: string; info: [string, string][]; sections: DocSection[] }
+const secTable = (s: DocSection) => table({ title: "", info: [], section: "", cols: s.cols ?? [], rows: s.rows ?? [], file: "" });
+export function openPrintPages(file: string, pages: DocPage[]) {
+  const w = window.open("", "_blank");
+  if (!w) return false;
+  const sec = (s: DocSection) => {
+    if (s.pairs) return "<h2>" + esc(s.title) + "</h2><dl>" + s.pairs.map(([k, v]) => "<div><dt>" + esc(k) + "</dt><dd>" + esc(v) + "</dd></div>").join("") + "</dl>";
+    const { head, body } = secTable(s);
+    return "<h2>" + esc(s.title) + "</h2><table><thead><tr>" + head.map((h) => "<th>" + esc(h) + "</th>").join("") + "</tr></thead><tbody>"
+      + body.map((r) => "<tr>" + r.map((c) => "<td>" + esc(c) + "</td>").join("") + "</tr>").join("") + "</tbody></table>";
+  };
+  w.document.write("<!doctype html><html lang=\"th\"><head><meta charset=\"utf-8\"><title>" + esc(file) + "</title>"
+    + "<style>body{font-family:sans-serif;margin:48px}section+section{break-before:page}table{border-collapse:collapse;width:100%}th,td{border:1px solid;padding:6px 10px;text-align:left}dl{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}dd{margin:0}</style></head><body>"
+    + pages.map((p) => "<section><h1>" + esc(p.heading) + "</h1><dl>" + p.info.map(([k, v]) => "<div><dt>" + esc(k) + "</dt><dd>" + esc(v) + "</dd></div>").join("") + "</dl>"
+      + p.sections.map(sec).join("") + "</section>").join("") + "</body></html>");
+  w.document.close();
+  w.focus();
+  w.print();
+  return true;
+}
+export function downloadCsvSheets(file: string, sheets: DocSection[]) {
+  const q = (s: string) => (/[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s);
+  const lines = sheets.flatMap((s, i) => { const { head, body } = secTable(s); return [...(i ? [[] as string[]] : []), [s.title], head, ...body]; });
+  const csv = "﻿" + lines.map((r) => r.map(q).join(",")).join("\r\n");
+  const url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = file + ".csv";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}

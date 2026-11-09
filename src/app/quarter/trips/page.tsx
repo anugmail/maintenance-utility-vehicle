@@ -4,7 +4,8 @@
    Page header "ไตรมาส n" + Badge สถานะแผน (ย้อนกลับ) · Breadcrumbs บำรุงรักษาตามวาระ › <ชื่อแผน> › ไตรมาส n → Content ช่องไฟ 32:
      รายละเอียดแผน (VehicleAndReporterInfo ของไฟล์ Maintain-D · มือถือ DisplayBox) — PLAN_KV ไตรมาส = ไตรมาสของหน้านี้ "ไตรมาส n (n คัน)" (tripList o.q · 9 พ.ย. 2569 เดิมแสดงไตรมาสที่กำลังทำของแผนทุกหน้า) · รถของไตรมาส = quarterCars() (แผนจากฟอร์ม S1 = รถที่จัดลงไตรมาส · แผนตัวอย่าง = TRIP_CARS 10 คัน)
      Section label "ยานพาหนะในไตรมาส 1 (n)" + Secondary button "เพิ่มยานพาหนะ" (หน่วยงาน) + Table (TRIP_Q_COLS + ไอคอนแก้ไข ลบ · คอลัมน์ "ผู้ดูแลยานพาหนะ" ชื่อ + เบอร์ 6 พ.ย. 2569) — รถที่ยังไม่มีใบ = Pill Gray "ยังไม่มีแผนเดินทาง" · เกิน 10 คันแบ่งหน้า
-       6 พ.ย. 2569 (TRIP_Q_COLS ของ screens.js): + คอลัมน์ "ประเภทยานพาหนะ" (typeOf · รีวิว S6 "ย้ายประเภท มาไว้ในคอลัมม์") · "ช่วงวันเดินทาง" เป็น "วันดำเนินการ" รายคัน (tripWork · อยู่ในใบแล้ว = วันของคันนั้นในใบ ค่าเริ่มต้นช่วงวันเดินทางทั้งช่วง · ยังไม่มีใบ = "—")
+       TRIP_Q_COLS = ชุดกลาง TRIP_V_COLS (R82) ไม่มีสถานที่ + แผนเดินทาง: ประเภทยานพาหนะ · วันดำเนินการรายคัน (อยู่ในใบ = วันของคันนั้น + บรรทัดรอง ค่าเริ่มต้น/แก้จากช่วงวันเดินทาง · ยังไม่มีใบ = "—")
+       ไอคอนแก้ไข คันที่อยู่ในใบ = popup "แก้ไขยานพาหนะในแผนเดินทาง" มีวันดำเนินการ (R83) · ยังไม่อยู่ = popup 3 ช่องเดิม
        · รถที่อยู่ในใบแล้ว ช่องแผนเดินทาง = ชื่อแผนเดินทาง + บรรทัดรอง "เพิ่มเข้าแผนเดินทางแล้ว" (เจ้าของงาน "หลังจากสร้างแผนการเดินทางแล้ว รถที่เพิ่ม จะแสดงว่าถูกเพิ่มแล้ว")
      Section label "อะไหล่ในไตรมาส n (n)" + Table QPART_COLS (R81 · lib/mock/plan.ts) ดูอย่างเดียว ต่อจากตารางยานพาหนะ — 6 พ.ย. 2569 เจ้าของงาน "หน้าที่ รวมรถในไตรมาส จะเป็นรวมแยกตามรายการ ไม่ต้องมีจาก smart inventory"
        (แทนหน้าความคืบหน้าอะไหล่ S4 เดิม · ยอด quarterPartRows ใน lib/mock/moves.ts · S25 รถที่ย้ายมา บรรทัดรองใต้ชนิด "รวม n หน่วย ของ {ทะเบียน} ที่ย้ายมา")
@@ -29,7 +30,7 @@ import { SectionLabel } from "@/components/vms/SectionLabel";
 import type { TableColumn, TableValue } from "@/components/vms/Table";
 import { TertiaryBrandButton } from "@/components/vms/TertiaryBrandButton";
 import { mrOf, planKv, planOf } from "@/lib/mock/closeout";
-import { PST, typeOf } from "@/lib/mock/data";
+import { PST } from "@/lib/mock/data";
 import { applySample, WSTAT } from "@/lib/mock/jobs";
 import { carPlanParts, cannotTrip, moveCar, movedInto, quarterPartRows } from "@/lib/mock/moves";
 import { QPART_COLS, qpartRow } from "@/lib/mock/plan";
@@ -39,17 +40,16 @@ import { useSample, type SampleMap } from "@/lib/useSample";
 import { RowMenu, anchorOf, type MenuAnchor } from "@/components/patterns/RowMenu";
 import { MoveModal, type MoveTarget } from "../_shared/MoveModal";
 import { notify, useMock, useRole } from "@/lib/mock/store";
-import { TST, addQuarterCars, badgeOf, ctrlCell, editQuarterCar, putTrip, qEditOf, quarterCars, quarterPool, quarterTrips, removeQuarterCar, tripBy, tripPlaces, tripRange, tripWork, type TripCar } from "@/lib/mock/trips";
+import { TST, addQuarterCars, badgeOf, ctrlCell, editQuarterCar, putTrip, qEditOf, quarterCars, quarterPool, quarterTrips, removeQuarterCar, tripBy, tripPlaces, tripRange, vTrip, type TripCar } from "@/lib/mock/trips";
+import { tripVCells, tripVCols, workOf } from "@/lib/mock/tripCols";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { TripCarEditModal } from "../_shared/TripCarEditModal";
 import { TripCarPicker } from "../_shared/TripCarPicker";
 import { Content, DataTable, PagedTable, Section, go, planDetailHref, quarterCrumbs, useBack } from "../_shared/ui";
 
-/* TRIP_Q_COLS ของ screens.js (6 พ.ย. 2569 + ประเภทยานพาหนะ · ช่วงวันเดินทาง เป็น วันดำเนินการรายคัน) — กว้างตามจอ */
-const TRIP_Q_COLS: TableColumn[] = [
-  { head: "ทะเบียน", width: 160, Style: "Lead text" }, { head: "ประเภทยานพาหนะ", width: 130 }, { head: "ยี่ห้อ/รุ่น" }, { head: "หน่วยงานเจ้าของยานพาหนะ", width: 140 },
-  { head: "ผู้ดูแลยานพาหนะ", width: 170 }, { head: "วันดำเนินการ", width: 190 }, { head: "แผนเดินทาง", width: 200 },
-];
+/* TRIP_Q_COLS ของ screens.js = ชุดกลาง TRIP_V_COLS (R82 · lib/mock/tripCols.ts) ไม่มีสถานที่บำรุงรักษา (สถานที่อยู่กับแผนเดินทาง) + แผนเดินทาง */
+const Q_DROP = { drop: ["สถานที่บำรุงรักษา"] };
+const TRIP_Q_COLS: TableColumn[] = [...tripVCols(Q_DROP), { head: "แผนเดินทาง", width: 200 }];
 const TRIP_COLS: TableColumn[] = [
   { head: "ชื่อแผนเดินทาง", Style: "Lead text" }, { head: "ช่วงวัน", width: 220 }, { head: "ยานพาหนะ (คัน)", width: 100 },
   { head: "ผู้ดำเนินการ", width: 260 }, { head: "สถานะ", width: 150, Style: "Badge" }, { head: "", width: 72, Style: "Action icons" },
@@ -93,8 +93,10 @@ function TripList() {
     const t = tripOf(c), cannot = t ? cannotTrip(mock, id, q, c.id) : null, from = moved.get(c.id);
     const acts = [{ IconSwap: "stylus-24-300-round", label: "แก้ไข " + c.plate, onClick: () => setEditCar(c) },
       ...(t ? [] : [{ IconSwap: "delete-24-300-round", label: "ลบ " + c.plate, onClick: () => setDropCar(c) }])];
-    const r: TableValue[] = [from ? { text: c.plate, sub: "ย้ายมาจาก" + "ไตรมาส " + from.from } : c.plate, typeOf(c.model), c.model, c.owner, ctrlCell(t ?? edits, c), t ? tripWork(t, c) : "—",
-      cannot ? { pills: [WSTAT.cannot] } : t ? { text: t.name, sub: "เพิ่มเข้าแผนเดินทางแล้ว" } : { pills: [["ยังไม่มีแผนเดินทาง", "Gray"]] }];
+    /* R82 ช่องตามชุดกลาง · ยังไม่อยู่ในแผนเดินทาง = ผู้ดูแลจากข้อมูลยานพาหนะ/ค่าที่แก้ในไตรมาส (E.18) · วันดำเนินการ "—" */
+    const base = tripVCells(c, t ? vTrip(t) : { phones: edits.phones, names: edits.names }, Q_DROP);
+    if (from) base[0] = { text: c.plate, sub: "ย้ายมาจาก" + "ไตรมาส " + from.from };
+    const r: TableValue[] = [...base, cannot ? { pills: [WSTAT.cannot] } : t ? { text: t.name, sub: "เพิ่มเข้าแผนเดินทางแล้ว" } : { pills: [["ยังไม่มีแผนเดินทาง", "Gray"]] }];
     if (!kbk) return r;
     if (cannot) return [...r, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู " + c.plate, onClick: (e) => setMenu({ car: c, anchor: anchorOf(e.currentTarget) }) }],
       mobileButtons: <SecondaryButton Text="ย้ายไปไตรมาสอื่น" LeadingIconSwap={MOVE_ICON} Size="lg" State={lastQ ? "Disabled" : "Default"} onClick={() => openMove(c)} /> }];
@@ -139,8 +141,13 @@ function TripList() {
       <RowMenu anchor={menu?.anchor ?? null} items={menu ? [{ Text: "ย้ายไปไตรมาสอื่น", IconSwap: MOVE_ICON, Disabled: lastQ, onClick: () => openMove(menu.car) }] : []} onClose={() => setMenu(null)} />
       <MoveModal target={moving} cur={q} counts={(k) => quarterCars(mock, id, k).length} onCancel={() => setMoving(null)}
         onMove={(k) => { if (moving) { const tid = cannotTrip(mock, id, q, moving.car.id)?.trip.id ?? ""; moveCar(id, moving.car, q, k, tid); } setMoving(null); }} />
-      <TripCarEditModal car={editCar} trip={editTrip ?? edits} onCancel={() => setEditCar(null)}
-        onSave={(o) => { if (editTrip) putTrip({ ...editTrip, ...o }); else editQuarterCar(id, q, o); setEditCar(null); }} />
+      {/* คันที่อยู่ในแผนเดินทาง = popup แบบแผนเดินทาง มีวันดำเนินการ (R83) · ยังไม่อยู่ = 3 ช่องหัวเดิม */}
+      <TripCarEditModal car={editCar} trip={editTrip ?? edits} work={editTrip && editCar ? { d1: editTrip.d1, d2: editTrip.d2, value: workOf(editTrip, editCar.id) } : undefined} onCancel={() => setEditCar(null)}
+        onSave={(o, w) => {
+          if (editTrip && editCar) { const works = { ...(editTrip.works ?? {}) }; if (w) works[editCar.id] = w; else delete works[editCar.id]; putTrip({ ...editTrip, ...o, works }); }
+          else editQuarterCar(id, q, o);
+          setEditCar(null);
+        }} />
       <ConfirmDialog spec={dropCar ? { danger: true, title: "ยืนยันการเอายานพาหนะออกจาก" + nowQ, sub: dropCar.plate + " จะถูกเอาออกจาก" + nowQ + " ของแผนนี้ และอะไหล่ของยานพาหนะคันนี้ออกจากรายการเบิกของไตรมาส", cancel: "ยกเลิก", ok: "เอาออก" } : null}
         onCancel={() => setDropCar(null)} onOk={() => { if (dropCar) { removeQuarterCar(id, q, dropCar.id); notify("เอายานพาหนะออกจาก" + nowQ + " สำเร็จ"); } setDropCar(null); }} />
     </>

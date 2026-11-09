@@ -3,7 +3,8 @@
    Page header "ตรวจสอบแผนเดินทาง" + Badge (รออนุมัติ → Brand · อนุมัติแล้ว → Success) → Content ช่องไฟ 32:
      (รออนุมัติ) ผลการพิจารณาบนสุด — approvals/_shared/Decision ไม่มีค่าเริ่มต้น (ปรับ 5 พ.ย. 2569 ตาม S2 · tripReview())
      รายละเอียดแผนเดินทาง (VehicleAndReporterInfo · tripKv — ใบจ้างแสดงผู้รับจ้าง เลขที่สัญญา ช่วงวันทำงาน แทนพนักงาน)
-     Section label "รถในแผนเดินทาง (n)" + Table ดูอย่างเดียว (TRIP_VIEW_COLS ไม่มีเบอร์ติดต่อ)
+     Section label "ยานพาหนะในแผนเดินทาง (n)" + Table ดูอย่างเดียว ชุดกลาง TRIP_V_COLS 7 คอลัมน์ (R82 · lib/mock/tripCols.ts)
+     Section label "อะไหล่ของแผนเดินทาง (n)" + Table QPART_COLS ดูอย่างเดียว รวมจากยานพาหนะในใบ (R84 · ให้ผู้อนุมัติเห็นชุดเดียวกับฟอร์ม)
      (รออนุมัติ) ปุ่ม ย้อนกลับ · ยืนยันผลการพิจารณา (Disabled จนกว่าจะเลือก และถ้าส่งกลับต้องมีเหตุผล)
      อนุมัติแล้ว: ไม่มีผลการพิจารณา ไม่มีปุ่ม ไม่มี Alert — toast "อนุมัติแผนเดินทางสำเร็จ" อย่างเดียว
    อนุมัติ → ConfirmDialog → trip approved + แจ้งเตือน กรย./หน่วยงานเจ้าของรถ (S8) + toast · ส่งกลับ → ConfirmDialog → trip returned + เหตุผล → รายการ + toast */
@@ -18,9 +19,12 @@ import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionLabel } from "@/components/vms/SectionLabel";
 import { mrOf, planOf } from "@/lib/mock/closeout";
 import { notify, useMock, useRole } from "@/lib/mock/store";
-import { APPROVED_AT, TST, addNotis, approvalNotis, badgeOf, findTrip, locCell, putTrip, tripCars, tripKv } from "@/lib/mock/trips";
+import { APPROVED_AT, TST, addNotis, approvalNotis, badgeOf, findTrip, putTrip, tripCars, tripKv, vTrip } from "@/lib/mock/trips";
+import { tripPartRows } from "@/lib/mock/moves";
+import { TRIP_V_COLS, tripVCells } from "@/lib/mock/tripCols";
+import { TripPartsSection } from "../../../trips/_lib/TripExport";
 import { DecisionSection, useDecision } from "../../_shared/Decision";
-import { BtnRow, Content, DataTable, MENU_HOME, Section, TRIP_VIEW_COLS, useBack } from "../../../quarter/_shared/ui";
+import { BtnRow, Content, DataTable, MENU_HOME, Section, useBack } from "../../../quarter/_shared/ui";
 
 const APPROVE_SUB = "แผนเดินทางผ่านการตรวจสอบ แจ้งเจ้าของยานพาหนะและ กรย.", RETURN_SUB = "แจ้งเหตุผลให้ กบค. แก้ไขแผนเดินทางแล้วส่งใหม่";
 
@@ -37,7 +41,7 @@ function TripReview() {
   const plan = planOf(mock, t.planId);
   const planLabel = mrOf(t.planId) + " " + (plan?.name ?? "");
   const ret = dec.decision === "return", reason = dec.reason;
-  const rows = tripCars(t).map((c) => [c.plate, c.model, c.owner, locCell(t, c)]);
+  const rows = tripCars(t).map((c) => tripVCells(c, vTrip(t)));
 
   const confirm = () => {
     if (!dec.ok) return;
@@ -69,8 +73,9 @@ function TripReview() {
         <VehicleAndReporterInfo Title="รายละเอียดแผนเดินทาง" pairs={tripKv(t, planLabel)} />
         <Section>
           <SectionLabel Title={"ยานพาหนะในแผนเดินทาง (" + rows.length + ")"} />
-          <DataTable columns={TRIP_VIEW_COLS} rows={rows} />
+          <DataTable columns={TRIP_V_COLS} rows={rows} />
         </Section>
+        <TripPartsSection parts={tripPartRows(mock, t)} />
         {t.status === "review" && approver && (
           <BtnRow>
             <SecondaryButton Text="ย้อนกลับ" Size="lg" onClick={back} />

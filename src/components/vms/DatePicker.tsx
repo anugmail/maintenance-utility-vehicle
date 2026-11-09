@@ -7,7 +7,9 @@
         _Date picker calendar item base 40×40 รัศมี 9999 ตัวเลข 14 Regular: Day (Hover พื้น gray-200) · Today พื้น gray-100 ตัวอักษร brand-900
           · Day in range พื้น gray-100 + connector ซ้าย/ขวา gray-100 (แถบต่อเนื่อง) · Selected day พื้น brand-900 ตัวอักษร white (Hover brand-800) · Disabled ตัวอักษร gray-400 (วันนอกเดือน)
         _Date picker footer: ขอบใน 16 เส้นบน gray-300 · Tertiary brand button (ล้าง) ซ้าย · Secondary + Primary button md ขวา ช่องไฟ 12
-   ข้อความตั้งต้นตามไลบรารี (Mo–Su · "Dec 2024" · Clear / Cancel / Apply) · ส่ง prop เพื่อเปลี่ยนได้ (COMPOSED.md ง.) · ClearText="" = ซ่อนปุ่มล้าง (Tertiary brand button ซ่อนตาม thaiDatePicker() ใน screens.js 5 พ.ย. 2569) */
+   ข้อความตั้งต้นตามไลบรารี (Mo–Su · "Dec 2024" · Clear / Cancel / Apply) · ส่ง prop เพื่อเปลี่ยนได้ (COMPOSED.md ง.) · ClearText="" = ซ่อนปุ่มล้าง (Tertiary brand button ซ่อนตาม thaiDatePicker() ใน screens.js 5 พ.ย. 2569)
+   9 พ.ย. 2569 (R83 วันดำเนินการ · rangeDays() ใน screens.js): min / max = วันนอกช่วงเป็น _Date picker calendar item base State=Disabled กดไม่ได้
+     · range = Type=Single แต่เลือกเป็นช่วง (Selected day + Day in range แบบ Dual) · Today={false} = ไม่ทำเครื่องหมายวันนี้ (rangeDays ไม่มี Today) — พฤติกรรมเพิ่ม หน้าตาตามไลบรารีเดิม */
 import { useState } from "react";
 import { cx } from "@/lib/cx";
 import { PrimaryButton } from "./PrimaryButton";
@@ -33,17 +35,24 @@ export interface DatePickerProps {
   weekdays?: string[];
   monthLabel?: (year: number, month: number) => string;
   ClearText?: string;
+  /** วันแรก/วันสุดท้ายที่เลือกได้ (นอกช่วง = State Disabled) */
+  min?: Date;
+  max?: Date;
+  /** Type=Single เลือกเป็นช่วงวัน */
+  range?: boolean;
+  /** ทำเครื่องหมายวันนี้ (Type Today) */
+  Today?: boolean;
   CancelText?: string;
   ApplyText?: string;
   className?: string;
 }
 
-export function DatePicker({ Type = "Dual", value, month, today = new Date(), onApply, onCancel, weekdays = LIB_WEEKDAYS, monthLabel = libMonth, ClearText = "Clear", CancelText = "Cancel", ApplyText = "Apply", className }: DatePickerProps) {
+export function DatePicker({ Type = "Dual", value, month, today = new Date(), onApply, onCancel, weekdays = LIB_WEEKDAYS, monthLabel = libMonth, ClearText = "Clear", CancelText = "Cancel", ApplyText = "Apply", min, max, range, Today = true, className }: DatePickerProps) {
   const first = month ?? value?.start ?? today;
   const [view, setView] = useState({ y: first.getFullYear(), m: first.getMonth() });
   const [sel, setSel] = useState<DateRange>(value ?? {});
   const pick = (d: Date) => {
-    if (Type === "Single") return setSel({ start: d, end: d });
+    if (Type === "Single" && !range) return setSel({ start: d, end: d });
     if (!sel.start || sel.end) return setSel({ start: d, end: null });
     return setSel(dayKey(d) < dayKey(sel.start) ? { start: d, end: sel.start } : { start: sel.start, end: d });
   };
@@ -55,7 +64,7 @@ export function DatePicker({ Type = "Dual", value, month, today = new Date(), on
         {months.map((i) => {
           const d = new Date(view.y, view.m + i, 1);
           return (
-            <Calendar key={i} year={d.getFullYear()} month={d.getMonth()} sel={sel} today={today} weekdays={weekdays} label={monthLabel(d.getFullYear(), d.getMonth())}
+            <Calendar key={i} year={d.getFullYear()} month={d.getMonth()} sel={sel} today={Today ? today : undefined} min={min} max={max} weekdays={weekdays} label={monthLabel(d.getFullYear(), d.getMonth())}
               prev={Type === "Single" || i === 0 ? () => shift(-1) : undefined} next={Type === "Single" || i === months.length - 1 ? () => shift(1) : undefined} onPick={pick} />
           );
         })}
@@ -71,8 +80,8 @@ export function DatePicker({ Type = "Dual", value, month, today = new Date(), on
   );
 }
 
-function Calendar({ year, month, sel, today, weekdays, label, prev, next, onPick }: {
-  year: number; month: number; sel: DateRange; today: Date; weekdays: string[]; label: string; prev?: () => void; next?: () => void; onPick: (d: Date) => void;
+function Calendar({ year, month, sel, today, min, max, weekdays, label, prev, next, onPick }: {
+  year: number; month: number; sel: DateRange; today?: Date; min?: Date; max?: Date; weekdays: string[]; label: string; prev?: () => void; next?: () => void; onPick: (d: Date) => void;
 }) {
   const start = new Date(year, month, 1);
   const lead = (start.getDay() + 6) % 7;   // จันทร์เป็นวันแรก (Mo–Su ตามไลบรารี)
@@ -89,7 +98,8 @@ function Calendar({ year, month, sel, today, weekdays, label, prev, next, onPick
       <div className="grid w-70 grid-cols-7">
         {weekdays.map((w) => <span key={w} className="flex size-10 items-center justify-center text-sm font-semibold text-black">{w}</span>)}
         {rows.map((d) => {
-          const out = d.getMonth() !== month;
+          const off = (!!min && dayKey(d) < dayKey(min)) || (!!max && dayKey(d) > dayKey(max));   // นอกช่วงที่เลือกได้ = Disabled
+          const out = d.getMonth() !== month || off;
           const isS = sameDay(d, s), isE = sameDay(d, e);
           const inRange = !!s && !!e && dayKey(d) > dayKey(s) && dayKey(d) < dayKey(e);
           const ranged = !!s && !!e && !sameDay(s, e);
@@ -98,7 +108,7 @@ function Calendar({ year, month, sel, today, weekdays, label, prev, next, onPick
             <span key={d.toISOString()} className="relative flex size-10 items-center justify-center">
               {!out && ranged && (inRange || isE) && <span aria-hidden="true" className="absolute inset-y-0 left-0 w-5 bg-gray-100" />}
               {!out && ranged && (inRange || isS) && <span aria-hidden="true" className="absolute inset-y-0 right-0 w-5 bg-gray-100" />}
-              <button type="button" disabled={out} onClick={() => onPick(d)} aria-pressed={isS || isE}
+              <button type="button" disabled={out} onClick={() => onPick(d)} aria-pressed={isS || isE} data-day={d.getMonth() === month ? d.getDate() : undefined}
                 className={cx("relative inline-flex size-10 items-center justify-center rounded-pill text-sm",
                   out ? "cursor-default text-gray-400"
                     : type === "Selected day" ? "cursor-pointer bg-brand-900 text-white hover:bg-brand-800"
