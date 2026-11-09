@@ -11,8 +11,10 @@
      Section label "รถในแผน" Primary action (Tertiary brand button) "ไปหน้าไตรมาส n" ตามแท็บที่เปิด (Q54) → หน้า "ไตรมาส n" (/quarter/trips/)
      Secondary action (Tertiary button) "ความคืบหน้าอะไหล่" (S4) เฉพาะแท็บไตรมาสที่กำลังทำ — ทางเข้าเดิม 4 พ.ย. (จอ Figma รอบ 5 พ.ย. ไม่มีทางเข้า S4 · BACKLOG ค.)
      ปุ่มหัว: ดำเนินการ + หน่วยงานยอมรับผลทั้งแผนแล้ว (S14 · closeout.accepted · เงื่อนไข S15) → "ส่งประวัติ" (S15) · ประวัติผ่านแล้ว/ปิดงานแล้ว → "รายงานผลการบำรุงรักษา" (S17)
-   A.32 กบค. ดูแผนของหน่วยงานอื่น (planDetail o.parts ของ screens.js · Figma 27aae0c): ต่อท้าย PlanBody ด้วยอะไหล่ในแผน (detail/PlanParts.tsx ชุดเดียวกับหน้าผู้อนุมัติ S2)
-     เจ้าของงาน 9 พ.ย. 2569 "A32 ต้องมี section อะใหล่เพิ่มเข้ามาด้วย เพราะตอนที่ หน้าอนุมัติก็ต้องมี section นี้ขึ้นมาด้วย" · หน้าของผู้สร้างแผนเองไม่มี (ฟอร์มมีอะไหล่รวมทุกไตรมาสแล้ว) */
+   อะไหล่ในแผน (detail/PlanParts.tsx ชุดเดียวกับหน้าผู้อนุมัติ S2) ต่อท้าย PlanBody ทุกสถานะ ทุกบทบาท (planBody ของ screens.js แสดง planPartsSec เสมอ · Figma e3040ff ee5e68c):
+     ผู้สร้างแผน รออนุมัติ / อนุมัติแล้ว / ส่งกลับแก้ไข (A.20–A.22 · S19 R.2 · S20 S.4–S.6) · กบค. ดูแผนของหน่วยงานอื่น (A.32) · แผนที่ดำเนินการ (E.2 planDetailQ)
+     เจ้าของงาน 9 พ.ย. 2569 ส่งภาพ A.20 A.21 A.22 A.32 "ทำให้เป็นแบบนี้" + "หน้าอื่นที่ต้องมีอะใหล่รวม หรืออะใหล่แต่ละไตรมาส ก็ต้องมี section อะใหล่ด้วยนะ" (ยกเลิก 1c33952 "มีแค่ผู้อนุมัติ")
+     ยอดรายไตรมาส = quarterPartRows ⇒ ไตรมาส n ตรงกับอะไหล่ในไตรมาส n ของหน้าไตรมาส (E.2 ไตรมาส 1 = PARTS) · ไตรมาส 2–4 ของแผนตัวอย่างรวมจากยานพาหนะจำลองของไตรมาสนั้น (carParts) ไม่ใช่ค่าสัดส่วนของ pQParts */
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";
@@ -51,7 +53,6 @@ function Detail() {
   const manage = canManage(role, plan);
   const canDelete = manage && st === "returned";
   const canEdit = manage && (st === "returned" || st === "approved");
-  const otherUnit = role === "กบค." && !manage;   // A.32 แผนของหน่วยงานอื่น ⇒ มีอะไหล่ในแผน
   const size = mob ? "lg" : "md";
   const id = planId(plan);
   const nowQ = Number(plan.nowQ.replace(/\D/g, "")) || 1;
@@ -74,7 +75,7 @@ function Detail() {
       <div className="flex flex-col gap-8">
         {st === "returned" && <Alert Color="Error" Text="ผู้อนุมัติส่งกลับให้แก้ไข" SupportingText={plan.returnReason} />}
         <PlanBody plan={plan} q={q} onQ={setQ} actions={qActions} />
-        {otherUnit && <PlanParts plan={plan} />}
+        <PlanParts plan={plan} />
       </div>
       <ConfirmDialog spec={del ? DELETE_CONFIRM : null} onCancel={() => setDel(false)} onOk={() => { setDel(false); deletePlan(plan.mr); router.push("/"); }} />
     </>
