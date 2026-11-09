@@ -15,7 +15,7 @@ import { CREATOR_SHORT } from "@/lib/mock/trips";
 import { DataTable, MENU_HOME, Section, go } from "../quarter/_shared/ui";
 
 const HQ_COLS: TableColumn[] = [
-  { head: "เลขที่ MR", width: 140, Style: "Lead text" }, { head: "แผน" }, { head: "กบค. ผู้ส่ง", width: 200 }, { head: "จำนวนยานพาหนะ", width: 110 },
+  { head: "เลขที่ MR", width: 140, Style: "Lead text" }, { head: "แผน" }, { head: "ผู้ส่ง", width: 200 }, { head: "จำนวนยานพาหนะ", width: 110 },
   { head: "วันที่ส่ง", width: 120, SortIcon: "Down" }, { head: "สถานะ", width: 180, Style: "Badge" }, { head: "", width: 60, Style: "Action icons" },
 ];
 

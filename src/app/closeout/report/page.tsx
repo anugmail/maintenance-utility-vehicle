@@ -49,7 +49,7 @@ function Report() {
         crumbs={[{ Text: MENU_HOME, href: "/" }, { Text: "แผน " + mrOf(id), onClick: () => router.push(planDetailHref(id)) }, { Text: "รายงานผลการบำรุงรักษา" }]}
         Actions={<SecondaryButton Text="ดาวน์โหลดรายงาน" LeadingIconSwap="cloud_upload-24-300-round" Size={mob ? "lg" : "md"} />} />
       <Content>
-        <VehicleAndReporterInfo Title="รายละเอียดแผน" pairs={[...planKv(plan), ["หัวหน้า กบค. ตรวจประวัติ", "ผ่าน · " + (c.headAt ?? HEAD_AT)], ["ผู้ตรวจ", HEAD_REVIEWER]]} />
+        <VehicleAndReporterInfo Title="รายละเอียดแผน" pairs={[...planKv(plan), ["หัวหน้าหน่วยงาน ตรวจประวัติ", "ผ่าน · " + (c.headAt ?? HEAD_AT)], ["ผู้ตรวจ", HEAD_REVIEWER]]} />
         <DisplayBox Title="สรุปรายงานผลการบำรุงรักษา" pairs={reportSummary(planHistory(mock, plan))} />
         {closed && <Alert Color="Success" Text={"ปิดงานแล้ว " + (c.closedAt ?? CLOSED_AT)} SupportingText="ไปขั้นคำนวณต้นทุนได้" />}
         <BtnRow>

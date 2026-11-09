@@ -23,9 +23,9 @@ export const EVIDENCE_BADGE = { wait: ["ครบทุกคันแล้ว"
 
 /* accRows cars (VEH[0], VEH[1], VEH[4]) — ชุดตัวอย่าง S13 S14 (ใส่เป็นงาน "เสร็จสิ้น" ของแผนเดินทาง T1) */
 export const ACCEPTANCE_CARS = [
-  { carId: "82-6789", date: "04/11/2569", by: "นายวิชัย ทองดี (กบค.)" },
-  { carId: "82-1145", date: "05/11/2569", by: "นางสาวกนกวรรณ ใจมั่น (กบค.)" },
-  { carId: "80-9981", date: "06/11/2569", by: "นายสมชาย พูลสุข (กบค.)" },
+  { carId: "82-6789", date: "04/11/2569", by: "นายวิชัย ทองดี (กกฟ.1)" },
+  { carId: "82-1145", date: "05/11/2569", by: "นางสาวกนกวรรณ ใจมั่น (กกฟ.1)" },
+  { carId: "80-9981", date: "06/11/2569", by: "นายสมชาย พูลสุข (กกฟ.1)" },
 ];
 export const ACCEPTANCE_DOCS = (plateNo: string) => [{ name: `ใบตรวจสภาพอะไหล่-${plateNo}.pdf`, size: "380 KB" }, { name: `ใบตรวจสภาพงานบำรุงรักษา-${plateNo}.pdf`, size: "410 KB" }];
 export const FEEDBACK_SAMPLE = { score: 5, comment: "ทีมงานตรงเวลา ทำความสะอาดพื้นที่หลังเสร็จงาน" };
@@ -61,7 +61,7 @@ export function planAcc(m: MockState, planId: string): PlanAcc {
   const total = trips.reduce((n, t) => n + t.carIds.length, 0);
   const dates = rows.map((r) => r.date).filter(Boolean).sort((a, b) => dkey(a).localeCompare(dkey(b)));
   const range = !dates.length ? "-" : dates[0] === dates[dates.length - 1] ? dates[0] : dates[0].slice(0, 2) + "–" + dates[dates.length - 1];
-  const by = [...new Set(trips.map((t) => (t.mode === "hire" ? t.vendor ?? "-" : "กบค. (ตรวจเอง)")))].join(", ");
+  const by = [...new Set(trips.map((t) => (t.mode === "hire" ? t.vendor ?? "-" : "กกฟ.1 (ตรวจเอง)")))].join(", ");
   return { planId, mr: "MR" + planId, rows, ready: total > 0 && rows.length === total && rows.every((r) => r.accepted), done: !!closeoutOf(m, planId).accepted, range, by };
 }
 /** แผนที่มีรถถึงขั้นยอมรับผล */

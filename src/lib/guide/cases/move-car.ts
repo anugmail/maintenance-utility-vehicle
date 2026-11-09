@@ -12,7 +12,7 @@ import { MOVE_PLATE, openPlan, PLAN_DETAIL, quarterAt, seedCannotIn, seedJobs } 
 const Q1 = quarterAt(1), Q2 = quarterAt(2);
 
 export const MOVE_CAR_GUIDE: GuideScenario = {
-  key: "move-car", code: "S25", title: "ย้ายยานพาหนะที่บำรุงรักษาไม่ได้ไปไตรมาสอื่น", who: "เจ้าหน้าที่ กบค.",
+  key: "move-car", code: "S25", title: "ย้ายยานพาหนะที่บำรุงรักษาไม่ได้ไปไตรมาสอื่น", who: "เจ้าหน้าที่หน่วยงาน",
   about: "ยานพาหนะที่บันทึกว่าบำรุงรักษาไม่ได้ ย้ายไปไตรมาสถัดไปของแผนเดียวกันได้ ยานพาหนะและอะไหล่ตามแผนของยานพาหนะย้ายไปด้วย โดยไม่ต้องส่งแผนอนุมัติใหม่",
   cases: [
     {

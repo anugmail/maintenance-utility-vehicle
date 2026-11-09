@@ -72,7 +72,7 @@ function PlanEvidence() {
         <TextArea LabelText="ข้อเสนอแนะเพิ่มเติม" Optional Text={a.comment} Placeholder="ระบุข้อเสนอแนะ" readOnly={done || !owner}
           onChange={(v) => writeFeedback(id, { comment: v })} />
         {done ? (
-          <Alert Color="Success" Text={"ยอมรับผลการตรวจบำรุงยานพาหนะทั้งแผนแล้ว " + ACCEPT_DATES.plan} SupportingText="แจ้ง กบค. แล้ว — ส่งประวัติให้หัวหน้า กบค. ได้" />
+          <Alert Color="Success" Text={"ยอมรับผลการตรวจบำรุงยานพาหนะทั้งแผนแล้ว " + ACCEPT_DATES.plan} SupportingText="แจ้งหน่วยงานแล้ว — ส่งประวัติให้หัวหน้าหน่วยงาน ได้" />
         ) : (
           <ButtonRow>
             <SecondaryButton Text="ย้อนกลับ" Size="lg" onClick={back} />
@@ -80,7 +80,7 @@ function PlanEvidence() {
           </ButtonRow>
         )}
       </div>
-      <ConfirmDialog spec={confirm ? { title: "ยืนยันยอมรับผลการตรวจบำรุงยานพาหนะทั้งแผน", sub: plan.mr + " · " + plan.cars + " คัน · คะแนนความพึงพอใจ " + a.score + " · ระบบจะแจ้ง กบค.", ok: "ยอมรับผล" } : null}
+      <ConfirmDialog spec={confirm ? { title: "ยืนยันยอมรับผลการตรวจบำรุงยานพาหนะทั้งแผน", sub: plan.mr + " · " + plan.cars + " คัน · คะแนนความพึงพอใจ " + a.score + " · ระบบจะแจ้งหน่วยงานผู้ดำเนินการ", ok: "ยอมรับผล" } : null}
         onOk={accept} onCancel={() => setConfirm(false)} />
     </>
   );

@@ -58,19 +58,19 @@ function History() {
         <Section>
           <DisplayBox Title="ความคืบหน้ารายคัน" pairs={progress} />
           {!done && h.todo > 0 && <Alert Color="Warning" Text={"ยังบำรุงรักษาไม่ครบทุกคันตามแผน (เหลือ " + h.todo + " คัน)"}
-            SupportingText="ครบแล้วจึงบันทึกและส่งประวัติให้หัวหน้า กบค. ตรวจสอบได้" />}
+            SupportingText="ครบแล้วจึงบันทึกและส่งประวัติให้หัวหน้าหน่วยงาน ตรวจสอบได้" />}
         </Section>
         <Section>
           <SectionLabel Title={done ? "ประวัติงานบำรุงรักษาทั้งหมด (" + total + ")" : "ประวัติงานบำรุงรักษา (" + h.rows.length + ")"} />
           <DataTable columns={HIST_COLS} rows={h.rows} pagination={done ? h.rows.length : undefined} perPage={Math.max(1, h.rows.length)} />
         </Section>
-        {sent && <Alert Color="Info" Text={"ส่งประวัติให้หัวหน้า กบค. ตรวจสอบแล้ว " + (c.sentAt ?? SENT_AT)} SupportingText="แก้ไขไม่ได้จนกว่าหัวหน้าจะตีกลับ" />}
+        {sent && <Alert Color="Info" Text={"ส่งประวัติให้หัวหน้าหน่วยงาน ตรวจสอบแล้ว " + (c.sentAt ?? SENT_AT)} SupportingText="แก้ไขไม่ได้จนกว่าหัวหน้าจะตีกลับ" />}
         <BtnRow>
           <SecondaryButton Text="ย้อนกลับ" Size="lg" onClick={back} />
           {!sent && <PrimaryButton Text="ส่งประวัติให้หัวหน้าตรวจสอบ" Size="lg" State={done && kbk ? "Default" : "Disabled"} onClick={() => setConfirm(true)} />}
         </BtnRow>
       </Content>
-      <ConfirmDialog spec={confirm ? { title: "ส่งประวัติให้หัวหน้า กบค. ตรวจสอบ", sub: "ประวัติงานบำรุงรักษา " + total + " คันของแผน " + mrOf(id) + " จะแก้ไขไม่ได้จนกว่าหัวหน้าจะตรวจเสร็จ", ok: "ส่งประวัติ" } : null}
+      <ConfirmDialog spec={confirm ? { title: "ส่งประวัติให้หัวหน้าหน่วยงาน ตรวจสอบ", sub: "ประวัติงานบำรุงรักษา " + total + " คันของแผน " + mrOf(id) + " จะแก้ไขไม่ได้จนกว่าหัวหน้าจะตรวจเสร็จ", ok: "ส่งประวัติ" } : null}
         onCancel={() => setConfirm(false)} onOk={send} />
     </>
   );

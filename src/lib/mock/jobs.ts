@@ -49,7 +49,7 @@ export const OIL_RESULT_OPTS = ["ผ่าน", "ไม่ผ่าน"];
 /* ---------- คน ---------- */
 export const PEOPLE = {
   staff: ["นายวิชัย ทองดี", "นางสาวกนกวรรณ ใจมั่น", "นายสมชาย พูลสุข"],   // TRIP.staff (พนักงาน กบค. ซ่อม)
-  kbk: "นายวิชัย ทองดี (กบค.)",                                         // JOB_BY · ผู้สร้าง · ผู้เริ่มงาน/ผู้บันทึกของแผนจ้างด้วย (กบค. บันทึกแทนผู้รับจ้าง)
+  kbk: "นายวิชัย ทองดี (กกฟ.1)",                                         // JOB_BY · ผู้สร้าง · ผู้เริ่มงาน/ผู้บันทึกของแผนจ้างด้วย (กบค. บันทึกแทนผู้รับจ้าง)
   ownerSigner: "นายสุรชัย แก้วมณี",                                      // SIGN_OWNER
 };
 /* เวลาตัวอย่างของจอ Figma (ต้นแบบใช้ค่าคงที่ให้ตรงจอ) */
@@ -286,7 +286,7 @@ function filledClose(job: Job, trip: JobTrip, car: TripCar): CloseForm {
     parts: f.parts.map((r) => { const v = CLOSE_FILLED_PARTS[r.part]; return v ? { ...r, used: v[0], old: v[1], note: v[2] } : r; }),
     costs: [["นายวิชัย ทองดี", 2], ["นางสาวกนกวรรณ ใจมั่น", 2], ["นายสมชาย พูลสุข", 1]].map(([name, days]) => ({ name: String(name), perDiem: "240", lodging: "800", days: Number(days) })),
     travel: "1,210", km: "182,640", hours: "6,131",
-    signers: [{ name: PEOPLE.kbk.replace(" (กบค.)", ""), sig: "sample" }, { name: PEOPLE.ownerSigner, sig: "sample" }],
+    signers: [{ name: PEOPLE.kbk.replace(" (กกฟ.1)", ""), sig: "sample" }, { name: PEOPLE.ownerSigner, sig: "sample" }],
     docs: f.docs.map((d) => ({ ...d, sel: "มี" })),
   };
 }

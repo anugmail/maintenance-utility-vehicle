@@ -26,7 +26,7 @@ import { TripPartsSection } from "../../../trips/_lib/TripExport";
 import { DecisionSection, useDecision } from "../../_shared/Decision";
 import { BtnRow, Content, DataTable, MENU_HOME, Section, useBack } from "../../../quarter/_shared/ui";
 
-const APPROVE_SUB = "แผนเดินทางผ่านการตรวจสอบ แจ้งเจ้าของยานพาหนะและ กรย.", RETURN_SUB = "แจ้งเหตุผลให้ กบค. แก้ไขแผนเดินทางแล้วส่งใหม่";
+const APPROVE_SUB = "แผนเดินทางผ่านการตรวจสอบ แจ้งเจ้าของยานพาหนะและ กรย.", RETURN_SUB = "แจ้งเหตุผลให้ผู้สร้างแผนเดินทางแก้ไขแล้วส่งใหม่";
 
 function TripReview() {
   const router = useRouter();
@@ -55,10 +55,10 @@ function TripReview() {
       },
     });
     else setPending({
-      spec: { title: "ยืนยันส่งกลับแก้ไข", sub: "แผนเดินทางจะกลับไปให้ กบค. แก้ไขตามเหตุผลที่ระบุ แล้วส่งอนุมัติใหม่", ok: "ส่งกลับ" },
+      spec: { title: "ยืนยันส่งกลับแก้ไข", sub: "แผนเดินทางจะกลับไปให้ผู้สร้างแผนเดินทางแก้ไขตามเหตุผลที่ระบุ แล้วส่งอนุมัติใหม่", ok: "ส่งกลับ" },
       run: () => {
         putTrip({ ...t, status: "returned", returnReason: reason.trim() });
-        notify("ส่งแผนเดินทางกลับให้ กบค. แก้ไขแล้ว");
+        notify("ส่งแผนเดินทางกลับให้ผู้สร้างแผนเดินทางแก้ไขแล้ว");
         router.push("/approvals/trips/");
       },
     });

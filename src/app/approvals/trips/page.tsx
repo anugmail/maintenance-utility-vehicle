@@ -15,7 +15,7 @@ import { CREATOR_SHORT, TST, tripRange, tripsOf } from "@/lib/mock/trips";
 import { DataTable, MENU_HOME, Section, go } from "../../quarter/_shared/ui";
 
 const TRIP_REVIEW_COLS: TableColumn[] = [
-  { head: "ชื่อแผนเดินทาง", Style: "Lead text" }, { head: "ช่วงวันเดินทาง", width: 220 }, { head: "ยานพาหนะ (คัน)", width: 100 }, { head: "ผู้สร้าง (กบค.)", width: 180 },
+  { head: "ชื่อแผนเดินทาง", Style: "Lead text" }, { head: "ช่วงวันเดินทาง", width: 220 }, { head: "ยานพาหนะ (คัน)", width: 100 }, { head: "ผู้สร้าง", width: 180 },
   { head: "วันที่ส่ง", width: 120, SortIcon: "Down" }, { head: "สถานะ", width: 150, Style: "Badge" }, { head: "", width: 60, Style: "Action icons" },
 ];
 

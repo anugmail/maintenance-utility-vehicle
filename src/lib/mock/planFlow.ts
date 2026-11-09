@@ -20,7 +20,7 @@ export const carIndexOf = (param: string | null) => (param ? CAND.findIndex((c) 
 
 /* ---------- หน้าเริ่มของบทบาท (routes.md §2) · บทบาทที่ไม่มีสิทธิ์เปิดหน้า → กลับราก ---------- */
 export const ROLE_HOME: Partial<Record<Role, string>> = {
-  "ผู้อนุมัติ": "/approvals/plans/", "หัวหน้า กบค.": "/head-review/", "กรย.": "/trips-view/", "หน่วยงานเจ้าของยานพาหนะ": "/trips-view/",
+  "ผู้อนุมัติ": "/approvals/plans/", "หัวหน้าหน่วยงาน": "/head-review/", "กรย.": "/trips-view/", "หน่วยงานเจ้าของยานพาหนะ": "/trips-view/",
 };
 /* หน้าเริ่มที่ขึ้นกับข้อมูล (ต้นแบบ — sidebar เมนูอื่นยังไม่พาไปไหน ⇒ เข้ารากแล้วไปหน้าที่มีงานรอ · COMPOSED.md หัวข้อ ช.)
    ผู้อนุมัติ: มีแผนเดินทางรออนุมัติ → /approvals/trips/ · หน่วยงานเจ้าของรถ: มีรถรอยอมรับผล / แผนพร้อมตรวจหลักฐาน → /acceptance/

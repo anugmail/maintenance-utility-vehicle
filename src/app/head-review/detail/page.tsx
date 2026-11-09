@@ -17,6 +17,7 @@ import { PageHeader } from "@/components/vms/PageHeader";
 import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionLabel } from "@/components/vms/SectionLabel";
+import { unitOf } from "@/lib/mock/data";
 import { HEAD_AT, HIST_COLS, HQ_OTHER, HST, SENT_AT, closeoutOf, headStatusOf, mrOf, planKv, planOf, putCloseout, setPlanStatus } from "@/lib/mock/closeout";
 import { notify, useMock, useRole } from "@/lib/mock/store";
 import { CREATOR, badgeOf } from "@/lib/mock/trips";
@@ -26,7 +27,7 @@ function HeadHistory() {
   const router = useRouter();
   const sp = useSearchParams();
   const mock = useMock();
-  const head = useRole() === "หัวหน้า กบค.";
+  const head = useRole() === "หัวหน้าหน่วยงาน";
   const id = sp.get("id") ?? "Z7000001";
   const plan = planOf(mock, id);
   const c = closeoutOf(mock, id);
@@ -38,7 +39,7 @@ function HeadHistory() {
   const st = other ? "ok" : headStatusOf(plan, c);
   const hist = planHistory(mock, plan);   // งานรายคันจริงของแผน (BACKLOG ข้อ 6)
   const total = hist.total;
-  const sender = other ? HQ_OTHER.sender + " (กบค.) · " + HQ_OTHER.sentAt : CREATOR + " · " + (c.sentAt ?? SENT_AT);
+  const sender = other ? HQ_OTHER.sender + " (" + unitOf(HQ_OTHER.mr) + ") · " + HQ_OTHER.sentAt : CREATOR + " · " + (c.sentAt ?? SENT_AT);
   const approve = () => {
     setAsk("");
     setPlanStatus(id, "passed");
@@ -62,7 +63,7 @@ function HeadHistory() {
           <SectionLabel Title={"ประวัติงานบำรุงรักษาทั้งหมด (" + hist.rows.length + ")"} />
           <DataTable columns={HIST_COLS} rows={hist.rows} pagination={hist.rows.length} perPage={Math.max(1, hist.rows.length)} />
         </Section>
-        {st === "ok" && <Alert Color="Success" Text={"อนุมัติประวัติแล้ว" + (other ? "" : " " + (c.headAt ?? HEAD_AT)) + " — บันทึกเป็นประวัติทางการ"} SupportingText="กบค. ออกรายงานผลและปิดงานได้" />}
+        {st === "ok" && <Alert Color="Success" Text={"อนุมัติประวัติแล้ว" + (other ? "" : " " + (c.headAt ?? HEAD_AT)) + " — บันทึกเป็นประวัติทางการ"} SupportingText="หน่วยงานออกรายงานผลและปิดงานได้" />}
         {st === "wait" && plan.status === "hist" && head && (
           <BtnRow>
             <SecondaryButton Text="ตีกลับ" Size="lg" onClick={() => { setReason(""); setAsk("back"); }} />

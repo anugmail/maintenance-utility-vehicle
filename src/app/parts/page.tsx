@@ -100,7 +100,7 @@ function PartsDash() {
     const all = exp.scope === "ทั้งหมด";
     const doc = {
       title: "รายงาน" + DASH_TITLE + " · ปีงบประมาณ " + DASH_YEAR,
-      info: [["หน่วยงานที่ออกเอกสาร", "กบค. การไฟฟ้าส่วนภูมิภาค"], ["ตัวกรอง", all || !chips.length ? "-" : chips.join(", ")], ["พิมพ์เมื่อ", new Date().toLocaleString("th-TH")], ["ผู้พิมพ์", PLAN_CREATOR]] as [string, string][],
+      info: [["หน่วยงานที่ออกเอกสาร", "กกฟ.1 การไฟฟ้าส่วนภูมิภาค"], ["ตัวกรอง", all || !chips.length ? "-" : chips.join(", ")], ["พิมพ์เมื่อ", new Date().toLocaleString("th-TH")], ["ผู้พิมพ์", PLAN_CREATOR]] as [string, string][],
       section: DASH_TABS[tab] + " (" + (all ? ALL_N[tab] : rows.length) + ")",
       cols: COLS[tab], rows: all ? allRows(tab) : rows, file: DASH_TITLE + "-" + DASH_TABS[tab],
     };
