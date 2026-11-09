@@ -2,18 +2,21 @@
 /* หน้าของต้นแบบ (ไม่ใช่จอของระบบ): เปิด scenario จากหน้า /scenarios/ ที่จุดเริ่มของ scenario นั้น — ใส่แผนตัวอย่าง MRZ7000004 (NEW_PLAN + EDIT_FORM ของ screens.js)
    ในสถานะที่ scenario ใช้ · ตั้งบทบาท · แล้วพาไปหน้าแรกของ scenario
    ?plan=review|returned|approved (acked= ของ S22 เอาออก 6 พ.ย. 2569) · ?draft=1 (ฟอร์มสร้างแผนที่จัดรถ 6 คันแล้ว ยังไม่เลือกอะไหล่ — S21 T.1) · ?role=<บทบาท> · ?go=<หน้า>
+   ?seed=<S> = ข้อมูลตั้งต้นของ scenario ชุด B (SEEDS ของ seedB.ts) + บทบาทของชุดนั้น แล้วพาไป go — S6 เริ่มที่รายการแผน (E.1) แทนหน้าไตรมาส (9 พ.ย. 2569)
    แผน Z7000004 เดิม (ถ้ามี) ถูกแทนที่ · ดู figma-spec/COMPOSED.md */
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
 import type { PlanStatus } from "@/lib/mock/data";
 import { samplePlan, sampleDraft } from "@/lib/mock/planFlow";
+import { SEEDS } from "@/lib/mock/seedB";
 import { ROLES, setMock, setRole, type Role } from "@/lib/mock/store";
 
 function Sample() {
   const router = useRouter();
   const sp = useSearchParams();
   useEffect(() => {
-    const st = sp.get("plan") as PlanStatus | null, role = sp.get("role") as Role | null;
+    const st = sp.get("plan") as PlanStatus | null, role = sp.get("role") as Role | null, seed = SEEDS[sp.get("seed") ?? ""];
+    if (seed) { seed.run(); setRole(seed.role); }
     if (role && (ROLES as readonly string[]).includes(role)) setRole(role);
     setMock((s) => {
       let n = { ...s };

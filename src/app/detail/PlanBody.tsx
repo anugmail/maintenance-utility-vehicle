@@ -23,7 +23,8 @@ import { useBreakpoint } from "@/lib/useBreakpoint";
 
 const COLS = CARP_COLS.slice(0, 6);
 
-export function PlanBody({ plan, q, onQ, actions }: { plan: Plan; q: number; onQ: (q: number) => void; actions?: ReactNode }) {
+/* kv = กล่องรายละเอียดแผนแทน npKv (planFlow.planKv) — E.2 planDetailQ ของ screens.js ใช้ PLAN_KV (closeout.planKv: ไตรมาส · วันที่สร้าง · อนุมัติเมื่อ) กับแผนที่ดำเนินการแล้ว */
+export function PlanBody({ plan, q, onQ, actions, kv }: { plan: Plan; q: number; onQ: (q: number) => void; actions?: ReactNode; kv?: [string, string][] }) {
   const mob = useBreakpoint() === "Mobile";
   const mock = useMock();
   const a = allocOf(plan);
@@ -35,7 +36,7 @@ export function PlanBody({ plan, q, onQ, actions }: { plan: Plan; q: number; onQ
   const total = plan.alloc ? plan.cars : [1, 2, 3, 4].reduce((n, k) => n + count(k), 0);
   return (
     <>
-      <VehicleAndReporterInfo Title="รายละเอียดแผน" pairs={planKv(plan)} />
+      <VehicleAndReporterInfo Title="รายละเอียดแผน" pairs={kv ?? planKv(plan)} />
       <section className="flex flex-col gap-4">
         <SectionLabel Title={"ยานพาหนะในแผน (" + total + ")"} Actions={actions} />
         <Tabs>{QUARTERS.map((t, i) => <TabItem key={t} Text={t} Badge={count(i + 1)} Active={q === i + 1} onClick={() => onQ(i + 1)} />)}</Tabs>

@@ -11,6 +11,8 @@
      Section label "รถในแผน" Primary action (Tertiary brand button) "ไปหน้าไตรมาส n" ตามแท็บที่เปิด (Q54) → หน้า "ไตรมาส n" (/quarter/trips/)
      Secondary action (Tertiary button) "ความคืบหน้าอะไหล่" (S4) เฉพาะแท็บไตรมาสที่กำลังทำ — ทางเข้าเดิม 4 พ.ย. (จอ Figma รอบ 5 พ.ย. ไม่มีทางเข้า S4 · BACKLOG ค.)
      ปุ่มหัว: ดำเนินการ + หน่วยงานยอมรับผลทั้งแผนแล้ว (S14 · closeout.accepted · เงื่อนไข S15) → "ส่งประวัติ" (S15) · ประวัติผ่านแล้ว/ปิดงานแล้ว → "รายงานผลการบำรุงรักษา" (S17)
+   กล่องรายละเอียดแผน: ก่อนดำเนินการ = npKv (planFlow.planKv · เขต ยานพาหนะรายไตรมาส วันที่ส่ง · planBody ของ screens.js)
+     · ดำเนินการขึ้นไป = PLAN_KV (closeout.planKv · ไตรมาส วันที่สร้าง อนุมัติเมื่อ) ตาม E.2 planDetailQ ของ screens.js (9 พ.ย. 2569)
    อะไหล่ในแผน (detail/PlanParts.tsx ชุดเดียวกับหน้าผู้อนุมัติ S2) ต่อท้าย PlanBody ทุกสถานะ ทุกบทบาท (planBody ของ screens.js แสดง planPartsSec เสมอ · Figma e3040ff ee5e68c):
      ผู้สร้างแผน รออนุมัติ / อนุมัติแล้ว / ส่งกลับแก้ไข (A.20–A.22 · S19 R.2 · S20 S.4–S.6) · กบค. ดูแผนของหน่วยงานอื่น (A.32) · แผนที่ดำเนินการ (E.2 planDetailQ)
      เจ้าของงาน 9 พ.ย. 2569 ส่งภาพ A.20 A.21 A.22 A.32 "ทำให้เป็นแบบนี้" + "หน้าอื่นที่ต้องมีอะใหล่รวม หรืออะใหล่แต่ละไตรมาส ก็ต้องมี section อะใหล่ด้วยนะ" (ยกเลิก 1c33952 "มีแค่ผู้อนุมัติ")
@@ -25,13 +27,16 @@ import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SecondaryDangerButton } from "@/components/vms/SecondaryDangerButton";
 import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { TertiaryBrandButton } from "@/components/vms/TertiaryBrandButton";
-import { closeoutOf } from "@/lib/mock/closeout";
-import { PST } from "@/lib/mock/data";
+import { closeoutOf, planKv as runKv } from "@/lib/mock/closeout";
+import { PST, type PlanStatus } from "@/lib/mock/data";
 import { DELETE_CONFIRM, badgeOf, canManage, deletePlan, findPlan, planId, startEdit, useHydrated } from "@/lib/mock/planFlow";
 import { useMock, useRole } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { PlanBody } from "./PlanBody";
 import { PlanParts } from "./PlanParts";
+
+/* สถานะที่แผนเริ่มดำเนินการแล้ว (หลังอนุมัติ · E.2 ของ S6 ขึ้นไป) */
+const RUN: PlanStatus[] = ["active", "hist", "passed", "closed"];
 
 function Detail() {
   const router = useRouter();
@@ -74,7 +79,8 @@ function Detail() {
         crumbs={[{ Text: "บำรุงรักษาตามวาระ", href: "/" }, { Text: plan.name }]} Actions={actions} />
       <div className="flex flex-col gap-8">
         {st === "returned" && <Alert Color="Error" Text="ผู้อนุมัติส่งกลับให้แก้ไข" SupportingText={plan.returnReason} />}
-        <PlanBody plan={plan} q={q} onQ={setQ} actions={qActions} />
+        {/* แผนที่ดำเนินการแล้ว (ดำเนินการ ขึ้นไป) = กล่อง PLAN_KV แบบ E.2 planDetailQ (ไตรมาสที่กำลังทำ · วันที่สร้าง · อนุมัติเมื่อ) · ก่อนนั้น = npKv แบบ planDetail (A.20–A.22) */}
+        <PlanBody plan={plan} q={q} onQ={setQ} actions={qActions} kv={RUN.includes(st) ? runKv(plan) : undefined} />
         <PlanParts plan={plan} />
       </div>
       <ConfirmDialog spec={del ? DELETE_CONFIRM : null} onCancel={() => setDel(false)} onOk={() => { setDel(false); deletePlan(plan.mr); router.push("/"); }} />

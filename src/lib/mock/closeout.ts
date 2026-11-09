@@ -10,12 +10,13 @@ export const planOf = (s: MockState, id: string): Plan | undefined => s.plans.fi
 export function setPlanStatus(id: string, status: PlanStatus) {
   setMock((s) => ({ ...s, plans: s.plans.map((p) => (p.mr === mrOf(id) ? { ...p, status } : p)) }));
 }
+/* อนุมัติเมื่อของแผนตัวอย่าง (PLAN_KV "08/10/2569") · คีย์ = id ใน URL (เลขที่ MR ตัด "MR" · 9 พ.ย. 2569 เลขติดกันแล้ว เดิม slice(3) ของ "MR Z…" ได้ "7000001" ค่าหาย) */
 const APPROVED_AT: Record<string, string> = { Z7000001: "08/10/2569" };
 /* PLAN_KV — กล่องรายละเอียดแผน (9 คู่) · quarterNote = ต่อท้ายไตรมาส (หน้าแผนเดินทาง "ไตรมาส 1 (10 คัน)")
    6 พ.ย. 2569 รีวิว S6 "ภาค เปลี่ยน หน่วยงาน" + "ย้ายประเภท มาไว้ในคอลัมม์" (PLAN_KV ของ screens.js): ภาค → หน่วยงานเจ้าของแผน · ไม่มีประเภทยานพาหนะ · ผู้สร้างแผน = CREATOR */
 export const planKv = (p: Plan, quarterNote?: string): [string, string][] => [
   ["ชื่อแผน", p.name], ["ปีงบประมาณ", p.year], ["หน่วยงาน", unitOf(p.mr, p.unit)], ["ไตรมาส", p.nowQ + (quarterNote ?? "")],
-  ["จำนวนยานพาหนะ", p.cars + " คัน"], ["เลขที่ MR", p.mr], ["ผู้สร้างแผน", creatorOf(p)], ["วันที่สร้าง", p.created], ["อนุมัติเมื่อ", p.approvedAt ?? APPROVED_AT[p.mr.slice(3)] ?? "-"],
+  ["จำนวนยานพาหนะ", p.cars + " คัน"], ["เลขที่ MR", p.mr], ["ผู้สร้างแผน", creatorOf(p)], ["วันที่สร้าง", p.created], ["อนุมัติเมื่อ", p.approvedAt ?? APPROVED_AT[p.mr.replace(/^MR/, "")] ?? "-"],
 ];
 
 /* ---------- S4 เบิก/จองอะไหล่ ---------- */
