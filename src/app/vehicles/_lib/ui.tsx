@@ -24,7 +24,7 @@ import { TertiaryBrandButton } from "@/components/vms/TertiaryBrandButton";
 import { TertiaryButton } from "@/components/vms/TertiaryButton";
 import { cx } from "@/lib/cx";
 import type { DueTone } from "@/lib/mock/maintenance";
-import { useRoleGuard } from "@/lib/mock/planFlow";
+import { useRoleGuard, UNIT_ROLES } from "@/lib/mock/planFlow";
 import { useRole } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 
@@ -36,11 +36,13 @@ export const detailHref = (carId: string) => "/vehicles/detail/?car=" + carId;
 export const PER = 10;
 
 /* Permission ของ Scenario 24: กบค. เห็นทุกคัน · หน่วยงานเจ้าของรถ เห็นเฉพาะรถในสังกัด · บทบาทอื่นกลับราก (useRoleGuard) */
-export const MA_ROLES = ["หน่วยงาน (กกฟ.1)", "กบค.", "หน่วยงานเจ้าของยานพาหนะ"] as const;   // 6 พ.ย. 2569 ผู้ดำเนินการ = หน่วยงาน · กบค. ยังเห็นข้อมูลทุกคัน
+/* 9 พ.ย. 2569 ตรวจสิทธิ์: หน่วยงานผู้ดำเนินการทุกหน่วยงาน (กกฟ.1 กกฟ.2 กรย.) เห็นเฉพาะยานพาหนะในแผนของตัวเอง (unit) · กบค. ทุกคัน · เดิมเฉพาะ กกฟ.1 */
+export const MA_ROLES = ["หน่วยงาน (กกฟ.1)", "หน่วยงาน (กกฟ.2)", "หน่วยงาน (กรย.)", "กบค.", "หน่วยงานเจ้าของยานพาหนะ"] as const;
 export function useMaAccess() {
   const ok = useRoleGuard(MA_ROLES);
-  const owner = useRole() === "หน่วยงานเจ้าของยานพาหนะ";
-  return { ok, owner };
+  const role = useRole();
+  const owner = role === "หน่วยงานเจ้าของยานพาหนะ";
+  return { ok, owner, unit: UNIT_ROLES[role] };
 }
 
 /* ---------- ช่องตาราง: { text, sub, tone } = บรรทัดรองสีตามสถานะ (toneText() ใน core.js) ---------- */

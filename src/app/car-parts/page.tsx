@@ -40,7 +40,7 @@ import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
 import { CAND, CAR_QTY, LAST_OIL, OIL_GRADES, OIL_PLAN_OPTS, OIL_SPEC, PARTS, PART_BM, PART_PRICE, PART_WH, oilChanges, type ManualPart, type OilSpec } from "@/lib/mock/data";
 import { inQuarter, type Draft } from "@/lib/mock/plan";
-import { PLAN_ROLES, carIndexOf, carParam, findPlan, oilChoice, useRoleGuard } from "@/lib/mock/planFlow";
+import { PLAN_ROLES, carIndexOf, carParam, findPlan, oilChoice, useRoleGuard, usePlanGate } from "@/lib/mock/planFlow";
 import { notify, setMock, useMock } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 
@@ -78,6 +78,7 @@ function CarParts() {
   const mock = useMock();
   const id = sp.get("id") ?? "new";
   const plan = id === "new" ? undefined : findPlan(mock.plans, id);
+  const denied = usePlanGate(plan, "own");   // หน่วยงานเปิดแผนของหน่วยงานอื่น → หน้ารายการ (ตรวจสิทธิ์ 9 พ.ย. 2569)
   const d = id === "new" ? mock.draft : mock.edit && plan && mock.edit.editOf === plan.mr ? mock.edit : null;
   const q = Number(sp.get("q")) || d?.q || 1;
   const cars = d ? inQuarter(d, q) : [];
@@ -98,6 +99,7 @@ function CarParts() {
     if (!buf) { const b = bufferOf(d, cars); setBuf(b); setOrig(JSON.stringify(b)); }
   }, [ok, d, cars, buf, formHref, router]);
   if (!ok || !d || !buf) return null;
+  if (denied) return null;
 
   const pIdx = carIndexOf(sp.get("car"));
   const car = cars.includes(pIdx) ? pIdx : cars[0];

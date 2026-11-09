@@ -34,8 +34,8 @@ function MaDetail() {
   const router = useRouter();
   const sp = useSearchParams();
   const mob = useBreakpoint() === "Mobile";
-  const { ok, owner } = useMaAccess();
-  const cars = useMaCars(owner);
+  const { ok, owner, unit } = useMaAccess();
+  const cars = useMaCars(owner, unit);
   const c = cars.find((x) => x.car.id === sp.get("car"));
   const [page, setPage] = useState(1);
   const [menu, setMenu] = useState<{ r: MaRecord; anchor: MenuAnchor } | null>(null);

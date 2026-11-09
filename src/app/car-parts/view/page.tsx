@@ -20,7 +20,7 @@ import { SectionLabel } from "@/components/vms/SectionLabel";
 import { Table, type TableValue } from "@/components/vms/Table";
 import { CAND, LAST_OIL, PARTS, PART_BM } from "@/lib/mock/data";
 import { carQty } from "@/lib/mock/plan";
-import { NO_DRAW, PLAN_ROLES, TODO_NONE, carIndexOf, findPlan, oilCellOf, oilChoice, otherParts, useRoleGuard } from "@/lib/mock/planFlow";
+import { NO_DRAW, PLAN_ROLES, TODO_NONE, carIndexOf, findPlan, oilCellOf, oilChoice, otherParts, useRoleGuard, usePlanGate } from "@/lib/mock/planFlow";
 import { useMock } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { CARP_PART_COLS } from "../cols";
@@ -35,6 +35,7 @@ function CarPartsView() {
   const mock = useMock();
   const id = sp.get("id") ?? "new";
   const plan = id === "new" ? undefined : findPlan(mock.plans, id);
+  const denied = usePlanGate(plan);   // หน่วยงานเปิดแผนของหน่วยงานอื่น → หน้ารายการ (ตรวจสิทธิ์ 9 พ.ย. 2569)
   const d = id === "new" ? mock.draft : mock.edit && plan && mock.edit.editOf === plan.mr ? mock.edit : null;
   const car = carIndexOf(sp.get("car"));
   const from = sp.get("from");
@@ -42,6 +43,7 @@ function CarPartsView() {
   const missing = !d || car < 0 || d.alloc[car] == null;
   useEffect(() => { if (ok && missing) router.replace(formHref); }, [ok, missing, formHref, router]);   // ไม่มีฟอร์มค้าง / ยานพาหนะไม่อยู่ในไตรมาสแล้ว → กลับฟอร์ม
   if (!ok || !d || missing) return null;
+  if (denied) return null;
 
   const c = CAND[car];
   const q = d.alloc[car];

@@ -14,7 +14,8 @@ import {
   type Job, type JobTrip, type OilChoice, type TripCar,
 } from "./jobs";
 import { useMock, type MockState } from "./store";
-import { OWN_UNIT, STAFF } from "./trips";
+import { OWN_UNIT, PLAN_ID, STAFF } from "./trips";
+import { unitOf } from "./data";
 
 /* วันนี้ของต้นแบบ = วันที่ของจอ Figma (MA_ROWS "วันนี้ 04/11/2569" · SIGN_DATE / JOB_TIMES ของ jobs.ts) — คงที่ให้ตรงจอ */
 export const MA_TODAY = SIGN_DATE;
@@ -162,16 +163,18 @@ export function maCar(car: TripCar, all: MaRecord[], today = dayOf(MA_TODAY)): M
 
 /* รถทุกคันของงานบำรุงรักษา (รถในงานรายคัน jobs.ts) + บันทึก · เรียงกำหนดครั้งถัดไปที่ใกล้สุดก่อน · คันที่ยังไม่มีบันทึกอยู่ท้าย
    owner = หน่วยงานเจ้าของรถ เห็นเฉพาะรถในสังกัด (OWN_UNIT) */
-export function maCars(m: MockState, owner = false): MaCar[] {
+/** unit = หน่วยงานผู้ดำเนินการ (กกฟ.1 กกฟ.2 กรย. กบค. · 9 พ.ย. 2569 ตรวจสิทธิ์) เห็นเฉพาะยานพาหนะในแผนของหน่วยงานตัวเอง (มีบันทึกของแผนนั้น · ยานพาหนะตัวอย่าง TRIP_CARS = แผน MRZ7000001) */
+export function maCars(m: MockState, owner = false, unit?: string): MaCar[] {
   const s = jobsOf(m);
   const fromJobs = Object.values(s.jobs).map((j) => (s.trips[j.tripId] ? jobRecord(j, s.trips[j.tripId]) : null)).filter((r): r is MaRecord => !!r);
   const all = [...SEED, ...fromJobs];
   /* รถตัวอย่าง (TRIP_CARS) + รถจากแผนที่สร้างในฟอร์มที่มีบันทึกแล้ว */
   const extra = [...new Set(fromJobs.map((r) => r.carId))].filter((id) => !TRIP_CARS.some((c) => c.id === id)).map(carOf).filter((c): c is TripCar => !!c);
   return [...TRIP_CARS, ...extra].filter((c) => !owner || c.owner === OWN_UNIT).map((c) => maCar(c, all))
+    .filter((x) => !unit || x.records.some((r) => unitOf(r.planMr) === unit) || (TRIP_CARS.some((t) => t.id === x.car.id) && unitOf("MR" + PLAN_ID) === unit))
     .sort((a, b) => (a.next ? a.next.due! : Infinity) - (b.next ? b.next.due! : Infinity) || a.car.plate.localeCompare(b.car.plate));
 }
-export function useMaCars(owner: boolean) { const m = useMock(); return useMemo(() => maCars(m, owner), [m, owner]); }
+export function useMaCars(owner: boolean, unit?: string) { const m = useMock(); return useMemo(() => maCars(m, owner, unit), [m, owner, unit]); }
 
 /* ---------- ข้อความในตาราง ---------- */
 export const oilText = (k?: OilChoice) => (k == null ? "-" : OIL_JOB_OPTS[k]);

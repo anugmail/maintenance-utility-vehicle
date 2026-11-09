@@ -97,7 +97,14 @@ export function quarterCars(s: Pick<MockState, "plans" | "qcars">, planId: strin
 export function quarterPool(s: Pick<MockState, "plans" | "qcars">, planId: string, q: number): TripCar[] {
   const p = planOfId(s.plans, planId);
   const inAny = new Set([1, 2, 3, 4].flatMap((k) => quarterCars(s, planId, k).map((c) => c.id)));
-  if (!hasAlloc(p)) return Q_EXTRA.filter((c) => !inAny.has(c.id));
+  if (!hasAlloc(p)) {
+    if (!p || p.mr === "MR" + PLAN_ID) return Q_EXTRA.filter((c) => !inAny.has(c.id));   // แผนตัวอย่างของ S6 = Q_EXTRA ของ screens.js
+    /* แผนตัวอย่างอื่น (9 พ.ย. 2569 ตรวจสิทธิ์): ยานพาหนะจำลองในภาคและประเภทของแผนที่ยังไม่อยู่ในแผนตัวอย่างใด (ค่าสมมติ) */
+    const taken = new Set(Object.values(SAMPLE_PLAN_Q).flatMap((m) => Object.values(m).flat().map((c) => c.id)));
+    const regions = planRegions(p), types = p.type.split(", ");
+    return CAND.filter((c) => regions.includes(regionOf(c).split(" (")[0]) && types.includes(c.type)).map((c) => carOf(candId(c.plate)))
+      .filter((c): c is TripCar => !!c && !inAny.has(c.id) && !taken.has(c.id));
+  }
   const regions = p.regions ?? [], districts = p.districts ?? [], types = p.types ?? p.type.split(", ");
   /* รถที่ฟอร์มเห็น (UNIT_FLEET = รถจำลองครบชุด 9 พ.ย. 2569) ในขอบเขตของแผนที่ยังไม่อยู่ในไตรมาสใด */
   return UNIT_FLEET.map((i) => CAND[i]).filter((c) => (!types.length || types.includes(c.type)) && (!districts.length || districts.includes(dCode(c)))

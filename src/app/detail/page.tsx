@@ -29,7 +29,7 @@ import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { TertiaryBrandButton } from "@/components/vms/TertiaryBrandButton";
 import { closeoutOf, planKv as runKv } from "@/lib/mock/closeout";
 import { PST, type PlanStatus } from "@/lib/mock/data";
-import { DELETE_CONFIRM, badgeOf, canManage, deletePlan, findPlan, planId, startEdit, useHydrated } from "@/lib/mock/planFlow";
+import { DELETE_CONFIRM, badgeOf, canManage, deletePlan, findPlan, planId, startEdit, useHydrated, usePlanGate } from "@/lib/mock/planFlow";
 import { useMock, useRole } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { PlanBody } from "./PlanBody";
@@ -46,11 +46,13 @@ function Detail() {
   const role = useRole();
   const mock = useMock();
   const plan = findPlan(mock.plans, sp.get("id"));
+  const denied = usePlanGate(plan);   // หน่วยงานเปิดแผนของหน่วยงานอื่น → หน้ารายการ (ตรวจสิทธิ์ 9 พ.ย. 2569)
   const [qSel, setQ] = useState<number | null>(null);   // แท็บที่เลือก · ยังไม่เลือก = ไตรมาสที่กำลังทำของแผน (9 พ.ย. 2569 MRZ7000002 ไตรมาส 2)
   const [del, setDel] = useState(false);
   const gone = hydrated && !plan;
   useEffect(() => { if (gone) router.replace("/"); }, [gone, router]);   // แผนไม่มีแล้ว (ลบ) → หน้ารายการ
   if (!hydrated || !plan) return null;
+  if (denied) return null;
 
   const st = plan.status;
   /* แก้ไข ลบ: หน่วยงานผู้สร้างแผน · กบค. เฉพาะแผนของ กบค. (แผนหน่วยงานอื่นดูอย่างเดียว · planDetail readonly ของ screens.js 6 พ.ย. 2569 รอบ 2) */

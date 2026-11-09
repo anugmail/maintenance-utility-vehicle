@@ -27,7 +27,7 @@ import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
 import { carOf, getJob, getTrip, OIL_JOB_OPTS, OIL_RESULT_OPTS, oilSampled, retRows, useJobs, type NewPart, type OilChoice, type OilSel, type PlanPart, type TripCar, type JobTrip } from "@/lib/mock/jobs";
 import { useMock, useRole } from "@/lib/mock/store";
-import { canManage } from "@/lib/mock/planFlow";
+import { canManage, usePlanGate } from "@/lib/mock/planFlow";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 
 export const MENU_NAME = "บำรุงรักษาตามวาระ";
@@ -62,6 +62,7 @@ export function useTripCar() {
   const plan = useMock().plans.find((x) => x.mr === trip?.planMr);
   /* ผู้ดำเนินการ = หน่วยงานเจ้าของแผน (canManage · กกฟ.1 กกฟ.2 กรย. กบค.) — 9 พ.ย. 2569 เดิมเฉพาะ กกฟ.1 ("แผนอนุมัติแล้ว แต่ไม่เจอแผนการเดินทางที่อนุมัติแล้ว") */
   const kbk = !!plan && canManage(role, plan);
+  usePlanGate(plan);   // หน่วยงานเปิดแผนเดินทาง/งานรายคันของแผนหน่วยงานอื่น → หน้ารายการ
   return { s, sp, role, trip, car, job, actor: !!trip && kbk, kbk };
 }
 

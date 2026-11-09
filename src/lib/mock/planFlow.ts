@@ -47,6 +47,23 @@ export const roleUnit = (r: Role) => UNIT_ROLES[r] ?? (r === "กบค." ? "ก
 export const visiblePlans = (r: Role, plans: Plan[]) => (r === "กบค." ? plans : plans.filter((p) => unitOf(p.mr, p.unit) === roleUnit(r)));
 /* จัดการแผนนี้ได้ (แก้ไข ลบ ตามสถานะ): ผู้สร้างแผนของหน่วยงานนั้นเท่านั้น (หน่วยงาน กกฟ.1 กกฟ.2 กรย. · กบค. = แผนของ กบค. · planRow view) */
 export const canManage = (r: Role, p: Plan) => { const u = roleUnit(r); return !!u && unitOf(p.mr, p.unit) === u; };
+/* ---------- สิทธิ์ต่อแผน (ตรวจสิทธิ์ 9 พ.ย. 2569 เจ้าของงาน "ทำไมหน้านี้ของ กกฟ2 เข้ามาในฐานะ กกฟ2 ก็ยังดูแผนการเดินทาง สร้างแผนการเดินทาง ไม่ได้ น่าจะเป็นเรื่อง permission") ----------
+   ownsPlan = หน่วยงานของบทบาท (UNIT_ROLES · กบค. = กบค.) ตรงกับหน่วยงานเจ้าของแผน ⇒ ทำงานทุกขั้นของแผนนั้นได้ (แก้ไข ลบ ไตรมาส แผนเดินทาง งานรายคัน ส่งประวัติ รายงานผล)
+   planAccess: own = เจ้าของ · view = กบค. ดูแผนของหน่วยงานอื่น (A.32 ดูอย่างเดียว) และบทบาทที่ไม่ใช่ผู้ดำเนินการ (ผู้อนุมัติ กรย. เจ้าของยานพาหนะ หัวหน้าหน่วยงาน · หน้าของบทบาทนั้นคุมสิทธิ์เอง)
+   · none = หน่วยงาน (กกฟ.1 กกฟ.2 กรย.) เปิดแผนของหน่วยงานอื่นด้วย URL ⇒ กลับหน้ารายการ (แบบแผนที่ไม่มีแล้ว · ไม่แสดงข้อมูล) */
+export const ownsPlan = (r: Role, p?: Plan) => !!p && canManage(r, p);
+export type PlanAccess = "own" | "view" | "none";
+export const planAccess = (r: Role, p?: Plan): PlanAccess => (!p ? "none" : canManage(r, p) ? "own" : UNIT_ROLES[r] ? "none" : "view");
+/** หน่วยงานเปิดแผนของหน่วยงานอื่น → หน้ารายการ · คืน true ระหว่างพาไป (หน้าไม่ต้องแสดงอะไร) */
+export function usePlanGate(plan: Plan | undefined, need: "view" | "own" = "view") {   // need = "own" หน้าแก้ไข (อะไหล่รายคัน S21) ต้องเป็นเจ้าของแผน
+  const router = useRouter();
+  const role = useRole();
+  const ready = useHydrated();
+  const a = plan ? planAccess(role, plan) : "view";
+  const deny = ready && !!plan && (a === "none" || (need === "own" && a !== "own"));
+  useEffect(() => { if (deny) router.replace("/"); }, [deny, router]);
+  return deny;
+}
 export function useRoleGuard(allowed: readonly Role[]) {
   const router = useRouter();
   const role = useRole();

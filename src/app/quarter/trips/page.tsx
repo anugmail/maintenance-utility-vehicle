@@ -40,7 +40,7 @@ import { useSample, type SampleMap } from "@/lib/useSample";
 import { RowMenu, anchorOf, type MenuAnchor } from "@/components/patterns/RowMenu";
 import { MoveModal, type MoveTarget } from "../_shared/MoveModal";
 import { notify, useMock, useRole } from "@/lib/mock/store";
-import { canManage } from "@/lib/mock/planFlow";
+import { canManage, usePlanGate } from "@/lib/mock/planFlow";
 import { TST, addQuarterCars, badgeOf, ctrlCell, editQuarterCar, putTrip, qEditOf, quarterCars, quarterPool, quarterTrips, removeQuarterCar, tripBy, tripPlaces, tripRange, vTrip, type TripCar } from "@/lib/mock/trips";
 import { tripVCells, tripVCols, workOf } from "@/lib/mock/tripCols";
 import { useBreakpoint } from "@/lib/useBreakpoint";
@@ -72,6 +72,7 @@ function TripList() {
   const plan = planOf(mock, id);
   /* ผู้ดำเนินการ = หน่วยงานเจ้าของแผน (canManage · กกฟ.1 กกฟ.2 กรย. กบค.) — 9 พ.ย. 2569 เดิมเฉพาะ กกฟ.1 ("แผนอนุมัติแล้ว แต่ไม่เจอแผนการเดินทางที่อนุมัติแล้ว") */
   const kbk = !!plan && canManage(role, plan);   // อื่น (กบค. ดูแผนของหน่วยงานอื่น · A.32) = ดูอย่างเดียว ไม่มีปุ่มเพิ่ม แก้ไข สร้าง
+  const denied = usePlanGate(plan);   // หน่วยงานเปิดแผนของหน่วยงานอื่น → หน้ารายการ (ตรวจสิทธิ์ 9 พ.ย. 2569)
   const trips = quarterTrips(mock, id, q);
   const cars = quarterCars(mock, id, q);
   const mob = useBreakpoint() === "Mobile";
@@ -116,6 +117,7 @@ function TripList() {
   const create = (Btn: typeof PrimaryButton | typeof TertiaryBrandButton) => kbk ? <Btn Text="สร้างแผนเดินทาง" LeadingIconSwap="add-24-300-round" State={free ? "Default" : "Disabled"} onClick={() => free && router.push(newHref)} /> : undefined;
 
   if (sampling) return null;
+  if (denied) return null;
   return (
     <>
       <PageHeader Title={nowQ} Badge={badgeOf(PST[plan?.status ?? "active"])} onBack={back} crumbs={quarterCrumbs(id, plan?.name ?? mrOf(id), q)} />

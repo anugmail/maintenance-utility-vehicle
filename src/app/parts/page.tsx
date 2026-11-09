@@ -33,15 +33,16 @@ import {
   EXPORT_ALL_SUB, EXPORT_CARDS, NO_FILTER, QPART_COLS, QST, aggRows, carRows, dashPlanOf, filterCount, progRows, sortAll,
   type CarRow, type DashFilter, type ProgRow,
 } from "@/lib/mock/partsDash";
-import { useRoleGuard } from "@/lib/mock/planFlow";
+import { UNIT_ROLES, useRoleGuard } from "@/lib/mock/planFlow";
 import { useSeed } from "@/lib/mock/seedB";
-import { notify } from "@/lib/mock/store";
+import { notify, useRole } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { Metrics, RadioPick, SORT0, SortTable, nextSort, sortRows, type Sort } from "./_lib/ui";
 import { downloadCsv, openPrint } from "./_lib/exportFile";
 
 /* Permission: กบค. ดูแผนที่อนุมัติแล้วของทุกหน่วยงาน · หน่วยงาน (กกฟ.1) เปิดได้ด้วย (เมนูเดียวกันทุกบทบาท · รอเคาะ BACKLOG ข้อ 22 หมวด ค.) */
-const DASH_ROLES = ["กบค.", "หน่วยงาน (กกฟ.1)"] as const;
+/* 9 พ.ย. 2569 ตรวจสิทธิ์: หน่วยงานผู้ดำเนินการทุกหน่วยงานเปิดได้ เห็นเฉพาะแผนของหน่วยงานตัวเอง (ตัวกรองหน่วยงานถูกตั้งเป็นหน่วยงานตัวเองเสมอ) · กบค. ทุกหน่วยงาน */
+const DASH_ROLES = ["กบค.", "หน่วยงาน (กกฟ.1)", "หน่วยงาน (กกฟ.2)", "หน่วยงาน (กรย.)"] as const;
 const COLS = [sortAll(QPART_COLS), sortAll(DASH_CAR_COLS), sortAll(DASH_PROG_COLS)];
 const ALL_N = [DASH_AGG.length, DASH_CARS.length, DASH_PROG.length];
 
@@ -62,6 +63,7 @@ function PartsDash() {
   const sp = useSearchParams();
   const seeding = useSeed();
   const ok = useRoleGuard(DASH_ROLES);
+  const role = useRole();
   const mob = useBreakpoint() === "Mobile";
   const [tab, setTab] = useState(0);
   const [query, setQuery] = useState("");
@@ -78,10 +80,13 @@ function PartsDash() {
     return [{ text: r[0], sub: p?.unit }, p?.name ?? "", "ไตรมาส " + r[1], r[2] + " ใบ", r[3] + "/" + r[4] + " คัน", { pills: [QST[r[5]]] },
       go("ไปหน้าไตรมาส " + r[1] + " ของ " + r[0], () => router.push(tripsHref(id, r[1])))];
   };
-  const rowsOf = (t: number): TableValue[][] =>
-    t === 0 ? aggRows(query, filter) : t === 1 ? carRows(query, filter).map(carRow) : progRows(query, filter).map(progRow);
+  const scope = UNIT_ROLES[role];   // หน่วยงาน = แผนของตัวเองเท่านั้น
+  const eff = (f: DashFilter): DashFilter => (scope ? { ...f, units: [scope] } : f);
+  const rowsOf = (t: number, q = query, f = filter): TableValue[][] =>
+    t === 0 ? aggRows(q, eff(f)) : t === 1 ? carRows(q, eff(f)).map(carRow) : progRows(q, eff(f)).map(progRow);
   const rows = sortRows(rowsOf(tab), sort);
-  const allRows = (t: number): TableValue[][] => (t === 0 ? DASH_AGG : t === 1 ? DASH_CARS.map(carRow) : DASH_PROG.map(progRow));
+  const allRows = (t: number): TableValue[][] => (scope ? rowsOf(t, "", NO_FILTER) : t === 0 ? DASH_AGG : t === 1 ? DASH_CARS.map(carRow) : DASH_PROG.map(progRow));
+  const allN = scope ? [0, 1, 2].map((t) => allRows(t).length) : ALL_N;   // หน่วยงาน = นับเฉพาะแผนของตัวเอง
   const chips = chipsOf(filter);
 
   if (seeding || !ok) return null;
@@ -101,7 +106,7 @@ function PartsDash() {
     const doc = {
       title: "รายงาน" + DASH_TITLE + " · ปีงบประมาณ " + DASH_YEAR,
       info: [["หน่วยงานที่ออกเอกสาร", "กกฟ.1 การไฟฟ้าส่วนภูมิภาค"], ["ตัวกรอง", all || !chips.length ? "-" : chips.join(", ")], ["พิมพ์เมื่อ", new Date().toLocaleString("th-TH")], ["ผู้พิมพ์", PLAN_CREATOR]] as [string, string][],
-      section: DASH_TABS[tab] + " (" + (all ? ALL_N[tab] : rows.length) + ")",
+      section: DASH_TABS[tab] + " (" + (all ? allN[tab] : rows.length) + ")",
       cols: COLS[tab], rows: all ? allRows(tab) : rows, file: DASH_TITLE + "-" + DASH_TABS[tab],
     };
     if (exp.format === "PDF") openPrint(doc); else downloadCsv(doc);
@@ -116,7 +121,7 @@ function PartsDash() {
       {empty ? (
         <EmptyStateDataEmpty Text="ยังไม่มีแผนที่อนุมัติแล้ว" SupportingText="เมื่อแผนบำรุงรักษาได้รับอนุมัติ อะไหล่และความคืบหน้าของแผนจะรวมมาที่นี่" />
       ) : <>
-        <Tabs>{DASH_TABS.map((t, i) => <TabItem key={t} Text={t} Badge={ALL_N[i]} Active={tab === i} onClick={() => pickTab(i)} />)}</Tabs>
+        <Tabs>{DASH_TABS.map((t, i) => <TabItem key={t} Text={t} Badge={allN[i]} Active={tab === i} onClick={() => pickTab(i)} />)}</Tabs>
         <Metrics />
         <section className="flex flex-col gap-6">
           <TableHeader Placeholder={DASH_HINT[tab]} query={query} onQuery={putQuery} onFilter={openPanel} FilterCount={filterCount(filter)}
@@ -148,7 +153,7 @@ function PartsDash() {
           <RadioPick title="รูปแบบไฟล์" options={EXPORT_CARDS} value={exp.format} onChange={(v) => setExp({ ...exp, format: v })} />
           <RadioPick title="ข้อมูลที่ส่งออก" value={exp.scope} onChange={(v) => setExp({ ...exp, scope: v })} options={[
             { Text: "ตามตัวกรองที่ใช้อยู่", SupportingText: rows.length + " รายการตามแท็บ " + DASH_TABS[tab] + (chips.length ? " และตัวกรองที่ใช้อยู่" : "") },
-            { Text: "ทั้งหมด", SupportingText: ALL_N[tab] + EXPORT_ALL_SUB },
+            { Text: "ทั้งหมด", SupportingText: allN[tab] + EXPORT_ALL_SUB },
           ]} />
         </>}
       </PopupModal>
