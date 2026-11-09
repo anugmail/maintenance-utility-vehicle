@@ -6,12 +6,13 @@
 /* S10 แผนจ้างดำเนินการ (จอ I.22) — ทางที่ใช้แทน S11 S23 */
 const HIRE_S10 = "/trips/detail/?trip=TV&sample=TV_mid";
 const sample = (q: Record<string, string>) => "/scenarios/sample/?" + new URLSearchParams(q).toString();
-/* 6 พ.ย. 2569 ชื่อ S1 S6 S19 S20 S21 ตาม SCENARIOS ของ screens.js: ผู้สร้างแผน/ผู้ดำเนินการ = หน่วยงาน (เดิม กบค.) */
+/* 6 พ.ย. 2569 ชื่อ S1 S6 S19 S20 S21 ตาม SCENARIOS ของ screens.js: ผู้สร้างแผน/ผู้ดำเนินการ = หน่วยงาน (เดิม กบค.)
+   9 พ.ย. 2569 S1 persona 3 หน่วยงาน + กบค. (A.1 A.39 A.40 A.31) — เปิดจาก href ด้วย กกฟ.1 · บทบาทอื่นเลือกที่แถบต้นแบบ หรือเคสพาดูของ S1 */
 /* alt = ชื่อหน้าที่ใช้แทนของแถวที่ตัดออก (ป้ายปุ่มเปิด "เปิด {alt} (แทน S…)") */
 export interface Scenario { id: string; name: string; phase: string; role: string; href?: string; cut?: string; alt?: string }
 
 export const SCENARIOS: Scenario[] = [
-  { id: "S1", name: "หน่วยงาน สร้างแผนบำรุงรักษาประจำปี และจัดยานพาหนะลงไตรมาส", phase: "เตรียมดำเนินการ", role: "หน่วยงาน (กกฟ.1)", href: sample({ role: "หน่วยงาน (กกฟ.1)", go: "/" }) },
+  { id: "S1", name: "หน่วยงาน สร้างแผนบำรุงรักษาประจำปี และจัดยานพาหนะลงไตรมาส", phase: "เตรียมดำเนินการ", role: "หน่วยงาน (กกฟ.1) · หน่วยงาน (กกฟ.2) · หน่วยงาน (กรย.) · กบค.", href: sample({ role: "หน่วยงาน (กกฟ.1)", go: "/" }) },
   { id: "S2", name: "ผู้อนุมัติ ตรวจสอบและอนุมัติแผนบำรุงรักษา", phase: "เตรียมดำเนินการ", role: "ผู้อนุมัติ", href: sample({ plan: "review", role: "ผู้อนุมัติ", go: "/approvals/plans/" }) },
   { id: "S19", name: "หน่วยงาน แก้ไขแผนบำรุงรักษา แล้วส่งอนุมัติใหม่", phase: "เตรียมดำเนินการ", role: "หน่วยงาน (กกฟ.1)", href: sample({ plan: "returned", role: "หน่วยงาน (กกฟ.1)", go: "/" }) },
   { id: "S20", name: "หน่วยงาน ลบแผนบำรุงรักษาที่ยังไม่อนุมัติ", phase: "เตรียมดำเนินการ", role: "หน่วยงาน (กกฟ.1)", href: sample({ plan: "review", role: "หน่วยงาน (กกฟ.1)", go: "/" }) },

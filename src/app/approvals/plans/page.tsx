@@ -10,7 +10,7 @@ import { PageHeader } from "@/components/vms/PageHeader";
 import { Table, type TableColumn, type TableValue } from "@/components/vms/Table";
 import { TableHeader } from "@/components/vms/TableHeader";
 import { TablePagination } from "@/components/vms/TablePagination";
-import { PLAN_CREATOR_SHORT, PST, unitOf } from "@/lib/mock/data";
+import { PST, creatorName, unitOf } from "@/lib/mock/data";
 import { scopeCell } from "@/lib/mock/plan";
 import { planId, useRoleGuard } from "@/lib/mock/planFlow";
 import { useMock } from "@/lib/mock/store";
@@ -32,11 +32,11 @@ export default function ApprovalList() {
   const [page, setPage] = useState(1);
   const rows = useMemo(() => {
     const q = query.trim();
-    return plans.filter((p) => (p.status === "review" || p.status === "returned") && (!q || p.name.includes(q) || PLAN_CREATOR_SHORT.includes(q)));
+    return plans.filter((p) => (p.status === "review" || p.status === "returned") && (!q || p.name.includes(q) || creatorName(p).includes(q)));
   }, [plans, query]);
   if (!ok) return <AppFrame>{null}</AppFrame>;
   const data: TableValue[][] = rows.slice((page - 1) * PER, page * PER).map((p) => [
-    p.name, p.year, { text: PLAN_CREATOR_SHORT, sub: unitOf(p.mr) }, scopeCell(p),   // reviewRow 6 พ.ย. 2569: ชื่อ + หน่วยงานบรรทัดรอง
+    p.name, p.year, { text: creatorName(p), sub: unitOf(p.mr, p.unit) }, scopeCell(p),   // reviewRow 6 พ.ย. 2569: ชื่อ + หน่วยงานบรรทัดรอง · ชื่อ = persona ของหน่วยงาน (9 พ.ย. 2569)
     p.cars + " คัน", p.sentAt ?? p.created, { pills: [PST[p.status]] },
     { actions: [{ IconSwap: "keyboard_arrow_right-20-400-round", label: "เปิด " + p.name, onClick: () => router.push("/approvals/plans/detail/?id=" + planId(p)) }] },
   ]);

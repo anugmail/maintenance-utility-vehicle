@@ -6,6 +6,7 @@
    มือถือ: ตารางเป็น Mobile table (1 แผน = 1 การ์ด) · ปุ่มหัวหน้าอยู่ใต้หัวข้อ · เมนู "…" เป็น bottom sheet
    เมนู "…" ตามสถานะ (S19 S20 · planMenu): ดูรายละเอียด → /detail/ · แก้ไข → /edit/ (S19) · ลบ → ยืนยันการลบแผน (S20) แล้ว toast "ลบแผนบำรุงรักษาสำเร็จ"
    สิทธิ์: สร้าง/แก้ไข/ลบ เฉพาะหน่วยงานผู้สร้างแผน (6 พ.ย. 2569 ผู้สร้างแผน = หน่วยงาน กกฟ.1 · กกฟ.2 · กรย. · กบค. — UNITS)
+   หน่วยงาน กกฟ.1 กกฟ.2 กรย. (persona 9 พ.ย. 2569 · ownPlans ของ screens.js · A.1 A.39 A.40): เห็นเฉพาะแผนของหน่วยงานตัวเอง ไม่มีบรรทัดรองหน่วยงาน มีปุ่มสร้างแผน · ไม่มีแผนของตัวเอง = Empty state
    กบค. (listScreen view ของ screens.js · 6 พ.ย. 2569 รอบ 2 "กบค จะทำแผนจะมีรถของ กฝช. ด้วย"): รายการแผนทุกหน่วยงาน มีปุ่มสร้างแผน · เลขที่ MR มีบรรทัดรอง = หน่วยงาน (PLAN_UNIT)
      · แผนของ กบค. (MRZ7100001) เมนู … ตามสถานะแบบปกติ · แผนของหน่วยงานอื่น เมนูเหลือดูรายละเอียด → รายละเอียดแผนไม่มีปุ่ม (canManage)
    ผู้อนุมัติเข้ารากแล้วไปหน้าเริ่มของบทบาท (routes.md §2: /approvals/plans/ · กบค. คลัง ตัดพร้อม S22 6 พ.ย. 2569)
@@ -32,7 +33,7 @@ import { TableHeader } from "@/components/vms/TableHeader";
 import { TablePagination } from "@/components/vms/TablePagination";
 import { DISTRICTS, MENU, UNITS, unitOf } from "@/lib/mock/data";
 import { PLAN_COLS, menuCount, planDistricts, planRow } from "@/lib/mock/plan";
-import { DELETE_CONFIRM, PLAN_ROLES, canManage, deletePlan, roleHome, planId, startEdit, useHydrated } from "@/lib/mock/planFlow";
+import { DELETE_CONFIRM, PLAN_ROLES, canManage, deletePlan, roleHome, planId, startEdit, useHydrated, visiblePlans } from "@/lib/mock/planFlow";
 import { FilterShell } from "@/app/vehicles/_lib/ui";
 import { useMock, useRole } from "@/lib/mock/store";
 import type { Plan } from "@/lib/mock/data";
@@ -46,9 +47,9 @@ export default function PlanList() {
   const router = useRouter();
   const mob = useBreakpoint() === "Mobile";
   const mock = useMock();
-  const { plans } = mock;
   const role = useRole();
-  const creator = PLAN_ROLES.includes(role);   // ผู้สร้างแผน: หน่วยงาน (กกฟ.1) · กบค. (6 พ.ย. 2569 รอบ 2)
+  const plans = useMemo(() => visiblePlans(role, mock.plans), [role, mock.plans]);   // กกฟ.1 กกฟ.2 กรย. เห็นเฉพาะแผนของตัวเอง (ownPlans) · กบค. ทุกหน่วยงาน (allPlans · 9 พ.ย. 2569)
+  const creator = PLAN_ROLES.includes(role);   // ผู้สร้างแผน: หน่วยงาน (กกฟ.1 · กกฟ.2 · กรย.) · กบค. (6 พ.ย. 2569 รอบ 2 · 9 พ.ย. 2569)
   const view = role === "กบค.";              // กบค. เห็นแผนทุกหน่วยงาน (หน่วยงานเป็นบรรทัดรองของเลขที่ MR)
   const hydrated = useHydrated();
   const home = hydrated ? roleHome(role, mock) : undefined;

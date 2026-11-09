@@ -39,7 +39,7 @@ function Detail() {
   const mob = useBreakpoint() === "Mobile";
   const hydrated = useHydrated();
   const role = useRole();
-  const kbk = role === "หน่วยงาน (กกฟ.1)";
+  const kbk = role === "หน่วยงาน (กกฟ.1)";   // ทางไปขั้นถัดไป (ไตรมาส · ส่งประวัติ · รายงานผล) เฉพาะ กกฟ.1 — จอ S6 ขึ้นไปของ Figma มีแต่ข้อมูลของ กกฟ.1 · กกฟ.2 กรย. (persona 9 พ.ย. 2569) มีจอแค่รายการแผน A.39 A.40
   const mock = useMock();
   const plan = findPlan(mock.plans, sp.get("id"));
   const [q, setQ] = useState(1);

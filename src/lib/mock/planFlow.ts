@@ -38,10 +38,15 @@ export function useHydrated() {
   return useSyncExternalStore(noop, () => true, () => false);
 }
 /* หน่วยงานของบทบาทผู้สร้างแผน (6 พ.ย. 2569 รอบ 2: กบค. สร้างแผนได้ · แผนของหน่วยงานอื่น กบค. ดูอย่างเดียว) — ไม่ใช่ผู้สร้างแผน = undefined */
-export const PLAN_ROLES: readonly Role[] = ["หน่วยงาน (กกฟ.1)", "กบค."];
-export const roleUnit = (r: Role) => (r === "หน่วยงาน (กกฟ.1)" ? "กกฟ.1" : r === "กบค." ? "กบค." : undefined);
-/* จัดการแผนนี้ได้ (แก้ไข ลบ ตามสถานะ): หน่วยงาน (กกฟ.1) = ทุกแผนในรายการ (listScreen ไม่มี view ของ screens.js) · กบค. = แผนของ กบค. เท่านั้น (planRow view) */
-export const canManage = (r: Role, p: Plan) => r === "หน่วยงาน (กกฟ.1)" || (r === "กบค." && unitOf(p.mr, p.unit) === "กบค.");
+/* 9 พ.ย. 2569 persona 3 หน่วยงาน (Figma 9d7d1a7 · ownPlans / allPlans ของ screens.js): กกฟ.1 กกฟ.2 กรย. สร้างแผนได้ หน้ารายการเห็นเฉพาะแผนของหน่วยงานตัวเอง (A.1 A.39 A.40)
+   · กบค. เห็นแผนทุกหน่วยงาน (A.31) สร้างแผนของ กบค. ได้ แผนของหน่วยงานอื่นดูอย่างเดียว */
+export const UNIT_ROLES: Partial<Record<Role, string>> = { "หน่วยงาน (กกฟ.1)": "กกฟ.1", "หน่วยงาน (กกฟ.2)": "กกฟ.2", "หน่วยงาน (กรย.)": "กรย." };
+export const PLAN_ROLES: readonly Role[] = [...(Object.keys(UNIT_ROLES) as Role[]), "กบค."];
+export const roleUnit = (r: Role) => UNIT_ROLES[r] ?? (r === "กบค." ? "กบค." : undefined);
+/* แผนที่บทบาทนี้เห็นในหน้ารายการ: กบค. = ทุกหน่วยงาน (allPlans) · ผู้สร้างแผนของหน่วยงาน = แผนของหน่วยงานตัวเอง (ownPlans) */
+export const visiblePlans = (r: Role, plans: Plan[]) => (r === "กบค." ? plans : plans.filter((p) => unitOf(p.mr, p.unit) === roleUnit(r)));
+/* จัดการแผนนี้ได้ (แก้ไข ลบ ตามสถานะ): ผู้สร้างแผนของหน่วยงานนั้นเท่านั้น (หน่วยงาน กกฟ.1 กกฟ.2 กรย. · กบค. = แผนของ กบค. · planRow view) */
+export const canManage = (r: Role, p: Plan) => { const u = roleUnit(r); return !!u && unitOf(p.mr, p.unit) === u; };
 export function useRoleGuard(allowed: readonly Role[]) {
   const router = useRouter();
   const role = useRole();
