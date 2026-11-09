@@ -64,8 +64,11 @@ export const planDistricts = (p: Plan): string[] => {
 };
 export const scopeCell = (p: Plan) => { const [text, sub] = planScope(p); return { text: text || "-", sub }; };
 /* view = กบค. ดูแผนทุกหน่วยงาน (planRow(p, view) ของ screens.js 6 พ.ย. 2569): หน่วยงานเจ้าของแผนเป็นบรรทัดรองของเลขที่ MR */
+/* มุม กบค. (view · เห็นแผนทุกหน่วยงาน) — 9 พ.ย. 2569 เจ้าของงาน "หน้านี้น่าจะต้องเพิ่มคอลัมม์ หน่วยงานเจ้าของเรื่อง ด้วย" (Figma 5dfd978 · PLAN_COLS_ALL ของ screens.js)
+   คอลัมน์ "หน่วยงานเจ้าของเรื่อง" (กว้าง 140 · Text) ต่อจากเลขที่ MR แทนบรรทัดรองใต้เลขที่ MR · มุมหน่วยงาน (เห็นแต่แผนของตัวเอง) ไม่มีคอลัมน์นี้ · มือถือเป็นช่องหนึ่งของการ์ด */
+export const PLAN_COLS_ALL = [PLAN_COLS[0], { head: "หน่วยงานเจ้าของเรื่อง", width: 140 }, ...PLAN_COLS.slice(1)];
 export const planRow = (p: Plan, menu: TableValue, view = false): TableValue[] =>
-  [view ? { text: p.mr, sub: unitOf(p.mr, p.unit) } : p.mr, { text: p.name, sub: "ปีงบประมาณ " + p.year }, scopeCell(p), String(p.cars), qCell(p.perQ), { pills: [PST[p.status]] }, menu];
+  [p.mr, ...(view ? [unitOf(p.mr, p.unit)] : []), { text: p.name, sub: "ปีงบประมาณ " + p.year }, scopeCell(p), String(p.cars), qCell(p.perQ), { pills: [PST[p.status]] }, menu];
 
 /* เมนู "…" ตามสถานะแผน (S19 S20): ก่อนอนุมัติ ดูรายละเอียด แก้ไข ลบ · อนุมัติแล้ว ดูรายละเอียด แก้ไข · ดำเนินการแล้ว ดูรายละเอียดอย่างเดียว */
 export const menuCount = (p: Plan) => (p.status === "review" || p.status === "returned" ? 3 : p.status === "approved" ? 2 : 1);

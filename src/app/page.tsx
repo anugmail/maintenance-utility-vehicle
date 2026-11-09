@@ -7,7 +7,7 @@
    เมนู "…" ตามสถานะ (S19 S20 · planMenu): ดูรายละเอียด → /detail/ · แก้ไข → /edit/ (S19) · ลบ → ยืนยันการลบแผน (S20) แล้ว toast "ลบแผนบำรุงรักษาสำเร็จ"
    สิทธิ์: สร้าง/แก้ไข/ลบ เฉพาะหน่วยงานผู้สร้างแผน (6 พ.ย. 2569 ผู้สร้างแผน = หน่วยงาน กกฟ.1 · กกฟ.2 · กรย. · กบค. — UNITS)
    หน่วยงาน กกฟ.1 กกฟ.2 กรย. (persona 9 พ.ย. 2569 · ownPlans ของ screens.js · A.1 A.39 A.40): เห็นเฉพาะแผนของหน่วยงานตัวเอง ไม่มีบรรทัดรองหน่วยงาน มีปุ่มสร้างแผน · ไม่มีแผนของตัวเอง = Empty state
-   กบค. (listScreen view ของ screens.js · 6 พ.ย. 2569 รอบ 2 "กบค จะทำแผนจะมีรถของ กฝช. ด้วย"): รายการแผนทุกหน่วยงาน มีปุ่มสร้างแผน · เลขที่ MR มีบรรทัดรอง = หน่วยงาน (PLAN_UNIT)
+   กบค. (listScreen view ของ screens.js · 6 พ.ย. 2569 รอบ 2 "กบค จะทำแผนจะมีรถของ กฝช. ด้วย"): รายการแผนทุกหน่วยงาน มีปุ่มสร้างแผน · คอลัมน์ "หน่วยงานเจ้าของเรื่อง" ต่อจากเลขที่ MR (PLAN_COLS_ALL · Figma 5dfd978 · 9 พ.ย. 2569 แทนบรรทัดรองใต้เลขที่ MR)
      · แผนของ กบค. (MRZ7100001) เมนู … ตามสถานะแบบปกติ · แผนของหน่วยงานอื่น เมนูเหลือดูรายละเอียด → รายละเอียดแผนไม่มีปุ่ม (canManage)
    ผู้อนุมัติเข้ารากแล้วไปหน้าเริ่มของบทบาท (routes.md §2: /approvals/plans/ · กบค. คลัง ตัดพร้อม S22 6 พ.ย. 2569)
    แผงตัวกรอง (listScreen o.filter · 6 พ.ย. 2569 รีวิว "filter หน้ารายการแผน เขต · หน่วยงานหน้างาน กรย. 12 เขต, กกฟ. 1and2" + "กบค. อยากเห็นทุกแผน"):
@@ -32,7 +32,7 @@ import { Table, type TableValue } from "@/components/vms/Table";
 import { TableHeader } from "@/components/vms/TableHeader";
 import { TablePagination } from "@/components/vms/TablePagination";
 import { DISTRICTS, MENU, UNITS, unitOf } from "@/lib/mock/data";
-import { PLAN_COLS, menuCount, planDistricts, planRow } from "@/lib/mock/plan";
+import { PLAN_COLS, PLAN_COLS_ALL, menuCount, planDistricts, planRow } from "@/lib/mock/plan";
 import { DELETE_CONFIRM, PLAN_ROLES, canManage, deletePlan, roleHome, planId, startEdit, useHydrated, visiblePlans } from "@/lib/mock/planFlow";
 import { FilterShell } from "@/app/vehicles/_lib/ui";
 import { useMock, useRole } from "@/lib/mock/store";
@@ -109,11 +109,11 @@ export default function PlanList() {
           <EmptyStateSearchNotFound Actions={<SecondaryButton Text="ล้างตัวกรอง" Size={mob ? "lg" : "md"} onClick={() => { setQuery(""); setApplied(NONE); setPage(1); }} />} />
         ) : mob ? (
           <div className="flex flex-col gap-5">
-            <MobileCards columns={PLAN_COLS} rows={data} rowKey={mrKey} />
+            <MobileCards columns={view ? PLAN_COLS_ALL : PLAN_COLS} rows={data} rowKey={mrKey} />
             <TablePagination total={rows.length} page={page} perPage={PER} onPage={setPage} />
           </div>
         ) : (
-          <Table columns={PLAN_COLS} rows={data} rowKey={mrKey} Pagination={<TablePagination total={rows.length} page={page} perPage={PER} onPage={setPage} />} />
+          <Table columns={view ? PLAN_COLS_ALL : PLAN_COLS} rows={data} rowKey={mrKey} Pagination={<TablePagination total={rows.length} page={page} perPage={PER} onPage={setPage} />} />
         )}
       </section>
       )}
