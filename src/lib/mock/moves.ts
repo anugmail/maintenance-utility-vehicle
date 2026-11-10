@@ -29,16 +29,22 @@ export function cannotTrip(s: MockState, planId: string, q: number, carId: strin
   return job.status === "cannot" ? { trip: t, reason: job.cannot?.reason ?? "-" } : null;
 }
 
-/** อะไหล่ตามแผนของรถคันนี้ (ย้ายไปด้วย): แผนที่จัดรถรายคัน = อะไหล่ที่ กบค. กำหนดให้รถ (S21) · แผนตัวอย่าง = อะไหล่ตามแผนของงานรายคัน (WORK) */
-export function carPlanParts(s: MockState, planId: string, carId: string, tripId?: string): { name: string; qty: number; unit: string }[] {
+/** อะไหล่ตามแผนของรถคันนี้ (ย้ายไปด้วย): แผนที่จัดรถรายคัน = อะไหล่ที่ กบค. กำหนดให้รถ (S21) · แผนตัวอย่าง = อะไหล่ตามแผนของงานรายคัน (WORK)
+    แถวมี ชนิด · รหัสอะไหล่ · ประเภท · จำนวน · หน่วย ให้ popup ย้ายไปไตรมาสอื่นใช้ QPART_COLS (movePartRows ของ screens.js 10 พ.ย. 2569 · R81)
+    อะไหล่ของงานรายคันหาประเภทจาก PARTS ตามชื่อ (MOVE_PART_OF) · ไม่พบ = "-" */
+export interface CarPlanPart { name: string; code: string; group: string; qty: number; unit: string }
+export function carPlanParts(s: MockState, planId: string, carId: string, tripId?: string): CarPlanPart[] {
   const p = s.plans.find((x) => x.mr === "MR" + planId);
   const i = CAND.findIndex((c) => candId(c.plate) === carId);
   if (p?.alloc && i >= 0 && p.alloc[i] != null) {
     const a = allocOf(p);
-    return quarterRows({ ...a, alloc: { [i]: p.alloc[i] } }, p.alloc[i]).map((r) => ({ name: r.name, qty: r.qty, unit: r.unit }));
+    return quarterRows({ ...a, alloc: { [i]: p.alloc[i] } }, p.alloc[i]).map((r) => ({ name: r.name, code: r.code, group: r.group, qty: r.qty, unit: r.unit }));
   }
   if (!tripId) return [];
-  return getJob(jobsOf(s), tripId, carId).parts.map((x) => ({ name: x.part, qty: x.planQty, unit: x.unit }));
+  return getJob(jobsOf(s), tripId, carId).parts.map((x) => {
+    const k = PARTS.find((y) => y.name === x.part);
+    return { name: k?.name ?? x.part, code: k?.code ?? "-", group: k?.group ?? "-", qty: x.planQty, unit: x.unit };
+  });
 }
 
 /** ย้ายรถ: เข้าไตรมาสใหม่ก่อน (อะไหล่ของรถไม่หาย) แล้วออกจากไตรมาสเดิม · toast "ย้ายรถ {ทะเบียน} ไปไตรมาส {k} สำเร็จ" */
