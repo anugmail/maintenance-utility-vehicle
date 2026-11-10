@@ -7,7 +7,7 @@
        · รายการงานและอะไหล่ที่ใช้จริง · คะแนนประเมินความพึงพอใจงานบำรุงรักษา 1–5 (RepairFeedback · ไม่มีค่าเริ่มต้น) — แทนไฟล์ PDF แบบเดิม
      บำรุงรักษาไม่ได้: สาเหตุที่บำรุงรักษาไม่ได้ (สาเหตุ · ผู้บันทึก · วันที่บันทึก) แทนผลงาน · ไม่มีประเมิน (เสนอ Q59)
    → ปุ่ม ย้อนกลับ + "รับทราบ" สีเขียว (AckButton) — ยังไม่เลือกคะแนน = Disabled · กดแล้วบันทึกทันที ไม่มี popup → ปุ่มหาย ป้ายรับทราบแล้ว + toast "รับทราบผลการบำรุงรักษา {ทะเบียน} แล้ว"
-   กดได้เฉพาะบทบาท ผู้ดูแลยานพาหนะ (Permission S13) · บทบาทอื่นเห็นปุ่มย้อนกลับอย่างเดียว · รับทราบครบทุกคันในแผนแล้วระบบส่งประวัติให้หัวหน้าหน่วยงานเอง (acceptCar)
+   กดได้เฉพาะบทบาท ผู้ดูแลยานพาหนะ (Permission S13) · บทบาทอื่นเห็นปุ่มย้อนกลับอย่างเดียว · รับทราบครบทุกคันในแผนแล้วแผนปิดงานเอง (acceptCar · S16 S17 ตัดออก Figma 6299e1d)
    อ้างอิง: Section label · Table · Images · Primary button (พื้น Color/surface/success) · Radio text card ของไฟล์ Component + VehicleAndReporterInfo · IncidentPhotoGallery
             · HandoverSignature · RepairFeedback ของไฟล์ Maintain-D + จอ L.2–L.5 ของ screens.js + ปุ่มหน้า 5.14 - 5.15 Cost & Expense Check ของ UI Release#2 */
 import { useRouter, useSearchParams } from "next/navigation";

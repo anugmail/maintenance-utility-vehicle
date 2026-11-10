@@ -1,4 +1,4 @@
-/* ข้อมูลจำลองของ S4 (ความคืบหน้าอะไหล่ของไตรมาส) และ S15 S16 S17 (ประวัติ · หัวหน้าตรวจ · รายงานผลและปิดงาน) — batch B
+/* ข้อมูลจำลองของ S4 (ความคืบหน้าอะไหล่ของไตรมาส) และการปิดงานของแผน (S15 S16 S17 ตัดออก 10 พ.ย. 2569) — batch B
    ยกจาก screens.js (partsProgress · partsSummary · PLAN_KV · HIST · hqRows · reportScreen) · ค่าสมมติทั้งหมด */
 import type { PillColor } from "@/components/vms/PillOutline";
 import { PARTS, creatorOf, unitOf, type Plan, type PlanStatus } from "./data";
@@ -56,36 +56,15 @@ export function partsSummary(rows: NeedRow[] = SAMPLE_NEED) {
   return { ok: ok.length, short: short.length, groups, totals };
 }
 
-/* ---------- S15 S16 S17 ---------- */
+/* ---------- ปิดงานของแผน ----------
+   10 พ.ย. 2569 S15 S16 S17 ตัดออก (Figma 9607c3b · 6299e1d · เจ้าของงาน "s16 ตัดทิ้งไม่ต้องรับทราบทั้งแผน ตอนเสร็จงานแล้ว รับทราบรายคันก็พอ" + "s17 ตัดทิ้ง")
+   ⇒ ผู้ดูแลยานพาหนะรับทราบครบทุกคันในแผน (S13) แล้วแผนปิดงานเอง (เสนอ) · closedAt = วันที่รับทราบคันสุดท้าย · ไม่มีส่งประวัติ ตรวจประวัติ รายงานผล */
 export interface CloseoutState {
-  /** ที่เก็บเก่า (S14 ยอมรับผลทั้งแผน · ตัดออก 10 พ.ย. 2569) — ไม่ใช้แล้ว */
-  accepted?: boolean;
-  /** sentAt = ระบบส่งประวัติให้หัวหน้าหน่วยงานเมื่อผู้ดูแลยานพาหนะรับทราบครบทุกคัน (S13 acceptCar · S15 ตัดออก) หรือผู้ดำเนินการส่งใหม่หลังถูกตีกลับ (S16 O.6) */
-  sentAt?: string;
-  /** ผลหัวหน้า กบค. (S16) */
-  head?: "ok" | "back";
-  headAt?: string;
-  headReason?: string;
   closedAt?: string;
+  /** ที่เก็บเก่า (S14–S17 ตัดออก 10 พ.ย. 2569) — ไม่ใช้แล้ว */
+  accepted?: boolean; sentAt?: string; head?: "ok" | "back"; headAt?: string; headReason?: string;
 }
 export const closeoutOf = (s: MockState, id: string): CloseoutState => s.closeout?.[id] ?? {};
 export function putCloseout(id: string, patch: Partial<CloseoutState>) {
   setMock((s) => ({ ...s, closeout: { ...s.closeout, [id]: { ...s.closeout?.[id], ...patch } } }));
 }
-
-/* ACC — การรับทราบของผู้ดูแลยานพาหนะ (S13 · 10 พ.ย. 2569 เดิม รอหน่วยงานยอมรับ / หน่วยงานยอมรับแล้ว) */
-export const ACC: Record<"wait" | "ok", [string, PillColor]> = { wait: ["รอรับทราบ", "Warning"], ok: ["รับทราบแล้ว", "Success"] };
-/* เหตุผลตีกลับตัวอย่าง (HIST_BACK · S16 O.3 O.6) */
-export const HIST_BACK = "ผลน้ำมันไฮโดรลิกของ 80-5738 น่าน ไม่ผ่าน ต้องระบุการแก้ไขก่อนบันทึกประวัติ";
-export const HST: Record<"wait" | "ok" | "back", [string, PillColor]> = { wait: ["รอหัวหน้าตรวจสอบ", "Warning"], ok: ["ผ่านแล้ว", "Success"], back: ["ตีกลับ", "Error"] };
-export const HIST_COLS = [
-  { head: "ทะเบียน", width: 160, Style: "Lead text" as const, SortIcon: "Swap" as const }, { head: "วันที่ทำ", width: 120 }, { head: "งานที่ทำ" },
-  { head: "อะไหล่ที่ใช้", width: 220 }, { head: "ผลน้ำมัน", width: 110, Style: "Badge" as const }, { head: "ผู้ทำ", width: 150 }, { head: "การรับทราบ", width: 190, Style: "Badge" as const },
-];
-/* แถวประวัติ ความคืบหน้า และสรุปรายงาน อ่านจากงานรายคันจริง — lib/mock/history.ts (BACKLOG ข้อ 6 · แทน HIST_ROWS PROGRESS_DONE reportSummary คงที่) */
-export const SENT_AT = "12/11/2569", HEAD_AT = "13/11/2569", CLOSED_AT = "14/11/2569";
-export const HEAD_REVIEWER = "นายประเสริฐ มั่นคง";
-export const HQ_OTHER = { id: "Z6900011", mr: "MRZ6900011", plan: "บำรุงรักษากระเช้าแก้ไฟ ภาค 1 ปีงบประมาณ 2569", sender: "นางสาวกนกวรรณ ใจมั่น", cars: "10 คัน", sentAt: "28/06/2569" };
-/* สถานะในรายการของหัวหน้า (HST) จากสถานะแผน */
-export const headStatusOf = (p: Plan, c: CloseoutState): "wait" | "ok" | "back" =>
-  c.head === "back" && p.status === "active" ? "back" : p.status === "passed" || p.status === "closed" ? "ok" : "wait";

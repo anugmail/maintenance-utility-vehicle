@@ -31,7 +31,7 @@ const COLS: TableColumn[] = [
   { head: "จำนวนยานพาหนะ", width: 100 }, { head: "วันที่ส่ง", width: 120, SortIcon: "Down" }, { head: "สถานะ", width: 150, Style: "Badge" }, { head: "", width: 60, Style: "Action icons" },
 ];
 /* REVIEW_TABS — [ข้อความ, สถานะแผนในแท็บ] · ตัวเลขเฉพาะแท็บรออนุมัติ */
-const TABS: [string, PlanStatus[]][] = [["รออนุมัติ", ["review"]], ["อนุมัติแล้ว", ["approved", "active", "hist", "passed"]], ["ส่งกลับแก้ไข", ["returned"]]];
+const TABS: [string, PlanStatus[]][] = [["รออนุมัติ", ["review"]], ["อนุมัติแล้ว", ["approved", "active"]], ["ส่งกลับแก้ไข", ["returned"]]];
 
 export default function ApprovalList() {
   const router = useRouter();

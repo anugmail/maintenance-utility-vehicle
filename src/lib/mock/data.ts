@@ -2,7 +2,7 @@
    แก้ค่าที่นี่ให้ตรงกับ screens.js เท่านั้น ไม่ตั้งค่าเอง */
 import type { PillColor } from "@/components/vms/PillOutline";
 
-export type PlanStatus = "review" | "returned" | "approved" | "active" | "hist" | "passed" | "closed";
+export type PlanStatus = "review" | "returned" | "approved" | "active" | "closed";   // hist (รอหัวหน้าตรวจสอบ) passed (ประวัติผ่านแล้ว) เอาออก 10 พ.ย. 2569 พร้อม S16 S17 (Figma 6299e1d)
 
 /* PST — สถานะแผน [ข้อความ, สี Pill outline] */
 export const PST: Record<PlanStatus, [string, PillColor]> = {
@@ -10,8 +10,6 @@ export const PST: Record<PlanStatus, [string, PillColor]> = {
   returned: ["ส่งกลับแก้ไข", "Error"],
   approved: ["อนุมัติแล้ว", "Brand"],
   active: ["ดำเนินการ", "Info"],
-  hist: ["รอหัวหน้าตรวจสอบ", "Warning"],
-  passed: ["ประวัติผ่านแล้ว", "Success"],
   closed: ["ปิดงานแล้ว", "Gray"],
 };
 

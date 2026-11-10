@@ -2,11 +2,11 @@
 /* ข้อมูลจำลอง S13 ผู้ดูแลยานพาหนะ รับทราบผลและประเมินความพึงพอใจรายคัน (Figma 9607c3b · R89 · 10 พ.ย. 2569)
    ยกจาก screens.js: ACC · ACC_COLS · ACK_CARS · ACK_LIST · accRows · ackResult · NOTI_ACK · feedback
    เจ้าของงาน 10 พ.ย. 2569: ผู้กด = ผู้ดูแลยานพาหนะที่ระบุรายคันในแผนเดินทาง · ประเมิน 1–5 ย้ายจาก S14 มาไว้ตอนรับทราบ · ปุ่ม "รับทราบ" สีเขียว ไม่มี popup ยืนยัน
-   รอบเดียวต่อคัน (Q28) · S14 S15 ตัดออก ⇒ รับทราบครบทุกคันในแผนแล้วระบบส่งประวัติให้หัวหน้าหน่วยงานตรวจเอง (S16)
+   รอบเดียวต่อคัน (Q28) · S14 S15 S16 S17 ตัดออก ⇒ รับทราบครบทุกคันในแผนแล้วแผนปิดงานเอง (เสนอ · Figma 6299e1d)
    รายการ = งานรายคัน (jobs.ts) ของแผนเดินทางที่อนุมัติแล้วที่ "เสร็จสิ้น" หรือ "บำรุงรักษาไม่ได้" · รับทราบ = job.acceptedAt + job.score
    "ครบทุกคันในแผน" (ยังไม่เคาะ: แผนทั้งปี หรือแผนเดินทางรายใบ) — ต้นแบบนับยานพาหนะทุกคันในแผนเดินทางที่อนุมัติแล้วของแผน (แบบประวัติ history.ts) */
 import type { PillColor } from "@/components/vms/PillOutline";
-import { SENT_AT, putCloseout } from "./closeout";
+import { putCloseout } from "./closeout";
 import { JOB_TEXT, PEOPLE, SEED_TRIPS, WORK, applyJobs, carOf, closedSample, getJob, jobKey, jobsOf, newJob, workItems, type Job, type JobTrip, type TripCar } from "./jobs";
 import { setMock, type MockState } from "./store";
 import { DEFAULT_NOTIS, TRIP_OTHER, ackNoti } from "./trips";
@@ -58,7 +58,7 @@ export function planAcked(m: MockState, planId: string) {
 
 /* ---------- เขียน ---------- */
 /** S13 รับทราบรายคัน (บันทึกทันที ไม่มี popup) · score = คะแนน 1–5 (คันที่บำรุงรักษาไม่ได้ไม่มี)
-    ครบทุกคันในแผน → ระบบส่งประวัติให้หัวหน้าหน่วยงานตรวจเอง (แผน "รอหัวหน้าตรวจสอบ" · S16) ไม่มีขั้นกดส่งประวัติ (S15 ตัดออก) */
+    ครบทุกคันในแผน → แผน "ปิดงานแล้ว" เอง (เสนอ · Figma 6299e1d · S16 S17 ตัดออก 10 พ.ย. 2569 — รับทราบรายคันเป็นขั้นสุดท้าย) */
 export function acceptCar(r: AccRow, score: number | null) {
   applyJobs((s) => ({ ...s, jobs: { ...s.jobs, [jobKey(r.trip.id, r.car.id)]: { ...getJob(s, r.trip.id, r.car.id), acceptedAt: ACK_AT, ...(score ? { score } : {}) } } }));
   const id = r.trip.planId;
@@ -67,13 +67,13 @@ export function acceptCar(r: AccRow, score: number | null) {
     const p = s.plans.find((x) => x.mr === "MR" + id);
     if (!p || p.status !== "active" || !planAcked(s, id)) return s;
     sent = true;
-    return { ...s, plans: s.plans.map((x) => (x === p ? { ...x, status: "hist" as const } : x)) };
+    return { ...s, plans: s.plans.map((x) => (x === p ? { ...x, status: "closed" as const } : x)) };
   });
-  if (sent) putCloseout(id, { sentAt: SENT_AT, head: undefined, headAt: undefined, headReason: undefined });
+  if (sent) putCloseout(id, { closedAt: ACK_AT.slice(0, 10) });
 }
 
 /* ---------- ?sample= จากหน้า /scenarios/ (ของต้นแบบ) ----------
-   S13 = แผนเดินทาง T1 3 คัน (ACCEPTANCE_CARS) ถึงขั้นรับทราบ ยังไม่รับทราบ + แจ้งเตือนใหม่ของ 82-6789 · acked = รับทราบครบแล้ว (ใช้กับ S16 S17) */
+   S13 = แผนเดินทาง T1 3 คัน (ACCEPTANCE_CARS) ถึงขั้นรับทราบ ยังไม่รับทราบ + แจ้งเตือนใหม่ของ 82-6789 · acked = รับทราบครบแล้ว */
 export function acceptSample(acked: boolean) {
   const T1: JobTrip = { ...SEED_TRIPS.T1, carIds: ACCEPTANCE_CARS.map((c) => c.carId) };
   applyJobs(() => ({
@@ -87,7 +87,7 @@ export function acceptSample(acked: boolean) {
   }), [{ ...TRIP_OTHER }]);
   const first = carOf(ACCEPTANCE_CARS[0].carId)!;
   setMock((s) => ({ ...s, plans: s.plans.map((p) => (p.mr === "MRZ7000001" ? { ...p, status: "active" as const } : p)), notis: acked ? DEFAULT_NOTIS() : [ackNoti(T1, first), ...DEFAULT_NOTIS()] }));
-  putCloseout("Z7000001", { sentAt: undefined, head: undefined, headAt: undefined, headReason: undefined, closedAt: undefined });
+  putCloseout("Z7000001", { closedAt: undefined });
 }
 export const ACCEPT_SAMPLES = {
   S13: { role: "ผู้ดูแลยานพาหนะ" as const, apply: () => acceptSample(false) },

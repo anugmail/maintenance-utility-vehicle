@@ -25,8 +25,6 @@ import { JOB_RECORD } from "./cases/job-record";
 import { MOVE_CAR_GUIDE } from "./cases/move-car";
 import { OIL_RESULT } from "./cases/oil-result";
 import { ACCEPT_CAR } from "./cases/accept-car";
-import { HEAD_REVIEW } from "./cases/head-review";
-import { CLOSE_PLAN } from "./cases/close-plan";
 import { VEHICLE_MAINTENANCE } from "./cases/vehicle-maintenance";
 
 /** หน้าในชีตยืนยัน (MaintainD-Maintainance) ของแต่ละเคส (หัวหน้างาน 5 พ.ย. 2569) — หน้า 1 รายการแผน · หน้า 2 สร้างและแก้ไขแผน · หน้า 3 จัดการอะไหล่ของรถ · หน้า 4 รายละเอียดแผน · หน้า 5 แผนรออนุมัติ
@@ -316,8 +314,6 @@ export const GUIDES: GuideScenario[] = [
   MOVE_CAR_GUIDE,
   OIL_RESULT,
   ACCEPT_CAR,
-  HEAD_REVIEW,
-  CLOSE_PLAN,
   VEHICLE_MAINTENANCE,
 ];
 
