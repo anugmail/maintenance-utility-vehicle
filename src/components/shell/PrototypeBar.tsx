@@ -1,5 +1,6 @@
 "use client";
 /* แถบต้นแบบบนสุด (ไม่ใช่หน้าจอของระบบ — มีเฉพาะต้นแบบ) · สลับบทบาท + ล้างข้อมูลจำลอง (CLAUDE.md ข้อ 5 และ 7)
+   + ปุ่มช่วยฟอร์ม "กรอกข้อมูลตัวอย่าง" · "ล้างค่า" (เจ้าของงาน 10 พ.ย. 2569 · ของต้นแบบเท่านั้น ไม่ใส่ใน Figma) — ขึ้นเฉพาะหน้าที่มีฟอร์มลงทะเบียน (lib/protoForm.ts) · ล้างค่าเมื่อมีค่าที่กรอกไว้ = ยืนยันก่อน
    ประกอบจากชิ้นไลบรารี: Input dropdown + Dropdown list (บทบาท) · Tertiary button (ล้างข้อมูลจำลอง) · Checkbox (จำลองบันทึกไม่สำเร็จ — ให้เห็นจอ "บันทึกไม่สำเร็จ") · Tertiary brand button (ไปหน้ารายการ scenario · ไปเมนูพาดูทีละเรื่อง /guide/) — บันทึกใน figma-spec/COMPOSED.md */
 import Link from "next/link";
 import { useState } from "react";
@@ -9,14 +10,19 @@ import { InputDropdown } from "@/components/vms/InputDropdown";
 import { Ms } from "@/components/vms/Ms";
 import { TertiaryButton } from "@/components/vms/TertiaryButton";
 import { Checkbox } from "@/components/vms/Checkbox";
+import { ConfirmDialog } from "@/components/patterns/ConfirmDialog";
 import { notify, resetMock, ROLES, setMock, setRole, useMock, useRole } from "@/lib/mock/store";
+import { useProtoFormTools } from "@/lib/protoForm";
 
 export function PrototypeBar() {
   const role = useRole();
   const fail = !!useMock().failSave;
   const [open, setOpen] = useState(false);
+  const form = useProtoFormTools();
+  const [ask, setAsk] = useState(false);
+  const clear = () => { form?.ref.current?.clear(); setAsk(false); notify("ล้างค่าในฟอร์มนี้แล้ว"); };
   return (
-    <div data-proto-bar className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-gray-200 bg-gray-50 px-4 py-1">
+    <div data-proto-bar className="relative z-[55] flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-gray-200 bg-gray-50 px-4 py-1">{/* z-[55] เหนือ popup (z-50) ให้กดปุ่มกรอกข้อมูลตัวอย่างตอน popup เปิดได้ · ต่ำกว่า toast (z-[60]) */}
       <Link href="/scenarios/" className="inline-flex items-center gap-1 text-xs font-semibold text-brand-900"><Ms name="home-20-300-round" size={16} />ต้นแบบบำรุงรักษาตามวาระ</Link>
       {/* เมนูพาดูทีละเรื่อง (G1 · เจ้าของงาน 5 พ.ย. 2569 "อยากให้มีเมนูแยกออกมาเลย ว่า เป็นเรื่องที่แยก scen") — ของต้นแบบ อยู่ที่แถบนี้ และเป็นเมนูย่อยต่อจาก "บำรุงรักษาตามวาระ" ใน Sidebar ด้วย (เจ้าของงาน 5 พ.ย. 2569 "สร้างเป็นอีกเมนู เป็นเมนูย่อยของ บำรุงรักษาตามวาระก็ได้") */}
       <Link href="/guide/" data-guide-menu className="inline-flex items-center gap-1 text-xs font-semibold text-brand-900"><Ms name="school-20-300-round" size={16} />พาดูทีละเรื่อง</Link>
@@ -26,11 +32,19 @@ export function PrototypeBar() {
           {ROLES.map((r) => <DropdownListItem key={r} Text={r} State={r === role ? "Selected" : "Default"} onClick={() => { setRole(r); setOpen(false); }} />)}
         </DropdownList>
       </InputDropdown>
+      {form && (
+        <span data-proto-form className="flex items-center gap-1 border-l border-gray-200 pl-3">
+          <TertiaryButton Text="กรอกข้อมูลตัวอย่าง" LeadingIconSwap="edit_note-24-300-round" onClick={() => { form.ref.current?.fill(); notify("กรอกข้อมูลตัวอย่างแล้ว"); }} />
+          <TertiaryButton Text="ล้างค่า" LeadingIconSwap="ink_eraser-24-300-round" onClick={() => (form.ref.current?.dirty ? setAsk(true) : clear())} />
+        </span>
+      )}
       <label className="ml-auto flex items-center gap-2 text-xs text-gray-600">
         <Checkbox Type={fail ? "Selected" : "Unselected"} label="จำลองบันทึกไม่สำเร็จ" onChange={(v) => setMock((s) => ({ ...s, failSave: v }))} />
         จำลองบันทึกไม่สำเร็จ
       </label>
       <TertiaryButton Text="ล้างข้อมูลจำลอง" LeadingIconSwap="restart_alt-24-300-round" onClick={() => { resetMock(); notify("ล้างข้อมูลจำลองแล้ว"); }} />
+      <ConfirmDialog spec={ask ? { danger: true, title: "ล้างค่าในฟอร์มนี้", sub: "ค่าที่กรอกไว้ในฟอร์มของหน้านี้จะกลับเป็นค่าเริ่มต้น แผนและงานอื่นที่บันทึกไว้ไม่เปลี่ยน", cancel: "ยกเลิก", ok: "ล้างค่า" } : null}
+        onCancel={() => setAsk(false)} onOk={clear} />
     </div>
   );
 }

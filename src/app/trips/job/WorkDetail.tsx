@@ -24,6 +24,7 @@ import { notify } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { badgeOf, ButtonRow, DataTable, useCrumbs, KvBox, OilResultFields, Section, toUpload, tripHref, useBack } from "../_lib/ui";
 import { vehiclePairs } from "./JobPage";
+import { useProtoForm } from "@/lib/protoForm";
 
 const WORK_COLS2: TableColumn[] = [{ head: "รายการงาน" }, { head: "อะไหล่ที่ใช้", width: 320 }, { head: "จำนวนตามแผน", width: 140 }, { head: "จำนวนที่ใช้จริง", width: 140 }, { head: "หน่วย", width: 110 }];
 const COST_COLS: TableColumn[] = [{ head: "พนักงาน", Style: "Lead text" }, { head: "ค่าเบี้ยเลี้ยง/วัน", width: 150 }, { head: "ค่าที่พัก/วัน", width: 150 }, { head: "จำนวนวัน", width: 120 }, { head: "รวม", width: 150 }];
@@ -52,6 +53,12 @@ export function WorkDetail({ trip, car, job, kbk }: { trip: JobTrip; car: TripCa
   const costs = f.costs.filter((r) => r.name).map((r) => [r.name!, nf(Number(r.perDiem.replace(/\D/g, "")) || 0), nf(Number(r.lodging.replace(/\D/g, "")) || 0), String(r.days ?? 0), nf(personSum(r))]);
   const sum = costSummary(f);
   const photos = job.photos ?? [];
+  /* ปุ่มต้นแบบ S12 (แถบต้นแบบ · lib/protoForm.ts): กรอกข้อมูลตัวอย่าง = ผลการทดสอบ "ผ่าน" + ไฟล์ผลตรวจ 1 ไฟล์ · ล้างค่า = ยังไม่เลือก ไม่มีไฟล์ (ผลที่บันทึกไว้แล้วเปลี่ยนเมื่อกดบันทึกเท่านั้น) */
+  useProtoForm(kbk && oilSampled(oil) ? {
+    fill: () => { setSel(0); setFiles((x) => (x.length ? x : [{ name: "ผลตรวจน้ำมันไฮดรอลิก-" + car.plate.split(" ")[0] + ".pdf", size: "320 KB", bar: true }])); setErr(false); },
+    clear: () => { setSel(-1); setFiles([]); setErr(false); },
+    dirty: sel >= 0 || files.length > 0,
+  } : null);
   const save = () => {
     if (sel < 0) { setErr(true); return; }
     saveOilResult(trip, car.id, sel, files);

@@ -7,7 +7,7 @@ import type { BadgeOutlineColor } from "@/components/vms/BadgeOutline";
 import type { PillColor } from "@/components/vms/PillOutline";
 import { FIG_FLEET, CAND, DISTRICTS, LAST_OIL, NEW_PLAN_DATE, OIL_OPTS, OIL_PLAN_OPTS, OIL_SPEC, PARTS, PART_PRICE, REGIONS, RETURN_REASON, UNIT_FLEET, creatorOf, dCode, oilChanges, unitOf, type ManualPart, type Plan, type PlanStatus } from "./data";
 import { CAR_PICK } from "./data";
-import { allocScope, carQty, inQuarter, quarterParts, type Draft } from "./plan";
+import { allocScope, areaPicked, carQty, carsFor, decided, inQuarter, quarterParts, type Draft } from "./plan";
 import { accRows } from "./acceptance";
 import { notify, setMock, useRole, type MockState, type Role } from "./store";
 import { SAMPLE_PLAN_Q, candId, tripsOf } from "./trips";
@@ -223,6 +223,18 @@ export function samplePlan(status: PlanStatus, acked?: number[]): Plan {
 /* อะไหล่ของแผนตัวอย่างที่กำหนดครบทุกคัน (A_PICKS · A_OILS · A_DRAW) — ฟอร์มที่กรอกครบ ส่งอนุมัติได้ (โหมดพาดู) */
 export const SAMPLE_PARTS = (): Pick<Draft, "picks" | "oils" | "draw"> => ({ picks: Object.fromEntries(Object.entries(A_PICKS).map(([i, v]) => [i, [...v]])), oils: { ...A_OILS }, draw: { ...A_DRAW } });
 /* ฟอร์มสร้างแผนของ S21 T.1: กรอกชื่อ ปี ตัวกรองครบ จัดรถทุกคันที่ฟอร์มเห็น (UNIT_FLEET) ยังไม่เลือกอะไหล่ */
+/** ปุ่มต้นแบบ "กรอกข้อมูลตัวอย่าง" ของฟอร์มแผน (S1 S19 · lib/protoForm.ts) — ชื่อแผน ปีงบประมาณ (ว่าง = ค่าแผนตัวอย่าง) · พื้นที่ (ยังไม่เลือก = R2 ภาค 2)
+    · ยานพาหนะทุกคันในตารางจัดลงไตรมาส (จัดไว้แล้วคงเดิม · ไม่จัด = ไตรมาสของแผนตัวอย่าง A_ALL) · คันที่ยังไม่กำหนดอะไหล่ = น้ำมันตามแผนตัวอย่าง + ไส้กรอง CAR_PICK ⇒ ผ่าน draftComplete */
+export function fillDraft(d: Draft): Draft {
+  const area = areaPicked(d) ? {} : { ...R2 };
+  const x: Draft = { ...d, name: d.name.trim() ? d.name : SAMPLE_NAME, year: d.year || "2570", ...area };
+  const alloc = { ...x.alloc }, picks = { ...x.picks }, oils = { ...(x.oils ?? {}) };
+  carsFor(x).forEach((i, k) => {
+    if (alloc[i] == null) alloc[i] = A_ALL[i] ?? (k % 4) + 1;
+    if (!decided(x, i)) { const o = oils[i] ?? A_OILS[i] ?? 0; oils[i] = o; picks[i] = oilChanges(o) ? [0, ...CAR_PICK] : [...CAR_PICK]; }
+  });
+  return { ...x, alloc, picks, oils, q: x.q || 1 };
+}
 export const sampleDraft = (): Draft => ({ name: SAMPLE_NAME, year: "2570", ...R2, alloc: { ...A_ALL }, picks: {}, q: 1 });
 
 /* ---------- การกระทำกับแผน ---------- */

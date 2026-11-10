@@ -28,9 +28,10 @@ import { TextInput } from "@/components/vms/TextInput";
 import { TH_PICKER } from "@/lib/thaiDate";
 import { workOf } from "@/lib/mock/tripCols";
 import { fromThai, toThai, workEdited } from "../../../quarter/_shared/TripCarEditModal";
-import { BEFORE, confirmInspect, patchTrip, emptyReceive, INSPECT_OPTS, inspectForm, patchJob, PEOPLE, staffOf, type ReceiveForm } from "@/lib/mock/jobs";
+import { BEFORE, confirmInspect, patchTrip, emptyReceive, filledReceive, INSPECT_OPTS, inspectForm, patchJob, PEOPLE, staffOf, type ReceiveForm } from "@/lib/mock/jobs";
 import { ButtonRow, Grid, jobHref, Section, toUpload, tripHref, useTripCar } from "../../_lib/ui";
 import { StepFrame } from "../StepFrame";
+import { useProtoForm } from "@/lib/protoForm";
 
 /* SIGN_IN ของ screens.js (9 พ.ย. 2569 ตามท้ายใบตรวจ · เดิม ผู้ส่งมอบ / ผู้รับมอบ) · ช่องเลือกชื่อ placeholder "เลือก" + ป้าย (signSection) */
 export const SLOTS = [
@@ -48,6 +49,16 @@ export function ReceivePage() {
   const [awayAtOpen] = useState(() => ({ v: null as boolean | null }));
   if (awayAtOpen.v === null && trip && car && job) awayAtOpen.v = away;
   useEffect(() => { if (awayAtOpen.v && trip && car) router.replace(jobHref(trip, car.id)); }, [awayAtOpen, trip, car, router]);
+  /* ปุ่มต้นแบบ (แถบต้นแบบ · lib/protoForm.ts): กรอกข้อมูลตัวอย่าง = รายการตรวจครบ (ปกติ · 1 รายการแก้ไขพร้อมหมายเหตุ) · ผู้ตรวจ ผู้รับการตรวจ ลงนามแล้ว · ภาพก่อนเริ่มงาน 2 ภาพ ⇒ ปุ่มยืนยันการตรวจสภาพกดได้
+     ล้างค่า = Step 1 ของคันนี้กลับค่าเริ่มต้น (emptyReceive) */
+  useProtoForm(trip && car && job && actor && !awayAtOpen.v ? {
+    fill: () => {
+      const x = filledReceive(vendor ? PEOPLE.vendorTech : staffOf(trip)[0] ?? PEOPLE.kbk, car);
+      patchJob(trip.id, car.id, (j) => ({ ...j, receive: { ...x, signers: [{ name: vendor ? PEOPLE.vendorTech : staffOf(trip)[0] ?? x.signers[0].name, sig: "sample" }, x.signers[1]] } }));
+    },
+    clear: () => patchJob(trip.id, car.id, (j) => ({ ...j, receive: emptyReceive(car) })),
+    dirty: !!job.receive && JSON.stringify(job.receive) !== JSON.stringify(emptyReceive(car)),
+  } : null);
   if (!trip || !car || !job) return <EmptyStateSearchNotFound />;
   if (awayAtOpen.v) return null;
   const f: ReceiveForm = job.receive ?? emptyReceive(car);

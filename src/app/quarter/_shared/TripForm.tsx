@@ -49,6 +49,7 @@ import { canManage, usePlanGate } from "@/lib/mock/planFlow";
 import { CREATOR, SENT_AT, STAFF, VENDORS, qEditOf, quarterCars, carOf, nextTripId, putTrip, quarterTrips, staffPos, staffTelOf, tripsOf, type Trip, type TripCar } from "@/lib/mock/trips";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useOutside } from "@/lib/useOutside";
+import { useProtoForm } from "@/lib/protoForm";
 import { TripCarEditModal, fromThai, toThai, type CarOverrides } from "./TripCarEditModal";
 import { TripCarPicker } from "./TripCarPicker";
 import { BtnRow, Content, DataTable, Section, quarterCrumbs, tripsHref, useBack } from "./ui";
@@ -183,6 +184,20 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
   };
   const nStaff = v.staff.filter(Boolean).length;
 
+  /* ปุ่มต้นแบบ (แถบต้นแบบ · lib/protoForm.ts): กรอกข้อมูลตัวอย่าง = ชื่อแผนเดินทาง · ผู้รับจ้าง (จ้าง) · ช่วงวัน 17–21/11/2569 · พนักงาน 2 คน (ตรวจเอง)
+     · ยานพาหนะ (ยังไม่มี = ไม่เกิน 3 คันของไตรมาสที่ยังไม่อยู่ในแผนเดินทางใบอื่น) — ช่องที่กรอกไว้แล้วคงเดิม ⇒ ปุ่มยืนยันกดได้ · ล้างค่า = ค่าเริ่มต้น (แก้ไข: ค่าของใบเดิม) */
+  const blank = fromTrip(edit, edit ? edit.mode : initialMode);
+  useProtoForm(kbk && !denied ? {
+    fill: () => {
+      const ids = v.carIds.length ? v.carIds : pool.filter((c) => !taken[c.id]).slice(0, 3).map((c) => c.id);
+      const staff = hire || (v.staff[0] && v.staff[1]) ? v.staff : [v.staff[0] || STAFF.find((n) => n !== v.staff[1])!, v.staff[1] || STAFF.find((n) => n !== (v.staff[0] || STAFF[0]))!, ...v.staff.slice(2)];
+      put({ name: v.name.trim() ? v.name : (hire ? "จ้างบำรุงรักษายานพาหนะ " : "ตรวจยานพาหนะ ") + nowQ, vendor: hire && !v.vendor ? VENDORS[0].name : v.vendor,
+        d1: v.d1 || "17/11/2569", d2: v.d2 || "21/11/2569", carIds: ids, staff, tels: staff.map((n, i) => v.tels[i] || (n ? staffTelOf(edit, n) : "")) });
+      setTouched({});
+    },
+    clear: () => { setV(blank); setTouched({}); },
+    dirty: JSON.stringify(v) !== JSON.stringify(blank),
+  } : null);
   if (denied) return null;
   return (
     <>

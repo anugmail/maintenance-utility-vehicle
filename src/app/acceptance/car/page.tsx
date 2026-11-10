@@ -33,6 +33,7 @@ import { useSample } from "@/lib/useSample";
 import { badgeOf, ButtonRow } from "../../trips/_lib/ui";
 import { SLOTS } from "../../trips/job/receive/ReceivePage";
 import { AckButton } from "../_lib/ui";
+import { useProtoForm } from "@/lib/protoForm";
 
 /* WORK_COLS2 */
 const WORK_COLS2: TableColumn[] = [{ head: "รายการงาน" }, { head: "อะไหล่ที่ใช้", width: 320 }, { head: "จำนวนตามแผน", width: 140 }, { head: "จำนวนที่ใช้จริง", width: 140 }, { head: "หน่วย", width: 110 }];
@@ -44,6 +45,9 @@ function AckResult() {
   const keeper = useRole() === "ผู้ดูแลยานพาหนะ";
   const mock = useMock();
   const [pick, setPick] = useState<number | null>(null);
+  /* ปุ่มต้นแบบ S13 (แถบต้นแบบ · lib/protoForm.ts): กรอกข้อมูลตัวอย่าง = คะแนน 4 ⇒ ปุ่มรับทราบกดได้ · ล้างค่า = ยังไม่เลือกคะแนน · เฉพาะผู้ดูแลยานพาหนะ คันที่ยังไม่รับทราบและมีประเมิน */
+  const r0 = pending ? undefined : accRecord(mock, sp.get("trip"), sp.get("car"));
+  useProtoForm(keeper && r0 && !r0.accepted && !r0.cannot ? { fill: () => setPick(4), clear: () => setPick(null), dirty: pick != null } : null);
   if (pending) return null;
   const rec = accRecord(mock, sp.get("trip"), sp.get("car"));
   if (!rec) return <EmptyStateSearchNotFound />;

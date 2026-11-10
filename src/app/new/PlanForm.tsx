@@ -53,7 +53,8 @@ import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
 import { CAND, DISTRICTS, MENU, QUARTERS, REGIONS, UNIT_FLEET, VEHICLE_TYPES, YEARS, shortRegion, type Plan } from "@/lib/mock/data";
 import { QPART_COLS, areaPicked, carsFor, decided, draftComplete, emptyDraft, inQuarter, isDirty, matchQuery, planFromDraft, qpartRow, thaiToday, type Draft } from "@/lib/mock/plan";
-import { allQuarterRows, carParam, roleUnit, draftFromPlan, draftKey, oilCellOf, otherCellOf, planId, planWithDraft, quarterRows } from "@/lib/mock/planFlow";
+import { allQuarterRows, carParam, roleUnit, draftFromPlan, draftKey, fillDraft, oilCellOf, otherCellOf, planId, planWithDraft, quarterRows } from "@/lib/mock/planFlow";
+import { useProtoForm } from "@/lib/protoForm";
 import { notify, setMock, useMock, useRole } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { CheckTable, type CheckRow } from "./CheckTable";
@@ -183,6 +184,13 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
   const back = from === "detail" && plan ? "/detail/?id=" + planId(plan) : "/";
   /* รีวิว 5 พ.ย. 2569 "ต้องกรอกข้อมูลที่ require ครบถึงจะ enable ปุ่ม" + 6 พ.ย. 2569 เจ้าของงาน "ต้องเอารถเข้า ไตรมาสทุกคัน" "บังคับให้กรอกอะใหล่ทุกคัน ไปหน้าต่อไปไม่ได้" (แบบ ก หน้าเดียว) */
   const complete = draftComplete(d);
+  /* ปุ่มต้นแบบ กรอกข้อมูลตัวอย่าง / ล้างค่า (แถบต้นแบบ · lib/protoForm.ts) — ล้างค่า = สร้าง: ฟอร์มว่าง · แก้ไข: ค่าของแผนที่บันทึกไว้ */
+  const saved = edit ? draftFromPlan(plan) : emptyDraft();
+  useProtoForm({
+    fill: () => { setMock((s) => (edit ? { ...s, edit: fillDraft(d) } : { ...s, draft: fillDraft(d) })); setTicked([]); },
+    clear: () => { setMock((s) => (edit ? { ...s, edit: { ...saved } } : { ...s, draft: { ...saved } })); setTicked([]); setQuery(""); },
+    dirty: edit ? draftKey(d) !== draftKey(saved) : isDirty(d),
+  });
   const qDone = q ? inQ(q).filter((i) => decided(d, i)).length : 0;
   const leave = () => {
     if (edit) {

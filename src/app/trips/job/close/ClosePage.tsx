@@ -36,12 +36,13 @@ import { TertiaryButton } from "@/components/vms/TertiaryButton";
 import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
 import {
-  BUDGET_CUT, carOf, closeJob, JOB_TIMES, OTHER_CC, closeRows, costSummary, emptyClose, nf, oilSampled, ownerCostCenter, patchJob, PEOPLE, personSum, safetyOn, staffOf, tripDays, tripLoc, tripPhone,
+  BUDGET_CUT, carOf, closeJob, JOB_TIMES, OTHER_CC, closeRows, costSummary, emptyClose, filledClose, nf, oilSampled, ownerCostCenter, patchJob, PEOPLE, personSum, safetyOn, staffOf, tripDays, tripLoc, tripPhone,
   type ClosePartRow, type CloseForm, type CostRow, type DocSel,
 } from "@/lib/mock/jobs";
 import { notify } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useOutside } from "@/lib/useOutside";
+import { useProtoForm } from "@/lib/protoForm";
 import { ButtonRow, DataTable, Grid, jobHref, KvBox, OilCards, OilResultFields, PartAddModal, PartEditModal, Section, toUpload, tripHref, useTripCar, type PartEditValue } from "../../_lib/ui";
 import { StepFrame } from "../StepFrame";
 
@@ -83,6 +84,18 @@ export function ClosePage() {
   const result = useRef<HTMLDivElement>(null);
   const docFile = useRef<HTMLInputElement>(null);
   const [docAt, setDocAt] = useState(-1);
+  /* ปุ่มต้นแบบ (แถบต้นแบบ · lib/protoForm.ts): กรอกข้อมูลตัวอย่าง = ฟอร์มสรุปงานแบบชุดตัวอย่าง (filledClose: จำนวนที่ใช้ อะไหล่เก่า ค่าใช้จ่าย เลขไมล์ ชั่วโมง ลงนามครบ เอกสาร "มี") ⇒ ปุ่มปิดงานกดได้
+     ล้างค่า = Step 2 ของคันนี้กลับค่าเริ่มต้น (emptyClose · ร่างของงานคันอื่นไม่แตะ) */
+  const blankClose = trip && car && job ? emptyClose(job, trip, car) : null;
+  useProtoForm(trip && car && job && actor && !awayAtOpen.v && blankClose ? {
+    fill: () => {
+      const x = filledClose(job, trip, car);
+      patchJob(trip.id, car.id, (j) => ({ ...j, close: { ...x, oilChoice: j.close?.oilChoice ?? x.oilChoice, signers: vendor ? [{ name: PEOPLE.vendorTech, sig: "sample" }, x.signers[1]] : [{ name: staffOf(trip)[0] ?? x.signers[0].name, sig: "sample" }, x.signers[1]] } }));
+      setTouched({});
+    },
+    clear: () => { patchJob(trip.id, car.id, (j) => ({ ...j, close: emptyClose(j, trip, car) })); setTouched({}); },
+    dirty: !!job.close && JSON.stringify(job.close) !== JSON.stringify(blankClose),
+  } : null);
   if (!trip || !car || !job) return <EmptyStateSearchNotFound />;
   if (awayAtOpen.v) return null;
 

@@ -38,11 +38,12 @@ import { type TableValue } from "@/components/vms/Table";
 import { CARP_PART_COLS } from "./cols";
 import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
-import { CAND, CAR_QTY, LAST_OIL, OIL_GRADES, OIL_PLAN_OPTS, OIL_SPEC, PARTS, PART_BM, PART_PRICE, PART_WH, oilChanges, type ManualPart, type OilSpec } from "@/lib/mock/data";
+import { CAND, CAR_PICK, CAR_QTY, LAST_OIL, OIL_GRADES, OIL_PLAN_OPTS, OIL_SPEC, PARTS, PART_BM, PART_PRICE, PART_WH, oilChanges, type ManualPart, type OilSpec } from "@/lib/mock/data";
 import { inQuarter, type Draft } from "@/lib/mock/plan";
 import { PLAN_ROLES, carIndexOf, carParam, findPlan, oilChoice, useRoleGuard, usePlanGate } from "@/lib/mock/planFlow";
 import { notify, setMock, useMock } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
+import { useProtoForm } from "@/lib/protoForm";
 
 /* อะไหล่ในคลัง = ไส้กรองและอะไหล่ (PARTS 1–4 · น้ำมันไฮดรอลิกมีส่วนของตัวเอง — carWarehouse()) */
 const STOCK: SparePart[] = PARTS.map((p, i) => ({ name: p.name, code: p.code, unit: p.unit, price: PART_PRICE[i], warehouse: PART_WH[i], stock: p.stock }));
@@ -65,6 +66,8 @@ const bufferOf = (d: Draft, cars: number[]): Buffer => Object.fromEntries(cars.m
     draw: d.draw?.[c] === "none" ? "none" : (d.picks[c] || []).some((x) => x !== 0) || (d.manual?.[c] ?? []).length ? "take" : "",
   }];
 }));
+/* ค่าเริ่มต้นของยานพาหนะ 1 คัน (ปุ่มต้นแบบ ล้างค่า) */
+const EMPTY_EDIT: CarEdit = { oil: 0, spec: { grade: "", code: "", litre: "" }, picks: [], qty: {}, manual: [], draw: "" };
 type Manual = { name: string; brand: string; model: string; code: string; qty: string; unit: string };
 const EMPTY_M: Manual = { name: "", brand: "", model: "", code: "", qty: "", unit: "" };
 /* แก้แถว: k = ลำดับในรายการเพิ่มเติม · pi = อะไหล่จากคลัง (แก้จำนวนได้อย่างเดียว) */
@@ -98,6 +101,14 @@ function CarParts() {
     if (!d || !cars.length) { router.replace(formHref); return; }   // ไม่มีฟอร์มค้าง / ไตรมาสไม่มีรถ → กลับฟอร์ม
     if (!buf) { const b = bufferOf(d, cars); setBuf(b); setOrig(JSON.stringify(b)); }
   }, [ok, d, cars, buf, formHref, router]);
+  /* ปุ่มต้นแบบ (แถบต้นแบบ · lib/protoForm.ts): กรอกข้อมูลตัวอย่าง = ยานพาหนะคันที่เปิดอยู่ เบิกอะไหล่ · เก็บตัวอย่างและเปลี่ยน (เบอร์ รหัส ลิตร) · ไส้กรอง CAR_PICK ⇒ ปุ่มบันทึกกดได้
+     ล้างค่า = คันนี้กลับเป็นยังไม่เลือก (ยังไม่บันทึกลงแผนจนกดบันทึก · คันอื่นไม่แตะ) */
+  const pCar = buf ? (cars.includes(carIndexOf(sp.get("car"))) ? carIndexOf(sp.get("car")) : cars[0]) : undefined;
+  useProtoForm(ok && buf && pCar != null && !denied ? {
+    fill: () => setBuf((b) => b && { ...b, [pCar]: { ...b[pCar], draw: "take", oil: 2, spec: { grade: OIL_GRADES[1] ?? OIL_GRADES[0], code: OIL_SPEC.code, litre: OIL_SPEC.litre }, picks: [...new Set([...b[pCar].picks, ...CAR_PICK])] } }),
+    clear: () => setBuf((b) => b && { ...b, [pCar]: { ...EMPTY_EDIT } }),
+    dirty: JSON.stringify(buf[pCar]) !== JSON.stringify(EMPTY_EDIT),
+  } : null);
   if (!ok || !d || !buf) return null;
   if (denied) return null;
 

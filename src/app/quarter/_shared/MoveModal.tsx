@@ -19,6 +19,7 @@ import { QPART_COLS, qpartRow } from "@/lib/mock/plan";
 import type { TripCar } from "@/lib/mock/trips";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { DataTable } from "./ui";
+import { useProtoForm } from "@/lib/protoForm";
 
 export interface MoveTarget { car: TripCar; tripName: string; reason: string; parts: CarPlanPart[] }
 
@@ -26,6 +27,8 @@ export function MoveModal({ target, cur, counts, onCancel, onMove }: { target: M
   const mob = useBreakpoint() === "Mobile";
   const [sel, setSel] = useState(0);
   const [ask, setAsk] = useState(false);
+  /* ปุ่มต้นแบบ S25 (แถบต้นแบบ · lib/protoForm.ts) ตอน popup เปิด: กรอกข้อมูลตัวอย่าง = ไตรมาสถัดไป ⇒ ปุ่มย้ายยานพาหนะกดได้ · ล้างค่า = ยังไม่เลือก */
+  useProtoForm(target && !ask && cur < 4 ? { fill: () => setSel(cur + 1), clear: () => setSel(0), dirty: sel !== 0 } : null);
   if (!target) return null;
   const { car } = target;
   const close = () => { setSel(0); setAsk(false); onCancel(); };

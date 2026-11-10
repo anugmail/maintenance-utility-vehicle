@@ -288,7 +288,7 @@ export function emptyClose(job: Job, trip: JobTrip, car: TripCar): CloseForm {
 export const newJob = (tripId: string, carId: string): Job => ({ tripId, carId, status: "todo", parts: WORK.map((p) => ({ ...p })) });
 
 /* ข้อมูลกรอกครบตามจอ Figma (ใช้กับชุดตัวอย่าง) — ตรวจครบ (INSPECT_FIX) + ลงนาม ผู้ตรวจ (กบค.) / ผู้รับการตรวจ (SIGN_IN) */
-const filledReceive = (by: string, c: Pick<TripCar, "type">): ReceiveForm => ({
+export const filledReceive = (by: string, c: Pick<TripCar, "type">): ReceiveForm => ({
   items: inspectRows(c).map((r, i) => (i === INSPECT_FIX ? { ...r, sel: 1, note: INSPECT_NOTE } : { ...r, sel: 0 })),
   signers: [{ name: by.replace(/ \(.*\)$/, ""), sig: "sample" }, { name: PEOPLE.ownerSigner, sig: "sample" }],
   photos: BEFORE.map((b, i) => [{ name: b.replace(/\s|\+|\(|\)/g, "-") + "-" + (i + 1) + ".jpg", size: "2.4 MB", bar: true }]),
@@ -296,7 +296,7 @@ const filledReceive = (by: string, c: Pick<TripCar, "type">): ReceiveForm => ({
 const CLOSE_FILLED_PARTS: Record<string, [number, number, string]> = {   // CLOSE_PARTS: ใช้ · อะไหล่เก่า · หมายเหตุ
   "น้ำมันไฮดรอลิก ISO VG 46": [30, 30, "น้ำมันเก่าส่งกำจัดตามระเบียบ"], "ไส้กรองไฮดรอลิก": [2, 2, ""], "ไส้กรองน้ำมันเครื่อง": [2, 2, ""], "ไส้กรองอากาศ": [1, 1, "ไส้กรองเดิมอีกลูกยังใช้ได้"],
 };
-function filledClose(job: Job, trip: JobTrip, car: TripCar): CloseForm {
+export function filledClose(job: Job, trip: JobTrip, car: TripCar): CloseForm {
   const f = emptyClose(job, trip, car);
   return {
     ...f,
