@@ -138,7 +138,7 @@ function TripList() {
           <SectionLabel Title={"แผนเดินทาง (" + trips.length + ")"} Actions={create(TertiaryBrandButton)} />
           {trips.length
             ? <DataTable columns={TRIP_COLS} rows={tripRows} />
-            : <EmptyStateDataEmpty Text="ยังไม่มีแผนเดินทาง" SupportingText="สร้างแผนเดินทางเพื่อนัดวันเข้าตรวจ แจ้งเจ้าของยานพาหนะและ กรย." Actions={create(PrimaryButton)} />}
+            : <EmptyStateDataEmpty Text="ยังไม่มีแผนเดินทาง" SupportingText="สร้างแผนเดินทางเพื่อนัดวันเข้าตรวจ แจ้งผู้ดูแลยานพาหนะและ กรย." Actions={create(PrimaryButton)} />}
         </Section>
       </Content>
       <TripCarPicker open={adding} pool={quarterPool(mock, id, q)} nowQ={nowQ} title={"เพิ่มยานพาหนะเข้า" + nowQ}

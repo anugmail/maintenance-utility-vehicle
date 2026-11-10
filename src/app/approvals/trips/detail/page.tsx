@@ -26,7 +26,7 @@ import { TripPartsSection } from "../../../trips/_lib/TripExport";
 import { DecisionSection, useDecision } from "../../_shared/Decision";
 import { BtnRow, Content, DataTable, MENU_HOME, Section, useBack } from "../../../quarter/_shared/ui";
 
-const APPROVE_SUB = "แผนเดินทางผ่านการตรวจสอบ แจ้งเจ้าของยานพาหนะและ กรย.", RETURN_SUB = "แจ้งเหตุผลให้ผู้สร้างแผนเดินทางแก้ไขแล้วส่งใหม่";
+const APPROVE_SUB = "แผนเดินทางผ่านการตรวจสอบ แจ้งผู้ดูแลยานพาหนะและ กรย.", RETURN_SUB = "แจ้งเหตุผลให้ผู้สร้างแผนเดินทางแก้ไขแล้วส่งใหม่";
 
 function TripReview() {
   const router = useRouter();
@@ -46,7 +46,7 @@ function TripReview() {
   const confirm = () => {
     if (!dec.ok) return;
     if (!ret) setPending({
-      spec: { title: "ยืนยันอนุมัติแผนเดินทาง", sub: t.name + " · " + t.carIds.length + " คัน · อนุมัติแล้วระบบแจ้งเตือน กรย. และหน่วยงานเจ้าของยานพาหนะ", ok: "อนุมัติ" },
+      spec: { title: "ยืนยันอนุมัติแผนเดินทาง", sub: t.name + " · " + t.carIds.length + " คัน · อนุมัติแล้วระบบแจ้งเตือน กรย. และผู้ดูแลยานพาหนะ", ok: "อนุมัติ" },
       run: () => {
         const next = { ...t, status: "approved" as const, approvedAt: APPROVED_AT, returnReason: undefined };
         putTrip(next);
