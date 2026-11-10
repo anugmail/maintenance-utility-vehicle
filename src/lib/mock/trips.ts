@@ -266,7 +266,7 @@ export function nextTripId(all: Trip[], mode: "self" | "hire") {
 
 /* ---------- แจ้งเตือนในแอป (S8) ---------- */
 export type NotiRole = "kry" | "owner";
-export interface Noti { id: string; role: NotiRole; status: StatusState; text: string; time: string; tripId?: string; unread: boolean }
+export interface Noti { id: string; role: NotiRole; status: StatusState; text: string; time: string; tripId?: string; unread: boolean; /** หน้าที่เปิดเมื่อกด (ไม่มี = แผนเดินทาง tripId) */ href?: string }
 export const OWN_UNIT = "กฟฉ.1 ขอนแก่น";   // หน่วยงานเจ้าของรถตัวอย่างที่เข้าระบบอยู่
 export const NOTI_OLD_TEXT = "บำรุงรักษายานพาหนะ 82-3302 อุดรธานี ตามแผนเดินทางเดือนตุลาคมเสร็จแล้ว";
 export const DEFAULT_NOTIS = (): Noti[] => [
@@ -274,15 +274,21 @@ export const DEFAULT_NOTIS = (): Noti[] => [
   { id: "old-owner", role: "owner", status: "Success", text: NOTI_OLD_TEXT, time: "2 วันที่แล้ว", unread: false },
 ];
 export const notisOf = (s: MockState): Noti[] => s.notis ?? DEFAULT_NOTIS();
-/* แจ้งเตือนเมื่อผู้อนุมัติอนุมัติแผนเดินทาง (NOTI_KRY · NOTI_OWN) — กรย. ทุกใบ · หน่วยงานเจ้าของรถเฉพาะใบที่มีรถของหน่วยงาน */
+/* แจ้งเตือนเมื่อผู้อนุมัติอนุมัติแผนเดินทาง (NOTI_KRY · NOTI_OWN) — กรย. ทุกใบ · ผู้ดูแลยานพาหนะเฉพาะใบที่มียานพาหนะที่ตนดูแล (10 พ.ย. 2569 Figma 9607c3b "ยานพาหนะที่คุณดูแล" เดิม "ยานพาหนะของหน่วยงาน")
+   role "owner" = บทบาท ผู้ดูแลยานพาหนะ (ต้นแบบใช้ยานพาหนะของหน่วยงาน OWN_UNIT เป็นยานพาหนะที่ผู้ใช้คนนี้ดูแล) */
 export function approvalNotis(t: Trip): Noti[] {
   const out: Noti[] = [{ id: t.id + "-kry", role: "kry", status: "Brand", tripId: t.id, unread: true, time: "10 นาทีที่แล้ว",
     text: "แผนเดินทาง " + t.name + " อนุมัติแล้ว หน่วยงานผู้ดำเนินการจะเข้าบำรุงรักษายานพาหนะ " + t.carIds.length + " คัน ระหว่างวันที่ " + t.d1 + " ถึง " + t.d2 }];
   const own = tripCars(t, OWN_UNIT);
   if (own.length) out.push({ id: t.id + "-owner", role: "owner", status: "Brand", tripId: t.id, unread: true, time: "10 นาทีที่แล้ว",
-    text: "หน่วยงานผู้ดำเนินการจะเข้าบำรุงรักษายานพาหนะของหน่วยงาน " + own.length + " คัน (" + own.map((c) => c.plate).join(", ") + ") ระหว่างวันที่ " + t.d1 + " ถึง " + t.d2 + " ที่ " + tripLoc(t, own[0]) });
+    text: "หน่วยงานผู้ดำเนินการจะเข้าบำรุงรักษายานพาหนะที่คุณดูแล " + own.length + " คัน (" + own.map((c) => c.plate).join(", ") + ") ระหว่างวันที่ " + t.d1 + " ถึง " + t.d2 + " ที่ " + tripLoc(t, own[0]) });
   return out;
 }
+/* แจ้งเตือนถึงผู้ดูแลยานพาหนะเมื่อผู้ดำเนินการปิดงานคันนั้น (NOTI_ACK · S13 L.6 · Figma 9607c3b) — role "owner" = บทบาท ผู้ดูแลยานพาหนะ · กดแล้วเปิดผลการบำรุงรักษาของคันนั้น */
+export const ackNoti = (t: { id: string }, c: { id: string; plate: string }, unread = true): Noti => ({
+  id: "ack-" + t.id + "-" + c.id, role: "owner", status: "Brand", unread, time: "5 นาทีที่แล้ว", href: "/acceptance/car/?trip=" + t.id + "&car=" + c.id,
+  text: "ปิดงานบำรุงรักษา " + c.plate + " แล้ว รอผู้ดูแลยานพาหนะรับทราบผลและประเมินความพึงพอใจ",
+});
 export function addNotis(list: Noti[]) {
   setMock((s) => { const ids = new Set(list.map((n) => n.id)); return { ...s, notis: [...list, ...notisOf(s).filter((n) => !ids.has(n.id))] }; });
 }

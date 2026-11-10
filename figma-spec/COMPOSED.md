@@ -394,3 +394,11 @@ screens.js ไม่ได้วาดปุ่มไปขั้นถัดไ
 | หน้างานที่เสร็จสิ้นของแผนจ้าง (`WorkDetail`) | ไม่แสดง Section ค่าใช้จ่าย (ไม่มีข้อมูลที่กรอก) | ต่อจากกติกา Step 2 · Figma ไม่มีจอนี้ของแผนจ้าง (BACKLOG ค.) |
 | หน้าเริ่มของบทบาทผู้รับจ้าง | แผนจ้างดำเนินการใบล่าสุดที่อนุมัติแล้ว (`roleHome`) | userflow S23 "ไม่มีหน้ารายการแผนเดินทางของผู้รับจ้าง" เข้าจากแจ้งเตือน (จอแจ้งเตือนของผู้รับจ้างยังไม่มีใน Figma) |
 | ส่งกลับแก้ไข | มีเฉพาะชุดตัวอย่าง `?sample=TV_vendorReturned` `TV_vendorReturnedCannot` `TV_vendorMid` | ผู้ตรวจรับ (S11) ยังตัด ไม่มีจอส่งกลับ |
+
+## ม. S13 ปุ่ม "รับทราบ" สีเขียว (R89 · BACKLOG ข้อ 50 · Figma 9607c3b · 10 พ.ย. 2569)
+
+| จุด | ประกอบจาก | เหตุผล |
+|---|---|---|
+| `src/app/acceptance/_lib/ui.tsx` `AckButton` | Primary button ของไฟล์ Component (ButtonBase ตัวเดียวกับ `PrimaryButton`) เปลี่ยนเฉพาะพื้นเป็นตัวแปร Color/surface/success (token `success-600` #17B26A) + ไอคอนนำ check-24-300-round · Disabled = State=Disabled ของไลบรารี | ackRow() ของ screens.js ผูกสีพื้นของ instance Primary button กับตัวแปร Color/surface/success ตามปุ่ม "ตรวจแล้ว" / "ขึ้น SAP แล้ว" หน้า 5.14 - 5.15 Cost & Expense Check ของ UI Release#2 · ไลบรารีไม่มี variant สีเขียว · Hover คงสีเดิม (จอมีแต่ Default) |
+| ผลการตรวจสภาพก่อนบำรุงรักษา (หน้า `/acceptance/car/`) | VehicleAndReporterInfo (แบบตรวจ) + `patterns/CheckTable` readonly + HandoverSignature สถานะลงนามแล้ว (ไม่ส่ง onSign) — ชุดเดียวกับ Step 1 ของ S10 | inspectStep(c, true, true) ของ screens.js · ผลที่ S10 บันทึกแทนไฟล์ PDF |
+

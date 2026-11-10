@@ -60,5 +60,5 @@ export function planHistory(m: MockState, plan: Plan): PlanHistory {
 export const reportSummary = (h: PlanHistory): [string, string][] => [
   ["ยานพาหนะตามแผน", h.total + " คัน"], ["บำรุงรักษาแล้ว", h.done + " คัน"], ["ทำไม่ได้", h.cannot + " คัน"], ["ใบเดินทาง", h.trips + " ใบ"],
   ["อะไหล่ที่ใช้", h.partsUsed + " รายการ · คืนคลัง " + h.partsReturned + " รายการ"], ["ผลน้ำมันไฮโดรลิก", "ผ่าน " + h.oilPass + " · ไม่ผ่าน " + h.oilFail],
-  ["หน่วยงานยอมรับผล", h.accepted + " / " + h.total + " คัน"], ["ช่วงดำเนินการ", h.range],
+  ["ผู้ดูแลยานพาหนะรับทราบ", h.accepted + " / " + h.total + " คัน"], ["ช่วงดำเนินการ", h.range],
 ];

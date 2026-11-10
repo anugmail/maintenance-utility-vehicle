@@ -8,7 +8,7 @@ import type { PillColor } from "@/components/vms/PillOutline";
 import { FIG_FLEET, CAND, DISTRICTS, LAST_OIL, NEW_PLAN_DATE, OIL_OPTS, OIL_PLAN_OPTS, OIL_SPEC, PARTS, PART_PRICE, REGIONS, RETURN_REASON, UNIT_FLEET, creatorOf, dCode, oilChanges, unitOf, type ManualPart, type Plan, type PlanStatus } from "./data";
 import { CAR_PICK } from "./data";
 import { allocScope, carQty, inQuarter, quarterParts, type Draft } from "./plan";
-import { accPlans, accRows } from "./acceptance";
+import { accRows } from "./acceptance";
 import { notify, setMock, useRole, type MockState, type Role } from "./store";
 import { SAMPLE_PLAN_Q, candId, tripsOf } from "./trips";
 
@@ -20,16 +20,16 @@ export const carIndexOf = (param: string | null) => (param ? CAND.findIndex((c) 
 
 /* ---------- หน้าเริ่มของบทบาท (routes.md §2) · บทบาทที่ไม่มีสิทธิ์เปิดหน้า → กลับราก ---------- */
 export const ROLE_HOME: Partial<Record<Role, string>> = {
-  "ผู้อนุมัติ": "/approvals/plans/", "หัวหน้าหน่วยงาน": "/head-review/", "กรย.": "/trips-view/", "หน่วยงานเจ้าของยานพาหนะ": "/trips-view/",
+  "ผู้อนุมัติ": "/approvals/plans/", "หัวหน้าหน่วยงาน": "/head-review/", "กรย.": "/trips-view/", "ผู้ดูแลยานพาหนะ": "/trips-view/",
 };
 /* หน้าเริ่มที่ขึ้นกับข้อมูล (ต้นแบบ — sidebar เมนูอื่นยังไม่พาไปไหน ⇒ เข้ารากแล้วไปหน้าที่มีงานรอ · COMPOSED.md หัวข้อ ช.)
-   ผู้อนุมัติ: มีแผนเดินทางรออนุมัติ → /approvals/trips/ · หน่วยงานเจ้าของรถ: มีรถรอยอมรับผล / แผนพร้อมตรวจหลักฐาน → /acceptance/
+   ผู้อนุมัติ: มีแผนเดินทางรออนุมัติ → /approvals/trips/ · ผู้ดูแลยานพาหนะ: มียานพาหนะรอรับทราบผล (S13) → /acceptance/
    ผู้รับจ้าง → แผนจ้างดำเนินการใบล่าสุดที่อนุมัติแล้ว (S23 เอากลับ 10 พ.ย. 2569 · userflow "ไม่มีหน้ารายการแผนเดินทางของผู้รับจ้าง" เข้าจากแจ้งเตือน) · ไม่มีใบ = รายการแผน (ว่าง) */
 export function roleHome(role: Role, m: MockState): string | undefined {
   const trips = tripsOf(m).filter((t) => !t.listOnly);
   if (role === "ผู้รับจ้าง") { const h = trips.filter((t) => t.mode === "hire" && t.status === "approved").pop(); return h ? "/trips/detail/?trip=" + h.id : undefined; }
   if (role === "ผู้อนุมัติ" && trips.some((t) => t.status === "review")) return "/approvals/trips/";
-  if (role === "หน่วยงานเจ้าของยานพาหนะ" && (accRows(m).some((r) => !r.accepted) || accPlans(m).some((p) => p.ready && !p.done))) return "/acceptance/";
+  if (role === "ผู้ดูแลยานพาหนะ" && accRows(m).some((r) => !r.accepted)) return "/acceptance/";
   return ROLE_HOME[role];
 }
 

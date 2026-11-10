@@ -1,7 +1,7 @@
 "use client";
 /* S16 P1 · ประวัติรอตรวจสอบ (/head-review/ · หัวหน้า กบค.) — roleList() + hqRows() ใน screens.js · spec S16.md (O.1)
    Page header (ไม่มีย้อนกลับ) → Section ช่องไฟ 24: Table header (ค้นหาเลขที่ MR, ชื่อแผน + ตัวกรอง) + Table (HQ_COLS) + pagination
-   แผนที่ กบค. ส่งประวัติแล้ว (S15) + MRZ6900011 (ผ่านแล้ว ตัวอย่าง) · สถานะ HST: รอหัวหน้าตรวจสอบ · ผ่านแล้ว · ตีกลับ */
+   แผนที่ระบบส่งประวัติมาแล้ว (ผู้ดูแลยานพาหนะรับทราบครบทุกคัน S13 · หรือผู้ดำเนินการส่งใหม่หลังตีกลับ O.6 · S15 ตัดออก 10 พ.ย. 2569) + MRZ6900011 (ผ่านแล้ว ตัวอย่าง) · สถานะ HST: รอหัวหน้าตรวจสอบ · ผ่านแล้ว · ตีกลับ */
 import { useRouter } from "next/navigation";
 import { Suspense, useState } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";
@@ -26,7 +26,7 @@ function HeadList() {
   const [query, setQuery] = useState("");
   const open = (id: string) => () => router.push("/head-review/detail/?id=" + id);
   const rows: TableValue[][] = [];
-  /* แผนที่ กบค. ส่งประวัติแล้ว (closeout.sentAt) — ทุกแผนใน store */
+  /* แผนที่ส่งประวัติแล้ว (closeout.sentAt) — ทุกแผนใน store */
   Object.keys(mock.closeout ?? {}).forEach((id) => {
     const p = planOf(mock, id), c = closeoutOf(mock, id);
     if (p && c.sentAt) rows.push([p.mr, p.name, CREATOR_SHORT, p.cars + " คัน", c.sentAt ?? SENT_AT, { pills: [HST[headStatusOf(p, c)]] }, go("เปิด " + p.mr, open(id))]);

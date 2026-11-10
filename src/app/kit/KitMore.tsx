@@ -180,7 +180,7 @@ export function KitMore() {
         <V label="PhotoGallery — library fallback" wide><PhotoGallery Title="ภาพก่อนเริ่มงาน (2)" photos={[{}, {}]} /></V>
       </Block>
       <Block name="RepairFeedback (Maintain-D)" node="Maintain-D Design (0:1)">
-        <V label="S14 คะแนนความพึงพอใจ" wide><RepairFeedback Title="คะแนนประเมินความพึงพอใจงานบำรุงรักษา" SupportingText="ให้คะแนน 1–5 · 1 ต้องปรับปรุงมาก · 5 ดีมาก" value={score} onChange={setScore} /></V>
+        <V label="S13 คะแนนความพึงพอใจ" wide><RepairFeedback Title="คะแนนประเมินความพึงพอใจงานบำรุงรักษา" SupportingText="ให้คะแนน 1–5 · 1 ต้องปรับปรุงมาก · 5 ดีมาก" value={score} onChange={setScore} /></V>
       </Block>
       <Block name="HandoverSignature · Modal Signature (Maintain-D)" node="Maintain-D Design (0:1)">
         <V label="State=Signed (ซ้าย) · Default (ขวา)" wide>

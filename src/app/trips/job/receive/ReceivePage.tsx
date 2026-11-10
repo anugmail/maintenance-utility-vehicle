@@ -33,7 +33,7 @@ import { ButtonRow, Grid, jobHref, Section, toUpload, tripHref, useTripCar } fro
 import { StepFrame } from "../StepFrame";
 
 /* SIGN_IN ของ screens.js (9 พ.ย. 2569 ตามท้ายใบตรวจ · เดิม ผู้ส่งมอบ / ผู้รับมอบ) · ช่องเลือกชื่อ placeholder "เลือก" + ป้าย (signSection) */
-const SLOTS = [
+export const SLOTS = [
   { LabelText: "ผู้ตรวจ (หน่วยงานผู้ดำเนินการ)", Placeholder: "เลือกผู้ตรวจ (หน่วยงานผู้ดำเนินการ)" },
   { LabelText: "ผู้รับการตรวจ (หน่วยงานเจ้าของยานพาหนะ)", Placeholder: "เลือกผู้รับการตรวจ (หน่วยงานเจ้าของยานพาหนะ)" },
 ];

@@ -37,11 +37,11 @@ export const PER = 10;
 
 /* Permission ของ Scenario 24: กบค. เห็นทุกคัน · หน่วยงานเจ้าของรถ เห็นเฉพาะรถในสังกัด · บทบาทอื่นกลับราก (useRoleGuard) */
 /* 9 พ.ย. 2569 ตรวจสิทธิ์: หน่วยงานผู้ดำเนินการทุกหน่วยงาน (กกฟ.1 กกฟ.2 กรย.) เห็นเฉพาะยานพาหนะในแผนของตัวเอง (unit) · กบค. ทุกคัน · เดิมเฉพาะ กกฟ.1 */
-export const MA_ROLES = ["หน่วยงาน (กกฟ.1)", "หน่วยงาน (กกฟ.2)", "หน่วยงาน (กรย.)", "กบค.", "หน่วยงานเจ้าของยานพาหนะ"] as const;
+export const MA_ROLES = ["หน่วยงาน (กกฟ.1)", "หน่วยงาน (กกฟ.2)", "หน่วยงาน (กรย.)", "กบค.", "ผู้ดูแลยานพาหนะ"] as const;
 export function useMaAccess() {
   const ok = useRoleGuard(MA_ROLES);
   const role = useRole();
-  const owner = role === "หน่วยงานเจ้าของยานพาหนะ";
+  const owner = role === "ผู้ดูแลยานพาหนะ";
   return { ok, owner, unit: UNIT_ROLES[role] };
 }
 

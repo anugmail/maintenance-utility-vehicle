@@ -58,8 +58,9 @@ export function partsSummary(rows: NeedRow[] = SAMPLE_NEED) {
 
 /* ---------- S15 S16 S17 ---------- */
 export interface CloseoutState {
-  /** หน่วยงานยอมรับผลทั้งแผนแล้ว (S14 — batch C ตั้งค่านี้) ⇒ ครบทุกคัน ส่งประวัติได้ */
+  /** ที่เก็บเก่า (S14 ยอมรับผลทั้งแผน · ตัดออก 10 พ.ย. 2569) — ไม่ใช้แล้ว */
   accepted?: boolean;
+  /** sentAt = ระบบส่งประวัติให้หัวหน้าหน่วยงานเมื่อผู้ดูแลยานพาหนะรับทราบครบทุกคัน (S13 acceptCar · S15 ตัดออก) หรือผู้ดำเนินการส่งใหม่หลังถูกตีกลับ (S16 O.6) */
   sentAt?: string;
   /** ผลหัวหน้า กบค. (S16) */
   head?: "ok" | "back";
@@ -71,14 +72,15 @@ export const closeoutOf = (s: MockState, id: string): CloseoutState => s.closeou
 export function putCloseout(id: string, patch: Partial<CloseoutState>) {
   setMock((s) => ({ ...s, closeout: { ...s.closeout, [id]: { ...s.closeout?.[id], ...patch } } }));
 }
-/** S14 (acceptance.ts acceptPlan) เรียกเมื่อหน่วยงานยอมรับผลทั้งแผน */
-export const markPlanAccepted = (id: string) => putCloseout(id, { accepted: true });
 
-export const ACC: Record<"wait" | "ok", [string, PillColor]> = { wait: ["รอหน่วยงานยอมรับ", "Warning"], ok: ["หน่วยงานยอมรับแล้ว", "Success"] };
+/* ACC — การรับทราบของผู้ดูแลยานพาหนะ (S13 · 10 พ.ย. 2569 เดิม รอหน่วยงานยอมรับ / หน่วยงานยอมรับแล้ว) */
+export const ACC: Record<"wait" | "ok", [string, PillColor]> = { wait: ["รอรับทราบ", "Warning"], ok: ["รับทราบแล้ว", "Success"] };
+/* เหตุผลตีกลับตัวอย่าง (HIST_BACK · S16 O.3 O.6) */
+export const HIST_BACK = "ผลน้ำมันไฮโดรลิกของ 80-5738 น่าน ไม่ผ่าน ต้องระบุการแก้ไขก่อนบันทึกประวัติ";
 export const HST: Record<"wait" | "ok" | "back", [string, PillColor]> = { wait: ["รอหัวหน้าตรวจสอบ", "Warning"], ok: ["ผ่านแล้ว", "Success"], back: ["ตีกลับ", "Error"] };
 export const HIST_COLS = [
   { head: "ทะเบียน", width: 160, Style: "Lead text" as const, SortIcon: "Swap" as const }, { head: "วันที่ทำ", width: 120 }, { head: "งานที่ทำ" },
-  { head: "อะไหล่ที่ใช้", width: 220 }, { head: "ผลน้ำมัน", width: 110, Style: "Badge" as const }, { head: "ผู้ทำ", width: 150 }, { head: "การยอมรับ", width: 190, Style: "Badge" as const },
+  { head: "อะไหล่ที่ใช้", width: 220 }, { head: "ผลน้ำมัน", width: 110, Style: "Badge" as const }, { head: "ผู้ทำ", width: 150 }, { head: "การรับทราบ", width: 190, Style: "Badge" as const },
 ];
 /* แถวประวัติ ความคืบหน้า และสรุปรายงาน อ่านจากงานรายคันจริง — lib/mock/history.ts (BACKLOG ข้อ 6 · แทน HIST_ROWS PROGRESS_DONE reportSummary คงที่) */
 export const SENT_AT = "12/11/2569", HEAD_AT = "13/11/2569", CLOSED_AT = "14/11/2569";

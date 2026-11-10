@@ -10,7 +10,8 @@
    ทางไปขั้นถัดไป เฉพาะ กบค. · แผนอนุมัติแล้ว/ดำเนินการ (planDetailQ ใน screens.js · S6 ทางเข้า 5 พ.ย. 2569):
      Section label "รถในแผน" Primary action (Tertiary brand button) "ไปหน้าไตรมาส n" ตามแท็บที่เปิด (Q54) → หน้า "ไตรมาส n" (/quarter/trips/)
      Secondary action (Tertiary button) "ความคืบหน้าอะไหล่" (S4) เฉพาะแท็บไตรมาสที่กำลังทำ — ทางเข้าเดิม 4 พ.ย. (จอ Figma รอบ 5 พ.ย. ไม่มีทางเข้า S4 · BACKLOG ค.)
-     ปุ่มหัว: ดำเนินการ + หน่วยงานยอมรับผลทั้งแผนแล้ว (S14 · closeout.accepted · เงื่อนไข S15) → "ส่งประวัติ" (S15) · ประวัติผ่านแล้ว/ปิดงานแล้ว → "รายงานผลการบำรุงรักษา" (S17)
+     ปุ่มหัว: ดำเนินการ + หัวหน้าหน่วยงานตีกลับประวัติ (closeout.head = back) → "ส่งประวัติ" (S16 O.6 หน้าประวัติของแผน แก้แล้วส่งใหม่) · ประวัติผ่านแล้ว/ปิดงานแล้ว → "รายงานผลการบำรุงรักษา" (S17)
+     10 พ.ย. 2569 S14 S15 ตัดออก (Figma 9607c3b): ผู้ดูแลยานพาหนะรับทราบครบทุกคันแล้วระบบส่งประวัติเอง ⇒ ไม่มีปุ่มส่งประวัติตอนครบ · ทางเข้า O.6 จอ Figma ไม่ระบุ ใช้ปุ่มเดิม (BACKLOG ค.)
    กล่องรายละเอียดแผน: ก่อนดำเนินการ = npKv (planFlow.planKv · เขต ยานพาหนะรายไตรมาส วันที่ส่ง · planBody ของ screens.js)
      · ดำเนินการขึ้นไป = PLAN_KV (closeout.planKv · ไตรมาส วันที่สร้าง อนุมัติเมื่อ) ตาม E.2 planDetailQ ของ screens.js (9 พ.ย. 2569)
    อะไหล่ในแผน (detail/PlanParts.tsx ชุดเดียวกับหน้าผู้อนุมัติ S2) ต่อท้าย PlanBody ทุกสถานะ ทุกบทบาท (planBody ของ screens.js แสดง planPartsSec เสมอ · Figma e3040ff ee5e68c):
@@ -63,7 +64,7 @@ function Detail() {
   const id = planId(plan);
   const nowQ = Number(plan.nowQ.replace(/\D/g, "")) || 1;
   const q = qSel ?? nowQ;
-  const canSend = manage && st === "active" && !!closeoutOf(mock, id).accepted;
+  const canSend = manage && st === "active" && closeoutOf(mock, id).head === "back";
   const canReport = manage && (st === "passed" || st === "closed");
   const actions = canEdit ? <>
     {canDelete && <SecondaryDangerButton Text="ลบแผน" LeadingIconSwap="delete-24-300-round" Size={size} onClick={() => setDel(true)} />}

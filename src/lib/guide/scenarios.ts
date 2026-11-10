@@ -25,8 +25,6 @@ import { JOB_RECORD } from "./cases/job-record";
 import { MOVE_CAR_GUIDE } from "./cases/move-car";
 import { OIL_RESULT } from "./cases/oil-result";
 import { ACCEPT_CAR } from "./cases/accept-car";
-import { ACCEPT_PLAN } from "./cases/accept-plan";
-import { SEND_HISTORY } from "./cases/send-history";
 import { HEAD_REVIEW } from "./cases/head-review";
 import { CLOSE_PLAN } from "./cases/close-plan";
 import { VEHICLE_MAINTENANCE } from "./cases/vehicle-maintenance";
@@ -318,8 +316,6 @@ export const GUIDES: GuideScenario[] = [
   MOVE_CAR_GUIDE,
   OIL_RESULT,
   ACCEPT_CAR,
-  ACCEPT_PLAN,
-  SEND_HISTORY,
   HEAD_REVIEW,
   CLOSE_PLAN,
   VEHICLE_MAINTENANCE,

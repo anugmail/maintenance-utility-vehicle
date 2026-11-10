@@ -3,7 +3,8 @@
    Page header "หมายเลขแผน MRZ7000001" + Badge HST (รอหัวหน้าตรวจสอบ → Brand · ผ่านแล้ว → Success · ตีกลับ → Error)
    Content ช่องไฟ 32: รายละเอียดแผน · ความคืบหน้ารายคัน (DisplayBox 4 คู่ + ผู้ส่ง) · ประวัติงานบำรุงรักษาทั้งหมด (12) + Table pagination 12
    รอตรวจ: ปุ่ม ตีกลับ (FormModal เหตุผลที่ตีกลับ · ว่าง = กดตีกลับไม่ได้) · อนุมัติประวัติ (ConfirmDialog) · อนุมัติแล้ว: Alert Success ไม่มีปุ่ม
-   ตีกลับ → แผนกลับไป กบค. (S15 ส่งใหม่) → กลับรายการ (จอผลตีกลับ/toast ยังไม่ออกแบบ) · อนุมัติ → ประวัติผ่านแล้ว + toast → S17 */
+   ตีกลับ → แผนกลับไปให้ผู้ดำเนินการแก้แล้วส่งใหม่ที่หน้าประวัติของแผน (S16 O.6 /closeout/history/ · S15 ตัดออก 10 พ.ย. 2569) → กลับรายการ (toast ยังไม่ออกแบบ) · อนุมัติ → ประวัติผ่านแล้ว + toast → S17
+   ประวัติมาถึงเองเมื่อผู้ดูแลยานพาหนะรับทราบครบทุกคัน (S13) · ความคืบหน้ารายคัน "ผู้ดูแลยานพาหนะรับทราบแล้ว" (Figma 9607c3b) */
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { planHistory } from "@/lib/mock/history";
@@ -58,7 +59,7 @@ function HeadHistory() {
         crumbs={[{ Text: MENU_HOME, href: "/" }, { Text: "ประวัติรอตรวจสอบ", href: "/head-review/" }, { Text: mrOf(id) }]} />
       <Content>
         <VehicleAndReporterInfo Title="รายละเอียดแผน" pairs={planKv(plan)} />
-        <DisplayBox Title="ความคืบหน้ารายคัน" pairs={[["บำรุงรักษาแล้ว", hist.done + " / " + total + " คัน"], ["ทำไม่ได้", hist.cannot + " คัน"], ["หน่วยงานยอมรับแล้ว", hist.accepted + " คัน"], ["ผู้ส่ง", sender]]} />
+        <DisplayBox Title="ความคืบหน้ารายคัน" pairs={[["บำรุงรักษาแล้ว", hist.done + " / " + total + " คัน"], ["ทำไม่ได้", hist.cannot + " คัน"], ["ผู้ดูแลยานพาหนะรับทราบแล้ว", hist.accepted + " คัน"], ["ผู้ส่ง", sender]]} />
         <Section>
           <SectionLabel Title={"ประวัติงานบำรุงรักษาทั้งหมด (" + hist.rows.length + ")"} />
           <DataTable columns={HIST_COLS} rows={hist.rows} pagination={hist.rows.length} perPage={Math.max(1, hist.rows.length)} />

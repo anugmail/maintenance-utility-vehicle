@@ -1,6 +1,6 @@
 "use client";
 /* Figma: "RepairFeedback" — ไฟล์ Maintain-D หน้า Design (node 0:1) · สเปก figma-spec/RepairFeedback.json (CLAUDE.md ข้อ 12)
-   คะแนนความพึงพอใจ 1–5 (S14) · ค่าเริ่มหัวข้อของไฟล์ "คะแนนประเมินคุณภาพงานซ่อมบำรุง" — S14 ส่ง Title เอง
+   คะแนนความพึงพอใจ 1–5 (S13 รับทราบรายคัน · เดิม S14 ตัดออก 10 พ.ย. 2569) · ค่าเริ่มหัวข้อของไฟล์ "คะแนนประเมินคุณภาพงานซ่อมบำรุง" — S13 ส่ง Title เอง
    ค่า: Section header (Title · Supporting text ถ้ามี) → ห่าง 16 → Radio แถวเดียว ช่องไฟ 12 (มือถือ 8 ยังแถวเดียว) Radio text card "1"…"5" กว้างเท่ากัน ไม่มี Supporting text
    มือถือ: การ์ด 5 ใบในแถวเดียวกว้างไม่พอขอบใน 16 → ขอบในข้าง 12 (COMPOSED.md จ.) */
 import { RadioTextCard } from "@/components/vms/RadioTextCard";

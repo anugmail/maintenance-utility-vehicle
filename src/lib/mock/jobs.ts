@@ -21,7 +21,7 @@ import type { PillColor } from "@/components/vms/PillOutline";
 import { useMemo } from "react";
 import { CAND, LAST_OIL, PLANS, typeOf, type Plan } from "./data";
 import { setMock, useMock, type MockState, type Role } from "./store";
-import { APPROVED_AT, PLAN_CARS, PLAN_ID, Q_EXTRA, TRIP_1, TRIP_CARS as CARS, TRIP_V, candId, tripsOf, type Trip } from "./trips";
+import { APPROVED_AT, PLAN_CARS, PLAN_ID, Q_EXTRA, TRIP_1, TRIP_CARS as CARS, TRIP_V, ackNoti, addNotis, candId, tripsOf, type Trip } from "./trips";
 
 /* ---------- เพิ่มฟิลด์ jobs ให้ MockState (store.ts) ---------- */
 declare module "./store" {
@@ -230,8 +230,8 @@ export interface Job {
   cannot?: CannotInfo;
   oilResult?: OilResult;
   safety?: SafetyDocs;
-  /** หน่วยงานยอมรับผลรายคันแล้ว (S13 · acceptance.ts) */
-  acceptedAt?: string;
+  /** ผู้ดูแลยานพาหนะรับทราบผลรายคันแล้ว (S13 · acceptance.ts · 10 พ.ย. 2569 เดิม หน่วยงานยอมรับผล) · score = คะแนนความพึงพอใจ 1–5 (คันที่บำรุงรักษาไม่ได้ไม่มี) */
+  acceptedAt?: string; score?: number;
   /** S23 ส่งตรวจงาน (รอตรวจรับ) · เหตุผลที่หน่วยงานส่งกลับแก้ไข */
   sentAt?: string; sentBy?: string; returnReason?: string;
 }
@@ -463,6 +463,8 @@ export function closeJob(t: JobTrip, carId: string, f: CloseForm, vendor = false
     oilResult: oilSampled(f.oilChoice) ? { sel: f.oilSel, files: f.oilFiles, sampledAt: at.slice(0, 10), sampledBy: by, ...(f.oilSel >= 0 ? { savedAt: at, savedBy: by } : {}) } : undefined,
     safety: { files: f.safetyFiles ?? [] },   // ไม่บังคับ — ปิดงานได้แม้ยังไม่แนบ
   }));
+  const c = carOf(carId);
+  if (!vendor && c) addNotis([ackNoti(t, c)]);   // S13 แจ้งผู้ดูแลยานพาหนะของคันนั้น (NOTI_ACK) · แผนจ้างของผู้รับจ้าง (S23) รอตรวจรับ — ยังไม่เคาะ
 }
 /** S10 บำรุงรักษาไม่ได้ → "บำรุงรักษาไม่ได้" ทันที ทั้งตรวจเองและแผนจ้าง (ไม่ต้องส่งตรวจ) */
 /** S23 ผู้รับจ้าง (vendor) → "แจ้งบำรุงรักษาไม่ได้" รอผู้รับจ้างส่งตรวจงาน · แก้สาเหตุ (edit) คงผู้แจ้ง/เวลาเดิม */
