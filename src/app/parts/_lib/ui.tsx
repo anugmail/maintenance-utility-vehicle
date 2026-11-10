@@ -12,17 +12,16 @@ import { cellProps, type TableColumn, type TableValue } from "@/components/vms/T
 import { TableCell } from "@/components/vms/TableCell";
 import { TableHeaderCell } from "@/components/vms/TableHeaderCell";
 import { TablePagination } from "@/components/vms/TablePagination";
-import { DASH_METRICS } from "@/lib/mock/partsDash";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 
 export const PER = 10;
 
 /* metricRow(): desktop 4 ใบเต็มแถว ช่องไฟ 24 · มือถือ 2 ใบต่อแถว ช่องไฟ 12 */
-export function Metrics() {
+export function Metrics({ items }: { items: [string, string, "Brand" | "Success"][] }) {
   const mob = useBreakpoint() === "Mobile";
   return (
     <div className={mob ? "grid grid-cols-2 gap-3" : "flex gap-6 [&>*]:flex-1 [&>*]:basis-0"}>
-      {DASH_METRICS.map(([t, n, c]) => <MetricItem key={t} Text={t} Number={n} FeaturedIconColor={c} />)}
+      {items.map(([t, n, c]) => <MetricItem key={t} Text={t} Number={n} FeaturedIconColor={c} />)}
     </div>
   );
 }

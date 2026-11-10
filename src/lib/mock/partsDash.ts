@@ -27,12 +27,12 @@ export const DASH_HINT = ["ค้นหาชื่ออะไหล่, รห
 export const DASH_YEAR = "2570";
 
 /* แผนที่อนุมัติแล้วของปีงบประมาณ 2570 (DASH_PLANS = [planAs('approved'), PLANS[0], PLANS[1]]) */
-export interface DashPlan { mr: string; name: string; unit: string; year: string; districts: string[] }
+export interface DashPlan { mr: string; name: string; unit: string; year: string; districts: string[]; cars: number }
 const regionsOf = (region: string) => REGIONS.filter((r) => region.split(",").map((s) => shortRegion(s.trim())).includes(shortRegion(r)));
-const dashPlan = (mr: string, name: string, region: string, year: string): DashPlan => ({ mr, name, unit: PLAN_UNIT[mr] ?? UNITS[0], year, districts: regionsOf(region).flatMap((r) => DISTRICTS[r]) });
+const dashPlan = (mr: string, name: string, region: string, year: string, cars: number): DashPlan => ({ mr, name, unit: PLAN_UNIT[mr] ?? UNITS[0], year, districts: regionsOf(region).flatMap((r) => DISTRICTS[r]), cars });
 export const DASH_PLANS: DashPlan[] = [
-  dashPlan("MRZ7000004", SAMPLE_NAME, REGIONS[0] + ", " + REGIONS[1], DASH_YEAR),
-  ...PLANS.slice(0, 2).map((p) => dashPlan(p.mr, p.name, p.region, p.year)),
+  dashPlan("MRZ7000004", SAMPLE_NAME, REGIONS[0] + ", " + REGIONS[1], DASH_YEAR, 10),   // NEW_PLAN[4] = 10 คัน
+  ...PLANS.slice(0, 2).map((p) => dashPlan(p.mr, p.name, p.region, p.year, p.cars)),
 ];
 const planOf = (mr: string) => DASH_PLANS.find((p) => p.mr === mr);
 
@@ -62,10 +62,16 @@ export const DASH_PROG: ProgRow[] = [
   ["MRZ7000002", 2, 1, 0, 4, "doing"], ["MRZ7000002", 3, 0, 0, 2, "todo"],
 ];
 
-/* Metric item 4 ใบ [Text, Number, สี Featured icon] — ค่าคงที่ของจอ */
-export const DASH_METRICS: [string, string, "Brand" | "Success"][] = [
-  ["แผนที่อนุมัติแล้ว", "3", "Brand"], ["ยานพาหนะในแผน", "30", "Brand"], ["รายการอะไหล่", String(DASH_AGG.length), "Brand"], ["ยานพาหนะบำรุงรักษาแล้ว", "4/30", "Success"],
-];
+/* Metric item 4 ใบ [Text, Number, สี Featured icon] — dashMetrics() ของ screens.js (Figma 76efd87 · 10 พ.ย. 2569)
+   เจ้าของงาน "ผู้สร้างแผนเห็นเฉพาะแผนของหน่วยงานตัวเอง ยกเว้น กบค จะเห็นแผนของหน่วยงานอื่นด้วย แต่แก้ไขไม่ได้"
+   ⇒ นับเฉพาะแผนที่บทบาทนั้นเห็น: unit = หน่วยงานของผู้ใช้ (กกฟ.1 กกฟ.2 กรย.) · ไม่มี = กบค. ทุกหน่วยงาน (แผน 3 · ยานพาหนะ 30 · บำรุงรักษาแล้ว 4/30 เท่าจอเดิม)
+   รายการอะไหล่ = DASH_AGG.length (จอ Figma ไม่แยกตามหน่วยงาน) */
+export const dashMine = (unit?: string) => (mr: string) => !unit || DASH_PLANS.find((p) => p.mr === mr)?.unit === unit;
+export function dashMetrics(unit?: string): [string, string, "Brand" | "Success"][] {
+  const pl = DASH_PLANS.filter((p) => dashMine(unit)(p.mr)), pr = DASH_PROG.filter((r) => dashMine(unit)(r[0]));
+  const cars = pl.reduce((a, p) => a + p.cars, 0), done = pr.reduce((a, r) => a + r[3], 0);
+  return [["แผนที่อนุมัติแล้ว", String(pl.length), "Brand"], ["ยานพาหนะในแผน", String(cars), "Brand"], ["รายการอะไหล่", String(DASH_AGG.length), "Brand"], ["ยานพาหนะบำรุงรักษาแล้ว", done + "/" + cars, "Success"]];
+}
 
 /* popup ส่งออก (exportModal · R32) */
 export const EXPORT_CARDS = [{ Text: "PDF", SupportingText: "เอกสาร A4 สำหรับพิมพ์หรือแนบเอกสาร" }, { Text: "Excel", SupportingText: "ไฟล์ .xlsx แยกชีตตามหัวข้อ" }];

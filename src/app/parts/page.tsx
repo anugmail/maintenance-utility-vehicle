@@ -30,7 +30,7 @@ import { MENU_HOME, go, tripsHref } from "@/app/quarter/_shared/ui";
 import { PARTS, PLAN_CREATOR, YEARS } from "@/lib/mock/data";
 import {
   DASH_AGG, DASH_CARS, DASH_CAR_COLS, DASH_DISTRICTS, DASH_HINT, DASH_PLANS, DASH_PROG, DASH_PROG_COLS, DASH_TABS, DASH_TITLE, DASH_UNITS, DASH_YEAR,
-  EXPORT_ALL_SUB, EXPORT_CARDS, NO_FILTER, QPART_COLS, QST, aggRows, carRows, dashPlanOf, filterCount, progRows, sortAll,
+  EXPORT_ALL_SUB, EXPORT_CARDS, NO_FILTER, QPART_COLS, QST, aggRows, carRows, dashMetrics, dashPlanOf, filterCount, progRows, sortAll,
   type CarRow, type DashFilter, type ProgRow,
 } from "@/lib/mock/partsDash";
 import { UNIT_ROLES, useRoleGuard } from "@/lib/mock/planFlow";
@@ -40,8 +40,9 @@ import { useBreakpoint } from "@/lib/useBreakpoint";
 import { Metrics, RadioPick, SORT0, SortTable, nextSort, sortRows, type Sort } from "./_lib/ui";
 import { downloadCsv, openPrint } from "./_lib/exportFile";
 
-/* Permission: กบค. ดูแผนที่อนุมัติแล้วของทุกหน่วยงาน · หน่วยงาน (กกฟ.1) เปิดได้ด้วย (เมนูเดียวกันทุกบทบาท · รอเคาะ BACKLOG ข้อ 22 หมวด ค.) */
-/* 9 พ.ย. 2569 ตรวจสิทธิ์: หน่วยงานผู้ดำเนินการทุกหน่วยงานเปิดได้ เห็นเฉพาะแผนของหน่วยงานตัวเอง (ตัวกรองหน่วยงานถูกตั้งเป็นหน่วยงานตัวเองเสมอ) · กบค. ทุกหน่วยงาน */
+/* Permission (เคาะ 10 พ.ย. 2569 · Figma 76efd87 C.14 C.15 · เจ้าของงาน "ผู้สร้างแผนเห็นเฉพาะแผนของหน่วยงานตัวเอง ยกเว้น กบค จะเห็นแผนของหน่วยงานอื่นด้วย แต่แก้ไขไม่ได้"):
+   หน่วยงาน (กกฟ.1 กกฟ.2 กรย.) เห็นเฉพาะแผนของหน่วยงานตัวเอง — การ์ดตัวเลข ตัวเลขบนแท็บ ตาราง นับตามแผนที่เห็น · แผงตัวกรองไม่มี "หน่วยงานผู้ขอเบิก" · ตัวเลือกแผนเฉพาะแผนของตัวเอง
+   กบค. เห็นทุกหน่วยงาน ดูอย่างเดียว · แผงตัวกรองมี "หน่วยงานผู้ขอเบิก" */
 const DASH_ROLES = ["กบค.", "หน่วยงาน (กกฟ.1)", "หน่วยงาน (กกฟ.2)", "หน่วยงาน (กรย.)"] as const;
 const COLS = [sortAll(QPART_COLS), sortAll(DASH_CAR_COLS), sortAll(DASH_PROG_COLS)];
 const ALL_N = [DASH_AGG.length, DASH_CARS.length, DASH_PROG.length];
@@ -122,7 +123,7 @@ function PartsDash() {
         <EmptyStateDataEmpty Text="ยังไม่มีแผนที่อนุมัติแล้ว" SupportingText="เมื่อแผนบำรุงรักษาได้รับอนุมัติ อะไหล่และความคืบหน้าของแผนจะรวมมาที่นี่" />
       ) : <>
         <Tabs>{DASH_TABS.map((t, i) => <TabItem key={t} Text={t} Badge={allN[i]} Active={tab === i} onClick={() => pickTab(i)} />)}</Tabs>
-        <Metrics />
+        <Metrics items={dashMetrics(scope)} />
         <section className="flex flex-col gap-6">
           <TableHeader Placeholder={DASH_HINT[tab]} query={query} onQuery={putQuery} onFilter={openPanel} FilterCount={filterCount(filter)}
             Filters={chips} onRemoveFilter={(v) => putFilter(dropChip(filter, v))}
@@ -137,14 +138,14 @@ function PartsDash() {
         <InputDropdown LabelText="ปีงบประมาณ" Optional Size={mob ? "lg" : "md"} Text={draft.year} Placeholder="เลือกปีงบประมาณ" open={open === "year"} onOpenChange={toggle("year")}>
           <DropdownList>{YEARS.map((y) => <DropdownListItem key={y} Text={y} State={y === draft.year ? "Selected" : "Default"} onClick={() => { setDraft({ ...draft, year: draft.year === y ? "" : y }); setOpen(""); }} />)}</DropdownList>
         </InputDropdown>
-        <InputDropdownWithBadges LabelText="หน่วยงานผู้ขอเบิก" Optional values={draft.units} Placeholder="เลือกหน่วยงานผู้ขอเบิก" onRemove={drop("units")} open={open === "unit"} onOpenChange={toggle("unit")}>
+        {!scope && <InputDropdownWithBadges LabelText="หน่วยงานผู้ขอเบิก" Optional values={draft.units} Placeholder="เลือกหน่วยงานผู้ขอเบิก" onRemove={drop("units")} open={open === "unit"} onOpenChange={toggle("unit")}>
           <DropdownList>{DASH_UNITS.map((u) => <DropdownListItem key={u} Text={u} State={draft.units.includes(u) ? "Selected" : "Default"} onClick={() => flip("units", u)} />)}</DropdownList>
-        </InputDropdownWithBadges>
+        </InputDropdownWithBadges>}
         <InputDropdownWithBadges LabelText="เขต" Optional values={draft.districts} Placeholder="เลือกเขต" onRemove={drop("districts")} open={open === "district"} onOpenChange={toggle("district")}>
           <DropdownList>{DASH_DISTRICTS.map((d) => <DropdownListItem key={d} Text={d} State={draft.districts.includes(d) ? "Selected" : "Default"} onClick={() => flip("districts", d)} />)}</DropdownList>
         </InputDropdownWithBadges>
         <InputDropdownWithBadges LabelText="แผน" Optional values={draft.plans} Placeholder="เลือกแผน" onRemove={drop("plans")} open={open === "plan"} onOpenChange={toggle("plan")}>
-          <DropdownList>{DASH_PLANS.map((p) => <DropdownListItem key={p.mr} Text={p.mr} SupportingText={p.name} State={draft.plans.includes(p.mr) ? "Selected" : "Default"} onClick={() => flip("plans", p.mr)} />)}</DropdownList>
+          <DropdownList>{DASH_PLANS.filter((p) => !scope || p.unit === scope).map((p) => <DropdownListItem key={p.mr} Text={p.mr} SupportingText={p.name} State={draft.plans.includes(p.mr) ? "Selected" : "Default"} onClick={() => flip("plans", p.mr)} />)}</DropdownList>
         </InputDropdownWithBadges>
       </FilterShell>
 
