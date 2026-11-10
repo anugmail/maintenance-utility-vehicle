@@ -3,7 +3,7 @@
    ย้าย = รถออกจากไตรมาสเดิม (qcars removed) + เข้าไตรมาสใหม่ขึ้นก่อน (qcars added) · แผนที่จัดรถรายคัน (alloc) เปลี่ยนไตรมาสของรถ อะไหล่ตามแผนของรถย้ายตาม
    แผนเดินทางเดิมยังมีรถคันนี้ (สถานะบำรุงรักษาไม่ได้) · ไม่ต้องอนุมัติใหม่ */
 import { CAND, CAR_PICK, CAR_QTY, OIL_SPEC, PARTS, QUARTERS } from "./data";
-import { WORK, getJob, jobsOf } from "./jobs";
+import { WORK, getJob, jobsOf, removeTripCar, type JobTrip } from "./jobs";
 import { allocOf, quarterRows } from "./planFlow";
 import { notify, setMock, type MockState } from "./store";
 import { TRIP_CARS as SAMPLE_TRIP_CARS, addQuarterCars, candId, quarterCars, quarterTrips, removeQuarterCar, type TripCar } from "./trips";
@@ -53,6 +53,16 @@ export function moveCar(planId: string, car: TripCar, from: number, to: number, 
   removeQuarterCar(planId, from, car.id);
   setMock((s) => ({ ...s, moves: [...movesOf(s), { planId, carId: car.id, plate: car.plate, from, to, tripId }] }));
   notify("ย้ายยานพาหนะ " + car.plate + " ไป" + qLabel(to) + " สำเร็จ");
+}
+
+/* ดำเนินการบำรุงรักษา (S25 X.11 X.12 · Figma 5c47568 · เจ้าของงาน 10 พ.ย. 2569 "s25 ตัวเลือกต้องสามารถเลือก ดำเนินการบำรุงรักษา และ ย้ายไปไตรมาสอื่น" + เคาะ "กลับเป็นรอเข้าแผนเดินทางในไตรมาสเดิม")
+   ยืนยันแล้วยานพาหนะออกจากแผนเดินทางเดิม (งานรายคัน "บำรุงรักษาไม่ได้" ของใบนั้นล้าง) → "ยังไม่มีแผนเดินทาง" ในไตรมาสเดิม · อยู่ในไตรมาสเดิม อะไหล่ตามแผนคงอยู่ · เพิ่มเข้าแผนเดินทางใบใหม่ (S6) แล้วบำรุงรักษาตามปกติ (S10) */
+export const MAINT_ITEM = { Text: "ดำเนินการบำรุงรักษา", IconSwap: "car_repair-24-300-round" } as const;
+export const MAINT_CONFIRM = (plate: string, q: number) => ({ title: "ยืนยันดำเนินการบำรุงรักษา · " + plate,
+  sub: plate + " จะกลับเป็นยานพาหนะที่ยังไม่มีแผนเดินทางใน" + qLabel(q) + " เพื่อเพิ่มเข้าแผนเดินทางแล้วบำรุงรักษาตามปกติ", cancel: "ยกเลิก", ok: "ยืนยัน" });
+export function maintainCar(car: TripCar, q: number, tripId: string) {
+  removeTripCar({ id: tripId } as JobTrip, car.id);
+  notify("นำ " + car.plate + " กลับมาบำรุงรักษาใน" + qLabel(q) + " แล้ว");   // MAINT_TOAST
 }
 
 /** บรรทัดรอง "รวม {n} {หน่วย} ของ {ทะเบียน} ที่ย้ายมา" ต่อรายการอะไหล่ (MOVE_Q2_SUBS) + อะไหล่ของรถที่ย้ายมา · ใช้ที่หัวข้ออะไหล่ในไตรมาส n ของหน้าไตรมาส (quarterPartRows) */

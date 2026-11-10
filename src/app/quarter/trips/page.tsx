@@ -14,8 +14,9 @@
        · ไอคอนแก้ไข = TripCarEditModal (คันที่อยู่ในแผนเดินทางแล้ว = แก้ที่ใบนั้น) · ไอคอนลบ = ConfirmDialog "ยืนยันการเอารถออกจากไตรมาส n" · ไม่ต้องส่งอนุมัติแผนใหม่
      Section label "แผนเดินทาง (n)" + Tertiary brand button "สร้างแผนเดินทาง" → Table (TRIP_COLS ไอคอน ›) / Empty state/Data empty + Primary button "สร้างแผนเดินทาง"
        รถทุกคันอยู่ในแผนเดินทางแล้ว = ปุ่ม "สร้างแผนเดินทาง" Disabled (5 พ.ย. 2569 "สร้างแผนได้จนกว่าจะไม่เหลือรถ" · ตัด popup "รถทุกคันของไตรมาสอยู่ในแผนเดินทางแล้ว")
-   S25 (5 พ.ย. 2569 · BACKLOG ข้อ 12): รถที่งาน "บำรุงรักษาไม่ได้" = Pill Error แทนชื่อแผนเดินทาง + ปุ่ม "…" เมนูเดียว "ย้ายไปไตรมาสอื่น" (ไตรมาส 4 = Disabled)
-     · มือถือ Mobile table item Style=Action buttons ปุ่มเดียว · MoveModal → ยืนยัน → กลับหน้านี้ รถคันนั้นหาย + toast · ไตรมาสใหม่ รถขึ้นก่อน บรรทัดรอง "ย้ายมาจากไตรมาส n"
+   S25 (5 พ.ย. 2569 · BACKLOG ข้อ 12 · 10 พ.ย. 2569 Figma 5c47568 BACKLOG ข้อ 55): รถที่งาน "บำรุงรักษาไม่ได้" = Pill Error แทนชื่อแผนเดินทาง + ปุ่ม "…" 2 รายการ
+     "ดำเนินการบำรุงรักษา" (car_repair · ยืนยัน MAINT_CONFIRM → ออกจากแผนเดินทางเดิม เป็น "ยังไม่มีแผนเดินทาง" ในไตรมาสนี้ อะไหล่คงอยู่ + toast) · "ย้ายไปไตรมาสอื่น" (ไตรมาส 4 = Disabled)
+     · มือถือ Mobile table item Style=Action buttons 2 ปุ่ม · ย้าย: MoveModal → ยืนยัน → กลับหน้านี้ รถคันนั้นหาย + toast · ไตรมาสใหม่ รถขึ้นก่อน บรรทัดรอง "ย้ายมาจากไตรมาส n"
    ไอคอน ›: อนุมัติแล้ว → รายละเอียดแผนเดินทาง (/trips/detail/ · batch C) · ส่งกลับแก้ไข → แก้ไข (E.14) · รออนุมัติ = ไม่มีจอ (ไม่มีไอคอน) */
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
@@ -32,7 +33,7 @@ import { TertiaryBrandButton } from "@/components/vms/TertiaryBrandButton";
 import { mrOf, planKv, planOf } from "@/lib/mock/closeout";
 import { PST } from "@/lib/mock/data";
 import { applySample, WSTAT } from "@/lib/mock/jobs";
-import { carPlanParts, cannotTrip, moveCar, movedInto, quarterPartRows } from "@/lib/mock/moves";
+import { MAINT_CONFIRM, MAINT_ITEM, carPlanParts, cannotTrip, maintainCar, moveCar, movedInto, quarterPartRows } from "@/lib/mock/moves";
 import { QPART_COLS, qpartRow } from "@/lib/mock/plan";
 import { useSeed } from "@/lib/mock/seedB";
 import { setMock } from "@/lib/mock/store";
@@ -81,6 +82,7 @@ function TripList() {
   const [dropCar, setDropCar] = useState<TripCar | null>(null);
   const [menu, setMenu] = useState<{ car: TripCar; anchor: MenuAnchor } | null>(null);
   const [moving, setMoving] = useState<MoveTarget | null>(null);
+  const [maint, setMaint] = useState<TripCar | null>(null);   // S25 ดำเนินการบำรุงรักษา (ยืนยัน)
   const back = useBack(planDetailHref(id));
   const newHref = "/quarter/trips/new/?id=" + id + "&q=" + q;
 
@@ -103,7 +105,11 @@ function TripList() {
     const r: TableValue[] = [...base, cannot ? { pills: [WSTAT.cannot] } : t ? { text: t.name, sub: "เพิ่มเข้าแผนเดินทางแล้ว" } : { pills: [["ยังไม่มีแผนเดินทาง", "Gray"]] }];
     if (!kbk) return r;
     if (cannot) return [...r, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู " + c.plate, onClick: (e) => setMenu({ car: c, anchor: anchorOf(e.currentTarget) }) }],
-      mobileButtons: <SecondaryButton Text="ย้ายไปไตรมาสอื่น" LeadingIconSwap={MOVE_ICON} Size="lg" State={lastQ ? "Disabled" : "Default"} onClick={() => openMove(c)} /> }];
+      /* 2 ปุ่ม (Action 2 ของ Mobile table item) — กว้าง 402 วางคู่กันแล้วข้อความล้นการ์ด ⇒ เรียงลงเต็มแถว (BACKLOG ค.) */
+      mobileButtons: <div className="flex flex-col gap-3 [&>*]:w-full">
+        <SecondaryButton Text={MAINT_ITEM.Text} LeadingIconSwap={MAINT_ITEM.IconSwap} Size="lg" onClick={() => setMaint(c)} />
+        <SecondaryButton Text="ย้ายไปไตรมาสอื่น" LeadingIconSwap={MOVE_ICON} Size="lg" State={lastQ ? "Disabled" : "Default"} onClick={() => openMove(c)} />
+      </div> }];
     return [...r, { actions: acts, mobileActions: acts }];
   });
   const editTrip = editCar ? tripOf(editCar) : undefined;
@@ -144,7 +150,10 @@ function TripList() {
       <TripCarPicker open={adding} pool={quarterPool(mock, id, q)} nowQ={nowQ} title={"เพิ่มยานพาหนะเข้า" + nowQ}
         sub="ยานพาหนะในขอบเขตของแผน (ภาค เขต และประเภทยานพาหนะเดียวกัน) ที่ยังไม่อยู่ในไตรมาสใด" okText={"เพิ่มเข้า" + nowQ} emptyText="ไม่มียานพาหนะที่เพิ่มเข้าไตรมาสนี้ได้"
         onCancel={() => setAdding(false)} onAdd={(ids) => { addQuarterCars(id, q, ids); setAdding(false); notify("เพิ่มยานพาหนะเข้า" + nowQ + " สำเร็จ"); }} />
-      <RowMenu anchor={menu?.anchor ?? null} items={menu ? [{ Text: "ย้ายไปไตรมาสอื่น", IconSwap: MOVE_ICON, Disabled: lastQ, onClick: () => openMove(menu.car) }] : []} onClose={() => setMenu(null)} />
+      {/* S25 (Figma 5c47568 X.2 X.11): ดำเนินการบำรุงรักษา + ย้ายไปไตรมาสอื่น · ไตรมาส 4 ย้ายกดไม่ได้ ดำเนินการบำรุงรักษากดได้ */}
+      <RowMenu anchor={menu?.anchor ?? null} items={menu ? [{ ...MAINT_ITEM, onClick: () => setMaint(menu.car) }, { Text: "ย้ายไปไตรมาสอื่น", IconSwap: MOVE_ICON, Disabled: lastQ, onClick: () => openMove(menu.car) }] : []} onClose={() => setMenu(null)} />
+      <ConfirmDialog spec={maint ? MAINT_CONFIRM(maint.plate, q) : null} onCancel={() => setMaint(null)}
+        onOk={() => { if (maint) { const x = cannotTrip(mock, id, q, maint.id); if (x) maintainCar(maint, q, x.trip.id); } setMaint(null); }} />
       <MoveModal target={moving} cur={q} counts={(k) => quarterCars(mock, id, k).length} onCancel={() => setMoving(null)}
         onMove={(k) => { if (moving) { const tid = cannotTrip(mock, id, q, moving.car.id)?.trip.id ?? ""; moveCar(id, moving.car, q, k, tid); } setMoving(null); }} />
       {/* คันที่อยู่ในแผนเดินทาง = popup แบบแผนเดินทาง มีวันดำเนินการ (R83) · ยังไม่อยู่ = 3 ช่องหัวเดิม */}
