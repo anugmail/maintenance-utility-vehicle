@@ -6,7 +6,10 @@
    → (อยู่ระหว่างบำรุงรักษา) IncidentPhotoGallery "ภาพก่อนเริ่มงาน (n)" · Section header "น้ำมันไฮโดรลิก" + Radio text card 3 ใบ + เปลี่ยนน้ำมันครั้งล่าสุด
    → Section label "รายการงานและอะไหล่ตามแผน (n)" + Secondary button "เพิ่มอะไหล่" + Table JOB_COLS (ไอคอนแก้ไข → popup แก้ไขอะไหล่ · ลบ → ยืนยันเอาอะไหล่ออก · เพิ่ม → popup เพิ่มอะไหล่ที่ใช้จริง — BACKLOG ข้อ 4)
      (เก็บเป็นร่างของหน้าปิดงาน — workItems() ใน lib/mock/jobs.ts) · แผนจ้างมีปุ่ม ตาราง ไอคอนชุดเดียวกัน กบค. เป็นผู้กด
-   popup "บำรุงรักษาไม่ได้ · <ทะเบียน>" (cannotModal) → ยืนยัน → กลับหน้ารายละเอียดแผนเดินทาง + toast "บันทึกบำรุงรักษาไม่ได้แล้ว" */
+   popup "บำรุงรักษาไม่ได้ · <ทะเบียน>" (cannotModal) → ยืนยัน → กลับหน้ารายละเอียดแผนเดินทาง + toast "บันทึกบำรุงรักษาไม่ได้แล้ว"
+   S23 ผู้รับจ้าง (jobPage({ vendor }) · R87 · V.3): ปุ่มหัวเหมือนกัน (บำรุงรักษาไม่ได้ · เริ่มงาน) · อะไหล่ตามแผนดูอย่างเดียว ไม่มีปุ่ม "เพิ่มอะไหล่" ไม่มีคอลัมน์ไอคอน (JOB_COLS 4 คอลัมน์)
+     · ผู้เริ่มงาน = ผู้รับจ้าง (HIRE_BY) · บำรุงรักษาไม่ได้ = สถานะ "แจ้งบำรุงรักษาไม่ได้" รอส่งตรวจงาน
+     · ส่งกลับแก้ไขคันที่แจ้งไม่ได้ไว้ (V.21) ปุ่มกลับเป็นแบบนี้ — VendorJob */
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ConfirmDialog } from "@/components/patterns/ConfirmDialog";
@@ -46,7 +49,7 @@ export const appointmentPairs = (t: JobTrip, c: TripCar, j?: Job): [string, stri
 /* ใช้ไปแล้วตอนแจ้งบำรุงรักษาไม่ได้ระหว่างบำรุงรักษา — ตัวอย่างจอ I.16 (CANNOT_USED: น้ำมัน 30 ไส้กรองไฮโดรลิก 2) · ยังไม่เริ่ม = 0 */
 const usedWhileDoing = (parts: PlanPart[]) => parts.map((p) => (p.part === WORK[0].part ? 30 : p.part === WORK[1].part ? 2 : 0));
 
-export function JobPage({ trip, car, job, actor }: { trip: JobTrip; car: TripCar; job: Job; actor: boolean }) {
+export function JobPage({ trip, car, job, actor, vendor = false }: { trip: JobTrip; car: TripCar; job: Job; actor: boolean; vendor?: boolean }) {
   const crumbs = useCrumbs();
   const router = useRouter();
   const back = useBack();
@@ -60,7 +63,7 @@ export function JobPage({ trip, car, job, actor }: { trip: JobTrip; car: TripCar
   const [adding, setAdding] = useState(false);
 
   /* อะไหล่ตามแผน: กบค. เพิ่ม แก้ไข ลบ ได้ตอนยังไม่เริ่ม/อยู่ระหว่างบำรุงรักษา (แผนจ้างด้วย) · บทบาทอื่นดูอย่างเดียว */
-  const editParts = actor;
+  const editParts = actor && !vendor;
   const oil = job.oilChoice ?? OIL_DEFAULT;
   /* แก้ไข = popup แก้ไขอะไหล่ (partEditModal) · เพิ่ม = popup เพิ่มอะไหล่ที่ใช้จริง (partAddModal) · ลบ = ยืนยันการเอาอะไหล่ออก (PART_DEL_CONFIRM)
      ค่าที่แก้เก็บเป็นร่างของหน้าปิดงาน (workItems) ⇒ เป็นค่าตั้งต้นของตาราง "รายการสภาพวัสดุอะไหล่" ตอนปิดงาน (BACKLOG ข้อ 4) · ยังไม่เริ่ม = ตามแผน (เปลี่ยนน้ำมัน) */
@@ -80,7 +83,7 @@ export function JobPage({ trip, car, job, actor }: { trip: JobTrip; car: TripCar
   const used = doing ? usedWhileDoing(job.parts) : null;
   const confirmCannot = () => {
     if (!reason.trim()) { setErr(true); return; }
-    cannotJob(trip, car.id, reason.trim(), used ?? job.parts.map(() => 0), thaiNow());
+    cannotJob(trip, car.id, reason.trim(), used ?? job.parts.map(() => 0), thaiNow(), vendor);
     setCannot(false);
     notify("บันทึกบำรุงรักษาไม่ได้แล้ว");
     router.push(tripHref(trip));
@@ -90,7 +93,7 @@ export function JobPage({ trip, car, job, actor }: { trip: JobTrip; car: TripCar
     <SecondaryButton Text="บำรุงรักษาไม่ได้" Size={size} onClick={() => { setReason(""); setErr(false); setCannot(true); }} />
     {doing
       ? <PrimaryButton Text="ปิดงาน" Size={size} onClick={() => router.push(jobHref(trip, car.id, "close/"))} />
-      : <PrimaryButton Text="เริ่มงาน" Size={size} onClick={() => { startJob(trip, car.id, planned); notify("เริ่มงานบำรุงรักษาแล้ว"); router.push(jobHref(trip, car.id, "receive/")); }} />}
+      : <PrimaryButton Text="เริ่มงาน" Size={size} onClick={() => { startJob(trip, car.id, planned, vendor); notify("เริ่มงานบำรุงรักษาแล้ว"); router.push(jobHref(trip, car.id, "receive/")); }} />}
   </> : undefined;
   const photos = job.photos ?? [];
 

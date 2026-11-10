@@ -3,7 +3,8 @@
    ตาม `Page header` · `Progress steps` (Type=Horizontal · ซ่อนช่อง 3–7) · `Mobile progress steps` (Collapsed=True + Step circles 1/2 · 2/2) ของไฟล์ Component
    + VehicleAndReporterInfo ของไฟล์ Maintain-D + หน้า Repair - กบค. ของ Flow การซ่อม (Section > Progress steps > เนื้อหาขั้น) · Check Expense Modal หน้า 5.14 - 5.15 ของ UI Release#2 (มือถือ 2 ขั้น)
    Page header: ทะเบียน · ป้าย "อยู่ระหว่างบำรุงรักษา" · ปุ่ม Secondary "บำรุงรักษาไม่ได้" ทุกขั้น → popup สาเหตุ + อะไหล่ส่งคืน (Step 1 คืนทั้งหมด · Step 2 ตามจำนวนที่ใช้ที่กรอก)
-   ยืนยันบำรุงรักษาไม่ได้ → หน้ารายละเอียดแผนเดินทาง + toast "บันทึกบำรุงรักษาไม่ได้แล้ว" · เนื้อหา: แถบขั้นตอน → ข้อมูลยานพาหนะ → การนัดหมาย (+ เริ่มงาน ผู้เริ่มงาน) → เนื้อหาขั้น */
+   ยืนยันบำรุงรักษาไม่ได้ → หน้ารายละเอียดแผนเดินทาง + toast "บันทึกบำรุงรักษาไม่ได้แล้ว" · เนื้อหา: แถบขั้นตอน → ข้อมูลยานพาหนะ → การนัดหมาย (+ เริ่มงาน ผู้เริ่มงาน) → เนื้อหาขั้น
+   S23 ผู้รับจ้าง (stepPage({ vendor }) · R87): บำรุงรักษาไม่ได้ = "แจ้งบำรุงรักษาไม่ได้" · แก้ไขงานหลังปิด (ดำเนินการบำรุงรักษาแล้ว / ส่งกลับแก้ไข) เปิด Step 2 ไม่มีปุ่ม "บำรุงรักษาไม่ได้" */
 import { useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { VehicleAndReporterInfo } from "@/components/maintain-d/VehicleAndReporterInfo";
@@ -17,7 +18,7 @@ import { useBreakpoint } from "@/lib/useBreakpoint";
 import { badgeOf, CannotPopup, tripHref, useBack, useCrumbs } from "../_lib/ui";
 import { appointmentPairs, vehiclePairs } from "./JobPage";
 
-export function StepFrame({ trip, car, job, step, used, actor, children }: { trip: JobTrip; car: TripCar; job: Job; step: 1 | 2; used: number[]; actor: boolean; children: ReactNode }) {
+export function StepFrame({ trip, car, job, step, used, actor, vendor = false, children }: { trip: JobTrip; car: TripCar; job: Job; step: 1 | 2; used: number[]; actor: boolean; vendor?: boolean; children: ReactNode }) {
   const crumbs = useCrumbs();
   const router = useRouter();
   const back = useBack();
@@ -27,15 +28,15 @@ export function StepFrame({ trip, car, job, step, used, actor, children }: { tri
   const [err, setErr] = useState(false);
   const ok = () => {
     if (!reason.trim()) { setErr(true); return; }
-    cannotJob(trip, car.id, reason.trim(), used, thaiNow());
+    cannotJob(trip, car.id, reason.trim(), used, thaiNow(), vendor);
     setCannot(false);
     notify("บันทึกบำรุงรักษาไม่ได้แล้ว");
     router.push(tripHref(trip));
   };
-  const actions = actor ? <SecondaryButton Text="บำรุงรักษาไม่ได้" Size={mob ? "lg" : "md"} onClick={() => { setReason(""); setErr(false); setCannot(true); }} /> : undefined;
+  const actions = actor && job.status === "doing" ? <SecondaryButton Text="บำรุงรักษาไม่ได้" Size={mob ? "lg" : "md"} onClick={() => { setReason(""); setErr(false); setCannot(true); }} /> : undefined;
   return (
     <>
-      <PageHeader Title={car.plate} Badge={badgeOf(WSTAT[job.status])} Pill={job.status === "doing" ? WSTAT.doing : undefined} crumbs={crumbs.job(trip, car.plate)} onBack={() => back(tripHref(trip))} Actions={actions} />
+      <PageHeader Title={car.plate} Badge={badgeOf(WSTAT[job.status])} Pill={job.status === "doing" || vendor ? WSTAT[job.status] : undefined} crumbs={crumbs.job(trip, car.plate)} onBack={() => back(tripHref(trip))} Actions={actions} />
       {mob ? <MobileProgressSteps steps={MT_STEPS} current={step} /> : <ProgressSteps steps={MT_STEPS} current={step} />}
       <VehicleAndReporterInfo Title="ข้อมูลยานพาหนะ" pairs={vehiclePairs(trip, car)} />
       <VehicleAndReporterInfo Title="การนัดหมาย" pairs={appointmentPairs(trip, car, job)} />

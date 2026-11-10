@@ -4,7 +4,7 @@
    DataTable = tbl() + mobileCards() (+ กดแถวเปิดรายการ) · CannotPopup = cannotModal() · OilBlock = jobOil() + oilResult()
    PartEditModal = partEditModal() (+ ช่อง "จำนวนอะไหล่เก่า" "หมายเหตุ" ของหน้าปิดงาน) · PartAddModal = partAddModal()
    ใช้ร่วมทั้งแผนที่ กบค. ดำเนินการเอง และแผนจ้างดำเนินการ (S10 S12 · กบค. ปิดงานแทนผู้รับจ้าง จอ I.22 I.23) — ชิ้นเดียวทั้งโฟลว์ ไม่ทำซ้ำรายหน้า
-   4 พ.ย. 2569 ตัด S23 S11 ⇒ ไม่มีบทบาทผู้รับจ้างในโฟลว์นี้ (Breadcrumbs แบบไม่มีลิงก์ของผู้รับจ้าง · ภาพก่อนเริ่มงานแบบแก้ไขได้ photoFiles() เอาออก) */
+   4 พ.ย. 2569 ตัด S23 S11 · 10 พ.ย. 2569 เอา S23 กลับ (R87): ผู้รับจ้างใช้หน้าเดียวกับ S10 ทุกหน้า ต่างที่ปุ่มและเมนู (useTripCar().vendor) */
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { DisplayBox } from "@/components/patterns/DisplayBox";
@@ -63,8 +63,10 @@ export function useTripCar() {
   const plan = useMock().plans.find((x) => x.mr === trip?.planMr);
   /* ผู้ดำเนินการ = หน่วยงานเจ้าของแผน (canManage · กกฟ.1 กกฟ.2 กรย. กบค.) — 9 พ.ย. 2569 เดิมเฉพาะ กกฟ.1 ("แผนอนุมัติแล้ว แต่ไม่เจอแผนการเดินทางที่อนุมัติแล้ว") */
   const kbk = !!plan && canManage(role, plan);
+  /* S23 ผู้รับจ้าง (R87 · 10 พ.ย. 2569): ทำงานรายคันของแผนจ้างดำเนินการ · เมนู "…" ดูรายละเอียดอย่างเดียว · อะไหล่ตามแผนดูอย่างเดียว · หลังปิดงานแก้ไข ลบ เพิ่ม อะไหล่และภาพ · ส่งตรวจงาน */
+  const vendor = role === "ผู้รับจ้าง" && trip?.mode === "hire";
   usePlanGate(plan);   // หน่วยงานเปิดแผนเดินทาง/งานรายคันของแผนหน่วยงานอื่น → หน้ารายการ
-  return { s, sp, role, trip, car, job, actor: !!trip && kbk, kbk };
+  return { s, sp, role, trip, car, job, actor: !!trip && (kbk || vendor), kbk, vendor };
 }
 
 export function useBack() {

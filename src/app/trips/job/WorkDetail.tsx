@@ -6,7 +6,8 @@
      + ปุ่ม "บันทึกผลการทดสอบ" (ต้องเลือกผล "กรุณาเลือกผลการทดสอบ" · บันทึกแล้วแก้ได้อีก · toast "บันทึกผลการทดสอบน้ำมันไฮโดรลิกสำเร็จ") — บันทึกได้เฉพาะ กบค.
    → (เฉพาะรถเครน/รถกระเช้า 4 พ.ย. 2569) Section label "Safety Inspection": File upload "เอกสาร Safety Inspection" (ไฟล์จากหน้าปิดงาน) + กล่อง บันทึกเอกสารเมื่อ
      + ปุ่ม "บันทึกเอกสาร Safety Inspection" (toast "บันทึกเอกสาร Safety Inspection สำเร็จ") — ตาม "File upload" "Section label" "Primary button" ของไฟล์ Component
-     + จอ S10 "หน้างานรายคัน — เพิ่มเอกสาร Safety Inspection ภายหลัง" / "บันทึกเอกสาร Safety Inspection สำเร็จ" · บันทึกได้เฉพาะ กบค. บทบาทอื่นดูรายการไฟล์อย่างเดียว */
+     + จอ S10 "หน้างานรายคัน — เพิ่มเอกสาร Safety Inspection ภายหลัง" / "บันทึกเอกสาร Safety Inspection สำเร็จ" · บันทึกได้เฉพาะ กบค. บทบาทอื่นดูรายการไฟล์อย่างเดียว
+   แผนจ้างดำเนินการ (R87 · 10 พ.ย. 2569): Step 2 ไม่มีส่วนค่าใช้จ่าย ⇒ หน้านี้ไม่แสดงส่วน "ค่าใช้จ่ายของยานพาหนะคันนี้ (บาท)" (ไม่มีข้อมูลที่กรอก · แบบหน้างานที่ปิดแล้วของผู้รับจ้าง vendorJob · ยังไม่เคาะสำหรับ S10 I.26 — BACKLOG ค.) */
 import { useEffect, useState } from "react";
 import { IncidentPhotoGallery } from "@/components/maintain-d/IncidentPhotoGallery";
 import { VehicleAndReporterInfo } from "@/components/maintain-d/VehicleAndReporterInfo";
@@ -70,12 +71,12 @@ export function WorkDetail({ trip, car, job, kbk }: { trip: JobTrip; car: TripCa
         <SectionLabel Title={"รายการงานและอะไหล่ที่ใช้จริง (" + work.length + ")"} />
         <DataTable cols={WORK_COLS2} rows={work} />
       </Section>
-      <Section>
+      {trip.mode !== "hire" && <Section>
         <SectionLabel Title="ค่าใช้จ่ายของยานพาหนะคันนี้ (บาท)" />
         <DataTable cols={COST_COLS} rows={costs} />
         <KvBox pairs={[["รวมค่าเบี้ยเลี้ยง", nf(sum.perDiem) + " บาท"], ["รวมค่าที่พัก", nf(sum.lodging) + " บาท"], ["ค่าเดินทาง (รวมทุกคน)", nf(sum.travel) + " บาท"],
           ["รวมค่าใช้จ่ายของยานพาหนะคันนี้", nf(sum.total) + " บาท"], ["งบที่ตัด", BUDGET_CUT[f.budgetType ?? 0]], ["ศูนย์ต้นทุน", f.costCenter ?? ownerCostCenter(car)]]} />
-      </Section>
+      </Section>}
       {oilSampled(oil) && (
         <Section>
           <SectionLabel Title="ผลการทดสอบน้ำมันไฮโดรลิก" />

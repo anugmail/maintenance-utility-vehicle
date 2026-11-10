@@ -10,8 +10,10 @@
    รถ (TRIP_CARS) ก็มาจาก trips.ts ชุดเดียวกัน (เติมประเภทรถ + เปลี่ยนน้ำมันครั้งล่าสุด)
    งานที่ยังไม่มีในที่เก็บ = ยังไม่เริ่ม (getJob คืนค่าตั้งต้น) · เปลี่ยนสถานะผ่านฟังก์ชันท้ายไฟล์ (startJob closeJob cannotJob saveOilResult …)
    4 พ.ย. 2569 เจ้าของงานตัด S23 (มุมผู้รับจ้าง) และ S11 (กบค. ตรวจรับทีละคัน) _"อยากตัด scen ผู้รับจ้าง หรือ vendor ตรวจรับทีละคัน ออก"_
-   ⇒ แผนจ้างใช้ 4 สถานะเดียวกับแผนที่ กบค. ดำเนินการเอง · กบค. เริ่มงาน ปิดงาน บำรุงรักษาไม่ได้ แทนผู้รับจ้างด้วยหน้าเดียวกัน (จอ I.22 I.23 ของ screens.js) · ไม่มีส่งตรวจงานและตรวจรับรายคัน
-   สถานะของงานผู้รับจ้างที่ค้างในที่เก็บเก่า (worked reported wait returned) แปลงเป็นสถานะที่ใกล้สุดตอนอ่าน (normJob)
+   ⇒ แผนจ้างใช้ 4 สถานะเดียวกับแผนที่ กบค. ดำเนินการเอง · หน่วยงานเริ่มงาน ปิดงาน บำรุงรักษาไม่ได้ แทนผู้รับจ้างด้วยหน้าเดียวกัน (จอ I.22 I.23 I.25 I.26 ของ screens.js — ยังคงอยู่)
+   10 พ.ย. 2569 เจ้าของงานเอา S23 กลับ (R87 · บล็อก V) _"scen s23 อยากปรับ ui ให้เหมือนกับ s10 แต่ว่า เงื่อนไขการมองเห็น เมนูต่างๆ ยังเป็นเหมือนเดิม"_
+   ⇒ บทบาท "ผู้รับจ้าง" ทำงานรายคันของแผนจ้างด้วยหน้าเดียวกับ S10 · สถานะของผู้รับจ้าง ดำเนินการบำรุงรักษาแล้ว · แจ้งบำรุงรักษาไม่ได้ · รอตรวจรับ · ส่งกลับแก้ไข (WSTAT ของ screens.js)
+     · ส่งตรวจงานทีละคัน · ส่งกลับแก้ไขมีเฉพาะชุดตัวอย่าง (S11 ผู้ตรวจรับยังตัด)
    ที่เก็บงานรายคันมีที่เดียวคือไฟล์นี้ (MockState.jobs) — S10 S12 S13 S15 S24 ใช้ร่วมกัน */
 import type { CheckRow } from "@/components/patterns/CheckTable";
 import type { UploadFile } from "@/components/vms/FileUpload";
@@ -27,14 +29,22 @@ declare module "./store" {
 }
 
 /* ---------- สถานะงานรายคัน WSTAT · ป้ายผลน้ำมัน OIL_TAG ---------- */
-/* แผนจ้างใช้ชุดเดียวกัน (ดำเนินการบำรุงรักษาแล้ว · แจ้งบำรุงรักษาไม่ได้ · รอตรวจรับ · ส่งกลับแก้ไข ตัดออกพร้อม S11 S23 4 พ.ย. 2569) */
-export type JobStatus = "todo" | "doing" | "done" | "cannot";
+/* S23 มุมผู้รับจ้าง (เอากลับ 10 พ.ย. 2569 R87): + ดำเนินการบำรุงรักษาแล้ว (Info) · แจ้งบำรุงรักษาไม่ได้ (Info) · รอตรวจรับ (Warning) · ส่งกลับแก้ไข (Error) ตาม WSTAT ของ screens.js
+   หน่วยงานปิดงานแทนผู้รับจ้างที่ S10 ยังใช้ 4 สถานะแรก */
+export type JobStatus = "todo" | "doing" | "done" | "cannot" | "worked" | "reported" | "wait" | "returned";
+export type VendorStatus = "worked" | "reported" | "wait" | "returned";
 export const WSTAT: Record<JobStatus, [string, PillColor]> = {
   todo: ["ยังไม่เริ่ม", "Gray"],
   doing: ["อยู่ระหว่างบำรุงรักษา", "Warning"],
   done: ["เสร็จสิ้น", "Success"],
   cannot: ["บำรุงรักษาไม่ได้", "Error"],
+  worked: ["ดำเนินการบำรุงรักษาแล้ว", "Info"],
+  reported: ["แจ้งบำรุงรักษาไม่ได้", "Info"],
+  wait: ["รอตรวจรับ", "Warning"],
+  returned: ["ส่งกลับแก้ไข", "Error"],
 };
+export const VENDOR_ST: readonly JobStatus[] = ["worked", "reported", "wait", "returned"];
+export const isVendorSt = (st: JobStatus): st is VendorStatus => VENDOR_ST.includes(st);
 export type OilTag = "wait" | "fail";
 export const OIL_TAG: Record<OilTag, [string, PillColor]> = { wait: ["รอผลตรวจน้ำมัน", "Warning"], fail: ["น้ำมันไม่ผ่าน", "Error"] };
 /* JOB_OIL_OPTS — 0 เก็บตัวอย่าง · 1 เปลี่ยนน้ำมัน · 2 เก็บตัวอย่างและเปลี่ยน (ค่าตั้งต้นหน้างาน JOB_OIL = 2) */
@@ -49,13 +59,15 @@ export const OIL_RESULT_OPTS = ["ผ่าน", "ไม่ผ่าน"];
 /* ---------- คน ---------- */
 export const PEOPLE = {
   staff: ["นายวิชัย ทองดี", "นางสาวกนกวรรณ ใจมั่น", "นายสมชาย พูลสุข"],   // TRIP.staff (พนักงาน กบค. ซ่อม)
-  kbk: "นายวิชัย ทองดี (กกฟ.1)",                                         // JOB_BY · ผู้สร้าง · ผู้เริ่มงาน/ผู้บันทึกของแผนจ้างด้วย (กบค. บันทึกแทนผู้รับจ้าง)
+  kbk: "นายวิชัย ทองดี (กกฟ.1)",                                         // JOB_BY · ผู้สร้าง · ผู้เริ่มงาน/ผู้บันทึกของแผนจ้างที่หน่วยงานปิดงานแทนผู้รับจ้าง (S10)
   ownerSigner: "นายสุรชัย แก้วมณี",                                      // SIGN_OWNER
+  vendor: "นายประเสริฐ ศรีสุข (ผู้รับจ้าง)",                              // HIRE_BY — ผู้เริ่มงาน ผู้บันทึก ผู้แจ้ง ผู้ส่ง ของ S23
+  vendorTech: "นายประเสริฐ ศรีสุข",                                      // HIRE_TECH — ผู้ลงนามฝั่งผู้ดำเนินการของ S23 (vendorSign · ใครลงนามจริงยังไม่เคาะ)
 };
 /* เวลาตัวอย่างของจอ Figma (ต้นแบบใช้ค่าคงที่ให้ตรงจอ) */
 export const JOB_TIMES = {
   self: { start: "04/11/2569 08:42 น.", end: "04/11/2569 11:15 น.", resultSaved: "11/11/2569 14:02 น." },
-  hire: { start: "17/11/2569 09:10 น.", end: "17/11/2569 13:25 น." },   // HIRE_START · เวลาปิดงานเดิมของใบจ้าง (จอ I.23 มีแค่เริ่มงาน)
+  hire: { start: "17/11/2569 09:10 น.", end: "17/11/2569 13:25 น.", sent: "17/11/2569 16:40 น.", sentCannot: "18/11/2569 08:50 น.", reported: "18/11/2569 08:35 น." },   // HIRE_START HIRE_END HIRE_SENT HIRE_REPORTED ของ screens.js
 };
 export const SIGN_DATE = "04/11/2569";
 /* Safety Inspection (JO 7.3.3) — แสดงเฉพาะรถประเภทนี้ (SAFETY_TYPES ใน screens.js) · เวลาบันทึกตามจอ "บันทึกเอกสาร Safety Inspection สำเร็จ" */
@@ -66,6 +78,9 @@ export const safetyOn = (c: { type: string }) => SAFETY_TYPES.includes(c.type);
 export const ODOMETER = ["182,400 กม.", "6,120 ชม."] as const;
 export const JOB_TEXT = {
   cannotSelf: "ยานพาหนะติดภารกิจซ่อมสายส่งฉุกเฉิน ไม่อยู่ที่จุดนัดในวันเดินทาง",   // JOB_CANNOT
+  cannotHire: "กระบอกสูบไฮโดรลิกหลักรั่ว ต้องส่งซ่อมก่อนจึงบำรุงรักษาได้",          // HIRE_WHY
+  back: "จำนวนไส้กรองอากาศที่คืนไม่ตรงกับภาพอะไหล่ใหม่ที่เหลือ กรุณาตรวจนับและแก้จำนวนที่คืน",   // HIRE_BACK
+  backCannot: "กรุณาระบุตำแหน่งที่รั่วและผลตรวจเบื้องต้นในสาเหตุให้ชัดเจน",           // HIRE_BACK_CANNOT
 };
 export const CANNOT_USED_SAMPLE = [30, 2, 0, 0];   // CANNOT_USED — เปลี่ยนน้ำมันและไส้กรองไฮโดรลิกแล้วพบปัญหา
 export const OIL_FILE: UploadFile = { name: "oil-test-82-6789.pdf", size: "420 KB", bar: true };
@@ -217,6 +232,8 @@ export interface Job {
   safety?: SafetyDocs;
   /** หน่วยงานยอมรับผลรายคันแล้ว (S13 · acceptance.ts) */
   acceptedAt?: string;
+  /** S23 ส่งตรวจงาน (รอตรวจรับ) · เหตุผลที่หน่วยงานส่งกลับแก้ไข */
+  sentAt?: string; sentBy?: string; returnReason?: string;
 }
 export interface JobsState { trips: Record<string, JobTrip>; jobs: Record<string, Job> }
 
@@ -299,17 +316,15 @@ export function jobsOf(m: MockState): JobsState {
   const jobs = Object.fromEntries(Object.entries(m.jobs?.jobs ?? {}).flatMap(([k, j]) => { const n = normJob(j); return n ? [[k, n]] : []; }));
   return { trips, jobs };
 }
-/* ที่เก็บเก่า (ก่อนตัด S23 S11 4 พ.ย. 2569) อาจมีสถานะของงานผู้รับจ้าง ⇒ แปลงเป็นสถานะที่ใกล้สุดจากข้อมูลที่มี (มีสาเหตุ = บำรุงรักษาไม่ได้ · ปิดงานแล้ว = เสร็จสิ้น · เริ่มแล้ว = อยู่ระหว่างบำรุงรักษา · อื่นๆ = ยังไม่เริ่ม)
-   ฟิลด์ส่งตรวจ/ส่งกลับเก่าทิ้งไป · ข้อมูลเสีย (ไม่ใช่ object) = ไม่มีงาน */
-const LEGACY = ["sentAt", "sentBy", "returnReason", "returnedAt", "reviewedAt", "reviewedBy"];
+/* สถานะที่ไม่รู้จักในที่เก็บ ⇒ สถานะที่ใกล้สุดจากข้อมูลที่มี (มีสาเหตุ = บำรุงรักษาไม่ได้ · ปิดงานแล้ว = เสร็จสิ้น · เริ่มแล้ว = อยู่ระหว่างบำรุงรักษา · อื่นๆ = ยังไม่เริ่ม)
+   สถานะของผู้รับจ้าง (S23) อ่านได้ตามเดิมตั้งแต่ 10 พ.ย. 2569 · ข้อมูลเสีย (ไม่ใช่ object) = ไม่มีงาน */
 function normJob(j: unknown): Job | null {
   if (!j || typeof j !== "object") return null;
   const x = j as Job;
   const ok = (Object.keys(WSTAT) as string[]).includes(x.status);
-  if (ok && Array.isArray(x.parts) && !LEGACY.some((k) => k in x)) return x;
-  const rest = Object.fromEntries(Object.entries(x).filter(([k]) => !LEGACY.includes(k))) as unknown as Job;
+  if (ok && Array.isArray(x.parts)) return x;
   const status: JobStatus = ok ? x.status : x.cannot ? "cannot" : x.closedAt && x.close ? "done" : x.startedAt ? "doing" : "todo";
-  return { ...rest, status, parts: Array.isArray(x.parts) ? x.parts : WORK.map((p) => ({ ...p })) };
+  return { ...x, status, parts: Array.isArray(x.parts) ? x.parts : WORK.map((p) => ({ ...p })) };
 }
 export function useJobs(): JobsState { const m = useMock(); return useMemo(() => jobsOf(m), [m]); }
 export const getTrip = (s: JobsState, id: string | null | undefined): JobTrip | undefined => (id ? s.trips[id] : undefined);
@@ -347,15 +362,19 @@ export function oilTag(j: Job): OilTag | undefined {
 }
 /** ความคืบหน้า "เสร็จสิ้น x จาก n คัน · อยู่ระหว่างบำรุงรักษา y · บำรุงรักษาไม่ได้ z" — แผนจ้างนับแบบเดียวกัน (รอตรวจรับ · ส่งกลับแก้ไข ตัดออกพร้อม S11 4 พ.ย. 2569) */
 /* ความคืบหน้า + ตัวนับ "ตรวจแล้ว x/y" (R71 5 พ.ย. 2569): x = เสร็จสิ้น · y = รถทั้งหมด − บำรุงรักษาไม่ได้ (เจ้าของงาน "ทั้งหมด 10 แล้วมีคันที่ไม่ได้บำรุงรักษา จะเหลือ 9") · ใบจ้างนับแบบเดียวกัน */
-export function tripCount(s: JobsState, t: JobTrip) {
+/* S23 มุมผู้รับจ้าง (vendor · 10 พ.ย. 2569 เสนอ ยังไม่เคาะ): ตรวจแล้ว = ผู้รับจ้างทำเสร็จแล้ว (ดำเนินการบำรุงรักษาแล้ว · รอตรวจรับ · เสร็จสิ้น) · ไม่นับรวม = แจ้งบำรุงรักษาไม่ได้ · บำรุงรักษาไม่ได้ (tripDetail ของ screens.js) */
+const PROG_ST: [JobStatus, string][] = [["doing", ""], ["worked", ""], ["wait", ""], ["returned", ""], ["reported", " (ไม่นับรวม)"], ["cannot", " (ไม่นับรวม)"]];
+export function tripCount(s: JobsState, t: JobTrip, vendor = false) {
   const st = t.carIds.map((c) => getJob(s, t.id, c).status);
   const n = (k: JobStatus) => st.filter((x) => x === k).length;
-  return { done: n("done"), doing: n("doing"), cannot: n("cannot"), total: t.carIds.length - n("cannot") };
+  const sum = (ks: JobStatus[]) => ks.reduce((a, k) => a + n(k), 0);
+  const done = sum(vendor ? ["worked", "wait", "done"] : ["done"]), out = sum(vendor ? ["reported", "cannot"] : ["cannot"]);
+  return { done, doing: n("doing"), cannot: n("cannot"), total: t.carIds.length - out, n };
 }
-export const tripCounter = (s: JobsState, t: JobTrip) => { const c = tripCount(s, t); return "ตรวจแล้ว " + c.done + "/" + c.total; };
-export function tripProgress(s: JobsState, t: JobTrip) {
-  const c = tripCount(s, t);
-  return "เสร็จสิ้น " + c.done + " จาก " + c.total + " คัน" + (c.doing ? " · อยู่ระหว่างบำรุงรักษา " + c.doing : "") + (c.cannot ? " · บำรุงรักษาไม่ได้ " + c.cannot + " (ไม่นับรวม)" : "");
+export const tripCounter = (s: JobsState, t: JobTrip, vendor = false) => { const c = tripCount(s, t, vendor); return "ตรวจแล้ว " + c.done + "/" + c.total; };
+export function tripProgress(s: JobsState, t: JobTrip, vendor = false) {
+  const c = tripCount(s, t, vendor);
+  return (vendor ? "ตรวจแล้ว " : "เสร็จสิ้น ") + c.done + " จาก " + c.total + " คัน" + PROG_ST.map(([k, x]) => (c.n(k) ? " · " + WSTAT[k][0] + " " + c.n(k) + x : "")).join("");
 }
 /** จำนวนรายการเมนู "…" ของรถ (MENU = ดูรายละเอียด แก้ไข ลบ · JOB_MENU) — ยังไม่เริ่ม 3 · อยู่ระหว่างบำรุงรักษา 2 · อื่นๆ 1 · แผนจ้างชุดเดียวกัน (มุมผู้รับจ้างตัดออกพร้อม S23) */
 export const menuCount = (st: JobStatus) => (st === "todo" ? 3 : st === "doing" ? 2 : 1);
@@ -397,15 +416,21 @@ const withClose = (j: Job, t: JobTrip, c: TripCar, fn: (ps: ClosePartRow[]) => C
   const f = j.close ?? emptyClose(j, t, c);
   return { ...j, close: { ...f, parts: fn(f.parts) } };
 };
+/* งานที่แจ้งบำรุงรักษาไม่ได้ (S23 แก้ไข ลบ เพิ่ม อะไหล่ได้ — 4 พ.ย. 2569 เอากลับ 10 พ.ย. 2569) แก้ที่ job.parts + job.cannot.used (แถวตาม workItems) */
 export function editPartUsed(t: JobTrip, c: TripCar, k: number, used: number) {
-  patchJob(t.id, c.id, (j) => withClose(j, t, c, (ps) => ps.map((r, i) => (i === k ? { ...r, used } : r))));
+  patchJob(t.id, c.id, (j) => (j.cannot
+    ? { ...j, cannot: { ...j.cannot, used: j.parts.map((_, i) => (i === k ? used : j.cannot!.used[i] ?? 0)) } }
+    : withClose(j, t, c, (ps) => ps.map((r, i) => (i === k ? { ...r, used } : r)))));
 }
 export function addJobPart(t: JobTrip, c: TripCar, p: NewPart) {
   const part = p.name.trim(), code = p.code.trim() || undefined, qty = Number(p.qty);
-  patchJob(t.id, c.id, (j) => withClose(j, t, c, (ps) => [...ps, { part, code, unit: p.unit, unitPrice: 0, planQty: 0, used: qty, old: 0, note: "", added: true }]));
+  patchJob(t.id, c.id, (j) => (j.cannot
+    ? { ...j, parts: [...j.parts, { task: "-", part, code, planQty: 0, unit: p.unit, unitPrice: 0 }], cannot: { ...j.cannot, used: [...j.parts.map((_, i) => j.cannot!.used[i] ?? 0), qty] } }
+    : withClose(j, t, c, (ps) => [...ps, { part, code, unit: p.unit, unitPrice: 0, planQty: 0, used: qty, old: 0, note: "", added: true }])));
 }
 export function deleteJobPart(t: JobTrip, c: TripCar, k: number) {
   patchJob(t.id, c.id, (j) => {
+    if (j.cannot) return { ...j, parts: j.parts.filter((_, i) => i !== k), cannot: { ...j.cannot, used: j.cannot.used.filter((_, i) => i !== k) } };
     const f = j.close ?? emptyClose(j, t, c), row = f.parts[k];
     return { ...j, parts: row && !row.added ? j.parts.filter((p) => p.part !== row.part) : j.parts, close: { ...f, parts: f.parts.filter((_, i) => i !== k) } };
   });
@@ -416,9 +441,9 @@ export function deleteJobPart(t: JobTrip, c: TripCar, k: number) {
 const timesOf = (t: JobTrip) => (t.mode === "hire" ? JOB_TIMES.hire : JOB_TIMES.self);
 /** S10 ยืนยันรับรถและเริ่มงาน → อยู่ระหว่างบำรุงรักษา (เวลา/ผู้เริ่มงานบันทึกเอง) */
 /** S10 กดเริ่มงาน = อยู่ระหว่างบำรุงรักษาทันที แล้วเข้า Step 1 (5 พ.ย. 2569 "เข้ามา step 1 ถือว่า อยู่ระหว่างบำรุงรักษา เลย") */
-export function startJob(t: JobTrip, carId: string, planned?: OilChoice) {
+export function startJob(t: JobTrip, carId: string, planned?: OilChoice, vendor = false) {   // vendor = S23 ผู้รับจ้างเริ่มงานเอง (HIRE_BY)
   patchJob(t.id, carId, (j) => ({
-    ...j, status: "doing", step: 1, startedAt: timesOf(t).start, startedBy: PEOPLE.kbk,
+    ...j, status: "doing", step: 1, startedAt: timesOf(t).start, startedBy: vendor ? PEOPLE.vendor : PEOPLE.kbk,
     oilChoice: j.oilChoice ?? planned ?? OIL_DEFAULT, photos: (j.receive?.photos ?? []).flat(), cannot: undefined,
   }));
 }
@@ -429,18 +454,28 @@ export function confirmInspect(t: JobTrip, carId: string) {
   patchJob(t.id, carId, (j) => ({ ...j, step: 2, photos: (j.receive?.photos ?? []).flat() }));
 }
 /** S10 ปิดงาน → "เสร็จสิ้น" ทันที ทั้งตรวจเองและแผนจ้าง (ไม่มีส่งตรวจงาน) · ใส่ผลน้ำมันมาแล้วเก็บเป็นผลการทดสอบ (S12) */
-export function closeJob(t: JobTrip, carId: string, f: CloseForm) {
-  const at = timesOf(t).end, by = PEOPLE.kbk;
+/** S23 ผู้รับจ้างปิดงาน → "ดำเนินการบำรุงรักษาแล้ว" (รอผู้รับจ้างส่งตรวจงาน) · แก้ไขงานหลังปิด/ส่งกลับ = ปิดซ้ำ ล้างเหตุผลที่ส่งกลับ */
+export function closeJob(t: JobTrip, carId: string, f: CloseForm, vendor = false) {
+  const at = timesOf(t).end, by = vendor ? PEOPLE.vendor : PEOPLE.kbk;
   patchJob(t.id, carId, (j) => ({
-    ...j, status: "done", close: f, closedAt: at, recordedBy: by, cannot: undefined,
+    ...j, status: vendor ? "worked" : "done", close: f, closedAt: at, recordedBy: by, cannot: undefined, returnReason: undefined,
     kmAfter: f.km + " กม.", hoursAfter: f.hours + " ชม.", oilChoice: f.oilChoice,
     oilResult: oilSampled(f.oilChoice) ? { sel: f.oilSel, files: f.oilFiles, sampledAt: at.slice(0, 10), sampledBy: by, ...(f.oilSel >= 0 ? { savedAt: at, savedBy: by } : {}) } : undefined,
     safety: { files: f.safetyFiles ?? [] },   // ไม่บังคับ — ปิดงานได้แม้ยังไม่แนบ
   }));
 }
 /** S10 บำรุงรักษาไม่ได้ → "บำรุงรักษาไม่ได้" ทันที ทั้งตรวจเองและแผนจ้าง (ไม่ต้องส่งตรวจ) */
-export function cannotJob(t: JobTrip, carId: string, reason: string, used: number[], at: string) {
-  patchJob(t.id, carId, (j) => ({ ...j, status: "cannot", cannot: { reason, used, by: PEOPLE.kbk, at, whileDoing: j.status === "doing" } }));
+/** S23 ผู้รับจ้าง (vendor) → "แจ้งบำรุงรักษาไม่ได้" รอผู้รับจ้างส่งตรวจงาน · แก้สาเหตุ (edit) คงผู้แจ้ง/เวลาเดิม */
+export function cannotJob(t: JobTrip, carId: string, reason: string, used: number[], at: string, vendor = false) {
+  patchJob(t.id, carId, (j) => ({ ...j, status: vendor ? "reported" : "cannot", returnReason: undefined,
+    cannot: { reason, used, by: vendor ? PEOPLE.vendor : PEOPLE.kbk, at: vendor ? JOB_TIMES.hire.reported : at, whileDoing: j.status === "doing" } }));
+}
+export function editCannotReason(t: JobTrip, carId: string, reason: string) {
+  patchJob(t.id, carId, (j) => (j.cannot ? { ...j, cannot: { ...j.cannot, reason } } : j));
+}
+/** S23 ส่งตรวจงาน → "รอตรวจรับ" (ทีละคัน · ล้างเหตุผลที่ส่งกลับ) · toast "ส่งตรวจงานแล้ว" */
+export function sendJob(t: JobTrip, carId: string) {
+  patchJob(t.id, carId, (j) => ({ ...j, status: "wait", sentAt: j.cannot ? JOB_TIMES.hire.sentCannot : JOB_TIMES.hire.sent, sentBy: PEOPLE.vendor, returnReason: undefined }));
 }
 /** S12 บันทึกผลการทดสอบ (แก้ได้ภายหลัง) */
 export function saveOilResult(t: JobTrip, carId: string, sel: OilSel, files: UploadFile[], by = PEOPLE.kbk) {
@@ -475,11 +510,17 @@ export function removeTripCar(t: JobTrip, carId: string) {
      ใบ T1 + ยานพาหนะรถพ่วงฉีดน้ำ 82-9012 ขอนแก่น (WATER_CAR = CAND[9] ของ screens.js) อยู่ระหว่างบำรุงรักษา Step 1 · ยังไม่ตรวจ / ตรวจรายการและลงนามครบ
      จอ Figma วางคันนี้ในใบ JOB_T (T1) กล่องการนัดหมายใช้ค่าของคันแรก (JOB_I) ⇒ เบอร์ติดต่อ/ผู้ดูแลยานพาหนะของคันนี้ในใบ = ค่าของ 82-6789 ตามจอ (ข้อมูลยานพาหนะไม่มีผู้ควบคุมของ กฟฉ.2)
      คันนี้เพิ่มเข้า "ยานพาหนะในไตรมาส 1" ของแผนตัวอย่างด้วย (qcars) ให้หน้าไตรมาสตรงกับใบ · ชุด T1 อื่นเอาออก */
-export const SAMPLES = ["T1_start", "T1_afterClose", "T1_afterCannot", "TV_start", "TV_mid", "T1_water", "T1_waterSigned"] as const;
+/* S23 มุมผู้รับจ้าง (เอากลับ 10 พ.ย. 2569 R87 · บล็อก V) — บทบาท "ผู้รับจ้าง" ใบ TV:
+     TV_vendor = V.1 ยังไม่เริ่มงาน 0/6 · TV_vendorWait = V.16 คันแรกรอตรวจรับ · TV_vendorReported = V.19 คันที่ 2 แจ้งบำรุงรักษาไม่ได้
+     TV_vendorReturned = V.20 คันแรกถูกส่งกลับ (ปิดงานไว้) · TV_vendorReturnedCannot = V.21 คันที่ 2 ถูกส่งกลับ (แจ้งไม่ได้ไว้)
+     TV_vendorMid = V.22 HIRE_VENDOR (ส่งกลับแก้ไข · รอตรวจรับ · ดำเนินการบำรุงรักษาแล้ว · อยู่ระหว่างบำรุงรักษา) */
+export const SAMPLES = ["T1_start", "T1_afterClose", "T1_afterCannot", "TV_start", "TV_mid", "T1_water", "T1_waterSigned",
+  "TV_vendor", "TV_vendorWait", "TV_vendorReported", "TV_vendorReturned", "TV_vendorReturnedCannot", "TV_vendorMid"] as const;
 export type SampleName = (typeof SAMPLES)[number];
-/* บทบาทที่สลับให้ตอนเปิดชุดตัวอย่าง — ทุกชุดเป็นของ กบค. */
-export const SAMPLE_ROLE: Record<SampleName, Role> = { T1_start: "หน่วยงาน (กกฟ.1)", T1_afterClose: "หน่วยงาน (กกฟ.1)", T1_afterCannot: "หน่วยงาน (กกฟ.1)", TV_start: "หน่วยงาน (กกฟ.1)", TV_mid: "หน่วยงาน (กกฟ.1)",
-  T1_water: "หน่วยงาน (กกฟ.1)", T1_waterSigned: "หน่วยงาน (กกฟ.1)" };
+/* บทบาทที่สลับให้ตอนเปิดชุดตัวอย่าง — ชุด S10 S12 เป็นของหน่วยงาน · ชุด TV_vendor* เป็นของผู้รับจ้าง (S23) */
+const U1: Role = "หน่วยงาน (กกฟ.1)", VD: Role = "ผู้รับจ้าง";
+export const SAMPLE_ROLE: Record<SampleName, Role> = { T1_start: U1, T1_afterClose: U1, T1_afterCannot: U1, TV_start: U1, TV_mid: U1, T1_water: U1, T1_waterSigned: U1,
+  TV_vendor: VD, TV_vendorWait: VD, TV_vendorReported: VD, TV_vendorReturned: VD, TV_vendorReturnedCannot: VD, TV_vendorMid: VD };
 /** ยานพาหนะรถพ่วงฉีดน้ำของชุดตัวอย่าง (WATER_CAR) · เบอร์/ผู้ดูแลในใบ = ค่าของคันแรก JOB_I ตามจอ Figma */
 export const WATER_CAR = "82-9012";
 const WATER_Q = PLAN_ID + "-1";
@@ -498,6 +539,20 @@ function cannotSample(t: JobTrip, carId: string): Job {
 }
 /* จอ I.22 ไม่มีป้ายผลตรวจน้ำมันของคันที่ปิดแล้ว ⇒ คันนี้เลือก "เปลี่ยนน้ำมัน" (ไม่เก็บตัวอย่าง) */
 const changedOnly = (j: Job): Job => ({ ...j, oilChoice: 1, close: j.close && { ...j.close, oilChoice: 1 }, oilResult: undefined });
+/* ---------- งานของผู้รับจ้าง (S23 · vendorJob ของ screens.js) — ผู้เริ่มงาน/ผู้บันทึก HIRE_BY · ผู้ลงนามฝั่งผู้ดำเนินการ HIRE_TECH (vendorSign) ---------- */
+const vendorSigned = <T extends { signers: [Signer, Signer] }>(f: T): T => ({ ...f, signers: [{ name: PEOPLE.vendorTech, sig: "sample" }, f.signers[1]] });
+function vDoing(t: JobTrip, carId: string): Job {
+  const d = doing(t, carId);
+  return { ...d, receive: d.receive && vendorSigned(d.receive), startedBy: PEOPLE.vendor };
+}
+function vWorked(t: JobTrip, carId: string): Job {
+  const d = vDoing(t, carId), f = vendorSigned(filledClose(d, t, carOf(carId)!));
+  return { ...d, status: "worked", close: f, closedAt: JOB_TIMES.hire.end, recordedBy: PEOPLE.vendor, kmAfter: "176,090 กม.", hoursAfter: "5,846 ชม.", oilChoice: f.oilChoice };
+}
+const vReported = (t: JobTrip, carId: string): Job => ({ ...newJob(t.id, carId), status: "reported",
+  cannot: { reason: JOB_TEXT.cannotHire, used: WORK.map(() => 0), by: PEOPLE.vendor, at: JOB_TIMES.hire.reported, whileDoing: false } });
+const vSent = (j: Job): Job => ({ ...j, status: "wait", sentAt: j.cannot ? JOB_TIMES.hire.sentCannot : JOB_TIMES.hire.sent, sentBy: PEOPLE.vendor });
+const vBack = (j: Job): Job => ({ ...j, status: "returned", returnReason: j.cannot ? JOB_TEXT.backCannot : JOB_TEXT.back });
 /** Step 1 อยู่ระหว่างบำรุงรักษา (เริ่มงานแล้ว) · filled = ตรวจรายการและลงนามครบ */
 function step1(t: JobTrip, carId: string, filled: boolean): Job {
   const c = carOf(carId) ?? { type: "" }, r = filled ? filledReceive(PEOPLE.kbk, c) : emptyReceive(c);
@@ -514,7 +569,7 @@ function waterInQuarter(on: boolean) {
   });
 }
 export function applySample(name: SampleName) {
-  const T1 = SEED_TRIPS.T1, TV = SEED_TRIPS.TV;
+  const T1 = SEED_TRIPS.T1, TV = SEED_TRIPS.TV, V = TV.carIds;   // V[0] = HIRE_DONE · V[1] = HIRE_CANNOT
   const T1W: JobTrip = { ...T1, carIds: [...T1.carIds, WATER_CAR], phones: { ...T1.phones, [WATER_CAR]: TRIP_CARS[0].ownerPhone }, names: { ...T1.names, [WATER_CAR]: TRIP_CARS[0].ctrl } };
   if (name.startsWith("T1_")) waterInQuarter(name.startsWith("T1_water"));
   const put = (list: Job[]) => Object.fromEntries(list.map((j) => [jobKey(j.tripId, j.carId), j]));
@@ -526,6 +581,12 @@ export function applySample(name: SampleName) {
       case "T1_afterCannot": return { trips: { ...s.trips, T1 }, jobs: { ...keep("T1"), ...put([cannotSample(T1, "80-9981")]) } };
       case "TV_start": return { trips: { ...s.trips, TV }, jobs: keep("TV") };
       case "TV_mid": return { trips: { ...s.trips, TV }, jobs: { ...keep("TV"), ...put([doing(TV, TV.carIds[0]), changedOnly(closedSample(TV, TV.carIds[1]))]) } };
+      case "TV_vendor": return { trips: { ...s.trips, TV }, jobs: keep("TV") };
+      case "TV_vendorWait": return { trips: { ...s.trips, TV }, jobs: { ...keep("TV"), ...put([vSent(vWorked(TV, V[0]))]) } };
+      case "TV_vendorReported": return { trips: { ...s.trips, TV }, jobs: { ...keep("TV"), ...put([vReported(TV, V[1])]) } };
+      case "TV_vendorReturned": return { trips: { ...s.trips, TV }, jobs: { ...keep("TV"), ...put([vBack(vWorked(TV, V[0]))]) } };
+      case "TV_vendorReturnedCannot": return { trips: { ...s.trips, TV }, jobs: { ...keep("TV"), ...put([vBack(vReported(TV, V[1]))]) } };
+      case "TV_vendorMid": return { trips: { ...s.trips, TV }, jobs: { ...keep("TV"), ...put([vBack(vWorked(TV, V[0])), vSent(vReported(TV, V[1])), vWorked(TV, V[2]), vDoing(TV, V[3])]) } };
       case "T1_water": return { trips: { ...s.trips, T1: T1W }, jobs: { ...keep("T1"), ...put([step1(T1W, WATER_CAR, false)]) } };
       case "T1_waterSigned": return { trips: { ...s.trips, T1: T1W }, jobs: { ...keep("T1"), ...put([step1(T1W, WATER_CAR, true)]) } };
     }

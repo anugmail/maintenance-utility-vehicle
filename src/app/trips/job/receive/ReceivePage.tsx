@@ -9,7 +9,9 @@
    → HandoverSignature "ลงนามการตรวจสภาพ" (ผู้ตรวจ (กบค.) · ผู้รับการตรวจ (หน่วยงานเจ้าของยานพาหนะ) — SIGN_IN 9 พ.ย. 2569 · บังคับ "เรื่องลงนาม require")
    → Section header "ภาพก่อนเริ่มงาน" + File upload 2 ช่อง → ปุ่ม "ย้อนกลับ" (หน้ารายละเอียดแผนเดินทาง) · "ยืนยันการตรวจสภาพ" (Disabled จนลงนามครบทั้งสองฝั่ง) → Step 2
    "เซ็นลงนาม" → Modal Signature "ลงนามการตรวจสภาพ" (วาดลายเซ็นได้จริง) · ค่าที่กรอกเก็บเป็นร่าง (ออกจากหน้าแล้วกลับมาไม่หาย)
-   แผนจ้างดำเนินการใช้หน้าเดียวกัน กบค. เป็นผู้รับมอบ (ใบจ้างไม่มีพนักงานในใบ ⇒ ตัวเลือก = พนักงาน กบค. ทั้งหมด staffOf · COMPOSED.md) */
+   แผนจ้างดำเนินการใช้หน้าเดียวกัน กบค. เป็นผู้รับมอบ (ใบจ้างไม่มีพนักงานในใบ ⇒ ตัวเลือก = พนักงาน กบค. ทั้งหมด staffOf · COMPOSED.md)
+   S23 ผู้รับจ้าง (stepPage({ vendor, step: 1 }) · R87 · V.4–V.6): ช่อง "วันดำเนินการ" State=Readonly (ผู้รับจ้างแก้ข้อมูลยานพาหนะในแผนเดินทางไม่ได้ · ยังไม่เคาะ)
+     · ผู้ตรวจฝั่งผู้ดำเนินการ = ช่างผู้รับจ้าง (vendorSign · HIRE_TECH) */
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { HandoverSignature } from "@/components/maintain-d/HandoverSignature";
@@ -38,7 +40,7 @@ const SLOTS = [
 
 export function ReceivePage() {
   const router = useRouter();
-  const { trip, car, job, actor } = useTripCar();
+  const { trip, car, job, actor, vendor } = useTripCar();
   const [sign, setSign] = useState(-1);
   const [cal, setCal] = useState(false);
   const away = !!trip && !!car && !!job && job.status !== "doing";   // ยังไม่เริ่ม / ปิดแล้ว → หน้างานรายคัน
@@ -50,7 +52,8 @@ export function ReceivePage() {
   if (awayAtOpen.v) return null;
   const f: ReceiveForm = job.receive ?? emptyReceive(car);
   const put = (fn: (f: ReceiveForm) => ReceiveForm) => patchJob(trip.id, car.id, (j) => ({ ...j, receive: fn(j.receive ?? emptyReceive(car)) }));
-  const options = [staffOf(trip), [PEOPLE.ownerSigner]];
+  const options = [vendor ? [PEOPLE.vendorTech] : staffOf(trip), [PEOPLE.ownerSigner]];
+  const pickWork = actor && !vendor;
   const fm = inspectForm(car, trip.planMr);
   const signed = f.signers.every((x) => !!x.sig);
   /* วันดำเนินการของคันนี้ (R83) — ค่าเดียวกับตารางแผนเดินทาง · เลือกได้เฉพาะในช่วงวันเดินทาง */
@@ -67,12 +70,12 @@ export function ReceivePage() {
   };
 
   return (
-    <StepFrame trip={trip} car={car} job={job} step={1} used={job.parts.map(() => 0)} actor={actor}>
+    <StepFrame trip={trip} car={car} job={job} step={1} used={job.parts.map(() => 0)} actor={actor} vendor={vendor}>
       <Section>
         <SectionHeader Title="วันดำเนินการ" />
         <Grid>
           <TextInput LabelText="วันดำเนินการ" LeadingIconSwap="calendar_month-24-300-round" Text={work[0] + " - " + work[1]} readOnly
-            State={!actor ? "Readonly" : cal ? "Focused" : "Filled"} onClick={() => actor && lo && hi && setCal(true)} aria-haspopup="dialog" aria-expanded={cal} />
+            State={!pickWork ? "Readonly" : cal ? "Focused" : "Filled"} onClick={() => pickWork && lo && hi && setCal(true)} aria-haspopup="dialog" aria-expanded={cal} />
         </Grid>
         {cal && lo && hi && (
           <div className="flex">

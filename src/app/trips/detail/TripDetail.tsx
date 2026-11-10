@@ -5,7 +5,9 @@
    → Section label "อะไหล่ของแผนเดินทาง" (ไม่มีตัวเลขจำนวนชนิด 9 พ.ย. 2569) (R84) · เมนูแก้ไข = popup "แก้ไขยานพาหนะในแผนเดินทาง" มีวันดำเนินการ (R83) · ส่งออก = TripExportPopup
    เมนู "…" ตามสถานะ (กบค.: ยังไม่เริ่ม ดู แก้ไข ลบ · อยู่ระหว่างบำรุงรักษา ดู แก้ไข · อื่นๆ ดู · บทบาทอื่น: ดู อย่างเดียว) · กดแถว = ดูรายละเอียด
    มือถือ: Mobile table รายคัน (ป้ายผลน้ำมันเป็นแถว "ผลตรวจน้ำมัน" ของตัวเอง) + ไอคอนดู แก้ไข ลบ กางบนการ์ด (CLAUDE.md ข้อ 14)
-   ใช้หน้าเดียวทั้งแผนตรวจเอง (?trip=T1) และแผนจ้าง (?trip=TV · กบค. ปิดงานแทนผู้รับจ้าง เมนูชุดเดียวกัน — S23 S11 ตัดออก 4 พ.ย. 2569)
+   ใช้หน้าเดียวทั้งแผนตรวจเอง (?trip=T1) และแผนจ้าง (?trip=TV · หน่วยงานปิดงานแทนผู้รับจ้าง เมนูชุดเดียวกัน)
+   S23 ผู้รับจ้าง (tripDetail({ vendor }) · R87 · V.1 V.2 V.10 V.22): เมนู "…" ดูรายละเอียดอย่างเดียวทุกสถานะ (VENDOR_MENU · มือถือไอคอนดูอย่างเดียว) ไม่มีแก้ไข ลบ
+     · ตัวนับ "ตรวจแล้ว x/y" x = ดำเนินการบำรุงรักษาแล้ว + รอตรวจรับ + เสร็จสิ้น · y = ทั้งหมด − แจ้งบำรุงรักษาไม่ได้ − บำรุงรักษาไม่ได้ (เสนอ ยังไม่เคาะ) · ความคืบหน้าเขียนจำนวนตามชื่อสถานะ
    ?sample=<ชุดตัวอย่าง> (จากหน้า /scenarios/: T1_start … TV_mid) ใส่สถานะงานตามจอ Figma + สลับบทบาท แล้วล้างพารามิเตอร์ · ชื่อที่ไม่รู้จัก (เช่น S23 S11 เดิม) = ข้ามไป */
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -46,7 +48,7 @@ export function TripDetail() {
   const router = useRouter();
   const back = useBack();
   const mob = useBreakpoint() === "Mobile";
-  const { s, trip, kbk } = useTripCar();
+  const { s, trip, kbk, vendor } = useTripCar();
   const pending = useSample(SAMPLE_MAP);
   const [menu, setMenu] = useState<{ car: string; anchor: MenuAnchor } | null>(null);
   const mock = useMock();
@@ -80,10 +82,10 @@ export function TripDetail() {
   return (
     <>
       <PageHeader Title={trip.name} Badge={["อนุมัติแล้ว", "Success"]} crumbs={crumbs.trip(trip)} onBack={() => back()} Actions={<TripExportButton onClick={() => setExp(true)} />} />
-      <VehicleAndReporterInfo Title="รายละเอียดแผนเดินทาง" pairs={[...tripKv(trip), ["ความคืบหน้า", tripProgress(s, trip)]]} />
+      <VehicleAndReporterInfo Title="รายละเอียดแผนเดินทาง" pairs={[...tripKv(trip), ["ความคืบหน้า", tripProgress(s, trip, vendor)]]} />
       <Section>
         {/* ตัวนับ "ตรวจแล้ว x/y" = Badge outline ใน Section header (R71 · แบบ "รายการยานพาหนะในสัญญา" หน้า 5.1 Rental Contract Management ของ UI Release#2 — Section label ไม่มีช่อง Badge) */}
-        <SectionHeader Title="ยานพาหนะในแผนเดินทาง" Badge={tripCounter(s, trip)} />
+        <SectionHeader Title="ยานพาหนะในแผนเดินทาง" Badge={tripCounter(s, trip, vendor)} />
         {mob ? (
           <div className="flex flex-col gap-3">
             {cars.map((c) => {

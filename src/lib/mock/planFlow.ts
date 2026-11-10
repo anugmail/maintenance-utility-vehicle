@@ -24,9 +24,10 @@ export const ROLE_HOME: Partial<Record<Role, string>> = {
 };
 /* หน้าเริ่มที่ขึ้นกับข้อมูล (ต้นแบบ — sidebar เมนูอื่นยังไม่พาไปไหน ⇒ เข้ารากแล้วไปหน้าที่มีงานรอ · COMPOSED.md หัวข้อ ช.)
    ผู้อนุมัติ: มีแผนเดินทางรออนุมัติ → /approvals/trips/ · หน่วยงานเจ้าของรถ: มีรถรอยอมรับผล / แผนพร้อมตรวจหลักฐาน → /acceptance/
-   (ผู้รับจ้าง → แผนจ้างใบล่าสุด เอาออกพร้อมบทบาท 4 พ.ย. 2569 · S23 ตัดออก) */
+   ผู้รับจ้าง → แผนจ้างดำเนินการใบล่าสุดที่อนุมัติแล้ว (S23 เอากลับ 10 พ.ย. 2569 · userflow "ไม่มีหน้ารายการแผนเดินทางของผู้รับจ้าง" เข้าจากแจ้งเตือน) · ไม่มีใบ = รายการแผน (ว่าง) */
 export function roleHome(role: Role, m: MockState): string | undefined {
   const trips = tripsOf(m).filter((t) => !t.listOnly);
+  if (role === "ผู้รับจ้าง") { const h = trips.filter((t) => t.mode === "hire" && t.status === "approved").pop(); return h ? "/trips/detail/?trip=" + h.id : undefined; }
   if (role === "ผู้อนุมัติ" && trips.some((t) => t.status === "review")) return "/approvals/trips/";
   if (role === "หน่วยงานเจ้าของยานพาหนะ" && (accRows(m).some((r) => !r.accepted) || accPlans(m).some((p) => p.ready && !p.done))) return "/acceptance/";
   return ROLE_HOME[role];

@@ -1,5 +1,5 @@
 "use client";
-/* หน้า /scenarios/ ของต้นแบบ (เปิดจากลิงก์ "ต้นแบบบำรุงรักษาตามวาระ" ในแถบต้นแบบ · รากเว็บเป็นรายการแผนแบบระบบจริง): รายการ scenario ตามลำดับงาน (ที่ใช้ + S11 S23 S22 ที่ตัดออกท้ายตาราง แบบ SCEN_CUT ของ screens.js) — Page header + Table (desktop) / Mobile table (มือถือ) ของไลบรารี
+/* หน้า /scenarios/ ของต้นแบบ (เปิดจากลิงก์ "ต้นแบบบำรุงรักษาตามวาระ" ในแถบต้นแบบ · รากเว็บเป็นรายการแผนแบบระบบจริง): รายการ scenario ตามลำดับงาน (ที่ใช้ + S11 S22 ที่ตัดออกท้ายตาราง · S23 เอากลับ 10 พ.ย. 2569 แบบ SCEN_CUT ของ screens.js) — Page header + Table (desktop) / Mobile table (มือถือ) ของไลบรารี
    ไม่ใช่จอใน Figma (เป็นสารบัญของต้นแบบ) · ดู figma-spec/COMPOSED.md */
 import { useRouter } from "next/navigation";
 import { AppFrame } from "@/components/shell/AppFrame";
