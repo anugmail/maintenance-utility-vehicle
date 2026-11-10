@@ -130,7 +130,7 @@ export function CannotPopup({ open, car, parts, used, reason, error, onReason, o
   );
 }
 
-/* ---------- น้ำมันไฮโดรลิก (jobOil) + ผลการทดสอบ (oilResult) ---------- */
+/* ---------- น้ำมันไฮดรอลิก (jobOil) + ผลการทดสอบ (oilResult) ---------- */
 export function OilCards({ value, onChange, Disabled }: { value: OilChoice; onChange?: (k: OilChoice) => void; Disabled?: boolean }) {
   return <RadioTextCards options={OIL_JOB_OPTS.map((Text) => ({ Text }))} value={OIL_JOB_OPTS[value]} Disabled={Disabled}
     onChange={(v) => onChange?.(OIL_JOB_OPTS.indexOf(v as (typeof OIL_JOB_OPTS)[number]) as OilChoice)} />;

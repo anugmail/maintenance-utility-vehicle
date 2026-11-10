@@ -1,9 +1,9 @@
 "use client";
-/* S10 P6 · งานรายคัน เสร็จสิ้น (ดู) — workDetail() ใน screens.js + S12 ส่วน "ผลการทดสอบน้ำมันไฮโดรลิก" (4 พ.ย. 2569 ทางเดียวที่บันทึกผลหลังปิดงาน)
+/* S10 P6 · งานรายคัน เสร็จสิ้น (ดู) — workDetail() ใน screens.js + S12 ส่วน "ผลการทดสอบน้ำมันไฮดรอลิก" (4 พ.ย. 2569 ทางเดียวที่บันทึกผลหลังปิดงาน)
    Page header (ทะเบียน · ป้าย "เสร็จสิ้น" · ไม่มีปุ่ม) → VehicleAndReporterInfo "ข้อมูลยานพาหนะและงาน" (14) → IncidentPhotoGallery "ภาพก่อนเริ่มงาน (n)" (ไม่มีภาพตอนจบงาน)
    → Section label "รายการงานและอะไหล่ที่ใช้จริง (n)" + Table WORK_COLS2 → Section label "ค่าใช้จ่ายของรถคันนี้ (บาท)" + Table + กล่องสรุป
-   → (เฉพาะคันที่เก็บตัวอย่าง) Section label "ผลการทดสอบน้ำมันไฮโดรลิก": Horizontal radio groups ผ่าน/ไม่ผ่าน (ครึ่งแถว) + File upload + กล่อง เก็บตัวอย่างเมื่อ / บันทึกผลเมื่อ
-     + ปุ่ม "บันทึกผลการทดสอบ" (ต้องเลือกผล "กรุณาเลือกผลการทดสอบ" · บันทึกแล้วแก้ได้อีก · toast "บันทึกผลการทดสอบน้ำมันไฮโดรลิกสำเร็จ") — บันทึกได้เฉพาะ กบค.
+   → (เฉพาะคันที่เก็บตัวอย่าง) Section label "ผลการทดสอบน้ำมันไฮดรอลิก": Horizontal radio groups ผ่าน/ไม่ผ่าน (ครึ่งแถว) + File upload + กล่อง เก็บตัวอย่างเมื่อ / บันทึกผลเมื่อ
+     + ปุ่ม "บันทึกผลการทดสอบ" (ต้องเลือกผล "กรุณาเลือกผลการทดสอบ" · บันทึกแล้วแก้ได้อีก · toast "บันทึกผลการทดสอบน้ำมันไฮดรอลิกสำเร็จ") — บันทึกได้เฉพาะ กบค.
    → (เฉพาะรถเครน/รถกระเช้า 4 พ.ย. 2569) Section label "Safety Inspection": File upload "เอกสาร Safety Inspection" (ไฟล์จากหน้าปิดงาน) + กล่อง บันทึกเอกสารเมื่อ
      + ปุ่ม "บันทึกเอกสาร Safety Inspection" (toast "บันทึกเอกสาร Safety Inspection สำเร็จ") — ตาม "File upload" "Section label" "Primary button" ของไฟล์ Component
      + จอ S10 "หน้างานรายคัน — เพิ่มเอกสาร Safety Inspection ภายหลัง" / "บันทึกเอกสาร Safety Inspection สำเร็จ" · บันทึกได้เฉพาะ กบค. บทบาทอื่นดูรายการไฟล์อย่างเดียว
@@ -45,7 +45,7 @@ export function WorkDetail({ trip, car, job, kbk }: { trip: JobTrip; car: TripCa
   useEffect(() => { setSafety(sf?.files ?? f.safetyFiles ?? []); }, [sf?.files, f.safetyFiles]);
 
   const pairs: [string, string][] = [...vehiclePairs(trip, car), ["แผน", trip.planMr], ["แผนเดินทาง", trip.name + " · " + tripRangeShort(trip)],
-    ["เริ่มงาน", job.startedAt ?? "-"], ["ปิดงาน", job.closedAt ?? "-"], ["ผู้บันทึก", job.recordedBy ?? "-"], ["น้ำมันไฮโดรลิก", OIL_JOB_OPTS[oil]],
+    ["เริ่มงาน", job.startedAt ?? "-"], ["ปิดงาน", job.closedAt ?? "-"], ["ผู้บันทึก", job.recordedBy ?? "-"], ["น้ำมันไฮดรอลิก", OIL_JOB_OPTS[oil]],
     ["เลขไมล์หลังทำ", job.kmAfter ?? "-"], ["ชั่วโมงเครื่องจักรหลังทำ", job.hoursAfter ?? "-"]];
   const taskOf = (part: string) => job.parts.find((p) => p.part === part)?.task ?? "-";
   const work = closeRows(f).map((r) => [taskOf(r.part), r.part, String(r.planQty), String(r.used), r.unit]);
@@ -55,7 +55,7 @@ export function WorkDetail({ trip, car, job, kbk }: { trip: JobTrip; car: TripCa
   const save = () => {
     if (sel < 0) { setErr(true); return; }
     saveOilResult(trip, car.id, sel, files);
-    notify("บันทึกผลการทดสอบน้ำมันไฮโดรลิกสำเร็จ");
+    notify("บันทึกผลการทดสอบน้ำมันไฮดรอลิกสำเร็จ");
   };
   const saveSafety = () => {
     saveSafetyDocs(trip, car.id, safety);
@@ -79,7 +79,7 @@ export function WorkDetail({ trip, car, job, kbk }: { trip: JobTrip; car: TripCa
       </Section>}
       {oilSampled(oil) && (
         <Section>
-          <SectionLabel Title="ผลการทดสอบน้ำมันไฮโดรลิก" />
+          <SectionLabel Title="ผลการทดสอบน้ำมันไฮดรอลิก" />
           <OilResultFields sel={sel} files={files} error={err} readonly={!kbk}
             onSel={(v) => { setSel(v); setErr(false); }}
             onFiles={(fs) => setFiles((x) => [...x, ...fs.map(toUpload)].slice(0, 10))} onDelete={(i) => setFiles((x) => x.filter((_, k) => k !== i))} />

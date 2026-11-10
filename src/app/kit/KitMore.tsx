@@ -51,15 +51,15 @@ import { Block, V } from "./KitBlocks";
 const STATES = ["Default", "Hover", "Focused", "Disabled"] as const;
 
 const PARTS: SparePart[] = [
-  { name: "น้ำมันไฮโดรลิก ISO VG 46", code: "OL-0011", unit: "ลิตร", price: 120, warehouse: "Smart Inventory", stock: 420 },
-  { name: "ไส้กรองไฮโดรลิก", code: "FL-0022", unit: "ชิ้น", price: 680, warehouse: "Smart Inventory", stock: 3 },
+  { name: "น้ำมันไฮดรอลิก ISO VG 46", code: "OL-0011", unit: "ลิตร", price: 120, warehouse: "Smart Inventory", stock: 420 },
+  { name: "ไส้กรองไฮดรอลิก", code: "FL-0022", unit: "ชิ้น", price: 680, warehouse: "Smart Inventory", stock: 3 },
   { name: "ไส้กรองน้ำมันเครื่อง", code: "FL-0031", unit: "ชิ้น", price: 250, warehouse: "Smart Inventory", stock: 40 },
   { name: "ไส้กรองอากาศ", code: "FL-0040", unit: "ชิ้น", price: 420, warehouse: "คลังสำรอง", stock: 60 },
   { name: "ไส้กรองเชื้อเพลิง", code: "FL-0052", unit: "ชิ้น", price: 350, warehouse: "คลังสำรอง", stock: 1 },
 ];
 const RECEIPT: ReceiptItem[] = ["แผ่นป้ายทะเบียนหน้า - หลัง", "ป้ายทะเบียนติดกระจกและ พรบ.", "กระจกมองข้างซ้าย - ขวา, กระจกมองหลัง", "ยางอะไหล่", "แบตเตอรี่", "เครื่องมือประจำยานพาหนะ, แม่แรง, ประแจถอดล้อ", "ฝาถังน้ำมัน", "อุปกรณ์บนหน้าปัด, แตร", "ใบปัดน้ำฝน", "วิทยุ, ลำโพง, เสาอากาศ, วิทยุรับ - ส่ง", "ระบบไฟแสงสว่าง", "สภาพยาง", "สภาพตัวถังและสี"]
   .map((name, i) => ({ name, has: i === 1 ? false : i < 6 ? true : null, damaged: i === 0, battery: name === "แบตเตอรี่" ? { brand: "GS Yuasa", qty: "1", unit: "ลูก" } : undefined }));
-const INSPECT: InspectionItem[] = ["ชุดเกียร์ PTO", "ชุดกระบอกขาช้างหน้า ซ้าย ขวา", "ชุดกระบอกขาช้างหลัง ซ้าย ขวา", "ชุดวาร์ลคอนโทรลขาช้าง", "เพลาขับปั๊มน้ำมันไฮดรอลิค", "ปั๊มน้ำมันไฮดรอลิค"]
+const INSPECT: InspectionItem[] = ["ชุดเกียร์ PTO", "ชุดกระบอกขาช้างหน้า ซ้าย ขวา", "ชุดกระบอกขาช้างหลัง ซ้าย ขวา", "ชุดวาร์ลคอนโทรลขาช้าง", "เพลาขับปั๊มน้ำมันไฮดรอลิก", "ปั๊มน้ำมันไฮดรอลิก"]
   .map((name, i) => ({ name, ok: i === 1 ? false : i < 4 ? true : null }));
 const FILES: UploadFile[] = [
   { name: "ใบรับยานพาหนะ-82-6789.pdf", size: "200 KB", bar: true },
@@ -232,8 +232,8 @@ export function KitMore() {
       <ModalSignature open={open === "sig"} Title="ลงนามการรับมอบยานพาหนะ" signer={[slots[sigFor].LabelText, slots[sigFor].value ?? "-"]} onClose={() => setOpen("")}
         onSave={() => { setSlots((s) => s.map((x, j) => (j === sigFor ? { ...x, signed: true } : x))); setOpen(""); }} />
       <SummaryRequestedParts open={open === "sum"} Title="สรุปรายการเบิก/จองอะไหล่" cancel="ยกเลิก" ok="ยืนยันเบิก/จอง" onOk={() => setOpen("")} onCancel={() => setOpen("")}
-        groups={[{ title: "อะไหล่ที่เบิก", subs: [{ title: "เบิกที่ Smart Inventory", rows: [["น้ำมันไฮโดรลิก ISO VG 46 x60", 7200], ["ไส้กรองน้ำมันเครื่อง x12", 3000]] }, { title: "เบิกที่คลังสำรอง", rows: [["ไส้กรองอากาศ x12", 5040]] }] },
-          { title: "อะไหล่ที่จัดซื้อ", subs: [{ title: "จัดซื้ออะไหล่เพิ่มโดย Smart Inventory", rows: [["ไส้กรองไฮโดรลิก x9", 6120]] }] }]}
+        groups={[{ title: "อะไหล่ที่เบิก", subs: [{ title: "เบิกที่ Smart Inventory", rows: [["น้ำมันไฮดรอลิก ISO VG 46 x60", 7200], ["ไส้กรองน้ำมันเครื่อง x12", 3000]] }, { title: "เบิกที่คลังสำรอง", rows: [["ไส้กรองอากาศ x12", 5040]] }] },
+          { title: "อะไหล่ที่จัดซื้อ", subs: [{ title: "จัดซื้ออะไหล่เพิ่มโดย Smart Inventory", rows: [["ไส้กรองไฮดรอลิก x9", 6120]] }] }]}
         totals={[["เบิกจาก Smart Inventory", 10200], ["เบิกจากคลังสำรอง", 5040], ["จัดซื้ออะไหล่เพิ่มโดย Smart Inventory", 6120]]} />
     </>
   );

@@ -121,10 +121,10 @@ export function planWithDraft(p: Plan, d: Draft, today: string): Plan {
 }
 
 /* ---------- รถและอะไหล่ ---------- */
-/* น้ำมันไฮโดรลิกของรถ: กำหนดในหน้า S21 แล้ว (oils) = OIL_PLAN_OPTS · แผนตัวอย่าง/ที่เก็บเก่า = picks มี 0 → เปลี่ยนน้ำมัน */
+/* น้ำมันไฮดรอลิกของรถ: กำหนดในหน้า S21 แล้ว (oils) = OIL_PLAN_OPTS · แผนตัวอย่าง/ที่เก็บเก่า = picks มี 0 → เปลี่ยนน้ำมัน */
 export const oilChoice = (a: Alloc, i: number): number | null => a.oils?.[i] ?? (a.picks[i] ? ((a.picks[i] || []).includes(0) ? 1 : 0) : null);
 export const oilOf = (a: Alloc, i: number) => (a.oils?.[i] != null ? OIL_PLAN_OPTS[a.oils[i]] : OIL_OPTS[(a.picks[i] || []).includes(0) ? 1 : 0]);
-/* ช่อง น้ำมันไฮโดรลิก · อะไหล่อื่นๆ ของแท็บไตรมาส n (oilCell · partList · partCell ใน screens.js 5 พ.ย. 2569) */
+/* ช่อง น้ำมันไฮดรอลิก · อะไหล่อื่นๆ ของแท็บไตรมาส n (oilCell · partList · partCell ใน screens.js 5 พ.ย. 2569) */
 export const TODO_NONE = "ยังไม่กำหนด";
 export const oilCellOf = (a: Alloc, i: number): string | { text: string; sub?: string } => {
   const k = oilChoice(a, i);
@@ -202,7 +202,7 @@ const EXTRA = UNIT_FLEET.filter((i) => !FIG_FLEET.includes(i));
 const A_ALL: Record<number, number> = { ...Object.fromEntries(FIG_FLEET.map((c, k) => [c, FIG_A_ALL[k]])), ...Object.fromEntries(EXTRA.map((c, k) => [c, (k % 4) + 1])) };
 const A_OILS: Record<number, number> = { ...Object.fromEntries(FIG_FLEET.map((c, k) => [c, FIG_A_OILS[k]])), ...Object.fromEntries(EXTRA.map((c) => [c, 0])) };
 const A_DRAW: Record<number, "none"> = Object.fromEntries(FIG_A_DRAW.map((k) => [FIG_FLEET[k], "none" as const]));
-/* A_PICKS = CAR_PICK ทุกคันที่เบิก + น้ำมันไฮโดรลิก (ลำดับ 0) เมื่อเลือกเปลี่ยน (qAgg นับน้ำมันจาก A_OILS) */
+/* A_PICKS = CAR_PICK ทุกคันที่เบิก + น้ำมันไฮดรอลิก (ลำดับ 0) เมื่อเลือกเปลี่ยน (qAgg นับน้ำมันจาก A_OILS) */
 const A_PICKS: Record<number, number[]> = Object.fromEntries(UNIT_FLEET.filter((c) => !A_DRAW[c]).map((c) => [c, oilChanges(A_OILS[c]) ? [0, ...CAR_PICK] : [...CAR_PICK]]));
 /** จำนวนรถของแผนตัวอย่างในไตรมาส q (ใช้ในข้อความโหมดพาดู) */
 export const SAMPLE_Q_CARS = (q: number) => Object.values(A_ALL).filter((x) => x === q).length;

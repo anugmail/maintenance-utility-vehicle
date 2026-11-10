@@ -33,7 +33,7 @@ export interface Plan {
   /* S21 อะไหล่ของรถ: จำนวนต่อคันที่แก้ไว้ (ไม่มี = CAR_QTY) · อะไหล่ที่ กบค. ระบุเอง (การ์ด "รายการเพิ่มเติม") */
   qty?: Record<number, Record<number, number>>;   // ลำดับรถ → ลำดับอะไหล่ → จำนวน
   manual?: Record<number, ManualPart[]>;          // ลำดับรถ → รายการเพิ่มเติม
-  /* S21 น้ำมันไฮโดรลิกรายคัน (5 พ.ย. 2569): ลำดับใน OIL_PLAN_OPTS (ไม่มี = ยังไม่กำหนด) · เบอร์ รหัส ลิตร เมื่อเปลี่ยนน้ำมัน (ลิตร = qty[รถ][0] · picks มี 0) */
+  /* S21 น้ำมันไฮดรอลิกรายคัน (5 พ.ย. 2569): ลำดับใน OIL_PLAN_OPTS (ไม่มี = ยังไม่กำหนด) · เบอร์ รหัส ลิตร เมื่อเปลี่ยนน้ำมัน (ลิตร = qty[รถ][0] · picks มี 0) */
   oils?: Record<number, number>;
   oilSpec?: Record<number, OilSpec>;
   /* S2 S19 วันที่และผลการพิจารณา */
@@ -50,7 +50,7 @@ export interface Plan {
 /* ManualPart — อะไหล่ที่ กบค. ระบุเอง (S21 · MANUAL + MANUAL_FIELDS ของ screens.js 5 พ.ย. 2569: ชื่อ · ยี่ห้อ · รุ่น · รหัส (ถ้ามี) · จำนวน · หน่วย)
    price = ราคาของการ์ด "รายการเพิ่มเติม" แบบเดิม (ที่เก็บเก่า) — ฟอร์มใหม่ไม่มีช่องราคา */
 export interface ManualPart { name: string; code: string; qty: number; brand?: string; model?: string; unit?: string; price?: string }
-/* น้ำมันไฮโดรลิกของรถ (S21 · carPartsScreen) — JOB_OIL_OPTS · OIL_GRADES · OIL_SPEC ของ screens.js */
+/* น้ำมันไฮดรอลิกของรถ (S21 · carPartsScreen) — JOB_OIL_OPTS · OIL_GRADES · OIL_SPEC ของ screens.js */
 export const OIL_PLAN_OPTS = ["เก็บตัวอย่าง", "เปลี่ยนน้ำมัน", "เก็บตัวอย่างและเปลี่ยน"];
 export const OIL_GRADES = ["ISO VG 32", "ISO VG 46", "ISO VG 68"];
 export interface OilSpec { grade: string; code: string; litre: string }
@@ -174,8 +174,8 @@ export const YEARS = ["2568", "2569", "2570", "2571", "2572"];
 /* PARTS — รายการ · รหัส · หมวด · จำนวนตามแผน · หน่วย · คงเหลือ · สถานะเมื่อจอง */
 export interface Part { name: string; code: string; group: string; planQty: number; unit: string; stock: number; st: "ok" | "short" }
 export const PARTS: Part[] = [
-  { name: "น้ำมันไฮโดรลิก ISO VG 46", code: "OL-0011", group: "น้ำมัน", planQty: 60, unit: "ลิตร", stock: 420, st: "ok" },
-  { name: "ไส้กรองไฮโดรลิก", code: "FL-0022", group: "ไส้กรอง", planQty: 12, unit: "ชิ้น", stock: 3, st: "short" },
+  { name: "น้ำมันไฮดรอลิก ISO VG 46", code: "OL-0011", group: "น้ำมัน", planQty: 60, unit: "ลิตร", stock: 420, st: "ok" },
+  { name: "ไส้กรองไฮดรอลิก", code: "FL-0022", group: "ไส้กรอง", planQty: 12, unit: "ชิ้น", stock: 3, st: "short" },
   { name: "ไส้กรองน้ำมันเครื่อง", code: "FL-0031", group: "ไส้กรอง", planQty: 12, unit: "ชิ้น", stock: 40, st: "ok" },
   { name: "ไส้กรองอากาศ", code: "FL-0040", group: "ไส้กรอง", planQty: 12, unit: "ชิ้น", stock: 60, st: "ok" },
   { name: "ไส้กรองเชื้อเพลิง", code: "FL-0052", group: "ไส้กรอง", planQty: 4, unit: "ชิ้น", stock: 1, st: "short" },
@@ -189,7 +189,7 @@ export const PART_WH = ["Smart Inventory", "Smart Inventory", "Smart Inventory",
 export const PART_PRICE = [120, 680, 250, 420, 350];
 
 /* RETURN_REASON — เหตุผลที่ผู้อนุมัติส่งกลับ (S2 B.7 · S19 R.2 R.3) */
-export const RETURN_REASON = "จำนวนไส้กรองไฮโดรลิกไม่ตรงกับรอบบำรุงรักษาของกระเช้าแก้ไฟ กรุณาตรวจสอบยานพาหนะที่เลือกเข้าแผน";
+export const RETURN_REASON = "จำนวนไส้กรองไฮดรอลิกไม่ตรงกับรอบบำรุงรักษาของกระเช้าแก้ไฟ กรุณาตรวจสอบยานพาหนะที่เลือกเข้าแผน";
 /* ผู้สร้างแผน (CREATOR · 6 พ.ย. 2569 ผู้สร้างแผน = หน่วยงาน) — ช่อง "ผู้สร้างแผน" ของรายละเอียดแผน · "ผู้สร้าง" + บรรทัดรองหน่วยงาน ของรายการแผนรออนุมัติ */
 export const PLAN_CREATOR = "นายวิชัย ทองดี (กกฟ.1)";
 export const PLAN_CREATOR_SHORT = "นายวิชัย ทองดี";

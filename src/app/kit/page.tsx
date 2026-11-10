@@ -318,7 +318,7 @@ export default function Kit() {
         Header={<ModalHeader Title="ยืนยันการออก" SupportingText="ข้อมูลที่กรอกไว้จะไม่ถูกบันทึก" onClose={() => setModal("")} />}
         Footer={<ModalFooter SecondaryAction={<SecondaryButton Text="ปิด" onClick={() => setModal("")} />} PrimaryAction={<PrimaryButton Text="ออก" onClick={() => setModal("")} />} />} />
       <Modal open={modal === "danger"} onClose={() => setModal("")} Type="Destructive centered image with input"
-        Header={<ModalHeader Title="ยืนยันการเอาอะไหล่ออก" SupportingText="ไส้กรองไฮโดรลิก จะถูกเอาออกจากยานพาหนะทุกคันในไตรมาส 2" onClose={() => setModal("")} />}
+        Header={<ModalHeader Title="ยืนยันการเอาอะไหล่ออก" SupportingText="ไส้กรองไฮดรอลิก จะถูกเอาออกจากยานพาหนะทุกคันในไตรมาส 2" onClose={() => setModal("")} />}
         Footer={<ModalFooter SecondaryAction={<SecondaryButton Text="ยกเลิก" onClick={() => setModal("")} />} PrimaryAction={<PrimaryDangerButton Text="เอาออก" onClick={() => setModal("")} />} />} />
       <Modal open={modal === "form"} onClose={() => setModal("")} Type="Form"
         Header={<ModalHeader Alignment="Left" FeaturedIcon={false} Title="แก้ไขเบอร์ติดต่อและสถานที่ · 82-6789 ขอนแก่น" onClose={() => setModal("")} />}

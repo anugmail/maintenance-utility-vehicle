@@ -22,7 +22,7 @@ export interface Draft {
   q: number;                          // แท็บที่เปิด (0 = ทั้งหมด · 1–4 = ไตรมาส · แบบ A 5 พ.ย. 2569)
   qty?: Record<number, Record<number, number>>;   // S21 จำนวนต่อคันที่แก้ไว้ (ไม่มี = CAR_QTY)
   manual?: Record<number, ManualPart[]>;          // S21 รายการเพิ่มเติม
-  oils?: Record<number, number>;                  // S21 น้ำมันไฮโดรลิกรายคัน (OIL_PLAN_OPTS)
+  oils?: Record<number, number>;                  // S21 น้ำมันไฮดรอลิกรายคัน (OIL_PLAN_OPTS)
   oilSpec?: Record<number, OilSpec>;              // S21 เบอร์ รหัส ลิตร
   draw?: Record<number, "none">;                  // S21 การเบิกอะไหล่ (6 พ.ย. 2569): "none" = ไม่เบิกอะไหล่
   editOf?: string;                    // S19 ฟอร์มแก้ไข: เลขที่ MR ของแผนที่แก้

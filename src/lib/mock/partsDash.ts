@@ -44,7 +44,7 @@ export const DASH_AGG: AggRow[] = [
   ["ไส้กรองอากาศขนาดเล็ก", "-", "เพิ่มเอง", "4", "ชิ้น"],
 ];
 
-/* แยกรายคัน — รถ 3 คันแรกของแผน MRZ7000004 (CAND 0–2 · ไตรมาส A_ALL = 1 · น้ำมันไฮโดรลิกเมื่อ A_OILS เปลี่ยนน้ำมัน (1, 2) + ไส้กรอง CAR_PICK)
+/* แยกรายคัน — รถ 3 คันแรกของแผน MRZ7000004 (CAND 0–2 · ไตรมาส A_ALL = 1 · น้ำมันไฮดรอลิกเมื่อ A_OILS เปลี่ยนน้ำมัน (1, 2) + ไส้กรอง CAR_PICK)
    จำนวน: น้ำมัน OIL_SPEC.litre · ไส้กรอง CAR_QTY · จอ Figma บอกยอดทั้งหมด 214 รายการ (ค่าสมมติ) แต่มีแถวตัวอย่าง 11 แถว ⇒ เว็บนับจากแถวจริง (BACKLOG ข้อ 22 หมวด ค.) */
 export interface CarRow { plate: string; mr: string; q: number; part: number; qty: string; district: string }
 const CAR_SRC: { car: number; q: number; oil: boolean }[] = [{ car: 0, q: 1, oil: true }, { car: 1, q: 1, oil: false }, { car: 2, q: 1, oil: true }];

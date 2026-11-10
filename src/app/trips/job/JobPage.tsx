@@ -3,7 +3,7 @@
    Page header (ทะเบียน · ป้ายสถานะงาน · ปุ่ม "บำรุงรักษาไม่ได้" + "เริ่มงาน") — กดเริ่มงาน = อยู่ระหว่างบำรุงรักษาทันที + toast "เริ่มงานบำรุงรักษาแล้ว" → Step 1 (5 พ.ย. 2569)
    (อยู่ระหว่างบำรุงรักษา: กบค. เข้าขั้นที่ค้างจาก JobView · หน้านี้แบบอยู่ระหว่างบำรุงรักษาเหลือไว้ให้บทบาทอื่นดูอย่างเดียว)
    → VehicleAndReporterInfo "ข้อมูลยานพาหนะ" (6) · "การนัดหมาย" (+ เริ่มงาน ผู้เริ่มงาน เมื่ออยู่ระหว่างบำรุงรักษา · แผนจ้าง: ผู้รับจ้าง ช่วงวันทำงาน แทนช่วงวันเดินทาง)
-   → (อยู่ระหว่างบำรุงรักษา) IncidentPhotoGallery "ภาพก่อนเริ่มงาน (n)" · Section header "น้ำมันไฮโดรลิก" + Radio text card 3 ใบ + เปลี่ยนน้ำมันครั้งล่าสุด
+   → (อยู่ระหว่างบำรุงรักษา) IncidentPhotoGallery "ภาพก่อนเริ่มงาน (n)" · Section header "น้ำมันไฮดรอลิก" + Radio text card 3 ใบ + เปลี่ยนน้ำมันครั้งล่าสุด
    → Section label "รายการงานและอะไหล่ตามแผน (n)" + Secondary button "เพิ่มอะไหล่" + Table JOB_COLS (ไอคอนแก้ไข → popup แก้ไขอะไหล่ · ลบ → ยืนยันเอาอะไหล่ออก · เพิ่ม → popup เพิ่มอะไหล่ที่ใช้จริง — BACKLOG ข้อ 4)
      (เก็บเป็นร่างของหน้าปิดงาน — workItems() ใน lib/mock/jobs.ts) · แผนจ้างมีปุ่ม ตาราง ไอคอนชุดเดียวกัน กบค. เป็นผู้กด
    popup "บำรุงรักษาไม่ได้ · <ทะเบียน>" (cannotModal) → ยืนยัน → กลับหน้ารายละเอียดแผนเดินทาง + toast "บันทึกบำรุงรักษาไม่ได้แล้ว"
@@ -46,7 +46,7 @@ export const appointmentPairs = (t: JobTrip, c: TripCar, j?: Job): [string, stri
   ["สถานที่บำรุงรักษา", tripLoc(t, c)], ["เบอร์ติดต่อ", tripPhone(t, c)], ["ผู้ดูแลยานพาหนะ", tripCtrl(t, c)],   // jobBoxes 9 พ.ย. 2569
   ...((j?.status === "doing" ? [["เริ่มงาน", j.startedAt ?? "-"], ["ผู้เริ่มงาน", j.startedBy ?? "-"]] : []) as [string, string][]),
 ];
-/* ใช้ไปแล้วตอนแจ้งบำรุงรักษาไม่ได้ระหว่างบำรุงรักษา — ตัวอย่างจอ I.16 (CANNOT_USED: น้ำมัน 30 ไส้กรองไฮโดรลิก 2) · ยังไม่เริ่ม = 0 */
+/* ใช้ไปแล้วตอนแจ้งบำรุงรักษาไม่ได้ระหว่างบำรุงรักษา — ตัวอย่างจอ I.16 (CANNOT_USED: น้ำมัน 30 ไส้กรองไฮดรอลิก 2) · ยังไม่เริ่ม = 0 */
 const usedWhileDoing = (parts: PlanPart[]) => parts.map((p) => (p.part === WORK[0].part ? 30 : p.part === WORK[1].part ? 2 : 0));
 
 export function JobPage({ trip, car, job, actor, vendor = false }: { trip: JobTrip; car: TripCar; job: Job; actor: boolean; vendor?: boolean }) {
@@ -105,7 +105,7 @@ export function JobPage({ trip, car, job, actor, vendor = false }: { trip: JobTr
       {doing && <IncidentPhotoGallery Title={"ภาพก่อนเริ่มงาน (" + photos.length + ")"} photos={photos.map((p) => ({ alt: p.name }))} />}
       {doing && (
         <Section>
-          <SectionHeader Title="น้ำมันไฮโดรลิก" />
+          <SectionHeader Title="น้ำมันไฮดรอลิก" />
           <OilCards value={oil} Disabled={!actor} onChange={(k) => patchJob(trip.id, car.id, (j) => ({ ...j, oilChoice: k, close: j.close && { ...j.close, oilChoice: k } }))} />
           <LastOil car={car} />
         </Section>

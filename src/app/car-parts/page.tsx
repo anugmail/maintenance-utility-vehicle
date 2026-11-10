@@ -8,9 +8,9 @@
      1. Input dropdown "รถ" (ครึ่งกว้างบน desktop · ไอคอน search) — รถของไตรมาสที่เปิดมาเท่านั้น (สลับคันในหน้าเดิม ที่แก้ของทุกคันค้างไว้จนบันทึก)
      1.5 Section label "การเบิกอะไหล่" + Radio text card 2 ใบ (6 พ.ย. 2569 เจ้าของงาน "อยากเพิ่มการเบิก โดยอยากให้มีการเลือกว่า ว่าเบิกอะใหล่ หรือไม่เบิก ด้วย" · radioPick label ของ carPartsScreen)
         "เบิกอะไหล่" (เลือกอะไหล่ที่ต้องเบิกให้รถคันนี้) / "ไม่เบิกอะไหล่" (รถคันนี้ไม่ใช้อะไหล่จากการเบิก) · ไม่มีค่าเริ่มต้น (เลือกอะไหล่ไว้แล้ว = เบิก) · ไม่เบิก = ซ่อนข้อ 3 และ 4 คันนี้ไม่รวมในอะไหล่ในไตรมาส
-     2. Section header "น้ำมันไฮโดรลิก" + Radio text card 3 ใบ (เก็บตัวอย่าง ค่าเริ่มต้น · เปลี่ยนน้ำมัน · เก็บตัวอย่างและเปลี่ยน)
+     2. Section header "น้ำมันไฮดรอลิก" + Radio text card 3 ใบ (เก็บตัวอย่าง ค่าเริ่มต้น · เปลี่ยนน้ำมัน · เก็บตัวอย่างและเปลี่ยน)
         เปลี่ยนน้ำมัน: แถว Input dropdown "เบอร์น้ำมัน" (ISO VG 32/46/68) · Text input "รหัสน้ำมัน" · "จำนวน (ลิตร)" · แถว Text input Readonly "เปลี่ยนน้ำมันครั้งล่าสุด"
-     3. (เบิกอะไหล่) PartsInventoryPanel คลังอะไหล่ (ไส้กรองและอะไหล่ ไม่รวมน้ำมันไฮโดรลิก) — กดเลือก/เอาออก
+     3. (เบิกอะไหล่) PartsInventoryPanel คลังอะไหล่ (ไส้กรองและอะไหล่ ไม่รวมน้ำมันไฮดรอลิก) — กดเลือก/เอาออก
      4. (เบิกอะไหล่) Section header "อะไหล่อื่นๆ" (Badge จำนวน) + Secondary button "ระบุอะไหล่เพิ่มเติม" → Table ชื่อ · ยี่ห้อ · รุ่น · รหัส · จำนวน · หน่วย · ไอคอนแก้ไข ลบ / Empty state
      5. ปุ่ม ย้อนกลับ · บันทึกอะไหล่ของรถ (lg · กดได้เมื่อเลือกไม่เบิก หรือเลือกเบิกแล้วมีอะไหล่อย่างน้อย 1 รายการ) → toast "บันทึกอะไหล่ของรถ {ทะเบียน} แล้ว"
    popup "ระบุอะไหล่เพิ่มเติม" (MANUAL_FIELDS): ชื่ออะไหล่ | ยี่ห้อ · รุ่น | รหัสอะไหล่ (ถ้ามี) · จำนวน | หน่วย · ปุ่ม ยกเลิก / เพิ่ม · มือถือ bottom sheet
@@ -44,7 +44,7 @@ import { PLAN_ROLES, carIndexOf, carParam, findPlan, oilChoice, useRoleGuard, us
 import { notify, setMock, useMock } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 
-/* อะไหล่ในคลัง = ไส้กรองและอะไหล่ (PARTS 1–4 · น้ำมันไฮโดรลิกมีส่วนของตัวเอง — carWarehouse()) */
+/* อะไหล่ในคลัง = ไส้กรองและอะไหล่ (PARTS 1–4 · น้ำมันไฮดรอลิกมีส่วนของตัวเอง — carWarehouse()) */
 const STOCK: SparePart[] = PARTS.map((p, i) => ({ name: p.name, code: p.code, unit: p.unit, price: PART_PRICE[i], warehouse: PART_WH[i], stock: p.stock }));
 const OTHER = PARTS.map((_, i) => i).filter((i) => i > 0);
 /* CARP_PART_COLS (ใช้ร่วมกับหน้าดูอะไหล่ของยานพาหนะ /car-parts/view/) */
@@ -150,12 +150,12 @@ function CarParts() {
       const picks = { ...cur.picks }, qty = { ...(cur.qty ?? {}) }, manual = { ...(cur.manual ?? {}) }, oils = { ...(cur.oils ?? {}) }, oilSpec = { ...(cur.oilSpec ?? {}) }, draw = { ...(cur.draw ?? {}) };
       Object.entries(buf).forEach(([c, b]) => {
         const i = Number(c), change = oilChanges(b.oil), litre = Number(b.spec.litre) || 0;
-        /* ไม่เบิกอะไหล่ = เก็บแค่น้ำมันไฮโดรลิก ไม่มีอะไหล่จากคลังและรายการเพิ่มเติม */
+        /* ไม่เบิกอะไหล่ = เก็บแค่น้ำมันไฮดรอลิก ไม่มีอะไหล่จากคลังและรายการเพิ่มเติม */
         const v = b.draw === "none" ? { ...b, picks: [], qty: {}, manual: [] } : b;
         if (b.draw === "none") draw[i] = "none"; else delete draw[i];
         oils[i] = v.oil;
         oilSpec[i] = v.spec;
-        picks[i] = change ? [0, ...v.picks] : v.picks;   // เปลี่ยนน้ำมัน = น้ำมันไฮโดรลิกเข้ารายการอะไหล่ (ลิตร = จำนวน)
+        picks[i] = change ? [0, ...v.picks] : v.picks;   // เปลี่ยนน้ำมัน = น้ำมันไฮดรอลิกเข้ารายการอะไหล่ (ลิตร = จำนวน)
         const q2: Record<number, number> = Object.fromEntries(Object.entries(v.qty).filter(([pi]) => v.picks.includes(Number(pi))));
         if (change) q2[0] = litre;
         qty[i] = q2;
@@ -201,7 +201,7 @@ function CarParts() {
             onChange={(v) => set({ draw: v === DRAW_OPTS[1].Text ? "none" : "take" })} />
         </section>
         <section className="flex flex-col gap-4">
-          <SectionHeader Title="น้ำมันไฮโดรลิก" />
+          <SectionHeader Title="น้ำมันไฮดรอลิก" />
           <RadioTextCards options={OIL_PLAN_OPTS.map((t) => ({ Text: t }))} value={OIL_PLAN_OPTS[e.oil]} onChange={setOil} />
           {oilChanges(e.oil) && third(<>
             <InputDropdown LabelText="เบอร์น้ำมัน" Text={e.spec.grade} Placeholder="เลือกเบอร์น้ำมัน" open={open === "grade"} onOpenChange={(v) => setOpen(v ? "grade" : "")}>

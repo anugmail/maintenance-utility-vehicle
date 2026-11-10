@@ -29,7 +29,7 @@ export function putQuarter(id: string, q: number, v: QuarterState) {
 export const WD: Record<"wait" | "reserved" | "taken" | "buy", [string, PillColor]> = {
   wait: ["รอเบิก", "Gray"], reserved: ["จองแล้ว", "Info"], taken: ["เบิกแล้ว", "Success"], buy: ["รอจัดซื้อ", "Warning"],
 };
-export const shortOf = (i: number) => Math.max(0, PARTS[i].planQty - PARTS[i].stock);   // ไส้กรองไฮโดรลิก 9 · ไส้กรองเชื้อเพลิง 3
+export const shortOf = (i: number) => Math.max(0, PARTS[i].planQty - PARTS[i].stock);   // ไส้กรองไฮดรอลิก 9 · ไส้กรองเชื้อเพลิง 3
 export const NOW_CARS = 6;   // "รถ 6 คันของไตรมาสนี้" (VEH ของ screens.js — ต่างจาก 10 คันของ S6 ตามข้อมูลตัวอย่าง)
 export const WH_ACK_AT = "02/11/2569";
 const WH = ["Smart Inventory", "Smart Inventory", "Smart Inventory", "คลังสำรอง", "คลังสำรอง"];

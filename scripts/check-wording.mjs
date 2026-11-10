@@ -8,6 +8,8 @@ import path from "node:path";
 import ts from "typescript";
 
 const WORD = "รถ", USE = "ยานพาหนะ";
+/* ตัวสะกดที่ห้าม (เจ้าของงาน · Figma c1196dd 10 พ.ย. 2569 สะกด "ไฮดรอลิก" ตามราชบัณฑิตทุกจอ) — ตรวจในข้อความเหมือน R80 · --fix แทนให้ */
+export const SPELL = { "ไฮโดรลิก": "ไฮดรอลิก", "ไฮดรอลิค": "ไฮดรอลิก", "ไฮโดรลิค": "ไฮดรอลิก" };
 export const ALLOW = ["สามารถ", "รถพ่วงฉีดน้ำ", "รถเสีย", "อะไรถ"];   // R80 allow ของ component-rules.json ("รถเสีย" = ประเภทการซ่อมของระบบ · Figma d6ce03a) + "อะไรถ" (อะไร + ถูก ไม่ใช่คำว่ารถ · ข้อความโหมดพาดู)
 const ROOT = path.join(path.dirname(new URL(import.meta.url).pathname), "..", "src");
 const fix = process.argv.includes("--fix");
@@ -33,7 +35,8 @@ const swap = (s) => {
 let bad = 0;
 for (const file of files) {
   const src = fs.readFileSync(file, "utf8");
-  if (!src.includes(WORD)) continue;
+  const spellHit = (t) => Object.keys(SPELL).find((w) => t.includes(w));
+  if (!src.includes(WORD) && !spellHit(src)) continue;
   const sf = ts.createSourceFile(file, src, ts.ScriptTarget.Latest, true, file.endsWith(".tsx") ? ts.ScriptKind.TSX : ts.ScriptKind.TS);
   const hits = [];   // [start, end] ของข้อความ (ไม่รวมเครื่องหมายคำพูด)
   const visit = (n) => {
@@ -45,22 +48,25 @@ for (const file of files) {
     ts.forEachChild(n, visit);
   };
   visit(sf);
-  const wrong = hits.filter(([a, b]) => strip(src.slice(a, b)).includes(WORD));
+  const wrong = hits.filter(([a, b]) => strip(src.slice(a, b)).includes(WORD) || !!spellHit(src.slice(a, b)));
   if (!wrong.length) continue;
   if (fix) {
     let out = src;
-    for (const [a, b] of [...wrong].sort((x, y) => y[0] - x[0])) out = out.slice(0, a) + swap(out.slice(a, b)) + out.slice(b);
+    const respell = (t) => Object.entries(SPELL).reduce((x, [w, u]) => x.split(w).join(u), t);
+    for (const [a, b] of [...wrong].sort((x, y) => y[0] - x[0])) out = out.slice(0, a) + respell(swap(out.slice(a, b))) + out.slice(b);
     fs.writeFileSync(file, out);
     console.log("แก้ " + path.relative(ROOT, file) + " " + wrong.length + " จุด");
   } else {
     for (const [a, b] of wrong) {
       bad++;
       const line = src.slice(0, a).split("\n").length;
-      console.log("⚠ R80 src/" + path.relative(ROOT, file) + ":" + line + ' ยังมีคำว่า "' + WORD + '" ต้องใช้ "' + USE + '": ' + src.slice(a, b).trim().slice(0, 80));
+      const sp = spellHit(src.slice(a, b));
+      console.log(sp ? "⚠ สะกด src/" + path.relative(ROOT, file) + ":" + line + ' "' + sp + '" ต้องใช้ "' + SPELL[sp] + '": ' + src.slice(a, b).trim().slice(0, 80)
+        : "⚠ R80 src/" + path.relative(ROOT, file) + ":" + line + ' ยังมีคำว่า "' + WORD + '" ต้องใช้ "' + USE + '": ' + src.slice(a, b).trim().slice(0, 80));
     }
   }
 }
 if (!fix) {
-  if (bad) { console.log("R80 ไม่ผ่าน " + bad + " จุด"); process.exit(1); }
-  console.log('R80 ข้อความใน src/ ไม่มีคำว่า "' + WORD + '" นอกข้อมูลจาก API ✓ (' + files.length + " ไฟล์)");
+  if (bad) { console.log("R80 / ตัวสะกด ไม่ผ่าน " + bad + " จุด"); process.exit(1); }
+  console.log('R80 ข้อความใน src/ ไม่มีคำว่า "' + WORD + '" นอกข้อมูลจาก API · สะกด "ไฮดรอลิก" ✓ (' + files.length + " ไฟล์)");
 }

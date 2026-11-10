@@ -37,7 +37,7 @@ export interface CheckTableProps {
   className?: string;
 }
 
-/* ชื่อรายการมีเลขลำดับนำหน้า "1. น้ำมันไฮดรอลิค" ตาม inspectStep() */
+/* ชื่อรายการมีเลขลำดับนำหน้า "1. น้ำมันไฮดรอลิก" ตาม inspectStep() */
 const label = (it: CheckRow, i: number) => i + 1 + ". " + it.name;
 
 export function CheckTable({ Title, Badge, options, items, onChange, onAdd, readonly, Breakpoint: bp, className }: CheckTableProps) {

@@ -78,11 +78,11 @@ export const safetyOn = (c: { type: string }) => SAFETY_TYPES.includes(c.type);
 export const ODOMETER = ["182,400 กม.", "6,120 ชม."] as const;
 export const JOB_TEXT = {
   cannotSelf: "ยานพาหนะติดภารกิจซ่อมสายส่งฉุกเฉิน ไม่อยู่ที่จุดนัดในวันเดินทาง",   // JOB_CANNOT
-  cannotHire: "กระบอกสูบไฮโดรลิกหลักรั่ว ต้องส่งซ่อมก่อนจึงบำรุงรักษาได้",          // HIRE_WHY
+  cannotHire: "กระบอกสูบไฮดรอลิกหลักรั่ว ต้องส่งซ่อมก่อนจึงบำรุงรักษาได้",          // HIRE_WHY
   back: "จำนวนไส้กรองอากาศที่คืนไม่ตรงกับภาพอะไหล่ใหม่ที่เหลือ กรุณาตรวจนับและแก้จำนวนที่คืน",   // HIRE_BACK
   backCannot: "กรุณาระบุตำแหน่งที่รั่วและผลตรวจเบื้องต้นในสาเหตุให้ชัดเจน",           // HIRE_BACK_CANNOT
 };
-export const CANNOT_USED_SAMPLE = [30, 2, 0, 0];   // CANNOT_USED — เปลี่ยนน้ำมันและไส้กรองไฮโดรลิกแล้วพบปัญหา
+export const CANNOT_USED_SAMPLE = [30, 2, 0, 0];   // CANNOT_USED — เปลี่ยนน้ำมันและไส้กรองไฮดรอลิกแล้วพบปัญหา
 export const OIL_FILE: UploadFile = { name: "oil-test-82-6789.pdf", size: "420 KB", bar: true };
 export const BEFORE = ["รูปยานพาหนะ + ทะเบียน", "อะไหล่ใหม่"];   // ภาพก่อนเริ่มงาน 2 ช่อง
 
@@ -101,7 +101,7 @@ export const PLAN_JOB_CARS: TripCar[] = PLAN_CARS.map((c) => { const i = CAND.fi
   return { id: c.id, plate: c.plate, model: c.model, owner: c.owner, ownerPhone: c.phone, ctrl: c.ctrl, type: CAND[i]?.type ?? typeOf(c.model), lastOil: LAST_OIL[i] ?? "-" }; });
 /* รถที่เพิ่มเข้าไตรมาสของแผนตัวอย่าง (Q_EXTRA · S6 E.1) — screens.js ไม่มีประเภท/น้ำมันครั้งล่าสุด ⇒ รถกระเช้า · "-" */
 const Q_EXTRA_JOB_CARS: TripCar[] = Q_EXTRA.map((c) => ({ id: c.id, plate: c.plate, model: c.model, owner: c.owner, ownerPhone: c.phone, ctrl: c.ctrl, type: typeOf(c.model), lastOil: "-" }));
-/* น้ำมันไฮโดรลิกตามแผนของรถ (S21) = ค่าตั้งต้นของ Step 2 (TRIP_OIL ใน screens.js 5 พ.ย. 2569 · ชีตลูกค้า: เดิมเลือก เก็บตัวอย่างและเปลี่ยน ทุกคัน)
+/* น้ำมันไฮดรอลิกตามแผนของรถ (S21) = ค่าตั้งต้นของ Step 2 (TRIP_OIL ใน screens.js 5 พ.ย. 2569 · ชีตลูกค้า: เดิมเลือก เก็บตัวอย่างและเปลี่ยน ทุกคัน)
    แผนตัวอย่าง: 82-6789 = เก็บตัวอย่างและเปลี่ยน · คันอื่นทุกคันที่ 3 = เปลี่ยนน้ำมัน ที่เหลือ = เก็บตัวอย่าง · แผนที่กำหนดอะไหล่รายคัน = ตัวเลือกที่กำหนดใน S21 */
 export const SAMPLE_OIL = (carId: string): OilChoice => { const i = CARS.findIndex((c) => c.id === carId); return i === 0 ? 2 : i >= 0 && i % 3 === 0 ? 1 : 0; };
 export function plannedOil(plans: Plan[], planId: string, carId: string): OilChoice {
@@ -172,8 +172,8 @@ export const ownerCostCenter = (c: TripCar) => "E301010000 " + c.owner + " - บ
 /* ---------- อะไหล่ตามแผนของรถ (WORK + ราคาจาก PARTS) ---------- */
 export interface PlanPart { task: string; part: string; code?: string; planQty: number; unit: string; unitPrice: number }
 export const WORK: PlanPart[] = [
-  { task: "เปลี่ยนน้ำมันไฮโดรลิก", part: "น้ำมันไฮโดรลิก ISO VG 46", code: "OL-0011", planQty: 30, unit: "ลิตร", unitPrice: 120 },
-  { task: "เปลี่ยนไส้กรองไฮโดรลิก", part: "ไส้กรองไฮโดรลิก", code: "FL-0022", planQty: 2, unit: "ชิ้น", unitPrice: 680 },
+  { task: "เปลี่ยนน้ำมันไฮดรอลิก", part: "น้ำมันไฮดรอลิก ISO VG 46", code: "OL-0011", planQty: 30, unit: "ลิตร", unitPrice: 120 },
+  { task: "เปลี่ยนไส้กรองไฮดรอลิก", part: "ไส้กรองไฮดรอลิก", code: "FL-0022", planQty: 2, unit: "ชิ้น", unitPrice: 680 },
   { task: "เปลี่ยนไส้กรองน้ำมันเครื่อง", part: "ไส้กรองน้ำมันเครื่อง", code: "FL-0031", planQty: 2, unit: "ชิ้น", unitPrice: 250 },
   { task: "เปลี่ยนไส้กรองอากาศ", part: "ไส้กรองอากาศ", code: "FL-0040", planQty: 2, unit: "ชิ้น", unitPrice: 420 },
 ];
@@ -217,7 +217,7 @@ export interface Job {
   tripId: string; carId: string; status: JobStatus;
   /** อะไหล่ตามแผนของรถ (S1/S21) — กบค. เพิ่ม แก้ไข ลบ ได้ตอนยังไม่เริ่ม/อยู่ระหว่างบำรุงรักษา · เป็นค่าตั้งต้นของตารางหน้าปิดงาน */
   parts: PlanPart[];
-  /** น้ำมันไฮโดรลิกที่เลือกหน้างาน (ตั้งแต่เริ่มงาน) */
+  /** น้ำมันไฮดรอลิกที่เลือกหน้างาน (ตั้งแต่เริ่มงาน) */
   oilChoice?: OilChoice;
   receive?: ReceiveForm;
   /** ภาพก่อนเริ่มงาน (จากหน้ารับรถ) */
@@ -242,9 +242,9 @@ export interface JobsState { trips: Record<string, JobTrip>; jobs: Record<string
    + เคาะ: แทนรายการเอกสารรับยานพาหนะใน Step 1 · ลงนาม ผู้ตรวจ / ผู้รับการตรวจ
    กระเช้าแก้ไฟ กระเช้าฮอทไลน์ = 30 รายการ (BUCKET_ITEMS) · รถพ่วงฉีดน้ำ = 19 รายการ (WATER_ITEMS) · ผลรายข้อ ปกติ / แก้ไข / หมายเหตุ · เลือกจากประเภทของยานพาหนะ (TripCar.type)
    ข้อมูลส่วนบนของใบตรวจ = กล่องแสดงข้อมูล · รหัส SERIAL No. หมายเลข HC เครื่องยนต์ ระยะทาง/ระยะเวลาการใช้งาน = ค่าสมมติของ screens.js */
-export const BUCKET_ITEMS = ["น้ำมันไฮดรอลิค", "กรองน้ำมันไฮดรอลิค", "แรงดันน้ำมันไฮดรอลิค MAIN 2400-2600 PSI", "ชุดเกียร์ PTO", "ปั๊มน้ำมันไฮดรอลิค", "เพลาขับปั๊มน้ำมันไฮดรอลิค",
+export const BUCKET_ITEMS = ["น้ำมันไฮดรอลิก", "กรองน้ำมันไฮดรอลิก", "แรงดันน้ำมันไฮดรอลิก MAIN 2400-2600 PSI", "ชุดเกียร์ PTO", "ปั๊มน้ำมันไฮดรอลิก", "เพลาขับปั๊มน้ำมันไฮดรอลิก",
   "ชุดกระบอกขาช้างหน้าซ้าย-ขวา", "ชุดกระบอกขาช้างหลังซ้าย-ขวา", "น้ำมันหล่อลื่นชุดเฟืองหมุนฐานเครน", "ชุดมอเตอร์และเฟืองหมุนฐานเครน", "ชุดกระบอก LOWER BOOM", "ชุดกระบอก UPPER BOOM",
-  "ชุดกระบอก EXTENSION", "ชุดโรตารี่", "ระบบ EMERGENCY", "ชุด CONTROL ล่าง", "ชุด CONTROL บน", "สายน้ำมันไฮดรอลิค", "สายสัญญาณต่างๆ", "เกจวัดต่างๆ", "ชุดวาล์วล๊อคต่างๆ",
+  "ชุดกระบอก EXTENSION", "ชุดโรตารี่", "ระบบ EMERGENCY", "ชุด CONTROL ล่าง", "ชุด CONTROL บน", "สายน้ำมันไฮดรอลิก", "สายสัญญาณต่างๆ", "เกจวัดต่างๆ", "ชุดวาล์วล๊อคต่างๆ",
   "ชุดปรับการหมุนและปรับดิ่งใบกระเช้า", "BUCKET, LINER", "ชุดการ์ดครอบป้องกันกระแสไฟ", "รอกและเชือกวินซ์", "ชุด LIFT รุ่น 115 KV", "การอัดและเคลือบจารบีตามจุดต่างๆ", "ชุดยึดฐานเครน",
   "ท่อนบูม, สลัก, จุดยึด", "PLATE ซองบูม, SLIDE PAD ADJ."];
 export const WATER_ITEMS = ["น้ำมันเครื่องยนต์", "น้ำมันเกียร์ชุดเฟืองเกียร์ทดรอบ", "น้ำมันดุมล้อ", "กรองอากาศ", "กรองน้ำมันเครื่องยนต์", "กรองน้ำมันเชื้อเพลิง", "กรองดักน้ำ",
@@ -254,7 +254,7 @@ export const WATER_ITEMS = ["น้ำมันเครื่องยนต์
 /** ตัวเลือกรายข้อ (หัวคอลัมน์ตาราง · Radio text card บนมือถือ) */
 export const INSPECT_OPTS = ["ปกติ", "แก้ไข"];
 /** ข้อมูลจำลองตอนตรวจครบ (INSPECT_NOTE / INSPECT_FIX): ทุกรายการ "ปกติ" ยกเว้นข้อ 18 "แก้ไข" + หมายเหตุ */
-export const INSPECT_FIX = 17, INSPECT_NOTE = "สายน้ำมันไฮดรอลิคซึมที่ข้อต่อ เปลี่ยนแล้ว";
+export const INSPECT_FIX = 17, INSPECT_NOTE = "สายน้ำมันไฮดรอลิกซึมที่ข้อต่อ เปลี่ยนแล้ว";
 const WATER_TYPE = "รถพ่วงฉีดน้ำ";
 /* "Isuzu FTR" → ["Isuzu", "FTR"] (brandModel ของ screens.js) */
 const brandModel = (s: string): [string, string] => { const w = s.trim().split(" "); return [w[0] ?? "", w.slice(1).join(" ")]; };
@@ -294,7 +294,7 @@ const filledReceive = (by: string, c: Pick<TripCar, "type">): ReceiveForm => ({
   photos: BEFORE.map((b, i) => [{ name: b.replace(/\s|\+|\(|\)/g, "-") + "-" + (i + 1) + ".jpg", size: "2.4 MB", bar: true }]),
 });
 const CLOSE_FILLED_PARTS: Record<string, [number, number, string]> = {   // CLOSE_PARTS: ใช้ · อะไหล่เก่า · หมายเหตุ
-  "น้ำมันไฮโดรลิก ISO VG 46": [30, 30, "น้ำมันเก่าส่งกำจัดตามระเบียบ"], "ไส้กรองไฮโดรลิก": [2, 2, ""], "ไส้กรองน้ำมันเครื่อง": [2, 2, ""], "ไส้กรองอากาศ": [1, 1, "ไส้กรองเดิมอีกลูกยังใช้ได้"],
+  "น้ำมันไฮดรอลิก ISO VG 46": [30, 30, "น้ำมันเก่าส่งกำจัดตามระเบียบ"], "ไส้กรองไฮดรอลิก": [2, 2, ""], "ไส้กรองน้ำมันเครื่อง": [2, 2, ""], "ไส้กรองอากาศ": [1, 1, "ไส้กรองเดิมอีกลูกยังใช้ได้"],
 };
 function filledClose(job: Job, trip: JobTrip, car: TripCar): CloseForm {
   const f = emptyClose(job, trip, car);
@@ -390,7 +390,7 @@ export function costSummary(f: CloseForm) {
   const tr = num(f.travel);
   return { perDiem: pd, lodging: lg, travel: tr, total: pd + lg + tr };
 }
-/** แถวอะไหล่ของหน้าปิดงานตามน้ำมันที่เลือก (เก็บตัวอย่างอย่างเดียว = ไม่มีน้ำมันไฮโดรลิก) */
+/** แถวอะไหล่ของหน้าปิดงานตามน้ำมันที่เลือก (เก็บตัวอย่างอย่างเดียว = ไม่มีน้ำมันไฮดรอลิก) */
 export const closeRows = (f: CloseForm) => f.parts.filter((r) => !(f.oilChoice === 0 && r.part === OIL_PART));
 /** พนักงาน กบค. ที่เลือกได้ในช่องลงนาม (ผู้รับมอบรถ/ผู้ส่งมอบรถ กบค.) และค่าใช้จ่ายรายคน — ตรวจเอง = พนักงานของแผนเดินทาง · แผนจ้างไม่มีพนักงานในใบ = พนักงาน กบค. ทั้งหมด (TRIP.staff) */
 export const staffOf = (t: JobTrip) => (t.staff.length ? t.staff : PEOPLE.staff);
@@ -406,7 +406,7 @@ export function workItems(j: Job): WorkItem[] {
   if (j.close) return j.close.parts.map((r, k) => ({ task: j.parts.find((p) => p.part === r.part)?.task ?? "-", part: r.part, planQty: r.planQty, usedQty: r.used, unit: r.unit, k }));
   return j.parts.map((p, k) => ({ task: p.task, part: p.part, planQty: p.planQty, usedQty: p.planQty, unit: p.unit, k }));
 }
-/** jobWork() ของ screens.js: เลือกเก็บตัวอย่างอย่างเดียว = ไม่มีแถวเปลี่ยนน้ำมันไฮโดรลิก */
+/** jobWork() ของ screens.js: เลือกเก็บตัวอย่างอย่างเดียว = ไม่มีแถวเปลี่ยนน้ำมันไฮดรอลิก */
 export function workShown(j: Job, rows = workItems(j)) {
   const oil = j.close ? j.close.oilChoice : j.oilChoice;
   return rows.filter((r) => !(oil === 0 && r.part === OIL_PART));
