@@ -5,7 +5,7 @@
    + หน้า Detail ของ UI Release#2 (Page header มีปุ่ม "แก้ไข" แบบหน้ารายละเอียดแผน planDetail · Section label R3 + กล่องข้อมูล R12)
    Page header "อะไหล่ของยานพาหนะ {ทะเบียน}" + Secondary button "แก้ไข" (stylus) → หน้าจัดการอะไหล่ของยานพาหนะ (S21 /car-parts/)
    · Breadcrumbs บำรุงรักษาตามวาระ › สร้างแผน (แก้ไข: แก้ไขแผน MR …) › อะไหล่ของยานพาหนะ
-   Content ช่องไฟ 32: กล่อง "ข้อมูลยานพาหนะ" (ทะเบียน · ยี่ห้อ/รุ่น · หน่วยงานเจ้าของยานพาหนะ · ไตรมาส · น้ำมันไฮโดรลิก · เปลี่ยนน้ำมันครั้งล่าสุด · การเบิกอะไหล่)
+   Content ช่องไฟ 32: กล่อง "ข้อมูลยานพาหนะ" (ทะเบียน · ประเภทยานพาหนะ (Figma 33a990c A.34) · ยี่ห้อ/รุ่น · หน่วยงานเจ้าของยานพาหนะ · ไตรมาส · น้ำมันไฮโดรลิก · เปลี่ยนน้ำมันครั้งล่าสุด · การเบิกอะไหล่)
      → Section label "อะไหล่อื่นๆ (n)" + Table CARP_PART_COLS 6 คอลัมน์ ไม่มีไอคอนท้ายแถว / Empty state ("ยานพาหนะคันนี้เลือกไม่เบิกอะไหล่" · "ยังไม่ได้กำหนดอะไหล่ของยานพาหนะคันนี้")
    ข้อมูลชุดเดียวกับหน้าจัดการอะไหล่ (ฟอร์มที่กรอกค้าง mock.draft / mock.edit) · ดูอย่างเดียว ไม่มีปุ่มท้ายหน้า · มือถือ: Mobile table · ปุ่มแก้ไขใต้หัวข้อ */
 import { PagedTable } from "@/app/quarter/_shared/ui";
@@ -18,7 +18,7 @@ import { PageHeader } from "@/components/vms/PageHeader";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionLabel } from "@/components/vms/SectionLabel";
 import { type TableValue } from "@/components/vms/Table";
-import { CAND, LAST_OIL, PARTS, PART_BM } from "@/lib/mock/data";
+import { CAND, LAST_OIL, PARTS, PART_BM, typeOf } from "@/lib/mock/data";
 import { carQty } from "@/lib/mock/plan";
 import { NO_DRAW, PLAN_ROLES, TODO_NONE, carIndexOf, findPlan, oilCellOf, oilChoice, otherParts, useRoleGuard, usePlanGate } from "@/lib/mock/planFlow";
 import { useMock } from "@/lib/mock/store";
@@ -51,7 +51,7 @@ function CarPartsView() {
   const k = oilChoice(d, car), oc = oilCellOf(d, car);
   const oil = typeof oc === "string" ? oc : k ? oc.text + " · " + oc.sub : oc.text;
   const draw = none ? NO_DRAW : otherParts(d, car).length ? "เบิกอะไหล่" : TODO_NONE;
-  const kv: [string, string][] = [["ทะเบียน", c.plate], ["ยี่ห้อ/รุ่น", c.model], ["หน่วยงานเจ้าของยานพาหนะ", c.owner], ["ไตรมาส", "ไตรมาส " + q],
+  const kv: [string, string][] = [["ทะเบียน", c.plate], ["ประเภทยานพาหนะ", typeOf(c.model)], ["ยี่ห้อ/รุ่น", c.model], ["หน่วยงานเจ้าของยานพาหนะ", c.owner], ["ไตรมาส", "ไตรมาส " + q],
     ["น้ำมันไฮโดรลิก", oil], ["เปลี่ยนน้ำมันครั้งล่าสุด", LAST_OIL[car]], ["การเบิกอะไหล่", draw]];
   const rows: TableValue[][] = none ? [] : [
     ...(d.picks[car] || []).filter((x) => x !== 0).map((x) => [PARTS[x].name, PART_BM[x][0], PART_BM[x][1], PARTS[x].code, String(carQty(d, car, x)), PARTS[x].unit]),
