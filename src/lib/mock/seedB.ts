@@ -4,6 +4,7 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { seedDash } from "./partsDash";
+import { applySample } from "./jobs";
 import { setMock, setRole, type Role } from "./store";
 import { DEFAULT_NOTIS, DEFAULT_TRIPS, TRIP_1, TRIP_OTHER, TRIP_V, approvalNotis, type Trip } from "./trips";
 
@@ -14,6 +15,8 @@ export const SEEDS: Record<string, { role: Role; run: () => void }> = {
   /* ตั้งแผนเดินทางใหม่ทั้งชุด = ล้างงานรายคัน (jobs.ts) ของใบเดิมด้วย — ที่เก็บแผนเดินทางมีที่เดียว ใบที่อนุมัติแล้วเปิดหน้างานรายคันได้ทันที */
   S6: { role: "หน่วยงาน (กกฟ.1)", run: () => setMock((s) => ({ ...s, trips: DEFAULT_TRIPS(), jobs: undefined })) },
   S9: { role: "หน่วยงาน (กกฟ.1)", run: () => setMock((s) => ({ ...s, trips: [approved(TRIP_1), { ...TRIP_OTHER }], jobs: undefined })) },
+  /* S18 ต้นทุน (R92): ใบ T1 ปิดงาน 3 คัน + บำรุงรักษาไม่ได้ 1 คัน (jobs.ts T1_cost) */
+  S18: { role: "หน่วยงาน (กกฟ.1)", run: () => applySample("T1_cost") },
   S7: { role: "ผู้อนุมัติ", run: () => setMock((s) => ({ ...s, trips: [{ ...TRIP_1 }, { ...TRIP_V }, { ...TRIP_OTHER }], jobs: undefined })) },
   S8: { role: "กรย.", run: () => setMock((s) => ({ ...s, trips: [approved(TRIP_1), { ...TRIP_OTHER }], jobs: undefined, notis: [...approvalNotis(approved(TRIP_1)), ...DEFAULT_NOTIS()] })) },
 };

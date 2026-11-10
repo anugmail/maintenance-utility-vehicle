@@ -418,3 +418,11 @@ screens.js ไม่ได้วาดปุ่มไปขั้นถัดไ
 |---|---|---|
 | แถบต้นแบบ (`shell/PrototypeBar`) ต่อจากช่องบทบาท | Tertiary button 2 ปุ่ม (ไอคอน edit_note · ink_eraser) แบบปุ่ม "ล้างข้อมูลจำลอง" ของแถบเดียวกัน + ConfirmDialog ของต้นแบบเมื่อล้างค่าที่กรอกไว้ | ของต้นแบบเท่านั้น ไม่ใช่ปุ่มของระบบ ไม่ใส่ใน Figma (เจ้าของงานเลือก) · ขึ้นเฉพาะหน้าที่มีฟอร์มลงทะเบียน `useProtoForm` (lib/protoForm.ts) · แถบอยู่ z-[55] เหนือ popup ให้กดตอน popup ย้ายไตรมาสเปิดได้ |
 
+## ล. S18 แท็บต้นทุนการบำรุงรักษา (R92 · BACKLOG ข้อ 61 · Figma c450480)
+
+| จุด | ประกอบจาก | เหตุผล |
+|---|---|---|
+| แท็บในหน้ารายละเอียดแผน (`/detail/` · `detail/CostTab.tsx`) | Tabs + Tab item ใต้ Page header แบบ Vehicle detail ที่ S24 ใช้ · Metric item ×4 (`Metrics` ของ S4) · Section label + Table / Mobile table · Empty state/Data empty ไม่มีปุ่ม | planDetailQ({ tab }) + costBody() ของ screens.js · โครงหน้า 5.13 EV charging costs ของ UI Release#2 ไม่มีกราฟ |
+| ปุ่ม "ส่งออก" ที่ Page header | Secondary button ไอคอน download (แบบ R84) · ไม่มี popup เลือกรูปแบบ · ไฟล์ = .csv ชีตต่อกัน (ต้นแบบทำ .xlsx หลายชีตไม่ได้ · แบบส่งออกแผนเดินทาง) | Excel อย่างเดียว ข้อมูลเหมือนจอ |
+| S10 Step 2 แถว ชั่วโมงทำงาน · อัตราค่าแรง (บาท/ชั่วโมง) | Text input ไม่บังคับ 2 ช่องครึ่งแถว (Grid) ใต้ค่าเดินทาง | closeCosts ของ screens.js c450480 |
+

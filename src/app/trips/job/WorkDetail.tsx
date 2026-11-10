@@ -17,7 +17,7 @@ import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { SectionLabel } from "@/components/vms/SectionLabel";
 import type { TableColumn } from "@/components/vms/Table";
 import {
-  BUDGET_CUT, closeRows, costSummary, emptyClose, nf, OIL_JOB_OPTS, OIL_DEFAULT, oilSampled, ownerCostCenter, personSum, safetyOn, saveOilResult, saveSafetyDocs, tripRangeShort, WSTAT,
+  BUDGET_CUT, closeRows, costSummary, emptyClose, nf, num, OIL_JOB_OPTS, OIL_DEFAULT, oilSampled, ownerCostCenter, personSum, safetyOn, saveOilResult, saveSafetyDocs, tripRangeShort, WSTAT,
   type Job, type JobTrip, type OilSel, type TripCar,
 } from "@/lib/mock/jobs";
 import { notify } from "@/lib/mock/store";
@@ -82,6 +82,7 @@ export function WorkDetail({ trip, car, job, kbk }: { trip: JobTrip; car: TripCa
         <SectionLabel Title="ค่าใช้จ่ายของยานพาหนะคันนี้ (บาท)" />
         <DataTable cols={COST_COLS} rows={costs} />
         <KvBox pairs={[["รวมค่าเบี้ยเลี้ยง", nf(sum.perDiem) + " บาท"], ["รวมค่าที่พัก", nf(sum.lodging) + " บาท"], ["ค่าเดินทาง (รวมทุกคน)", nf(sum.travel) + " บาท"],
+          ["ค่าชั่วโมงทำงาน", num(f.workHours) ? f.workHours + " ชม. × " + nf(num(f.workRate)) + " บาท = " + nf(sum.labour) + " บาท" : "0 บาท"],
           ["รวมค่าใช้จ่ายของยานพาหนะคันนี้", nf(sum.total) + " บาท"], ["งบที่ตัด", BUDGET_CUT[f.budgetType ?? 0]], ["ศูนย์ต้นทุน", f.costCenter ?? ownerCostCenter(car)]]} />
       </Section>}
       {oilSampled(oil) && (

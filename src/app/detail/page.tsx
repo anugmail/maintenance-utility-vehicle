@@ -33,6 +33,12 @@ import { useMock, useRole } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { PlanBody } from "./PlanBody";
 import { PlanParts } from "./PlanParts";
+import { CostTab } from "./CostTab";
+import { TabItem } from "@/components/vms/TabItem";
+import { Tabs } from "@/components/vms/Tabs";
+import { notify } from "@/lib/mock/store";
+import { COST_COLS, QCOST_COLS, costMetrics, costRow, planCosts, quarterCostRows } from "@/lib/mock/cost";
+import { downloadCsvSheets } from "@/app/parts/_lib/exportFile";
 
 /* สถานะที่แผนเริ่มดำเนินการแล้ว (หลังอนุมัติ · E.2 ของ S6 ขึ้นไป) */
 const RUN: PlanStatus[] = ["active", "closed"];
@@ -62,7 +68,21 @@ function Detail() {
   const id = planId(plan);
   const nowQ = Number(plan.nowQ.replace(/\D/g, "")) || 1;
   const q = qSel ?? nowQ;
-  const actions = canEdit ? <>
+  /* S18 (R92 · Figma c450480): แผนที่อนุมัติแล้วขึ้นไปมีแท็บ รายละเอียดแผน · ต้นทุนการบำรุงรักษา (Tabs ใต้หัวหน้า แบบ Vehicle detail ที่ S24 ใช้) · ?tab=cost
+     เห็นแท็บ = หน่วยงานเจ้าของแผน + กบค. (ทุกหน่วยงาน ดูอย่างเดียว · การมองเห็นแบบ S4) · ส่งออก = Excel อย่างเดียว ไม่มี popup · ยังไม่มีต้นทุน = ไม่มีปุ่มส่งออก */
+  const costOn = (manage || role === "กบค.") && (st === "approved" || RUN.includes(st));
+  const costTab = costOn && sp.get("tab") === "cost";
+  const costs = costOn ? planCosts(mock, plan) : [];
+  const exportCost = () => {
+    downloadCsvSheets("ต้นทุนการบำรุงรักษา-" + plan.mr, [
+      { title: "สรุปรายไตรมาส", cols: [{ head: "รายการ" }, { head: "ค่า" }], rows: costMetrics(costs, plan.cars).map(([k, v]) => [k, v]) },
+      { title: "สรุปรายไตรมาส", cols: QCOST_COLS, rows: quarterCostRows(costs) },
+      { title: "ต้นทุนรายคัน", cols: COST_COLS, rows: costs.filter((r) => !r.cannot).map(costRow) },
+      { title: "ยานพาหนะที่บำรุงรักษาไม่ได้", cols: COST_COLS, rows: costs.filter((r) => r.cannot).map(costRow) },
+    ]);
+    notify("ส่งออกไฟล์สำเร็จ");
+  };
+  const actions = costTab ? (costs.length ? <SecondaryButton Text="ส่งออก" LeadingIconSwap="download-24-300-round" Size={size} onClick={exportCost} /> : undefined) : canEdit ? <>
     {canDelete && <SecondaryDangerButton Text="ลบแผน" LeadingIconSwap="delete-24-300-round" Size={size} onClick={() => setDel(true)} />}
     <SecondaryButton Text="แก้ไข" LeadingIconSwap="stylus-24-300-round" Size={size} onClick={() => { startEdit(plan); router.push("/edit/?id=" + id + "&from=detail"); }} />
   </> : undefined;
@@ -78,12 +98,14 @@ function Detail() {
     <>
       <PageHeader Title={"เลขที่ " + plan.mr} Badge={[PST[st][0], badgeOf(PST[st][1])]} onBack={() => router.push("/")}
         crumbs={[{ Text: "บำรุงรักษาตามวาระ", href: "/" }, { Text: plan.name }]} Actions={actions} />
-      <div className="flex flex-col gap-8">
+      {costOn && <div className="mb-6"><Tabs>{["รายละเอียดแผน", "ต้นทุนการบำรุงรักษา"].map((t, i) => <TabItem key={t} Text={t} Active={(i === 1) === costTab}
+        onClick={() => router.replace("/detail/?id=" + id + (i === 1 ? "&tab=cost" : ""))} />)}</Tabs></div>}
+      {costTab ? <CostTab rows={costs} planCars={plan.cars} /> : <div className="flex flex-col gap-8">
         {st === "returned" && <Alert Color="Error" Text="ผู้อนุมัติส่งกลับให้แก้ไข" SupportingText={plan.returnReason} />}
         {/* แผนที่ดำเนินการแล้ว (ดำเนินการ ขึ้นไป) = กล่อง PLAN_KV แบบ E.2 planDetailQ (ไตรมาสที่กำลังทำ · วันที่สร้าง · อนุมัติเมื่อ) · ก่อนนั้น = npKv แบบ planDetail (A.20–A.22) */}
         <PlanBody plan={plan} q={q} onQ={setQ} actions={qActions} kv={RUN.includes(st) ? runKv(plan) : undefined} />
         <PlanParts plan={plan} />
-      </div>
+      </div>}
       <ConfirmDialog spec={del ? DELETE_CONFIRM : null} onCancel={() => setDel(false)} onOk={() => { setDel(false); deletePlan(plan.mr); router.push("/"); }} />
     </>
   );

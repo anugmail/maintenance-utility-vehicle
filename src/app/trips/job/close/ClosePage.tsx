@@ -214,7 +214,12 @@ export function ClosePage() {
         <div className="flex"><SecondaryButton Text="เพิ่มพนักงาน" LeadingIconSwap="add-24-300-round" Size={mob ? "lg" : "md"} className={mob ? "w-full" : undefined}
           onClick={() => put((x) => ({ ...x, costs: [...x.costs, { name: null, perDiem: "", lodging: "", days: null }] }))} /></div>
         <Grid><TextInput LabelText="ค่าเดินทาง (รวมทุกคน)" Optional Text={f.travel} Placeholder="0" inputMode="numeric" onChange={(v) => put((x) => ({ ...x, travel: digits(v) }))} /></Grid>
-        <KvBox pairs={[["รวมค่าเบี้ยเลี้ยง", nf(sum.perDiem) + " บาท"], ["รวมค่าที่พัก", nf(sum.lodging) + " บาท"], ["ค่าเดินทาง", nf(sum.travel) + " บาท"], ["รวมค่าใช้จ่ายของยานพาหนะคันนี้", nf(sum.total) + " บาท"]]} />
+        {/* S18 R92 (Figma c450480): ชั่วโมงทำงาน × อัตราค่าแรง ไม่บังคับ · แถวใต้ค่าเดินทาง · แผนจ้างไม่มีส่วนนี้ */}
+        <Grid>
+          <TextInput LabelText="ชั่วโมงทำงาน" Optional Text={f.workHours ?? ""} Placeholder="0" inputMode="numeric" onChange={(v) => put((x) => ({ ...x, workHours: digits(v) }))} />
+          <TextInput LabelText="อัตราค่าแรง (บาท/ชั่วโมง)" Optional Text={f.workRate ?? ""} Placeholder="0" inputMode="numeric" onChange={(v) => put((x) => ({ ...x, workRate: digits(v) }))} />
+        </Grid>
+        <KvBox pairs={[["รวมค่าเบี้ยเลี้ยง", nf(sum.perDiem) + " บาท"], ["รวมค่าที่พัก", nf(sum.lodging) + " บาท"], ["ค่าเดินทาง", nf(sum.travel) + " บาท"], ["ค่าชั่วโมงทำงาน", nf(sum.labour) + " บาท"], ["รวมค่าใช้จ่ายของยานพาหนะคันนี้", nf(sum.total) + " บาท"]]} />
         {/* งบที่ตัด + ศูนย์ต้นทุน (R72 · Request Repair/Budget ของงานซ่อม): หน่วยงานต้นสังกัด = ศูนย์ต้นทุนของหน่วยงานเจ้าของรถ Readonly · หน่วยงานอื่น = Input dropdown "ระบุศูนย์ต้นทุน" · ประเภทอื่นยังไม่ออกแบบช่อง */}
         <Grid>
           <InputDropdown LabelText="งบที่ตัด" Text={BUDGET_CUT[budget]} Placeholder="เลือกงบที่ตัด" open={open === "cut"} onOpenChange={toggle("cut")}>

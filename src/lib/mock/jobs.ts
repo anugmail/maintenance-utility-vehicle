@@ -202,6 +202,8 @@ export interface CloseForm {
   budgetType?: number;
   /** วันที่เปลี่ยนน้ำมันครั้งล่าสุด (ถ้ามี) — ไม่มี = ค่าในข้อมูลรถ (R73) */
   oilDate?: string;
+  /** ชั่วโมงทำงาน × อัตราค่าแรง (บาท/ชั่วโมง) — ไม่บังคับ · แผนที่ทำเองเท่านั้น (S18 R92 · Figma c450480 · CLOSE_HOURS 6 × CLOSE_RATE 150) · ฟอร์มเก่าในที่เก็บไม่มีฟิลด์นี้ = 0 */
+  workHours?: string; workRate?: string;
 }
 /* งบที่ตัด — ค่า variant "งบที่ตัด" ของ Request Repair/Budget (ไฟล์ Maintain-D) · BUDGET_CUT ใน screens.js */
 export const BUDGET_CUT = ["งบทำการ หน่วยงานต้นสังกัด", "งบทำการ หน่วยงานอื่น", "งบโครงการ (ตาม WBS)", "งบซ่อมบำรุงตามใบสั่ง (PM Order)", "อื่น ๆ"];
@@ -302,7 +304,7 @@ export function filledClose(job: Job, trip: JobTrip, car: TripCar): CloseForm {
     ...f,
     parts: f.parts.map((r) => { const v = CLOSE_FILLED_PARTS[r.part]; return v ? { ...r, used: v[0], old: v[1], note: v[2] } : r; }),
     costs: [["นายวิชัย ทองดี", 2], ["นางสาวกนกวรรณ ใจมั่น", 2], ["นายสมชาย พูลสุข", 1]].map(([name, days]) => ({ name: String(name), perDiem: "240", lodging: "800", days: Number(days) })),
-    travel: "1,210", km: "182,640", hours: "6,131",
+    travel: "1,210", km: "182,640", hours: "6,131", workHours: "6", workRate: "150",   // CLOSE_HOURS × CLOSE_RATE (S18 R92)
     signers: [{ name: PEOPLE.kbk.replace(" (กกฟ.1)", ""), sig: "sample" }, { name: PEOPLE.ownerSigner, sig: "sample" }],
     docs: f.docs.map((d) => ({ ...d, sel: "มี" })),
   };
@@ -388,7 +390,8 @@ export function costSummary(f: CloseForm) {
   const pd = f.costs.reduce((a, r) => a + num(r.perDiem) * (r.days ?? 0), 0);
   const lg = f.costs.reduce((a, r) => a + num(r.lodging) * (r.days ?? 0), 0);
   const tr = num(f.travel);
-  return { perDiem: pd, lodging: lg, travel: tr, total: pd + lg + tr };
+  const lb = num(f.workHours) * num(f.workRate);   // ค่าชั่วโมงทำงาน (S18 R92)
+  return { perDiem: pd, lodging: lg, travel: tr, labour: lb, total: pd + lg + tr + lb };
 }
 /** แถวอะไหล่ของหน้าปิดงานตามน้ำมันที่เลือก (เก็บตัวอย่างอย่างเดียว = ไม่มีน้ำมันไฮดรอลิก) */
 export const closeRows = (f: CloseForm) => f.parts.filter((r) => !(f.oilChoice === 0 && r.part === OIL_PART));
@@ -517,12 +520,12 @@ export function removeTripCar(t: JobTrip, carId: string) {
      TV_vendorReturned = V.20 คันแรกถูกส่งกลับ (ปิดงานไว้) · TV_vendorReturnedCannot = V.21 คันที่ 2 ถูกส่งกลับ (แจ้งไม่ได้ไว้)
      TV_vendorMid = V.22 HIRE_VENDOR (ส่งกลับแก้ไข · รอตรวจรับ · ดำเนินการบำรุงรักษาแล้ว · อยู่ระหว่างบำรุงรักษา) */
 export const SAMPLES = ["T1_start", "T1_afterClose", "T1_afterCannot", "TV_start", "TV_mid", "T1_water", "T1_waterSigned",
-  "TV_vendor", "TV_vendorWait", "TV_vendorReported", "TV_vendorReturned", "TV_vendorReturnedCannot", "TV_vendorMid"] as const;
+  "TV_vendor", "TV_vendorWait", "TV_vendorReported", "TV_vendorReturned", "TV_vendorReturnedCannot", "TV_vendorMid", "T1_cost"] as const;
 export type SampleName = (typeof SAMPLES)[number];
 /* บทบาทที่สลับให้ตอนเปิดชุดตัวอย่าง — ชุด S10 S12 เป็นของหน่วยงาน · ชุด TV_vendor* เป็นของผู้รับจ้าง (S23) */
 const U1: Role = "หน่วยงาน (กกฟ.1)", VD: Role = "ผู้รับจ้าง";
 export const SAMPLE_ROLE: Record<SampleName, Role> = { T1_start: U1, T1_afterClose: U1, T1_afterCannot: U1, TV_start: U1, TV_mid: U1, T1_water: U1, T1_waterSigned: U1,
-  TV_vendor: VD, TV_vendorWait: VD, TV_vendorReported: VD, TV_vendorReturned: VD, TV_vendorReturnedCannot: VD, TV_vendorMid: VD };
+  TV_vendor: VD, TV_vendorWait: VD, TV_vendorReported: VD, TV_vendorReturned: VD, TV_vendorReturnedCannot: VD, TV_vendorMid: VD, T1_cost: U1 };
 /** ยานพาหนะรถพ่วงฉีดน้ำของชุดตัวอย่าง (WATER_CAR) · เบอร์/ผู้ดูแลในใบ = ค่าของคันแรก JOB_I ตามจอ Figma */
 export const WATER_CAR = "82-9012";
 const WATER_Q = PLAN_ID + "-1";
@@ -580,6 +583,17 @@ export function applySample(name: SampleName) {
     switch (name) {
       case "T1_start": return { trips: { ...s.trips, T1 }, jobs: keep("T1") };
       case "T1_afterClose": return { trips: { ...s.trips, T1 }, jobs: { ...keep("T1"), ...put([closedSample(T1, "82-6789"), doing(T1, "82-1145"), cannotSample(T1, "80-9981")]) } };
+      /* S18 ต้นทุน (R92 · Figma c450480 COST_V COST_X): ใบ T1 ปิดงาน 3 คัน (ชั่วโมงทำงาน 6 · 5 · ไม่กรอก · คันที่ 3 ศูนย์ต้นทุนหน่วยงานอื่น) + 80-9981 บำรุงรักษาไม่ได้ (ใช้อะไหล่ไปแล้ว 2 รายการ) */
+      case "T1_cost": {
+        const c1 = closedSample(T1, "82-6789"), c2 = closedSample(T1, "82-1145"), c3 = closedSample(T1, "82-3302");
+        const x = cannotSample(T1, "80-9981");
+        return { trips: { ...s.trips, T1 }, jobs: { ...keep("T1"), ...put([
+          c1,
+          { ...c2, closedAt: "05/11/2569 10:40 น.", close: c2.close && { ...c2.close, workHours: "5" } },
+          { ...c3, closedAt: "06/11/2569 15:20 น.", close: c3.close && { ...c3.close, workHours: "", workRate: "", budgetType: 1, costCenter: OTHER_CC } },
+          { ...x, cannot: x.cannot && { ...x.cannot, used: WORK.map((_, k) => (k === 1 || k === 3 ? 1 : 0)) } },
+        ]) } };
+      }
       case "T1_afterCannot": return { trips: { ...s.trips, T1 }, jobs: { ...keep("T1"), ...put([cannotSample(T1, "80-9981")]) } };
       case "TV_start": return { trips: { ...s.trips, TV }, jobs: keep("TV") };
       case "TV_mid": return { trips: { ...s.trips, TV }, jobs: { ...keep("TV"), ...put([doing(TV, TV.carIds[0]), changedOnly(closedSample(TV, TV.carIds[1]))]) } };
