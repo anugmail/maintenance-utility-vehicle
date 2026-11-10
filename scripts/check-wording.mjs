@@ -66,7 +66,26 @@ for (const file of files) {
     }
   }
 }
+/* ดัมป์สเปกจาก Figma (figma-spec/*.json) — แก้ตัวสะกดด้วยมือแล้ว 10 พ.ย. 2569 · npm run figma-spec ดึงตัวสะกดเดิมกลับมาได้ ⇒ ตรวจตัวสะกดทั้งไฟล์ (--fix แทนให้) */
+const SPEC = path.join(ROOT, "..", "figma-spec");
+const specFiles = [];
+(function walkSpec(d) {
+  if (!fs.existsSync(d)) return;
+  for (const f of fs.readdirSync(d, { withFileTypes: true })) {
+    const p = path.join(d, f.name);
+    if (f.isDirectory()) walkSpec(p); else if (f.name.endsWith(".json")) specFiles.push(p);
+  }
+})(SPEC);
+for (const file of specFiles) {
+  const src = fs.readFileSync(file, "utf8");
+  const found = Object.keys(SPELL).filter((w) => src.includes(w));
+  if (!found.length) continue;
+  if (fix) {
+    fs.writeFileSync(file, Object.entries(SPELL).reduce((x, [w, u]) => x.split(w).join(u), src));
+    console.log("แก้ figma-spec/" + path.relative(SPEC, file));
+  } else for (const w of found) { bad++; console.log('⚠ สะกด figma-spec/' + path.relative(SPEC, file) + ' "' + w + '" ต้องใช้ "' + SPELL[w] + '" (' + (src.split(w).length - 1) + " จุด)"); }
+}
 if (!fix) {
   if (bad) { console.log("R80 / ตัวสะกด ไม่ผ่าน " + bad + " จุด"); process.exit(1); }
-  console.log('R80 ข้อความใน src/ ไม่มีคำว่า "' + WORD + '" นอกข้อมูลจาก API · สะกด "ไฮดรอลิก" ✓ (' + files.length + " ไฟล์)");
+  console.log('R80 ข้อความใน src/ ไม่มีคำว่า "' + WORD + '" นอกข้อมูลจาก API · สะกด "ไฮดรอลิก" ✓ (' + files.length + " ไฟล์ src · " + specFiles.length + " ไฟล์ figma-spec)");
 }

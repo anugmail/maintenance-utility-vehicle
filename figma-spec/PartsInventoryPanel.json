@@ -4761,7 +4761,7 @@
         "Optional#1105:0": true,
         "Leading icon swap#33:3": "1:8255",
         "Helper#33:19": false,
-        "Text#33:0": "ไส้กรองไฮโดรลิก",
+        "Text#33:0": "ไส้กรองไฮดรอลิก",
         "State": "Focused",
         "Size": "md"
        },
@@ -4952,7 +4952,7 @@
               "size": 16,
               "lh": null
              },
-             "text": "ไส้กรองไฮโดรลิก"
+             "text": "ไส้กรองไฮดรอลิก"
             },
             {
              "name": "_Cursor",
