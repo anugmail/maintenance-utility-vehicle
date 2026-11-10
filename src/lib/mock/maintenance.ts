@@ -1,185 +1,225 @@
 "use client";
-/* S24 ข้อมูลการบำรุงรักษารายคัน + กำหนดครั้งถัดไป — ค่าตัวอย่างชุดเดียวกับปลั๊กอิน Figma (screens.js: MA_DUE · MA_ITEMS · MA_ROWS · MA_COLS · MA_NEXT_COLS · MA_HIST_COLS · MA_HIST)
-   ไม่มีที่เก็บของตัวเอง: บันทึกการบำรุงรักษา = ประวัติตั้งต้น (SEED ด้านล่าง ยกจาก MA_ROWS / MA_HIST) + งานรายคันที่ปิดแล้วในที่เก็บงานรายคัน (jobs.ts · MockState.jobs)
-     · ปิดงานรายคัน (S10 → "เสร็จสิ้น" · แผนตรวจเองและแผนจ้างที่ กบค. ปิดแทนผู้รับจ้าง — S11 ตัดออก 4 พ.ย. 2569) = 1 บันทึกใหม่ทันที (อ่านสด ไม่คัดลอกเก็บซ้ำ)
-     · ผลตรวจน้ำมันที่บันทึกภายหลัง (S12) / เอกสาร Safety Inspection ที่เพิ่มภายหลัง (S10) = บันทึกเดิมอัปเดตตาม
-     · คันที่ "บำรุงรักษาไม่ได้" ขึ้นในประวัติ แต่ไม่นับเป็นครั้งล่าสุด
-   กำหนดครั้งถัดไป (Condition ของ Scenario 24 ในไฟล์ userflow) = รายการที่ถึงก่อนจาก 4 อย่าง:
-     รอบเวลา 12 เดือนจากครั้งล่าสุด · ชั่วโมงเครื่องจักร ทุก 1,000 ชม. (ประมาณวันจากการใช้งานเฉลี่ยระหว่างสองครั้งล่าสุด — คิดไม่ได้ = แสดงชั่วโมงเป้าหมายอย่างเดียว ไม่นำมาเทียบ)
-     · น้ำมันไฮโดรลิก 3 ปีจากเปลี่ยนครั้งล่าสุด · Safety Inspection 1 ปี (เฉพาะรถเครน/รถกระเช้า)
-     ใกล้ครบ = ครบภายใน 6 เดือนนับจากวันนี้ · ครบ = ถึงหรือเลยวันครบ · วันเท่ากัน = รายการที่มาก่อนใน MA_ITEMS */
+/* S24 แดชบอร์ดการบำรุงรักษารายคัน + กำหนดครั้งถัดไป (R90) — ค่าตัวอย่างและตรรกะชุดเดียวกับปลั๊กอิน Figma
+   ยกจาก screens.js (Figma d6ce03a · 99bb8b2 · 18a432e 10 พ.ย. 2569): MA_DUE · MA_ITEMS · MA_CYCLE · MA_TODAY · maStatus · MA_ROWS · maDues · maNext · maOil · MA_VSTAT · MA_USE · maMetrics
+     · MA_HIST · MA_WAR · MA_REPAIRS · MA_WARRANTY
+   เจ้าของงาน 10 พ.ย. 2569 "ตอนนี้น่าจะมีแค่เกณฑ์เรื่องเวลา คือ เปลี่ยนทุก 1 ปี สำหรับกรองอากาศ และถ้าเป็นน้ำมันไฮดรอลิก จะเปลี่ยนทุก 3 ปี ระหว่างนั้น ต้องเก็บตัวอย่าง …"
+     + "ปีที่ 1 เปลี่ยนน้ำมัน ปีที่2 เก็บตัวอย่าง ปีที่ 3 เก็บตัวอย่าง และปีที่ 4 เปลี่ยนน้ำมัน" (ผลตัวอย่างกรอกที่ S12 เหมือนเดิม) · ตัดชั่วโมงเครื่องจักร/ระยะทาง
+   กำหนดครั้งถัดไป 5 รายการ (ตามเวลาอย่างเดียว):
+     รอบบำรุงรักษา 12 เดือนจากครั้งล่าสุด (เสนอ) · ไส้กรองอากาศ 1 ปีจากเปลี่ยนล่าสุด · เปลี่ยนน้ำมันไฮดรอลิก 3 ปีจากเปลี่ยนล่าสุด
+     · เก็บตัวอย่างน้ำมัน 1 ปีจากเก็บตัวอย่างหรือเปลี่ยนล่าสุด (ปีที่ครบเปลี่ยน = ไม่ต้องเก็บตัวอย่าง) · Safety Inspection 1 ปี
+     ใกล้ครบ = เหลือไม่เกิน 6 เดือน · ครบ = เลยวันครบแล้ว · ครั้งถัดไป = รายการที่ถึงก่อน (วันเท่ากัน = ลำดับใน MA_ITEMS)
+   ระบบจำจากที่บันทึกตอนปิดงาน S10 Step 2 (ไม่เพิ่มช่องกรอก): ไส้กรองอากาศ = มีในอะไหล่ที่ใช้จริง · น้ำมัน = ตัวเลือกเก็บตัวอย่าง/เปลี่ยน · ผลตรวจ = S12 · Safety = เอกสารที่แนบ
+   บันทึก = ประวัติตั้งต้น (SEED ยกจาก MA_ROWS + MA_HIST) + งานรายคันที่ปิดแล้วในที่เก็บ (jobs.ts · อ่านสด) · คันที่บำรุงรักษาไม่ได้ขึ้นในประวัติ แต่ไม่นับเป็นครั้งล่าสุด */
 import { useMemo } from "react";
-import {
-  carOf, closeRows, jobsOf, oilSampled, num, nf, safetyOn, SIGN_DATE, TRIP_CARS, WSTAT, OIL_JOB_OPTS,
-  type Job, type JobTrip, type OilChoice, type TripCar,
-} from "./jobs";
+import { carOf, closeRows, jobsOf, oilSampled, nf, TRIP_CARS, WSTAT, type Job, type JobTrip, type OilChoice, type TripCar } from "./jobs";
 import { useMock, type MockState } from "./store";
 import { OWN_UNIT, PLAN_ID, STAFF } from "./trips";
 import { unitOf } from "./data";
+import type { PillColor } from "@/components/vms/PillOutline";
 
-/* วันนี้ของต้นแบบ = วันที่ของจอ Figma (MA_ROWS "วันนี้ 04/11/2569" · SIGN_DATE / JOB_TIMES ของ jobs.ts) — คงที่ให้ตรงจอ */
-export const MA_TODAY = SIGN_DATE;
+/* วันนี้ของต้นแบบ = MA_TODAY ของ screens.js (ค่าคงที่ให้ตรงจอ) */
+export const MA_TODAY = "10/11/2569";
 
 export type DueTone = "warning" | "error";
 export type DueStatus = "near" | "over";
-/* MA_DUE — ข้อความตาม Vehicle list ของ UI Release#2 · สีบรรทัดรอง Color/text/warning · Color/text/error */
 export const MA_DUE: Record<DueStatus, [string, DueTone]> = { near: ["ใกล้ครบกำหนดบำรุงรักษา", "warning"], over: ["ครบกำหนดบำรุงรักษา", "error"] };
-export const MA_ITEMS = ["รอบเวลา", "ชั่วโมงเครื่องจักร/ระยะทาง", "น้ำมันไฮโดรลิก", "Safety Inspection"] as const;
+export const MA_ITEMS = ["รอบบำรุงรักษา", "ไส้กรองอากาศ", "เปลี่ยนน้ำมันไฮดรอลิก", "เก็บตัวอย่างน้ำมัน", "Safety Inspection"] as const;
+/* รอบ (99bb8b2 · เจ้าของงาน 10 พ.ย. 2569 ปีที่ 1 เปลี่ยน · ปีที่ 2 3 เก็บตัวอย่าง · ปีที่ 4 เปลี่ยน) · รอบบำรุงรักษาทั่วไป 12 เดือน = เสนอ ยังไม่เคาะ */
+export const MA_CYCLE = ["ทุก 12 เดือน", "เปลี่ยนทุก 1 ปี", "เปลี่ยนทุก 3 ปี (ปีที่ 1 และปีที่ 4)", "เก็บตัวอย่างปีที่ 2 และ 3 หลังเปลี่ยน", "ทุก 1 ปี"];
 export const MA_NO_DATA = "ยังไม่มีข้อมูลการบำรุงรักษา";
-export const MA_CYCLE = ["ทุก 12 เดือน", "ทุก 1,000 ชม.", "เปลี่ยนทุก 3 ปี", "ทุก 1 ปี"];
-const HOURS_CYCLE = 1000;
+export const MA_NO_SAMPLE = "ปีนี้ครบรอบเปลี่ยนน้ำมัน ไม่ต้องเก็บตัวอย่าง";
+/* สถานะยานพาหนะ (ค่าสมมติ) · ประกัน */
+export const MA_VSTAT: Record<"ok" | "repair" | "off", [string, PillColor]> = { ok: ["ปกติ", "Success"], repair: ["อยู่ระหว่างซ่อม", "Warning"], off: ["งดใช้งาน", "Gray"] };
+export const MA_WAR: Record<"in" | "near" | "out" | "none", [string, PillColor]> = { in: ["อยู่ในประกัน", "Success"], near: ["ใกล้หมดประกัน", "Warning"], out: ["หมดประกัน", "Gray"], none: ["ไม่มีประกัน", "Gray"] };
 
 /* ---------- วันที่ (วว/ดด/ปปปป พ.ศ.) ---------- */
 const pad = (n: number) => String(n).padStart(2, "0");
 export const dayOf = (s: string) => { const [d, m, y] = s.slice(0, 10).split("/").map(Number); return Date.UTC(y - 543, m - 1, d); };
 export const thaiDate = (t: number) => { const d = new Date(t); return pad(d.getUTCDate()) + "/" + pad(d.getUTCMonth() + 1) + "/" + (d.getUTCFullYear() + 543); };
-const thaiMonth = (t: number) => { const d = new Date(t); return pad(d.getUTCMonth() + 1) + "/" + (d.getUTCFullYear() + 543); };
-const addMonths = (t: number, n: number) => { const d = new Date(t); return Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + n, d.getUTCDate()); };
-const DAY = 864e5;
+export const addMonths = (t: number, n: number) => { const d = new Date(t); return Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + n, d.getUTCDate()); };
+const isDate = (s?: string): s is string => !!s && /^\d{2}\/\d{2}\/\d{4}/.test(s);
+const later = (a?: string, b?: string) => (!isDate(a) ? (isDate(b) ? b : undefined) : !isDate(b) ? a : dayOf(a) >= dayOf(b) ? a : b);
+export const TODAY = dayOf(MA_TODAY);
+/** maStatus: เลยวันครบ = over · ครบภายใน 6 เดือน = near */
+export const statusOf = (due: number, today = TODAY): DueStatus | undefined => (due < today ? "over" : due <= addMonths(today, 6) ? "near" : undefined);
+
+/* ---------- ข้อมูลยานพาหนะ (MA_USE · ค่าสมมติ) [ปีที่จดทะเบียน, เลขไมล์สะสม, ชั่วโมงเครื่องจักรสะสม, ประกัน, สถานะยานพาหนะ] ---------- */
+type Use = [year: number, km: string, hours: string, war: keyof typeof MA_WAR, st: keyof typeof MA_VSTAT];
+const MA_USE: Record<string, Use> = {
+  "80-4458": [2557, "171,220", "5,610", "none", "ok"], "80-5738": [2558, "168,900", "5,480", "out", "repair"], "80-3316": [2560, "154,300", "4,920", "none", "ok"],
+  "80-9981": [2561, "176,050", "5,840", "in", "ok"], "82-7720": [2562, "149,700", "4,410", "none", "ok"], "82-1145": [2559, "176,050", "6,010", "near", "ok"],
+  "81-6604": [2563, "163,480", "5,120", "none", "ok"], "82-6789": [2564, "182,640", "6,131", "in", "ok"], "81-2210": [2566, "41,200", "980", "none", "off"],
+};
+/** ยานพาหนะของแดชบอร์ด = แถว MA_ROWS (9 คัน) + คันอื่นที่มีบันทึกจากงานรายคัน */
+const MA_CAR_IDS = Object.keys(MA_USE);
+export const MA_CAR = "82-1145";   // คันตัวอย่างของหน้ารายละเอียด (ประวัติซ่อม การรับประกัน)
 
 /* ---------- บันทึกการบำรุงรักษา (1 ครั้งที่ปิดงาน = 1 บันทึก) ---------- */
 export interface MaRecord {
-  key: string; carId: string;
-  /** วันที่ปิดงาน */
-  date: string; planMr: string; tripId?: string; tripName?: string;
-  /** งานที่ทำ · อะไหล่ที่ใช้จริง ("ชื่อ จำนวน หน่วย") */
+  key: string; carId: string; date: string; planMr: string; tripId?: string; tripName?: string;
   work: string; parts: string[];
-  km?: string; hours?: string;
-  /** น้ำมันไฮโดรลิกที่เลือก (OIL_JOB_OPTS) · ผลตรวจ "ผ่าน" "ไม่ผ่าน" "รอผลตรวจ" (เฉพาะที่เก็บตัวอย่าง) */
-  oil?: OilChoice; oilResult?: string;
-  /** วันที่ Safety Inspection (มีเอกสารแนบ) · ชื่อไฟล์ */
-  safety?: string; safetyFiles?: string[];
-  by: string;
-  /** บำรุงรักษาไม่ได้ (สาเหตุ) — ขึ้นในประวัติ ไม่นับเป็นครั้งล่าสุด */
+  /** เปลี่ยนไส้กรองอากาศ · น้ำมันไฮดรอลิกที่เลือก (0 เก็บตัวอย่าง · 1 เปลี่ยน · 2 ทั้งสอง) · ผลตรวจ · มีเอกสาร Safety Inspection */
+  air?: boolean; oil?: OilChoice; oilResult?: string; safety?: boolean;
+  km?: string; hours?: string; by: string;
   cannot?: string;
   /** มาจากงานรายคันในต้นแบบ → เปิดหน้างานรายคันที่ปิดแล้ว /trips/job/ ได้ · ไม่มี = ประวัติตั้งต้น */
   fromJob?: boolean;
 }
 
-/* SEED — ประวัติก่อนต้นแบบ: แถวของ MA_ROWS (ครั้งล่าสุดของแต่ละคัน) + MA_HIST (82-1145 สามครั้ง)
-   MA_ROWS: ล่าสุด · แผน · ไมล์ · ชม. · เปลี่ยนน้ำมันล่าสุด · ผลตรวจน้ำมัน · Safety ล่าสุด
-     เปลี่ยนน้ำมันวันเดียวกับครั้งล่าสุด = เลือก "เก็บตัวอย่างและเปลี่ยน" · คนละวัน = "เก็บตัวอย่าง" และเปลี่ยนน้ำมันครั้งก่อนหน้า = OIL_BEFORE
-   งานที่ทำ: ข้อความของ MA_HIST (เก็บตัวอย่าง = MA_HIST[0] · เปลี่ยนน้ำมัน = MA_HIST[2]) · ผู้บันทึก TRIP.staff[0]
-   82-6789 (ครั้งล่าสุด 04/11/2569 ของ MA_ROWS) ไม่อยู่ที่นี่ — มาจากงานรายคันที่ปิดใน S10 (ชุดตัวอย่าง ?sample=S24) */
-const WORK_SAMPLE = "เปลี่ยนไส้กรองไฮโดรลิก · ไส้กรองน้ำมันเครื่อง", WORK_CHANGE = "เปลี่ยนน้ำมันไฮโดรลิก · ไส้กรอง";
-type Row = [carId: string, date: string, plan: string, km: string, hrs: string, oilAt: string, result: string, safety: string];
+/* MA_ROWS — [ทะเบียน, บำรุงรักษาล่าสุด, เลขที่ MR, ไส้กรองอากาศล่าสุด, เปลี่ยนน้ำมันล่าสุด, เก็บตัวอย่างล่าสุด, ผลตรวจล่าสุด, Safety Inspection ล่าสุด]
+   82-6789 (ล่าสุด 04/11/2569 ของ MA_ROWS) มาจากงานรายคันที่ปิดใน S10 (?sample=S24) · 81-2210 ยังไม่มีข้อมูล */
+type Row = [carId: string, date: string, mr: string, air: string, oil: string, sample: string, result: string, safety: string];
 const MA_ROWS: Row[] = [
-  ["80-4458", "01/10/2568", "MRZ6900011", "171,220", "5,610", "01/10/2568", "ผ่าน", "01/10/2568"],
-  ["80-5738", "14/10/2568", "MRZ6900011", "168,900", "5,480", "14/10/2568", "ไม่ผ่าน", "14/10/2568"],
-  ["80-3316", "20/11/2568", "MRZ6900011", "154,300", "4,920", "05/02/2567", "ผ่าน", "20/11/2568"],
-  ["80-9981", "10/01/2569", "MRZ6900014", "176,050", "5,840", "10/01/2569", "ผ่าน", "10/01/2569"],
-  ["82-7720", "02/02/2569", "MRZ6900014", "149,700", "4,410", "18/06/2568", "ผ่าน", "02/02/2569"],
-  ["81-6604", "20/09/2569", "MRZ7000001", "163,480", "5,120", "20/09/2569", "ผ่าน", "20/09/2569"],
+  ["80-4458", "01/10/2568", "MRZ6900011", "01/10/2568", "01/10/2566", "01/10/2568", "ผ่าน", "01/10/2568"],
+  ["80-5738", "14/10/2568", "MRZ6900011", "14/10/2567", "14/10/2565", "14/10/2568", "ไม่ผ่าน", "14/10/2568"],
+  ["80-3316", "20/11/2568", "MRZ6900011", "20/11/2568", "05/02/2567", "20/11/2568", "ผ่าน", "20/11/2568"],
+  ["80-9981", "10/01/2569", "MRZ6900014", "10/01/2569", "10/01/2569", "10/01/2569", "ผ่าน", "10/01/2569"],
+  ["82-7720", "02/02/2569", "MRZ6900014", "02/02/2569", "18/06/2567", "02/02/2569", "ผ่าน", "02/02/2569"],
+  ["82-1145", "18/06/2569", "MRZ6900014", "18/06/2569", "12/03/2567", "18/06/2569", "ผ่าน", "18/06/2569"],
+  ["81-6604", "20/09/2569", "MRZ7000001", "20/09/2569", "20/09/2569", "20/09/2569", "ผ่าน", "20/09/2569"],
 ];
-const seedRow = ([carId, date, plan, km, hrs, oilAt, result, safety]: Row): MaRecord => {
-  const change = oilAt === date;
-  return { key: "seed:" + carId + ":" + date, carId, date, planMr: plan, work: change ? WORK_CHANGE : WORK_SAMPLE, parts: [], km: km + " กม.", hours: hrs + " ชม.",
-    oil: change ? 2 : 0, oilResult: result, safety, by: STAFF[0] };
+/** ค่าครั้งล่าสุดก่อนต้นแบบ (รายการที่ไม่ได้ทำในบันทึกครั้งล่าสุด เช่น เปลี่ยนน้ำมันเมื่อ 3 ปีก่อน) */
+const BASE: Record<string, { air: string; oil: string; sample: string; result: string; safety: string }> =
+  Object.fromEntries(MA_ROWS.map(([id, , , air, oil, sample, result, safety]) => [id, { air, oil, sample, result, safety }]));
+const workOf = (air: boolean, change: boolean) => [change ? "เปลี่ยนน้ำมันไฮดรอลิก" : "เปลี่ยนไส้กรองไฮดรอลิก", ...(air ? ["ไส้กรองอากาศ"] : [])].join(" · ");
+const seedRow = ([carId, date, mr, air, oil, sample, result, safety]: Row): MaRecord => {
+  const ch = oil === date, sm = sample === date;
+  return { key: "seed:" + carId + ":" + date, carId, date, planMr: mr, work: workOf(air === date, ch), parts: [], air: air === date,
+    oil: ch && sm ? 2 : ch ? 1 : sm ? 0 : undefined, oilResult: sm ? result : undefined, safety: safety === date, by: STAFF[0] };
 };
 /* MA_HIST — 82-1145 (MA_CAR) · ใหม่สุดก่อน */
 const MA_HIST: MaRecord[] = [
-  { key: "seed:82-1145:18/06/2569", carId: "82-1145", date: "18/06/2569", planMr: "MRZ6900014", work: WORK_SAMPLE, parts: [], km: "176,050 กม.", hours: "6,010 ชม.", oil: 0, oilResult: "ผ่าน", safety: "18/06/2569", by: STAFF[0] },
-  { key: "seed:82-1145:20/06/2568", carId: "82-1145", date: "20/06/2568", planMr: "MRZ6800007", work: "เปลี่ยนไส้กรองไฮโดรลิก", parts: [], km: "168,300 กม.", hours: "5,420 ชม.", oil: 0, oilResult: "ผ่าน", by: STAFF[2] },
-  { key: "seed:82-1145:12/03/2567", carId: "82-1145", date: "12/03/2567", planMr: "MRZ6700004", work: WORK_CHANGE, parts: [], km: "159,800 กม.", hours: "4,880 ชม.", oil: 1, by: STAFF[1] },
+  { key: "seed:82-1145:18/06/2569", carId: "82-1145", date: "18/06/2569", planMr: "MRZ6900014", work: "เปลี่ยนไส้กรองไฮดรอลิก · ไส้กรองอากาศ", parts: [], air: true, oil: 0, oilResult: "ผ่าน", safety: true, by: STAFF[0] },
+  { key: "seed:82-1145:20/06/2568", carId: "82-1145", date: "20/06/2568", planMr: "MRZ6800007", work: "เปลี่ยนไส้กรองไฮดรอลิก · ไส้กรองอากาศ", parts: [], air: true, oil: 0, oilResult: "ผ่าน", safety: true, by: STAFF[2] },
+  { key: "seed:82-1145:12/03/2567", carId: "82-1145", date: "12/03/2567", planMr: "MRZ6700004", work: "เปลี่ยนน้ำมันไฮดรอลิก · ไส้กรอง", parts: [], air: true, oil: 1, safety: true, by: STAFF[1] },
 ];
-export const SEED: MaRecord[] = [...MA_ROWS.map(seedRow), ...MA_HIST];
-/* เปลี่ยนน้ำมันครั้งก่อนประวัติตั้งต้น (MA_ROWS คอลัมน์เปลี่ยนน้ำมันล่าสุด) · คันอื่น = เปลี่ยนน้ำมันครั้งล่าสุดของรถในงานรายคัน (LAST_OIL ใน jobs.ts) */
-const OIL_BEFORE: Record<string, string> = { "80-3316": "05/02/2567", "82-7720": "18/06/2568" };
+export const SEED: MaRecord[] = [...MA_ROWS.filter((r) => r[0] !== MA_CAR).map(seedRow), ...MA_HIST];
 
 /* ---------- งานรายคัน → บันทึก ---------- */
 const OIL_RESULT_TEXT = ["ผ่าน", "ไม่ผ่าน"];
 function jobRecord(j: Job, t: JobTrip): MaRecord | null {
   const base = { key: "job:" + t.id + ":" + j.carId, carId: j.carId, planMr: t.planMr, tripId: t.id, tripName: t.name, fromJob: true };
-  if (j.status === "cannot" && j.cannot) {
-    return { ...base, date: j.cannot.at.slice(0, 10), work: WSTAT.cannot[0], parts: [], by: j.cannot.by, cannot: j.cannot.reason };
-  }
+  if (j.status === "cannot" && j.cannot) return { ...base, date: j.cannot.at.slice(0, 10), work: WSTAT.cannot[0], parts: [], by: j.cannot.by, cannot: j.cannot.reason };
   if (j.status !== "done" || !j.close || !j.closedAt) return null;
   const rows = closeRows(j.close).filter((r) => r.used > 0);
   const task = (part: string) => j.parts.find((p) => p.part === part)?.task ?? part;
-  const sampled = oilSampled(j.close.oilChoice);
   const r = j.oilResult;
   const files = j.safety?.files ?? j.close.safetyFiles ?? [];
-  const safety = !files.length ? undefined : j.safety?.savedAt ? j.safety.savedAt.slice(0, 10) : j.closedAt.slice(0, 10);
   return {
     ...base, date: j.closedAt.slice(0, 10), work: rows.map((x) => task(x.part)).join(" · ") || "-", parts: rows.map((x) => x.part + " " + nf(x.used) + " " + x.unit),
-    km: j.kmAfter, hours: j.hoursAfter, oil: j.close.oilChoice,
-    oilResult: sampled ? (!r || r.sel < 0 ? "รอผลตรวจ" : OIL_RESULT_TEXT[r.sel]) : undefined,
-    safety, safetyFiles: files.map((f) => f.name), by: j.recordedBy ?? "-",
+    air: rows.some((x) => /ไส้กรองอากาศ/.test(x.part)), oil: j.close.oilChoice, safety: files.length > 0,
+    oilResult: oilSampled(j.close.oilChoice) ? (!r || r.sel < 0 ? "รอผลตรวจ" : OIL_RESULT_TEXT[r.sel]) : undefined,
+    km: j.kmAfter, hours: j.hoursAfter, by: j.recordedBy ?? "-",
   };
 }
 
-/* ---------- กำหนดครั้งถัดไป ---------- */
-export interface DueItem {
-  k: 0 | 1 | 2 | 3;
-  /** ครั้งล่าสุด · ครบกำหนด (ข้อความในตาราง กำหนดครั้งถัดไป) */
-  last: string; dueText: string;
-  /** วันครบ (ชั่วโมงเครื่องจักร = วันที่ประมาณ) · ไม่มี = คิดไม่ได้ */
-  due?: number; status?: DueStatus;
-}
+/* ---------- กำหนดครั้งถัดไป (maDues · maNext · maOil) ---------- */
+export interface DueItem { k: 0 | 1 | 2 | 3 | 4; last: string; due?: number; status?: DueStatus }
 export interface MaCar {
   car: TripCar;
   records: MaRecord[];   // ใหม่สุดก่อน
   latest?: MaRecord;
-  oilAt?: string; oilResult?: string; safety?: string;
-  items: DueItem[];
-  next?: DueItem;
+  /** ครั้งล่าสุดของแต่ละรายการ */
+  air?: string; oilAt?: string; sampleAt?: string; result?: string; safetyAt?: string;
+  /** 5 รายการตาม MA_ITEMS (ไม่มีข้อมูล = ว่าง) · ครั้งถัดไป · รายการน้ำมันของปีนี้ (maOil) */
+  items: DueItem[]; next?: DueItem; oilItem?: DueItem;
+  /** MA_USE: อายุการใช้งาน · เลขไมล์ · ชั่วโมงเครื่องจักร · ปีที่จดทะเบียน · ประกัน · สถานะยานพาหนะ */
+  year?: number; km?: string; hours?: string; war: keyof typeof MA_WAR; vstat: keyof typeof MA_VSTAT;
 }
-const statusOf = (due: number | undefined, today: number): DueStatus | undefined =>
-  due == null ? undefined : due <= today ? "over" : due <= addMonths(today, 6) ? "near" : undefined;
 
-export function maCar(car: TripCar, all: MaRecord[], today = dayOf(MA_TODAY)): MaCar {
+export function maCar(car: TripCar, all: MaRecord[], today = TODAY): MaCar {
   const records = all.filter((r) => r.carId === car.id).sort((a, b) => dayOf(b.date) - dayOf(a.date) || (a.fromJob === b.fromJob ? 0 : a.fromJob ? -1 : 1));
   const done = records.filter((r) => !r.cannot);
-  const latest = done[0];
-  if (!latest) return { car, records, items: [], next: undefined };
-  const changed = done.find((r) => r.oil === 1 || r.oil === 2);
-  const oilAt = changed?.date ?? OIL_BEFORE[car.id] ?? car.lastOil;
-  const sampled = done.find((r) => r.oil === 0 || r.oil === 2);
-  const safetyRec = safetyOn(car) ? done.find((r) => r.safety) : undefined;
-  const items: DueItem[] = [];
-  const at = (k: DueItem["k"], last: string, due: number | undefined, dueText?: string) =>
-    items.push({ k, last, due, dueText: dueText ?? (due == null ? "-" : thaiDate(due)), status: statusOf(due, today) });
-  /* (1) รอบเวลา */
-  at(0, latest.date, addMonths(dayOf(latest.date), 12));
-  /* (2) ชั่วโมงเครื่องจักร — ประมาณวันจากการใช้งานเฉลี่ยระหว่างสองครั้งล่าสุดที่มีชั่วโมง */
-  const withH = done.filter((r) => r.hours && num(r.hours) > 0);
-  if (withH[0]) {
-    const h1 = num(withH[0].hours), target = h1 + HOURS_CYCLE;
-    let est: number | undefined;
-    if (withH[1]) {
-      const rate = (h1 - num(withH[1].hours)) / ((dayOf(withH[0].date) - dayOf(withH[1].date)) / DAY);
-      if (rate > 0 && Number.isFinite(rate)) est = dayOf(withH[0].date) + Math.round(HOURS_CYCLE / rate) * DAY;
-    }
-    at(1, withH[0].hours + (withH[0].km ? " · " + withH[0].km : ""), est, nf(target) + " ชม." + (est != null ? " (ประมาณ " + thaiMonth(est) + ")" : ""));
-  } else at(1, "-", undefined);
-  /* (3) น้ำมันไฮโดรลิก */
-  const oilOk = /^\d{2}\/\d{2}\/\d{4}/.test(oilAt);   // LAST_OIL "ไม่มีข้อมูล" = คิดไม่ได้
-  at(2, oilOk ? "เปลี่ยน " + oilAt : "-", oilOk ? addMonths(dayOf(oilAt), 36) : undefined);
-  /* (4) Safety Inspection — เฉพาะรถเครน/รถกระเช้า */
-  if (safetyOn(car)) at(3, safetyRec?.safety ?? "-", safetyRec?.safety ? addMonths(dayOf(safetyRec.safety), 12) : undefined);
-  const next = items.filter((i) => i.due != null).sort((a, b) => a.due! - b.due! || a.k - b.k)[0];
-  return { car, records, latest, oilAt: oilOk ? oilAt : undefined, oilResult: sampled?.oilResult, safety: safetyRec?.safety, items, next };
+  const latest = done[0], u = MA_USE[car.id], b = BASE[car.id];
+  const first = <T,>(f: (r: MaRecord) => T | undefined) => { for (const r of done) { const v = f(r); if (v) return [r, v] as const; } return undefined; };
+  const air = later(first((r) => (r.air ? r.date : undefined))?.[1], b?.air);
+  const oilAt = later(first((r) => (r.oil === 1 || r.oil === 2 ? r.date : undefined))?.[1], b?.oil ?? (latest ? car.lastOil : undefined));
+  const sm = first((r) => (r.oil === 0 || r.oil === 2 ? r.date : undefined));
+  const sampleAt = later(sm?.[1], b?.sample);
+  const result = sm && sampleAt === sm[1] ? sm[0].oilResult : b?.result;
+  const safetyAt = later(first((r) => (r.safety ? r.date : undefined))?.[1], b?.safety);
+  const base = { car, records, latest, air, oilAt, sampleAt, result, safetyAt, year: u?.[0], km: latest?.km?.replace(/ กม\.$/, "") ?? u?.[1], hours: latest?.hours?.replace(/ ชม\.$/, "") ?? u?.[2],
+    war: u?.[3] ?? "none", vstat: u?.[4] ?? "ok" } as const;
+  if (!latest) return { ...base, items: [] };
+  const item = (k: DueItem["k"], last: string | undefined, due?: number): DueItem => ({ k, last: last ?? "-", due, status: due == null ? undefined : statusOf(due, today) });
+  const chg = isDate(oilAt) ? addMonths(dayOf(oilAt), 36) : undefined;
+  const smpFrom = later(sampleAt, oilAt);
+  const smp = smpFrom ? addMonths(dayOf(smpFrom), 12) : undefined;
+  const changeYear = chg != null && smp != null && chg <= smp;   // ปีที่ครบเปลี่ยน = ไม่ต้องเก็บตัวอย่าง
+  const sampleLast = isDate(sampleAt) && (!isDate(oilAt) || dayOf(sampleAt) > dayOf(oilAt)) ? sampleAt + (result ? " · ผล " + result : "") : oilAt;
+  const items = [
+    item(0, latest.date, addMonths(dayOf(latest.date), 12)),
+    item(1, air, isDate(air) ? addMonths(dayOf(air), 12) : undefined),
+    item(2, oilAt, chg),
+    item(3, sampleLast, changeYear ? undefined : smp),
+    item(4, safetyAt, isDate(safetyAt) ? addMonths(dayOf(safetyAt), 12) : undefined),
+  ];
+  const withDue = items.filter((i) => i.due != null);
+  const next = withDue.sort((a, b2) => a.due! - b2.due! || a.k - b2.k)[0];
+  const oilItem = !changeYear && smp != null ? items[3] : items[2];
+  return { ...base, items, next, oilItem };
 }
 
-/* รถทุกคันของงานบำรุงรักษา (รถในงานรายคัน jobs.ts) + บันทึก · เรียงกำหนดครั้งถัดไปที่ใกล้สุดก่อน · คันที่ยังไม่มีบันทึกอยู่ท้าย
-   owner = หน่วยงานเจ้าของรถ เห็นเฉพาะรถในสังกัด (OWN_UNIT) */
-/** unit = หน่วยงานผู้ดำเนินการ (กกฟ.1 กกฟ.2 กรย. กบค. · 9 พ.ย. 2569 ตรวจสิทธิ์) เห็นเฉพาะยานพาหนะในแผนของหน่วยงานตัวเอง (มีบันทึกของแผนนั้น · ยานพาหนะตัวอย่าง TRIP_CARS = แผน MRZ7000001) */
+/* ยานพาหนะของแดชบอร์ด · เรียงกำหนดครั้งถัดไปที่ใกล้สุดก่อน · คันที่ยังไม่มีบันทึกอยู่ท้าย
+   owner = ผู้ดูแลยานพาหนะ เห็นเฉพาะยานพาหนะของหน่วยงานตัวอย่าง (OWN_UNIT) · unit = หน่วยงานผู้ดำเนินการ เห็นเฉพาะยานพาหนะในแผนของหน่วยงานตัวเอง */
 export function maCars(m: MockState, owner = false, unit?: string): MaCar[] {
   const s = jobsOf(m);
   const fromJobs = Object.values(s.jobs).map((j) => (s.trips[j.tripId] ? jobRecord(j, s.trips[j.tripId]) : null)).filter((r): r is MaRecord => !!r);
   const all = [...SEED, ...fromJobs];
-  /* รถตัวอย่าง (TRIP_CARS) + รถจากแผนที่สร้างในฟอร์มที่มีบันทึกแล้ว */
-  const extra = [...new Set(fromJobs.map((r) => r.carId))].filter((id) => !TRIP_CARS.some((c) => c.id === id)).map(carOf).filter((c): c is TripCar => !!c);
-  return [...TRIP_CARS, ...extra].filter((c) => !owner || c.owner === OWN_UNIT).map((c) => maCar(c, all))
+  const ids = [...new Set([...MA_CAR_IDS, ...fromJobs.map((r) => r.carId)])];
+  const cars = ids.map((id) => TRIP_CARS.find((c) => c.id === id) ?? carOf(id)).filter((c): c is TripCar => !!c);
+  return cars.filter((c) => !owner || c.owner === OWN_UNIT).map((c) => maCar(c, all))
     .filter((x) => !unit || x.records.some((r) => unitOf(r.planMr) === unit) || (TRIP_CARS.some((t) => t.id === x.car.id) && unitOf("MR" + PLAN_ID) === unit))
     .sort((a, b) => (a.next ? a.next.due! : Infinity) - (b.next ? b.next.due! : Infinity) || a.car.plate.localeCompare(b.car.plate));
 }
 export function useMaCars(owner: boolean, unit?: string) { const m = useMock(); return useMemo(() => maCars(m, owner, unit), [m, owner, unit]); }
 
-/* ---------- ข้อความในตาราง ---------- */
-export const oilText = (k?: OilChoice) => (k == null ? "-" : OIL_JOB_OPTS[k]);
-/** ช่องกำหนดครั้งถัดไปของรายการรถ: "วันที่ · รายการ" + บรรทัดรองสถานะ */
+/* ---------- ช่องตาราง / การ์ดตัวเลข ---------- */
 export const nextText = (c: MaCar) => (c.next ? thaiDate(c.next.due!) + " · " + MA_ITEMS[c.next.k] : MA_NO_DATA);
+export const ageText = (c: MaCar) => (c.year ? Number(MA_TODAY.slice(6)) - c.year + " ปี" : "-");
 export const isDue = (c: MaCar) => !!c.next?.status;
-/* ตัวเลือกตัวกรอง */
-export const MA_STATUS_OPTS = [MA_DUE.near[0], MA_DUE.over[0]];
+/** maMetrics — ครบกำหนด · ใกล้ครบกำหนด · ต้องเก็บตัวอย่างน้ำมันใน 6 เดือน · ต้องเปลี่ยนน้ำมันไฮดรอลิกใน 6 เดือน */
+export function maMetrics(cars: MaCar[]): [string, string, "Error" | "Warning" | "Brand"][] {
+  const n = (f: (c: MaCar) => boolean) => String(cars.filter(f).length);
+  return [["ครบกำหนดบำรุงรักษา", n((c) => c.next?.status === "over"), "Error"], ["ใกล้ครบกำหนดบำรุงรักษา", n((c) => c.next?.status === "near"), "Warning"],
+    ["ต้องเก็บตัวอย่างน้ำมันใน 6 เดือน", n((c) => c.oilItem?.k === 3 && !!c.oilItem.status), "Brand"], ["ต้องเปลี่ยนน้ำมันไฮดรอลิกใน 6 เดือน", n((c) => c.oilItem?.k === 2 && !!c.oilItem.status), "Brand"]];
+}
+
+/* ---------- ตัวกรอง 6 ช่อง (maList o.filter) ---------- */
+export const MA_LAST_OPTS = ["ภายใน 6 เดือน", "6 ถึง 12 เดือนที่แล้ว", "เกิน 12 เดือน", "ยังไม่เคยบำรุงรักษา"];   // เสนอ
+export const MA_WITHIN_OPTS = ["เลยกำหนดแล้ว", "ภายใน 1 เดือน", "ภายใน 3 เดือน", "ภายใน 6 เดือน"];
+export const MA_OIL_OPTS = ["ผ่าน", "ไม่ผ่าน", "รอผลตรวจ"];   // ค่าที่มีในข้อมูล (จอไม่ได้ระบุตัวเลือก — BACKLOG ค.)
+export function lastMatch(c: MaCar, v: string) {
+  if (v === MA_LAST_OPTS[3]) return !c.latest;
+  if (!c.latest) return false;
+  const d = dayOf(c.latest.date);
+  return v === MA_LAST_OPTS[0] ? d >= addMonths(TODAY, -6) : v === MA_LAST_OPTS[1] ? d < addMonths(TODAY, -6) && d >= addMonths(TODAY, -12) : d < addMonths(TODAY, -12);
+}
+export function withinMatch(c: MaCar, v: string) {
+  if (!c.next) return false;
+  if (v === MA_WITHIN_OPTS[0]) return c.next.status === "over";
+  const m = v === MA_WITHIN_OPTS[1] ? 1 : v === MA_WITHIN_OPTS[2] ? 3 : 6;
+  return c.next.due! <= addMonths(TODAY, m);
+}
+/** รายการที่ครบกำหนด (ใกล้ครบหรือครบแล้ว) */
+export const itemMatch = (c: MaCar, items: string[]) => c.items.some((i) => !!i.status && items.includes(MA_ITEMS[i.k]));
+
+/* ---------- แท็บประวัติการซ่อมบำรุง · การรับประกัน (หน้ารายละเอียด) ---------- */
+/* MA_REPAIRS ของ 82-1145 (แบบ VEH_HISTORY ของปลั๊กอิน Overhaul) — [หมายเลขงาน, วันที่ซ่อมเสร็จ, ศูนย์บริการ, ประเภท, บรรทัดรองประเภท, อาการ, รายละเอียด, ประกัน, ค่าซ่อม] */
+export type Repair = [string, string, string, string, string, string, string, keyof typeof MA_WAR, string];
+export const MA_REPAIRS: Repair[] = [
+  ["RP-2569-0611", "02/09/2569", "อู่ ศรีเมืองการช่าง", "รถเสีย", "", "บูมยกช้า", "เปลี่ยนปั๊มไฮดรอลิก", "in", "28,400"],
+  ["MA-2569-0102", "18/06/2569", "กกฟ.1", "บำรุงรักษา", "ตามวาระ MRZ6900014", "ตรวจตามรอบ", "เปลี่ยนไส้กรองไฮดรอลิก · ไส้กรองอากาศ", "none", "-"],
+  ["PO-680412", "15/12/2568", "บริษัท สยามไฮดรอลิก จำกัด", "Overhaul", "แผน ORZ6800003", "ยกเครื่องตามแผน", "ไฮดรอลิกกระเช้า · เครื่องยนต์", "in", "-"],
+  ["RP-2568-0877", "03/08/2568", "กรย. ภาค 1", "อุบัติเหตุ", "", "กันชนหน้าบุบ", "เปลี่ยนกันชนหน้า", "out", "6,500"],
+];
+/** คันอื่น (จอ Figma มีแค่ 82-1145) = งานบำรุงรักษาตามวาระของคันนั้นในรูปแถวประเภท "บำรุงรักษา" แบบแถว MA-2569-0102 — BACKLOG ค. */
+export const repairsOf = (c: MaCar): Repair[] => c.car.id === MA_CAR ? MA_REPAIRS
+  : c.records.filter((r) => !r.cannot).map((r) => [r.planMr, r.date, unitOf(r.planMr), "บำรุงรักษา", "ตามวาระ " + r.planMr, "ตรวจตามรอบ", r.work, "none", "-"]);
+/* MA_WARRANTY ของ 82-1145 — [ประเภทงาน, เลขที่งาน / PO, ผู้รับจ้าง, รายการที่รับประกัน, วันเริ่ม, วันหมดอายุ, บรรทัดรองวันหมดอายุ, สถานะ] · คันอื่น = ข้อความว่าง (W.15) */
+export const MA_WARRANTY: [string, string, string, string, string, string, string, keyof typeof MA_WAR][] = [
+  ["ซ่อม", "RP-2569-0611", "อู่ ศรีเมืองการช่าง", "ปั๊มไฮดรอลิก", "02/09/2569", "01/03/2570", "เหลือ 111 วัน", "in"],
+  ["Overhaul", "PO-680412", "บริษัท สยามไฮดรอลิก จำกัด", "ไฮดรอลิกกระเช้า · เครื่องยนต์", "15/12/2568", "10/12/2569", "เหลือ 30 วัน", "near"],
+  ["ซ่อม", "RP-2568-0877", "กรย. ภาค 1", "กันชนหน้า", "03/08/2568", "01/11/2568", "", "out"],
+];
+export const warrantyOf = (c: MaCar) => (c.car.id === MA_CAR ? MA_WARRANTY : []);

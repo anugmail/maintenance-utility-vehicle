@@ -4,6 +4,7 @@
    · Background overlay · Featured icon · Tertiary button · Tertiary brand button · Secondary button · Primary button · Input dropdown · Dropdown list ของไฟล์ Component (ดู figma-spec/COMPOSED.md หัวข้อ ซ.)
    MaTable / MaCards = Table / MobileCards ที่ช่อง { text, sub, tone } ทำบรรทัดรอง (Supporting text) เป็นสีเตือน/แดงได้ (Table cell ของต้นแบบมี Supporting text สี gray-600 อย่างเดียว)
    FilterPanel = แผงตัวกรองด้านข้าง (Side panel header / Side panel footer ของไลบรารียังไม่มีในต้นแบบ — ประกอบตามค่าในดัมป์) · มือถือ Bottom sheet */
+import Link from "next/link";
 import { useEffect, useState, type ReactNode } from "react";
 import { BottomSheet } from "@/components/vms/BottomSheet";
 import { BottomSheetFooter } from "@/components/vms/BottomSheetFooter";
@@ -32,10 +33,10 @@ import { useBreakpoint } from "@/lib/useBreakpoint";
 export const VEHICLE_ROOT = "ยานพาหนะ";
 export const LIST_TITLE = "ข้อมูลยานพาหนะ";
 export const LIST_HREF = "/vehicles/maintenance/";
-export const detailHref = (carId: string) => "/vehicles/detail/?car=" + carId;
+export const detailHref = (carId: string, tab?: number) => "/vehicles/detail/?car=" + carId + (tab != null ? "&tab=" + tab : "");
 export const PER = 10;
 
-/* Permission ของ Scenario 24: กบค. เห็นทุกคัน · หน่วยงานเจ้าของรถ เห็นเฉพาะรถในสังกัด · บทบาทอื่นกลับราก (useRoleGuard) */
+/* Permission ของ Scenario 24: กบค. เห็นทุกคัน · ผู้ดูแลยานพาหนะ เห็นเฉพาะยานพาหนะที่ดูแล (ต้นแบบ = หน่วยงานตัวอย่าง OWN_UNIT) · บทบาทอื่นกลับราก (useRoleGuard) */
 /* 9 พ.ย. 2569 ตรวจสิทธิ์: หน่วยงานผู้ดำเนินการทุกหน่วยงาน (กกฟ.1 กกฟ.2 กรย.) เห็นเฉพาะยานพาหนะในแผนของตัวเอง (unit) · กบค. ทุกคัน · เดิมเฉพาะ กกฟ.1 */
 export const MA_ROLES = ["หน่วยงาน (กกฟ.1)", "หน่วยงาน (กกฟ.2)", "หน่วยงาน (กรย.)", "กบค.", "ผู้ดูแลยานพาหนะ"] as const;
 export function useMaAccess() {
@@ -46,12 +47,15 @@ export function useMaAccess() {
 }
 
 /* ---------- ช่องตาราง: { text, sub, tone } = บรรทัดรองสีตามสถานะ (toneText() ใน core.js) ---------- */
-export type MaValue = TableValue | { text: string; sub?: string; tone?: DueTone };
+/* { text, sub, href } = เลขทะเบียนเป็นลิงก์เปิดหน้ารายละเอียดยานพาหนะ (S24 รอบ 2 18a432e · ไม่มีคอลัมน์ปุ่ม … · สไตล์ลิงก์ชุดเดียวกับ PlateLink: info-700 ขีดเส้นใต้) */
+export type MaValue = TableValue | { text: string; sub?: string; tone?: DueTone } | { text: string; sub?: string; href: string };
 const TONE: Record<DueTone, string> = { warning: "text-warning-600", error: "text-error-600" };
 const isTone = (v: MaValue): v is { text: string; sub?: string; tone: DueTone } => !!v && typeof v === "object" && "tone" in v && !!v.tone;
+const isLink = (v: MaValue): v is { text: string; sub?: string; href: string } => !!v && typeof v === "object" && "href" in v && !!v.href;
 const toneNode = (v: { text: string; sub?: string; tone: DueTone }) => (
   <>{v.text}{v.sub && <span className={cx("block text-xs font-normal", TONE[v.tone])}>{v.sub}</span>}</>
 );
+const linkNode = (v: { text: string; href: string }) => <Link href={v.href} data-plate-link className="text-info-700 underline underline-offset-2">{v.text}</Link>;
 
 /* desktop: Table (Content = Table header cell + Table cell) + Table pagination — แบบเดียวกับ components/vms/Table */
 export function MaTable({ cols, rows, Pagination }: { cols: TableColumn[]; rows: MaValue[][]; Pagination?: ReactNode }) {
@@ -66,7 +70,7 @@ export function MaTable({ cols, rows, Pagination }: { cols: TableColumn[]; rows:
               <tr key={ri}>
                 {cols.map((c, ci) => {
                   const v = r[ci];
-                  const p = isTone(v) ? { Style: c.Style ?? "Text", Text: toneNode(v) } : cellProps(v as TableValue, c.Style);
+                  const p = isTone(v) ? { Style: c.Style ?? "Text", Text: toneNode(v) } : isLink(v) ? { Style: c.Style ?? "Text", Text: linkNode(v), SupportingText: v.sub } : cellProps(v as TableValue, c.Style);
                   return <TableCell key={ci} AlternatingFills={ri % 2 === 1} {...p} />;
                 })}
               </tr>
@@ -98,6 +102,8 @@ export function MaCards({ cols, rows }: { cols: TableColumn[]; rows: MaValue[][]
               const Style = i === 0 ? "Lead text" : "Text";
               const last = i === data.length - 1 && !a?.length;
               if (isTone(v)) return <MobileTableItem key={i} Style={Style} Header={head} Text={toneNode(v)} last={last} />;
+              if (v && typeof v === "object" && "pills" in v) return <MobileTableItem key={i} Style="Badge" Header={head} Pill={v.pills[0]} last={last} />;
+              if (isLink(v)) return <MobileTableItem key={i} Style={Style} Header={head} Text={linkNode(v)} SupportingText={v.sub || undefined} last={last} />;
               if (v && typeof v === "object" && "text" in v) return <MobileTableItem key={i} Style={Style} Header={head} Text={v.text} SupportingText={v.sub || undefined} last={last} />;
               return <MobileTableItem key={i} Style={Style} Header={head} Text={v == null ? "" : String(v)} last={last} />;
             })}

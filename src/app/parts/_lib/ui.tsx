@@ -4,6 +4,7 @@
    · ปุ่ม "ส่งออก" แบบปุ่มรายงานของ Vehicle list (5.2) · component: Metric item · Featured icon · Table header cell (Sort icon) · Table cell · Table pagination
    · Mobile table · Mobile table item · Radio text card · Section label ของไฟล์ Component (ดู figma-spec/COMPOSED.md หัวข้อ บ.)
    SortTable = Table ของไลบรารีที่ Table header cell กดเรียงได้ (components/vms/Table ไม่รับ onSort — ประกอบจาก Table header cell + Table cell แบบเดียวกับ MaTable ของ S24) */
+import type { FeaturedIconColor } from "@/components/vms/FeaturedIcon";
 import { MetricItem } from "@/components/vms/MetricItem";
 import { MobileCards } from "@/components/vms/MobileTable";
 import { RadioTextCards } from "@/components/vms/RadioTextCard";
@@ -17,7 +18,7 @@ import { useBreakpoint } from "@/lib/useBreakpoint";
 export const PER = 10;
 
 /* metricRow(): desktop 4 ใบเต็มแถว ช่องไฟ 24 · มือถือ 2 ใบต่อแถว ช่องไฟ 12 */
-export function Metrics({ items }: { items: [string, string, "Brand" | "Success"][] }) {
+export function Metrics({ items }: { items: [string, string, FeaturedIconColor][] }) {   // ใช้ร่วมแดชบอร์ด S24 (maMetrics)
   const mob = useBreakpoint() === "Mobile";
   return (
     <div className={mob ? "grid grid-cols-2 gap-3" : "flex gap-6 [&>*]:flex-1 [&>*]:basis-0"}>

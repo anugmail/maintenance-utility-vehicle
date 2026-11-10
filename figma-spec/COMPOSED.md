@@ -402,3 +402,13 @@ screens.js ไม่ได้วาดปุ่มไปขั้นถัดไ
 | `src/app/acceptance/_lib/ui.tsx` `AckButton` | Primary button ของไฟล์ Component (ButtonBase ตัวเดียวกับ `PrimaryButton`) เปลี่ยนเฉพาะพื้นเป็นตัวแปร Color/surface/success (token `success-600` #17B26A) + ไอคอนนำ check-24-300-round · Disabled = State=Disabled ของไลบรารี | ackRow() ของ screens.js ผูกสีพื้นของ instance Primary button กับตัวแปร Color/surface/success ตามปุ่ม "ตรวจแล้ว" / "ขึ้น SAP แล้ว" หน้า 5.14 - 5.15 Cost & Expense Check ของ UI Release#2 · ไลบรารีไม่มี variant สีเขียว · Hover คงสีเดิม (จอมีแต่ Default) |
 | ผลการตรวจสภาพก่อนบำรุงรักษา (หน้า `/acceptance/car/`) | VehicleAndReporterInfo (แบบตรวจ) + `patterns/CheckTable` readonly + HandoverSignature สถานะลงนามแล้ว (ไม่ส่ง onSign) — ชุดเดียวกับ Step 1 ของ S10 | inspectStep(c, true, true) ของ screens.js · ผลที่ S10 บันทึกแทนไฟล์ PDF |
 
+## ย. S24 แดชบอร์ดการบำรุงรักษารายคัน + รายละเอียดยานพาหนะ 5 แท็บ (R90 · BACKLOG ข้อ 53 · Figma d6ce03a 99bb8b2 18a432e · 10 พ.ย. 2569)
+
+| จุด | ประกอบจาก | เหตุผล |
+|---|---|---|
+| ลิงก์เลขทะเบียนในตาราง `/vehicles/maintenance/` (`MaValue { href }` ใน `vehicles/_lib/ui.tsx`) | Table cell Lead text + ข้อความลิงก์สไตล์ PlateLink (info-700 ขีดเส้นใต้) + Supporting text ประเภทยานพาหนะ · เปิดหน้ารายละเอียดในแท็บเดิม | maRow() ของ screens.js รอบ 2 (18a432e) ไม่มีคอลัมน์ปุ่ม … (Table ของไลบรารี 8 คอลัมน์) เปิดรายละเอียดด้วยลิงก์เลขทะเบียน · PlateLink กลางยังพาไป /soon/ แท็บใหม่ |
+| แผงตัวกรอง 6 ช่อง | FilterShell เดิม + Input dropdown with badges (หลายค่า: ประเภท สังกัด รายการที่ครบกำหนด) + Input dropdown (ค่าเดียว: บำรุงรักษาล่าสุด ครบกำหนดภายใน ผลตรวจน้ำมันล่าสุด) | maList o.filter ของ screens.js · ชิปค่าเดียว = "ชื่อช่อง ค่า" ตามจอ W.9 W.10 |
+| การ์ดตัวเลข 4 ใบ | `Metrics` ของแดชบอร์ด S4 (Metric item · Featured icon Error / Warning / Brand) | metricRow() + maMetrics() |
+| แท็บ Overhaul | Tab item ไม่มี onClick (กดไม่ได้) | เจ้าของงาน "มี tab แต่ไม่มี display ออกมา" |
+| มือถือ: ช่องป้ายในการ์ด (ประกัน · สถานะยานพาหนะ) | Mobile table item Style=Badge | MaCards เดิมไม่รองรับ pills |
+

@@ -8,7 +8,7 @@ import path from "node:path";
 import ts from "typescript";
 
 const WORD = "รถ", USE = "ยานพาหนะ";
-export const ALLOW = ["สามารถ", "รถพ่วงฉีดน้ำ", "อะไรถ"];   // R80 allow ของ component-rules.json + "อะไรถ" (อะไร + ถูก ไม่ใช่คำว่ารถ · ข้อความโหมดพาดู)
+export const ALLOW = ["สามารถ", "รถพ่วงฉีดน้ำ", "รถเสีย", "อะไรถ"];   // R80 allow ของ component-rules.json ("รถเสีย" = ประเภทการซ่อมของระบบ · Figma d6ce03a) + "อะไรถ" (อะไร + ถูก ไม่ใช่คำว่ารถ · ข้อความโหมดพาดู)
 const ROOT = path.join(path.dirname(new URL(import.meta.url).pathname), "..", "src");
 const fix = process.argv.includes("--fix");
 
