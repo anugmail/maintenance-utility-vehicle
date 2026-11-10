@@ -67,7 +67,7 @@ function TripReview() {
   return (
     <>
       <PageHeader Title="ตรวจสอบแผนเดินทาง" Badge={badgeOf(TST[t.status])} onBack={back}
-        crumbs={[{ Text: MENU_HOME, href: "/" }, { Text: "แผนเดินทางรออนุมัติ", href: "/approvals/trips/" }, { Text: t.name }]} />
+        crumbs={[{ Text: MENU_HOME, href: "/" }, { Text: "อนุมัติแผนเดินทาง", href: "/approvals/trips/" }, { Text: t.name }]} />
       <Content>
         {t.status === "review" && approver && <DecisionSection approveSub={APPROVE_SUB} returnSub={RETURN_SUB} {...dec} />}
         <VehicleAndReporterInfo Title="รายละเอียดแผนเดินทาง" pairs={tripKv(t, planLabel)} />

@@ -1,6 +1,6 @@
 "use client";
 /* S2 · หน้า ตรวจสอบแผนบำรุงรักษา (/approvals/plans/detail/?id=Z7000004) — planReview() ใน screens.js · เฉพาะบทบาท ผู้อนุมัติ
-   Page header "ตรวจสอบแผนบำรุงรักษา" · ย้อนกลับ · Breadcrumbs บำรุงรักษาตามวาระ › แผนรออนุมัติ › ชื่อแผน · Badge outline = สถานะแผน
+   Page header "ตรวจสอบแผนบำรุงรักษา" · ย้อนกลับ · Breadcrumbs บำรุงรักษาตามวาระ › อนุมัติแผนบำรุงรักษา › ชื่อแผน (R88 ชื่อหน้ารายการใหม่ 10 พ.ย. 2569) · Badge outline = สถานะแผน
    เนื้อหา ช่องไฟ 32 (planReview() ปรับ 5 พ.ย. 2569 รีวิวทีมออกแบบ):
      รออนุมัติ: ผลการพิจารณาบนสุด (approvals/_shared/Decision · ไม่มีค่าเริ่มต้น) → PlanBody (รายละเอียดแผน + รถในแผน แยกแท็บไตรมาส ดูอย่างเดียว)
        → อะไหล่ในแผน (planPartsSec · 6 พ.ย. 2569 เจ้าของงาน "อยากเพิ่ม section อะใหล่ โดย group ชนิด ประเภท จำนวน ไม่แยกรายคัน แต่ละไตรมาส"):
@@ -68,7 +68,7 @@ function Review() {
   return (
     <>
       <PageHeader Title="ตรวจสอบแผนบำรุงรักษา" Badge={[PST[plan.status][0], badgeOf(PST[plan.status][1])]} onBack={() => router.push(LIST)}
-        crumbs={[{ Text: "บำรุงรักษาตามวาระ", href: "/" }, { Text: "แผนรออนุมัติ", href: LIST }, { Text: plan.name }]} />
+        crumbs={[{ Text: "บำรุงรักษาตามวาระ", href: "/" }, { Text: "อนุมัติแผนบำรุงรักษา", href: LIST }, { Text: plan.name }]} />
       <div className="flex flex-col gap-8">
         {plan.status === "review" && <DecisionSection approveSub={APPROVE_SUB} returnSub={RETURN_SUB} {...dec} />}
         <PlanBody plan={plan} q={q} onQ={setQ} />
