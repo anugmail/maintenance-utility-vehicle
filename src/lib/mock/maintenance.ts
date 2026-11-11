@@ -185,7 +185,7 @@ export function maMetrics(cars: MaCar[]): [string, string, "Error" | "Warning" |
     ["ต้องเก็บตัวอย่างน้ำมันใน 6 เดือน", n((c) => c.oilItem?.k === 3 && !!c.oilItem.status), "Brand"], ["ต้องเปลี่ยนน้ำมันไฮดรอลิกใน 6 เดือน", n((c) => c.oilItem?.k === 2 && !!c.oilItem.status), "Brand"]];
 }
 
-/* ---------- ตัวกรอง 6 ช่อง (maList o.filter) ---------- */
+/* ---------- ตัวกรอง 7 ช่อง (maList o.filter + ครบกำหนดเปลี่ยนน้ำมันไฮดรอลิก 11 พ.ย. 2569) ---------- */
 export const MA_LAST_OPTS = ["ภายใน 6 เดือน", "6 ถึง 12 เดือนที่แล้ว", "เกิน 12 เดือน", "ยังไม่เคยบำรุงรักษา"];   // เสนอ
 export const MA_WITHIN_OPTS = ["เลยกำหนดแล้ว", "ภายใน 1 เดือน", "ภายใน 3 เดือน", "ภายใน 6 เดือน"];
 export const MA_OIL_OPTS = ["ผ่าน", "ไม่ผ่าน", "รอผลตรวจ"];   // ค่าที่มีในข้อมูล (จอไม่ได้ระบุตัวเลือก — BACKLOG ค.)
@@ -195,12 +195,17 @@ export function lastMatch(c: MaCar, v: string) {
   const d = dayOf(c.latest.date);
   return v === MA_LAST_OPTS[0] ? d >= addMonths(TODAY, -6) : v === MA_LAST_OPTS[1] ? d < addMonths(TODAY, -6) && d >= addMonths(TODAY, -12) : d < addMonths(TODAY, -12);
 }
-export function withinMatch(c: MaCar, v: string) {
-  if (!c.next) return false;
-  if (v === MA_WITHIN_OPTS[0]) return c.next.status === "over";
+/** ตัวเลือก MA_WITHIN_OPTS กับวันครบของรายการหนึ่ง · เลยกำหนดแล้ว = ครบแล้ว · ภายใน n เดือน = ครบไม่เกิน n เดือนจากวันนี้ (รวมที่เลยกำหนดแล้ว) */
+function dueWithin(it: DueItem | undefined, v: string) {
+  if (!it || it.due == null) return false;
+  if (v === MA_WITHIN_OPTS[0]) return it.status === "over";
   const m = v === MA_WITHIN_OPTS[1] ? 1 : v === MA_WITHIN_OPTS[2] ? 3 : 6;
-  return c.next.due! <= addMonths(TODAY, m);
+  return it.due <= addMonths(TODAY, m);
 }
+export const withinMatch = (c: MaCar, v: string) => dueWithin(c.next, v);
+/** ครบกำหนดเปลี่ยนน้ำมันไฮดรอลิก (รายการที่ 2 ของ MA_ITEMS · เปลี่ยนทุก 3 ปี) — ตัวกรองและคอลัมน์ของแดชบอร์ด (เจ้าของงาน 11 พ.ย. 2569) */
+export const oilChangeOf = (c: MaCar): DueItem | undefined => c.items[2];
+export const oilDueMatch = (c: MaCar, v: string) => dueWithin(oilChangeOf(c), v);
 /** รายการที่ครบกำหนด (ใกล้ครบหรือครบแล้ว) */
 export const itemMatch = (c: MaCar, items: string[]) => c.items.some((i) => !!i.status && items.includes(MA_ITEMS[i.k]));
 
@@ -213,9 +218,23 @@ export const MA_REPAIRS: Repair[] = [
   ["PO-680412", "15/12/2568", "บริษัท สยามไฮดรอลิก จำกัด", "Overhaul", "แผน ORZ6800003", "ยกเครื่องตามแผน", "ไฮดรอลิกกระเช้า · เครื่องยนต์", "in", "-"],
   ["RP-2568-0877", "03/08/2568", "กรย. ภาค 1", "อุบัติเหตุ", "", "กันชนหน้าบุบ", "เปลี่ยนกันชนหน้า", "out", "6,500"],
 ];
-/** คันอื่น (จอ Figma มีแค่ 82-1145) = งานบำรุงรักษาตามวาระของคันนั้นในรูปแถวประเภท "บำรุงรักษา" แบบแถว MA-2569-0102 — BACKLOG ค. */
-export const repairsOf = (c: MaCar): Repair[] => c.car.id === MA_CAR ? MA_REPAIRS
-  : c.records.filter((r) => !r.cannot).map((r) => [r.planMr, r.date, unitOf(r.planMr), "บำรุงรักษา", "ตามวาระ " + r.planMr, "ตรวจตามรอบ", r.work, "none", "-"]);
+/* แท็บประวัติการซ่อมบำรุง 2 มุมมอง (เจ้าของงาน 11 พ.ย. 2569 "tab ประวัติจะแบ่งเป็น 2 ประวัติคือประวัติการบำรุงรักษาจะแสดงรายละเอียดเกี่ยวกับบำรุงรักษา
+   แต่ถ้าเป็นประวัติการซ่อม จะแสดงประวัติการบำรุงรักษาด้วย โดยเรียงจากเวลาที่เกิดขึ้น"):
+     ประวัติการบำรุงรักษา = c.records (บันทึกเดียวกับแท็บตารางบำรุงรักษา)
+     ประวัติการซ่อม = งานซ่อม/Overhaul (MA_REPAIRS ยกเว้นแถวประเภท "บำรุงรักษา") + บันทึกการบำรุงรักษาทุกครั้งของคันนั้น เรียงวันที่ปิดงานใหม่สุดก่อน
+     (แถว MA-2569-0102 ของจอ Figma ซ้ำกับบันทึก 18/06/2569 ⇒ ใช้บันทึกแทน ไม่นับซ้ำ) · ป้ายประเภท บำรุงรักษา · ซ่อม · Overhaul */
+export type HistKind = "ma" | "repair" | "overhaul";
+export const MA_KIND: Record<HistKind, [string, PillColor]> = { ma: ["บำรุงรักษา", "Brand"], repair: ["ซ่อม", "Warning"], overhaul: ["Overhaul", "Purple"] };
+export interface HistRow { kind: HistKind; no: string; sub?: string; date: string; center: string; text: string; detail: string; war: keyof typeof MA_WAR; cost: string; rec?: MaRecord }
+export function repairHistoryOf(c: MaCar): HistRow[] {
+  const repairs: HistRow[] = (c.car.id === MA_CAR ? MA_REPAIRS : []).filter((h) => h[3] !== "บำรุงรักษา").map((h) => ({
+    kind: h[3] === "Overhaul" ? "overhaul" : "repair", no: h[0], sub: h[4] || h[3], date: h[1], center: h[2], text: h[5], detail: h[6], war: h[7], cost: h[8],
+  }));
+  const ma: HistRow[] = c.records.map((r) => ({
+    kind: "ma", no: r.planMr, sub: r.tripName, date: r.date, center: unitOf(r.planMr), text: r.cannot ? r.work : "ตรวจตามรอบ", detail: r.cannot ?? r.work, war: "none", cost: "-", rec: r,
+  }));
+  return [...repairs, ...ma].sort((a, b) => dayOf(b.date) - dayOf(a.date));
+}
 /* MA_WARRANTY ของ 82-1145 — [ประเภทงาน, เลขที่งาน / PO, ผู้รับจ้าง, รายการที่รับประกัน, วันเริ่ม, วันหมดอายุ, บรรทัดรองวันหมดอายุ, สถานะ] · คันอื่น = ข้อความว่าง (W.15) */
 export const MA_WARRANTY: [string, string, string, string, string, string, string, keyof typeof MA_WAR][] = [
   ["ซ่อม", "RP-2569-0611", "อู่ ศรีเมืองการช่าง", "ปั๊มไฮดรอลิก", "02/09/2569", "01/03/2570", "เหลือ 111 วัน", "in"],
