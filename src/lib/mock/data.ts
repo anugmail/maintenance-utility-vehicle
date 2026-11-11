@@ -99,6 +99,15 @@ export const DISTRICTS: Record<string, string[]> = {
    (src/domains/shared/types/vehicle-inspection.types.ts: กระเช้าฮอทไลน์ · กระเช้าแก้ไฟ · รถพ่วงฉีดน้ำ) · ค่าสมมติจากยี่ห้อ/รุ่น: ถังฉีดน้ำ = รถพ่วงฉีดน้ำ · Tadano = กระเช้าฮอทไลน์ · ที่เหลือ = กระเช้าแก้ไฟ */
 export const VEHICLE_TYPES = ["กระเช้าฮอทไลน์", "กระเช้าแก้ไฟ", "รถพ่วงฉีดน้ำ"];
 export const typeOf = (model: string) => /ฉีดน้ำ/.test(model) ? VEHICLE_TYPES[2] : /Tadano/.test(model) ? VEHICLE_TYPES[0] : VEHICLE_TYPES[1];
+/* ยี่ห้อ/รุ่นของยานพาหนะ (แชสซี) และของเครื่องจักร จากข้อความยี่ห้อ/รุ่น "แชสซี + เครื่องจักร" (11 พ.ย. 2569 BACKLOG ข้อ 64 · หน้าไตรมาส S6)
+   "Isuzu FTR + กระเช้า Aichi SK17A" → ยานพาหนะ "Isuzu FTR" · เครื่องจักร ยี่ห้อ "Aichi" รุ่น "SK17A"
+   ไม่มียี่ห้อเครื่องจักร (รถพ่วงฉีดน้ำ "Hino FM + ถังฉีดน้ำ 6,000 ลิตร") → ยี่ห้อ "-" · รุ่น = สเปกถัง "ถังฉีดน้ำ 6,000 ลิตร" (ค่าสมมติ · ข้อมูลจริงรอ API เครื่องจักร) */
+export const machineOf = (model: string): { vehicle: string; brand: string; model: string } => {
+  const [vehicle, rest] = model.split(" + ");
+  if (!rest) return { vehicle: model, brand: "-", model: "-" };
+  const m = rest.match(/^\S*[\u0E00-\u0E7F]\S*\s+([A-Za-z][\w.-]*)\s+(.+)$/);
+  return m ? { vehicle, brand: m[1], model: m[2] } : { vehicle, brand: "-", model: rest };
+};
 
 export type CarStatus = "ok" | "repair" | "transfer" | "dispose";
 export interface Car { plate: string; model: string; owner: string; status: CarStatus; type: string }

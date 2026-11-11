@@ -155,6 +155,8 @@ export const badgeOf = (p: [string, PillColor]): [string, BadgeOutlineColor] =>
 export interface Trip {
   id: string; planId: string; quarter: number; name: string; mode: "self" | "hire";
   vendor?: string; contract?: string; carIds: string[];
+  /** เบอร์โทรผู้รับจ้าง (แผนจ้าง · เติมจากข้อมูลผู้รับจ้าง แก้ได้ · บังคับ — 11 พ.ย. 2569 BACKLOG ข้อ 64) */
+  vendorTel?: string;
   locs: Record<string, string>; phones: Record<string, string>;
   /** ชื่อผู้ดูแลยานพาหนะที่แก้รายคัน (6 พ.ย. 2569 · ไม่มี = ผู้ควบคุมรถ) */
   names?: Record<string, string>;
@@ -176,12 +178,15 @@ export const staffTelOf = (t: Pick<Trip, "staffTel"> | null | undefined, name: s
 export const CREATOR = "นายวิชัย ทองดี (กกฟ.1)";   // CREATOR ของ screens.js (6 พ.ย. 2569 ผู้สร้าง = หน่วยงาน)
 export const CREATOR_SHORT = "นายวิชัย ทองดี";
 export const SENT_AT = "03/11/2569", APPROVED_AT = "04/11/2569";
+/* tel = เบอร์โทรผู้รับจ้างในข้อมูลผู้รับจ้าง (ค่าสมมติ · 11 พ.ย. 2569 เจ้าของงาน "ตอนที่สร้างแผนการเดินทาง ที่ต้องใส่เบอร์ หรือดึงเบอร์ผู้รับจ้างมา" · BACKLOG ข้อ 64) */
 export const VENDORS = [   // VENDORS: ชื่อ · ประเภทรถ (Supporting text)
-  { name: "บริษัท สยามไฮดรอลิก เซอร์วิส จำกัด", types: "กระเช้าแก้ไฟ · กระเช้าฮอทไลน์" },   // 6 พ.ย. 2569 ประเภทตามโค้ดจริง (screens.js VENDORS)
-  { name: "หจก. ช่างกลภาคอีสาน", types: "กระเช้าแก้ไฟ" },
-  { name: "บริษัท เครนเทค เอ็นจิเนียริ่ง จำกัด", types: "รถพ่วงฉีดน้ำ" },
-  { name: "หจก. ล้านนาไฮดรอลิก", types: "กระเช้าแก้ไฟ · รถพ่วงฉีดน้ำ" },
+  { name: "บริษัท สยามไฮดรอลิก เซอร์วิส จำกัด", types: "กระเช้าแก้ไฟ · กระเช้าฮอทไลน์", tel: "02-917-4410" },   // 6 พ.ย. 2569 ประเภทตามโค้ดจริง (screens.js VENDORS)
+  { name: "หจก. ช่างกลภาคอีสาน", types: "กระเช้าแก้ไฟ", tel: "043-224-918" },
+  { name: "บริษัท เครนเทค เอ็นจิเนียริ่ง จำกัด", types: "รถพ่วงฉีดน้ำ", tel: "038-196-552" },
+  { name: "หจก. ล้านนาไฮดรอลิก", types: "กระเช้าแก้ไฟ · รถพ่วงฉีดน้ำ", tel: "053-280-117" },
 ];
+/** เบอร์โทรผู้รับจ้างของใบ = ที่กรอกในฟอร์ม (vendorTel) · ใบเดิมที่ไม่มี = เบอร์ในข้อมูลผู้รับจ้าง */
+export const vendorTelOf = (t: Pick<Trip, "vendor" | "vendorTel">) => t.vendorTel || VENDORS.find((v) => v.name === t.vendor)?.tel || "";
 export const TRIP_RETURN_REASON = "ช่วงวันที่ 03 ถึง 07/11/2569 ตรงกับแผนดับไฟของ กฟฉ.1 ขอนแก่น กรุณาเลื่อนเป็นสัปดาห์ถัดไป";
 
 const base = { planId: PLAN_ID, quarter: 1, createdBy: CREATOR, sentAt: SENT_AT };
@@ -232,7 +237,7 @@ export const tripCars = (t: Trip, only?: string) => t.carIds.map(carOf).filter((
 export const tripKv = (t: Trip, planLabel: string): [string, string][] => [
   ["ชื่อแผนเดินทาง", t.name], ["แผน", planLabel], ["ไตรมาส", "ไตรมาส " + t.quarter], ["รูปแบบดำเนินการ", t.mode === "hire" ? "จ้างดำเนินการ" : "ดำเนินการเอง"],
   ...(t.mode === "hire"
-    ? [["ผู้รับจ้าง", t.vendor ?? "-"], ["เลขที่สัญญา/ใบสั่งจ้าง", t.contract || "-"], ["ช่วงวันทำงาน", tripRange(t)]] as [string, string][]
+    ? [["ผู้รับจ้าง", t.vendor ?? "-"], ["เบอร์โทรผู้รับจ้าง", vendorTelOf(t) || "-"], ["เลขที่สัญญา/ใบสั่งจ้าง", t.contract || "-"], ["ช่วงวันทำงาน", tripRange(t)]] as [string, string][]
     : [["ช่วงวันเดินทาง", tripRange(t)], ["พนักงานที่เดินทาง", (t.staff ?? []).join(", ")]] as [string, string][]),
   ["ผู้สร้าง", t.createdBy], ["วันที่ส่ง", t.sentAt],
 ];
@@ -240,7 +245,7 @@ export const tripKv = (t: Trip, planLabel: string): [string, string][] => [
 export const tripViewKv = (t: Trip, planLabel: string): [string, string][] => [
   ["ชื่อแผนเดินทาง", t.name], ["แผน", planLabel], ["ไตรมาส", "ไตรมาส " + t.quarter],
   ...(t.mode === "hire"
-    ? [["ช่วงวันทำงาน", tripRange(t)], ["ผู้รับจ้าง", t.vendor ?? "-"]] as [string, string][]
+    ? [["ช่วงวันทำงาน", tripRange(t)], ["ผู้รับจ้าง", t.vendor ?? "-"], ["เบอร์โทรผู้รับจ้าง", vendorTelOf(t) || "-"]] as [string, string][]
     : [["ช่วงวันเดินทาง", tripRange(t)], ["พนักงานที่เดินทาง", (t.staff ?? []).join(", ")]] as [string, string][]),
   ["ผู้สร้าง", t.createdBy], ["อนุมัติเมื่อ", t.approvedAt ?? "-"],
 ];

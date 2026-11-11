@@ -3,7 +3,9 @@
    Content ช่องไฟ 32 (ลำดับส่วน 6 พ.ย. 2569 เจ้าของงาน "ย้าย ช่วงวันเดินทางขึ้นมาก่อนเลือกรถ" + "พนักงาน ขึ้นไปก่อนการเลือกรถ"):
      (แก้ไข) Alert Error "ผู้อนุมัติส่งกลับให้แก้ไข" + เหตุผล
      ข้อมูลแผนเดินทาง (Section header) — Text input ชื่อแผนเดินทาง · Horizontal radio groups รูปแบบดำเนินการ "ดำเนินการเอง" / "จ้างดำเนินการ" (ครึ่งแถว · มือถือเรียงลง)
-     (จ้าง) ผู้รับจ้าง (Section header) — Input dropdown ค้นหาผู้รับจ้าง + Dropdown list (ชื่อ · ประเภทรถ) · Text input เลขที่สัญญา/ใบสั่งจ้าง (ถ้ามี)
+     (จ้าง) ผู้รับจ้าง (Section header) — Input dropdown ค้นหาผู้รับจ้าง + Dropdown list (ชื่อ · ประเภทรถ) · Text input เบอร์โทรผู้รับจ้าง · Text input เลขที่สัญญา/ใบสั่งจ้าง (ถ้ามี)
+       11 พ.ย. 2569 เจ้าของงาน "ตอนที่สร้างแผนการเดินทาง ที่ต้องใส่เบอร์ หรือดึงเบอร์ผู้รับจ้างมา" (BACKLOG ข้อ 64) ⇒ เลือกผู้รับจ้าง = เติมเบอร์จากข้อมูลผู้รับจ้าง (VENDORS tel)
+       แก้ได้ · บังคับ "กรุณาระบุเบอร์โทรผู้รับจ้าง" · desktop 3 ช่องในแถวเดียว · แสดงในรายละเอียดแผนเดินทาง (tripKv · tripViewKv)
      ช่วงวันเดินทาง | ช่วงวันทำงาน (Section header) — Text input 2 ช่อง + ช่องว่าง (หนึ่งในสาม) · desktop โฟกัสแล้วเปิด Date picker Type=Dual ใต้ช่องเริ่ม
      (ตรวจเอง) พนักงานที่เดินทาง (Section header + Badge "n คน") — 6 พ.ย. 2569 เจ้าของงาน "เปลี่ยนคำของพนักงาน กบค" + "จำนวนคนเดินทาง เพิ่ม ได้ไม่จำกัด"
        9 พ.ย. 2569 เจ้าของงาน "พนักงานสามารถเพิ่มได้ไม่จำกัด และ เป็น 1 คน 1 แถว เป็นชื่อ สกุล ตำแหน่ง เบอร์โทร" (Figma d5d40a2)
@@ -46,7 +48,7 @@ import { QPART_COLS, qpartRow } from "@/lib/mock/plan";
 import { tripVCells, tripVCols, workOf } from "@/lib/mock/tripCols";
 import { notify, useMock, useRole } from "@/lib/mock/store";
 import { canManage, usePlanGate } from "@/lib/mock/planFlow";
-import { CREATOR, SENT_AT, STAFF, VENDORS, qEditOf, quarterCars, carOf, nextTripId, putTrip, quarterTrips, staffPos, staffTelOf, tripsOf, type Trip, type TripCar } from "@/lib/mock/trips";
+import { CREATOR, SENT_AT, STAFF, VENDORS, vendorTelOf, qEditOf, quarterCars, carOf, nextTripId, putTrip, quarterTrips, staffPos, staffTelOf, tripsOf, type Trip, type TripCar } from "@/lib/mock/trips";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useOutside } from "@/lib/useOutside";
 import { useProtoForm } from "@/lib/protoForm";
@@ -61,13 +63,13 @@ const MODES = ["ดำเนินการเอง", "จ้างดำเน
 
 
 /* staff = ชื่อ-สกุลรายแถว · tels = เบอร์โทรรายแถว (ลำดับเดียวกัน) */
-interface Values { name: string; mode: "self" | "hire"; vendor: string; contract: string; carIds: string[]; locs: Record<string, string>; phones: Record<string, string>; names: Record<string, string>; works: Record<string, [string, string]>; d1: string; d2: string; staff: string[]; tels: string[] }
+interface Values { name: string; mode: "self" | "hire"; vendor: string; vendorTel: string; contract: string; carIds: string[]; locs: Record<string, string>; phones: Record<string, string>; names: Record<string, string>; works: Record<string, [string, string]>; d1: string; d2: string; staff: string[]; tels: string[] }
 /* แถวพนักงานอย่างน้อย 2 แถว (ฟอร์มว่างแสดง 2 แถว) */
 const atLeast2 = (a: string[]) => (a.length >= 2 ? a : [...a, "", ""].slice(0, 2));
 const fromTrip = (t?: Trip, mode: "self" | "hire" = "self"): Values => {
-  if (!t) return { name: "", mode, vendor: "", contract: "", carIds: [], locs: {}, phones: {}, names: {}, works: {}, d1: "", d2: "", staff: ["", ""], tels: ["", ""] };
+  if (!t) return { name: "", mode, vendor: "", vendorTel: "", contract: "", carIds: [], locs: {}, phones: {}, names: {}, works: {}, d1: "", d2: "", staff: ["", ""], tels: ["", ""] };
   const staff = atLeast2([...(t.staff ?? [])]);
-  return { name: t.name, mode: t.mode, vendor: t.vendor ?? "", contract: t.contract ?? "", carIds: [...t.carIds], locs: { ...t.locs }, phones: { ...t.phones }, names: { ...(t.names ?? {}) }, works: { ...(t.works ?? {}) }, d1: t.d1, d2: t.d2,
+  return { name: t.name, mode: t.mode, vendor: t.vendor ?? "", vendorTel: t.mode === "hire" ? vendorTelOf(t) : "", contract: t.contract ?? "", carIds: [...t.carIds], locs: { ...t.locs }, phones: { ...t.phones }, names: { ...(t.names ?? {}) }, works: { ...(t.works ?? {}) }, d1: t.d1, d2: t.d2,
     staff, tels: staff.map((n) => (n ? staffTelOf(t, n) : "")) };
 };
 
@@ -143,14 +145,14 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
   /* ตรวจและส่ง — ข้อความ error ขึ้นเมื่อออกจากช่องโดยยังว่าง (touched) · ปุ่มยืนยัน Disabled จนกว่าครบ */
   const E = (k: string, m: string, bad: boolean) => (touched[k] && bad ? m : undefined);
   const staffOk = !!v.staff[0] && !!v.staff[1];
-  const valid = !!v.name.trim() && (!hire || !!v.vendor) && cars.length > 0 && !!v.d1.trim() && !!v.d2.trim() && (hire || staffOk);
+  const valid = !!v.name.trim() && (!hire || (!!v.vendor && !!v.vendorTel.trim())) && cars.length > 0 && !!v.d1.trim() && !!v.d2.trim() && (hire || staffOk);
   const submit = () => {
     if (!valid) return;
     if (mock.failSave) { notify("general error", "Error"); return; }
     const all = tripsOf(mock);
     const t: Trip = {
       id: edit?.id ?? nextTripId(all, v.mode), planId, quarter: q, name: v.name.trim(), mode: v.mode,
-      vendor: hire ? v.vendor : undefined, contract: hire ? v.contract.trim() || undefined : undefined,
+      vendor: hire ? v.vendor : undefined, vendorTel: hire ? v.vendorTel.trim() : undefined, contract: hire ? v.contract.trim() || undefined : undefined,
       carIds: v.carIds, locs: v.locs, phones: v.phones, names: v.names, works: v.works, d1: v.d1.trim(), d2: v.d2.trim(), status: "review",
       staff: hire ? undefined : v.staff.filter(Boolean), staffTel: hire ? undefined : Object.fromEntries(v.staff.flatMap((n, i) => (n ? [[n, v.tels[i]?.trim() ?? ""]] : []))),
       createdBy: edit?.createdBy ?? CREATOR, sentAt: edit?.sentAt ?? SENT_AT,
@@ -191,7 +193,7 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
     fill: () => {
       const ids = v.carIds.length ? v.carIds : pool.filter((c) => !taken[c.id]).slice(0, 3).map((c) => c.id);
       const staff = hire || (v.staff[0] && v.staff[1]) ? v.staff : [v.staff[0] || STAFF.find((n) => n !== v.staff[1])!, v.staff[1] || STAFF.find((n) => n !== (v.staff[0] || STAFF[0]))!, ...v.staff.slice(2)];
-      put({ name: v.name.trim() ? v.name : (hire ? "จ้างบำรุงรักษายานพาหนะ " : "ตรวจยานพาหนะ ") + nowQ, vendor: hire && !v.vendor ? VENDORS[0].name : v.vendor,
+      put({ name: v.name.trim() ? v.name : (hire ? "จ้างบำรุงรักษายานพาหนะ " : "ตรวจยานพาหนะ ") + nowQ, vendor: hire && !v.vendor ? VENDORS[0].name : v.vendor, vendorTel: hire && !v.vendorTel.trim() ? (VENDORS.find((x) => x.name === (v.vendor || VENDORS[0].name))?.tel ?? "") : v.vendorTel,
         d1: v.d1 || "17/11/2569", d2: v.d2 || "21/11/2569", carIds: ids, staff, tels: staff.map((n, i) => v.tels[i] || (n ? staffTelOf(edit, n) : "")) });
       setTouched({});
     },
@@ -218,9 +220,11 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
             <SectionHeader Title="ผู้รับจ้าง" />
             {row(<>
               <SearchPick label="ผู้รับจ้าง" placeholder="ค้นหาชื่อผู้รับจ้าง" value={v.vendor} options={VENDORS.map((x) => ({ Text: x.name, SupportingText: x.types }))}
-                onPick={(vendor) => put({ vendor })} error={E("vendor", "กรุณาเลือกผู้รับจ้าง", !v.vendor)} onLeave={touch("vendor")} />
+                onPick={(vendor) => put({ vendor, vendorTel: VENDORS.find((x) => x.name === vendor)?.tel ?? "" })} error={E("vendor", "กรุณาเลือกผู้รับจ้าง", !v.vendor)} onLeave={touch("vendor")} />
+              <TextInput LabelText="เบอร์โทรผู้รับจ้าง" Text={v.vendorTel} Placeholder="0XX-XXX-XXXX" inputMode="tel" onChange={(vendorTel) => put({ vendorTel })} onBlur={touch("vendorTel")}
+                State={E("vendorTel", "x", !v.vendorTel.trim()) ? "Error" : undefined} HelperText={E("vendorTel", "กรุณาระบุเบอร์โทรผู้รับจ้าง", !v.vendorTel.trim())} />
               <TextInput LabelText="เลขที่สัญญา/ใบสั่งจ้าง" Optional Text={v.contract} Placeholder="ระบุเลขที่สัญญาหรือใบสั่งจ้าง" onChange={(contract) => put({ contract })} />
-            </>, 2)}
+            </>, 3)}
           </Section>
         )}
 

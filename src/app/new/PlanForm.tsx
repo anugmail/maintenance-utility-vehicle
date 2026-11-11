@@ -57,7 +57,7 @@ import { allQuarterRows, carParam, roleUnit, draftFromPlan, draftKey, fillDraft,
 import { useProtoForm } from "@/lib/protoForm";
 import { notify, setMock, useMock, useRole } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
-import { histText, lastMaOf, lastRepairOf } from "@/lib/mock/vehicleHistory";
+import { MA_HEAD, REPAIR_HEAD, histText, lastMaOf, lastRepairOf } from "@/lib/mock/vehicleHistory";
 import { CheckTable, type CheckRow } from "./CheckTable";
 import { TripCarPicker } from "@/app/quarter/_shared/TripCarPicker";
 import { FilterShell } from "@/app/vehicles/_lib/ui";
@@ -69,10 +69,11 @@ export const CARP_COLS: TableColumn[] = [
 ];
 /* PICK_COLS — แท็บทั้งหมด · Q_COLS — แท็บไตรมาส n (screens.js) */
 /* 11 พ.ย. 2569 เจ้าของงาน "เพิ่มตอนเลือกรถเข้าแผน เพิ่มคอลัมน์ วันที่บำรุงล่าสุดเมื่อไร และอยากเพิ่ม วันที่ซ่อมล่าสุดด้วย" (BACKLOG ข้อ 64) ⇒ HIST_COLS ต่อจากเขต / หน่วยงาน
-   ทั้งสองแท็บ (ทั้งหมด 6 คอลัมน์ · ไตรมาส 8 คอลัมน์ = เต็ม Table ของไลบรารี R25) · ไม่มีข้อมูล = "ไม่มีข้อมูล" (lib/mock/vehicleHistory.ts) · มือถือ = บรรทัดรองของรายการ */
-const HIST_COLS: TableColumn[] = [{ head: "บำรุงรักษาล่าสุด", width: 130 }, { head: "ซ่อมล่าสุด", width: 120 }];
-const PICK_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 260 }, { head: "ประเภทยานพาหนะ", width: 150 }, { head: "เขต / หน่วยงานเจ้าของยานพาหนะ" }, ...HIST_COLS, { head: "ไตรมาส", width: 140, Style: "Badge" }];
-const Q_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 240 }, { head: "ประเภทยานพาหนะ", width: 140 }, { head: "เขต / หน่วยงานเจ้าของยานพาหนะ" }, ...HIST_COLS, { head: "น้ำมันไฮดรอลิก", width: 150 }, { head: "อะไหล่อื่นๆ", width: 150 }, { head: "", width: 60, Style: "Action icons" }];   // 6 พ.ย. 2569 ท้ายแถว = ปุ่ม … (Q_MENU) แทนไอคอนแก้ไข
+   ทั้งสองแท็บ (ทั้งหมด 6 คอลัมน์ · ไตรมาส 8 คอลัมน์ = เต็ม Table ของไลบรารี R25) · ไม่มีข้อมูล = "ไม่มีข้อมูล" (lib/mock/vehicleHistory.ts) · มือถือ = บรรทัดรองของรายการ
+   แก้คำ 11 พ.ย. 2569 "วันที่บำรุงเครื่องจักรล่าสุด … วันที่ซ่อมเครื่องจักรล่าสุด" ⇒ หัว "บำรุงรักษาเครื่องจักรล่าสุด" "ซ่อมเครื่องจักรล่าสุด" (MA_HEAD REPAIR_HEAD) */
+const HIST_COLS: TableColumn[] = [{ head: MA_HEAD, width: 200 }, { head: REPAIR_HEAD, width: 170 }];
+const PICK_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 250 }, { head: "ประเภทยานพาหนะ", width: 150 }, { head: "เขต / หน่วยงานเจ้าของยานพาหนะ" }, ...HIST_COLS, { head: "ไตรมาส", width: 130, Style: "Badge" }];
+const Q_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 200 }, { head: "ประเภทยานพาหนะ", width: 152 }, { head: "เขต / หน่วยงานเจ้าของยานพาหนะ" }, ...HIST_COLS, { head: "น้ำมันไฮดรอลิก", width: 140 }, { head: "อะไหล่อื่นๆ", width: 130 }, { head: "", width: 60, Style: "Action icons" }];   // 6 พ.ย. 2569 ท้ายแถว = ปุ่ม … (Q_MENU) แทนไอคอนแก้ไข
 const PER = 10;
 /* S19: Alert เหนือฟอร์มแก้ไข (ALERT_RETURNED · ALERT_APPROVED) */
 const ALERT_APPROVED = ["แผนนี้อนุมัติแล้ว", "เมื่อบันทึก แผนจะกลับเป็นสถานะรออนุมัติ และต้องให้ผู้อนุมัติตรวจสอบอีกครั้ง"] as const;

@@ -15,12 +15,13 @@ import { EmptyStateDataEmpty } from "@/components/vms/EmptyStateDataEmpty";
 import { TextInput } from "@/components/vms/TextInput";
 import type { TripCar } from "@/lib/mock/trips";
 import { useBreakpoint } from "@/lib/useBreakpoint";
-import { histText, lastMaOf, lastRepairOf } from "@/lib/mock/vehicleHistory";
+import { MA_HEAD, REPAIR_HEAD, histText, lastMaOf, lastRepairOf } from "@/lib/mock/vehicleHistory";
 import { CheckTable } from "@/app/new/CheckTable";
 
 /* 11 พ.ย. 2569 เจ้าของงาน "อยากเพิ่ม วันที่ซ่อมล่าสุดด้วย ตอนเลือกรถเข้าแผน และตอนเลือกเข้าแผนการเดินทาง" (BACKLOG ข้อ 64) ⇒ บำรุงรักษาล่าสุด · ซ่อมล่าสุด (lib/mock/vehicleHistory.ts)
    ใช้ทุก popup ที่เรียก TripCarPicker: เพิ่มยานพาหนะเข้าแผนเดินทาง (S6 S9) · เพิ่มยานพาหนะเข้าไตรมาส (หน้าไตรมาส S6 · ฟอร์มแผน S1 S19 R75) · มือถือ = บรรทัดรองของรายการ */
-const COLS = [{ head: "ทะเบียน", width: 165 }, { head: "ยี่ห้อ/รุ่น" }, { head: "หน่วยงานเจ้าของยานพาหนะ", width: 150 }, { head: "บำรุงรักษาล่าสุด", width: 140 }, { head: "ซ่อมล่าสุด", width: 110 }];
+/* แก้คำ 11 พ.ย. 2569 เป็นวันของเครื่องจักร (MA_HEAD REPAIR_HEAD) — popup กว้าง 800 ⇒ หน่วยงานเจ้าของยานพาหนะย้ายเป็นบรรทัดรองของทะเบียน (แบบ unitSub ของ tripVCols) */
+const COLS = [{ head: "ทะเบียน", width: 190 }, { head: "ยี่ห้อ/รุ่น" }, { head: MA_HEAD, width: 200 }, { head: REPAIR_HEAD, width: 165 }];
 const SEARCH = "ค้นหาทะเบียน, ยี่ห้อ/รุ่น, หน่วยงาน";
 
 /* title / sub / okText / emptyText = popup "เพิ่มรถเข้าไตรมาส n" ของ E.1 (qAddModal() → tripCarModal(o.cars o.title o.sub o.okText)) · taken = รถที่อยู่ในแผนเดินทางอื่น (แสดงแต่เลือกไม่ได้) */
@@ -42,7 +43,7 @@ function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่
   const search = <TextInput Label={false} Size={mob ? "lg" : "md"} LeadingIconSwap="search-24-300-round" Text={q} Placeholder={SEARCH} onChange={setQ} aria-label={SEARCH} className={mob ? "w-full" : "w-80"} />;
   const rows = shown.map((c) => {
     const inTrip = taken[c.id] ? "อยู่ในแผนเดินทาง " + taken[c.id] : undefined;
-    return { key: c.id, text: c.plate, sub: inTrip, mobileSub: (inTrip ? inTrip + " · " : "") + histText(c.plate), disabled: !!taken[c.id], cells: [c.model, c.owner, lastMaOf(c.plate), lastRepairOf(c.plate)] };
+    return { key: c.id, text: c.plate, sub: c.owner + (inTrip ? " · " + inTrip : ""), mobileSub: (inTrip ? inTrip + " · " : "") + histText(c.plate), disabled: !!taken[c.id], cells: [c.model, lastMaOf(c.plate), lastRepairOf(c.plate)] };
   });
 
   const body = !pool.length
