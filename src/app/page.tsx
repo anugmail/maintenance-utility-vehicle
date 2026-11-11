@@ -12,7 +12,7 @@
    ผู้อนุมัติเข้ารากแล้วไปหน้าเริ่มของบทบาท (routes.md §2: /approvals/plans/ · กบค. คลัง ตัดพร้อม S22 6 พ.ย. 2569)
    แผงตัวกรอง (listScreen o.filter · 6 พ.ย. 2569 รีวิว "filter หน้ารายการแผน เขต · หน่วยงานหน้างาน กรย. 12 เขต, กกฟ. 1and2" + "กบค. อยากเห็นทุกแผน"):
      ปุ่ม "ตัวกรอง" ของ Table header เปิด FilterShell (แผงตัวกรองแบบเดียวกับฟอร์มแผน S1 · มือถือ Bottom sheet) ช่อง `Input dropdown with badges` (Optional) หลายค่า
-     เขต (12 เขตของภาค 1–4 · DISTRICTS ไม่รวม กกฟ.1 กกฟ.2 ของ สนง. ที่อยู่ในช่องหน่วยงานหน้างานแล้ว — Figma R93 132a652) · หน่วยงานหน้างาน (UNITS) · กดตกลงจึงใช้ → ชิปใต้แถวค้นหา (กดเอาออกทีละตัว) + Pill จำนวนบนปุ่มตัวกรอง · ไม่ตรง = Empty state/Search not found + ล้างตัวกรอง
+     เขต (12 เขตของภาค 1–4 · DISTRICTS ไม่รวมเขตของ สนง. กกฟ.1 กกฟ.2 กบร. กฝช. กบค. กบส. — Figma R93 132a652 · BACKLOG ข้อ 64ข) · หน่วยงานหน้างาน (UNITS) · กดตกลงจึงใช้ → ชิปใต้แถวค้นหา (กดเอาออกทีละตัว) + Pill จำนวนบนปุ่มตัวกรอง · ไม่ตรง = Empty state/Search not found + ล้างตัวกรอง
      ตามแผงตัวกรอง "PEA Car Cost Filter" ของ UI Release#2 (แบบเดียวกับ R77 ของฟอร์มแผน) */
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
