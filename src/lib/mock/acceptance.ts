@@ -1,14 +1,15 @@
 "use client";
 /* ข้อมูลจำลอง S13 ผู้ดูแลยานพาหนะ รับทราบผลและประเมินความพึงพอใจรายคัน (Figma 9607c3b · R89 · 10 พ.ย. 2569)
    ยกจาก screens.js: ACC · ACC_COLS · ACK_CARS · ACK_LIST · accRows · ackResult · NOTI_ACK · feedback
-   เจ้าของงาน 10 พ.ย. 2569: ผู้กด = ผู้ดูแลยานพาหนะที่ระบุรายคันในแผนเดินทาง · ประเมิน 1–5 ย้ายจาก S14 มาไว้ตอนรับทราบ · ปุ่ม "รับทราบ" สีเขียว ไม่มี popup ยืนยัน
+   เจ้าของงาน 10 พ.ย. 2569: ผู้กด = ผู้ดูแลยานพาหนะที่ระบุรายคันในแผนเดินทาง · ประเมิน 1–5 ย้ายจาก S14 มาไว้ตอนรับทราบ (11 พ.ย. 2569 แทนด้วยแบบประเมินความพึงพอใจของ กบค. survey.ts · R94) · ปุ่ม "รับทราบ" สีเขียว ไม่มี popup ยืนยัน
    รอบเดียวต่อคัน (Q28) · S14 S15 S16 S17 ตัดออก ⇒ รับทราบครบทุกคันในแผนแล้วแผนปิดงานเอง (เสนอ · Figma 6299e1d)
-   รายการ = งานรายคัน (jobs.ts) ของแผนเดินทางที่อนุมัติแล้วที่ "เสร็จสิ้น" หรือ "บำรุงรักษาไม่ได้" · รับทราบ = job.acceptedAt + job.score
+   รายการ = งานรายคัน (jobs.ts) ของแผนเดินทางที่อนุมัติแล้วที่ "เสร็จสิ้น" หรือ "บำรุงรักษาไม่ได้" · รับทราบ = job.acceptedAt + job.survey (+ job.score คะแนนเฉลี่ย)
    "ครบทุกคันในแผน" (ยังไม่เคาะ: แผนทั้งปี หรือแผนเดินทางรายใบ) — ต้นแบบนับยานพาหนะทุกคันในแผนเดินทางที่อนุมัติแล้วของแผน (แบบประวัติ history.ts) */
 import type { PillColor } from "@/components/vms/PillOutline";
 import { putCloseout } from "./closeout";
 import { JOB_TEXT, PEOPLE, SEED_TRIPS, WORK, applyJobs, carOf, closedSample, getJob, jobKey, jobsOf, newJob, workItems, type Job, type JobTrip, type TripCar } from "./jobs";
 import { setMock, type MockState } from "./store";
+import { sampleAnswers, surveyAvg, surveyInfo, type SurveyRecord } from "./survey";
 import { DEFAULT_NOTIS, TRIP_OTHER, ackNoti } from "./trips";
 
 type Pill = readonly [label: string, tone: PillColor];
@@ -18,7 +19,6 @@ export const ACCEPT_STATUS = { wait: ["รอรับทราบ", "Warning"],
 export const ACK_LIST = "ผลการบำรุงรักษารอรับทราบ";
 /** รับทราบเมื่อ (ackResult o.done) */
 export const ACK_AT = "06/11/2569 10:05 น.";
-export const FEEDBACK_TITLE = "คะแนนประเมินความพึงพอใจงานบำรุงรักษา", FEEDBACK_SUB = "ให้คะแนน 1–5 · 1 ต้องปรับปรุงมาก · 5 ดีมาก";
 
 /* ACK_CARS ของ screens.js = [JOB_I, TRIP_1.sel[1], TRIP_1.sel[2]] — 82-6789 · 82-1145 ปิดงานแล้ว · 80-9981 บำรุงรักษาไม่ได้ (MOVE_I) */
 export const ACCEPTANCE_CARS = [
@@ -57,10 +57,10 @@ export function planAcked(m: MockState, planId: string) {
 }
 
 /* ---------- เขียน ---------- */
-/** S13 รับทราบรายคัน (บันทึกทันที ไม่มี popup) · score = คะแนน 1–5 (คันที่บำรุงรักษาไม่ได้ไม่มี)
+/** S13 รับทราบรายคัน (บันทึกทันที ไม่มี popup) · survey = แบบประเมินความพึงพอใจของ กบค. ที่ตอบครบ (คันที่บำรุงรักษาไม่ได้ไม่มี · R94 11 พ.ย. 2569) · job.score = คะแนนเฉลี่ย
     ครบทุกคันในแผน → แผน "ปิดงานแล้ว" เอง (เสนอ · Figma 6299e1d · S16 S17 ตัดออก 10 พ.ย. 2569 — รับทราบรายคันเป็นขั้นสุดท้าย) */
-export function acceptCar(r: AccRow, score: number | null) {
-  applyJobs((s) => ({ ...s, jobs: { ...s.jobs, [jobKey(r.trip.id, r.car.id)]: { ...getJob(s, r.trip.id, r.car.id), acceptedAt: ACK_AT, ...(score ? { score } : {}) } } }));
+export function acceptCar(r: AccRow, survey: SurveyRecord | null) {
+  applyJobs((s) => ({ ...s, jobs: { ...s.jobs, [jobKey(r.trip.id, r.car.id)]: { ...getJob(s, r.trip.id, r.car.id), acceptedAt: ACK_AT, ...(survey ? { survey, score: surveyAvg(survey.answers) } : {}) } } }));
   const id = r.trip.planId;
   let sent = false;
   setMock((s) => {
@@ -82,12 +82,17 @@ export function acceptSample(acked: boolean) {
       const j: Job = r.cannot
         ? { ...newJob("T1", r.carId), status: "cannot", cannot: { reason: JOB_TEXT.cannotSelf, used: WORK.map(() => 0), by: r.by, at: r.date + " 09:20 น.", whileDoing: false } }
         : { ...closedSample(T1, r.carId), closedAt: r.date + " 11:15 น.", recordedBy: r.by };
-      return [jobKey("T1", r.carId), acked ? { ...j, acceptedAt: ACK_AT, ...(r.cannot ? {} : { score: 4 }) } : j];
+      return [jobKey("T1", r.carId), acked ? { ...j, acceptedAt: ACK_AT, ...(r.cannot ? {} : ackedSurvey(r.carId)) } : j];
     })),
   }), [{ ...TRIP_OTHER }]);
   const first = carOf(ACCEPTANCE_CARS[0].carId)!;
   setMock((s) => ({ ...s, plans: s.plans.map((p) => (p.mr === "MRZ7000001" ? { ...p, status: "active" as const } : p)), notis: acked ? DEFAULT_NOTIS() : [ackNoti(T1, first), ...DEFAULT_NOTIS()] }));
   putCloseout("Z7000001", { closedAt: undefined });
+}
+/** ผลประเมินตัวอย่างของคันที่รับทราบแล้ว (ค่าจอ L.5) */
+export function ackedSurvey(carId: string): { survey: SurveyRecord; score: number } {
+  const c = carOf(carId)!, answers = sampleAnswers();
+  return { survey: { info: surveyInfo(c.plate, c.ctrl, c.owner), answers }, score: surveyAvg(answers) };
 }
 export const ACCEPT_SAMPLES = {
   S13: { role: "ผู้ดูแลยานพาหนะ" as const, apply: () => acceptSample(false) },

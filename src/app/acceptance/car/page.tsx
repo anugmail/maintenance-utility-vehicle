@@ -4,12 +4,14 @@
    Content ช่องไฟ 32: ข้อมูลยานพาหนะและงาน (ทะเบียน · ยี่ห้อ/รุ่น · ประเภทยานพาหนะ · หน่วยงานเจ้าของยานพาหนะ · แผนเดินทาง · เลขที่ MR · ผู้ดูแลยานพาหนะ
      + ปิดงานแล้ว: วันดำเนินการ · เริ่มงาน · ปิดงาน · ผู้ดำเนินการ · น้ำมันไฮดรอลิก · เลขไมล์หลังทำ | บำรุงรักษาไม่ได้: วันดำเนินการ · ผู้แจ้ง · แจ้งเมื่อ · + รับทราบเมื่อ)
    → ปิดงานแล้ว: ผลการตรวจสภาพก่อนบำรุงรักษา (Step 1 ของ S10: แบบตรวจตามประเภทยานพาหนะ + รายการตรวจ + ลงนามการตรวจสภาพ ดูอย่างเดียว) · ภาพก่อนเริ่มงาน
-       · รายการงานและอะไหล่ที่ใช้จริง · คะแนนประเมินความพึงพอใจงานบำรุงรักษา 1–5 (RepairFeedback · ไม่มีค่าเริ่มต้น) — แทนไฟล์ PDF แบบเดิม
+       · รายการงานและอะไหล่ที่ใช้จริง — แทนไฟล์ PDF แบบเดิม
+       · แบบประเมินความพึงพอใจการให้บริการของ กบค. (SurveyForm · R94 · เจ้าของงาน 11 พ.ย. 2569 "ประเมินแทน S13 หลังบำรุงรักษาเสร็จ" · แทนคะแนน 1–5 ข้อเดียว RepairFeedback)
+         ข้อมูลผู้ใช้รถฯ 5 ช่องเติมให้ + 4 ด้าน 11 ข้อ คะแนน 1–5 ทุกข้อบังคับ ไม่มีค่าเริ่มต้น
      บำรุงรักษาไม่ได้: สาเหตุที่บำรุงรักษาไม่ได้ (สาเหตุ · ผู้บันทึก · วันที่บันทึก) แทนผลงาน · ไม่มีประเมิน (เสนอ Q59)
-   → ปุ่ม ย้อนกลับ + "รับทราบ" สีเขียว (AckButton) — ยังไม่เลือกคะแนน = Disabled · กดแล้วบันทึกทันที ไม่มี popup → ปุ่มหาย ป้ายรับทราบแล้ว + toast "รับทราบผลการบำรุงรักษา {ทะเบียน} แล้ว"
+   → ปุ่ม ย้อนกลับ + "รับทราบ" สีเขียว (AckButton) — ตอบแบบประเมินยังไม่ครบ 11 ข้อ = Disabled (แบบปุ่มส่งคำตอบของแบบสำรวจ) · กดแล้วบันทึกทันที ไม่มี popup → ปุ่มหาย ป้ายรับทราบแล้ว + toast "รับทราบผลการบำรุงรักษา {ทะเบียน} แล้ว"
    กดได้เฉพาะบทบาท ผู้ดูแลยานพาหนะ (Permission S13) · บทบาทอื่นเห็นปุ่มย้อนกลับอย่างเดียว · รับทราบครบทุกคันในแผนแล้วแผนปิดงานเอง (acceptCar · S16 S17 ตัดออก Figma 6299e1d)
    อ้างอิง: Section label · Table · Images · Primary button (พื้น Color/surface/success) · Radio text card ของไฟล์ Component + VehicleAndReporterInfo · IncidentPhotoGallery
-            · HandoverSignature · RepairFeedback ของไฟล์ Maintain-D + จอ L.2–L.5 ของ screens.js + ปุ่มหน้า 5.14 - 5.15 Cost & Expense Check ของ UI Release#2 */
+            · HandoverSignature ของไฟล์ Maintain-D · Section header · Text input · Input label ของไฟล์ Component (แบบประเมิน) + จอ L.2–L.5 ของ screens.js + ปุ่มหน้า 5.14 - 5.15 Cost & Expense Check ของ UI Release#2 */
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";
@@ -17,7 +19,6 @@ import { DisplayBox } from "@/components/patterns/DisplayBox";
 import { CheckTable } from "@/components/patterns/CheckTable";
 import { HandoverSignature } from "@/components/maintain-d/HandoverSignature";
 import { IncidentPhotoGallery } from "@/components/maintain-d/IncidentPhotoGallery";
-import { RepairFeedback } from "@/components/maintain-d/RepairFeedback";
 import { VehicleAndReporterInfo } from "@/components/maintain-d/VehicleAndReporterInfo";
 import { EmptyStateSearchNotFound } from "@/components/vms/EmptyStateSearchNotFound";
 import { PageHeader } from "@/components/vms/PageHeader";
@@ -25,7 +26,8 @@ import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionLabel } from "@/components/vms/SectionLabel";
 import { type TableColumn } from "@/components/vms/Table";
 import { PagedTable } from "@/app/quarter/_shared/ui";
-import { ACCEPT_SAMPLES, ACCEPT_STATUS, ACK_AT, ACK_LIST, FEEDBACK_SUB, FEEDBACK_TITLE, acceptCar, accRecord, workRows } from "@/lib/mock/acceptance";
+import { ACCEPT_SAMPLES, ACCEPT_STATUS, ACK_AT, ACK_LIST, acceptCar, accRecord, workRows } from "@/lib/mock/acceptance";
+import { emptyAnswers, sampleAnswers, savedAnswers, surveyDone, surveyInfo, type SurveyAnswers } from "@/lib/mock/survey";
 import { BEFORE, INSPECT_OPTS, OIL_DEFAULT, OIL_JOB_OPTS, emptyReceive, inspectForm, tripCtrl } from "@/lib/mock/jobs";
 import { workOf } from "@/lib/mock/tripCols";
 import { notify, useMock, useRole } from "@/lib/mock/store";
@@ -33,6 +35,7 @@ import { useSample } from "@/lib/useSample";
 import { badgeOf, ButtonRow } from "../../trips/_lib/ui";
 import { SLOTS } from "../../trips/job/receive/ReceivePage";
 import { AckButton } from "../_lib/ui";
+import { SurveyForm } from "../_lib/SurveyForm";
 import { useProtoForm } from "@/lib/protoForm";
 
 /* WORK_COLS2 */
@@ -44,20 +47,21 @@ function AckResult() {
   const pending = useSample(ACCEPT_SAMPLES);
   const keeper = useRole() === "ผู้ดูแลยานพาหนะ";
   const mock = useMock();
-  const [pick, setPick] = useState<number | null>(null);
-  /* ปุ่มต้นแบบ S13 (แถบต้นแบบ · lib/protoForm.ts): กรอกข้อมูลตัวอย่าง = คะแนน 4 ⇒ ปุ่มรับทราบกดได้ · ล้างค่า = ยังไม่เลือกคะแนน · เฉพาะผู้ดูแลยานพาหนะ คันที่ยังไม่รับทราบและมีประเมิน */
+  const [picks, setPicks] = useState<SurveyAnswers>(emptyAnswers);
+  /* ปุ่มต้นแบบ S13 (แถบต้นแบบ · lib/protoForm.ts): กรอกข้อมูลตัวอย่าง = ตอบแบบประเมินครบ 11 ข้อ (ค่าจอ L.4) ⇒ ปุ่มรับทราบกดได้ · ล้างค่า = ยังไม่ตอบสักข้อ · เฉพาะผู้ดูแลยานพาหนะ คันที่ยังไม่รับทราบและมีประเมิน */
   const r0 = pending ? undefined : accRecord(mock, sp.get("trip"), sp.get("car"));
-  useProtoForm(keeper && r0 && !r0.accepted && !r0.cannot ? { fill: () => setPick(4), clear: () => setPick(null), dirty: pick != null } : null);
+  useProtoForm(keeper && r0 && !r0.accepted && !r0.cannot ? { fill: () => setPicks(sampleAnswers()), clear: () => setPicks(emptyAnswers()), dirty: picks.some((x) => x != null) } : null);
   if (pending) return null;
   const rec = accRecord(mock, sp.get("trip"), sp.get("car"));
   if (!rec) return <EmptyStateSearchNotFound />;
   const { car, cannot, job, trip } = rec;
   const done = rec.accepted;
-  const score = done ? job.score ?? null : pick;
+  const answers = done ? savedAnswers(job) : picks;
+  const info = job.survey?.info ?? surveyInfo(car.plate, tripCtrl(trip, car), car.owner);
   const back = () => router.push("/acceptance/");
   const ack = () => {
-    if (!cannot && !score) return;
-    acceptCar(rec, cannot ? null : score);
+    if (!cannot && !surveyDone(picks)) return;
+    acceptCar(rec, cannot || !surveyDone(picks) ? null : { info, answers: picks });
     notify("รับทราบผลการบำรุงรักษา " + car.plate + " แล้ว");
   };
 
@@ -93,12 +97,12 @@ function AckResult() {
               <SectionLabel Title={"รายการงานและอะไหล่ที่ใช้จริง (" + work.length + ")"} />
               <PagedTable columns={WORK_COLS2} rows={work} />
             </section>
-            <RepairFeedback Title={FEEDBACK_TITLE} SupportingText={FEEDBACK_SUB} value={score} onChange={!done && keeper ? setPick : undefined} />
+            <SurveyForm info={info} answers={answers} onChange={!done && keeper ? setPicks : undefined} />
           </>
         )}
         <ButtonRow>
           <SecondaryButton Text="ย้อนกลับ" Size="lg" onClick={back} />
-          {!done && keeper && <AckButton Size="lg" State={cannot || score ? "Default" : "Disabled"} onClick={ack} />}
+          {!done && keeper && <AckButton Size="lg" State={cannot || surveyDone(answers) ? "Default" : "Disabled"} onClick={ack} />}
         </ButtonRow>
       </div>
     </>
