@@ -33,7 +33,7 @@ import type { TableColumn, TableValue } from "@/components/vms/Table";
 import { TertiaryBrandButton } from "@/components/vms/TertiaryBrandButton";
 import { mrOf, planKv, planOf } from "@/lib/mock/closeout";
 import { PST } from "@/lib/mock/data";
-import { applySample, WSTAT } from "@/lib/mock/jobs";
+import { applySample, getJob, jobsOf, WSTAT } from "@/lib/mock/jobs";
 import { MAINT_CONFIRM, MAINT_ITEM, carPlanParts, cannotTrip, maintainCar, moveCar, movedInto, quarterFinished, quarterPartRows } from "@/lib/mock/moves";
 import { QPART_COLS, qpartRow } from "@/lib/mock/plan";
 import { useSeed } from "@/lib/mock/seedB";
@@ -99,13 +99,14 @@ function TripList() {
   };
   const carRows: TableValue[][] = cars.map((c) => {
     const t = tripOf(c), cannot = t ? cannotTrip(mock, id, q, c.id) : null, from = moved.get(c.id);
+    const done = !!t && t.status === "approved" && getJob(jobsOf(mock), t.id, c.id).status === "done";   // Figma E.26 (R93 132a652): ปิดงานเสร็จสิ้น = Pill เสร็จสิ้น ไม่มีไอคอน/เมนู
     const acts = [{ IconSwap: "stylus-24-300-round", label: "แก้ไข " + c.plate, onClick: () => setEditCar(c) },
       ...(t ? [] : [{ IconSwap: "delete-24-300-round", label: "ลบ " + c.plate, onClick: () => setDropCar(c) }])];
     /* R82 ช่องตามชุดกลาง · ยังไม่อยู่ในแผนเดินทาง = ผู้ดูแลจากข้อมูลยานพาหนะ/ค่าที่แก้ในไตรมาส (E.18) · วันดำเนินการ "—" */
     const base = tripVCells(c, t ? vTrip(t) : { phones: edits.phones, names: edits.names }, Q_DROP);
     if (from) base[0] = { text: c.plate, sub: "ย้ายมาจาก" + "ไตรมาส " + from.from };
-    const r: TableValue[] = [...base, cannot ? { pills: [WSTAT.cannot] } : t ? { text: t.name, sub: "เพิ่มเข้าแผนเดินทางแล้ว" } : { pills: [["ยังไม่มีแผนเดินทาง", "Gray"]] }];
-    if (!kbk) return r;
+    const r: TableValue[] = [...base, cannot ? { pills: [WSTAT.cannot] } : done ? { pills: [WSTAT.done] } : t ? { text: t.name, sub: "เพิ่มเข้าแผนเดินทางแล้ว" } : { pills: [["ยังไม่มีแผนเดินทาง", "Gray"]] }];
+    if (!kbk || done) return done && kbk ? [...r, null] : r;
     if (cannot) return [...r, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู " + c.plate, onClick: (e) => setMenu({ car: c, anchor: anchorOf(e.currentTarget) }) }],
       /* 2 ปุ่ม (Action 2 ของ Mobile table item) — กว้าง 402 วางคู่กันแล้วข้อความล้นการ์ด ⇒ เรียงลงเต็มแถว (BACKLOG ค.) */
       mobileButtons: <div className="flex flex-col gap-3 [&>*]:w-full">

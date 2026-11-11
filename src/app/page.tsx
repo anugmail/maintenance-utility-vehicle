@@ -12,7 +12,7 @@
    ผู้อนุมัติเข้ารากแล้วไปหน้าเริ่มของบทบาท (routes.md §2: /approvals/plans/ · กบค. คลัง ตัดพร้อม S22 6 พ.ย. 2569)
    แผงตัวกรอง (listScreen o.filter · 6 พ.ย. 2569 รีวิว "filter หน้ารายการแผน เขต · หน่วยงานหน้างาน กรย. 12 เขต, กกฟ. 1and2" + "กบค. อยากเห็นทุกแผน"):
      ปุ่ม "ตัวกรอง" ของ Table header เปิด FilterShell (แผงตัวกรองแบบเดียวกับฟอร์มแผน S1 · มือถือ Bottom sheet) ช่อง `Input dropdown with badges` (Optional) หลายค่า
-     เขต (12 เขต · DISTRICTS) · หน่วยงานหน้างาน (UNITS) · กดตกลงจึงใช้ → ชิปใต้แถวค้นหา (กดเอาออกทีละตัว) + Pill จำนวนบนปุ่มตัวกรอง · ไม่ตรง = Empty state/Search not found + ล้างตัวกรอง
+     เขต (12 เขตของภาค 1–4 · DISTRICTS ไม่รวม กกฟ.1 กกฟ.2 ของ สนง. ที่อยู่ในช่องหน่วยงานหน้างานแล้ว — Figma R93 132a652) · หน่วยงานหน้างาน (UNITS) · กดตกลงจึงใช้ → ชิปใต้แถวค้นหา (กดเอาออกทีละตัว) + Pill จำนวนบนปุ่มตัวกรอง · ไม่ตรง = Empty state/Search not found + ล้างตัวกรอง
      ตามแผงตัวกรอง "PEA Car Cost Filter" ของ UI Release#2 (แบบเดียวกับ R77 ของฟอร์มแผน) */
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -31,7 +31,7 @@ import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { Table, type TableValue } from "@/components/vms/Table";
 import { TableHeader } from "@/components/vms/TableHeader";
 import { TablePagination } from "@/components/vms/TablePagination";
-import { DISTRICTS, MENU, UNITS, unitOf } from "@/lib/mock/data";
+import { DISTRICTS, HQ_REGION, MENU, UNITS, unitOf } from "@/lib/mock/data";
 import { PLAN_COLS, PLAN_COLS_ALL, menuCount, planDistricts, planRow } from "@/lib/mock/plan";
 import { DELETE_CONFIRM, PLAN_ROLES, canManage, deletePlan, roleHome, planId, startEdit, useHydrated, visiblePlans } from "@/lib/mock/planFlow";
 import { FilterShell } from "@/app/vehicles/_lib/ui";
@@ -120,7 +120,7 @@ export default function PlanList() {
       <RowMenu anchor={menu?.anchor ?? null} items={items} onClose={() => setMenu(null)} />
       <FilterShell open={panel} onClose={closePanel} onClear={() => setFd(NONE)} onApply={() => { setApplied(fd); setPage(1); closePanel(); }}>
         <InputDropdownWithBadges LabelText="เขต" Optional values={fd.districts} Placeholder="เลือกเขต" onRemove={drop("districts")} open={open === "district"} onOpenChange={(v) => setOpen(v ? "district" : "")}>
-          <DropdownList>{Object.values(DISTRICTS).flat().map((x) => <DropdownListItem key={x} Text={x} State={fd.districts.includes(x) ? "Selected" : "Default"} onClick={() => flip("districts", x)} />)}</DropdownList>
+          <DropdownList>{Object.entries(DISTRICTS).filter(([r]) => r !== HQ_REGION).flatMap(([, d]) => d).map((x) => <DropdownListItem key={x} Text={x} State={fd.districts.includes(x) ? "Selected" : "Default"} onClick={() => flip("districts", x)} />)}</DropdownList>
         </InputDropdownWithBadges>
         <InputDropdownWithBadges LabelText="หน่วยงานหน้างาน" Optional values={fd.units} Placeholder="เลือกหน่วยงานหน้างาน" onRemove={drop("units")} open={open === "unit"} onOpenChange={(v) => setOpen(v ? "unit" : "")}>
           <DropdownList>{UNITS.map((u) => <DropdownListItem key={u} Text={u} State={fd.units.includes(u) ? "Selected" : "Default"} onClick={() => flip("units", u)} />)}</DropdownList>
