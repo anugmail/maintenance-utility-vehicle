@@ -10,7 +10,7 @@ import { CAR_PICK } from "./data";
 import { allocScope, areaPicked, carQty, carsFor, decided, inQuarter, quarterParts, type Draft } from "./plan";
 import { accRows } from "./acceptance";
 import { notify, setMock, useRole, type MockState, type Role } from "./store";
-import { SAMPLE_PLAN_Q, candId, tripsOf } from "./trips";
+import { SAMPLE_PLAN_Q, candId, quarterCars, tripsOf } from "./trips";
 
 /* ---------- id ของแผนและรถใน query string ---------- */
 export const planId = (p: Plan) => p.mr.replace(/^MR/, "");
@@ -84,18 +84,19 @@ export const allocOf = (p: Plan): Alloc => ({ alloc: p.alloc ?? {}, picks: p.pic
 /* แผนตัวอย่าง (ไม่มี alloc) เปิดแก้ไข = ยานพาหนะรายไตรมาสชุดเดียวกับหน้ารายละเอียด (SAMPLE_PLAN_Q · ข้อ 38) กำหนดอะไหล่แล้วทุกคัน
    (ไส้กรอง CAR_PICK · น้ำมันเก็บตัวอย่าง = ยอดเดียวกับ carParts ของแผนตัวอย่าง) — 9 พ.ย. 2569 เจ้าของงาน หน้าแก้ไขแผนที่ถูกส่งกลับ "จัดลงไตรมาสแล้ว 6/243 คัน" ส่งไม่ได้
    ⇒ เปิดแล้วเห็นยานพาหนะของแผนครบ (MRZ7100001 = 9 คัน 3 · 2 · 2 · 2) · ส่งใหม่ได้เมื่อยานพาหนะในตารางตามตัวกรองจัดครบ (de74711 · MRZ7100001 9 จาก 20 คันในภาค 4 กระเช้าแก้ไฟ ⇒ ยังส่งไม่ได้ ไม่เติมให้เอง) */
-function sampleAlloc(p: Plan): Pick<Draft, "alloc" | "picks" | "oils"> {
+/* s = ที่เก็บ (11 พ.ย. 2569 แก้แผนที่ดำเนินการ): ยานพาหนะรายไตรมาสตามหน้าไตรมาส (quarterCars · รวมคันที่เพิ่ม/เอาออก/ย้ายใน S6 S25) · ไม่ส่ง = SAMPLE_PLAN_Q */
+function sampleAlloc(p: Plan, s?: Pick<MockState, "plans" | "qcars">): Pick<Draft, "alloc" | "picks" | "oils"> {
   const alloc: Record<number, number> = {}, picks: Record<number, number[]> = {}, oils: Record<number, number> = {};
-  [1, 2, 3, 4].forEach((q) => (SAMPLE_PLAN_Q[p.mr]?.[q] ?? []).forEach((c) => {
+  [1, 2, 3, 4].forEach((q) => (s ? quarterCars(s, planId(p), q) : SAMPLE_PLAN_Q[p.mr]?.[q] ?? []).forEach((c) => {
     const i = CAND.findIndex((x) => candId(x.plate) === c.id);
     if (i >= 0) { alloc[i] = q; picks[i] = [...CAR_PICK]; oils[i] = 0; }
   }));
   return { alloc, picks, oils };
 }
-export function draftFromPlan(p: Plan): Draft {
+export function draftFromPlan(p: Plan, st?: Pick<MockState, "plans" | "qcars">): Draft {
   const regions = p.regions ?? REGIONS.filter((r) => p.region.split(", ").map((x) => x.split(" (")[0]).includes(r.split(" (")[0]));
   if (!p.alloc || !Object.keys(p.alloc).length) {
-    const s = sampleAlloc(p);
+    const s = sampleAlloc(p, st);
     return { name: p.name, year: p.year, regions, districts: p.districts ?? [], types: p.types ?? p.type.split(", ").filter(Boolean), ...s, q: 1, editOf: p.mr };
   }
   return {
@@ -247,4 +248,4 @@ export function deletePlan(mr: string) {
 /* แก้ไขค่าของแผน 1 แผน */
 export const updatePlan = (mr: string, fn: (p: Plan) => Plan) => setMock((s) => ({ ...s, plans: s.plans.map((p) => (p.mr === mr ? fn(p) : p)) }));
 /* เริ่มฟอร์มแก้ไข (S19) จากข้อมูลแผนล่าสุด */
-export const startEdit = (p: Plan) => setMock((s) => ({ ...s, edit: draftFromPlan(p) }));
+export const startEdit = (p: Plan) => setMock((s) => ({ ...s, edit: draftFromPlan(p, s) }));

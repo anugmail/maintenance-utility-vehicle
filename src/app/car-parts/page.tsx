@@ -50,6 +50,7 @@ import { CAND, CAR_PICK, CAR_QTY, LAST_OIL, OIL_GRADES, OIL_PLAN_OPTS, OIL_SPEC,
 import { inQuarter, type Draft } from "@/lib/mock/plan";
 import { PLAN_ROLES, carIndexOf, carParam, findPlan, oilCellOf, oilChoice, otherCellOf, useRoleGuard, usePlanGate } from "@/lib/mock/planFlow";
 import { decided } from "@/lib/mock/plan";
+import { isLive, liveLocks } from "@/lib/mock/liveEdit";
 import { notify, setMock, useMock } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useProtoForm } from "@/lib/protoForm";
@@ -95,7 +96,9 @@ function CarParts() {
   const denied = usePlanGate(plan, "own");   // หน่วยงานเปิดแผนของหน่วยงานอื่น → หน้ารายการ (ตรวจสิทธิ์ 9 พ.ย. 2569)
   const d = id === "new" ? mock.draft : mock.edit && plan && mock.edit.editOf === plan.mr ? mock.edit : null;
   const q = Number(sp.get("q")) || d?.q || 1;
-  const cars = d ? inQuarter(d, q) : [];
+  /* แผนที่ดำเนินการ: คันที่ล็อก (ไตรมาสเสร็จแล้ว · ปิดงานแล้ว) แก้อะไหล่ไม่ได้ (liveEdit.ts · BACKLOG ข้อ 64) */
+  const locks = plan && isLive(plan) ? liveLocks(mock, plan) : null;
+  const cars = d ? inQuarter(d, q).filter((i) => !locks?.locked(i)) : [];
   const formHref = id === "new" ? "/new/" : "/edit/?id=" + id + (sp.get("from") ? "&from=" + sp.get("from") : "");
   const formCrumb = plan ? "แก้ไขแผน " + plan.mr : "สร้างแผน";
 

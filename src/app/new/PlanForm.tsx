@@ -25,7 +25,11 @@
    popup "จัดลงไตรมาส" (Radio text card ไตรมาส 1–4 เรียงลง ช่องไฟ 12 · ไม่มีตัวเลือกเอาออก) → toast "จัดรถ n คันลงไตรมาส k สำเร็จ" · มือถือ bottom sheet
    เอาภาค เขต ประเภทรถ ชิปตัวกรอง หรือคำค้นออก = เปลี่ยนแค่แถวที่เห็น รถที่จัดแล้วไม่หาย (ไม่มี confirm)
    Validation: ช่องบังคับที่ออกจากช่องโดยยังว่าง (Out of focus) แสดง "กรุณาระบุชื่อแผน" / "กรุณาเลือกปีงบประมาณ"
-   popup ยืนยัน: ออกจากหน้าเมื่อมีการแก้ไข · (แก้ไข) ยืนยันการแก้ไข */
+   popup ยืนยัน: ออกจากหน้าเมื่อมีการแก้ไข · (แก้ไข) ยืนยันการแก้ไข
+   แผนที่ดำเนินการแล้ว (11 พ.ย. 2569 เจ้าของงาน "แผนที่ดำเนินการแล้ว ยังสามารถแก้ไขได้" + เคาะ "เฉพาะไตรมาสที่ยังไม่เสร็จ" · "ไม่ต้อง บันทึกแล้วมีผลเลย" · BACKLOG ข้อ 64 · lib/mock/liveEdit.ts)
+     Alert Info "แผนนี้อยู่ระหว่างดำเนินการ" · แท็บไตรมาสที่เสร็จแล้ว = Alert Success "ไตรมาส n บำรุงรักษาเสร็จทุกคันแล้ว" ดูอย่างเดียว (ติ๊ก จัดลงไตรมาส กำหนดอะไหล่ ไม่ได้ · เมนู = ดูรายละเอียด)
+     · ยานพาหนะที่ปิดงานแล้วในไตรมาสที่ยังไม่เสร็จ ล็อกแบบเดียวกัน (บรรทัดรอง "ปิดงานแล้ว") · popup จัดลงไตรมาส: ไตรมาสที่เสร็จแล้ว Disabled
+     · ปุ่ม "บันทึก" (ไม่ต้องจัดครบทุกคันในตาราง · คันในไตรมาสต้องกำหนดอะไหล่ครบ) ไม่มี popup ยืนยัน → toast "บันทึกการแก้ไขแผนสำเร็จ" → หน้ารายละเอียดแผน · แผนคงสถานะดำเนินการ */
 import { PagedTable } from "@/app/quarter/_shared/ui";
 import { useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
@@ -51,12 +55,13 @@ import { TablePagination } from "@/components/vms/TablePagination";
 import { Tabs } from "@/components/vms/Tabs";
 import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
-import { CAND, DISTRICTS, MENU, QUARTERS, REGIONS, UNIT_FLEET, VEHICLE_TYPES, YEARS, shortRegion, type Plan } from "@/lib/mock/data";
+import { CAND, CAR_PICK, DISTRICTS, MENU, QUARTERS, REGIONS, UNIT_FLEET, VEHICLE_TYPES, YEARS, shortRegion, type Plan } from "@/lib/mock/data";
 import { QPART_COLS, areaPicked, carsFor, decided, draftComplete, emptyDraft, inQuarter, isDirty, matchQuery, planFromDraft, qpartRow, thaiToday, type Draft } from "@/lib/mock/plan";
 import { allQuarterRows, carParam, roleUnit, draftFromPlan, draftKey, fillDraft, oilCellOf, otherCellOf, planId, planWithDraft, quarterRows } from "@/lib/mock/planFlow";
 import { useProtoForm } from "@/lib/protoForm";
 import { notify, setMock, useMock, useRole } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
+import { isLive, liveLocks, saveLive } from "@/lib/mock/liveEdit";
 import { MA_HEAD, REPAIR_HEAD, histText, useMachineDates } from "@/lib/mock/vehicleHistory";
 import { CheckTable, type CheckRow } from "./CheckTable";
 import { TripCarPicker } from "@/app/quarter/_shared/TripCarPicker";
@@ -77,6 +82,8 @@ const Q_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 200 }, { 
 const PER = 10;
 /* S19: Alert เหนือฟอร์มแก้ไข (ALERT_RETURNED · ALERT_APPROVED) */
 const ALERT_APPROVED = ["แผนนี้อนุมัติแล้ว", "เมื่อบันทึก แผนจะกลับเป็นสถานะรออนุมัติ และต้องให้ผู้อนุมัติตรวจสอบอีกครั้ง"] as const;
+/* แผนที่ดำเนินการ (BACKLOG ข้อ 64) — ข้อความของเว็บ (Figma ตามทีหลัง) */
+const ALERT_LIVE = ["แผนนี้อยู่ระหว่างดำเนินการ", "แก้ไขได้เฉพาะไตรมาสที่ยังบำรุงรักษาไม่เสร็จ และยานพาหนะที่ยังไม่ปิดงาน เมื่อบันทึกจะมีผลทันที ไม่ต้องส่งอนุมัติใหม่"] as const;
 
 type Open = "" | "year" | "region" | "district" | "type";
 type Pending = { spec: ConfirmSpec; run: () => void };
@@ -87,7 +94,12 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
   const mob = useBreakpoint() === "Mobile";
   const mock = useMock();
   const edit = mode === "edit" && plan;
-  const base = (): Draft => (edit ? draftFromPlan(plan) : emptyDraft());
+  const base = (): Draft => (edit ? draftFromPlan(plan, mock) : emptyDraft());
+  /* แผนที่ดำเนินการแล้ว: ไตรมาสที่เสร็จ + คันที่ปิดงาน = ล็อก (liveEdit.ts) */
+  const live = !!edit && isLive(plan);
+  const locks = live ? liveLocks(mock, plan) : null;
+  const lockedCar = (i: number) => !!locks?.locked(i);
+  const qLocked = (n: number) => !!locks?.finished.has(n);
   const d: Draft = (edit ? mock.edit : mock.draft) ?? base();
   const [open, setOpen] = useState<Open>("");
   const [query, setQuery] = useState("");
@@ -128,7 +140,9 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
   };
 
   /* ---------- รถ ---------- */
-  const area = carsFor(d);
+  /* + ยานพาหนะที่จัดไว้แล้วแต่ไม่อยู่ในชุดของฟอร์ม (CAND_FIG ของแผนตัวอย่าง MRZ7000001 · BACKLOG ข้อ 64) ⇒ แท็บทั้งหมดนับตรงกับแท็บไตรมาส */
+  const fleet = new Set(UNIT_FLEET);
+  const area = [...carsFor(d), ...Object.keys(d.alloc).map(Number).filter((i) => !fleet.has(i))];
   const q = d.q;
   const inQ = (k: number) => inQuarter(d, k);
   const k = query.trim();
@@ -142,7 +156,7 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
   const toS21 = (car: number) => router.push("/car-parts/" + carQuery(car));
   /* Q_MENU (MENU) ของยานพาหนะ: ดูรายละเอียด (carPartsView) · แก้ไข (S21) · ลบ = เอาออกจากไตรมาส (Q_OUT_CONFIRM) */
   const outOfQ = (car: number) => setPending({
-    spec: { danger: true, title: "ยืนยันการเอายานพาหนะออกจากไตรมาส " + q, sub: CAND[car].plate + " จะกลับเป็นยังไม่จัด ต้องจัดลงไตรมาสอีกครั้งก่อนบันทึกและส่งอนุมัติ", cancel: "ยกเลิก", ok: "เอาออก" },
+    spec: { danger: true, title: "ยืนยันการเอายานพาหนะออกจากไตรมาส " + q, sub: CAND[car].plate + (live ? " จะกลับเป็นยังไม่จัด และออกจากแผนเดินทางของไตรมาสนี้เมื่อบันทึก" : " จะกลับเป็นยังไม่จัด ต้องจัดลงไตรมาสอีกครั้งก่อนบันทึกและส่งอนุมัติ"), cancel: "ยกเลิก", ok: "เอาออก" },
     run: () => {
       const alloc = { ...d.alloc };
       delete alloc[car];
@@ -152,15 +166,16 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
     },
   });
   const carActs = [(car: number) => router.push("/car-parts/view/" + carQuery(car)), toS21, outOfQ];
-  const carItems = carMenu ? MENU.map((m, k) => ({ ...m, onClick: () => carActs[k](carMenu.car) })) : [];
+  const carItems = carMenu ? MENU.slice(0, lockedCar(carMenu.car) ? 1 : 3).map((m, k) => ({ ...m, onClick: () => carActs[k](carMenu.car) })) : [];
   const mDates = useMachineDates();
   const rows: CheckRow[] = rowsOnPage.map((i) => {
-    const c = CAND[i], md = mDates(c.plate), hist = [md.ma, md.repair];
-    if (!q) return { key: String(i), text: c.plate, sub: c.model, mobileSub: c.model + " · " + qPill(i)[0] + " · " + histText(md), cells: [c.type, c.owner, ...hist, { pills: [qPill(i)] }] };
+    const c = CAND[i], md = mDates(c.plate), hist = [md.ma, md.repair], lk = lockedCar(i);
+    const lockSub = lk ? (locks?.closed.has(i) ? "ปิดงานแล้ว · " : "ไตรมาสบำรุงรักษาเสร็จแล้ว · ") : "";
+    if (!q) return { key: String(i), text: c.plate, sub: lockSub + c.model, mobileSub: lockSub + c.model + " · " + qPill(i)[0] + " · " + histText(md), disabled: lk, cells: [c.type, c.owner, ...hist, { pills: [qPill(i)] }] };
     const oil = oilCellOf(d, i), other = otherCellOf(d, i), txt = (v: typeof oil) => (typeof v === "string" ? v : v.text);
     /* มือถือ: ไอคอนดู แก้ไข (S21) ลบ ใต้รายการ (CLAUDE.md ข้อ 14 · เดิมไม่มี ⇒ มือถือเข้าหน้าอะไหล่รายคันไม่ได้ · BACKLOG ข้อ 64) */
-    const mobileActions = MENU.map((m, k) => ({ IconSwap: m.IconSwap, label: m.Text + " " + c.plate, onClick: () => carActs[k](i) }));
-    return { key: String(i), text: c.plate, sub: c.model, mobileSub: "น้ำมัน " + txt(oil) + " · อะไหล่อื่นๆ " + (typeof other === "string" ? other : other.text) + " · " + histText(md), mobileActions,
+    const mobileActions = MENU.slice(0, lk ? 1 : 3).map((m, k) => ({ IconSwap: m.IconSwap, label: m.Text + " " + c.plate, onClick: () => carActs[k](i) }));
+    return { key: String(i), text: c.plate, sub: lockSub + c.model, disabled: lk, mobileSub: lockSub + "น้ำมัน " + txt(oil) + " · อะไหล่อื่นๆ " + (typeof other === "string" ? other : other.text) + " · " + histText(md), mobileActions,
       cells: [c.type, c.owner, ...hist, oil, other, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู " + c.plate, onClick: (e) => setCarMenu({ car: i, anchor: anchorOf(e.currentTarget) }) }] }] };
   });
   /* กำหนดอะไหล่หลายคันครั้งเดียว (เจ้าของงาน 11 พ.ย. 2569 "อยากเพิ่มอะไหล่ครั้งเดียวในรถประเภทเดียวกัน" + "ทุกคันที่เลือกได้มั้ย คือต้องเลือกรถที่ต้องการเพิ่มอะไหล่" · BACKLOG ข้อ 64)
@@ -194,11 +209,20 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
   /* ---------- ออก / ตรวจและบันทึก ---------- */
   const back = from === "detail" && plan ? "/detail/?id=" + planId(plan) : "/";
   /* รีวิว 5 พ.ย. 2569 "ต้องกรอกข้อมูลที่ require ครบถึงจะ enable ปุ่ม" + 6 พ.ย. 2569 เจ้าของงาน "ต้องเอารถเข้า ไตรมาสทุกคัน" "บังคับให้กรอกอะใหล่ทุกคัน ไปหน้าต่อไปไม่ได้" (แบบ ก หน้าเดียว) */
-  const complete = draftComplete(d);
+  /* แผนที่ดำเนินการ: ชื่อแผน + ยานพาหนะในไตรมาสอย่างน้อย 1 คัน + ทุกคันที่จัดกำหนดอะไหล่แล้ว (ไม่บังคับจัดครบทุกคันในตาราง เพราะแผนเริ่มงานแล้ว) */
+  const complete = live ? !!d.name.trim() && Object.keys(d.alloc).length > 0 && Object.keys(d.alloc).every((i) => decided(d, Number(i))) : draftComplete(d);
   /* ปุ่มต้นแบบ กรอกข้อมูลตัวอย่าง / ล้างค่า (แถบต้นแบบ · lib/protoForm.ts) — ล้างค่า = สร้าง: ฟอร์มว่าง · แก้ไข: ค่าของแผนที่บันทึกไว้ */
-  const saved = edit ? draftFromPlan(plan) : emptyDraft();
+  const saved = edit ? draftFromPlan(plan, mock) : emptyDraft();
   useProtoForm({
-    fill: () => { setMock((s) => (edit ? { ...s, edit: fillDraft(d) } : { ...s, draft: fillDraft(d) })); setTicked([]); },
+    /* แผนที่ดำเนินการ: ไม่จัดไตรมาสให้ (ไตรมาสที่เสร็จแล้วล็อก) · กำหนดอะไหล่ให้คันที่จัดแล้วแต่ยังไม่กำหนด (ไส้กรอง CAR_PICK · เก็บตัวอย่างน้ำมัน) */
+    fill: () => {
+      if (live) {
+        const picks = { ...d.picks }, oils = { ...(d.oils ?? {}) };
+        Object.keys(d.alloc).map(Number).filter((i) => !lockedCar(i) && !decided(d, i)).forEach((i) => { picks[i] = [...CAR_PICK]; oils[i] = 0; });
+        put({ name: d.name.trim() ? d.name : plan.name, picks, oils });
+      } else setMock((s) => (edit ? { ...s, edit: fillDraft(d) } : { ...s, draft: fillDraft(d) }));
+      setTicked([]);
+    },
     clear: () => { setMock((s) => (edit ? { ...s, edit: { ...saved } } : { ...s, draft: { ...saved } })); setTicked([]); setQuery(""); },
     dirty: edit ? draftKey(d) !== draftKey(saved) : isDirty(d),
   });
@@ -206,7 +230,7 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
   const leave = () => {
     if (edit) {
       const go = () => { setMock((s) => ({ ...s, edit: null })); router.push(back); };
-      if (draftKey(d) === draftKey(draftFromPlan(plan))) return go();
+      if (draftKey(d) === draftKey(draftFromPlan(plan, mock))) return go();
       return setPending({ spec: { title: "ยืนยันการออก", sub: "ข้อมูลที่แก้ไขไว้จะไม่ถูกบันทึก", cancel: "ยกเลิก", ok: "ยืนยัน" }, run: go });
     }
     const go = () => { setMock((s) => ({ ...s, draft: null })); router.push("/"); };
@@ -215,6 +239,13 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
   };
   const save = () => {
     if (!complete) return;
+    if (live) {
+      if (mock.failSave) { notify("general error", "Error"); return; }
+      saveLive(plan, d);
+      notify("บันทึกการแก้ไขแผนสำเร็จ");
+      router.push("/detail/?id=" + planId(plan));
+      return;
+    }
     if (edit) {
       return setPending({
         spec: { title: "ยืนยันการแก้ไข", sub: "แผนจะกลับเป็นสถานะรออนุมัติ และส่งให้ผู้อนุมัติตรวจสอบอีกครั้ง โปรดตรวจสอบก่อนยืนยัน", cancel: "ยกเลิก", ok: "ยืนยัน" },
@@ -256,6 +287,7 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
       <div className="flex flex-col gap-8">
         {edit && plan.status === "returned" && <Alert Color="Error" Text="ผู้อนุมัติส่งกลับให้แก้ไข" SupportingText={plan.returnReason} />}
         {edit && plan.status === "approved" && <Alert Color="Warning" Text={ALERT_APPROVED[0]} SupportingText={ALERT_APPROVED[1]} />}
+        {live && <Alert Color="Info" Text={ALERT_LIVE[0]} SupportingText={ALERT_LIVE[1]} />}
         <section className="flex flex-col gap-4">
           <SectionHeader Title="ข้อมูลแผน" />
           {row(<>
@@ -280,6 +312,7 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
             onQuery={(v) => { setQuery(v); setPage(1); }} onFilter={openPanel} FilterCount={chips.length} Filters={chips} onRemoveFilter={removeChip}
             Actions={[<SecondaryButton key="assign" Text={"จัดลงไตรมาส" + (nTicked ? " (" + nTicked + ")" : "")} Size={mob ? "lg" : "md"} State={nTicked ? "Default" : "Disabled"} onClick={() => nTicked && setAssign("")} />,
               q ? <SecondaryButton key="parts" Text={"กำหนดอะไหล่" + (nTicked ? " (" + nTicked + ")" : "")} Size={mob ? "lg" : "md"} State={nTicked ? "Default" : "Disabled"} onClick={() => nTicked && toBulk()} /> : null]} />
+          {live && q > 0 && qLocked(q) && <Alert Color="Success" Text={"ไตรมาส " + q + " บำรุงรักษาเสร็จทุกคันแล้ว"} SupportingText="ดูอย่างเดียว ย้าย เอาออก หรือกำหนดอะไหล่ของยานพาหนะในไตรมาสนี้ไม่ได้" />}
           {carBody}
         </section>
 
@@ -292,13 +325,13 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
 
         <div className={cx("flex", mob ? "gap-4 [&>*]:flex-1 [&>*]:basis-0" : "justify-between gap-3")}>
           <SecondaryButton Text={edit ? "ยกเลิก" : "ย้อนกลับ"} Size="lg" onClick={leave} />
-          <PrimaryButton Text="บันทึกและส่งอนุมัติ" Size="lg" State={complete ? "Default" : "Disabled"} onClick={save} />
+          <PrimaryButton Text={live ? "บันทึก" : "บันทึกและส่งอนุมัติ"} Size="lg" State={complete ? "Default" : "Disabled"} onClick={save} />
         </div>
       </div>
       <PopupModal open={assign !== null} title="จัดลงไตรมาส" sub={"ยานพาหนะที่เลือก " + nTicked + " คัน · ยานพาหนะที่จัดไว้แล้วจะย้ายไปไตรมาสที่เลือก"} ok="ยืนยัน" okDisabled={!assign}
         onCancel={() => setAssign(null)} onOk={doAssign}>
         <div role="radiogroup" className="flex flex-col gap-3">
-          {QUARTERS.map((t) => <RadioTextCard key={t} Text={t} Selected={assign === t} onClick={() => setAssign(t)} />)}
+          {QUARTERS.map((t, k) => <RadioTextCard key={t} Text={t} SupportingText={qLocked(k + 1) ? "บำรุงรักษาเสร็จทุกคันแล้ว" : undefined} State={qLocked(k + 1) ? "Disabled" : "Default"} Selected={assign === t} onClick={() => setAssign(t)} />)}
         </div>
       </PopupModal>
       <TripCarPicker open={qAdd} pool={addPool} nowQ={"ไตรมาส " + q} title={"เพิ่มยานพาหนะเข้าไตรมาส " + q} okText={"เพิ่มเข้าไตรมาส " + q}

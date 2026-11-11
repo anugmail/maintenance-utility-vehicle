@@ -10,7 +10,7 @@ import { PLAN_ROLES, canManage, findPlan, startEdit, useRoleGuard } from "@/lib/
 import { useMock, useRole } from "@/lib/mock/store";
 import { PlanForm } from "../new/PlanForm";
 
-const EDITABLE = ["review", "returned", "approved"];
+const EDITABLE = ["review", "returned", "approved", "active"];   // 11 พ.ย. 2569 ดำเนินการ = แก้ได้เฉพาะไตรมาสที่ยังไม่เสร็จ บันทึกแล้วมีผลทันที (liveEdit.ts · BACKLOG ข้อ 64)
 
 function Edit() {
   const router = useRouter();

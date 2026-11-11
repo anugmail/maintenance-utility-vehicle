@@ -63,7 +63,7 @@ function Detail() {
   /* แก้ไข ลบ: หน่วยงานผู้สร้างแผน · กบค. เฉพาะแผนของ กบค. (แผนหน่วยงานอื่นดูอย่างเดียว · planDetail readonly ของ screens.js 6 พ.ย. 2569 รอบ 2) */
   const manage = canManage(role, plan);
   const canDelete = manage && st === "returned";
-  const canEdit = manage && (st === "returned" || st === "approved");
+  const canEdit = manage && (st === "returned" || st === "approved" || st === "active");   // ดำเนินการ = แก้ได้เฉพาะไตรมาสที่ยังไม่เสร็จ ไม่ส่งอนุมัติใหม่ (BACKLOG ข้อ 64)
   const size = mob ? "lg" : "md";
   const id = planId(plan);
   const nowQ = Number(plan.nowQ.replace(/\D/g, "")) || 1;

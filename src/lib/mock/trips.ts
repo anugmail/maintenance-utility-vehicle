@@ -5,7 +5,7 @@
 import type { BadgeOutlineColor } from "@/components/vms/BadgeOutline";
 import type { PillColor } from "@/components/vms/PillOutline";
 import type { StatusState } from "@/components/vms/Status";
-import { CAND, DISTRICTS, PLANS, UNIT_FLEET, dCode, regionOf, type Plan } from "./data";
+import { CAND, DISTRICTS, FIG_EXTRA_IDS, PLANS, UNIT_FLEET, dCode, regionOf, type Plan } from "./data";
 import { setMock, type MockState } from "./store";
 
 export const NOW_Q = "ไตรมาส 1";
@@ -32,7 +32,7 @@ export const candId = (plate: string) => plate.split(" ")[0];
 const ownerPhone = (owner: string) => TRIP_CARS.find((c) => c.owner === owner)?.phone ?? "";
 /* ผู้ดูแลยานพาหนะของรถที่ screens.js ไม่มีชื่อ = ผู้ควบคุมรถของหน่วยงานเจ้าของรถเดียวกันใน TRIP_CARS (แบบเดียวกับเบอร์) · ไม่มี = ว่าง (ตารางแสดง "-") */
 const ownerCtrl = (owner: string) => TRIP_CARS.find((c) => c.owner === owner)?.ctrl ?? "";
-export const PLAN_CARS: TripCar[] = CAND.filter((c) => !TRIP_CARS.some((t) => t.id === candId(c.plate)))
+export const PLAN_CARS: TripCar[] = CAND.filter((c) => !TRIP_CARS.some((t) => t.id === candId(c.plate)) && !FIG_EXTRA_IDS.has(candId(c.plate)))   // CAND_FIG = ข้อมูลของ Q_EXTRA SAMPLE_Q (carOf)
   .map((c) => ({ id: candId(c.plate), plate: c.plate, model: c.model, owner: c.owner, phone: ownerPhone(c.owner), ctrl: ownerCtrl(c.owner) }));
 /* Q_EXTRA — รถในแผนปีที่ยังไม่อยู่ในไตรมาส (ค่าสมมติของ screens.js · popup "เพิ่มรถเข้าไตรมาส" E.16 ของแผนตัวอย่าง) */
 export const Q_EXTRA: TripCar[] = [

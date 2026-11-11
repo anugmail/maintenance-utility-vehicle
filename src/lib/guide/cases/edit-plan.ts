@@ -5,10 +5,12 @@
    ชีตยืนยัน หน้า 2 (ฟอร์มสร้างและแก้ไขแผน) · เคสที่ดูแผนที่ถูกส่งกลับจากหน้ารายละเอียด = หน้า 4
    ข้อมูลตั้งต้น: ล้างข้อมูลจำลองแล้วใส่แผนตัวอย่าง MRZ7000004 (samplePlan) ในสถานะที่เคสใช้ — ได้ค่าเดิมทุกครั้ง
    ข้อความที่ลูกค้าเห็น: ภาษาคนพูด ไม่มีรหัส scenario/สถานะ ไม่มี "·" ลูกศร อีโมจิ (types.ts) */
-import { DISTRICTS, REGIONS, UNIT_FLEET, type PlanStatus } from "@/lib/mock/data";
+import { DISTRICTS, REGIONS, UNIT_FLEET, typeOf, type PlanStatus } from "@/lib/mock/data";
+import { applySample, carOf as jobCarOf, closeJob, filledClose, getJob, jobsOf } from "@/lib/mock/jobs";
+import { CREATOR, STAFF, carOf as tripCarOf, putTrip, quarterCars } from "@/lib/mock/trips";
 import { carsFor } from "@/lib/mock/plan";
 import { SAMPLE_Q_CARS, samplePlan } from "@/lib/mock/planFlow";
-import { setMock } from "@/lib/mock/store";
+import { setMock, type MockState } from "@/lib/mock/store";
 import type { GuideScenario, GuideStep } from "../types";
 
 const PLAN = "MRZ7000004", ID = "Z7000004";
@@ -17,6 +19,26 @@ const N = UNIT_FLEET.length, R2_ALL = DISTRICTS[REGIONS[1]];
 const AREA = carsFor({ regions: [REGIONS[1]], districts: R2_ALL, types: [] }).length;
 const AREA_NO3 = carsFor({ regions: [REGIONS[1]], districts: R2_ALL.filter((x) => x !== "กฟฉ.3"), types: [] }).length;
 const LIST = "/", DETAIL = "/detail/?id=" + ID, EDIT = "/edit/?id=" + ID;
+const ACT_EDIT = "/edit/?id=Z7000001", ACT_DETAIL = "/detail/?id=Z7000001", ACT_Q1 = "/quarter/trips/?id=Z7000001&q=1";
+/* แผนที่ดำเนินการ (edit-active): ใบ T1 ของไตรมาส 1 (T1_afterClose) + ใบ TG3 ไตรมาส 3 อนุมัติแล้วและปิดงานครบทุกคัน ⇒ ไตรมาส 3 เสร็จแล้ว (quarterFinished) */
+function seedActive() {
+  applySample("T1_afterClose");
+  let st = null as unknown as MockState;
+  const read = () => setMock((s) => (st = s));
+  read();
+  const ids = quarterCars(st, "Z7000001", 3).map((c) => c.id);
+  putTrip({ id: "TG3", planId: "Z7000001", quarter: 3, name: "ตรวจยานพาหนะ ไตรมาส 3", mode: "self", carIds: ids, locs: {}, phones: {}, d1: "05/11/2569", d2: "08/11/2569",
+    status: "approved", staff: STAFF.slice(0, 2), createdBy: CREATOR, sentAt: "01/11/2569", approvedAt: "02/11/2569" });
+  read();
+  const jt = jobsOf(st).trips["TG3"];
+  if (!jt) return;
+  ids.forEach((cid) => {
+    const c = tripCarOf(cid);
+    if (!c) return;
+    const car = jobCarOf(cid) ?? { id: c.id, plate: c.plate, model: c.model, owner: c.owner, ownerPhone: c.phone, ctrl: c.ctrl, type: typeOf(c.model), lastOil: "-" };
+    closeJob(jt, cid, filledClose(getJob(jobsOf(st), "TG3", cid), jt, car));
+  });
+}
 const withPlan = (st: PlanStatus) => () => setMock((s) => ({ ...s, plans: [samplePlan(st), ...s.plans.filter((p) => p.mr !== PLAN)] }));
 const menuEdit = (what: string): GuideStep => ({
   at: LIST,
@@ -26,7 +48,7 @@ const menuEdit = (what: string): GuideStep => ({
 
 export const EDIT_PLAN: GuideScenario = {
   key: "edit-plan", code: "S19", title: "แก้ไขแผนบำรุงรักษา แล้วส่งอนุมัติใหม่", who: "เจ้าหน้าที่หน่วยงานผู้จัดทำแผน",
-  about: "แก้ไขแผนที่ยังไม่เริ่มดำเนินการ ทั้งแผนที่ถูกส่งกลับและแผนที่อนุมัติแล้ว เมื่อบันทึก แผนจะกลับไปรอผู้อนุมัติตรวจอีกครั้งโดยใช้เลขที่แผนเดิม",
+  about: "แก้ไขแผนที่ถูกส่งกลับและแผนที่อนุมัติแล้ว เมื่อบันทึก แผนจะกลับไปรอผู้อนุมัติตรวจอีกครั้งโดยใช้เลขที่แผนเดิม ส่วนแผนที่ดำเนินการแล้วแก้ได้เฉพาะไตรมาสที่ยังไม่เสร็จ บันทึกแล้วมีผลทันที",
   cases: [
     {
       id: "edit-returned", name: "แก้ไขแผนที่ถูกส่งกลับ แล้วส่งอนุมัติใหม่", about: "เปิดฟอร์มแก้ไขจากรายการแผน ข้อมูลเดิมกรอกไว้แล้ว แก้ชื่อแผน แล้วยืนยันการแก้ไข", role: "หน่วยงาน (กกฟ.1)", sheet: 2,
@@ -82,12 +104,22 @@ export const EDIT_PLAN: GuideScenario = {
       ],
     },
     {
-      id: "edit-active", name: "แผนที่ดำเนินการแล้วแก้ไขไม่ได้", about: "แผนที่เริ่มงานแล้วเปิดดูรายละเอียดได้อย่างเดียว ไม่มีแก้ไขและลบ", role: "หน่วยงาน (กกฟ.1)", sheet: 4,
-      seed: () => {},
+      /* 11 พ.ย. 2569 เจ้าของงาน "แผนที่ดำเนินการแล้ว ยังสามารถแก้ไขได้" + เคาะ "เฉพาะไตรมาสที่ยังไม่เสร็จ" "ไม่ต้อง บันทึกแล้วมีผลเลย" (BACKLOG ข้อ 64 · เดิม "แผนที่ดำเนินการแล้วแก้ไขไม่ได้")
+         ข้อมูลตั้งต้น: MRZ7000001 ใบ T1 ไตรมาส 1 (82-6789 ปิดงานแล้ว · 80-9981 บำรุงรักษาไม่ได้) + ใบ TG3 ไตรมาส 3 ปิดงานครบทุกคัน ⇒ ไตรมาส 3 เสร็จแล้ว */
+      id: "edit-active", name: "แก้ไขแผนที่ดำเนินการแล้ว เฉพาะไตรมาสที่ยังไม่เสร็จ", about: "แผนที่เริ่มงานแล้วแก้ไขได้เฉพาะไตรมาสที่ยังบำรุงรักษาไม่เสร็จ บันทึกแล้วมีผลทันทีโดยไม่ต้องส่งอนุมัติใหม่", role: "หน่วยงาน (กกฟ.1)", sheet: 4,
+      seed: seedActive,
       steps: [
-        { at: LIST, text: "ที่รายการแผน กดปุ่มสามจุดท้ายแถวของแผน MRZ7000001 ซึ่งอยู่ในสถานะดำเนินการ เมนูมีดูรายละเอียดอย่างเดียว เลือกดูรายละเอียด",
-          mobile: "การ์ดของแผน MRZ7000001 ซึ่งอยู่ในสถานะดำเนินการ มีไอคอนดูรายละเอียดอย่างเดียว กดไอคอนนั้น" },
-        { at: "/detail/?id=Z7000001", text: "ส่วนหัวของหน้ารายละเอียดไม่มีปุ่มแก้ไขหรือลบแผน แผนที่เริ่มดำเนินการแล้วจึงแก้ไม่ได้" },
+        { at: LIST, text: "ที่รายการแผน กดปุ่มสามจุดท้ายแถวของแผน MRZ7000001 ซึ่งอยู่ในสถานะดำเนินการ เมนูมีดูรายละเอียดกับแก้ไข ไม่มีลบ เลือกแก้ไข",
+          mobile: "การ์ดของแผน MRZ7000001 ซึ่งอยู่ในสถานะดำเนินการ มีไอคอนดูรายละเอียดกับแก้ไข ไม่มีไอคอนลบ กดไอคอนแก้ไข" },
+        { at: ACT_EDIT, text: "ด้านบนของฟอร์มมีกล่องบอกว่าแผนนี้อยู่ระหว่างดำเนินการ แก้ได้เฉพาะไตรมาสที่ยังบำรุงรักษาไม่เสร็จและยานพาหนะที่ยังไม่ปิดงาน บันทึกแล้วมีผลทันที" },
+        { at: ACT_EDIT, text: "กดแท็บไตรมาส 3 กล่องสีเขียวบอกว่าไตรมาส 3 บำรุงรักษาเสร็จทุกคันแล้ว ยานพาหนะในไตรมาสนี้ติ๊กไม่ได้ ปุ่มสามจุดมีแค่ดูรายละเอียด" ,
+          mobile: "กดแท็บไตรมาส 3 กล่องสีเขียวบอกว่าไตรมาส 3 บำรุงรักษาเสร็จทุกคันแล้ว ยานพาหนะในไตรมาสนี้ติ๊กไม่ได้ และมีแค่ไอคอนดูรายละเอียด" },
+        { at: ACT_EDIT, text: "กดแท็บไตรมาส 1 ยานพาหนะ 82-6789 ขอนแก่น กับ 80-9981 ลำปาง มีบรรทัดรองว่าปิดงานแล้ว จึงติ๊กไม่ได้และแก้อะไหล่ไม่ได้ คันอื่นยังแก้ได้ตามปกติ" },
+        { at: ACT_EDIT, text: "กดปุ่มสามจุดของ 81-2210 เชียงใหม่ เลือกลบ แล้วกดเอาออกในหน้าต่างยืนยัน ยานพาหนะคันนี้กลับเป็นยังไม่จัด",
+          mobile: "ที่รายการ 81-2210 เชียงใหม่ กดไอคอนลบ แล้วกดเอาออกในหน้าต่างยืนยัน ยานพาหนะคันนี้กลับเป็นยังไม่จัด" },
+        { at: ACT_EDIT, text: "กดบันทึก ไม่มีหน้าต่างส่งอนุมัติ" },
+        { at: ACT_DETAIL, text: "กลับมาที่หน้ารายละเอียดแผน มุมจอขึ้นว่าบันทึกการแก้ไขแผนสำเร็จ แผนยังอยู่ในสถานะดำเนินการ กดไปหน้าไตรมาส 1" },
+        { at: ACT_Q1, text: "หน้าไตรมาส 1 เหลือยานพาหนะ 9 คัน ไม่มี 81-2210 เชียงใหม่ แล้ว อะไหล่ในไตรมาสลดตามไปด้วย" },
       ],
     },
   ],
