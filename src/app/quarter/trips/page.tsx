@@ -11,6 +11,7 @@
        (แทนหน้าความคืบหน้าอะไหล่ S4 เดิม · ยอด quarterPartRows ใน lib/mock/moves.ts · S25 รถที่ย้ายมา บรรทัดรองใต้ชนิด "รวม n หน่วย ของ {ทะเบียน} ที่ย้ายมา")
        · ไม่มีรายการ = Empty state/Data empty "ยังไม่มีรายการอะไหล่" / "ไตรมาสนี้ไม่มีอะไหล่ที่ต้องเบิก" (noParts ของอะไหล่ในแผน S2 · จอหน้าไตรมาสไม่มีแบบว่าง)
      E.16–E.20 (เพิ่ม ลด แก้ไข รถในไตรมาส 4 พ.ย. 2569 · tripList o.added o.removed · Q_EXTRA · Q_REMOVE_CONFIRM · qAddModal): popup "เพิ่มรถเข้าไตรมาส n" (TripCarPicker)
+       · 11 พ.ย. 2569 เพิ่มรายคันได้เฉพาะไตรมาสที่ยังบำรุงรักษาไม่เสร็จทุกคัน (quarterFinished · เสร็จสิ้น + บำรุงรักษาไม่ได้ นับว่าเสร็จ) — เสร็จครบแล้ว ปุ่ม "เพิ่มยานพาหนะ" Disabled
        · ไอคอนแก้ไข = TripCarEditModal (คันที่อยู่ในแผนเดินทางแล้ว = แก้ที่ใบนั้น) · ไอคอนลบ = ConfirmDialog "ยืนยันการเอารถออกจากไตรมาส n" · ไม่ต้องส่งอนุมัติแผนใหม่
      Section label "แผนเดินทาง (n)" + Tertiary brand button "สร้างแผนเดินทาง" → Table (TRIP_COLS ไอคอน ›) / Empty state/Data empty + Primary button "สร้างแผนเดินทาง"
        รถทุกคันอยู่ในแผนเดินทางแล้ว = ปุ่ม "สร้างแผนเดินทาง" Disabled (5 พ.ย. 2569 "สร้างแผนได้จนกว่าจะไม่เหลือรถ" · ตัด popup "รถทุกคันของไตรมาสอยู่ในแผนเดินทางแล้ว")
@@ -33,7 +34,7 @@ import { TertiaryBrandButton } from "@/components/vms/TertiaryBrandButton";
 import { mrOf, planKv, planOf } from "@/lib/mock/closeout";
 import { PST } from "@/lib/mock/data";
 import { applySample, WSTAT } from "@/lib/mock/jobs";
-import { MAINT_CONFIRM, MAINT_ITEM, carPlanParts, cannotTrip, maintainCar, moveCar, movedInto, quarterPartRows } from "@/lib/mock/moves";
+import { MAINT_CONFIRM, MAINT_ITEM, carPlanParts, cannotTrip, maintainCar, moveCar, movedInto, quarterFinished, quarterPartRows } from "@/lib/mock/moves";
 import { QPART_COLS, qpartRow } from "@/lib/mock/plan";
 import { useSeed } from "@/lib/mock/seedB";
 import { setMock } from "@/lib/mock/store";
@@ -90,6 +91,7 @@ function TripList() {
   const edits = qEditOf(mock, id, q);
   const tripOf = (c: TripCar) => trips.find((x) => x.carIds.includes(c.id));
   const moved = new Map(movedInto(mock, id, q).map((m) => [m.carId, m]));
+  const finished = quarterFinished(mock, id, q);   // 11 พ.ย. 2569 บำรุงรักษาเสร็จทุกคันแล้ว (เสร็จสิ้น + บำรุงรักษาไม่ได้) ⇒ เพิ่มยานพาหนะเข้าไตรมาสนี้ไม่ได้
   const lastQ = q >= 4;   // ไตรมาสสุดท้ายของแผน = ย้ายไม่ได้ (Disabled · ยังไม่เคาะเรื่องแผนปีถัดไป)
   const openMove = (c: TripCar) => {
     const x = cannotTrip(mock, id, q, c.id); if (!x || lastQ) return;
@@ -131,7 +133,7 @@ function TripList() {
         {plan && <VehicleAndReporterInfo Title="รายละเอียดแผน" pairs={planKv(plan).map(([k, v]): [string, string] => (k === "ไตรมาส" ? [k, nowQ + " (" + cars.length + " คัน)"] : [k, v]))} />}
         <Section>
           <SectionLabel Title={"ยานพาหนะใน" + nowQ + " (" + cars.length + ")"}
-            Actions={kbk ? <SecondaryButton Text="เพิ่มยานพาหนะ" LeadingIconSwap="add-24-300-round" Size={mob ? "lg" : "md"} onClick={() => setAdding(true)} /> : undefined} />
+            Actions={kbk ? <SecondaryButton Text="เพิ่มยานพาหนะ" LeadingIconSwap="add-24-300-round" Size={mob ? "lg" : "md"} State={finished ? "Disabled" : "Default"} onClick={() => !finished && setAdding(true)} /> : undefined} />
           <PagedTable columns={kbk ? [...TRIP_Q_COLS, { head: "", width: 104, Style: "Action icons" }] : TRIP_Q_COLS} rows={carRows} rowKey={(r) => String(r[0])} />
         </Section>
         <Section>

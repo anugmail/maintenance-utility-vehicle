@@ -84,13 +84,16 @@ export const PLANS: Plan[] = [   // 6 พ.ย. 2569 ประเภทยาน�
 /* NEW_PLAN — แผนที่บันทึกในจอ "บันทึกและส่งอนุมัติสำเร็จ" (วันที่สร้างในต้นแบบ = วันนี้) */
 export const NEW_PLAN_DATE = "30/10/2569";
 
-export const REGIONS = ["ภาค 1 (เหนือ)", "ภาค 2 (ตะวันออกเฉียงเหนือ)", "ภาค 3 (กลาง)", "ภาค 4 (ใต้)"];
-/* DISTRICTS — เขตภายใต้ภาค (R35) */
+/* 11 พ.ย. 2569 เจ้าของงาน "ให้เพิ่ม ภาค อีกหนึ่งรายการคือ สนง = สำนักงานใหญ่ โดยภายใต้สำนักงานใหญ่จะมี กกฟ1 กกฟ2" (เคาะป้าย "สนง. (สำนักงานใหญ่)") ⇒ ต่อท้าย ลำดับภาคเดิมไม่เลื่อน */
+export const HQ_REGION = "สนง. (สำนักงานใหญ่)";
+export const REGIONS = ["ภาค 1 (เหนือ)", "ภาค 2 (ตะวันออกเฉียงเหนือ)", "ภาค 3 (กลาง)", "ภาค 4 (ใต้)", HQ_REGION];
+/* DISTRICTS — เขตภายใต้ภาค (R35) · สนง. = กกฟ.1 กกฟ.2 */
 export const DISTRICTS: Record<string, string[]> = {
   [REGIONS[0]]: ["กฟน.1", "กฟน.2", "กฟน.3"],
   [REGIONS[1]]: ["กฟฉ.1", "กฟฉ.2", "กฟฉ.3"],
   [REGIONS[2]]: ["กฟก.1", "กฟก.2", "กฟก.3"],
   [REGIONS[3]]: ["กฟต.1", "กฟต.2", "กฟต.3"],
+  [HQ_REGION]: ["กกฟ.1", "กกฟ.2"],
 };
 /* ประเภทยานพาหนะ (VTYPES · typeOf ของ screens.js 6 พ.ย. 2569) — ข้อมูลจาก API ตามโค้ดจริง resolveInspectionCarType ของ maintain-d-fe
    (src/domains/shared/types/vehicle-inspection.types.ts: กระเช้าฮอทไลน์ · กระเช้าแก้ไฟ · รถพ่วงฉีดน้ำ) · ค่าสมมติจากยี่ห้อ/รุ่น: ถังฉีดน้ำ = รถพ่วงฉีดน้ำ · Tadano = กระเช้าฮอทไลน์ · ที่เหลือ = กระเช้าแก้ไฟ */
@@ -118,6 +121,7 @@ const PROVINCES: Record<string, string[]> = {
   "กฟฉ.1": ["ขอนแก่น", "อุดรธานี", "หนองคาย"], "กฟฉ.2": ["อุบลราชธานี", "ร้อยเอ็ด", "ยโสธร"], "กฟฉ.3": ["นครราชสีมา", "บุรีรัมย์", "ชัยภูมิ"],
   "กฟก.1": ["พระนครศรีอยุธยา", "สระบุรี", "ปทุมธานี"], "กฟก.2": ["ชลบุรี", "ระยอง", "ฉะเชิงเทรา"], "กฟก.3": ["นครปฐม", "ราชบุรี", "สุพรรณบุรี"],
   "กฟต.1": ["เพชรบุรี", "ประจวบคีรีขันธ์", "ชุมพร"], "กฟต.2": ["นครศรีธรรมราช", "สุราษฎร์ธานี", "พัทลุง"], "กฟต.3": ["สงขลา", "ตรัง", "ยะลา"],
+  "กกฟ.1": ["กรุงเทพมหานคร"], "กกฟ.2": ["กรุงเทพมหานคร"],
 };
 const MODELS: Record<string, string[]> = {
   /* 6 พ.ย. 2569 ยี่ห้อ/รุ่นของ CAND ใน screens.js แยกตามประเภท (typeOf) — รถเครน รถขุด เดิมไม่มีในประเภทตามโค้ดจริง */
@@ -125,7 +129,8 @@ const MODELS: Record<string, string[]> = {
   [VEHICLE_TYPES[1]]: ["Isuzu FTR + กระเช้า Aichi SK17A", "Isuzu FRR + กระเช้า Aichi SK10A", "Isuzu FTR + กระเช้า Aichi SH15A"],
   [VEHICLE_TYPES[2]]: ["Hino FM + ถังฉีดน้ำ 6,000 ลิตร"],
 };
-const fillCars = (seed: Car[]): Car[] => VEHICLE_TYPES.flatMap((type, t) => REGIONS.flatMap((region, r) => {
+/* regions = ภาคที่เติม (r = ลำดับใน REGIONS ใช้ทำทะเบียน) — ชุดแรกเติมเฉพาะ 4 ภาคเดิม ⇒ ลำดับรถเดิมใน CAND ไม่เลื่อน (plan.alloc อ้างลำดับ) · สนง. เติมแยกต่อท้ายสุด (GENERATED_HQ) */
+const fillCars = (seed: Car[], regions: string[]): Car[] => VEHICLE_TYPES.flatMap((type, t) => regions.map((region) => [region, REGIONS.indexOf(region)] as const).flatMap(([region, r]) => {
   const ds = DISTRICTS[region];
   const have = seed.filter((c) => c.type === type && ds.includes(c.owner.split(" ")[0])).length;
   return Array.from({ length: Math.max(0, CARS_PER_TYPE - have) }, (_, k) => {
@@ -140,10 +145,12 @@ const CAND_LATE: Car[] = [
   car("81-2210 เชียงใหม่", "Hino FG + กระเช้า Tadano AT-146", "กฟน.1 เชียงใหม่", "ok"),
   car("82-9012 ขอนแก่น", "Hino FM + ถังฉีดน้ำ 6,000 ลิตร", "กฟฉ.2 ขอนแก่น", "ok"),   // 6 พ.ย. 2569 เดิมรถเครน · ประเภทตามโค้ดจริงไม่มีรถเครน (screens.js CAND)
 ];
-const GENERATED = fillCars(CAND_SEED);
-export const CAND: Car[] = [...CAND_SEED, ...GENERATED, ...CAND_LATE];
+const GENERATED = fillCars(CAND_SEED, REGIONS.filter((r) => r !== HQ_REGION));
+/* GENERATED_HQ — รถจำลองของ สนง. (กกฟ.1 กกฟ.2 · 11 พ.ย. 2569) 20 คันต่อประเภทแบบภาคอื่น · ต่อท้ายสุดของ CAND */
+const GENERATED_HQ = fillCars([], [HQ_REGION]);
+export const CAND: Car[] = [...CAND_SEED, ...GENERATED, ...CAND_LATE, ...GENERATED_HQ];
 /* FIG_FLEET — รถ 10 คันของ CAND ใน screens.js (CAND_SEED 7 คัน + CAND_LATE 3 คัน) ใช้จับคู่ค่าตัวอย่างรายคันของ Figma (A_ALL A_OILS A_DRAW ของ NEW_PLAN)
-   UNIT_FLEET — รถที่ฟอร์มสร้าง/แก้ไขแผนเห็นและต้องจัดลงไตรมาสครบทุกคัน = รถจำลองครบชุด CAND (ภาค 4 × ประเภท 3 × 20 คัน + รถของ screens.js · 243 คัน)
+   UNIT_FLEET — รถที่ฟอร์มสร้าง/แก้ไขแผนเห็นและต้องจัดลงไตรมาสครบทุกคัน = รถจำลองครบชุด CAND (ภาค 4 × ประเภท 3 × 20 คัน + รถของ screens.js · 243 คัน · 11 พ.ย. 2569 + สนง. 60 คัน = 303 คัน)
    9 พ.ย. 2569 เจ้าของงาน _"รถตัวอย่างทำไมมีน้อยตอนแรกมี 250 คันป่ะ"_ + _"ถ้าเลือกภาคแล้วต้องแสดงตามที่เลือกสิ"_ (เดิม 6 พ.ย. 2569 = FIG_FLEET 10 คัน · BACKLOG ข้อ 21 ค.(ก) ปิด) */
 export const FIG_FLEET: number[] = [...CAND_SEED.map((_, i) => i), ...CAND_LATE.map((_, k) => CAND_SEED.length + GENERATED.length + k)];
 export const UNIT_FLEET: number[] = CAND.map((_, i) => i);
@@ -163,7 +170,8 @@ export const uniq = <T,>(a: T[]) => [...new Set(a)];
 const LAST_OIL_SEED = ["12/03/2568", "12/03/2567", "05/02/2567", "20/11/2566", "ไม่มีข้อมูล", "18/06/2568", "09/01/2566"];
 /* รถจำลองเพิ่ม: วันที่วนปี 2566–2568 · ทุก 11 คันไม่มีข้อมูล */
 export const LAST_OIL = [...LAST_OIL_SEED, ...GENERATED.map((_, k) => k % 11 === 5 ? "ไม่มีข้อมูล"
-  : String(1 + (k * 7) % 28).padStart(2, "0") + "/" + String(1 + (k * 5) % 12).padStart(2, "0") + "/" + (2566 + (k % 3))), "14/10/2568", "ไม่มีข้อมูล", "ไม่มีข้อมูล"];   // CAND_LATE ตาม LAST_OIL ของ screens.js
+  : String(1 + (k * 7) % 28).padStart(2, "0") + "/" + String(1 + (k * 5) % 12).padStart(2, "0") + "/" + (2566 + (k % 3))), "14/10/2568", "ไม่มีข้อมูล", "ไม่มีข้อมูล",   // CAND_LATE ตาม LAST_OIL ของ screens.js
+  ...GENERATED_HQ.map((_, k) => String(1 + (k * 7) % 28).padStart(2, "0") + "/" + String(1 + (k * 5) % 12).padStart(2, "0") + "/" + (2566 + (k % 3)))];   // สนง. วนแบบรถจำลองเพิ่ม
 export const OIL_OPTS = ["เก็บตัวอย่าง", "เปลี่ยนน้ำมัน"];
 
 /* 6 พ.ย. 2569 เจ้าของงาน "ไตรเป็นตามปีปฎิทิน" (เดิมไตรมาส 1 = ต.ค.–ธ.ค. ตามปีงบ) · ป้ายช่อง "ปีงบประมาณ" คงเดิม */

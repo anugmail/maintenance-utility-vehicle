@@ -29,6 +29,19 @@ export function cannotTrip(s: MockState, planId: string, q: number, carId: strin
   return job.status === "cannot" ? { trip: t, reason: job.cannot?.reason ?? "-" } : null;
 }
 
+/** ไตรมาสบำรุงรักษาเสร็จทุกคันแล้ว — 11 พ.ย. 2569 เจ้าของงาน "ถ้าไตรมาสนั้นยังบำรุงไม่เสร็จทุกคันจะสามารถเพิ่มรถเข้ามาไตรมาสนั้นๆ ได้"
+    เสร็จ = รถอยู่ในแผนเดินทางที่อนุมัติแล้ว และงานปิดแล้ว ทั้งเสร็จสิ้นและบำรุงรักษาไม่ได้ (เคาะ "นับว่าเสร็จ") · ไตรมาสที่ยังไม่มีรถ = ยังไม่เสร็จ (เพิ่มได้)
+    เสร็จแล้ว ⇒ ปุ่ม "เพิ่มยานพาหนะ" ของหน้าไตรมาส Disabled · รถที่ "ดำเนินการบำรุงรักษา" (S25) ออกจากแผนเดินทางเดิม = ยังไม่เสร็จ */
+export function quarterFinished(s: MockState, planId: string, q: number) {
+  const cars = quarterCars(s, planId, q);
+  const trips = quarterTrips(s, planId, q).filter((t) => t.status === "approved");
+  return cars.length > 0 && cars.every((c) => {
+    const t = trips.find((x) => x.carIds.includes(c.id));
+    const st = t ? getJob(jobsOf(s), t.id, c.id).status : null;
+    return st === "done" || st === "cannot";
+  });
+}
+
 /** อะไหล่ตามแผนของรถคันนี้ (ย้ายไปด้วย): แผนที่จัดรถรายคัน = อะไหล่ที่ กบค. กำหนดให้รถ (S21) · แผนตัวอย่าง = อะไหล่ตามแผนของงานรายคัน (WORK)
     แถวมี ชนิด · รหัสอะไหล่ · ประเภท · จำนวน · หน่วย ให้ popup ย้ายไปไตรมาสอื่นใช้ QPART_COLS (movePartRows ของ screens.js 10 พ.ย. 2569 · R81)
     อะไหล่ของงานรายคันหาประเภทจาก PARTS ตามชื่อ (MOVE_PART_OF) · ไม่พบ = "-" */
