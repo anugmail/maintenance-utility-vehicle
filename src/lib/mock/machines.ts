@@ -7,9 +7,11 @@
      · ไม่มีคอลัมน์ของ ประเภทเครื่องมือกล · รหัสทรัพย์สิน/รหัสย่อย (vms_mas_vehicle_department.vehicle_asset_no varchar(9) เป็นของตัวรถ) · ชั่วโมงเครื่องยนต์ — BACKLOG ค.
    รหัสทรัพย์สิน 12 หลัก + รหัสย่อย 4 หลัก (รูปแบบ SAP · design-mock/equipment-asset-code.html ของรีโป Maintenance-Request-Form: รหัสหลักของตัวรถ · ย่อย 0000 = ตัวรถ · 0001 ขึ้นไป = เครื่องมือกล)
    1 คันมีได้หลายเครื่อง (ตาราง mechanic แยกแถวต่อเครื่อง · ทะเบียนเครื่องมือกลมีรหัสย่อยต่อเครื่อง) · ชั่วโมงทั้งสองช่องเก็บต่อเครื่อง (เสนอ)
-   ค่าตั้งต้นทุกคัน = 1 เครื่องจาก machineOf() ของยี่ห้อ/รุ่นในข้อมูลยานพาหนะ (ค่าสมมติ) · แก้แล้วเก็บ MockState.machines[ทะเบียนไม่มีจังหวัด] */
+   ค่าตั้งต้น = 1 เครื่องจาก machineOf() ของยี่ห้อ/รุ่นในข้อมูลยานพาหนะ (ค่าสมมติ) · แก้แล้วเก็บ MockState.machines[ทะเบียนไม่มีจังหวัด]
+   ข้อ 68ก (เจ้าของงาน "กลุ่มรหัสข้างรถ เลข 04, 07, 08, 09, 10 จะสามารถเพิ่มเครื่องมือกลได้ ถ้ามีข้อมูลต้องสามารถแก้ไขได้"): เฉพาะรหัสข้างรถที่ hasEquipment ในตารางอ้างอิง vehicleTypes.ts */
 import { useMemo } from "react";
 import { CAND, machineOf, type Car } from "./data";
+import { hasEquipment, sideCodeOf } from "./vehicleTypes";
 import { setMock, useMock, type MockState } from "./store";
 
 declare module "./store" {
@@ -34,8 +36,12 @@ export interface Machine {
 const idOf = (plate: string) => plate.split(" ")[0];
 const digits = (plate: string) => idOf(plate).replace(/\D/g, "").padStart(6, "0").slice(-6);
 const typeOfModel = (m: string) => (/ถังฉีดน้ำ/.test(m) ? "ถังฉีดน้ำ" : /เครน/.test(m) ? "เครน" : /กระเช้า/.test(m) ? "กระเช้า" : "อื่นๆ");
-/** ค่าตั้งต้นของคันหนึ่ง (ค่าสมมติ · i = ลำดับใน CAND) */
+/** ค่าตั้งต้นของคันหนึ่ง (ค่าสมมติ · i = ลำดับใน CAND) — ข้อ 68ก: มีเฉพาะคันที่รหัสข้างรถอยู่ในกลุ่มเพิ่มเครื่องมือกลได้ (ตารางอ้างอิง)
+    และรหัส 09 08 10 (04 07 เริ่มว่าง ให้เห็นกรณีในกลุ่มแต่ยังไม่มีข้อมูล · สมมติ) */
+const PREFILL = ["09", "08", "10"];
 export function defaultMachines(car: Car, i: number): Machine[] {
+  const code = sideCodeOf(car);
+  if (!hasEquipment(code) || !PREFILL.includes(code)) return [];
   const mc = machineOf(car.model), type = typeOfModel(car.model);
   const d = digits(car.plate);
   return [{

@@ -479,4 +479,4 @@ screens.js ไม่ได้วาดปุ่มไปขั้นถัดไ
 |---|---|---|
 | ส่วนเครื่องมือกล | Section label + Actions Secondary button "เพิ่มเครื่องมือกล" + Table / Mobile table (MaGrid ของ S24) + Action icons แก้ไข + Empty state/Data empty | UI Release#2 และไลบรารีไม่มีบล็อกเครื่องมือกลในรายละเอียดยานพาหนะ · ทะเบียนเครื่องมือกลเดิม (design-mock/equipment-asset-code.html ของรีโปงานซ่อม · ใช้แค่รายการช่อง) เป็นตารางต่อเครื่อง ⇒ ตารางชุดเดียวกับแท็บอื่นของหน้านี้ |
 | popup เพิ่ม/แก้ไข | PopupModal (Modal · มือถือ Bottom sheet) + Input dropdown (ประเภท) + Text input ×9 วาง 2 คอลัมน์ | ฟอร์มสั้นในหน้าที่ดูอย่างเดียว แบบ popup ของ S10/S26 · ตรวจตอนกดบันทึก (Text input State Error + Helper text) |
-
+| การแสดงส่วนเครื่องมือกล (ข้อ 68ก) | ไม่มี component ใหม่ · อ่านธง hasEquipment จากตารางอ้างอิง `lib/mock/vehicleTypes.ts` ตามรหัสข้างรถ | กติกาอยู่ในข้อมูล (table reference) ไม่ฝังในหน้าจอ |

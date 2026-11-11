@@ -17,7 +17,8 @@
 import { useMemo } from "react";
 import { CAND, type Car, type CarStatus } from "./data";
 import type { PillColor } from "@/components/vms/PillOutline";
-import { jobsOf, safetyOn } from "./jobs";
+import { jobsOf } from "./jobs";
+import { sideCodeOf } from "./vehicleTypes";
 import type { UploadFile } from "@/components/vms/FileUpload";
 import { MA_DUE, MA_VSTAT, TODAY, addMonths, baseSafetyOf, dayOf, maCars, thaiDate, type DueStatus, type DueTone } from "./maintenance";
 import { latestUpload, safetyUploads, type SafetyCycle, type SafetyRec, type SafetyResult } from "./safetyStore";
@@ -31,8 +32,8 @@ export const popupHref = (carId: string) => "/safety/?car=" + carId;
 const idOf = (plate: string) => plate.split(" ")[0];
 /** รหัสประเภทที่ต้องตรวจ Safety Inspection */
 export const SAFETY_TYPE_CODE = "09";
-/** รหัสประเภทของยานพาหนะจำลอง (สมมติ) */
-export const peaTypeOf = (c: Car) => (safetyOn(c) ? SAFETY_TYPE_CODE : "06");
+/** รหัสข้างรถของยานพาหนะจำลอง — จากตารางอ้างอิง vehicleTypes.ts (ข้อ 68ก · เดิม กระเช้า 09 / รถพ่วงฉีดน้ำ 06 ในไฟล์นี้) */
+export const peaTypeOf = (c: Car) => sideCodeOf(c);
 /** รหัสยานพาหนะจำลอง รูปแบบ vehicle_pea_id "น.2-09-0504" */
 export const peaIdOf = (c: Car) => c.owner.split(" ")[0].replace("กฟ", "") + "-" + peaTypeOf(c) + "-" + (idOf(c.plate).split("-")[1] ?? "0000").padStart(4, "0");
 

@@ -22,6 +22,7 @@ import { TextInput } from "@/components/vms/TextInput";
 import type { Car } from "@/lib/mock/data";
 import { LIFT_UNIT, MACHINE_TYPES, NO_LIFT, nf0, saveMachine, usedAssets, useMachines, type Machine } from "@/lib/mock/machines";
 import { notify, useMock, useRole } from "@/lib/mock/store";
+import { hasEquipment, sideCodeOf } from "@/lib/mock/vehicleTypes";
 import { useProtoForm } from "@/lib/protoForm";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { cx } from "@/lib/cx";
@@ -118,7 +119,11 @@ function MachineModal({ open, carId, car, edit, list, onClose }: { open: boolean
   );
 }
 
+/** ข้อ 68ก: รหัสข้างรถนอกกลุ่ม (ตารางอ้างอิง REF_VEHICLE_TYPE hasEquipment = false) ⇒ ไม่แสดงส่วนนี้ */
 export function MachineSection({ carId, car }: { carId: string; car: Car }) {
+  return hasEquipment(sideCodeOf(car)) ? <MachineBody carId={carId} car={car} /> : null;
+}
+function MachineBody({ carId, car }: { carId: string; car: Car }) {
   const role = useRole();
   const mob = useBreakpoint() === "Mobile";
   const list = useMachines(carId, car);
