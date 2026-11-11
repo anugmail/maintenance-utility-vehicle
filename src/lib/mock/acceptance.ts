@@ -1,15 +1,14 @@
 "use client";
 /* ข้อมูลจำลอง S13 ผู้ดูแลยานพาหนะ รับทราบผลและประเมินความพึงพอใจรายคัน (Figma 9607c3b · R89 · 10 พ.ย. 2569)
    ยกจาก screens.js: ACC · ACC_COLS · ACK_CARS · ACK_LIST · accRows · ackResult · NOTI_ACK · feedback
-   เจ้าของงาน 10 พ.ย. 2569: ผู้กด = ผู้ดูแลยานพาหนะที่ระบุรายคันในแผนเดินทาง · ประเมิน 1–5 ย้ายจาก S14 มาไว้ตอนรับทราบ (11 พ.ย. 2569 แทนด้วยแบบประเมินความพึงพอใจของ กบค. survey.ts · R94) · ปุ่ม "รับทราบ" สีเขียว ไม่มี popup ยืนยัน
+   เจ้าของงาน 10 พ.ย. 2569: ผู้กด = ผู้ดูแลยานพาหนะที่ระบุรายคันในแผนเดินทาง · ประเมิน 1–5 ย้ายจาก S14 มาไว้ตอนรับทราบ (11 พ.ย. 2569 รอบต่อมา: ประเมินย้ายออกไปหน้า "ประเมินความพึงพอใจ" แยก S27 survey.ts · S13 เหลือรับทราบอย่างเดียว) · ปุ่ม "รับทราบ" สีเขียว ไม่มี popup ยืนยัน
    รอบเดียวต่อคัน (Q28) · S14 S15 S16 S17 ตัดออก ⇒ รับทราบครบทุกคันในแผนแล้วแผนปิดงานเอง (เสนอ · Figma 6299e1d)
-   รายการ = งานรายคัน (jobs.ts) ของแผนเดินทางที่อนุมัติแล้วที่ "เสร็จสิ้น" หรือ "บำรุงรักษาไม่ได้" · รับทราบ = job.acceptedAt + job.survey (+ job.score คะแนนเฉลี่ย)
+   รายการ = งานรายคัน (jobs.ts) ของแผนเดินทางที่อนุมัติแล้วที่ "เสร็จสิ้น" หรือ "บำรุงรักษาไม่ได้" · รับทราบ = job.acceptedAt · รับทราบแล้ว (ไม่รวมคันที่บำรุงรักษาไม่ได้) เข้ารายการยังไม่ได้ประเมินของ S27
    "ครบทุกคันในแผน" (ยังไม่เคาะ: แผนทั้งปี หรือแผนเดินทางรายใบ) — ต้นแบบนับยานพาหนะทุกคันในแผนเดินทางที่อนุมัติแล้วของแผน (แบบประวัติ history.ts) */
 import type { PillColor } from "@/components/vms/PillOutline";
 import { putCloseout } from "./closeout";
 import { JOB_TEXT, PEOPLE, SEED_TRIPS, WORK, applyJobs, carOf, closedSample, getJob, jobKey, jobsOf, newJob, workItems, type Job, type JobTrip, type TripCar } from "./jobs";
 import { setMock, type MockState } from "./store";
-import { sampleAnswers, surveyAvg, surveyInfo, type SurveyRecord } from "./survey";
 import { DEFAULT_NOTIS, TRIP_OTHER, ackNoti } from "./trips";
 
 type Pill = readonly [label: string, tone: PillColor];
@@ -57,10 +56,10 @@ export function planAcked(m: MockState, planId: string) {
 }
 
 /* ---------- เขียน ---------- */
-/** S13 รับทราบรายคัน (บันทึกทันที ไม่มี popup) · survey = แบบประเมินความพึงพอใจของ กบค. ที่ตอบครบ (คันที่บำรุงรักษาไม่ได้ไม่มี · R94 11 พ.ย. 2569) · job.score = คะแนนเฉลี่ย
+/** S13 รับทราบรายคัน (บันทึกทันที ไม่มี popup) · รับทราบอย่างเดียว (11 พ.ย. 2569 ประเมินย้ายไป S27 · คันที่รับทราบแล้วเข้ารายการยังไม่ได้ประเมิน)
     ครบทุกคันในแผน → แผน "ปิดงานแล้ว" เอง (เสนอ · Figma 6299e1d · S16 S17 ตัดออก 10 พ.ย. 2569 — รับทราบรายคันเป็นขั้นสุดท้าย) */
-export function acceptCar(r: AccRow, survey: SurveyRecord | null) {
-  applyJobs((s) => ({ ...s, jobs: { ...s.jobs, [jobKey(r.trip.id, r.car.id)]: { ...getJob(s, r.trip.id, r.car.id), acceptedAt: ACK_AT, ...(survey ? { survey, score: surveyAvg(survey.answers) } : {}) } } }));
+export function acceptCar(r: AccRow) {
+  applyJobs((s) => ({ ...s, jobs: { ...s.jobs, [jobKey(r.trip.id, r.car.id)]: { ...getJob(s, r.trip.id, r.car.id), acceptedAt: ACK_AT } } }));
   const id = r.trip.planId;
   let sent = false;
   setMock((s) => {
@@ -82,17 +81,12 @@ export function acceptSample(acked: boolean) {
       const j: Job = r.cannot
         ? { ...newJob("T1", r.carId), status: "cannot", cannot: { reason: JOB_TEXT.cannotSelf, used: WORK.map(() => 0), by: r.by, at: r.date + " 09:20 น.", whileDoing: false } }
         : { ...closedSample(T1, r.carId), closedAt: r.date + " 11:15 น.", recordedBy: r.by };
-      return [jobKey("T1", r.carId), acked ? { ...j, acceptedAt: ACK_AT, ...(r.cannot ? {} : ackedSurvey(r.carId)) } : j];
+      return [jobKey("T1", r.carId), acked ? { ...j, acceptedAt: ACK_AT } : j];
     })),
   }), [{ ...TRIP_OTHER }]);
   const first = carOf(ACCEPTANCE_CARS[0].carId)!;
   setMock((s) => ({ ...s, plans: s.plans.map((p) => (p.mr === "MRZ7000001" ? { ...p, status: "active" as const } : p)), notis: acked ? DEFAULT_NOTIS() : [ackNoti(T1, first), ...DEFAULT_NOTIS()] }));
   putCloseout("Z7000001", { closedAt: undefined });
-}
-/** ผลประเมินตัวอย่างของคันที่รับทราบแล้ว (ค่าจอ L.5) */
-export function ackedSurvey(carId: string): { survey: SurveyRecord; score: number } {
-  const c = carOf(carId)!, answers = sampleAnswers();
-  return { survey: { info: surveyInfo(c.plate, c.ctrl, c.owner), answers }, score: surveyAvg(answers) };
 }
 export const ACCEPT_SAMPLES = {
   S13: { role: "ผู้ดูแลยานพาหนะ" as const, apply: () => acceptSample(false) },

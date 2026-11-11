@@ -23,6 +23,8 @@
 | Radio button | (Component) VMS Plus | ✅ Radio button (2:17) | 8 |
 | Horizontal radio groups | (Component) VMS Plus | ✅ Radio button (2:17) | 1 |
 | Radio text card | (Component) VMS Plus | ✅ Radio button (2:17) | 8 |
+| Rating | (Component) VMS Plus | Rating (107:2628) | 11 |
+| _Rating star base | (Component) VMS Plus | Rating (107:2628) | 6 |
 | Table | (Component) VMS Plus | ✅ Table (2:14) | 2 |
 | Table cell | (Component) VMS Plus | ✅ Table (2:14) | 27 |
 | Table header cell | (Component) VMS Plus | ✅ Table (2:14) | 2 |

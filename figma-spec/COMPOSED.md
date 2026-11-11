@@ -437,11 +437,16 @@ screens.js ไม่ได้วาดปุ่มไปขั้นถัดไ
 - **S19 แก้ไขแผนที่ดำเนินการ** (`lib/mock/liveEdit.ts`) — ฟอร์มเดิม + `Alert` Info "แผนนี้อยู่ระหว่างดำเนินการ" ใต้หัว · แท็บไตรมาสที่เสร็จแล้ว `Alert` Success "ไตรมาส n บำรุงรักษาเสร็จทุกคันแล้ว" เหนือตาราง · แถวที่ล็อก = `Table cell` Lead checkbox Checkbox State=Disabled (มือถือ `List with checkbox item` State=Disabled) + บรรทัดรอง "ปิดงานแล้ว" / "ไตรมาสบำรุงรักษาเสร็จแล้ว" · เมนู … เหลือดูรายละเอียด · popup จัดลงไตรมาส `Radio text card` State=Disabled + Supporting text · ปุ่มหลัก "บันทึก" ไม่มี popup ยืนยัน (ไม่ส่งอนุมัติใหม่)
 - **ฟอร์มแผนเดินทาง S9 ช่อง "เบอร์โทรผู้รับจ้าง"** — `Text input` ต่อจากผู้รับจ้าง (แถว 3 ช่อง) เติมจากข้อมูลผู้รับจ้าง แก้ได้ บังคับ
 
-## ศ. S13 แบบประเมินความพึงพอใจการให้บริการของ กบค. (R94 · BACKLOG ข้อ 66 · Figma e4a5607 · 11 พ.ย. 2569)
+## ศ. S27 หน้าประเมินความพึงพอใจของ กบค. (R94 ฉบับ 2 · BACKLOG ข้อ 66 66ก · Figma d2fbd82 · 11 พ.ย. 2569)
+
+> ฉบับแรก (Figma e4a5607) วางแบบประเมินในหน้า S13 ด้วย Radio text card — เจ้าของงานให้ย้ายออกเป็นหน้าแยกในวันเดียวกัน ⇒ `acceptance/_lib/SurveyForm.tsx` ลบแล้ว
 
 | จุด | ประกอบจาก | เหตุผล |
 |---|---|---|
-| `src/app/acceptance/_lib/SurveyForm.tsx` | ส่วนละ `Section header` (Supporting text = "โดย 1 คือคะแนนแย่สุด และ 5 คือคะแนนดีสุด") · ข้อมูลผู้ใช้รถฯ = `Text input` State=Readonly 5 ช่อง (desktop 2 ช่องต่อแถว) · คำถาม = `Input label` + แถว `Radio text card` "1"…"5" แบบ RepairFeedback (ช่องไฟ 12 · มือถือ 8) · ระหว่างส่วน 32 · หัว → เนื้อ 16 · ระหว่างคำถาม 24 | ไลบรารีไม่มี component แบบประเมินหลายข้อ และไม่มีสเกลคะแนนตัวเลข (`Rating` เป็นดาว ไม่มีเลข 1–5 ของแบบสำรวจ) ⇒ ใช้แถวคะแนนเดิมของ S13 · หน้าเดียวหมวดเรียงลงตามฟอร์มประเมินผู้รับจ้างที่เจ้าของงานเลือก "หน้าเต็ม" · ตรง `survey()` ของ screens.js |
+| `src/app/satisfaction/_lib/ui.tsx` `SurveyGroups` | หัวด้าน = `Featured icon` (Brand md) + `Section header` (Badge คะแนนด้าน "x/10") ช่องไฟ 16 · ข้อ = `Input label` "n. ข้อความ" → ห่าง 12 → `Rating` · desktop ข้อเยื้อง 64 · ระหว่างข้อ 24 | ไลบรารีไม่มี component แบบประเมินหลายข้อ ⇒ ยกโครง groupHead() question() ของ contractor-eval-plugin (หน้าประเมินผู้รับจ้างที่เจ้าของงานเลือก 22 ต.ค. 2569) · ตรง satGroupHead() satQuestion() ของ screens.js |
+| `src/components/vms/Rating.tsx` | component ของไลบรารี (Rating 107:2628 + _Rating star base) สเปก figma-spec/Rating.json ดึงเฉพาะ 2 ตัวนี้ (ไม่รัน figma-spec ทั้งชุด) · ปุ่มดาวกดได้เมื่อมี onChange | ใช้ตัวเดียวกับประเมินผู้รับจ้าง แทน Radio text card ของฉบับแรก |
+| เมนูย่อย "ประเมินความพึงพอใจ" (SidebarNavigation `SAT_LABEL`) | Nav list item + Badge แบบเมนูอนุมัติ (บ.) | ไม่มีใน Sidebar Navigation ของ UI Release#2 · แบบเมนู "ประเมินพนักงานขับรถ" ของ VMS+ เดิมที่ประเมินผู้รับจ้างยกมา |
+| ฟอร์ม/ผล | DisplayBox (กล่องแสดงข้อมูล) · ConfirmDialog (popup ยืนยันการประเมิน · ยืนยันการออก) · Alert Info | ตาม evalForm / resultScreen ของ contractor-eval-plugin |
 
 ## ษ. ลงนามแบบส่งให้ยืนยัน · popup วันเวลาเริ่มงาน/ปิดงาน · ตรวจรับงานผู้รับจ้าง (เจ้าของงาน 11 พ.ย. 2569 · BACKLOG ข้อ 63 · เว็บอย่างเดียว ยังไม่มีจอ Figma)
 

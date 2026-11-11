@@ -15,9 +15,10 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { BackgroundOverlay } from "@/components/vms/BackgroundOverlay";
 import { HeaderNavigation } from "@/components/vms/HeaderNavigation";
-import { APPROVE_PLANS_LABEL, APPROVE_TRIPS_LABEL, GUIDE_LABEL, MT_LABEL, PARTS_LABEL, SAFETY_LABEL, SIDEBAR_MENU, SidebarNavigation } from "@/components/vms/SidebarNavigation";
+import { APPROVE_PLANS_LABEL, APPROVE_TRIPS_LABEL, GUIDE_LABEL, MT_LABEL, PARTS_LABEL, SAFETY_LABEL, SAT_LABEL, SIDEBAR_MENU, SidebarNavigation } from "@/components/vms/SidebarNavigation";
 import { useMock } from "@/lib/mock/store";
 import { tripsOf } from "@/lib/mock/trips";
+import { satRows } from "@/lib/mock/survey";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useOutside } from "@/lib/useOutside";
 import { GuideBar } from "@/components/guide/GuideBar";
@@ -47,11 +48,12 @@ export function AppFrame({ children, bell }: { children: ReactNode; bell?: boole
   const [fromMenu, setFromMenu] = useState(false);
   useEffect(() => { setFromMenu(new URLSearchParams(window.location.search).get("from") === "menu"); }, [path]);
   const sideActive = path === "/guide" || (path.startsWith("/scenarios/guide") && fromMenu) ? GUIDE_LABEL : path === "/parts" ? PARTS_LABEL : path.startsWith("/safety") ? SAFETY_LABEL
-    : path.startsWith("/approvals/plans") ? APPROVE_PLANS_LABEL : path.startsWith("/approvals/trips") ? APPROVE_TRIPS_LABEL : MT_LABEL;
+    : path.startsWith("/approvals/plans") ? APPROVE_PLANS_LABEL : path.startsWith("/approvals/trips") ? APPROVE_TRIPS_LABEL : path.startsWith("/satisfaction") ? SAT_LABEL : MT_LABEL;
   /* เมนูอนุมัติของทุกบทบาท + Badge จำนวนที่รออนุมัติ (ตัวเดียวกับรายการ S2 S7 · 9 พ.ย. 2569) */
   const mock = useMock();
   const nPlans = mock.plans.filter((p) => p.status === "review").length, nTrips = tripsOf(mock).filter((t) => t.status === "review").length;
-  const menu = SIDEBAR_MENU.map((g) => (g.items ? { ...g, items: g.items.map((s) => (s.Text === APPROVE_PLANS_LABEL && nPlans ? { ...s, badge: String(nPlans) } : s.Text === APPROVE_TRIPS_LABEL && nTrips ? { ...s, badge: String(nTrips) } : s)) } : g));
+  const nSat = satRows(mock).filter((r) => !r.evaluated).length;   // S27 ยังไม่ได้ประเมิน (11 พ.ย. 2569)
+  const menu = SIDEBAR_MENU.map((g) => (g.items ? { ...g, items: g.items.map((s) => (s.Text === APPROVE_PLANS_LABEL && nPlans ? { ...s, badge: String(nPlans) } : s.Text === APPROVE_TRIPS_LABEL && nTrips ? { ...s, badge: String(nTrips) } : s.Text === SAT_LABEL && nSat ? { ...s, badge: String(nSat) } : s)) } : g));
 
   const expanded = pinned || hover;
   return (

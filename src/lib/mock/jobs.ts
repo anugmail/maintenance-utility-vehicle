@@ -235,7 +235,7 @@ export interface Job {
   oilResult?: OilResult;
   safety?: SafetyDocs;
   /** ผู้ดูแลยานพาหนะรับทราบผลรายคันแล้ว (S13 · acceptance.ts · 10 พ.ย. 2569 เดิม หน่วยงานยอมรับผล) · score = คะแนนความพึงพอใจ 1–5 (คันที่บำรุงรักษาไม่ได้ไม่มี) */
-  acceptedAt?: string; score?: number; survey?: { info: string[]; answers: number[] };   // survey = แบบประเมินความพึงพอใจของ กบค. (survey.ts · R94 · 11 พ.ย. 2569) · score = คะแนนเฉลี่ย
+  acceptedAt?: string; score?: number; survey?: { info: string[]; answers: number[]; remark?: string; at?: string; by?: string };   // survey = แบบประเมินความพึงพอใจของ กบค. (S27 หน้าประเมินความพึงพอใจ · survey.ts · R94 · 11 พ.ย. 2569) · score = คะแนนรวม (เต็ม 55)
   /** S23 ส่งตรวจงาน (รอตรวจรับ) · เหตุผลที่หน่วยงานส่งกลับแก้ไข */
   sentAt?: string; sentBy?: string; returnReason?: string;
   /** S23 หน่วยงานตรวจรับ (11 พ.ย. 2569 เจ้าของงาน "จังหวะที่ vendor ส่ง approve เจ้าหน้าที่ต้องสามารถระบุค่าใช้จ่ายของคันนั้น โดยมี 2 คือค่าจ้าง กับค่าเดินทาง")

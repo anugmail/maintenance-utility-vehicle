@@ -1,0 +1,701 @@
+{
+ "component": "_Rating star base",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
+ "page": "Rating",
+ "node": "107:2628",
+ "props": {
+  "Fill": {
+   "type": "VARIANT",
+   "defaultValue": "Full",
+   "variantOptions": [
+    "Full",
+    "Half",
+    "Empty"
+   ]
+  },
+  "State": {
+   "type": "VARIANT",
+   "defaultValue": "Default",
+   "variantOptions": [
+    "Default",
+    "Hover"
+   ]
+  }
+ },
+ "set": {
+  "name": "_Rating star base",
+  "type": "COMPONENT_SET",
+  "w": 141,
+  "h": 211,
+  "sizing": [
+   "FIXED",
+   "FIXED"
+  ],
+  "r": 5,
+  "justify": "MIN",
+  "align": "MIN",
+  "fill": [
+   "#FFFFFF"
+  ],
+  "stroke": [
+   "#9747FF"
+  ],
+  "sw": 1,
+  "strokeAlign": "INSIDE",
+  "vars": {
+   "fills": "Color/background/default"
+  }
+ },
+ "variants": [
+  {
+   "name": "Fill=Full, State=Default",
+   "type": "COMPONENT",
+   "w": 48,
+   "h": 48,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "pl": 4.5,
+   "pr": 4.5,
+   "pt": 4.5,
+   "pb": 4.5,
+   "gap": 15,
+   "r": 0,
+   "justify": "CENTER",
+   "align": "CENTER",
+   "sw": 1.5,
+   "strokeAlign": "INSIDE",
+   "variant": {
+    "Fill": "Full",
+    "State": "Default"
+   },
+   "kids": [
+    {
+     "name": "star-48-300-round-fill",
+     "type": "INSTANCE",
+     "w": 48,
+     "h": 48,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "component": "star-48-300-round-fill",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 48,
+       "h": 48,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE"
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 32,
+       "h": 30,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#F79009"
+       ],
+       "sw": 0.05000000074505806,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/component/utility/warning/500"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Fill=Full, State=Hover",
+   "type": "COMPONENT",
+   "w": 48,
+   "h": 48,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "pl": 4.5,
+   "pr": 4.5,
+   "pt": 4.5,
+   "pb": 4.5,
+   "gap": 15,
+   "r": 0,
+   "justify": "CENTER",
+   "align": "CENTER",
+   "sw": 1.5,
+   "strokeAlign": "INSIDE",
+   "variant": {
+    "Fill": "Full",
+    "State": "Hover"
+   },
+   "kids": [
+    {
+     "name": "star-48-400-round-fill",
+     "type": "INSTANCE",
+     "w": 48,
+     "h": 48,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "component": "star-48-400-round-fill",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 48,
+       "h": 48,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE"
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 36,
+       "h": 34,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#F79009"
+       ],
+       "sw": 0.05000000074505806,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/component/utility/warning/500"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Fill=Half, State=Default",
+   "type": "COMPONENT",
+   "w": 48,
+   "h": 48,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "pl": 4.5,
+   "pr": 4.5,
+   "pt": 4.5,
+   "pb": 4.5,
+   "gap": 15,
+   "r": 0,
+   "justify": "CENTER",
+   "align": "CENTER",
+   "sw": 1.5,
+   "strokeAlign": "INSIDE",
+   "variant": {
+    "Fill": "Half",
+    "State": "Default"
+   },
+   "kids": [
+    {
+     "name": "star-48-300-round-fill",
+     "type": "INSTANCE",
+     "w": 48,
+     "h": 48,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "component": "star-48-300-round-fill",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 48,
+       "h": 48,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE"
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 32,
+       "h": 30,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#D0D5DD"
+       ],
+       "sw": 0.05000000074505806,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/tertiary"
+       }
+      }
+     ]
+    },
+    {
+     "name": "star-48-300-round-half",
+     "type": "FRAME",
+     "w": 48,
+     "h": 48,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 48,
+       "h": 48,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE"
+      },
+      {
+       "name": "Intersect",
+       "type": "BOOLEAN_OPERATION",
+       "w": 16,
+       "h": 30,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#F79009"
+       ],
+       "sw": 1.5,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/component/utility/warning/500"
+       },
+       "kids": [
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 32,
+         "h": 30,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "fill": [
+          "#1C1B1F"
+         ],
+         "sw": 0.05000000074505806,
+         "strokeAlign": "INSIDE"
+        },
+        {
+         "name": "Vector",
+         "type": "RECTANGLE",
+         "w": 18,
+         "h": 36,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "fill": [
+          "#F79009"
+         ],
+         "sw": 1.5,
+         "strokeAlign": "INSIDE",
+         "vars": {
+          "fills": "Color/component/utility/warning/500"
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Fill=Half, State=Hover",
+   "type": "COMPONENT",
+   "w": 48,
+   "h": 48,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "pl": 4.5,
+   "pr": 4.5,
+   "pt": 4.5,
+   "pb": 4.5,
+   "gap": 15,
+   "r": 0,
+   "justify": "CENTER",
+   "align": "CENTER",
+   "sw": 1.5,
+   "strokeAlign": "INSIDE",
+   "variant": {
+    "Fill": "Half",
+    "State": "Hover"
+   },
+   "kids": [
+    {
+     "name": "star-48-400-round-fill",
+     "type": "INSTANCE",
+     "w": 48,
+     "h": 48,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "component": "star-48-400-round-fill",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 48,
+       "h": 48,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE"
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 36,
+       "h": 34,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#D0D5DD"
+       ],
+       "sw": 0.05000000074505806,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/tertiary"
+       }
+      }
+     ]
+    },
+    {
+     "name": "star-48-400-round-half",
+     "type": "FRAME",
+     "w": 48,
+     "h": 48,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 48,
+       "h": 48,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE"
+      },
+      {
+       "name": "Subtract",
+       "type": "BOOLEAN_OPERATION",
+       "w": 18,
+       "h": 34,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#F79009"
+       ],
+       "sw": 0.05000000074505806,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/component/utility/warning/500"
+       },
+       "kids": [
+        {
+         "name": "Vector",
+         "type": "VECTOR",
+         "w": 36,
+         "h": 34,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "fill": [
+          "#1C1B1F"
+         ],
+         "sw": 0.05000000074505806,
+         "strokeAlign": "INSIDE"
+        },
+        {
+         "name": "Rectangle 4",
+         "type": "RECTANGLE",
+         "w": 18,
+         "h": 48,
+         "sizing": [
+          "FIXED",
+          "FIXED"
+         ],
+         "r": 0,
+         "fill": [
+          "#D9D9D9"
+         ],
+         "sw": 1,
+         "strokeAlign": "INSIDE"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Fill=Empty, State=Hover",
+   "type": "COMPONENT",
+   "w": 48,
+   "h": 48,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "pl": 4.5,
+   "pr": 4.5,
+   "pt": 4.5,
+   "pb": 4.5,
+   "gap": 15,
+   "r": 0,
+   "justify": "CENTER",
+   "align": "CENTER",
+   "sw": 1.5,
+   "strokeAlign": "INSIDE",
+   "variant": {
+    "Fill": "Empty",
+    "State": "Hover"
+   },
+   "kids": [
+    {
+     "name": "star-48-400-round-fill",
+     "type": "INSTANCE",
+     "w": 48,
+     "h": 48,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "component": "star-48-400-round-fill",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 48,
+       "h": 48,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE"
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 36,
+       "h": 34,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#D0D5DD"
+       ],
+       "sw": 0.05000000074505806,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/tertiary"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "Fill=Empty, State=Default",
+   "type": "COMPONENT",
+   "w": 48,
+   "h": 48,
+   "sizing": [
+    "FIXED",
+    "FIXED"
+   ],
+   "pl": 4.5,
+   "pr": 4.5,
+   "pt": 4.5,
+   "pb": 4.5,
+   "gap": 15,
+   "r": 0,
+   "justify": "CENTER",
+   "align": "CENTER",
+   "sw": 1.5,
+   "strokeAlign": "INSIDE",
+   "variant": {
+    "Fill": "Empty",
+    "State": "Default"
+   },
+   "kids": [
+    {
+     "name": "star-48-300-round-fill",
+     "type": "INSTANCE",
+     "w": 48,
+     "h": 48,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "component": "star-48-300-round-fill",
+     "kids": [
+      {
+       "name": "Bounding box",
+       "type": "RECTANGLE",
+       "w": 48,
+       "h": 48,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#D9D9D9"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE"
+      },
+      {
+       "name": "Vector",
+       "type": "VECTOR",
+       "w": 32,
+       "h": 30,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#D0D5DD"
+       ],
+       "sw": 0.05000000074505806,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/icon/tertiary"
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

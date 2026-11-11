@@ -68,6 +68,7 @@ import { Table, type TableColumn } from "@/components/vms/Table";
 | `RadioButton` (+ `RadioDot`) | Radio button · Radio button 2:17 | `Selected` `State` `onChange` `label` `bare` |
 | `HorizontalRadioGroups` | Horizontal radio groups · 2:17 | `Label` `Optional` `options[]` `value` `onChange(v)` `HelperText` `Error` `Disabled` |
 | `RadioTextCard` (+ `RadioTextCards`) | Radio text card · 2:17 | `Text` `SupportingText` `Selected` `State` `onClick` `compact` · `RadioTextCards` = แถวตาม radioPick(): `options[{Text, SupportingText}]` `value` `onChange` `row` |
+| `Rating` | Rating · Rating 107:2628 (+ `_Rating star base`) | `Point` (0–5 · ครึ่งดวงแสดงได้) `onChange(n)` (ไม่ส่ง = แสดงผลอย่างเดียว) `label` · S27 แบบประเมินความพึงพอใจ (11 พ.ย. 2569) |
 | `CheckboxTextCard` | Checkbox text card · Checkbox 2:18 | `Text` `SupportingText` `Selected` `State` `onChange(next)` |
 | `ProgressBar` | Progress bar · 2843:13902 | `Progress` (0–100) `Percentage` `Color` (Brand/Success) |
 | `FileUpload` | File upload · 2123:5261 (upload() ใน core.js) | `LabelText` `Optional` `files[{name, size, progress, bar, err}]` `hint` `max` `readonly` `bar` `HelperText` `Error` `onFiles` `onDelete(i)` `onDownload(i)` |
