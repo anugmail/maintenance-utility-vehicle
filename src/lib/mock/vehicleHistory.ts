@@ -1,0 +1,31 @@
+/* วันที่บำรุงรักษาล่าสุด · ซ่อมล่าสุด ของยานพาหนะ (เจ้าของงาน 11 พ.ย. 2569 _"เพิ่มตอนเลือกรถเข้าแผน เพิ่มคอลัมน์ วันที่บำรุงล่าสุดเมื่อไร และอยากเพิ่ม วันที่ซ่อมล่าสุดด้วย
+   ตอนเลือกรถเข้าแผน และตอนเลือกเข้าแผนการเดินทาง"_ · BACKLOG ข้อ 64) — ค่าสมมติ ใช้ที่ตารางเลือกยานพาหนะของฟอร์มแผน (S1 S19) · popup เพิ่มยานพาหนะ (TripCarPicker)
+   · หน้าไตรมาส (S6)
+   คันที่มีในข้อมูลแดชบอร์ด S24 (MA_ROWS · MA_REPAIRS ของ maintenance.ts) ใช้วันเดียวกัน (ยกค่ามาไว้ที่นี่ ไม่ import ไฟล์ S24 เพราะต้องอ่าน MockState)
+   คันอื่นใน CAND = วันที่ตามลำดับใน CAND (คำนวณจากลำดับ ⇒ เพิ่มยานพาหนะต่อท้าย CAND ลำดับเดิมไม่เลื่อน) · ทุก 9 คันไม่มีประวัติบำรุงรักษา · ทุก 5 คันไม่มีประวัติซ่อม
+   ไม่มีข้อมูล = "ไม่มีข้อมูล" (แบบ LAST_OIL เปลี่ยนน้ำมันครั้งล่าสุด) */
+import { CAND } from "./data";
+
+export const NO_HIST = "ไม่มีข้อมูล";
+const id = (plate: string) => plate.split(" ")[0];
+const pad = (n: number) => String(n).padStart(2, "0");
+/* ค่าของ S24 (MA_ROWS วันบำรุงรักษาล่าสุด · MA_REPAIRS วันซ่อมเสร็จล่าสุดที่ไม่ใช่บำรุงรักษาตามวาระ) — 81-2210 82-6789 ยังไม่มีบันทึกในค่าตั้งต้นของ S24 */
+const MA_LAST: Record<string, string> = {
+  "80-4458": "01/10/2568", "80-5738": "14/10/2568", "80-3316": "20/11/2568", "80-9981": "10/01/2569", "82-7720": "02/02/2569", "82-1145": "18/06/2569", "81-6604": "20/09/2569",
+  "81-2210": NO_HIST, "82-6789": NO_HIST,
+};
+const REPAIR_LAST: Record<string, string> = { "82-1145": "02/09/2569" };
+/* ลำดับใน CAND → วันที่ (ก่อนวันนี้ของต้นแบบ 10/11/2569) */
+const date = (d: number, m: number, y: number) => pad(d) + "/" + pad(y === 2569 && m > 10 ? m - 6 : m) + "/" + y;   // ปี 2569 ไม่เกิน ต.ค. (ก่อนวันนี้ของต้นแบบ)
+const maOf = (i: number) => (i % 9 === 4 ? NO_HIST : date(1 + ((i * 11) % 28), 1 + ((i * 7) % 12), 2567 + (i % 3)));
+const repairOf = (i: number) => (i % 5 === 2 ? NO_HIST : date(1 + ((i * 13) % 28), 1 + ((i * 5) % 12), 2566 + (i % 4)));
+
+/** ตามลำดับ CAND (ชุดเดียวกับ LAST_OIL) */
+export const LAST_MA: string[] = CAND.map((c, i) => MA_LAST[id(c.plate)] ?? maOf(i));
+export const LAST_REPAIR: string[] = CAND.map((c, i) => REPAIR_LAST[id(c.plate)] ?? repairOf(i));
+const byId = new Map(CAND.map((c, i) => [id(c.plate), i]));
+/** ตามทะเบียน (มีหรือไม่มีจังหวัดก็ได้) — ยานพาหนะตัวอย่างที่ไม่อยู่ใน CAND (TRIP_CARS บางคัน) ใช้ค่าของ S24 ถ้ามี · ไม่มี = "ไม่มีข้อมูล" */
+export const lastMaOf = (plate: string) => { const i = byId.get(id(plate)); return i != null ? LAST_MA[i] : MA_LAST[id(plate)] ?? NO_HIST; };
+export const lastRepairOf = (plate: string) => { const i = byId.get(id(plate)); return i != null ? LAST_REPAIR[i] : REPAIR_LAST[id(plate)] ?? NO_HIST; };
+/** บรรทัดรองบนมือถือ / popup ที่แคบ */
+export const histText = (plate: string) => "บำรุงรักษาล่าสุด " + lastMaOf(plate) + " · ซ่อมล่าสุด " + lastRepairOf(plate);

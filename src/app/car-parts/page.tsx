@@ -14,7 +14,14 @@
      4. (เบิกอะไหล่) Section header "อะไหล่อื่นๆ" (Badge จำนวน) + Secondary button "ระบุอะไหล่เพิ่มเติม" → Table ชื่อ · ยี่ห้อ · รุ่น · รหัส · จำนวน · หน่วย · ไอคอนแก้ไข ลบ / Empty state
      5. ปุ่ม ย้อนกลับ · บันทึกอะไหล่ของรถ (lg · กดได้เมื่อเลือกไม่เบิก หรือเลือกเบิกแล้วมีอะไหล่อย่างน้อย 1 รายการ) → toast "บันทึกอะไหล่ของรถ {ทะเบียน} แล้ว"
    popup "ระบุอะไหล่เพิ่มเติม" (MANUAL_FIELDS): ชื่ออะไหล่ | ยี่ห้อ · รุ่น | รหัสอะไหล่ (ถ้ามี) · จำนวน | หน่วย · ปุ่ม ยกเลิก / เพิ่ม · มือถือ bottom sheet
-   ย้อนกลับเมื่อมีการแก้ไข → ยืนยันการออก "อะไหล่ที่แก้ไขไว้จะไม่ถูกบันทึก" */
+   ย้อนกลับเมื่อมีการแก้ไข → ยืนยันการออก "อะไหล่ที่แก้ไขไว้จะไม่ถูกบันทึก"
+   หลายคัน (&cars=ทะเบียน,ทะเบียน · 11 พ.ย. 2569 เจ้าของงาน "อยากเพิ่มอะไหล่ครั้งเดียวในรถประเภทเดียวกัน" + "ทุกคันที่เลือกได้มั้ย คือต้องเลือกรถที่ต้องการเพิ่มอะไหล่" · BACKLOG ข้อ 64)
+     เปิดจากปุ่ม "กำหนดอะไหล่ (n)" ของแท็บไตรมาส n (ติ๊กยานพาหนะก่อน) · หน้าเดียวกับรายคัน: Page header "จัดการอะไหล่ของยานพาหนะ n คัน" · แทนช่องเลือกยานพาหนะด้วย
+     Section header "ยานพาหนะที่เลือก" + Badge + Table (ทะเบียน/ยี่ห้อ รุ่น · ประเภท · เปลี่ยนน้ำมันครั้งล่าสุด · น้ำมันไฮดรอลิก · อะไหล่อื่นๆ ที่กำหนดไว้ตอนนี้)
+     · Alert Warning เมื่อยานพาหนะที่เลือกมีหลายประเภท (ตัวเลือกน้ำมันและคลังอะไหล่ของต้นแบบเหมือนกันทุกประเภท ⇒ ให้เลือกได้ แจ้งให้ตรวจ · BACKLOG ค.)
+     · Alert Warning เมื่อบางคันกำหนดอะไหล่ไว้แล้ว (บันทึก = แทนค่าเดิมของทุกคันที่เลือก) · ค่าตั้งต้น = ค่าเดียวกันของทุกคัน (ต่างกัน = ยังไม่เลือก)
+     · ช่อง "เปลี่ยนน้ำมันครั้งล่าสุด" อยู่ในตาราง (คนละค่าต่อคัน) · บันทึก = ค่าเดียวกันลงทุกคัน → toast "บันทึกอะไหล่ของยานพาหนะ n คันแล้ว" → กลับแท็บไตรมาสเดิม · แก้รายคันภายหลังได้ตามเดิม
+   บันทึก (รายคันและหลายคัน) เขียนเฉพาะคันที่แก้ในหน้านี้ — 11 พ.ย. 2569 เดิมเขียนทุกคันของไตรมาส คันที่ยังไม่กำหนดกลายเป็นน้ำมัน "เก็บตัวอย่าง" ในตาราง */
 import { PagedTable } from "@/app/quarter/_shared/ui";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState, type ReactNode } from "react";
@@ -27,6 +34,7 @@ import { CardFormRow } from "@/components/vms/CardFormRow";
 import { DropdownList } from "@/components/vms/DropdownList";
 import { DropdownListItem } from "@/components/vms/DropdownListItem";
 import { EmptyStateDataEmpty } from "@/components/vms/EmptyStateDataEmpty";
+import { Alert } from "@/components/vms/Alert";
 import { InputDropdown } from "@/components/vms/InputDropdown";
 import { PageHeader } from "@/components/vms/PageHeader";
 import { PrimaryButton } from "@/components/vms/PrimaryButton";
@@ -34,13 +42,14 @@ import { RadioTextCards } from "@/components/vms/RadioTextCard";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionHeader } from "@/components/vms/SectionHeader";
 import { SectionLabel } from "@/components/vms/SectionLabel";
-import { type TableValue } from "@/components/vms/Table";
+import { type TableColumn, type TableValue } from "@/components/vms/Table";
 import { CARP_PART_COLS } from "./cols";
 import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
 import { CAND, CAR_PICK, CAR_QTY, LAST_OIL, OIL_GRADES, OIL_PLAN_OPTS, OIL_SPEC, PARTS, PART_BM, PART_PRICE, PART_WH, oilChanges, type ManualPart, type OilSpec } from "@/lib/mock/data";
 import { inQuarter, type Draft } from "@/lib/mock/plan";
-import { PLAN_ROLES, carIndexOf, carParam, findPlan, oilChoice, useRoleGuard, usePlanGate } from "@/lib/mock/planFlow";
+import { PLAN_ROLES, carIndexOf, carParam, findPlan, oilCellOf, oilChoice, otherCellOf, useRoleGuard, usePlanGate } from "@/lib/mock/planFlow";
+import { decided } from "@/lib/mock/plan";
 import { notify, setMock, useMock } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useProtoForm } from "@/lib/protoForm";
@@ -50,6 +59,8 @@ const STOCK: SparePart[] = PARTS.map((p, i) => ({ name: p.name, code: p.code, un
 const OTHER = PARTS.map((_, i) => i).filter((i) => i > 0);
 /* CARP_PART_COLS (ใช้ร่วมกับหน้าดูอะไหล่ของยานพาหนะ /car-parts/view/) */
 const COLS = CARP_PART_COLS;
+/* หลายคัน — ยานพาหนะที่เลือก (ค่าตอนนี้ของแต่ละคัน · ดูอย่างเดียว) */
+const BULK_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 260, Style: "Lead text" }, { head: "ประเภทยานพาหนะ", width: 150 }, { head: "เปลี่ยนน้ำมันครั้งล่าสุด", width: 170 }, { head: "น้ำมันไฮดรอลิก", width: 200 }, { head: "อะไหล่อื่นๆ" }];
 
 /* ที่แก้ของรถแต่ละคันในหน้านี้ (ยังไม่บันทึกลงฟอร์ม) — picks/qty = อะไหล่จากคลัง (ไม่รวมน้ำมัน) */
 /* draw: "" = ยังไม่เลือก · take = เบิกอะไหล่ · none = ไม่เบิกอะไหล่ (6 พ.ย. 2569) */
@@ -88,8 +99,12 @@ function CarParts() {
   const formHref = id === "new" ? "/new/" : "/edit/?id=" + id + (sp.get("from") ? "&from=" + sp.get("from") : "");
   const formCrumb = plan ? "แก้ไขแผน " + plan.mr : "สร้างแผน";
 
+  /* หลายคัน = ยานพาหนะที่ติ๊กมา (อยู่ในไตรมาสนี้) มากกว่า 1 คัน */
+  const bulk = (sp.get("cars") ?? "").split(",").filter(Boolean).map(carIndexOf).filter((i) => cars.includes(i));
+  const isBulk = bulk.length > 1;
   const [buf, setBuf] = useState<Buffer | null>(null);
-  const [orig, setOrig] = useState("");
+  const [origBuf, setOrigBuf] = useState<Buffer>({});
+  const orig = JSON.stringify(origBuf);
   const [open, setOpen] = useState<"" | "car" | "grade">("");
   const [query, setQuery] = useState("");
   const [invQuery, setInvQuery] = useState("");
@@ -99,11 +114,16 @@ function CarParts() {
   useEffect(() => {
     if (!ok) return;
     if (!d || !cars.length) { router.replace(formHref); return; }   // ไม่มีฟอร์มค้าง / ไตรมาสไม่มีรถ → กลับฟอร์ม
-    if (!buf) { const b = bufferOf(d, cars); setBuf(b); setOrig(JSON.stringify(b)); }
-  }, [ok, d, cars, buf, formHref, router]);
+    if (!buf) {
+      const b = bufferOf(d, cars);
+      /* หลายคัน: ค่าตั้งต้น = ค่าของคันแรกเมื่อทุกคันที่เลือกกำหนดไว้เหมือนกัน · ต่างกัน = ยังไม่เลือก */
+      if (isBulk && bulk.some((c) => JSON.stringify(b[c]) !== JSON.stringify(b[bulk[0]]))) b[bulk[0]] = { ...EMPTY_EDIT, spec: { ...EMPTY_EDIT.spec } };
+      setBuf(b); setOrigBuf(JSON.parse(JSON.stringify(b)));
+    }
+  }, [ok, d, cars, buf, formHref, router, isBulk, bulk]);
   /* ปุ่มต้นแบบ (แถบต้นแบบ · lib/protoForm.ts): กรอกข้อมูลตัวอย่าง = ยานพาหนะคันที่เปิดอยู่ เบิกอะไหล่ · เก็บตัวอย่างและเปลี่ยน (เบอร์ รหัส ลิตร) · ไส้กรอง CAR_PICK ⇒ ปุ่มบันทึกกดได้
      ล้างค่า = คันนี้กลับเป็นยังไม่เลือก (ยังไม่บันทึกลงแผนจนกดบันทึก · คันอื่นไม่แตะ) */
-  const pCar = buf ? (cars.includes(carIndexOf(sp.get("car"))) ? carIndexOf(sp.get("car")) : cars[0]) : undefined;
+  const pCar = buf ? (isBulk ? bulk[0] : cars.includes(carIndexOf(sp.get("car"))) ? carIndexOf(sp.get("car")) : cars[0]) : undefined;
   useProtoForm(ok && buf && pCar != null && !denied ? {
     fill: () => setBuf((b) => b && { ...b, [pCar]: { ...b[pCar], draw: "take", oil: 2, spec: { grade: OIL_GRADES[1] ?? OIL_GRADES[0], code: OIL_SPEC.code, litre: OIL_SPEC.litre }, picks: [...new Set([...b[pCar].picks, ...CAR_PICK])] } }),
     clear: () => setBuf((b) => b && { ...b, [pCar]: { ...EMPTY_EDIT } }),
@@ -113,7 +133,7 @@ function CarParts() {
   if (denied) return null;
 
   const pIdx = carIndexOf(sp.get("car"));
-  const car = cars.includes(pIdx) ? pIdx : cars[0];
+  const car = isBulk ? bulk[0] : cars.includes(pIdx) ? pIdx : cars[0];
   const e = buf[car];
   const set = (patch: Partial<CarEdit>) => setBuf({ ...buf, [car]: { ...e, ...patch } });
   const togglePart = (pi: number) => {
@@ -159,8 +179,11 @@ function CarParts() {
       const cur = s[key];
       if (!cur) return s;
       const picks = { ...cur.picks }, qty = { ...(cur.qty ?? {}) }, manual = { ...(cur.manual ?? {}) }, oils = { ...(cur.oils ?? {}) }, oilSpec = { ...(cur.oilSpec ?? {}) }, draw = { ...(cur.draw ?? {}) };
-      Object.entries(buf).forEach(([c, b]) => {
-        const i = Number(c), change = oilChanges(b.oil), litre = Number(b.spec.litre) || 0;
+      /* เขียนเฉพาะคันที่แก้ในหน้านี้ · หลายคัน = ค่าของหน้านี้ลงทุกคันที่เลือก */
+      const out: [number, CarEdit][] = isBulk ? bulk.map((i) => [i, { ...e, manual: e.manual.map((m) => ({ ...m })), qty: { ...e.qty }, picks: [...e.picks] }])
+        : Object.entries(buf).map(([c, b]): [number, CarEdit] => [Number(c), b]).filter(([i, b]) => i === car || JSON.stringify(b) !== JSON.stringify(origBuf[i]));
+      out.forEach(([i, b]) => {
+        const change = oilChanges(b.oil), litre = Number(b.spec.litre) || 0;
         /* ไม่เบิกอะไหล่ = เก็บแค่น้ำมันไฮดรอลิก ไม่มีอะไหล่จากคลังและรายการเพิ่มเติม */
         const v = b.draw === "none" ? { ...b, picks: [], qty: {}, manual: [] } : b;
         if (b.draw === "none") draw[i] = "none"; else delete draw[i];
@@ -174,7 +197,7 @@ function CarParts() {
       });
       return { ...s, [key]: { ...cur, picks, qty, manual, oils, oilSpec, draw, q } };
     });
-    notify("บันทึกอะไหล่ของยานพาหนะ " + CAND[car].plate + " แล้ว");
+    notify(isBulk ? "บันทึกอะไหล่ของยานพาหนะ " + bulk.length + " คันแล้ว" : "บันทึกอะไหล่ของยานพาหนะ " + CAND[car].plate + " แล้ว");
     router.push(formHref);
   };
 
@@ -190,6 +213,10 @@ function CarParts() {
     ...e.manual.map((x, k) => [x.name, x.brand || "-", x.model || "-", x.code || "-", String(x.qty), x.unit || "-", icons(x.name, () => openManual(k), () => set({ manual: e.manual.filter((_, j) => j !== k) }))]),
   ];
   const stockEdit = editing?.kind === "stock";
+  /* หลายคัน: ตารางยานพาหนะที่เลือก + Alert ประเภทต่างกัน / กำหนดไว้แล้ว */
+  const bulkTypes = [...new Set(bulk.map((i) => CAND[i].type))];
+  const bulkSet = bulk.filter((i) => decided(d, i)).length;
+  const bulkRows: TableValue[][] = bulk.map((i) => [{ text: CAND[i].plate, sub: CAND[i].model }, CAND[i].type, LAST_OIL[i], oilCellOf(d, i), otherCellOf(d, i)]);
   const fld = (label: string, k: keyof Manual, placeholder: string, opt?: boolean) => (
     <TextInput LabelText={label} Optional={opt} Text={m[k]} Placeholder={placeholder} State={stockEdit && k !== "qty" ? "Readonly" : undefined} readOnly={stockEdit && k !== "qty"}
       onChange={(v) => setM({ ...m, [k]: v })} />
@@ -197,10 +224,15 @@ function CarParts() {
 
   return (
     <>
-      <PageHeader Title={"จัดการอะไหล่ของยานพาหนะ " + CAND[car].plate} onBack={leave}
+      <PageHeader Title={"จัดการอะไหล่ของยานพาหนะ " + (isBulk ? bulk.length + " คัน" : CAND[car].plate)} onBack={leave}
         crumbs={[{ Text: "บำรุงรักษาตามวาระ", onClick: leave }, { Text: formCrumb, onClick: leave }, { Text: "จัดการอะไหล่ของยานพาหนะ" }]} />
       <div className="flex flex-col gap-8">
-        {half(
+        {isBulk ? <section className="flex flex-col gap-4">
+          <SectionHeader Title="ยานพาหนะที่เลือก" Badge={bulk.length + " คัน"} />
+          {bulkTypes.length > 1 && <Alert Color="Warning" Text={"ยานพาหนะที่เลือกมี " + bulkTypes.length + " ประเภท (" + bulkTypes.join(", ") + ")"} SupportingText="น้ำมันไฮดรอลิกและอะไหล่ที่เลือกในหน้านี้จะใช้กับทุกคัน ตรวจสอบให้ตรงกับประเภทยานพาหนะก่อนบันทึก" />}
+          {bulkSet > 0 && <Alert Color="Warning" Text={"กำหนดอะไหล่ไว้แล้ว " + bulkSet + " คัน"} SupportingText="เมื่อบันทึก อะไหล่และน้ำมันไฮดรอลิกของทุกคันที่เลือกจะเป็นตามหน้านี้ แทนค่าที่กำหนดไว้เดิม" />}
+          <PagedTable columns={BULK_COLS} rows={bulkRows} />
+        </section> : half(
           <InputDropdown LabelText="ยานพาหนะ" Text={open === "car" ? query : CAND[car].plate} Placeholder="เลือกยานพาหนะในไตรมาสนี้" LeadingIconSwap="search-24-300-round"
             onQuery={setQuery} open={open === "car"} onOpenChange={(v) => { setOpen(v ? "car" : ""); setQuery(""); }}>
             <DropdownList>{carList.map((i) => <DropdownListItem key={i} Text={CAND[i].plate} State={i === car ? "Selected" : "Default"} onClick={() => goCar(i)} />)}</DropdownList>
@@ -221,7 +253,7 @@ function CarParts() {
             <TextInput LabelText="รหัสน้ำมัน" Text={e.spec.code} Placeholder="ระบุรหัสน้ำมัน" onChange={(v) => setSpec({ code: v })} />
             <TextInput LabelText="จำนวน (ลิตร)" Text={e.spec.litre} Placeholder="0" inputMode="numeric" onChange={(v) => setSpec({ litre: v.replace(/[^\d.]/g, "") })} />
           </>)}
-          {third(<TextInput LabelText="เปลี่ยนน้ำมันครั้งล่าสุด" Text={LAST_OIL[car]} State="Readonly" readOnly />, 2)}
+          {!isBulk && third(<TextInput LabelText="เปลี่ยนน้ำมันครั้งล่าสุด" Text={LAST_OIL[car]} State="Readonly" readOnly />, 2)}
         </section>
         {e.draw === "take" && <PartsInventoryPanel parts={OTHER.map((i) => STOCK[i])} picked={e.picks.map((pi) => PARTS[pi].code)} onPick={(p) => togglePart(PARTS.findIndex((x) => x.code === p.code))} query={invQuery} onQuery={setInvQuery} />}
         {e.draw === "take" && <section className="flex flex-col gap-4">

@@ -57,6 +57,7 @@ import { allQuarterRows, carParam, roleUnit, draftFromPlan, draftKey, fillDraft,
 import { useProtoForm } from "@/lib/protoForm";
 import { notify, setMock, useMock, useRole } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
+import { histText, lastMaOf, lastRepairOf } from "@/lib/mock/vehicleHistory";
 import { CheckTable, type CheckRow } from "./CheckTable";
 import { TripCarPicker } from "@/app/quarter/_shared/TripCarPicker";
 import { FilterShell } from "@/app/vehicles/_lib/ui";
@@ -67,8 +68,11 @@ export const CARP_COLS: TableColumn[] = [
   { head: "น้ำมันไฮดรอลิก", width: 140 }, { head: "เปลี่ยนล่าสุด", width: 120 }, { head: "อะไหล่", width: 120 }, { head: "", width: 104, Style: "Action icons" },
 ];
 /* PICK_COLS — แท็บทั้งหมด · Q_COLS — แท็บไตรมาส n (screens.js) */
-const PICK_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 260 }, { head: "ประเภทยานพาหนะ", width: 160 }, { head: "เขต / หน่วยงานเจ้าของยานพาหนะ" }, { head: "ไตรมาส", width: 160, Style: "Badge" }];
-const Q_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 240 }, { head: "ประเภทยานพาหนะ", width: 130 }, { head: "เขต / หน่วยงานเจ้าของยานพาหนะ" }, { head: "น้ำมันไฮดรอลิก", width: 200 }, { head: "อะไหล่อื่นๆ", width: 200 }, { head: "", width: 60, Style: "Action icons" }];   // 6 พ.ย. 2569 ท้ายแถว = ปุ่ม … (Q_MENU) แทนไอคอนแก้ไข
+/* 11 พ.ย. 2569 เจ้าของงาน "เพิ่มตอนเลือกรถเข้าแผน เพิ่มคอลัมน์ วันที่บำรุงล่าสุดเมื่อไร และอยากเพิ่ม วันที่ซ่อมล่าสุดด้วย" (BACKLOG ข้อ 64) ⇒ HIST_COLS ต่อจากเขต / หน่วยงาน
+   ทั้งสองแท็บ (ทั้งหมด 6 คอลัมน์ · ไตรมาส 8 คอลัมน์ = เต็ม Table ของไลบรารี R25) · ไม่มีข้อมูล = "ไม่มีข้อมูล" (lib/mock/vehicleHistory.ts) · มือถือ = บรรทัดรองของรายการ */
+const HIST_COLS: TableColumn[] = [{ head: "บำรุงรักษาล่าสุด", width: 130 }, { head: "ซ่อมล่าสุด", width: 120 }];
+const PICK_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 260 }, { head: "ประเภทยานพาหนะ", width: 150 }, { head: "เขต / หน่วยงานเจ้าของยานพาหนะ" }, ...HIST_COLS, { head: "ไตรมาส", width: 140, Style: "Badge" }];
+const Q_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 240 }, { head: "ประเภทยานพาหนะ", width: 140 }, { head: "เขต / หน่วยงานเจ้าของยานพาหนะ" }, ...HIST_COLS, { head: "น้ำมันไฮดรอลิก", width: 150 }, { head: "อะไหล่อื่นๆ", width: 150 }, { head: "", width: 60, Style: "Action icons" }];   // 6 พ.ย. 2569 ท้ายแถว = ปุ่ม … (Q_MENU) แทนไอคอนแก้ไข
 const PER = 10;
 /* S19: Alert เหนือฟอร์มแก้ไข (ALERT_RETURNED · ALERT_APPROVED) */
 const ALERT_APPROVED = ["แผนนี้อนุมัติแล้ว", "เมื่อบันทึก แผนจะกลับเป็นสถานะรออนุมัติ และต้องให้ผู้อนุมัติตรวจสอบอีกครั้ง"] as const;
@@ -149,12 +153,17 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
   const carActs = [(car: number) => router.push("/car-parts/view/" + carQuery(car)), toS21, outOfQ];
   const carItems = carMenu ? MENU.map((m, k) => ({ ...m, onClick: () => carActs[k](carMenu.car) })) : [];
   const rows: CheckRow[] = rowsOnPage.map((i) => {
-    const c = CAND[i];
-    if (!q) return { key: String(i), text: c.plate, sub: c.model, mobileSub: c.model + " · " + qPill(i)[0], cells: [c.type, c.owner, { pills: [qPill(i)] }] };
+    const c = CAND[i], hist = [lastMaOf(c.plate), lastRepairOf(c.plate)];
+    if (!q) return { key: String(i), text: c.plate, sub: c.model, mobileSub: c.model + " · " + qPill(i)[0] + " · " + histText(c.plate), cells: [c.type, c.owner, ...hist, { pills: [qPill(i)] }] };
     const oil = oilCellOf(d, i), other = otherCellOf(d, i), txt = (v: typeof oil) => (typeof v === "string" ? v : v.text);
-    return { key: String(i), text: c.plate, sub: c.model, mobileSub: "น้ำมัน " + txt(oil) + " · อะไหล่อื่นๆ " + (typeof other === "string" ? other : other.text),
-      cells: [c.type, c.owner, oil, other, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู " + c.plate, onClick: (e) => setCarMenu({ car: i, anchor: anchorOf(e.currentTarget) }) }] }] };
+    /* มือถือ: ไอคอนดู แก้ไข (S21) ลบ ใต้รายการ (CLAUDE.md ข้อ 14 · เดิมไม่มี ⇒ มือถือเข้าหน้าอะไหล่รายคันไม่ได้ · BACKLOG ข้อ 64) */
+    const mobileActions = MENU.map((m, k) => ({ IconSwap: m.IconSwap, label: m.Text + " " + c.plate, onClick: () => carActs[k](i) }));
+    return { key: String(i), text: c.plate, sub: c.model, mobileSub: "น้ำมัน " + txt(oil) + " · อะไหล่อื่นๆ " + (typeof other === "string" ? other : other.text) + " · " + histText(c.plate), mobileActions,
+      cells: [c.type, c.owner, ...hist, oil, other, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู " + c.plate, onClick: (e) => setCarMenu({ car: i, anchor: anchorOf(e.currentTarget) }) }] }] };
   });
+  /* กำหนดอะไหล่หลายคันครั้งเดียว (เจ้าของงาน 11 พ.ย. 2569 "อยากเพิ่มอะไหล่ครั้งเดียวในรถประเภทเดียวกัน" + "ทุกคันที่เลือกได้มั้ย คือต้องเลือกรถที่ต้องการเพิ่มอะไหล่" · BACKLOG ข้อ 64)
+     แท็บไตรมาส n: ติ๊กยานพาหนะ → "กำหนดอะไหล่ (n)" → หน้า S21 แบบหลายคัน (/car-parts/?cars=…) ค่าที่เลือกใช้กับทุกคันที่ติ๊ก · แก้รายคันภายหลังได้จากเมนู … ตามเดิม */
+  const toBulk = () => router.push("/car-parts/?id=" + (edit ? planId(plan) : "new") + "&q=" + q + "&cars=" + ticked.map((x) => carParam(Number(x))).join(",") + (from === "detail" ? "&from=detail" : ""));
   const doAssign = () => {
     const kq = QUARTERS.indexOf(assign ?? "") + 1;
     if (!kq) return;
@@ -267,7 +276,8 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
           </Tabs>
           <TableHeader Title={q ? "ยานพาหนะในไตรมาส " + q : "ยานพาหนะในพื้นที่ที่เลือก"} Badge={q ? "กำหนดอะไหล่แล้ว " + qDone + "/" + inQ(q).length + " คัน" : shown.length + " คัน"} Placeholder="เลขทะเบียน, ยี่ห้อ, รุ่น" query={query}
             onQuery={(v) => { setQuery(v); setPage(1); }} onFilter={openPanel} FilterCount={chips.length} Filters={chips} onRemoveFilter={removeChip}
-            Actions={<SecondaryButton Text={"จัดลงไตรมาส" + (nTicked ? " (" + nTicked + ")" : "")} Size={mob ? "lg" : "md"} State={nTicked ? "Default" : "Disabled"} onClick={() => nTicked && setAssign("")} />} />
+            Actions={[<SecondaryButton key="assign" Text={"จัดลงไตรมาส" + (nTicked ? " (" + nTicked + ")" : "")} Size={mob ? "lg" : "md"} State={nTicked ? "Default" : "Disabled"} onClick={() => nTicked && setAssign("")} />,
+              q ? <SecondaryButton key="parts" Text={"กำหนดอะไหล่" + (nTicked ? " (" + nTicked + ")" : "")} Size={mob ? "lg" : "md"} State={nTicked ? "Default" : "Disabled"} onClick={() => nTicked && toBulk()} /> : null]} />
           {carBody}
         </section>
 
