@@ -10,7 +10,8 @@
        (รอบ 4 11 พ.ย. 2569 "ไม่อยากให้ต้องเปิดหน้าใหม่ แต่เป็นหน้าลิสต์แล้วพอเลือก upload ก็แสดง pop up" · รอบ 2–3 มีหน้ารายละเอียด เอาออกแล้ว)
        ผู้ดูแลยานพาหนะ = ไอคอนดูผล เปิด popup ดูอย่างเดียว (ผลล่าสุด + ดาวน์โหลดเอกสาร)
    คอลัมน์ "การตรวจ ปจ.2 ล่าสุด" บรรทัดรอง "วาระ n เดือน" · "ครบกำหนดครั้งถัดไป" = วันตรวจ + วาระ บรรทัดรองนับถอยหลัง "เหลือ n วัน" / "เลยกำหนด n วัน" (ข้อ 67จ) · เรียงวันที่เหลือน้อยสุดก่อน
-   ตัวกรอง 5 ช่อง (FilterShell ชุดเดียวกับ S24): ประเภทยานพาหนะ · สังกัดยานพาหนะ (เขต) · วาระการตรวจ (ข้อ 67จ) · ผล Safety Inspection (หลายค่า) · ครบกำหนดภายใน (ค่าเดียว ตัวเลือก MA_WITHIN_OPTS)
+   ข้อ 67ฉ: คอลัมน์ "สถานะยานพาหนะ" (Pill ชุดเดียวกับ S24) · ปุ่ม "ส่งออก" (Secondary ไอคอน download แบบ S18) ใน Table header = .csv ของแถวที่ค้นหา/กรองอยู่
+   ตัวกรอง 6 ช่อง (FilterShell ชุดเดียวกับ S24): ประเภทยานพาหนะ · สังกัดยานพาหนะ (เขต) · สถานะยานพาหนะ (ข้อ 67ฉ) · วาระการตรวจ (ข้อ 67จ) · ผล Safety Inspection (หลายค่า) · ครบกำหนดภายใน (ค่าเดียว ตัวเลือก MA_WITHIN_OPTS)
    บทบาท: ผู้ดำเนินการ (หน่วยงาน กกฟ.1 กกฟ.2 กรย. · กบค.) เห็นทุกคันและอัปโหลดได้ · ผู้ดูแลยานพาหนะ เห็นเฉพาะยานพาหนะที่ดูแล ดูอย่างเดียว (PERMISSIONS.md)
    ?sample=S26 = งานรายคันชุด T1_afterClose (82-6789 ปิดงานแล้ว 04/11/2569) + เอกสาร Safety Inspection ตอนปิดงาน (ยังไม่มีผล) */
 import { Suspense, useEffect, useMemo, useState } from "react";
@@ -25,8 +26,10 @@ import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import type { TableColumn } from "@/components/vms/Table";
 import { TableHeader } from "@/components/vms/TableHeader";
 import { applySample, patchJob, SAFETY_TYPES } from "@/lib/mock/jobs";
-import { MA_WITHIN_OPTS } from "@/lib/mock/maintenance";
-import { SAFETY_TITLE, dueCell, safetyDueMatch, useSafetyCars, type SafetyCar } from "@/lib/mock/safety";
+import { SAFETY_TITLE, VSTAT_OPTS, countdown, dueCell, safetyDueMatch, useSafetyCars, type SafetyCar } from "@/lib/mock/safety";
+import { MA_TODAY, MA_WITHIN_OPTS, thaiDate } from "@/lib/mock/maintenance";
+import { notify } from "@/lib/mock/store";
+import { downloadCsv } from "@/app/parts/_lib/exportFile";
 import { SAFETY_CYCLES, SAFETY_NONE, SAFETY_PILL, cycleText } from "@/lib/mock/safetyStore";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useSample, type SampleMap } from "@/lib/useSample";
@@ -35,27 +38,33 @@ import { ALL, FilterShell, MaGrid, type MaValue } from "@/app/vehicles/_lib/ui";
 import { SAFETY_ROOT, resultPill, useSafetyAccess } from "./_lib/ui";
 import { SafetyPopup } from "./_lib/SafetyPopup";
 
+/* 8 คอลัมน์ (R25) — ข้อ 67ฉ เพิ่ม "สถานะยานพาหนะ" ⇒ รหัสยานพาหนะย้ายเป็นบรรทัดรองของทะเบียน · ยี่ห้อ/รุ่นย้ายเป็นบรรทัดรองของประเภทยานพาหนะ */
 const SAFETY_COLS: TableColumn[] = [
-  { head: "ทะเบียน", width: 190, Style: "Lead text" }, { head: "รหัสยานพาหนะ", width: 140 }, { head: "ประเภทยานพาหนะ", width: 140 }, { head: "สังกัดยานพาหนะ" },
-  { head: "การตรวจ ปจ.2 ล่าสุด", width: 170 }, { head: "ผล", width: 140, Style: "Badge" }, { head: "ครบกำหนดครั้งถัดไป", width: 200 }, { head: "อัปโหลดเอกสาร", width: 130, Style: "Action icons" },
+  { head: "ทะเบียน", width: 170, Style: "Lead text" }, { head: "ประเภทยานพาหนะ", width: 190 }, { head: "สังกัดยานพาหนะ" }, { head: "สถานะยานพาหนะ", width: 150, Style: "Badge" },
+  { head: "การตรวจ ปจ.2 ล่าสุด", width: 160 }, { head: "ผล", width: 130, Style: "Badge" }, { head: "ครบกำหนดครั้งถัดไป", width: 170 }, { head: "อัปโหลดเอกสาร", width: 130, Style: "Action icons" },
 ];
+/* ส่งออก (ข้อ 67ฉ · "อยากให้กรองแล้ว อยากให้สามารถดาวน์โหลดสิ่งที่กรองได้"): แถวที่แสดงอยู่ (หลังค้นหาและกรอง ทุกหน้า) ทุกค่าแยกคอลัมน์ · .csv แบบส่งออกของ S4/S18 (ต้นแบบทำ .xlsx ไม่ได้) */
+const EXPORT_COLS: TableColumn[] = ["ทะเบียน", "รหัสยานพาหนะ", "ยี่ห้อ/รุ่น", "ประเภทยานพาหนะ", "สังกัดยานพาหนะ", "สถานะยานพาหนะ", "การตรวจ ปจ.2 ล่าสุด", "วาระการตรวจ", "ผลการตรวจ ปจ.2",
+  "ครบกำหนดครั้งถัดไป", "นับถอยหลัง"].map((head) => ({ head }));
+const exportRow = (c: SafetyCar): string[] => [c.car.plate, c.peaId, c.car.model, c.car.type, c.car.owner, c.vstat[0], c.last ?? "-", c.cycle ? cycleText(c.cycle) : "-", resultPill(c)[0],
+  c.due != null ? thaiDate(c.due) : "-", c.due != null ? countdown(c.due) : "-"];
 const RESULT_OPTS = [...SAFETY_PILL.map((p) => p[0]), SAFETY_NONE[0]];
 
-interface SFilter { types: string[]; units: string[]; results: string[]; cycles: string[]; within: string }
-const NONE: SFilter = { types: [], units: [], results: [], cycles: [], within: ALL };
-type Multi = "types" | "units" | "results" | "cycles";
+interface SFilter { types: string[]; units: string[]; vstats: string[]; results: string[]; cycles: string[]; within: string }
+const NONE: SFilter = { types: [], units: [], vstats: [], results: [], cycles: [], within: ALL };
+type Multi = "types" | "units" | "vstats" | "results" | "cycles";
 /* ตัวกรองวาระการตรวจ (ข้อ 67จ) — ชิปเป็น "วาระ 3 เดือน" ไม่ชนกับตัวกรองอื่น */
 const CYCLE_OPTS = SAFETY_CYCLES.map((n) => "วาระ " + cycleText(n));
 const WITHIN_LABEL = "ครบกำหนดภายใน";
 const unitOf = (c: SafetyCar) => c.car.owner.split(" ")[0];
 const match = (c: SafetyCar, f: SFilter) =>
-  (!f.types.length || f.types.includes(c.car.type)) && (!f.units.length || f.units.includes(unitOf(c)))
+  (!f.types.length || f.types.includes(c.car.type)) && (!f.units.length || f.units.includes(unitOf(c))) && (!f.vstats.length || f.vstats.includes(c.vstat[0]))
   && (!f.results.length || f.results.includes(resultPill(c)[0])) && (!f.cycles.length || (c.cycle != null && f.cycles.includes("วาระ " + cycleText(c.cycle)))) && (f.within === ALL || safetyDueMatch(c, f.within, MA_WITHIN_OPTS));
 /* ชิป: หลายค่า = ค่าที่เลือก · ครบกำหนดภายใน = "ครบกำหนดภายใน 3 เดือน" / "ครบกำหนดภายใน เลยกำหนดแล้ว" (แบบ S24) */
 const withinChip = (v: string) => WITHIN_LABEL + " " + v.replace(/^ภายใน /, "");
-const chipsOf = (f: SFilter) => [...f.types, ...f.units, ...f.results, ...f.cycles, ...(f.within !== ALL ? [withinChip(f.within)] : [])];
+const chipsOf = (f: SFilter) => [...f.types, ...f.units, ...f.vstats, ...f.results, ...f.cycles, ...(f.within !== ALL ? [withinChip(f.within)] : [])];
 const dropChip = (f: SFilter, v: string): SFilter => ({
-  types: f.types.filter((x) => x !== v), units: f.units.filter((x) => x !== v), results: f.results.filter((x) => x !== v), cycles: f.cycles.filter((x) => x !== v), within: f.within !== ALL && withinChip(f.within) === v ? ALL : f.within,
+  types: f.types.filter((x) => x !== v), units: f.units.filter((x) => x !== v), vstats: f.vstats.filter((x) => x !== v), results: f.results.filter((x) => x !== v), cycles: f.cycles.filter((x) => x !== v), within: f.within !== ALL && withinChip(f.within) === v ? ALL : f.within,
 });
 
 const SAMPLES: SampleMap = {
@@ -102,12 +111,18 @@ function SafetyList() {
       <DropdownList>{options.map((o) => <DropdownListItem key={o} Text={o} State={draft[k].includes(o) ? "Selected" : "Default"} onClick={() => flip(k, o)} />)}</DropdownList>
     </InputDropdownWithBadges>
   );
+  /* ส่งออกแถวที่แสดงอยู่ (ข้อ 67ฉ) · ไม่มีแถว = ปุ่ม Disabled · toast คำเดียวกับ S4/S18 */
+  const exportShown = () => {
+    if (!shown.length) return;
+    downloadCsv({ title: SAFETY_TITLE, info: [], section: "", cols: EXPORT_COLS, rows: shown.map(exportRow), file: "การตรวจ-ปจ2-" + MA_TODAY.replace(/\//g, "-") });
+    notify("ส่งออกไฟล์สำเร็จ");
+  };
   const row = (c: SafetyCar): MaValue[] => {
     const plate = c.car.plate;
     /* รอบ 4: อัปโหลดเอกสาร (upload_file) เปิด popup บนหน้านี้ · ผู้ดูแลยานพาหนะ = ดูผล (quick_reference_all) popup ดูอย่างเดียว */
     const a = [owner ? { IconSwap: "quick_reference_all-24-300-round", label: "ดูผล " + plate, onClick: () => setSel(c.id) }
       : { IconSwap: "upload_file-24-300-round", label: "อัปโหลดเอกสาร " + plate, onClick: () => setSel(c.id) }];
-    return [{ text: plate, sub: c.car.model }, c.peaId, c.car.type, c.car.owner, c.last ? { text: c.last, sub: c.cycle ? "วาระ " + cycleText(c.cycle) : undefined } : "-", { pills: [resultPill(c)] }, dueCell(c), { actions: a, mobileActions: a }];
+    return [{ text: plate, sub: c.peaId }, { text: c.car.type, sub: c.car.model }, c.car.owner, { pills: [c.vstat] }, c.last ? { text: c.last, sub: c.cycle ? "วาระ " + cycleText(c.cycle) : undefined } : "-", { pills: [resultPill(c)] }, dueCell(c), { actions: a, mobileActions: a }];
   };
 
   return (
@@ -115,13 +130,15 @@ function SafetyList() {
       <PageHeader Title={SAFETY_TITLE} crumbs={[{ Text: SAFETY_ROOT }]} />
       <section className="flex flex-col gap-6">
         <TableHeader Placeholder="เลขทะเบียน, รหัสยานพาหนะ, ยี่ห้อ, รุ่น" query={query} onQuery={(q) => { setQuery(q); setPage(1); }} onFilter={() => { setDraft(filter); setOpen(""); setPanel(true); }}
-          FilterCount={chips.length} Filters={chips} onRemoveFilter={(v) => put(dropChip(filter, v))} />
+          FilterCount={chips.length} Filters={chips} onRemoveFilter={(v) => put(dropChip(filter, v))}
+          Actions={<SecondaryButton Text="ส่งออก" LeadingIconSwap="download-24-300-round" Size={mob ? "lg" : "md"} State={shown.length ? "Default" : "Disabled"} disabled={!shown.length} onClick={exportShown} />} />
         {shown.length ? <MaGrid cols={SAFETY_COLS} rows={shown.map(row)} page={page} onPage={setPage} />
           : <EmptyStateSearchNotFound Actions={<SecondaryButton Text="ล้างตัวกรอง" Size={mob ? "lg" : "md"} onClick={reset} />} />}
       </section>
       <FilterShell open={panel} onClose={() => setPanel(false)} onClear={() => setDraft(NONE)} onApply={() => { put(draft); setPanel(false); }}>
         {multi("types", "ประเภทยานพาหนะ", SAFETY_TYPES)}
         {multi("units", "สังกัดยานพาหนะ", units)}
+        {multi("vstats", "สถานะยานพาหนะ", VSTAT_OPTS)}
         {multi("results", "ผลการตรวจ ปจ.2", RESULT_OPTS)}
         {multi("cycles", "วาระการตรวจ", CYCLE_OPTS)}
         <InputDropdown LabelText={WITHIN_LABEL} Optional Size={mob ? "lg" : "md"} Text={draft.within} open={open === "within"} onOpenChange={toggle("within")}>

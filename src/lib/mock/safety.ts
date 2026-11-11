@@ -15,10 +15,11 @@
    ครบกำหนดครั้งถัดไป = ครั้งล่าสุด + วาระการตรวจของครั้งนั้น 3/6/12 เดือน (ข้อ 67จ · เดิม +12 เดือน) · นับถอยหลังจากวันนี้ของต้นแบบ MA_TODAY
      เลยกำหนด = over · เหลือไม่เกิน 30 วัน = near (NEAR_DAYS) · S24 แถวการตรวจ ปจ.2 ใช้วาระเดียวกัน (maCar safetyUp) */
 import { useMemo } from "react";
-import { CAND, type Car } from "./data";
+import { CAND, type Car, type CarStatus } from "./data";
+import type { PillColor } from "@/components/vms/PillOutline";
 import { jobsOf, safetyOn } from "./jobs";
 import type { UploadFile } from "@/components/vms/FileUpload";
-import { MA_DUE, TODAY, addMonths, baseSafetyOf, dayOf, maCars, thaiDate, type DueStatus, type DueTone } from "./maintenance";
+import { MA_DUE, MA_VSTAT, TODAY, addMonths, baseSafetyOf, dayOf, maCars, thaiDate, type DueStatus, type DueTone } from "./maintenance";
 import { latestUpload, safetyUploads, type SafetyCycle, type SafetyRec, type SafetyResult } from "./safetyStore";
 import { useMock, type MockState } from "./store";
 import { OWN_UNIT } from "./trips";
@@ -52,8 +53,16 @@ export const daysLeft = (due: number) => Math.round((due - TODAY) / 86400000);
 export const NEAR_DAYS = 30;
 const safetyStatus = (due: number): DueStatus | undefined => { const d = daysLeft(due); return d < 0 ? "over" : d <= NEAR_DAYS ? "near" : undefined; };
 
+/* สถานะยานพาหนะจากข้อมูลหลัก (เจ้าของงาน 11 พ.ย. 2569 "อยากเพิ่มคอลัมน์ สถานะรถ ที่ดึงจาก master" · ข้อ 67ฉ) — ป้ายและสีชุดเดียวกับคอลัมน์สถานะยานพาหนะของ S24 (MA_VSTAT)
+   Car.status: ok ปกติ · repair อยู่ระหว่างซ่อม (MA_VSTAT) · transfer โอนย้าย · dispose จำหน่าย (ไม่มีใน S24 · ข้อมูลจำลองยังไม่มีคันสถานะนี้ — BACKLOG ค.)
+   ยานพาหนะที่อยู่ในแดชบอร์ด S24 = สถานะของ S24 (MA_USE · เช่น 81-2210 งดใช้งาน) ให้สองหน้าตรงกัน */
+export const CAR_VSTAT: Record<CarStatus, [string, PillColor]> = { ok: MA_VSTAT.ok, repair: MA_VSTAT.repair, transfer: ["โอนย้าย", "Info"], dispose: ["จำหน่าย", "Gray"] };
+export const VSTAT_OPTS = [...new Set([...Object.values(MA_VSTAT), ...Object.values(CAR_VSTAT)].map((p) => p[0]))];
+
 export interface SafetyCar {
   car: Car; id: string; peaId: string;
+  /** สถานะยานพาหนะ (ป้าย · สี) */
+  vstat: [string, PillColor];
   /** ครั้งล่าสุด · ผล (ไม่มี = ยังไม่มีข้อมูล) · ครบกำหนดครั้งถัดไป */
   last?: string; result?: SafetyResult; due?: number; status?: DueStatus;
   /** วาระการตรวจของครั้งล่าสุด (เดือน · ไม่มีข้อมูล = ไม่มี) */
@@ -83,7 +92,7 @@ export function safetyCars(m: MockState, owner = false): SafetyCar[] {
     if (up && (!last || dayOf(up.date) >= dayOf(last))) { last = up.date; result = up.result; cycle = up.cycle ?? 12; }
     /* ครบกำหนดครั้งถัดไป = วันตรวจล่าสุด + วาระ (ข้อ 67จ · เดิม +12 เดือนทุกคัน) */
     const due = last ? addMonths(dayOf(last), cycle ?? 12) : undefined;
-    return [{ car, id, peaId: peaIdOf(car), base, last, result, cycle: last ? cycle ?? 12 : undefined, due, status: due == null ? undefined : safetyStatus(due), uploads: safetyUploads(m, id) }];
+    return [{ car, id, peaId: peaIdOf(car), vstat: ma ? MA_VSTAT[ma.vstat] : CAR_VSTAT[car.status], base, last, result, cycle: last ? cycle ?? 12 : undefined, due, status: due == null ? undefined : safetyStatus(due), uploads: safetyUploads(m, id) }];
   }).sort((a, b) => (a.due ?? Infinity) - (b.due ?? Infinity) || a.car.plate.localeCompare(b.car.plate));   // เรียงวันที่เหลือน้อยสุดก่อน (เลยกำหนดมากสุดบนสุด) · ไม่มีข้อมูลท้าย
 }
 export function useSafetyCars(owner: boolean) { const m = useMock(); return useMemo(() => safetyCars(m, owner), [m, owner]); }
