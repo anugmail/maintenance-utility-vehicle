@@ -35,6 +35,7 @@ import {
   MA_CYCLE, MA_DUE, MA_ITEMS, MA_KIND, MA_NO_DATA, MA_NO_SAMPLE, MA_VSTAT, MA_WAR, ageText, machineHistoryOf, thaiDate, useMaCars, warrantyOf, type HistRow, type MaRecord,
 } from "@/lib/mock/maintenance";
 import { useBreakpoint } from "@/lib/useBreakpoint";
+import { MachineSection } from "../_lib/MachineSection";
 import { LIST_HREF, LIST_TITLE, MaGrid, MaTable, MaCards, VEHICLE_ROOT, detailHref, useMaAccess, type MaValue } from "../_lib/ui";
 
 const MA_VTABS = ["ข้อมูลยานพาหนะ", "ตารางบำรุงรักษา", "ประวัติการซ่อมบำรุง", "การรับประกัน", "Overhaul"];
@@ -111,9 +112,13 @@ function MaDetail() {
 
   let body: React.ReactNode = null;
   if (tab === 0) {
-    body = <VehicleAndReporterInfo pairs={[["ทะเบียน", car.plate], ["ยี่ห้อ/รุ่น", car.model], ["ประเภทยานพาหนะ", car.type], ["หน่วยงานเจ้าของยานพาหนะ", car.owner],
-      ["ผู้ดูแลยานพาหนะ", car.ctrl || "-"], ["เบอร์ติดต่อ", car.ownerPhone || "-"], ["ปีที่จดทะเบียน", c.year ? String(c.year) : "-"], ["อายุการใช้งาน", ageText(c)],
-      ["เลขไมล์สะสม", c.km ? c.km + " กม." : "-"], ["ชั่วโมงเครื่องจักรสะสม", c.hours ? c.hours + " ชม." : "-"], ["สถานะยานพาหนะ", MA_VSTAT[c.vstat][0]]]} />;
+    /* + ส่วนเครื่องมือกล ใต้กล่องข้อมูลยานพาหนะ (BACKLOG ข้อ 68 · _lib/MachineSection.tsx) */
+    body = <>
+      <VehicleAndReporterInfo pairs={[["ทะเบียน", car.plate], ["ยี่ห้อ/รุ่น", car.model], ["ประเภทยานพาหนะ", car.type], ["หน่วยงานเจ้าของยานพาหนะ", car.owner],
+        ["ผู้ดูแลยานพาหนะ", car.ctrl || "-"], ["เบอร์ติดต่อ", car.ownerPhone || "-"], ["ปีที่จดทะเบียน", c.year ? String(c.year) : "-"], ["อายุการใช้งาน", ageText(c)],
+        ["เลขไมล์สะสม", c.km ? c.km + " กม." : "-"], ["ชั่วโมงเครื่องจักรสะสม", c.hours ? c.hours + " ชม." : "-"], ["สถานะยานพาหนะ", MA_VSTAT[c.vstat][0]]]} />
+      <MachineSection carId={car.id} car={{ plate: car.plate, model: car.model, owner: car.owner, status: "ok", type: car.type }} />
+    </>;
   } else if (tab === 1) {
     const next: MaValue[][] = MA_ITEMS.map((t, k) => {
       const it = c.items[k];

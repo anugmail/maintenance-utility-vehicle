@@ -472,3 +472,11 @@ screens.js ไม่ได้วาดปุ่มไปขั้นถัดไ
 | เมนู Sidebar "การตรวจ ปจ.2" (เดิม Safety Inspection) | Nav list item ในกลุ่ม งานซ่อมและบำรุงรักษา | ไม่มีใน Sidebar Navigation ของ UI Release#2 (แบบเมนูต้นแบบ บ.) |
 | บรรทัดยานพาหนะใน popup บนมือถือ (ข้อ 67ง) | ข้อความ 14 gray-600 บนสุดของเนื้อหา Bottom sheet | Bottom sheet header ไม่มี Supporting text (desktop อยู่ใน Supporting text ของ Modal header) |
 | คอลัมน์สถานะยานพาหนะ + ปุ่มส่งออก (ข้อ 67ฉ) | Table cell Style=Badge (Pill outline ชุด MA_VSTAT ของ S24) · Table header Actions = Secondary button "ส่งออก" ไอคอน download (แบบแท็บต้นทุน S18) · ไฟล์ .csv จาก `downloadCsv` ของ S4 | ครบ 8 คอลัมน์แล้ว ⇒ รหัสยานพาหนะ · ยี่ห้อ/รุ่น เป็นบรรทัดรอง |
+
+## ศ3. เครื่องมือกล ในหน้ารายละเอียดยานพาหนะ (S24 · `src/app/vehicles/_lib/MachineSection.tsx` · 11 พ.ย. 2569 · BACKLOG ข้อ 68 · ทำเว็บก่อน Figma)
+
+| ส่วน | ประกอบจาก | เหตุผล |
+|---|---|---|
+| ส่วนเครื่องมือกล | Section label + Actions Secondary button "เพิ่มเครื่องมือกล" + Table / Mobile table (MaGrid ของ S24) + Action icons แก้ไข + Empty state/Data empty | UI Release#2 และไลบรารีไม่มีบล็อกเครื่องมือกลในรายละเอียดยานพาหนะ · ทะเบียนเครื่องมือกลเดิม (design-mock/equipment-asset-code.html ของรีโปงานซ่อม · ใช้แค่รายการช่อง) เป็นตารางต่อเครื่อง ⇒ ตารางชุดเดียวกับแท็บอื่นของหน้านี้ |
+| popup เพิ่ม/แก้ไข | PopupModal (Modal · มือถือ Bottom sheet) + Input dropdown (ประเภท) + Text input ×9 วาง 2 คอลัมน์ | ฟอร์มสั้นในหน้าที่ดูอย่างเดียว แบบ popup ของ S10/S26 · ตรวจตอนกดบันทึก (Text input State Error + Helper text) |
+
