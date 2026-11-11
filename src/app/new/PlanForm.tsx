@@ -57,7 +57,7 @@ import { allQuarterRows, carParam, roleUnit, draftFromPlan, draftKey, fillDraft,
 import { useProtoForm } from "@/lib/protoForm";
 import { notify, setMock, useMock, useRole } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
-import { MA_HEAD, REPAIR_HEAD, histText, lastMaOf, lastRepairOf } from "@/lib/mock/vehicleHistory";
+import { MA_HEAD, REPAIR_HEAD, histText, useMachineDates } from "@/lib/mock/vehicleHistory";
 import { CheckTable, type CheckRow } from "./CheckTable";
 import { TripCarPicker } from "@/app/quarter/_shared/TripCarPicker";
 import { FilterShell } from "@/app/vehicles/_lib/ui";
@@ -153,13 +153,14 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
   });
   const carActs = [(car: number) => router.push("/car-parts/view/" + carQuery(car)), toS21, outOfQ];
   const carItems = carMenu ? MENU.map((m, k) => ({ ...m, onClick: () => carActs[k](carMenu.car) })) : [];
+  const mDates = useMachineDates();
   const rows: CheckRow[] = rowsOnPage.map((i) => {
-    const c = CAND[i], hist = [lastMaOf(c.plate), lastRepairOf(c.plate)];
-    if (!q) return { key: String(i), text: c.plate, sub: c.model, mobileSub: c.model + " · " + qPill(i)[0] + " · " + histText(c.plate), cells: [c.type, c.owner, ...hist, { pills: [qPill(i)] }] };
+    const c = CAND[i], md = mDates(c.plate), hist = [md.ma, md.repair];
+    if (!q) return { key: String(i), text: c.plate, sub: c.model, mobileSub: c.model + " · " + qPill(i)[0] + " · " + histText(md), cells: [c.type, c.owner, ...hist, { pills: [qPill(i)] }] };
     const oil = oilCellOf(d, i), other = otherCellOf(d, i), txt = (v: typeof oil) => (typeof v === "string" ? v : v.text);
     /* มือถือ: ไอคอนดู แก้ไข (S21) ลบ ใต้รายการ (CLAUDE.md ข้อ 14 · เดิมไม่มี ⇒ มือถือเข้าหน้าอะไหล่รายคันไม่ได้ · BACKLOG ข้อ 64) */
     const mobileActions = MENU.map((m, k) => ({ IconSwap: m.IconSwap, label: m.Text + " " + c.plate, onClick: () => carActs[k](i) }));
-    return { key: String(i), text: c.plate, sub: c.model, mobileSub: "น้ำมัน " + txt(oil) + " · อะไหล่อื่นๆ " + (typeof other === "string" ? other : other.text) + " · " + histText(c.plate), mobileActions,
+    return { key: String(i), text: c.plate, sub: c.model, mobileSub: "น้ำมัน " + txt(oil) + " · อะไหล่อื่นๆ " + (typeof other === "string" ? other : other.text) + " · " + histText(md), mobileActions,
       cells: [c.type, c.owner, ...hist, oil, other, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู " + c.plate, onClick: (e) => setCarMenu({ car: i, anchor: anchorOf(e.currentTarget) }) }] }] };
   });
   /* กำหนดอะไหล่หลายคันครั้งเดียว (เจ้าของงาน 11 พ.ย. 2569 "อยากเพิ่มอะไหล่ครั้งเดียวในรถประเภทเดียวกัน" + "ทุกคันที่เลือกได้มั้ย คือต้องเลือกรถที่ต้องการเพิ่มอะไหล่" · BACKLOG ข้อ 64)

@@ -15,7 +15,7 @@ import { EmptyStateDataEmpty } from "@/components/vms/EmptyStateDataEmpty";
 import { TextInput } from "@/components/vms/TextInput";
 import type { TripCar } from "@/lib/mock/trips";
 import { useBreakpoint } from "@/lib/useBreakpoint";
-import { MA_HEAD, REPAIR_HEAD, histText, lastMaOf, lastRepairOf } from "@/lib/mock/vehicleHistory";
+import { MA_HEAD, REPAIR_HEAD, histText, useMachineDates } from "@/lib/mock/vehicleHistory";
 import { CheckTable } from "@/app/new/CheckTable";
 
 /* 11 พ.ย. 2569 เจ้าของงาน "อยากเพิ่ม วันที่ซ่อมล่าสุดด้วย ตอนเลือกรถเข้าแผน และตอนเลือกเข้าแผนการเดินทาง" (BACKLOG ข้อ 64) ⇒ บำรุงรักษาล่าสุด · ซ่อมล่าสุด (lib/mock/vehicleHistory.ts)
@@ -35,6 +35,7 @@ function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่
   const mob = useBreakpoint() === "Mobile";
   const [q, setQ] = useState("");
   const [ticked, setTicked] = useState<string[]>([]);
+  const mDates = useMachineDates();
   const k = q.trim();
   const shown = k ? pool.filter((c) => c.plate.includes(k) || c.model.includes(k) || c.owner.includes(k)) : pool;
   const nTaken = pool.filter((c) => taken[c.id]).length;
@@ -42,8 +43,8 @@ function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่
   const sub = subText ?? "ยานพาหนะทุกคันของ" + nowQ + (nTaken ? " · " + nTaken + " คันอยู่ในแผนเดินทางอื่นแล้ว เลือกไม่ได้" : "");
   const search = <TextInput Label={false} Size={mob ? "lg" : "md"} LeadingIconSwap="search-24-300-round" Text={q} Placeholder={SEARCH} onChange={setQ} aria-label={SEARCH} className={mob ? "w-full" : "w-80"} />;
   const rows = shown.map((c) => {
-    const inTrip = taken[c.id] ? "อยู่ในแผนเดินทาง " + taken[c.id] : undefined;
-    return { key: c.id, text: c.plate, sub: c.owner + (inTrip ? " · " + inTrip : ""), mobileSub: (inTrip ? inTrip + " · " : "") + histText(c.plate), disabled: !!taken[c.id], cells: [c.model, lastMaOf(c.plate), lastRepairOf(c.plate)] };
+    const inTrip = taken[c.id] ? "อยู่ในแผนเดินทาง " + taken[c.id] : undefined, md = mDates(c.plate);
+    return { key: c.id, text: c.plate, sub: c.owner + (inTrip ? " · " + inTrip : ""), mobileSub: (inTrip ? inTrip + " · " : "") + histText(md), disabled: !!taken[c.id], cells: [c.model, md.ma, md.repair] };
   });
 
   const body = !pool.length
