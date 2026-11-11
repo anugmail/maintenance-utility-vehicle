@@ -25,7 +25,7 @@ export const MA_TODAY = "10/11/2569";
 export type DueTone = "warning" | "error";
 export type DueStatus = "near" | "over";
 export const MA_DUE: Record<DueStatus, [string, DueTone]> = { near: ["ใกล้ครบกำหนดบำรุงรักษา", "warning"], over: ["ครบกำหนดบำรุงรักษา", "error"] };
-export const MA_ITEMS = ["รอบบำรุงรักษา", "ไส้กรองอากาศ", "เปลี่ยนน้ำมันไฮดรอลิก", "เก็บตัวอย่างน้ำมัน", "Safety Inspection"] as const;
+export const MA_ITEMS = ["รอบบำรุงรักษา", "ไส้กรองอากาศ", "เปลี่ยนน้ำมันไฮดรอลิก", "เก็บตัวอย่างน้ำมัน", "การตรวจ ปจ.2"] as const;   // รายการที่ 5 ชื่อบนจอ "การตรวจ ปจ.2" (เดิม Safety Inspection · เจ้าของงาน 11 พ.ย. 2569)
 /* รอบ (99bb8b2 · เจ้าของงาน 10 พ.ย. 2569 ปีที่ 1 เปลี่ยน · ปีที่ 2 3 เก็บตัวอย่าง · ปีที่ 4 เปลี่ยน) · รอบบำรุงรักษาทั่วไป 12 เดือน = เสนอ ยังไม่เคาะ */
 export const MA_CYCLE = ["ทุก 12 เดือน", "เปลี่ยนทุก 1 ปี", "เปลี่ยนทุก 3 ปี (ปีที่ 1 และปีที่ 4)", "เก็บตัวอย่างปีที่ 2 และ 3 หลังเปลี่ยน", "ทุก 1 ปี"];
 export const MA_NO_DATA = "ยังไม่มีข้อมูลการบำรุงรักษา";
@@ -131,8 +131,9 @@ export interface MaCar {
   year?: number; km?: string; hours?: string; war: keyof typeof MA_WAR; vstat: keyof typeof MA_VSTAT;
 }
 
-/** safetyUp = วันตรวจ Safety Inspection ล่าสุดที่บันทึกจากหน้า Safety Inspection (S26 · safetyStore.ts) — รวมเข้ากับเอกสารตอนปิดงานให้ทุกหน้าตรงกัน */
-export function maCar(car: TripCar, all: MaRecord[], today = TODAY, safetyUp?: string): MaCar {
+/** safetyUp = การตรวจ ปจ.2 ล่าสุดที่บันทึกจากหน้า S26 (safetyStore.ts · วันที่ + วาระ 3/6/12 เดือน) — รวมเข้ากับเอกสารตอนปิดงานให้ทุกหน้าตรงกัน
+    ครบกำหนดรายการที่ 5 = ครั้งล่าสุด + วาระของครั้งนั้น (ไม่มีวาระ = 12 เดือน · ข้อ 67จ) */
+export function maCar(car: TripCar, all: MaRecord[], today = TODAY, safetyUp?: { date: string; cycle?: number }): MaCar {
   const records = all.filter((r) => r.carId === car.id).sort((a, b) => dayOf(b.date) - dayOf(a.date) || (a.fromJob === b.fromJob ? 0 : a.fromJob ? -1 : 1));
   const done = records.filter((r) => !r.cannot);
   const latest = done[0], u = MA_USE[car.id], b = BASE[car.id];
@@ -142,7 +143,8 @@ export function maCar(car: TripCar, all: MaRecord[], today = TODAY, safetyUp?: s
   const sm = first((r) => (r.oil === 0 || r.oil === 2 ? r.date : undefined));
   const sampleAt = later(sm?.[1], b?.sample);
   const result = sm && sampleAt === sm[1] ? sm[0].oilResult : b?.result;
-  const safetyAt = later(later(first((r) => (r.safety ? r.date : undefined))?.[1], b?.safety), safetyUp);
+  const safetyAt = later(later(first((r) => (r.safety ? r.date : undefined))?.[1], b?.safety), safetyUp?.date);
+  const safetyCycle = safetyUp && safetyAt === safetyUp.date ? safetyUp.cycle ?? 12 : 12;
   const base = { car, records, latest, air, oilAt, sampleAt, result, safetyAt, year: u?.[0], km: latest?.km?.replace(/ กม\.$/, "") ?? u?.[1], hours: latest?.hours?.replace(/ ชม\.$/, "") ?? u?.[2],
     war: u?.[3] ?? "none", vstat: u?.[4] ?? "ok" } as const;
   if (!latest) return { ...base, items: [] };
@@ -157,7 +159,7 @@ export function maCar(car: TripCar, all: MaRecord[], today = TODAY, safetyUp?: s
     item(1, air, isDate(air) ? addMonths(dayOf(air), 12) : undefined),
     item(2, oilAt, chg),
     item(3, sampleLast, changeYear ? undefined : smp),
-    item(4, safetyAt, isDate(safetyAt) ? addMonths(dayOf(safetyAt), 12) : undefined),
+    item(4, safetyAt, isDate(safetyAt) ? addMonths(dayOf(safetyAt), safetyCycle) : undefined),
   ];
   const withDue = items.filter((i) => i.due != null);
   const next = withDue.sort((a, b2) => a.due! - b2.due! || a.k - b2.k)[0];
@@ -173,7 +175,7 @@ export function maCars(m: MockState, owner = false, unit?: string): MaCar[] {
   const all = [...SEED, ...fromJobs];
   const ids = [...new Set([...MA_CAR_IDS, ...fromJobs.map((r) => r.carId)])];
   const cars = ids.map((id) => TRIP_CARS.find((c) => c.id === id) ?? carOf(id)).filter((c): c is TripCar => !!c);
-  return cars.filter((c) => !owner || c.owner === OWN_UNIT).map((c) => maCar(c, all, TODAY, latestUpload(m, c.id)?.date))
+  return cars.filter((c) => !owner || c.owner === OWN_UNIT).map((c) => maCar(c, all, TODAY, latestUpload(m, c.id)))
     .filter((x) => !unit || x.records.some((r) => unitOf(r.planMr) === unit) || (TRIP_CARS.some((t) => t.id === x.car.id) && unitOf("MR" + PLAN_ID) === unit))
     .sort((a, b) => (a.next ? a.next.due! : Infinity) - (b.next ? b.next.due! : Infinity) || a.car.plate.localeCompare(b.car.plate));
 }

@@ -31,7 +31,7 @@ export const PARTS_LABEL = "อะไหล่ของแผนที่อน�
 /** เมนูย่อยอนุมัติ (9 พ.ย. 2569 เจ้าของงาน "ตอนอนุมัติให้เห็น เมนูของทุกคนไปเลย … อันนี้ในเวปนะ แต่จริงๆเงื่อนไขคือยิงเส้น upper lower ในการหาคนอนุมัติ")
     ทุกบทบาทของต้นแบบเห็นและอนุมัติได้ · ชื่อ = หัวหน้าของจอ S2 S7 · ไม่มีใน Sidebar Navigation ของ UI Release#2 (COMPOSED.md บ.) · Badge = จำนวนที่รออนุมัติ */
 /** เมนูย่อย Safety Inspection /safety/ (S26 · เจ้าของงาน 11 พ.ย. 2569 "อยากทำหน้าลิสต์รถ เป็นอีก scen นึง … scen ชื่อว่า safety inspection" · ไม่มีใน Sidebar Navigation ของ UI Release#2 — COMPOSED.md) */
-export const SAFETY_LABEL = "Safety Inspection";
+export const SAFETY_LABEL = "การตรวจ ปจ.2";   // ชื่อบนจอ "การตรวจ ปจ.2" (เจ้าของงาน 11 พ.ย. 2569 · เดิม Safety Inspection)
 export const APPROVE_PLANS_LABEL = "แผนรออนุมัติ";
 export const APPROVE_TRIPS_LABEL = "แผนเดินทางรออนุมัติ";
 /** เมนูย่อย: ประเมินความพึงพอใจการให้บริการของ กบค. /satisfaction/ (S27 · เจ้าของงาน 11 พ.ย. 2569 "ทำเป็นอีก 1 view" · แบบเมนู "ประเมินพนักงานขับรถ" ของ VMS+ เดิมที่ประเมินผู้รับจ้างยกมา · ไม่มีใน Sidebar Navigation ของ UI Release#2 — COMPOSED.md ศ.) · Badge = จำนวนที่ยังไม่ได้ประเมิน */

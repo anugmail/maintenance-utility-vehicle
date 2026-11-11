@@ -41,7 +41,7 @@ const MA_VTABS = ["ข้อมูลยานพาหนะ", "ตาราง
 const MA_NEXT_COLS: TableColumn[] = [{ head: "รายการ", Style: "Lead text" }, { head: "ครั้งล่าสุด", width: 220 }, { head: "รอบ", width: 220 }, { head: "ครบกำหนด", width: 320 }];
 const MA_HIST_COLS: TableColumn[] = [
   { head: "วันที่ปิดงาน", width: 130, Style: "Lead text" }, { head: "เลขที่ MR", width: 140 }, { head: "งานที่ทำ" }, { head: "ไส้กรองอากาศ", width: 130 },
-  { head: "น้ำมันไฮดรอลิก", width: 180 }, { head: "Safety Inspection", width: 150 }, { head: "ผู้ดำเนินการ", width: 170 }, { head: "", width: 64, Style: "Action icons" },
+  { head: "น้ำมันไฮดรอลิก", width: 180 }, { head: "การตรวจ ปจ.2", width: 150 }, { head: "ผู้ดำเนินการ", width: 170 }, { head: "", width: 64, Style: "Action icons" },
 ];
 /* ซ่อมเครื่องจักร (รวมบันทึกการบำรุงรักษา · 11 พ.ย. 2569): หมายเลขงาน (บรรทัดรอง ประเภทการซ่อม / แผน Overhaul / แผนเดินทาง) · วันที่ปิดงาน · ประเภท (Pill) · ศูนย์บริการ · อาการ / รายละเอียด · การรับประกัน · ค่าซ่อม */
 const MA_REPAIR_COLS: TableColumn[] = [
