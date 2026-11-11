@@ -15,6 +15,7 @@ import { carOf, closeRows, jobsOf, oilSampled, nf, TRIP_CARS, WSTAT, type Job, t
 import { useMock, type MockState } from "./store";
 import { OWN_UNIT, PLAN_ID, STAFF } from "./trips";
 import { unitOf } from "./data";
+import { lastMaOf, lastRepairOf } from "./vehicleHistory";
 import type { PillColor } from "@/components/vms/PillOutline";
 
 /* วันนี้ของต้นแบบ = MA_TODAY ของ screens.js (ค่าคงที่ให้ตรงจอ) */
@@ -218,23 +219,42 @@ export const MA_REPAIRS: Repair[] = [
   ["PO-680412", "15/12/2568", "บริษัท สยามไฮดรอลิก จำกัด", "Overhaul", "แผน ORZ6800003", "ยกเครื่องตามแผน", "ไฮดรอลิกกระเช้า · เครื่องยนต์", "in", "-"],
   ["RP-2568-0877", "03/08/2568", "กรย. ภาค 1", "อุบัติเหตุ", "", "กันชนหน้าบุบ", "เปลี่ยนกันชนหน้า", "out", "6,500"],
 ];
-/* แท็บประวัติการซ่อมบำรุง 2 มุมมอง (เจ้าของงาน 11 พ.ย. 2569 "tab ประวัติจะแบ่งเป็น 2 ประวัติคือประวัติการบำรุงรักษาจะแสดงรายละเอียดเกี่ยวกับบำรุงรักษา
-   แต่ถ้าเป็นประวัติการซ่อม จะแสดงประวัติการบำรุงรักษาด้วย โดยเรียงจากเวลาที่เกิดขึ้น"):
-     ประวัติการบำรุงรักษา = c.records (บันทึกเดียวกับแท็บตารางบำรุงรักษา)
-     ประวัติการซ่อม = งานซ่อม/Overhaul (MA_REPAIRS ยกเว้นแถวประเภท "บำรุงรักษา") + บันทึกการบำรุงรักษาทุกครั้งของคันนั้น เรียงวันที่ปิดงานใหม่สุดก่อน
-     (แถว MA-2569-0102 ของจอ Figma ซ้ำกับบันทึก 18/06/2569 ⇒ ใช้บันทึกแทน ไม่นับซ้ำ) · ป้ายประเภท บำรุงรักษา · ซ่อม · Overhaul */
+/* แท็บประวัติการซ่อมบำรุง 2 มุมมอง = ประวัติของเครื่องจักร (กระเช้า · ชุดถังน้ำ ฯลฯ ไม่ใช่ตัวรถ)
+   เจ้าของงาน 11 พ.ย. 2569 "tab ประวัติจะแบ่งเป็น 2 ประวัติคือประวัติการบำรุงรักษาจะแสดงรายละเอียดเกี่ยวกับบำรุงรักษา แต่ถ้าเป็นประวัติการซ่อม จะแสดงประวัติการบำรุงรักษาด้วย โดยเรียงจากเวลาที่เกิดขึ้น"
+     + "หน้า tab ประวัติ ก็เพิ่ม โดยแยกประวัติ ของการซ่อมเครื่องจักรล่าสุด และการบำรุงรักษาเครื่องจักรล่าสุด" (BACKLOG ข้อ 65)
+     บำรุงรักษาเครื่องจักร = c.records (บันทึกเดียวกับแท็บตารางบำรุงรักษา)
+     ซ่อมเครื่องจักร = งานซ่อมเครื่องจักร/Overhaul + บันทึกการบำรุงรักษาทุกครั้ง เรียงวันที่ปิดงานใหม่สุดก่อน · ป้ายประเภท บำรุงรักษา · ซ่อม · Overhaul
+     (แถว MA-2569-0102 ของจอ Figma ซ้ำกับบันทึก 18/06/2569 ⇒ ใช้บันทึกแทน · RP-2568-0877 กันชนหน้า = งานตัวรถ ไม่ใช่เครื่องจักร ⇒ ไม่อยู่ในประวัตินี้ ยังอยู่แท็บการรับประกัน)
+   วันล่าสุดต้องเท่ากับคอลัมน์ "บำรุงรักษาเครื่องจักรล่าสุด" · "ซ่อมเครื่องจักรล่าสุด" ของฟอร์มแผน ⇒ อ่านจาก vehicleHistory.ts (lastMaOf · lastRepairOf) ไม่ก๊อปค่า:
+     วันใน vehicleHistory ที่ไม่มีแถวในประวัติของ S24 (ซ่อม: 80-5738 81-2210 82-6789 · บำรุงรักษา: ยานพาหนะใน CAND ที่ไม่มีบันทึกตั้งต้น เช่น 82-3302)
+       ⇒ เติมแถวจากวันนั้น ช่องที่ไม่รู้เป็น "-" (VH_ROW) ให้รายการกับวันล่าสุดตรงกัน
+     งานที่ปิดในต้นแบบหลังวันใน vehicleHistory (เช่น 82-6789 ปิด 04/11/2569 แต่ vehicleHistory = ไม่มีข้อมูล) ⇒ ล่าสุด = วันที่ใหม่กว่า (vehicleHistory ยังไม่อ่านงานที่ปิด) */
 export type HistKind = "ma" | "repair" | "overhaul";
 export const MA_KIND: Record<HistKind, [string, PillColor]> = { ma: ["บำรุงรักษา", "Brand"], repair: ["ซ่อม", "Warning"], overhaul: ["Overhaul", "Purple"] };
-export interface HistRow { kind: HistKind; no: string; sub?: string; date: string; center: string; text: string; detail: string; war: keyof typeof MA_WAR; cost: string; rec?: MaRecord }
-export function repairHistoryOf(c: MaCar): HistRow[] {
-  const repairs: HistRow[] = (c.car.id === MA_CAR ? MA_REPAIRS : []).filter((h) => h[3] !== "บำรุงรักษา").map((h) => ({
+export interface HistRow { kind: HistKind; no: string; sub?: string; date: string; center: string; text: string; detail: string; war?: keyof typeof MA_WAR; cost: string; rec?: MaRecord }
+/** งานตัวรถ (ไม่ใช่เครื่องจักร) ใน MA_REPAIRS */
+const CHASSIS_JOBS = new Set(["RP-2568-0877"]);
+export interface MachineHistory { ma: MaRecord[]; rows: HistRow[]; lastMa?: string; lastRepair?: string }
+export function machineHistoryOf(c: MaCar): MachineHistory {
+  const vhMa = lastMaOf(c.car.plate), vhRepair = lastRepairOf(c.car.plate);
+  const ma = [...c.records];
+  if (isDate(vhMa) && !ma.some((r) => !r.cannot && r.date === vhMa))
+    ma.push({ key: "vh:" + c.car.id + ":" + vhMa, carId: c.car.id, date: vhMa, planMr: "-", work: "-", parts: [], by: "-" });
+  ma.sort((a, b) => dayOf(b.date) - dayOf(a.date));
+  const repairs: HistRow[] = (c.car.id === MA_CAR ? MA_REPAIRS : []).filter((h) => h[3] !== "บำรุงรักษา" && !CHASSIS_JOBS.has(h[0])).map((h) => ({
     kind: h[3] === "Overhaul" ? "overhaul" : "repair", no: h[0], sub: h[4] || h[3], date: h[1], center: h[2], text: h[5], detail: h[6], war: h[7], cost: h[8],
   }));
-  const ma: HistRow[] = c.records.map((r) => ({
-    kind: "ma", no: r.planMr, sub: r.tripName, date: r.date, center: unitOf(r.planMr), text: r.cannot ? r.work : "ตรวจตามรอบ", detail: r.cannot ?? r.work, war: "none", cost: "-", rec: r,
-  }));
-  return [...repairs, ...ma].sort((a, b) => dayOf(b.date) - dayOf(a.date));
+  if (isDate(vhRepair) && !repairs.some((h) => h.kind === "repair" && h.date === vhRepair))
+    repairs.push({ kind: "repair", no: "-", date: vhRepair, center: "-", text: "-", detail: "", cost: "-" });
+  const rows: HistRow[] = [...repairs, ...ma.map((r): HistRow => ({
+    kind: "ma", no: r.planMr, sub: r.tripName, date: r.date, center: r.planMr === "-" ? "-" : unitOf(r.planMr), text: r.cannot ? r.work : r.planMr === "-" ? "-" : "ตรวจตามรอบ",
+    detail: r.cannot ?? (r.work === "-" ? "" : r.work), war: r.planMr === "-" ? undefined : "none", cost: "-", rec: r,
+  }))].sort((a, b) => dayOf(b.date) - dayOf(a.date));
+  const lastMa = ma.find((r) => !r.cannot)?.date;
+  const lastRepair = repairs.filter((h) => h.kind === "repair").sort((a, b) => dayOf(b.date) - dayOf(a.date))[0]?.date;
+  return { ma, rows, lastMa, lastRepair };
 }
+
 /* MA_WARRANTY ของ 82-1145 — [ประเภทงาน, เลขที่งาน / PO, ผู้รับจ้าง, รายการที่รับประกัน, วันเริ่ม, วันหมดอายุ, บรรทัดรองวันหมดอายุ, สถานะ] · คันอื่น = ข้อความว่าง (W.15) */
 export const MA_WARRANTY: [string, string, string, string, string, string, string, keyof typeof MA_WAR][] = [
   ["ซ่อม", "RP-2569-0611", "อู่ ศรีเมืองการช่าง", "ปั๊มไฮดรอลิก", "02/09/2569", "01/03/2570", "เหลือ 111 วัน", "in"],
