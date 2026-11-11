@@ -10,12 +10,13 @@
    ดาวน์โหลด (เจ้าของงาน 11 พ.ย. 2569 "ต้องสามารถดาวน์โหลดเอกสารหลังจากอัปโหลดเอกสารได้"): lib/fileDownload.ts — ไฟล์ที่เลือกในแท็บนี้ = ไฟล์จริง · อื่นๆ = ไฟล์ข้อความแทนชื่อเดียวกัน
    เพิ่มผล = PopupModal (Modal ของไลบรารี · มือถือ Bottom sheet · แบบ popup วันเวลาปิดงาน S10) "เพิ่มผล Safety Inspection":
        Text input วันที่ตรวจ + Date picker Type=Single ภาษาไทย (ไม่เกินวันนี้ · ตั้งต้น 10/11/2569) · Input label "ผล Safety Inspection" + Radio text card ×3 ผ่าน · ไม่ผ่าน · ระงับ
-       · File upload "เอกสาร Safety Inspection" PDF JPG สูงสุด 10 ไฟล์ แสดงรายการไฟล์ · ไม่มีช่องหมายเหตุ
+       · File upload "เอกสาร Safety Inspection" PDF JPG PNG สูงสุด 10 ไฟล์ แสดงรายการไฟล์ (ชนิดอื่น = Error "รองรับเฉพาะไฟล์ PDF, JPG, PNG") · มือถือมีปุ่ม "ถ่ายรูป" (กล้องหลัง) · ไม่มีช่องหมายเหตุ
        · ปุ่ม ยกเลิก / บันทึก (Disabled จนมีไฟล์และเลือกผล · ลบไฟล์จนหมด = File upload Error)
        บันทึก → toast "บันทึกผล Safety Inspection สำเร็จ" · อยู่หน้าเดิม ผลล่าสุดและประวัติเปลี่ยนทันที (เสนอ · BACKLOG ค.)
    ผู้ดูแลยานพาหนะ: ดูอย่างเดียว ไม่มีปุ่มเพิ่มผล · ยานพาหนะที่ไม่อยู่ในรายการ → กลับหน้ารายการ */
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
+import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { AppFrame } from "@/components/shell/AppFrame";
 import { VehicleAndReporterInfo } from "@/components/maintain-d/VehicleAndReporterInfo";
 import { PopupModal } from "@/components/patterns/PopupModal";
@@ -47,6 +48,10 @@ import { SAFETY_ROOT, resultPill, useSafetyAccess } from "../_lib/ui";
 const HIST_COLS: TableColumn[] = [{ head: "วันที่ตรวจ", width: 140, Style: "Lead text" }, { head: "ผล", width: 150, Style: "Badge" }, { head: "เอกสาร" }, { head: "บันทึกโดย", width: 280 },
   { head: "", width: 120, Style: "Action icons" }];
 const FILE_ERR = "กรุณาแนบเอกสาร Safety Inspection อย่างน้อย 1 ไฟล์";
+/* ชนิดไฟล์ (เจ้าของงาน 11 พ.ย. 2569 "ไฟล์รองรับ ไฟล์ pdf jpeg png ถ่ายรูปได้" · BACKLOG ข้อ 67ค) — ลากวางข้ามตัวกรอง accept ได้ ⇒ ตรวจซ้ำตอนรับไฟล์ */
+const ACCEPT = ".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png";
+const TYPE_ERR = "รองรับเฉพาะไฟล์ PDF, JPG, PNG";
+const okType = (f: File) => /\.(pdf|jpe?g|png)$/i.test(f.name) || ["application/pdf", "image/jpeg", "image/png"].includes(f.type);
 const toThai = (d: Date) => String(d.getDate()).padStart(2, "0") + "/" + String(d.getMonth() + 1).padStart(2, "0") + "/" + (d.getFullYear() + 543);
 const fromThai = (v: string) => { const m = v.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/); return m ? new Date(Number(m[3]) - 543, Number(m[2]) - 1, Number(m[1])) : null; };
 const TODAY_D = fromThai(MA_TODAY)!;
@@ -67,8 +72,18 @@ function AddResult({ open, carId, onClose }: { open: boolean; carId: string; onC
   const [result, setResult] = useState<SafetyResult | null>(null);
   const [files, setFiles] = useState<UploadFile[]>([]);
   const [touched, setTouched] = useState(false);
+  const [badType, setBadType] = useState(false);
   const [seen, setSeen] = useState(false);
-  const reset = () => { setDate(MA_TODAY); setCal(false); setResult(null); setFiles([]); setTouched(false); };
+  const mob = useBreakpoint() === "Mobile";
+  const cam = useRef<HTMLInputElement>(null);
+  const reset = () => { setDate(MA_TODAY); setCal(false); setResult(null); setFiles([]); setTouched(false); setBadType(false); };
+  /* รับไฟล์ (เลือก · ลากวาง · ถ่ายรูป): ชนิดไม่รองรับ = ไม่รับ + Error · จำไฟล์จริงไว้ดาวน์โหลด (lib/fileDownload.ts) */
+  const take = (fs: File[]) => {
+    const good = fs.filter(okType);
+    setBadType(good.length < fs.length);
+    rememberFiles(good);
+    setFiles((x) => [...x, ...good.map(toUpload)].slice(0, 10));
+  };
   /* เปิด popup ใหม่ = ค่าเริ่ม (แบบ DateTimeModal) */
   if (open && !seen) { reset(); setSeen(true); }
   if (!open && seen) setSeen(false);
@@ -85,7 +100,7 @@ function AddResult({ open, carId, onClose }: { open: boolean; carId: string; onC
     notify("บันทึกผล Safety Inspection สำเร็จ");
     onClose();
   };
-  const fileErr = touched && files.length === 0;
+  const fileErr = badType || (touched && files.length === 0);
   return (
     <PopupModal open={open} title="เพิ่มผล Safety Inspection" sub="แนบเอกสารผลการตรวจ และเลือกผล" width={640} ok="บันทึก" okDisabled={!canSave} onOk={save} onCancel={onClose}>
       <div className="flex flex-col gap-4">
@@ -97,10 +112,16 @@ function AddResult({ open, carId, onClose }: { open: boolean; carId: string; onC
           <RadioTextCards options={SAFETY_RESULTS.map((Text) => ({ Text }))} value={result == null ? null : SAFETY_RESULTS[result]}
             onChange={(v) => setResult(SAFETY_RESULTS.indexOf(v as (typeof SAFETY_RESULTS)[number]) as SafetyResult)} />
         </div>
-        <FileUpload LabelText="เอกสาร Safety Inspection" files={files} hint="PDF, JPG · สูงสุด 10 ไฟล์" bar accept=".pdf,.jpg,.jpeg"
-          Error={fileErr} HelperText={fileErr ? FILE_ERR : undefined}
+        <FileUpload LabelText="เอกสาร Safety Inspection" files={files} hint="PDF, JPG, PNG · สูงสุด 10 ไฟล์" bar accept={ACCEPT}
+          Error={fileErr} HelperText={badType ? TYPE_ERR : fileErr ? FILE_ERR : undefined}
           onDownload={(i) => downloadFile(files[i].name)}
-          onFiles={(fs) => { rememberFiles(fs); setFiles((x) => [...x, ...fs.map(toUpload)].slice(0, 10)); }} onDelete={(i) => { setFiles((x) => x.filter((_, k) => k !== i)); setTouched(true); }} />
+          onFiles={take} onDelete={(i) => { setFiles((x) => x.filter((_, k) => k !== i)); setTouched(true); setBadType(false); }} />
+        {/* ถ่ายรูป (มือถือ): ไลบรารีไม่มี File upload แบบกล้อง และต้นแบบยังไม่มีจุดถ่ายรูป ⇒ Secondary button ไอคอน photo_camera + input accept="image/*" capture="environment" (BACKLOG ค.) */}
+        {mob && <>
+          <SecondaryButton Text="ถ่ายรูป" LeadingIconSwap="photo_camera-24-300-round" Size="lg" disabled={files.length >= 10} onClick={() => cam.current?.click()} />
+          <input ref={cam} type="file" hidden accept="image/*" capture="environment" aria-label="ถ่ายรูปเอกสาร Safety Inspection" data-camera
+            onChange={(e) => { take(Array.from(e.target.files ?? [])); e.target.value = ""; }} />
+        </>}
       </div>
     </PopupModal>
   );
