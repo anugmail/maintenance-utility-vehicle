@@ -5,7 +5,7 @@
    · รายการสภาพวัสดุอะไหล่ (8 คอลัมน์ · desktop "จำนวนที่ใช้" = Number input ในช่อง R74 แบบ ReturnPart ของงานซ่อม · มือถือ การ์ดกดแก้ไข + "เพิ่มรายการ")
    · ค่าใช้จ่ายของรถคันนี้ (บาท) (แถวละคน + "เพิ่มพนักงาน" · ค่าเดินทาง · สรุป) + งบที่ตัด (ตั้งต้น งบทำการ หน่วยงานต้นสังกัด) · ศูนย์ต้นทุน (Readonly ของหน่วยงานเจ้าของรถ · หน่วยงานอื่น = Input dropdown "ระบุศูนย์ต้นทุน") — R72 แบบ Request Repair/Budget ของงานซ่อม
    · ผลการบำรุงรักษา (เลขไมล์ · ชั่วโมงเครื่องจักร บังคับ · error out of focus) · น้ำมันไฮดรอลิก (Radio text card 3 ใบ + "วันที่เปลี่ยนน้ำมันครั้งล่าสุด (ถ้ามี)" ปฏิทินวันเดียว R73 + ผลการทดสอบ (ถ้ามี) เมื่อเก็บตัวอย่าง)
-   · (เฉพาะรถเครน/รถกระเช้า) Safety Inspection (ถ้ามี) · HandoverSignature "ลงนามการส่งคืนรถ" · บันทึกตรวจสอบเอกสารปิดงาน (มี/ไม่มี/ไม่ต้องใช้ + "อัพโหลดเอกสาร")
+   · (เฉพาะรถเครน/รถกระเช้า) Safety Inspection (ถ้ามี) · SignRequest "ลงนามการส่งคืนยานพาหนะ" (11 พ.ย. 2569 เลือกชื่อ ส่งให้ลงนาม ผู้ลงนามยืนยัน) · ปิดงาน → popup วันเวลาปิดงาน · บันทึกตรวจสอบเอกสารปิดงาน (มี/ไม่มี/ไม่ต้องใช้ + "อัพโหลดเอกสาร")
    → "ย้อนกลับ" (Step 1) · "ปิดงาน" (Disabled จนครบ: เลขไมล์ ชั่วโมงเครื่องจักร ลงนามส่งคืนครบ — R59) → "เสร็จสิ้น" → หน้ารายละเอียดแผนเดินทาง + toast "บันทึกงานบำรุงรักษาสำเร็จ"
    แผนจ้างดำเนินการใช้หน้าเดียวกัน กบค. กรอกตามที่ผู้รับจ้างทำจริง · ใบจ้างไม่มีพนักงานในใบ ⇒ ตัวเลือกพนักงาน = พนักงาน กบค. ทั้งหมด (staffOf · COMPOSED.md)
    แผนจ้างดำเนินการ (R87 · เจ้าของงาน 10 พ.ย. 2569 _"จะไม่มีเรื่องทั้ง section ค่าใช้จ่ายรายคัน ที่ต้องกรอก ส่วนที่สภาพวัสดุอะไหล่ ส่วนที่เป็นราคาต้องไม่แสดง"_ · stepPage o.hire / o.vendor · closeParts noPrice):
@@ -15,8 +15,6 @@
      · "แก้ไขงาน" จากหน้างานที่ปิดแล้ว (ดำเนินการบำรุงรักษาแล้ว / ส่งกลับแก้ไขคันที่ปิดงานไว้) เปิดหน้านี้พร้อมค่าเดิม · "ย้อนกลับ" = หน้างานรายคัน */
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { HandoverSignature } from "@/components/maintain-d/HandoverSignature";
-import { ModalSignature } from "@/components/maintain-d/ModalSignature";
 import { DropdownList } from "@/components/vms/DropdownList";
 import { FileUpload } from "@/components/vms/FileUpload";
 import { DropdownListItem } from "@/components/vms/DropdownListItem";
@@ -36,14 +34,14 @@ import { TertiaryButton } from "@/components/vms/TertiaryButton";
 import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
 import {
-  BUDGET_CUT, carOf, closeJob, JOB_TIMES, OTHER_CC, closeRows, costSummary, emptyClose, filledClose, nf, oilSampled, ownerCostCenter, patchJob, PEOPLE, personSum, safetyOn, staffOf, tripDays, tripLoc, tripPhone,
+  BUDGET_CUT, carOf, closeJob, requestSign, thaiNow, JOB_TIMES, OTHER_CC, closeRows, costSummary, emptyClose, filledClose, nf, oilSampled, ownerCostCenter, patchJob, PEOPLE, personSum, safetyOn, staffOf, tripDays, tripLoc, tripPhone,
   type ClosePartRow, type CloseForm, type CostRow, type DocSel,
 } from "@/lib/mock/jobs";
 import { notify } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useOutside } from "@/lib/useOutside";
 import { useProtoForm } from "@/lib/protoForm";
-import { ButtonRow, DataTable, Grid, jobHref, KvBox, OilCards, OilResultFields, PartAddModal, PartEditModal, Section, toUpload, tripHref, useTripCar, type PartEditValue } from "../../_lib/ui";
+import { ButtonRow, DataTable, DateTimeModal, Grid, SignRequest, jobHref, KvBox, OilCards, OilResultFields, PartAddModal, PartEditModal, Section, toUpload, tripHref, useTripCar, type PartEditValue } from "../../_lib/ui";
 import { StepFrame } from "../StepFrame";
 
 const PART_COLS: TableColumn[] = ["ชื่ออะไหล่", "ราคาต่อหน่วย", "จำนวนที่ใช้", "ราคารวมที่ใช้", "จำนวนที่คืน", "ราคารวมที่คืน", "จำนวนอะไหล่เก่า", "หมายเหตุ"]
@@ -76,7 +74,7 @@ export function ClosePage() {
   const [awayAtOpen] = useState(() => ({ v: null as boolean | null }));
   if (awayAtOpen.v === null && trip && car && job) awayAtOpen.v = away;
   useEffect(() => { if (awayAtOpen.v && trip && car) router.replace(jobHref(trip, car.id)); }, [awayAtOpen, trip, car, router]);
-  const [sign, setSign] = useState(-1);
+  const [closing, setClosing] = useState(false);
   const [edit, setEdit] = useState<number | null>(null);
   const [add, setAdd] = useState(false);
   const [open, setOpen] = useState("");   // ช่อง dropdown ที่เปิด
@@ -90,7 +88,7 @@ export function ClosePage() {
   useProtoForm(trip && car && job && actor && !awayAtOpen.v && blankClose ? {
     fill: () => {
       const x = filledClose(job, trip, car);
-      patchJob(trip.id, car.id, (j) => ({ ...j, close: { ...x, oilChoice: j.close?.oilChoice ?? x.oilChoice, signers: vendor ? [{ name: PEOPLE.vendorTech, sig: "sample" }, x.signers[1]] : [{ name: staffOf(trip)[0] ?? x.signers[0].name, sig: "sample" }, x.signers[1]] } }));
+      patchJob(trip.id, car.id, (j) => ({ ...j, close: { ...x, oilChoice: j.close?.oilChoice ?? x.oilChoice, signers: [{ name: vendor ? PEOPLE.vendorTech : staffOf(trip)[0] ?? x.signers[0].name, sig: "sample", at: thaiNow() }, { ...x.signers[1], at: thaiNow() }] } }));
       setTouched({});
     },
     clear: () => { patchJob(trip.id, car.id, (j) => ({ ...j, close: emptyClose(j, trip, car) })); setTouched({}); },
@@ -121,9 +119,10 @@ export function ClosePage() {
   /* จำนวนที่ใช้ตามแถวอะไหล่ตามแผน (ส่งต่อ popup บำรุงรักษาไม่ได้ระหว่าง Step 2) */
   const usedOfPlan = job.parts.map((p) => f.parts.find((r) => r.part === p.part && !r.added)?.used ?? 0);
 
-  const submit = () => {
-    if (!actor || !complete) return;
-    closeJob(trip, car.id, f, vendor);
+  /* ปิดงาน → popup วันเวลาปิดงาน (11 พ.ย. 2569 · ค่าเริ่มต้น = ตอนนี้ · แก้ไขงาน = ค่าเดิม) → บันทึก */
+  const submit = () => { if (actor && complete) setClosing(true); };
+  const doClose = (at: string) => {
+    closeJob(trip, car.id, f, vendor, at);
     notify("บันทึกงานบำรุงรักษาสำเร็จ");
     router.push(tripHref(trip));
   };
@@ -274,10 +273,11 @@ export function ClosePage() {
             onDelete={(i) => put((x) => ({ ...x, safetyFiles: (x.safetyFiles ?? []).filter((_, k) => k !== i) }))} />
         </Section>
       )}
-      <HandoverSignature Title="ลงนามการส่งคืนยานพาหนะ"
-        slots={RETURN_SLOTS.map((s, i) => ({ ...s, options: i === 0 ? staffOptions : [PEOPLE.ownerSigner], value: f.signers[i].name, signed: !!f.signers[i].sig }))}
-        onPick={(i, name) => put((x) => ({ ...x, signers: x.signers.map((s, k) => (k === i ? { name, sig: s.name === name ? s.sig : null } : s)) as CloseForm["signers"] }))}
-        onSign={setSign} />
+      {/* 11 พ.ย. 2569 เลือกชื่อ → ส่งให้ลงนาม → ผู้ลงนามยืนยัน (แทนวาดลายเซ็น · SignRequest) */}
+      <SignRequest Title="ลงนามการส่งคืนยานพาหนะ" readonly={!actor}
+        slots={RETURN_SLOTS.map((s, i) => ({ ...s, options: i === 0 ? staffOptions : [PEOPLE.ownerSigner], ...f.signers[i] }))}
+        onPick={(i, name) => put((x) => ({ ...x, signers: x.signers.map((s, k) => (k === i ? (s.name === name ? s : { name, sig: null }) : s)) as CloseForm["signers"] }))}
+        onSend={(i) => { requestSign(trip, car, "close", i); notify("ส่งให้ " + (f.signers[i].name ?? "") + " ลงนามแล้ว · รอผู้ลงนามยืนยัน"); }} />
       <Section>
         <SectionHeader Title="บันทึกตรวจสอบเอกสารปิดงาน" Badge={f.docs.length} />
         {f.docs.map((d, i) => (
@@ -299,10 +299,8 @@ export function ClosePage() {
         <PrimaryButton Text="ปิดงาน" Size="lg" State={complete && actor ? "Default" : "Disabled"} onClick={submit} />
       </ButtonRow>
 
-      <ModalSignature open={sign >= 0} Title="ลงนามการส่งคืนยานพาหนะ" signer={[RETURN_SLOTS[Math.max(0, sign)].LabelText, f.signers[Math.max(0, sign)].name ?? ""]}
-        value={sign >= 0 && f.signers[sign].sig !== "sample" ? f.signers[sign].sig : null}
-        onSave={(url) => { const i = sign; put((x) => ({ ...x, signers: x.signers.map((s, k) => (k === i ? { ...s, sig: url } : s)) as CloseForm["signers"] })); setSign(-1); }}
-        onClose={() => setSign(-1)} />
+<DateTimeModal open={closing} title={"วันเวลาปิดงาน · " + car.plate} sub="ระบุวันและเวลาที่ปิดงานบำรุงรักษาของยานพาหนะคันนี้ แก้ไขได้ภายหลังเมื่อแก้ไขงาน" label="ปิดงาน"
+        value={job.closedAt ?? thaiNow()} ok="ปิดงาน" onCancel={() => setClosing(false)} onOk={(at) => { setClosing(false); doClose(at); }} />
       <PartEditModal extra item={editRow && { part: editRow.part, task: job.parts.find((p) => p.part === editRow.part)?.task ?? "-", planQty: editRow.planQty, unit: editRow.unit,
         used: editRow.used, old: editRow.old, note: editRow.note, added: editRow.added }} onSave={saveEdit} onCancel={() => setEdit(null)} />
       <PartAddModal open={add} onAdd={saveAdd} onCancel={() => setAdd(false)} />

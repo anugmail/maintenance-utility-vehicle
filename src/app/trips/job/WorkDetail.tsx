@@ -78,6 +78,12 @@ export function WorkDetail({ trip, car, job, kbk }: { trip: JobTrip; car: TripCa
         <SectionLabel Title={"รายการงานและอะไหล่ที่ใช้จริง (" + work.length + ")"} />
         <DataTable cols={WORK_COLS2} rows={work} />
       </Section>
+      {/* แผนจ้าง: ค่าจ้าง ค่าเดินทาง ที่หน่วยงานกรอกตอนตรวจรับ (S23 · 11 พ.ย. 2569) */}
+      {trip.mode === "hire" && job.hireCost && <Section>
+        <SectionLabel Title="ค่าใช้จ่ายของยานพาหนะคันนี้ (บาท)" />
+        <KvBox pairs={[["ค่าจ้าง", job.hireCost.wage + " บาท"], ["ค่าเดินทาง", job.hireCost.travel + " บาท"], ["รวม", nf(num(job.hireCost.wage) + num(job.hireCost.travel)) + " บาท"],
+          ["ตรวจรับเมื่อ", (job.reviewedAt ?? "-") + " โดย " + (job.reviewedBy ?? "-")]]} />
+      </Section>}
       {trip.mode !== "hire" && <Section>
         <SectionLabel Title="ค่าใช้จ่ายของยานพาหนะคันนี้ (บาท)" />
         <DataTable cols={COST_COLS} rows={costs} />

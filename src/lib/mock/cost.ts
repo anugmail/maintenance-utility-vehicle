@@ -3,7 +3,9 @@
    นับเฉพาะแผนเดินทางที่หน่วยงานดำเนินการเอง (mode self · แผนจ้างไม่แสดง) · คันที่ "เสร็จสิ้น" = ต้นทุนรายคัน · "บำรุงรักษาไม่ได้" = แยกหัวข้อ
    ค่าอะไหล่ = ราคาต่อหน่วย × จำนวนที่ใช้จริงตอนปิดงาน (ไม่รวมที่คืน · รวมอะไหล่ที่เพิ่มหน้างาน) · บำรุงรักษาไม่ได้ = จำนวนที่ใช้ไปแล้วจาก popup บำรุงรักษาไม่ได้
    ค่าเบี้ยเลี้ยง ค่าที่พัก ค่าเดินทาง ศูนย์ต้นทุน = ที่กรอกรายคันตอนปิดงาน S10 · ค่าชั่วโมงทำงาน = ชั่วโมง × อัตรา (ไม่กรอก = "-")
-   เฉลี่ยต่อคัน = ต้นทุนรวม ÷ ยานพาหนะที่มีต้นทุน (รวมคันที่บำรุงรักษาไม่ได้ · เสนอ) · เงินแสดง "63,560 บาท" */
+   เฉลี่ยต่อคัน = ต้นทุนรวม ÷ ยานพาหนะที่มีต้นทุน (รวมคันที่บำรุงรักษาไม่ได้ · เสนอ) · เงินแสดง "63,560 บาท"
+   11 พ.ย. 2569 แผนจ้างดำเนินการรวมด้วย (เจ้าของงาน "รวมใน S18 ด้วย"): คันที่หน่วยงานตรวจรับแล้ว ค่าจ้าง + ค่าเดินทาง · การ์ดตัวเลขและสรุปรายไตรมาสนับด้วย
+     (สรุปรายไตรมาส: ค่าเดินทางรวมในช่องค่าเดินทาง · ค่าจ้างไม่มีช่องของตัวเอง (Table 8 คอลัมน์) รวมอยู่ในรวม (บาท) — BACKLOG ค.) · ไม่รวมค่าอะไหล่ที่หน่วยงานจ่ายให้ผู้รับจ้าง (หน้างานผู้รับจ้างไม่มีราคา — BACKLOG ค.) */
 import type { TableColumn, TableValue } from "@/components/vms/Table";
 import { QUARTERS, type Plan } from "./data";
 import { carOf, closeRows, costSummary, getJob, jobsOf, nf, num, ownerCostCenter } from "./jobs";
@@ -11,11 +13,20 @@ import type { MockState } from "./store";
 
 export interface CarCost {
   carId: string; plate: string; q: number; date: string; cannot: boolean; cc: string;
+  /** แผนจ้างดำเนินการ (11 พ.ย. 2569 เจ้าของงาน "รวมใน S18 ด้วย"): ค่าจ้าง + ค่าเดินทาง ที่หน่วยงานกรอกตอนตรวจรับ · คอลัมน์อื่น 0 */
+  hire?: boolean; wage?: number;
   parts: number; perDiem: number; hours: number; rate: number; labour: number; lodging: number; travel: number; total: number;
 }
 export function planCosts(m: MockState, plan: Plan): CarCost[] {
   const s = jobsOf(m), id = plan.mr.replace(/^MR/, "");
-  return Object.values(s.trips).filter((t) => t.planId === id && t.mode === "self").flatMap((t) => t.carIds.flatMap((carId): CarCost[] => {
+  const hired = Object.values(s.trips).filter((t) => t.planId === id && t.mode === "hire").flatMap((t) => t.carIds.flatMap((carId): CarCost[] => {
+    const car = carOf(carId), j = getJob(s, t.id, carId);
+    if (!car || !j.hireCost || (j.status !== "done" && j.status !== "cannot")) return [];
+    const wage = num(j.hireCost.wage), travel = num(j.hireCost.travel);
+    return [{ carId, plate: car.plate, q: t.q, date: (j.reviewedAt ?? "").slice(0, 10), cannot: j.status === "cannot", cc: ownerCostCenter(car), hire: true, wage,
+      parts: 0, perDiem: 0, hours: 0, rate: 0, labour: 0, lodging: 0, travel, total: wage + travel }];
+  }));
+  return [...Object.values(s.trips).filter((t) => t.planId === id && t.mode === "self").flatMap((t) => t.carIds.flatMap((carId): CarCost[] => {
     const car = carOf(carId), j = getJob(s, t.id, carId);
     if (!car) return [];
     const base = { carId, plate: car.plate, q: t.q };
@@ -28,7 +39,7 @@ export function planCosts(m: MockState, plan: Plan): CarCost[] {
     const parts = closeRows(f).reduce((a, r) => a + r.unitPrice * r.used, 0);
     return [{ ...base, date: (j.closedAt ?? "").slice(0, 10), cannot: false, cc: f.costCenter ?? ownerCostCenter(car), parts, perDiem: sum.perDiem,
       hours: num(f.workHours), rate: num(f.workRate), labour: sum.labour, lodging: sum.lodging, travel: sum.travel, total: parts + sum.total }];
-  }));
+  })), ...hired];
 }
 
 export const baht = (n: number) => nf(n) + " บาท";
@@ -40,6 +51,14 @@ export const QCOST_COLS: TableColumn[] = [
   { head: "ไตรมาส", Style: "Lead text" }, { head: "ยานพาหนะ (คัน)", width: 160 }, { head: "ค่าอะไหล่", width: 110 }, { head: "ค่าเบี้ยเลี้ยง", width: 120 },
   { head: "ค่าชั่วโมงทำงาน", width: 150 }, { head: "ค่าที่พัก", width: 110 }, { head: "ค่าเดินทาง", width: 110 }, { head: "รวม (บาท)", width: 120 },
 ];
+/* ยานพาหนะที่จ้างดำเนินการ (11 พ.ย. 2569 · ข้อเสนอ: แยกหัวข้อ เพราะ Table ต้นทุนรายคันเต็ม 8 คอลัมน์ R25) */
+export const HIRE_COST_COLS: TableColumn[] = [
+  { head: "ทะเบียน", width: 210, Style: "Lead text" }, { head: "ศูนย์ต้นทุน" }, { head: "ค่าจ้าง", width: 140 }, { head: "ค่าเดินทาง", width: 140 }, { head: "รวม (บาท)", width: 140 },
+];
+export const hireCostRow = (r: CarCost): TableValue[] => {
+  const [code, ...unit] = r.cc.split(" ");
+  return [{ text: r.plate, sub: "ไตรมาส " + r.q + " · " + (r.cannot ? "บำรุงรักษาไม่ได้" : "ตรวจรับ " + r.date) }, { text: code, sub: unit.join(" ") }, nf(r.wage ?? 0), nf(r.travel), nf(r.total)];
+};
 /** แถวต้นทุนรายคัน (costRow ของ screens.js) */
 export const costRow = (r: CarCost): TableValue[] => {
   const [code, ...unit] = r.cc.split(" ");

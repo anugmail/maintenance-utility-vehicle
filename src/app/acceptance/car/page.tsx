@@ -3,7 +3,7 @@
    Page header ป้าย "รอรับทราบ" / "รับทราบแล้ว" (คันที่บำรุงรักษาไม่ได้ก็รอรับทราบ สาเหตุอยู่ในเนื้อหา) · Breadcrumbs บำรุงรักษาตามวาระ › ผลการบำรุงรักษารอรับทราบ › ทะเบียน
    Content ช่องไฟ 32: ข้อมูลยานพาหนะและงาน (ทะเบียน · ยี่ห้อ/รุ่น · ประเภทยานพาหนะ · หน่วยงานเจ้าของยานพาหนะ · แผนเดินทาง · เลขที่ MR · ผู้ดูแลยานพาหนะ
      + ปิดงานแล้ว: วันดำเนินการ · เริ่มงาน · ปิดงาน · ผู้ดำเนินการ · น้ำมันไฮดรอลิก · เลขไมล์หลังทำ | บำรุงรักษาไม่ได้: วันดำเนินการ · ผู้แจ้ง · แจ้งเมื่อ · + รับทราบเมื่อ)
-   → ปิดงานแล้ว: ผลการตรวจสภาพก่อนบำรุงรักษา (Step 1 ของ S10: แบบตรวจตามประเภทยานพาหนะ + รายการตรวจ + ลงนามการตรวจสภาพ ดูอย่างเดียว) · ภาพก่อนเริ่มงาน
+   → ปิดงานแล้ว: ผลการตรวจสภาพก่อนบำรุงรักษา (Step 1 ของ S10: แบบตรวจตามประเภทยานพาหนะ + รายการตรวจ + ลงนามการตรวจสภาพอะไหล่ SignRequest ดูอย่างเดียว · สถานะรอยืนยัน/ยืนยันแล้ว 11 พ.ย. 2569) · ภาพก่อนเริ่มงาน
        · รายการงานและอะไหล่ที่ใช้จริง — แทนไฟล์ PDF แบบเดิม
        · แบบประเมินความพึงพอใจการให้บริการของ กบค. (SurveyForm · R94 · เจ้าของงาน 11 พ.ย. 2569 "ประเมินแทน S13 หลังบำรุงรักษาเสร็จ" · แทนคะแนน 1–5 ข้อเดียว RepairFeedback)
          ข้อมูลผู้ใช้รถฯ 5 ช่องเติมให้ + 4 ด้าน 11 ข้อ คะแนน 1–5 ทุกข้อบังคับ ไม่มีค่าเริ่มต้น
@@ -11,13 +11,12 @@
    → ปุ่ม ย้อนกลับ + "รับทราบ" สีเขียว (AckButton) — ตอบแบบประเมินยังไม่ครบ 11 ข้อ = Disabled (แบบปุ่มส่งคำตอบของแบบสำรวจ) · กดแล้วบันทึกทันที ไม่มี popup → ปุ่มหาย ป้ายรับทราบแล้ว + toast "รับทราบผลการบำรุงรักษา {ทะเบียน} แล้ว"
    กดได้เฉพาะบทบาท ผู้ดูแลยานพาหนะ (Permission S13) · บทบาทอื่นเห็นปุ่มย้อนกลับอย่างเดียว · รับทราบครบทุกคันในแผนแล้วแผนปิดงานเอง (acceptCar · S16 S17 ตัดออก Figma 6299e1d)
    อ้างอิง: Section label · Table · Images · Primary button (พื้น Color/surface/success) · Radio text card ของไฟล์ Component + VehicleAndReporterInfo · IncidentPhotoGallery
-            · HandoverSignature ของไฟล์ Maintain-D · Section header · Text input · Input label ของไฟล์ Component (แบบประเมิน) + จอ L.2–L.5 ของ screens.js + ปุ่มหน้า 5.14 - 5.15 Cost & Expense Check ของ UI Release#2 */
+            · SignRequest (ประกอบจาก Input dropdown + Pill outline · COMPOSED.md ษ.) · Section header · Text input · Input label ของไฟล์ Component (แบบประเมิน) + จอ L.2–L.5 ของ screens.js + ปุ่มหน้า 5.14 - 5.15 Cost & Expense Check ของ UI Release#2 */
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";
 import { DisplayBox } from "@/components/patterns/DisplayBox";
 import { CheckTable } from "@/components/patterns/CheckTable";
-import { HandoverSignature } from "@/components/maintain-d/HandoverSignature";
 import { IncidentPhotoGallery } from "@/components/maintain-d/IncidentPhotoGallery";
 import { VehicleAndReporterInfo } from "@/components/maintain-d/VehicleAndReporterInfo";
 import { EmptyStateSearchNotFound } from "@/components/vms/EmptyStateSearchNotFound";
@@ -32,7 +31,7 @@ import { BEFORE, INSPECT_OPTS, OIL_DEFAULT, OIL_JOB_OPTS, emptyReceive, inspectF
 import { workOf } from "@/lib/mock/tripCols";
 import { notify, useMock, useRole } from "@/lib/mock/store";
 import { useSample } from "@/lib/useSample";
-import { badgeOf, ButtonRow } from "../../trips/_lib/ui";
+import { badgeOf, ButtonRow, SignRequest } from "../../trips/_lib/ui";
 import { SLOTS } from "../../trips/job/receive/ReceivePage";
 import { AckButton } from "../_lib/ui";
 import { SurveyForm } from "../_lib/SurveyForm";
@@ -90,7 +89,7 @@ function AckResult() {
               <SectionLabel Title="ผลการตรวจสภาพก่อนบำรุงรักษา" />
               <VehicleAndReporterInfo Title={fm.title} pairs={fm.kv} />
               <CheckTable Title="รายการตรวจสภาพ" options={INSPECT_OPTS} items={rcv.items} readonly />
-              <HandoverSignature Title="ลงนามการตรวจสภาพ" slots={SLOTS.map((s, i) => ({ ...s, options: rcv.signers[i].name ? [rcv.signers[i].name!] : [], value: rcv.signers[i].name, signed: !!rcv.signers[i].sig }))} />
+              <SignRequest Title="ลงนามการตรวจสภาพอะไหล่" readonly slots={SLOTS.map((s, i) => ({ ...s, options: rcv.signers[i].name ? [rcv.signers[i].name!] : [], ...rcv.signers[i] }))} onPick={() => {}} onSend={() => {}} />
             </section>
             <IncidentPhotoGallery Title={"ภาพก่อนเริ่มงาน (" + photos.length + ")"} photos={photos} />
             <section className="flex flex-col gap-4">

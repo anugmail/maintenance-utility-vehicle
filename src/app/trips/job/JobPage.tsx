@@ -28,7 +28,7 @@ import {
 import { notify, useMock } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { tripWork } from "@/lib/mock/tripCols";
-import { badgeOf, CannotPopup, DataTable, useCrumbs, jobHref, LastOil, OilCards, PartAddModal, PartEditModal, Section, tripHref, useBack } from "../_lib/ui";
+import { badgeOf, CannotPopup, DataTable, DateTimeModal, useCrumbs, jobHref, LastOil, OilCards, PartAddModal, PartEditModal, Section, tripHref, useBack } from "../_lib/ui";
 
 const JOB_COLS: TableColumn[] = [{ head: "รายการงาน" }, { head: "อะไหล่ตามแผน", width: 320 }, { head: "จำนวนตามแผน", width: 140 }, { head: "หน่วย", width: 110 }, { head: "", width: 104, Style: "Action icons" }];
 
@@ -61,6 +61,7 @@ export function JobPage({ trip, car, job, actor, vendor = false }: { trip: JobTr
   const [del, setDel] = useState<{ part: string; k: number } | null>(null);
   const [editK, setEditK] = useState<number | null>(null);
   const [adding, setAdding] = useState(false);
+  const [starting, setStarting] = useState(false);   // popup วันเวลาเริ่มงาน (11 พ.ย. 2569)
 
   /* อะไหล่ตามแผน: กบค. เพิ่ม แก้ไข ลบ ได้ตอนยังไม่เริ่ม/อยู่ระหว่างบำรุงรักษา (แผนจ้างด้วย) · บทบาทอื่นดูอย่างเดียว */
   const editParts = actor && !vendor;
@@ -93,7 +94,7 @@ export function JobPage({ trip, car, job, actor, vendor = false }: { trip: JobTr
     <SecondaryButton Text="บำรุงรักษาไม่ได้" Size={size} onClick={() => { setReason(""); setErr(false); setCannot(true); }} />
     {doing
       ? <PrimaryButton Text="ปิดงาน" Size={size} onClick={() => router.push(jobHref(trip, car.id, "close/"))} />
-      : <PrimaryButton Text="เริ่มงาน" Size={size} onClick={() => { startJob(trip, car.id, planned, vendor); notify("เริ่มงานบำรุงรักษาแล้ว"); router.push(jobHref(trip, car.id, "receive/")); }} />}
+      : <PrimaryButton Text="เริ่มงาน" Size={size} onClick={() => setStarting(true)} />}
   </> : undefined;
   const photos = job.photos ?? [];
 
@@ -122,6 +123,10 @@ export function JobPage({ trip, car, job, actor, vendor = false }: { trip: JobTr
       <PartEditModal item={editItem && { ...editItem, used: editItem.usedQty }} onCancel={() => setEditK(null)}
         onSave={(v) => { if (editItem) editPartUsed(trip, car, editItem.k, v.used); setEditK(null); }} />
       <PartAddModal open={adding} onCancel={() => setAdding(false)} onAdd={(p) => { addJobPart(trip, car, p); setAdding(false); }} />
+      {/* เริ่มงาน → popup วันเวลาเริ่มงาน ค่าเริ่มต้น = ตอนนี้ (11 พ.ย. 2569 เจ้าของงาน "ตอนที่เริ่มงานอยากให้มี pop up ให้กรอกวันเวลาเริ่มงาน") → Step 1 แก้ได้อีก */}
+      <DateTimeModal open={starting} title={"เริ่มงาน · " + car.plate} sub="ระบุวันและเวลาที่เริ่มงานบำรุงรักษาของยานพาหนะคันนี้ แก้ไขได้ที่ขั้นตรวจสภาพก่อนบำรุงรักษา" label="เริ่มงาน"
+        value={thaiNow()} ok="เริ่มงาน" onCancel={() => setStarting(false)}
+        onOk={(at) => { setStarting(false); startJob(trip, car.id, planned, vendor, at); notify("เริ่มงานบำรุงรักษาแล้ว"); router.push(jobHref(trip, car.id, "receive/")); }} />
     </>
   );
 }

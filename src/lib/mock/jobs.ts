@@ -180,7 +180,9 @@ export const WORK: PlanPart[] = [
 export const OIL_PART = WORK[0].part;
 
 /* ---------- ฟอร์ม ---------- */
-export interface Signer { name: string | null; /** ลายเซ็น (data URL) · มีค่า = ลงนามแล้ว */ sig: string | null }
+/** ผู้ลงนาม — 11 พ.ย. 2569 เจ้าของงาน "เรื่องการลงนามจะใช้วิธีการ เลือกชื่อและให้ส่ง noti login confirm และถ้าคอนเฟิร์มแล้วก็ยืนยัน" (ทุกจุดลงนามของงานบำรุงรักษา)
+    เลือกชื่อ → ส่งให้ลงนาม (req = เวลาที่ส่ง) → ผู้ลงนามได้รับแจ้งเตือน เข้าระบบแล้วยืนยัน → sig มีค่า + at = เวลายืนยัน · sig มีค่า = ลงนามแล้ว (ชุดตัวอย่างเดิม "sample" = ยืนยันแล้ว) */
+export interface Signer { name: string | null; sig: string | null; req?: string; at?: string }
 /** Step 1 ตรวจสภาพก่อนบำรุงรักษา — เก็บร่างระหว่างกรอก · ยืนยันแล้วคงไว้เป็นข้อมูลของงาน
     items = รายการตรวจของแบบตรวจตามประเภทยานพาหนะ (R86 · sel 0 ปกติ · 1 แก้ไข) · signers = [ผู้ตรวจ (กบค.), ผู้รับการตรวจ (หน่วยงานเจ้าของยานพาหนะ)] (SIGN_IN 9 พ.ย. 2569) */
 export interface ReceiveForm { items: CheckRow[]; signers: [Signer, Signer]; /** ไฟล์ต่อช่อง BEFORE */ photos: UploadFile[][] }
@@ -236,6 +238,9 @@ export interface Job {
   acceptedAt?: string; score?: number; survey?: { info: string[]; answers: number[] };   // survey = แบบประเมินความพึงพอใจของ กบค. (survey.ts · R94 · 11 พ.ย. 2569) · score = คะแนนเฉลี่ย
   /** S23 ส่งตรวจงาน (รอตรวจรับ) · เหตุผลที่หน่วยงานส่งกลับแก้ไข */
   sentAt?: string; sentBy?: string; returnReason?: string;
+  /** S23 หน่วยงานตรวจรับ (11 พ.ย. 2569 เจ้าของงาน "จังหวะที่ vendor ส่ง approve เจ้าหน้าที่ต้องสามารถระบุค่าใช้จ่ายของคันนั้น โดยมี 2 คือค่าจ้าง กับค่าเดินทาง")
+      ค่าจ้าง · ค่าเดินทาง (บาท) ที่เจ้าหน้าที่กรอกตอนตรวจรับ (รวมใน S18) · ตรวจรับเมื่อ / ผู้ตรวจรับ */
+  hireCost?: { wage: string; travel: string }; reviewedAt?: string; reviewedBy?: string;
 }
 export interface JobsState { trips: Record<string, JobTrip>; jobs: Record<string, Job> }
 
@@ -444,9 +449,9 @@ export function deleteJobPart(t: JobTrip, c: TripCar, k: number) {
 const timesOf = (t: JobTrip) => (t.mode === "hire" ? JOB_TIMES.hire : JOB_TIMES.self);
 /** S10 ยืนยันรับรถและเริ่มงาน → อยู่ระหว่างบำรุงรักษา (เวลา/ผู้เริ่มงานบันทึกเอง) */
 /** S10 กดเริ่มงาน = อยู่ระหว่างบำรุงรักษาทันที แล้วเข้า Step 1 (5 พ.ย. 2569 "เข้ามา step 1 ถือว่า อยู่ระหว่างบำรุงรักษา เลย") */
-export function startJob(t: JobTrip, carId: string, planned?: OilChoice, vendor = false) {   // vendor = S23 ผู้รับจ้างเริ่มงานเอง (HIRE_BY)
+export function startJob(t: JobTrip, carId: string, planned?: OilChoice, vendor = false, at?: string) {   // vendor = S23 ผู้รับจ้างเริ่มงานเอง (HIRE_BY) · at = วันเวลาเริ่มงานจาก popup (11 พ.ย. 2569)
   patchJob(t.id, carId, (j) => ({
-    ...j, status: "doing", step: 1, startedAt: timesOf(t).start, startedBy: vendor ? PEOPLE.vendor : PEOPLE.kbk,
+    ...j, status: "doing", step: 1, startedAt: at ?? timesOf(t).start, startedBy: vendor ? PEOPLE.vendor : PEOPLE.kbk,
     oilChoice: j.oilChoice ?? planned ?? OIL_DEFAULT, photos: (j.receive?.photos ?? []).flat(), cannot: undefined,
   }));
 }
@@ -458,8 +463,8 @@ export function confirmInspect(t: JobTrip, carId: string) {
 }
 /** S10 ปิดงาน → "เสร็จสิ้น" ทันที ทั้งตรวจเองและแผนจ้าง (ไม่มีส่งตรวจงาน) · ใส่ผลน้ำมันมาแล้วเก็บเป็นผลการทดสอบ (S12) */
 /** S23 ผู้รับจ้างปิดงาน → "ดำเนินการบำรุงรักษาแล้ว" (รอผู้รับจ้างส่งตรวจงาน) · แก้ไขงานหลังปิด/ส่งกลับ = ปิดซ้ำ ล้างเหตุผลที่ส่งกลับ */
-export function closeJob(t: JobTrip, carId: string, f: CloseForm, vendor = false) {
-  const at = timesOf(t).end, by = vendor ? PEOPLE.vendor : PEOPLE.kbk;
+export function closeJob(t: JobTrip, carId: string, f: CloseForm, vendor = false, closeAt?: string) {   // closeAt = วันเวลาปิดงานจาก popup (11 พ.ย. 2569)
+  const at = closeAt ?? timesOf(t).end, by = vendor ? PEOPLE.vendor : PEOPLE.kbk;
   patchJob(t.id, carId, (j) => ({
     ...j, status: vendor ? "worked" : "done", close: f, closedAt: at, recordedBy: by, cannot: undefined, returnReason: undefined,
     kmAfter: f.km + " กม.", hoursAfter: f.hours + " ชม.", oilChoice: f.oilChoice,
@@ -477,6 +482,48 @@ export function cannotJob(t: JobTrip, carId: string, reason: string, used: numbe
 }
 export function editCannotReason(t: JobTrip, carId: string, reason: string) {
   patchJob(t.id, carId, (j) => (j.cannot ? { ...j, cannot: { ...j.cannot, reason } } : j));
+}
+/** วันเวลาเริ่มงาน แก้ได้ที่ Step 1 (11 พ.ย. 2569 เจ้าของงาน "เลือกมาแล้วก็มาแสดงในตอนสเต็ปแรกของการดำเนินการบำรุงรักษา") */
+export function setStartedAt(t: JobTrip, carId: string, at: string) { patchJob(t.id, carId, (j) => ({ ...j, startedAt: at })); }
+/** S23 หน่วยงานตรวจรับงานที่ผู้รับจ้างส่ง → เสร็จสิ้น (แจ้งบำรุงรักษาไม่ได้ = บำรุงรักษาไม่ได้) + ค่าจ้าง ค่าเดินทาง · แจ้งผู้ดูแลยานพาหนะ (S13) เมื่อปิดงานได้ */
+export function acceptVendorJob(t: JobTrip, carId: string, cost: { wage: string; travel: string }) {
+  let done = false;
+  patchJob(t.id, carId, (j) => { done = !j.cannot; return { ...j, status: j.cannot ? "cannot" : "done", hireCost: cost, reviewedAt: thaiNow(), reviewedBy: PEOPLE.kbk, returnReason: undefined }; });
+  const c = carOf(carId);
+  if (done && c) addNotis([ackNoti(t, c)]);
+}
+/** S23 หน่วยงานส่งกลับให้ผู้รับจ้างแก้ไข (เหตุผล) */
+export function returnVendorJob(t: JobTrip, carId: string, reason: string) {
+  patchJob(t.id, carId, (j) => ({ ...j, status: "returned", returnReason: reason }));
+}
+/* ---------- ลงนามแบบส่งให้ผู้ลงนามยืนยัน (11 พ.ย. 2569) ---------- */
+export type SignForm = "receive" | "close";
+const formOf = (j: Job, k: SignForm, t: JobTrip, car: TripCar) => (k === "receive" ? j.receive ?? emptyReceive(car) : j.close ?? emptyClose(j, t, car));
+/** ส่งให้ลงนาม: เลือกชื่อแล้วกดส่ง ⇒ รอยืนยัน · เปลี่ยนชื่อ = ล้างสถานะเดิม */
+export function requestSign(t: JobTrip, car: TripCar, k: SignForm, i: number) {
+  patchJob(t.id, car.id, (j) => { const f = formOf(j, k, t, car); const signers = f.signers.map((x, n) => (n === i ? { ...x, sig: null, at: undefined, req: thaiNow() } : x)) as [Signer, Signer];
+    return { ...j, [k]: { ...f, signers } }; });
+}
+/** ผู้ลงนามยืนยัน (ต้นแบบ: แถบต้นแบบ "คำขอลงนาม" จำลองการเข้าระบบแล้วยืนยัน) */
+export function confirmSign(tripId: string, carId: string, k: SignForm, i: number) {
+  const car = carOf(carId);
+  write((s) => {
+    const t = s.trips[tripId]; const j = getJob(s, tripId, carId);
+    if (!t || !car) return s;
+    const f = formOf(j, k, t, car); const signers = f.signers.map((x, n) => (n === i ? { ...x, sig: "confirm", at: thaiNow() } : x)) as [Signer, Signer];
+    return { ...s, jobs: { ...s.jobs, [jobKey(tripId, carId)]: { ...j, [k]: { ...f, signers } } } };
+  });
+}
+export interface PendingSign { tripId: string; carId: string; plate: string; k: SignForm; i: number; name: string; req: string; title: string }
+/** คำขอลงนามที่รอผู้ลงนามยืนยันทั้งหมด */
+export function pendingSigns(m: MockState): PendingSign[] {
+  const s = jobsOf(m);
+  return Object.values(s.jobs).flatMap((j) => (["receive", "close"] as SignForm[]).flatMap((k) => {
+    const f = j[k]; const c = carOf(j.carId);
+    if (!f || !c || !s.trips[j.tripId]) return [];
+    return f.signers.flatMap((x, i) => (x.req && !x.sig && x.name ? [{ tripId: j.tripId, carId: j.carId, plate: c.plate, k, i, name: x.name, req: x.req,
+      title: k === "receive" ? "ลงนามการตรวจสภาพอะไหล่" : "ลงนามการส่งคืนยานพาหนะ" }] : []));
+  }));
 }
 /** S23 ส่งตรวจงาน → "รอตรวจรับ" (ทีละคัน · ล้างเหตุผลที่ส่งกลับ) · toast "ส่งตรวจงานแล้ว" */
 export function sendJob(t: JobTrip, carId: string) {

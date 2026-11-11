@@ -18,6 +18,9 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ConfirmDialog, type ConfirmSpec } from "@/components/patterns/ConfirmDialog";
+import { FormModal } from "@/components/patterns/FormModal";
+import { SectionHeader } from "@/components/vms/SectionHeader";
+import { TextInput } from "@/components/vms/TextInput";
 import { VehicleAndReporterInfo } from "@/components/maintain-d/VehicleAndReporterInfo";
 import { Alert } from "@/components/vms/Alert";
 import { FileUpload } from "@/components/vms/FileUpload";
@@ -27,19 +30,19 @@ import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionLabel } from "@/components/vms/SectionLabel";
 import type { TableColumn, TableValue } from "@/components/vms/Table";
 import {
-  addJobPart, cannotJob, deleteJobPart, editCannotReason, editPartUsed, OIL_DEFAULT, OIL_JOB_OPTS, patchJob, plannedOil, retRows, sendJob, startJob, thaiNow, workItems, workShown, WSTAT,
+  acceptVendorJob, addJobPart, cannotJob, deleteJobPart, returnVendorJob, editCannotReason, editPartUsed, OIL_DEFAULT, OIL_JOB_OPTS, patchJob, plannedOil, retRows, sendJob, startJob, thaiNow, workItems, workShown, WSTAT,
   type Job, type JobTrip, type TripCar, type WorkItem,
 } from "@/lib/mock/jobs";
 import { notify, useMock } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
-import { badgeOf, CannotPopup, DataTable, jobHref, PartAddModal, PartEditModal, RET_COLS, Section, toUpload, tripHref, useBack, useCrumbs } from "../_lib/ui";
+import { badgeOf, CannotPopup, DataTable, DateTimeModal, Grid, jobHref, PartAddModal, PartEditModal, RET_COLS, Section, toUpload, tripHref, useBack, useCrumbs } from "../_lib/ui";
 import { vehiclePairs } from "./JobPage";
 
 /* WORK_COLS2 (อะไหล่ที่ใช้จริง) · คอลัมน์ไอคอนแก้ไข + ลบ กว้าง 104 (EDIT_ICONS) */
 const WORK_COLS2: TableColumn[] = [{ head: "รายการงาน" }, { head: "อะไหล่ที่ใช้", width: 320 }, { head: "จำนวนตามแผน", width: 140 }, { head: "จำนวนที่ใช้จริง", width: 140 }, { head: "หน่วย", width: 110 }];
 const ICON_COL: TableColumn = { head: "", width: 104, Style: "Action icons" };
 
-export function VendorJob({ trip, car, job, vendor }: { trip: JobTrip; car: TripCar; job: Job; vendor: boolean }) {
+export function VendorJob({ trip, car, job, vendor, kbk }: { trip: JobTrip; car: TripCar; job: Job; vendor: boolean; kbk?: boolean }) {
   const crumbs = useCrumbs();
   const router = useRouter();
   const back = useBack();
@@ -74,12 +77,33 @@ export function VendorJob({ trip, car, job, vendor }: { trip: JobTrip; car: Trip
     spec: { danger: true, title: "ยืนยันการเอาอะไหล่ออก", sub: w.part + " จะถูกเอาออกจากยานพาหนะคันนี้", cancel: "ยกเลิก", ok: "เอาออก" },   // PART_DEL_CONFIRM
     run: () => deleteJobPart(trip, car, w.k),
   });
-  const start = () => { startJob(trip, car.id, planned, true); notify("เริ่มงานบำรุงรักษาแล้ว"); router.push(jobHref(trip, car.id, "receive/")); };
+  const [starting, setStarting] = useState(false);   // popup วันเวลาเริ่มงาน (11 พ.ย. 2569)
+  const start = () => setStarting(true);
+  const doStart = (at: string) => { setStarting(false); startJob(trip, car.id, planned, true, at); notify("เริ่มงานบำรุงรักษาแล้ว"); router.push(jobHref(trip, car.id, "receive/")); };
+
+  /* ---------- หน่วยงานตรวจรับ (รอตรวจรับ · 11 พ.ย. 2569) ----------
+     เจ้าของงาน "จังหวะที่ vendor ส่ง approve เจ้าหน้าที่ต้องสามารถระบุค่าใช้จ่ายของคันนั้น โดยมี 2 คือค่าจ้าง กับค่าเดินทาง โดยเป็น view เดียวกับตอนที่ vendor ส่ง approve แต่มีให้กรอกเพิ่มเติม"
+     หน้าเดียวกับที่ผู้รับจ้างส่ง + Section "ค่าใช้จ่ายของยานพาหนะคันนี้ (บาท)" Text input ค่าจ้าง · ค่าเดินทาง (บังคับเมื่อตรวจรับ · ส่งกลับแก้ไขไม่ต้องกรอก — ข้อเสนอ BACKLOG ค.)
+     ปุ่ม ส่งกลับแก้ไข (เหตุผลบังคับ · FormModal) · ตรวจรับ (ยืนยันก่อน) → เสร็จสิ้น / บำรุงรักษาไม่ได้ · ค่าใช้จ่ายรวมใน S18 */
+  const review = !!kbk && !vendor && s === "wait";
+  const digits = (v: string) => { const d = v.replace(/\D/g, ""); return d ? Number(d).toLocaleString("en-US") : ""; };
+  const [wage, setWage] = useState(job.hireCost?.wage ?? ""), [travel, setTravel] = useState(job.hireCost?.travel ?? "");
+  const [costTouched, setCostTouched] = useState(false);
+  const [backWhy, setBackWhy] = useState<string | null>(null);
+  const costOk = !!wage && !!travel;
+  const accept = () => {
+    if (!costOk) { setCostTouched(true); return; }
+    setPending({
+      spec: { title: "ยืนยันตรวจรับงาน · " + car.plate, sub: "ค่าจ้าง " + wage + " บาท · ค่าเดินทาง " + travel + " บาท · งานของยานพาหนะคันนี้จะเป็น" + (isCannot ? "บำรุงรักษาไม่ได้" : "เสร็จสิ้น") + " และรวมในต้นทุนการบำรุงรักษา", cancel: "ยกเลิก", ok: "ตรวจรับ" },
+      run: () => { acceptVendorJob(trip, car.id, { wage, travel }); notify("ตรวจรับงานแล้ว"); },
+    });
+  };
 
   /* ---------- ปุ่มหัวหน้า (vendorJob acts) ---------- */
   const size = mob ? "lg" : "md";
   const editWork = () => (isCannot ? openCannot(true) : router.push(jobHref(trip, car.id, "close/")));
-  const actions = !ed ? undefined
+  const actions = review ? <><SecondaryButton Text="ส่งกลับแก้ไข" Size={size} onClick={() => setBackWhy("")} /><PrimaryButton Text="ตรวจรับ" Size={size} State={costOk ? "Default" : "Disabled"} onClick={accept} /></>
+    : !ed ? undefined
     : s === "worked" || s === "reported" ? <><SecondaryButton Text="แก้ไขงาน" Size={size} onClick={editWork} /><PrimaryButton Text="ส่งตรวจงาน" Size={size} onClick={send} /></>
     : s === "returned" ? (isCannot
       ? <><SecondaryButton Text="บำรุงรักษาไม่ได้" Size={size} onClick={() => openCannot(false)} /><PrimaryButton Text="เริ่มงาน" Size={size} onClick={start} /></>
@@ -124,6 +148,22 @@ export function VendorJob({ trip, car, job, vendor }: { trip: JobTrip; car: Trip
         <DataTable cols={ed ? [...RET_COLS, ICON_COL] : RET_COLS} rows={rows.map((w, i) => [...ret[i], ...(ed ? [icons(w)] : [])])} />
       </Section>
 
+      {review && (
+        <Section>
+          <SectionHeader Title="ค่าใช้จ่ายของยานพาหนะคันนี้ (บาท)" />
+          <Grid>
+            <TextInput LabelText="ค่าจ้าง (บาท)" Text={wage} Placeholder="0" inputMode="numeric" onChange={(v) => setWage(digits(v))} onBlur={() => setCostTouched(true)}
+              State={costTouched && !wage ? "Error" : undefined} HelperText={costTouched && !wage ? "กรุณาระบุค่าจ้าง" : undefined} />
+            <TextInput LabelText="ค่าเดินทาง (บาท)" Text={travel} Placeholder="0" inputMode="numeric" onChange={(v) => setTravel(digits(v))} onBlur={() => setCostTouched(true)}
+              State={costTouched && !travel ? "Error" : undefined} HelperText={costTouched && !travel ? "กรุณาระบุค่าเดินทาง" : undefined} />
+          </Grid>
+        </Section>
+      )}
+      <FormModal open={backWhy !== null} title={"ส่งกลับแก้ไข · " + car.plate} fields={[{ label: "เหตุผลที่ส่งกลับ", value: backWhy ?? "", area: true }]} onField={(_, v) => setBackWhy(v)}
+        ok="ส่งกลับ" okDisabled={!backWhy?.trim()} onCancel={() => setBackWhy(null)}
+        onOk={() => { if (backWhy?.trim()) { returnVendorJob(trip, car.id, backWhy.trim()); notify("ส่งกลับให้ผู้รับจ้างแก้ไขแล้ว"); } setBackWhy(null); }} />
+      <DateTimeModal open={starting} title={"เริ่มงาน · " + car.plate} sub="ระบุวันและเวลาที่เริ่มงานบำรุงรักษาของยานพาหนะคันนี้ แก้ไขได้ที่ขั้นตรวจสภาพก่อนบำรุงรักษา" label="เริ่มงาน"
+        value={thaiNow()} ok="เริ่มงาน" onCancel={() => setStarting(false)} onOk={doStart} />
       <PartEditModal item={editItem && { ...editItem, used: editItem.usedQty }} onCancel={() => setEditK(null)}
         onSave={(v) => { if (editItem) editPartUsed(trip, car, editItem.k, v.used); setEditK(null); }} />
       <PartAddModal open={adding} onCancel={() => setAdding(false)} onAdd={(p) => { addJobPart(trip, car, p); setAdding(false); }} />

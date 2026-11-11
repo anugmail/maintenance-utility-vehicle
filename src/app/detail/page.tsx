@@ -37,7 +37,7 @@ import { CostTab } from "./CostTab";
 import { TabItem } from "@/components/vms/TabItem";
 import { Tabs } from "@/components/vms/Tabs";
 import { notify } from "@/lib/mock/store";
-import { COST_COLS, QCOST_COLS, costMetrics, costRow, planCosts, quarterCostRows } from "@/lib/mock/cost";
+import { COST_COLS, HIRE_COST_COLS, QCOST_COLS, costMetrics, costRow, hireCostRow, planCosts, quarterCostRows } from "@/lib/mock/cost";
 import { downloadCsvSheets } from "@/app/parts/_lib/exportFile";
 
 /* สถานะที่แผนเริ่มดำเนินการแล้ว (หลังอนุมัติ · E.2 ของ S6 ขึ้นไป) */
@@ -77,8 +77,9 @@ function Detail() {
     downloadCsvSheets("ต้นทุนการบำรุงรักษา-" + plan.mr, [
       { title: "สรุปรายไตรมาส", cols: [{ head: "รายการ" }, { head: "ค่า" }], rows: costMetrics(costs, plan.cars).map(([k, v]) => [k, v]) },
       { title: "สรุปรายไตรมาส", cols: QCOST_COLS, rows: quarterCostRows(costs) },
-      { title: "ต้นทุนรายคัน", cols: COST_COLS, rows: costs.filter((r) => !r.cannot).map(costRow) },
-      { title: "ยานพาหนะที่บำรุงรักษาไม่ได้", cols: COST_COLS, rows: costs.filter((r) => r.cannot).map(costRow) },
+      { title: "ต้นทุนรายคัน", cols: COST_COLS, rows: costs.filter((r) => !r.cannot && !r.hire).map(costRow) },
+      { title: "ยานพาหนะที่บำรุงรักษาไม่ได้", cols: COST_COLS, rows: costs.filter((r) => r.cannot && !r.hire).map(costRow) },
+      { title: "ยานพาหนะที่จ้างดำเนินการ", cols: HIRE_COST_COLS, rows: costs.filter((r) => r.hire).map(hireCostRow) },
     ]);
     notify("ส่งออกไฟล์สำเร็จ");
   };

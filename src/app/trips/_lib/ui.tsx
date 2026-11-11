@@ -18,7 +18,10 @@ import type { KvPair } from "@/components/vms/ContentItemRow";
 import { FileUpload, type UploadFile } from "@/components/vms/FileUpload";
 import { HorizontalRadioGroups } from "@/components/vms/HorizontalRadioGroups";
 import { MobileCards } from "@/components/vms/MobileTable";
-import type { PillColor } from "@/components/vms/PillOutline";
+import { PillOutline, type PillColor } from "@/components/vms/PillOutline";
+import { SecondaryButton } from "@/components/vms/SecondaryButton";
+import { DatePicker } from "@/components/vms/DatePicker";
+import { TH_PICKER } from "@/lib/thaiDate";
 import { RadioTextCards } from "@/components/vms/RadioTextCard";
 import { SectionHeader } from "@/components/vms/SectionHeader";
 import { Table, type TableColumn, type TableValue } from "@/components/vms/Table";
@@ -216,3 +219,66 @@ export function PartAddModal({ open, onAdd, onCancel }: { open: boolean; onAdd: 
     </PopupModal>
   );
 }
+
+/* ---------- ลงนามแบบส่งให้ผู้ลงนามยืนยัน (11 พ.ย. 2569 · ทุกจุดลงนามของงานบำรุงรักษา: S10/S23 Step 1 · Step 2) ----------
+   เจ้าของงาน "เรื่องการลงนามจะใช้วิธีการ เลือกชื่อและให้ส่ง noti login confirm และถ้าคอนเฟิร์มแล้วก็ยืนยัน" — แทนการวาดลายเซ็น (Modal Signature)
+   ประกอบจากชิ้นไลบรารีตามโครง HandoverSignature ของไฟล์ Maintain-D (Section header → 2 กล่อง ช่องไฟ 16 · มือถือเรียงลง): Input dropdown เลือกชื่อ → Secondary button "ส่งให้ลงนาม"
+   → ส่งแล้ว Pill outline Warning "รอยืนยัน" + ส่งเมื่อ + "ส่งอีกครั้ง" · ยืนยันแล้ว Pill outline Success "ยืนยันแล้ว" + ยืนยันเมื่อ (COMPOSED.md ษ.)
+   ผู้ลงนามยืนยัน = ต้นแบบจำลองด้วยปุ่ม "คำขอลงนาม" ในแถบต้นแบบ (ไม่มีบทบาทของผู้ลงนามรายคน) */
+export interface SignSlot { LabelText: string; Placeholder: string; options: string[]; name: string | null; sig: string | null; req?: string; at?: string }
+export function SignRequest({ Title, slots, onPick, onSend, readonly }: { Title: string; slots: SignSlot[]; onPick: (i: number, name: string) => void; onSend: (i: number) => void; readonly?: boolean }) {
+  const mob = useBreakpoint() === "Mobile";
+  const [open, setOpen] = useState(-1);
+  return (
+    <section className="flex flex-col gap-4">
+      <SectionHeader Title={Title} />
+      <div className={cx("flex gap-4", mob ? "flex-col" : "[&>*]:min-w-0 [&>*]:flex-1 [&>*]:basis-0")}>
+        {slots.map((s, i) => (
+          <div key={s.LabelText} className="flex flex-col gap-4">
+            <InputDropdown LabelText={s.LabelText} Placeholder={s.Placeholder} Text={s.name ?? undefined} open={open === i} onOpenChange={(o) => setOpen(o && !readonly ? i : -1)}
+              State={readonly ? "Disabled" : undefined}>
+              <DropdownList>{s.options.map((o) => <DropdownListItem key={o} Text={o} State={o === s.name ? "Selected" : "Default"} onClick={() => { onPick(i, o); setOpen(-1); }} />)}</DropdownList>
+            </InputDropdown>
+            {s.sig ? (
+              <div className="flex flex-wrap items-center gap-2"><PillOutline Text="ยืนยันแล้ว" Color="Success" /><span className="text-sm text-gray-600">{s.at ? "ยืนยันเมื่อ " + s.at : "ลงนามแล้ว"}</span></div>
+            ) : s.req ? (
+              <div className="flex flex-wrap items-center gap-2">
+                <PillOutline Text="รอยืนยัน" Color="Warning" /><span className="text-sm text-gray-600">{"ส่งให้ " + (s.name ?? "-") + " เมื่อ " + s.req}</span>
+                {!readonly && <SecondaryButton Text="ส่งอีกครั้ง" onClick={() => onSend(i)} />}
+              </div>
+            ) : (
+              <div className="flex"><SecondaryButton Text="ส่งให้ลงนาม" LeadingIconSwap="send-24-300-round" State={s.name && !readonly ? "Default" : "Disabled"} onClick={() => onSend(i)} /></div>
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ---------- popup วันเวลาเริ่มงาน / ปิดงาน (11 พ.ย. 2569 เจ้าของงาน "ตอนที่เริ่มงานอยากให้มี pop up ให้กรอกวันเวลาเริ่มงาน และตอนปิดงานอยากให้มีกรอกวันและเวลาปิดงาน โดยสามารถแก้ไขได้") ----------
+   PopupModal (Modal ของไลบรารี · มือถือ Bottom sheet) + Text input วันที่ (ไอคอน calendar_month · กดเปิด Date picker Type=Single แบบช่องวันดำเนินการเดิม) + Text input เวลา "HH:MM"
+   ไลบรารีไม่มีตัวเลือกเวลา ⇒ Text input พิมพ์เวลา (ตรวจรูปแบบ 00:00–23:59) — BACKLOG ค. · ค่าเริ่มต้น = ตอนนี้ (หรือค่าเดิมเมื่อแก้) · เก็บเป็น "dd/mm/yyyy HH:MM น." */
+export const splitAt = (s?: string): [string, string] => { const m = (s ?? "").match(/^(\d{2}\/\d{2}\/\d{4})(?:\s+(\d{1,2}:\d{2}))?/); return m ? [m[1], m[2] ?? ""] : ["", ""]; };
+const timeOk = (v: string) => /^([01]?\d|2[0-3]):[0-5]\d$/.test(v);
+export function DateTimeModal({ open, title, sub, label, value, ok, onOk, onCancel }: { open: boolean; title: string; sub?: string; label: string; value: string; ok: string; onOk: (at: string) => void; onCancel: () => void }) {
+  const [d, setD] = useState(""), [tm, setTm] = useState(""), [cal, setCal] = useState(false), [seen, setSeen] = useState("");
+  const key = open ? value : "";
+  if (open && seen !== key) { const [a, b] = splitAt(value); setD(a); setTm(b); setCal(false); setSeen(key); }
+  if (!open && seen) setSeen("");
+  const date = fromThaiDate(d);
+  const valid = !!date && timeOk(tm);
+  return (
+    <PopupModal open={open} title={title} sub={sub} ok={ok} okDisabled={!valid} onCancel={onCancel} onOk={() => valid && onOk(d + " " + tm.padStart(5, "0") + " น.")}>
+      <div className="flex flex-col gap-4">
+        <TextInput LabelText={"วันที่" + label} LeadingIconSwap="calendar_month-24-300-round" Text={d} Placeholder="วว/ดด/ปปปป" readOnly State={cal ? "Focused" : "Filled"} onClick={() => setCal(true)} />
+        {cal && <div className="flex"><DatePicker Type="Single" {...TH_PICKER} value={{ start: date ?? new Date(), end: date ?? new Date() }} month={date ?? new Date()}
+          onCancel={() => setCal(false)} onApply={(r) => { if (r.start) setD(toThaiDate(r.start)); setCal(false); }} /></div>}
+        <TextInput LabelText={"เวลา" + label} LeadingIconSwap="schedule-24-300-round" Text={tm} Placeholder="00:00" inputMode="numeric"
+          State={tm && !timeOk(tm) ? "Error" : undefined} HelperText={tm && !timeOk(tm) ? "กรุณาระบุเวลาเป็น ชั่วโมง:นาที เช่น 08:30" : undefined} onChange={(v) => setTm(v.replace(/[^\d:]/g, "").slice(0, 5))} />
+      </div>
+    </PopupModal>
+  );
+}
+const toThaiDate = (x: Date) => String(x.getDate()).padStart(2, "0") + "/" + String(x.getMonth() + 1).padStart(2, "0") + "/" + (x.getFullYear() + 543);
+const fromThaiDate = (s: string) => { const m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/); return m ? new Date(Number(m[3]) - 543, Number(m[2]) - 1, Number(m[1])) : null; };

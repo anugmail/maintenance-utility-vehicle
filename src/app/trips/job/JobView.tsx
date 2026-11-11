@@ -21,7 +21,7 @@ export function JobView() {
   useEffect(() => { if (to) router.replace(to); }, [to, router]);
   if (!trip || !car || !job) return <EmptyStateSearchNotFound />;
   if (to) return null;
-  if (isVendorSt(job.status)) return <VendorJob trip={trip} car={car} job={job} vendor={vendor} />;
+  if (isVendorSt(job.status)) return <VendorJob trip={trip} car={car} job={job} vendor={vendor} kbk={kbk} />;
   switch (job.status) {
     case "done":
       return <WorkDetail trip={trip} car={car} job={job} kbk={kbk} />;
