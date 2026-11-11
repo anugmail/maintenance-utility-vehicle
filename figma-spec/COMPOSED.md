@@ -460,11 +460,11 @@ screens.js ไม่ได้วาดปุ่มไปขั้นถัดไ
 | งานที่ตรวจรับแล้ว (`WorkDetail.tsx`) | Section + KvBox ค่าจ้าง · ค่าเดินทาง · รวม · ตรวจรับเมื่อ | ดูย้อนหลังได้ว่าค่าใช้จ่ายของคันนั้นเท่าไร |
 | S18 Section "ยานพาหนะที่จ้างดำเนินการ (n)" (`CostTab.tsx`) | Section label + Table / Mobile table คอลัมน์ ทะเบียน · ศูนย์ต้นทุน · ค่าจ้าง · ค่าเดินทาง · รวม (แบบตารางคันที่ทำเองของ R92) · รวมใน Metric และสรุปรายไตรมาส · ส่งออกชีต "ยานพาหนะที่จ้างดำเนินการ" | เจ้าของงาน "ค่าใช้จ่ายไปรวมใน S18" |
 
-## ศ2. S26 Safety Inspection (`/safety/` · `/safety/upload/` · 11 พ.ย. 2569 · BACKLOG ข้อ 67 · ทำเว็บก่อน Figma)
+## ศ2. S26 Safety Inspection (`/safety/` · `/safety/detail/` · 11 พ.ย. 2569 · BACKLOG ข้อ 67 67ก · ทำเว็บก่อน Figma)
 
 | ส่วน | ประกอบจาก | เหตุผล |
 |---|---|---|
-| หน้ารายการ | ชิ้นเดียวกับแดชบอร์ด S24 (`MaGrid` · `FilterShell` · Table header · Input dropdown (with badges) · Empty state/Search not found) + Action icons ไอคอน `upload_file` | โครงหน้ารายการแบบ Vehicle list ของ "Vehicle Management" ใน UI Release#2 ที่ S24 ใช้แล้ว ไม่ประกอบใหม่ · ไลบรารีไม่มีปุ่มข้อความในช่องตาราง ⇒ Tertiary button ไอคอน (Action icons ของ Table cell) |
-| หน้าอัปโหลดเอกสาร | VehicleAndReporterInfo (ไฟล์ Maintain-D) + Section label + Text input วันที่ + Date picker Type=Single (แบบ popup วันเวลาปิดงาน S10) + Input label + Radio text card ×3 (แบบตัวเลือกน้ำมันไฮดรอลิก S10) + File upload (ชุดเดียวกับหน้าปิดงาน S10) + Secondary / Primary button + Table + Empty state/Data empty | หน้าแบบฟอร์มเดี่ยวไม่มีจอใน UI Release#2 ⇒ ประกอบจากชิ้นที่หน้าในต้นแบบใช้กับเอกสาร/ผลตรวจอยู่แล้ว · Radio text card ไม่มีสถานะ Error ⇒ บังคับเลือกด้วยปุ่มบันทึก Disabled |
+| หน้ารายการ | ชิ้นเดียวกับแดชบอร์ด S24 (`MaGrid` · `FilterShell` · Table header · Input dropdown (with badges) · Empty state/Search not found) + Action icons ไอคอนดูรายละเอียด `quick_reference_all` (รอบแรก `upload_file`) | โครงหน้ารายการแบบ Vehicle list ของ "Vehicle Management" ใน UI Release#2 ที่ S24 ใช้แล้ว ไม่ประกอบใหม่ · ไลบรารีไม่มีปุ่มข้อความในช่องตาราง ⇒ Tertiary button ไอคอน (Action icons ของ Table cell) |
+| หน้ารายละเอียด + popup เพิ่มผล (ข้อ 67ก) | Page header + Primary button "เพิ่มผล" (Actions แบบ "สร้างแผน") · VehicleAndReporterInfo ×2 (ข้อมูลยานพาหนะ · ผลล่าสุด · ไฟล์ Maintain-D) · Section label + Table + Empty state/Data empty (ประวัติ) · PopupModal (Modal · มือถือ Bottom sheet) ใส่ Text input วันที่ + Date picker Type=Single · Input label + Radio text card ×3 ผ่าน/ไม่ผ่าน/ระงับ · File upload | หน้ารายละเอียดแบบรายละเอียดยานพาหนะของ S24 · เพิ่มผลแบบ popup วันเวลาปิดงาน S10 (ฟอร์มสั้นในหน้าที่ดูอย่างเดียว) · Radio text card ไม่มีสถานะ Error ⇒ บังคับเลือกด้วยปุ่มบันทึก Disabled |
 | เมนู Sidebar "Safety Inspection" | Nav list item ในกลุ่ม งานซ่อมและบำรุงรักษา | ไม่มีใน Sidebar Navigation ของ UI Release#2 (แบบเมนูต้นแบบ บ.) |
 

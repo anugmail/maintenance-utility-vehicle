@@ -4,8 +4,9 @@
    โครงหน้ารายการแบบแดชบอร์ด S24 (Vehicle list ของหน้า "Vehicle Management" ใน UI Release#2 + Table · Mobile table · Table header · Side panel ของไฟล์ Component):
      Page header "Safety Inspection" (Breadcrumbs งานซ่อมและบำรุงรักษา) → Table header (ค้นหา "เลขทะเบียน, ยี่ห้อ, รุ่น" + ตัวกรอง + ชิป)
      เฉพาะยานพาหนะรหัสประเภท 09 (รหัสยานพาหนะ "น.3-09-1650" · เจ้าของงาน "รถ type 09 ที่จะมาแสดงที่หน้า list" · lib/mock/safety.ts)
-     → Table 8 คอลัมน์ SAFETY_COLS (ทะเบียน/ยี่ห้อรุ่น · รหัสยานพาหนะ · ประเภท · สังกัด · ล่าสุด · ผล · ครบกำหนดครั้งถัดไป · อัปโหลดเอกสาร) + Table pagination / Empty state/Search not found + ล้างตัวกรอง
-     คอลัมน์สุดท้าย "อัปโหลดเอกสาร" = Action icons (Tertiary button ไอคอน upload_file) เปิดหน้าอัปโหลดเอกสารของคันนั้น (ผู้ดูแลยานพาหนะ = ไอคอนดู เปิดดูอย่างเดียว)
+     → Table 8 คอลัมน์ SAFETY_COLS (ทะเบียน/ยี่ห้อรุ่น · รหัสยานพาหนะ · ประเภท · สังกัด · ล่าสุด · ผล · ครบกำหนดครั้งถัดไป · ดูรายละเอียด) + Table pagination / Empty state/Search not found + ล้างตัวกรอง
+     คอลัมน์สุดท้าย = Action icons ไอคอนดูรายละเอียด (quick_reference_all แบบแท็บประวัติ S24) เปิดหน้ารายละเอียด /safety/detail/ ของคันนั้น
+       (รอบ 2 11 พ.ย. 2569 "safety inspection มี 2 หน้า คือหน้า list และหน้ารายละเอียด" · เดิม ไอคอน upload_file "อัปโหลดเอกสาร") · กดทั้งแถวไม่ได้ (ตารางในต้นแบบเปิดจากไอคอน/ลิงก์)
    ตัวกรอง 4 ช่อง (FilterShell ชุดเดียวกับ S24): ประเภทยานพาหนะ · สังกัดยานพาหนะ (เขต) · ผล Safety Inspection (หลายค่า) · ครบกำหนดภายใน (ค่าเดียว ตัวเลือก MA_WITHIN_OPTS)
    บทบาท: ผู้ดำเนินการ (หน่วยงาน กกฟ.1 กกฟ.2 กรย. · กบค.) เห็นทุกคันและอัปโหลดได้ · ผู้ดูแลยานพาหนะ เห็นเฉพาะยานพาหนะที่ดูแล ดูอย่างเดียว (PERMISSIONS.md)
    ?sample=S26 = งานรายคันชุด T1_afterClose (82-6789 ปิดงานแล้ว 04/11/2569) + เอกสาร Safety Inspection ตอนปิดงาน (ยังไม่มีผล) */
@@ -22,7 +23,7 @@ import type { TableColumn } from "@/components/vms/Table";
 import { TableHeader } from "@/components/vms/TableHeader";
 import { applySample, patchJob, SAFETY_TYPES } from "@/lib/mock/jobs";
 import { MA_WITHIN_OPTS } from "@/lib/mock/maintenance";
-import { SAFETY_TITLE, dueCell, safetyDueMatch, uploadHref, useSafetyCars, type SafetyCar } from "@/lib/mock/safety";
+import { SAFETY_TITLE, dueCell, detailHref, safetyDueMatch, useSafetyCars, type SafetyCar } from "@/lib/mock/safety";
 import { SAFETY_NONE, SAFETY_PILL } from "@/lib/mock/safetyStore";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useSample, type SampleMap } from "@/lib/useSample";
@@ -32,7 +33,7 @@ import { SAFETY_ROOT, resultPill, useSafetyAccess } from "./_lib/ui";
 
 const SAFETY_COLS: TableColumn[] = [
   { head: "ทะเบียน", width: 190, Style: "Lead text" }, { head: "รหัสยานพาหนะ", width: 140 }, { head: "ประเภทยานพาหนะ", width: 140 }, { head: "สังกัดยานพาหนะ" },
-  { head: "Safety Inspection ล่าสุด", width: 170 }, { head: "ผล", width: 140, Style: "Badge" }, { head: "ครบกำหนดครั้งถัดไป", width: 200 }, { head: "อัปโหลดเอกสาร", width: 130, Style: "Action icons" },
+  { head: "Safety Inspection ล่าสุด", width: 170 }, { head: "ผล", width: 140, Style: "Badge" }, { head: "ครบกำหนดครั้งถัดไป", width: 200 }, { head: "", width: 64, Style: "Action icons" },
 ];
 const RESULT_OPTS = [...SAFETY_PILL.map((p) => p[0]), SAFETY_NONE[0]];
 
@@ -87,8 +88,8 @@ function SafetyList() {
   );
   const row = (c: SafetyCar): MaValue[] => {
     const plate = c.car.plate;
-    const act = owner ? { IconSwap: "quick_reference_all-24-300-round", label: "ดูเอกสาร " + plate } : { IconSwap: "upload_file-24-300-round", label: "อัปโหลดเอกสาร " + plate };
-    const a = [{ ...act, onClick: () => router.push(uploadHref(c.id)) }];
+    /* ดูรายละเอียด (ไอคอนเดียวกับแท็บประวัติของ S24 · quick_reference_all) — ทุกบทบาท · เพิ่มผลทำที่หน้ารายละเอียด */
+    const a = [{ IconSwap: "quick_reference_all-24-300-round", label: "ดูรายละเอียด " + plate, onClick: () => router.push(detailHref(c.id)) }];
     return [{ text: plate, sub: c.car.model }, c.peaId, c.car.type, c.car.owner, c.last ?? "-", { pills: [resultPill(c)] }, dueCell(c), { actions: a, mobileActions: a }];
   };
 

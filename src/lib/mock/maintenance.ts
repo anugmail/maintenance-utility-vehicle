@@ -83,6 +83,8 @@ const MA_ROWS: Row[] = [
 /** ค่าครั้งล่าสุดก่อนต้นแบบ (รายการที่ไม่ได้ทำในบันทึกครั้งล่าสุด เช่น เปลี่ยนน้ำมันเมื่อ 3 ปีก่อน) */
 const BASE: Record<string, { air: string; oil: string; sample: string; result: string; safety: string }> =
   Object.fromEntries(MA_ROWS.map(([id, , , air, oil, sample, result, safety]) => [id, { air, oil, sample, result, safety }]));
+/** Safety Inspection ล่าสุดของค่าตั้งต้น (MA_ROWS) — หน้า Safety Inspection (S26) ใช้เป็นแถวแรกของประวัติ */
+export const baseSafetyOf = (carId: string): string | undefined => BASE[carId]?.safety;
 const workOf = (air: boolean, change: boolean) => [change ? "เปลี่ยนน้ำมันไฮดรอลิก" : "เปลี่ยนไส้กรองไฮดรอลิก", ...(air ? ["ไส้กรองอากาศ"] : [])].join(" · ");
 const seedRow = ([carId, date, mr, air, oil, sample, result, safety]: Row): MaRecord => {
   const ch = oil === date, sm = sample === date;
