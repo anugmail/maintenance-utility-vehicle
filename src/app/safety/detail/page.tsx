@@ -4,9 +4,10 @@
    (ที่อยู่เดิม /safety/upload/ พาไปที่นี่ · MovedTo)
    Page header (ทะเบียน · ย้อนกลับ · Breadcrumbs งานซ่อมและบำรุงรักษา › Safety Inspection › ทะเบียน · Actions = Primary button "เพิ่มผล" ไอคอน add แบบ "สร้างแผน" ของรายการแผน)
    → VehicleAndReporterInfo "ข้อมูลยานพาหนะ" (ทะเบียน รหัสยานพาหนะ ยี่ห้อ/รุ่น ประเภท สังกัด)
-   → VehicleAndReporterInfo "ผล Safety Inspection ล่าสุด" (วันที่ตรวจ ผล ครบกำหนดครั้งถัดไป เอกสาร บันทึกโดย)
+   → VehicleAndReporterInfo "ผล Safety Inspection ล่าสุด" (วันที่ตรวจ ผล ครบกำหนดครั้งถัดไป บันทึกโดย) + File upload readonly รายการไฟล์ ปุ่มดาวน์โหลด (ข้อ 67ข)
    → Section label "ประวัติผล Safety Inspection (n)" + ตาราง (วันที่ตรวจ · ผล Pill · เอกสาร · บันทึกโดย) ใหม่สุดก่อน / Empty state/Data empty
-       แถวที่ไม่ได้บันทึกจากหน้านี้ (ค่าตั้งต้น · เอกสารตอนปิดงาน S10) เอกสาร/บันทึกโดย "-"
+       แถวที่ไม่ได้บันทึกจากหน้านี้ (ค่าตั้งต้น · เอกสารตอนปิดงาน S10) บันทึกโดย "-" · เอกสารตอนปิดงาน S10 มีชื่อไฟล์ · คอลัมน์ท้าย ปุ่มดาวน์โหลดไฟล์ละปุ่ม
+   ดาวน์โหลด (เจ้าของงาน 11 พ.ย. 2569 "ต้องสามารถดาวน์โหลดเอกสารหลังจากอัปโหลดเอกสารได้"): lib/fileDownload.ts — ไฟล์ที่เลือกในแท็บนี้ = ไฟล์จริง · อื่นๆ = ไฟล์ข้อความแทนชื่อเดียวกัน
    เพิ่มผล = PopupModal (Modal ของไลบรารี · มือถือ Bottom sheet · แบบ popup วันเวลาปิดงาน S10) "เพิ่มผล Safety Inspection":
        Text input วันที่ตรวจ + Date picker Type=Single ภาษาไทย (ไม่เกินวันนี้ · ตั้งต้น 10/11/2569) · Input label "ผล Safety Inspection" + Radio text card ×3 ผ่าน · ไม่ผ่าน · ระงับ
        · File upload "เอกสาร Safety Inspection" PDF JPG สูงสุด 10 ไฟล์ แสดงรายการไฟล์ · ไม่มีช่องหมายเหตุ
@@ -37,11 +38,14 @@ import { notify, useRole } from "@/lib/mock/store";
 import { useProtoForm } from "@/lib/protoForm";
 import { TH_PICKER } from "@/lib/thaiDate";
 import { useBreakpoint } from "@/lib/useBreakpoint";
+import { downloadFile, rememberFiles } from "@/lib/fileDownload";
 import { Section, toUpload } from "@/app/trips/_lib/ui";
 import { MaGrid, type MaValue } from "@/app/vehicles/_lib/ui";
 import { SAFETY_ROOT, resultPill, useSafetyAccess } from "../_lib/ui";
 
-const HIST_COLS: TableColumn[] = [{ head: "วันที่ตรวจ", width: 140, Style: "Lead text" }, { head: "ผล", width: 150, Style: "Badge" }, { head: "เอกสาร" }, { head: "บันทึกโดย", width: 280 }];
+/* ข้อ 67ข: คอลัมน์ท้าย = Action icons ไอคอน download-24-300-round (Download action ของ _File upload item base) ไฟล์ละ 1 ปุ่ม */
+const HIST_COLS: TableColumn[] = [{ head: "วันที่ตรวจ", width: 140, Style: "Lead text" }, { head: "ผล", width: 150, Style: "Badge" }, { head: "เอกสาร" }, { head: "บันทึกโดย", width: 280 },
+  { head: "", width: 120, Style: "Action icons" }];
 const FILE_ERR = "กรุณาแนบเอกสาร Safety Inspection อย่างน้อย 1 ไฟล์";
 const toThai = (d: Date) => String(d.getDate()).padStart(2, "0") + "/" + String(d.getMonth() + 1).padStart(2, "0") + "/" + (d.getFullYear() + 543);
 const fromThai = (v: string) => { const m = v.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/); return m ? new Date(Number(m[3]) - 543, Number(m[2]) - 1, Number(m[1])) : null; };
@@ -49,10 +53,10 @@ const TODAY_D = fromThai(MA_TODAY)!;
 const dueText = (c: SafetyCar) => { const d = dueCell(c); return typeof d === "string" ? d : d.text + (d.sub ? " (" + d.sub + ")" : ""); };
 
 /* ประวัติ: ครั้งที่บันทึกจากหน้านี้ + ครั้งล่าสุดก่อนหน้า (base) · ใหม่สุดก่อน (วันเท่ากัน = ที่บันทึกทีหลังก่อน) */
-interface HistItem { date: string; result?: SafetyResult; files: string; by: string; at?: string; n: number }
+interface HistItem { date: string; result?: SafetyResult; files: UploadFile[]; by: string; at?: string; n: number }
 function historyOf(c: SafetyCar): HistItem[] {
-  const up: HistItem[] = c.uploads.map((u, n) => ({ date: u.date, result: u.result, files: u.files.map((f) => f.name).join(", ") || "-", by: u.savedBy, at: u.savedAt, n: n + 1 }));
-  const base: HistItem[] = c.base ? [{ date: c.base.date, result: c.base.result, files: "-", by: "-", n: 0 }] : [];
+  const up: HistItem[] = c.uploads.map((u, n) => ({ date: u.date, result: u.result, files: u.files, by: u.savedBy, at: u.savedAt, n: n + 1 }));
+  const base: HistItem[] = c.base ? [{ date: c.base.date, result: c.base.result, files: c.base.files ?? [], by: "-", n: 0 }] : [];
   return [...base, ...up].sort((a, b) => dayOf(b.date) - dayOf(a.date) || b.n - a.n);
 }
 
@@ -95,7 +99,8 @@ function AddResult({ open, carId, onClose }: { open: boolean; carId: string; onC
         </div>
         <FileUpload LabelText="เอกสาร Safety Inspection" files={files} hint="PDF, JPG · สูงสุด 10 ไฟล์" bar accept=".pdf,.jpg,.jpeg"
           Error={fileErr} HelperText={fileErr ? FILE_ERR : undefined}
-          onFiles={(fs) => setFiles((x) => [...x, ...fs.map(toUpload)].slice(0, 10))} onDelete={(i) => { setFiles((x) => x.filter((_, k) => k !== i)); setTouched(true); }} />
+          onDownload={(i) => downloadFile(files[i].name)}
+          onFiles={(fs) => { rememberFiles(fs); setFiles((x) => [...x, ...fs.map(toUpload)].slice(0, 10)); }} onDelete={(i) => { setFiles((x) => x.filter((_, k) => k !== i)); setTouched(true); }} />
       </div>
     </PopupModal>
   );
@@ -116,7 +121,11 @@ function SafetyDetail() {
   const plate = c.car.plate;
   const hist = historyOf(c);
   const latest = hist[0];
-  const rows: MaValue[][] = hist.map((h) => [h.date, { pills: [h.result == null ? SAFETY_NONE : SAFETY_PILL[h.result]] }, h.files, h.at ? { text: h.by, sub: h.at } : h.by]);
+  const rows: MaValue[][] = hist.map((h) => {
+    const dl = h.files.map((f) => ({ IconSwap: "download-24-300-round", label: "ดาวน์โหลด " + f.name, onClick: () => downloadFile(f.name) }));
+    return [h.date, { pills: [h.result == null ? SAFETY_NONE : SAFETY_PILL[h.result]] }, h.files.map((f) => f.name).join(", ") || "-", h.at ? { text: h.by, sub: h.at } : h.by, { actions: dl, mobileActions: dl }];
+  });
+  const latestFiles = latest && latest.date === c.last ? latest.files : [];
   const add = owner ? undefined : <PrimaryButton Text="เพิ่มผล" LeadingIconSwap="add-24-300-round" Size={mob ? "lg" : "md"} onClick={() => setAdding(true)} />;
 
   return (
@@ -124,7 +133,9 @@ function SafetyDetail() {
       <PageHeader Title={plate} onBack={() => router.push(SAFETY_HREF)} crumbs={[{ Text: SAFETY_ROOT }, { Text: SAFETY_TITLE, href: SAFETY_HREF }, { Text: plate }]} Actions={add} />
       <VehicleAndReporterInfo pairs={[["ทะเบียน", plate], ["รหัสยานพาหนะ", c.peaId], ["ยี่ห้อ/รุ่น", c.car.model], ["ประเภทยานพาหนะ", c.car.type], ["สังกัดยานพาหนะ", c.car.owner]]} />
       <VehicleAndReporterInfo Title="ผล Safety Inspection ล่าสุด" pairs={[["วันที่ตรวจ", c.last ?? "-"], ["ผล", resultPill(c)[0]], ["ครบกำหนดครั้งถัดไป", dueText(c)],
-        ["เอกสาร", latest && latest.date === c.last ? latest.files : "-"], ["บันทึกโดย", latest && latest.date === c.last ? latest.by : "-"]]} />
+        ["บันทึกโดย", latest && latest.date === c.last ? latest.by : "-"]]} />
+      {/* เอกสารของผลล่าสุด = File upload readonly + Download action (ข้อ 67ข · ไฟล์แนบแบบหน้างานรายคัน S10) */}
+      {latestFiles.length > 0 && <FileUpload LabelText="เอกสาร Safety Inspection ล่าสุด" readonly bar files={latestFiles} onDownload={(i) => downloadFile(latestFiles[i].name)} />}
       <Section>
         <SectionLabel Title={"ประวัติผล Safety Inspection (" + hist.length + ")"} />
         {rows.length ? <MaGrid cols={HIST_COLS} rows={rows} page={page} onPage={setPage} />

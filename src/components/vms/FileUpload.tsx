@@ -18,7 +18,7 @@ export interface FileUploadProps {
   /** ข้อความใน Supporting text ก่อนจำนวนไฟล์ (ค่าเริ่ม "PDF, JPG · สูงสุด 10 ไฟล์") */
   hint?: string;
   max?: number;
-  /** หน้ารายละเอียด: ไม่มีกล่องอัปโหลด ไม่มีปุ่มลบ */
+  /** หน้ารายละเอียด: ไม่มีกล่องอัปโหลด ไม่มีปุ่มลบ · ส่ง onDownload = แสดงปุ่มดาวน์โหลด (Download action) ด้วย (S26 11 พ.ย. 2569) */
   readonly?: boolean;
   /** แสดงแถบ 100% ทุกไฟล์ที่อัปโหลดเสร็จ */
   bar?: boolean;
@@ -47,7 +47,7 @@ export function FileUpload({ LabelText, Optional, files, hint = "PDF, JPG · ส
             <FileUploadItemBase key={f.name + i} FileName={f.name} FileSize={f.err ? f.size ?? "อัปโหลดไม่สำเร็จ" : f.size}
               State={f.err ? "Error" : f.progress != null ? "In progress" : "Completed"} Progress={f.progress}
               ProgressBar={!f.err && (f.progress != null || !!f.bar || !!bar)}
-              DownloadAction={!f.err && !readonly && f.progress == null} DeleteAction={!readonly}
+              DownloadAction={!f.err && (!readonly || !!onDownload) && f.progress == null} DeleteAction={!readonly}
               onDelete={() => onDelete?.(i)} onDownload={() => onDownload?.(i)} />
           ))}
         </div>

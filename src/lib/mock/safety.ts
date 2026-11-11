@@ -14,7 +14,8 @@
    ครบกำหนดครั้งถัดไป = ครั้งล่าสุด + 12 เดือน (กติกา Safety Inspection ทุก 1 ปีของ S24) · ใกล้ครบ/ครบ ตาม statusOf · วันนี้ของต้นแบบ MA_TODAY */
 import { useMemo } from "react";
 import { CAND, type Car } from "./data";
-import { safetyOn } from "./jobs";
+import { jobsOf, safetyOn } from "./jobs";
+import type { UploadFile } from "@/components/vms/FileUpload";
 import { MA_DUE, TODAY, addMonths, baseSafetyOf, dayOf, maCars, statusOf, thaiDate, type DueStatus, type DueTone } from "./maintenance";
 import { latestUpload, safetyUploads, type SafetyRec, type SafetyResult } from "./safetyStore";
 import { useMock, type MockState } from "./store";
@@ -45,11 +46,13 @@ export interface SafetyCar {
   /** ทุกครั้งที่บันทึกจากหน้ารายละเอียด (เก่าก่อน) */
   uploads: SafetyRec[];
   /** ครั้งล่าสุดก่อนบันทึกในต้นแบบ (ค่าตั้งต้น · S24 MA_ROWS · เอกสารตอนปิดงาน S10) = แถวแรกของประวัติ */
-  base?: { date: string; result?: SafetyResult; fromJob?: boolean };
+  base?: { date: string; result?: SafetyResult; fromJob?: boolean; files?: UploadFile[] };
 }
 
 export function safetyCars(m: MockState, owner = false): SafetyCar[] {
   const s24 = new Map(maCars(m).map((c) => [c.car.id, c]));
+  /* เอกสาร Safety Inspection ที่แนบตอนปิดงาน S10 (หน้างานรายคัน · ดาวน์โหลดได้ที่หน้ารายละเอียด ข้อ 67ข) คีย์ ทะเบียน|วันปิดงาน */
+  const jobFiles = new Map(Object.values(jobsOf(m).jobs).filter((j) => j.closedAt).map((j) => [j.carId + "|" + j.closedAt!.slice(0, 10), j.safety?.files ?? j.close?.safetyFiles ?? []]));
   return CAND.flatMap((car, i): SafetyCar[] => {
     if (peaTypeOf(car) !== SAFETY_TYPE_CODE || (owner && car.owner !== OWN_UNIT)) return [];
     const id = idOf(car.plate), up = latestUpload(m, id), ma = s24.get(id);
@@ -59,7 +62,7 @@ export function safetyCars(m: MockState, owner = false): SafetyCar[] {
       const rec = ma.records.filter((r) => r.safety).sort((x, y) => dayOf(y.date) - dayOf(x.date))[0], b0 = baseSafetyOf(id);
       const d = rec && (!b0 || dayOf(rec.date) >= dayOf(b0)) ? rec.date : b0;
       const job = !!rec?.fromJob && rec.date === d;
-      base = d ? { date: d, result: job ? undefined : 0, fromJob: job } : undefined;
+      base = d ? { date: d, result: job ? undefined : 0, fromJob: job, files: job ? jobFiles.get(id + "|" + d) : undefined } : undefined;
     } else { const sd = seedOf(i); base = sd && { date: sd.date, result: sd.result }; }
     let last = base?.date, result = base?.result;
     if (up && (!last || dayOf(up.date) >= dayOf(last))) { last = up.date; result = up.result; }
