@@ -30,6 +30,8 @@ export const GUIDE_LABEL = "พาดูทีละเรื่อง";
 export const PARTS_LABEL = "อะไหล่ของแผนที่อนุมัติแล้ว";
 /** เมนูย่อยอนุมัติ (9 พ.ย. 2569 เจ้าของงาน "ตอนอนุมัติให้เห็น เมนูของทุกคนไปเลย … อันนี้ในเวปนะ แต่จริงๆเงื่อนไขคือยิงเส้น upper lower ในการหาคนอนุมัติ")
     ทุกบทบาทของต้นแบบเห็นและอนุมัติได้ · ชื่อ = หัวหน้าของจอ S2 S7 · ไม่มีใน Sidebar Navigation ของ UI Release#2 (COMPOSED.md บ.) · Badge = จำนวนที่รออนุมัติ */
+/** เมนูย่อย Safety Inspection /safety/ (S26 · เจ้าของงาน 11 พ.ย. 2569 "อยากทำหน้าลิสต์รถ เป็นอีก scen นึง … scen ชื่อว่า safety inspection" · ไม่มีใน Sidebar Navigation ของ UI Release#2 — COMPOSED.md) */
+export const SAFETY_LABEL = "Safety Inspection";
 export const APPROVE_PLANS_LABEL = "แผนรออนุมัติ";
 export const APPROVE_TRIPS_LABEL = "แผนเดินทางรออนุมัติ";
 
@@ -39,7 +41,7 @@ export const SIDEBAR_MENU: SideGroup[] = [
   { IconSwap: "traffic_jam-24-300-round", Text: "จัดการคำขอใช้ยานพาหนะ", items: [{ Text: "ตรวจสอบและจัดการคำขอ" }, { Text: "อนุมัติใช้ยานพาหนะ" }] },
   { IconSwap: "database-24-300-round", Text: "ข้อมูลพนักงานและยานพาหนะ", items: [{ Text: "ผู้ดูแลยานพาหนะ" }, { Text: "ข้อมูลพนักงานขับยานพาหนะ" }, { Text: "ข้อมูลยานพาหนะ" }, { Text: "กลุ่มยานพาหนะ" }, { Text: "บริหารสัญญา" }] },
   { IconSwap: "ev_station", Text: "การอัดประจุไฟฟ้า", items: [{ Text: "สถานีอัดประจุไฟฟ้า" }, { Text: "อัตราค่าไฟฟ้า" }, { Text: "ค่าใช้จ่ายอัดประจุยานพาหนะ" }, { Text: "บันทึกการอัดประจุ Wall Charger" }, { Text: "ต้นทุนและค่าใช้จ่ายในการอัดประจุ" }] },
-  { IconSwap: "build", Text: "งานซ่อมและบำรุงรักษา", items: [{ Text: "ภาพรวมการซ่อมบำรุง" }, { Text: "ตารางบำรุงรักษา" }, { Text: "นัดหมายบำรุงรักษา" }, { Text: "งานซ่อม" }, { Text: "ยานพาหนะทดแทน" }, { Text: MT_LABEL, href: "/" }, { Text: PARTS_LABEL, href: "/parts/" }, { Text: APPROVE_PLANS_LABEL, href: "/approvals/plans/" }, { Text: APPROVE_TRIPS_LABEL, href: "/approvals/trips/" }, { Text: GUIDE_LABEL, href: "/guide/" }] },
+  { IconSwap: "build", Text: "งานซ่อมและบำรุงรักษา", items: [{ Text: "ภาพรวมการซ่อมบำรุง" }, { Text: "ตารางบำรุงรักษา" }, { Text: "นัดหมายบำรุงรักษา" }, { Text: "งานซ่อม" }, { Text: "ยานพาหนะทดแทน" }, { Text: MT_LABEL, href: "/" }, { Text: PARTS_LABEL, href: "/parts/" }, { Text: SAFETY_LABEL, href: "/safety/" }, { Text: APPROVE_PLANS_LABEL, href: "/approvals/plans/" }, { Text: APPROVE_TRIPS_LABEL, href: "/approvals/trips/" }, { Text: GUIDE_LABEL, href: "/guide/" }] },
   { IconSwap: "e911_emergency", Text: "จัดการเหตุการณ์", items: [{ Text: "จัดการเหตุยานพาหนะเสีย" }, { Text: "จัดการเหตุอุบัติเหตุ" }] },
   { IconSwap: "news", Text: "รายงาน" },
 ];

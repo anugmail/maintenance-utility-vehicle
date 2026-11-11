@@ -16,6 +16,7 @@ import { useMock, type MockState } from "./store";
 import { OWN_UNIT, PLAN_ID, STAFF } from "./trips";
 import { unitOf } from "./data";
 import { lastMaOf, lastRepairOf } from "./vehicleHistory";
+import { latestUpload } from "./safetyStore";
 import type { PillColor } from "@/components/vms/PillOutline";
 
 /* วันนี้ของต้นแบบ = MA_TODAY ของ screens.js (ค่าคงที่ให้ตรงจอ) */
@@ -128,7 +129,8 @@ export interface MaCar {
   year?: number; km?: string; hours?: string; war: keyof typeof MA_WAR; vstat: keyof typeof MA_VSTAT;
 }
 
-export function maCar(car: TripCar, all: MaRecord[], today = TODAY): MaCar {
+/** safetyUp = วันตรวจ Safety Inspection ล่าสุดที่บันทึกจากหน้า Safety Inspection (S26 · safetyStore.ts) — รวมเข้ากับเอกสารตอนปิดงานให้ทุกหน้าตรงกัน */
+export function maCar(car: TripCar, all: MaRecord[], today = TODAY, safetyUp?: string): MaCar {
   const records = all.filter((r) => r.carId === car.id).sort((a, b) => dayOf(b.date) - dayOf(a.date) || (a.fromJob === b.fromJob ? 0 : a.fromJob ? -1 : 1));
   const done = records.filter((r) => !r.cannot);
   const latest = done[0], u = MA_USE[car.id], b = BASE[car.id];
@@ -138,7 +140,7 @@ export function maCar(car: TripCar, all: MaRecord[], today = TODAY): MaCar {
   const sm = first((r) => (r.oil === 0 || r.oil === 2 ? r.date : undefined));
   const sampleAt = later(sm?.[1], b?.sample);
   const result = sm && sampleAt === sm[1] ? sm[0].oilResult : b?.result;
-  const safetyAt = later(first((r) => (r.safety ? r.date : undefined))?.[1], b?.safety);
+  const safetyAt = later(later(first((r) => (r.safety ? r.date : undefined))?.[1], b?.safety), safetyUp);
   const base = { car, records, latest, air, oilAt, sampleAt, result, safetyAt, year: u?.[0], km: latest?.km?.replace(/ กม\.$/, "") ?? u?.[1], hours: latest?.hours?.replace(/ ชม\.$/, "") ?? u?.[2],
     war: u?.[3] ?? "none", vstat: u?.[4] ?? "ok" } as const;
   if (!latest) return { ...base, items: [] };
@@ -169,7 +171,7 @@ export function maCars(m: MockState, owner = false, unit?: string): MaCar[] {
   const all = [...SEED, ...fromJobs];
   const ids = [...new Set([...MA_CAR_IDS, ...fromJobs.map((r) => r.carId)])];
   const cars = ids.map((id) => TRIP_CARS.find((c) => c.id === id) ?? carOf(id)).filter((c): c is TripCar => !!c);
-  return cars.filter((c) => !owner || c.owner === OWN_UNIT).map((c) => maCar(c, all))
+  return cars.filter((c) => !owner || c.owner === OWN_UNIT).map((c) => maCar(c, all, TODAY, latestUpload(m, c.id)?.date))
     .filter((x) => !unit || x.records.some((r) => unitOf(r.planMr) === unit) || (TRIP_CARS.some((t) => t.id === x.car.id) && unitOf("MR" + PLAN_ID) === unit))
     .sort((a, b) => (a.next ? a.next.due! : Infinity) - (b.next ? b.next.due! : Infinity) || a.car.plate.localeCompare(b.car.plate));
 }
