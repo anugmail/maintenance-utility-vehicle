@@ -97,7 +97,7 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
   const mock = useMock();
   const role = useRole();
   const owner = planOf(mock, planId);
-  /* ผู้ดำเนินการ = หน่วยงานเจ้าของแผน (canManage · กกฟ.1 กกฟ.2 กรย. กบค.) — 9 พ.ย. 2569 เดิมเฉพาะ กกฟ.1 ("แผนอนุมัติแล้ว แต่ไม่เจอแผนการเดินทางที่อนุมัติแล้ว") */
+  /* ผู้ดำเนินการ = หน่วยงานเจ้าของแผน (canManage · กบผ. กปส. กรย. กส.1 กส.2 กบค.) — 9 พ.ย. 2569 เดิมเฉพาะ กบผ. ("แผนอนุมัติแล้ว แต่ไม่เจอแผนการเดินทางที่อนุมัติแล้ว") */
   const kbk = !!owner && canManage(role, owner);
   const denied = usePlanGate(owner);   // หน่วยงานเปิดฟอร์มของแผนหน่วยงานอื่น → หน้ารายการ
   const [v, setV] = useState<Values>(() => fromTrip(edit, initialMode));

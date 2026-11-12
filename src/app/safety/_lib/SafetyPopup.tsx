@@ -1,17 +1,18 @@
 "use client";
 /* S26 Safety Inspection · popup อัปโหลดเอกสารและเลือกผลบนหน้ารายการ (รอบ 4 · เจ้าของงาน 11 พ.ย. 2569 · BACKLOG ข้อ 67ง)
    _"ไม่อยากให้ต้องเปิดหน้าใหม่ แต่เป็นหน้าลิสต์แล้วพอเลือก upload ก็แสดง pop up ให้ upload เอกสาร และมีให้เลือกผล"_ + ผล 4 ตัวเลือก "ผ่าน ไม่ผ่าน ระงับ และ ให้แก้ไข"
+   → เปลี่ยน 12 พ.ย. 2569 (BACKLOG ข้อ 69 · เจ้าของงาน 12 พ.ย. 2569 เลือกตามไฟล์สรุปประชุม VMS Plus (Notion "meeting 11/11/68" หัวข้อ 9)): ผล 3 ตัวเลือก ผ่าน ไม่ผ่าน ระงับ (ข้อบกพร่องเล็กน้อยที่ผู้ตรวจยอมให้ = ผ่าน · ไม่มีช่องหมายเหตุ) · ไฟล์ PDF อย่างเดียว ไม่มีปุ่มถ่ายรูป
    PopupModal (Modal ของไลบรารี · มือถือ Bottom sheet · แบบ popup วันเวลาปิดงาน S10):
      หัว "ผลการตรวจ ปจ.2" (เจ้าของงาน "modal ก็แสดงชื่อเป็นผลการตรวจ ปจ.2") · บรรทัดรอง = ทะเบียน · รหัสยานพาหนะ · ประเภทยานพาหนะ
      → DisplayBox "ผลล่าสุด" (วันที่ตรวจ · ผล · ครบกำหนดครั้งถัดไป) + File upload readonly "เอกสารผลล่าสุด" ปุ่มดาวน์โหลด (มีไฟล์เท่านั้น)
      → Content divider → Text input วันที่ตรวจ + Date picker Type=Single ภาษาไทย (ไม่เกินวันนี้ · ตั้งต้น 10/11/2569)
      → Input label "วาระการตรวจ" + Radio text card ×3 3 เดือน · 6 เดือน · 12 เดือน (ข้อ 67จ · ตั้งต้น = วาระของครั้งล่าสุด หรือ 12 เดือน)
-     → Input label "ผลการตรวจ" + Radio text card ×4 ผ่าน · ไม่ผ่าน · ระงับ · ให้แก้ไข
-     → File upload "เอกสารการตรวจ ปจ.2" PDF JPG PNG สูงสุด 10 ไฟล์ (ชนิดอื่น = Error · ดาวน์โหลดก่อนบันทึกได้) · มือถือ ปุ่ม "ถ่ายรูป" (กล้องหลัง · ไลบรารีไม่มี File upload แบบกล้อง — COMPOSED.md ศ2.)
+     → Input label "ผลการตรวจ" + Radio text card ×3 ผ่าน · ไม่ผ่าน · ระงับ (ข้อ 69 · เดิม ×4 มี ให้แก้ไข)
+     → File upload "เอกสารการตรวจ ปจ.2" PDF สูงสุด 10 ไฟล์ (ชนิดอื่น = Error · ดาวน์โหลดก่อนบันทึกได้) · ข้อ 69 เอาปุ่ม "ถ่ายรูป" ของมือถือออก (เดิม PDF JPG PNG + กล้อง — COMPOSED.md ศ2.)
      ปุ่ม ยกเลิก / บันทึก (Disabled จนมีไฟล์และผล) → toast "บันทึกผลการตรวจ ปจ.2 สำเร็จ" ปิด popup แถวในรายการเปลี่ยนทันที
    ผู้ดูแลยานพาหนะ (readonly): หัวเดียวกัน · ผลล่าสุด + เอกสารดาวน์โหลดได้ · ไม่มีส่วนเพิ่มผล · ปุ่ม "ปิด" อย่างเดียว
    ไม่มีตารางประวัติ (หน้ารายละเอียดเอาออกรอบ 4 · ผลครั้งก่อนๆ ยังเก็บใน MockState.safety — BACKLOG ค.) */
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { DisplayBox } from "@/components/patterns/DisplayBox";
 import { PopupModal } from "@/components/patterns/PopupModal";
 import { ContentDivider } from "@/components/vms/ContentDivider";
@@ -19,7 +20,6 @@ import { DatePicker } from "@/components/vms/DatePicker";
 import { FileUpload, type UploadFile } from "@/components/vms/FileUpload";
 import { InputLabel } from "@/components/vms/InputLabel";
 import { RadioTextCards } from "@/components/vms/RadioTextCard";
-import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { TextInput } from "@/components/vms/TextInput";
 import { PEOPLE, thaiNow } from "@/lib/mock/jobs";
 import { MA_TODAY } from "@/lib/mock/maintenance";
@@ -35,10 +35,10 @@ import { toUpload } from "@/app/trips/_lib/ui";
 import { resultPill } from "./ui";
 
 const FILE_ERR = "กรุณาแนบเอกสารการตรวจ ปจ.2 อย่างน้อย 1 ไฟล์";
-/* ชนิดไฟล์ (เจ้าของงาน 11 พ.ย. 2569 "ไฟล์รองรับ ไฟล์ pdf jpeg png ถ่ายรูปได้" · ข้อ 67ค) — ลากวางข้ามตัวกรอง accept ได้ ⇒ ตรวจซ้ำตอนรับไฟล์ */
-const ACCEPT = ".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png";
-const TYPE_ERR = "รองรับเฉพาะไฟล์ PDF, JPG, PNG";
-const okType = (f: File) => /\.(pdf|jpe?g|png)$/i.test(f.name) || ["application/pdf", "image/jpeg", "image/png"].includes(f.type);
+/* ชนิดไฟล์ PDF อย่างเดียว (ข้อ 69 · เจ้าของงาน 12 พ.ย. 2569 ตามสรุปประชุม VMS Plus หัวข้อ 9 · เดิม 11 พ.ย. 2569 "ไฟล์รองรับ ไฟล์ pdf jpeg png ถ่ายรูปได้" ข้อ 67ค) — ลากวางข้ามตัวกรอง accept ได้ ⇒ ตรวจซ้ำตอนรับไฟล์ */
+const ACCEPT = ".pdf,application/pdf";
+const TYPE_ERR = "รองรับเฉพาะไฟล์ PDF";
+const okType = (f: File) => /\.pdf$/i.test(f.name) || f.type === "application/pdf";
 const toThai = (d: Date) => String(d.getDate()).padStart(2, "0") + "/" + String(d.getMonth() + 1).padStart(2, "0") + "/" + (d.getFullYear() + 543);
 const fromThai = (v: string) => { const m = v.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/); return m ? new Date(Number(m[3]) - 543, Number(m[2]) - 1, Number(m[1])) : null; };
 const TODAY_D = fromThai(MA_TODAY)!;
@@ -53,7 +53,6 @@ export function latestFiles(c: SafetyCar): UploadFile[] {
 export function SafetyPopup({ car: c, readonly, onClose }: { car: SafetyCar | null; readonly?: boolean; onClose: () => void }) {
   const role = useRole();
   const mob = useBreakpoint() === "Mobile";
-  const cam = useRef<HTMLInputElement>(null);
   const [date, setDate] = useState(MA_TODAY);
   const [cal, setCal] = useState(false);
   const [result, setResult] = useState<SafetyResult | null>(null);
@@ -115,15 +114,10 @@ export function SafetyPopup({ car: c, readonly, onClose }: { car: SafetyCar | nu
             <RadioTextCards options={SAFETY_RESULTS.map((Text) => ({ Text }))} value={result == null ? null : SAFETY_RESULTS[result]}
               onChange={(v) => setResult(SAFETY_RESULTS.indexOf(v as (typeof SAFETY_RESULTS)[number]) as SafetyResult)} />
           </div>
-          <FileUpload LabelText="เอกสารการตรวจ ปจ.2" files={files} hint="PDF, JPG, PNG · สูงสุด 10 ไฟล์" bar accept={ACCEPT}
+          <FileUpload LabelText="เอกสารการตรวจ ปจ.2" files={files} hint="PDF · สูงสุด 10 ไฟล์" bar accept={ACCEPT}
             Error={fileErr} HelperText={badType ? TYPE_ERR : fileErr ? FILE_ERR : undefined}
             onDownload={(i) => downloadFile(files[i].name)}
             onFiles={take} onDelete={(i) => { setFiles((x) => x.filter((_, k) => k !== i)); setTouched(true); setBadType(false); }} />
-          {mob && <>
-            <SecondaryButton Text="ถ่ายรูป" LeadingIconSwap="photo_camera-24-300-round" Size="lg" disabled={files.length >= 10} onClick={() => cam.current?.click()} />
-            <input ref={cam} type="file" hidden accept="image/*" capture="environment" aria-label="ถ่ายรูปเอกสารการตรวจ ปจ.2" data-camera
-              onChange={(e) => { take(Array.from(e.target.files ?? [])); e.target.value = ""; }} />
-          </>}
         </>}
       </div>
     </PopupModal>

@@ -12,7 +12,7 @@
    คอลัมน์ "การตรวจ ปจ.2 ล่าสุด" บรรทัดรอง "วาระ n เดือน" · "ครบกำหนดครั้งถัดไป" = วันตรวจ + วาระ บรรทัดรองนับถอยหลัง "เหลือ n วัน" / "เลยกำหนด n วัน" (ข้อ 67จ) · เรียงวันที่เหลือน้อยสุดก่อน
    ข้อ 67ฉ: คอลัมน์ "สถานะยานพาหนะ" (Pill ชุดเดียวกับ S24) · ปุ่ม "ส่งออก" (Secondary ไอคอน download แบบ S18) ใน Table header = .csv ของแถวที่ค้นหา/กรองอยู่
    ตัวกรอง 6 ช่อง (FilterShell ชุดเดียวกับ S24): ประเภทยานพาหนะ · สังกัดยานพาหนะ (เขต) · สถานะยานพาหนะ (ข้อ 67ฉ) · วาระการตรวจ (ข้อ 67จ) · ผล Safety Inspection (หลายค่า) · ครบกำหนดภายใน (ค่าเดียว ตัวเลือก MA_WITHIN_OPTS)
-   บทบาท: ผู้ดำเนินการ (หน่วยงาน กกฟ.1 กกฟ.2 กรย. · กบค.) เห็นทุกคันและอัปโหลดได้ · ผู้ดูแลยานพาหนะ เห็นเฉพาะยานพาหนะที่ดูแล ดูอย่างเดียว (PERMISSIONS.md)
+   บทบาท: ผู้ดำเนินการ (หน่วยงาน กบผ. กปส. กรย. กส.1 กส.2 · กบค.) เห็นทุกคันและอัปโหลดได้ · ผู้ดูแลยานพาหนะ เห็นเฉพาะยานพาหนะที่ดูแล ดูอย่างเดียว (PERMISSIONS.md)
    ?sample=S26 = งานรายคันชุด T1_afterClose (82-6789 ปิดงานแล้ว 04/11/2569) + เอกสาร Safety Inspection ตอนปิดงาน (ยังไม่มีผล) */
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";
@@ -68,7 +68,7 @@ const dropChip = (f: SFilter, v: string): SFilter => ({
 });
 
 const SAMPLES: SampleMap = {
-  S26: { role: "หน่วยงาน (กกฟ.1)", apply: () => { applySample("T1_afterClose"); patchJob("T1", "82-6789", (j) => ({ ...j, safety: { files: [{ name: "Safety-Inspection-82-6789.pdf", size: "1.2 MB", bar: true }] } })); } },
+  S26: { role: "หน่วยงาน (กบผ.)", apply: () => { applySample("T1_afterClose"); patchJob("T1", "82-6789", (j) => ({ ...j, safety: { files: [{ name: "Safety-Inspection-82-6789.pdf", size: "1.2 MB", bar: true }] } })); } },
 };
 
 function SafetyList() {

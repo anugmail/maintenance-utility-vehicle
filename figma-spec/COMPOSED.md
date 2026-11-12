@@ -462,13 +462,13 @@ screens.js ไม่ได้วาดปุ่มไปขั้นถัดไ
 
 ## ศ2. S26 การตรวจ ปจ.2 (Safety Inspection · `/safety/` + popup · 11 พ.ย. 2569 · BACKLOG ข้อ 67–67ง · ทำเว็บก่อน Figma)
 
-รอบ 4 (ข้อ 67ง): ไม่มีหน้ารายละเอียด (`/safety/detail/` `/safety/upload/` พามาที่รายการ + เปิด popup) · popup อยู่ `src/app/safety/_lib/SafetyPopup.tsx` · ผล 4 ตัวเลือก ผ่าน · ไม่ผ่าน · ระงับ · ให้แก้ไข (Pill Success · Error · Warning · Info)
+รอบ 4 (ข้อ 67ง): ไม่มีหน้ารายละเอียด (`/safety/detail/` `/safety/upload/` พามาที่รายการ + เปิด popup) · popup อยู่ `src/app/safety/_lib/SafetyPopup.tsx` · ผล 4 ตัวเลือก ผ่าน · ไม่ผ่าน · ระงับ · ให้แก้ไข (Pill Success · Error · Warning · Info) → 12 พ.ย. 2569 (ข้อ 69) ผล 3 ตัวเลือก ผ่าน · ไม่ผ่าน · ระงับ (Pill Success · Error · Warning) · File upload PDF อย่างเดียว
 
 | ส่วน | ประกอบจาก | เหตุผล |
 |---|---|---|
 | หน้ารายการ | ชิ้นเดียวกับแดชบอร์ด S24 (`MaGrid` · `FilterShell` · Table header · Input dropdown (with badges) · Empty state/Search not found) + Action icons ไอคอน `upload_file` "อัปโหลดเอกสาร" เปิด popup (ผู้ดูแลยานพาหนะ `quick_reference_all` "ดูผล") | โครงหน้ารายการแบบ Vehicle list ของ "Vehicle Management" ใน UI Release#2 ที่ S24 ใช้แล้ว ไม่ประกอบใหม่ · ไลบรารีไม่มีปุ่มข้อความในช่องตาราง ⇒ Tertiary button ไอคอน (Action icons ของ Table cell) |
 | popup ผลการตรวจ ปจ.2 บนหน้ารายการ (ข้อ 67ง · เดิมหน้ารายละเอียด + popup เพิ่มผล ข้อ 67ก) | Page header + Primary button "เพิ่มผล" (Actions แบบ "สร้างแผน") · VehicleAndReporterInfo ×2 (ข้อมูลยานพาหนะ · ผลล่าสุด · ไฟล์ Maintain-D) · Section label + Table + Empty state/Data empty (ประวัติ) · PopupModal (Modal · มือถือ Bottom sheet) ใส่ Text input วันที่ + Date picker Type=Single · Input label + Radio text card ×3 ผ่าน/ไม่ผ่าน/ระงับ · File upload | หน้ารายละเอียดแบบรายละเอียดยานพาหนะของ S24 · เพิ่มผลแบบ popup วันเวลาปิดงาน S10 (ฟอร์มสั้นในหน้าที่ดูอย่างเดียว) · Radio text card ไม่มีสถานะ Error ⇒ บังคับเลือกด้วยปุ่มบันทึก Disabled |
-| ปุ่ม "ถ่ายรูป" ใน popup ผลการตรวจ ปจ.2 (มือถือ · ข้อ 67ค) | Secondary button lg ไอคอน `photo_camera` ใต้ File upload + input ไฟล์ซ่อน `accept="image/*" capture="environment"` | เจ้าของงาน "ถ่ายรูปได้" · ไลบรารีไม่มี File upload แบบกล้อง และต้นแบบยังไม่มีจุดถ่ายรูปให้ลอก ⇒ ใช้ปุ่มของไลบรารีเปิดกล้อง ภาพเข้ารายการไฟล์ของ File upload เดิม |
+| ~~ปุ่ม "ถ่ายรูป" ใน popup ผลการตรวจ ปจ.2 (มือถือ · ข้อ 67ค)~~ **เอาออก 12 พ.ย. 2569 (ข้อ 69 · ไฟล์ PDF อย่างเดียว)** | Secondary button lg ไอคอน `photo_camera` ใต้ File upload + input ไฟล์ซ่อน `accept="image/*" capture="environment"` | เจ้าของงาน "ถ่ายรูปได้" · ไลบรารีไม่มี File upload แบบกล้อง และต้นแบบยังไม่มีจุดถ่ายรูปให้ลอก ⇒ ใช้ปุ่มของไลบรารีเปิดกล้อง ภาพเข้ารายการไฟล์ของ File upload เดิม |
 | เมนู Sidebar "การตรวจ ปจ.2" (เดิม Safety Inspection) | Nav list item ในกลุ่ม งานซ่อมและบำรุงรักษา | ไม่มีใน Sidebar Navigation ของ UI Release#2 (แบบเมนูต้นแบบ บ.) |
 | บรรทัดยานพาหนะใน popup บนมือถือ (ข้อ 67ง) | ข้อความ 14 gray-600 บนสุดของเนื้อหา Bottom sheet | Bottom sheet header ไม่มี Supporting text (desktop อยู่ใน Supporting text ของ Modal header) |
 | คอลัมน์สถานะยานพาหนะ + ปุ่มส่งออก (ข้อ 67ฉ) | Table cell Style=Badge (Pill outline ชุด MA_VSTAT ของ S24) · Table header Actions = Secondary button "ส่งออก" ไอคอน download (แบบแท็บต้นทุน S18) · ไฟล์ .csv จาก `downloadCsv` ของ S4 | ครบ 8 คอลัมน์แล้ว ⇒ รหัสยานพาหนะ · ยี่ห้อ/รุ่น เป็นบรรทัดรอง |
@@ -478,5 +478,5 @@ screens.js ไม่ได้วาดปุ่มไปขั้นถัดไ
 | ส่วน | ประกอบจาก | เหตุผล |
 |---|---|---|
 | ส่วนเครื่องมือกล | Section label + Actions Secondary button "เพิ่มเครื่องมือกล" + Table / Mobile table (MaGrid ของ S24) + Action icons แก้ไข + Empty state/Data empty | UI Release#2 และไลบรารีไม่มีบล็อกเครื่องมือกลในรายละเอียดยานพาหนะ · ทะเบียนเครื่องมือกลเดิม (design-mock/equipment-asset-code.html ของรีโปงานซ่อม · ใช้แค่รายการช่อง) เป็นตารางต่อเครื่อง ⇒ ตารางชุดเดียวกับแท็บอื่นของหน้านี้ |
-| popup เพิ่ม/แก้ไข | PopupModal (Modal · มือถือ Bottom sheet) + Input dropdown (ประเภท) + Text input ×9 วาง 2 คอลัมน์ | ฟอร์มสั้นในหน้าที่ดูอย่างเดียว แบบ popup ของ S10/S26 · ตรวจตอนกดบันทึก (Text input State Error + Helper text) |
+| popup เพิ่ม/แก้ไข | PopupModal (Modal · มือถือ Bottom sheet) + Input dropdown (ประเภท) + Text input ×10 วาง 2 คอลัมน์ (12 พ.ย. 2569 ข้อ 72 เพิ่ม หมายเลขเครื่องยนต์ (ส่วนเครื่องจักร) ไม่บังคับ · เดิม ×9) | ฟอร์มสั้นในหน้าที่ดูอย่างเดียว แบบ popup ของ S10/S26 · ตรวจตอนกดบันทึก (Text input State Error + Helper text) |
 | การแสดงส่วนเครื่องมือกล (ข้อ 68ก) | ไม่มี component ใหม่ · อ่านธง hasEquipment จากตารางอ้างอิง `lib/mock/vehicleTypes.ts` ตามรหัสข้างรถ | กติกาอยู่ในข้อมูล (table reference) ไม่ฝังในหน้าจอ |

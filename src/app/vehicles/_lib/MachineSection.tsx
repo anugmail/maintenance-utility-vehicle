@@ -6,7 +6,9 @@
    เพิ่ม/แก้ไข = PopupModal (Modal ของไลบรารี · มือถือ Bottom sheet · แบบ popup ของ S10 S26) ช่อง 2 คอลัมน์ (Grid · มือถือเรียงลง):
      ประเภทเครื่องมือกล (Input dropdown · บังคับ) · ยี่ห้อ · รุ่น · รหัสทรัพย์สิน 12 หลัก · รหัสทรัพย์สินย่อย 4 หลัก (บังคับ · คู่รหัสห้ามซ้ำทั้งระบบ)
      · พิกัดยก กก. (บังคับ ยกเว้นถังฉีดน้ำ/อื่นๆ) · ชั่วโมงเครื่องยนต์ · ชั่วโมงเครน (บังคับ จำนวนเต็ม ≥ 0 · Cumulative_working_hours NOT NULL)
-     · หมายเลข HC · หมายเลขเครื่อง (Serial No.) (ถ้ามี)
+     · หมายเลข HC · หมายเลขประจำเครื่องจักร (Serial No.) · หมายเลขเครื่องยนต์ (ส่วนเครื่องจักร) (ถ้ามี)
+     12 พ.ย. 2569 ข้อ 72 (เจ้าของงาน 12 พ.ย. 2569 เลือกตามไฟล์สรุปประชุม VMS Plus (Notion "meeting 11/11/68" หัวข้อ 9)): เพิ่มหมายเลขเครื่องยนต์ (ส่วนเครื่องจักร) ไม่บังคับ ต่อจาก Serial No. · ป้าย "หมายเลขเครื่อง (Serial No.)" → "หมายเลขประจำเครื่องจักร (Serial No.)"
+     ค่าที่แมปจากฐานข้อมูลได้ขึ้นเป็นค่าตั้งต้นและแก้ได้ (เจ้าของงาน "ถ้าแมปข้อมูลจากฐานข้อมูลได้ ก็เอามาแสดง แต่สามารถแก้ไขได้") · ตารางคงคอลัมน์เดิม (เต็มแล้ว) หมายเลขเครื่องยนต์อยู่บรรทัดรองของยี่ห้อ/รุ่น
      ตรวจตอนกดบันทึก: ช่องผิด = Text input State Error + Helper text · ผ่าน = toast "บันทึกเครื่องมือกลสำเร็จ"
    แก้ได้เฉพาะ กบค. (ผู้ดูแลข้อมูลยานพาหนะ ตามทะเบียนเครื่องมือกลเดิม · เสนอ — PERMISSIONS.md) · บทบาทอื่นดูอย่างเดียว */
 import { useState } from "react";
@@ -34,10 +36,10 @@ const COLS: TableColumn[] = [
   { head: "พิกัดยก (" + LIFT_UNIT + ")", width: 120 }, { head: "ชั่วโมงเครื่องยนต์", width: 150 }, { head: "ชั่วโมงเครน", width: 130 }, { head: "", width: 64, Style: "Action icons" },
 ];
 
-interface Draft { type: string; brand: string; model: string; asset: string; subAsset: string; lift: string; engineHours: string; craneHours: string; hc: string; serial: string }
+interface Draft { type: string; brand: string; model: string; asset: string; subAsset: string; lift: string; engineHours: string; craneHours: string; hc: string; serial: string; engineNo: string }
 const toDraft = (x?: Machine): Draft => ({
   type: x?.type ?? "", brand: x?.brand ?? "", model: x?.model ?? "", asset: x?.asset ?? "", subAsset: x?.subAsset ?? "",
-  lift: x?.lift != null ? String(x.lift) : "", engineHours: x ? String(x.engineHours) : "", craneHours: x ? String(x.craneHours) : "", hc: x?.hc ?? "", serial: x?.serial ?? "",
+  lift: x?.lift != null ? String(x.lift) : "", engineHours: x ? String(x.engineHours) : "", craneHours: x ? String(x.craneHours) : "", hc: x?.hc ?? "", serial: x?.serial ?? "", engineNo: x?.engineNo ?? "",
 });
 const intOk = (v: string) => /^\d+$/.test(v.replace(/,/g, ""));
 const toInt = (v: string) => Number(v.replace(/,/g, ""));
@@ -80,7 +82,7 @@ function MachineModal({ open, carId, car, edit, list, onClose }: { open: boolean
     if (bad) return;
     saveMachine(carId, car, {
       key: edit?.key ?? "m" + Date.now(), type: d.type, brand: d.brand.trim(), model: d.model.trim(), asset: d.asset, subAsset: d.subAsset,
-      lift: d.lift ? toInt(d.lift) : undefined, engineHours: toInt(d.engineHours), craneHours: toInt(d.craneHours), hc: d.hc.trim() || undefined, serial: d.serial.trim() || undefined,
+      lift: d.lift ? toInt(d.lift) : undefined, engineHours: toInt(d.engineHours), craneHours: toInt(d.craneHours), hc: d.hc.trim() || undefined, serial: d.serial.trim() || undefined, engineNo: d.engineNo.trim() || undefined,
     });
     notify("บันทึกเครื่องมือกลสำเร็จ");
     onClose();
@@ -89,7 +91,7 @@ function MachineModal({ open, carId, car, edit, list, onClose }: { open: boolean
   useProtoForm(open ? {
     fill: () => setD((x) => ({ ...x, type: x.type || "กระเช้า", brand: x.brand || "Aichi", model: x.model || "SK17A", lift: x.lift || "200", engineHours: x.engineHours || "0", craneHours: x.craneHours || "0" })),
     clear: () => { setSeen(null); },
-    dirty: edit ? JSON.stringify(d) !== JSON.stringify(toDraft(edit)) : !!(d.type || d.brand || d.model || d.lift || d.engineHours || d.craneHours || d.hc || d.serial),
+    dirty: edit ? JSON.stringify(d) !== JSON.stringify(toDraft(edit)) : !!(d.type || d.brand || d.model || d.lift || d.engineHours || d.craneHours || d.hc || d.serial || d.engineNo),
   } : null);
   const f = (k: keyof Draft, label: string, o: { optional?: boolean; num?: boolean; ph?: string; max?: number } = {}) => (
     <TextInput LabelText={label} Optional={o.optional} Text={d[k]} Placeholder={o.ph ?? "ระบุ" + label.replace(/ \(.*\)$/, "")} inputMode={o.num ? "numeric" : undefined} maxLength={o.max}
@@ -113,7 +115,8 @@ function MachineModal({ open, carId, car, edit, list, onClose }: { open: boolean
         {f("engineHours", "ชั่วโมงเครื่องยนต์", { num: true, ph: "ชั่วโมง" })}
         {f("craneHours", "ชั่วโมงเครน", { num: true, ph: "ชั่วโมง" })}
         {f("hc", "หมายเลข HC", { optional: true, ph: "เช่น HC - 9001" })}
-        {f("serial", "หมายเลขเครื่อง (Serial No.)", { optional: true, ph: "ระบุหมายเลขเครื่อง" })}
+        {f("serial", "หมายเลขประจำเครื่องจักร (Serial No.)", { optional: true, ph: "ระบุหมายเลขประจำเครื่องจักร" })}
+        {f("engineNo", "หมายเลขเครื่องยนต์ (ส่วนเครื่องจักร)", { optional: true, ph: "ระบุหมายเลขเครื่องยนต์ของเครื่องจักร" })}
       </div>
     </PopupModal>
   );
@@ -134,7 +137,7 @@ function MachineBody({ carId, car }: { carId: string; car: Car }) {
   const openEdit = (x: Machine | null) => { setEdit(x); setOpen(true); };
   const rows: MaValue[][] = list.map((x) => {
     const a = canEdit ? [{ IconSwap: "edit-24-300-round", label: "แก้ไข " + x.type + " " + x.subAsset, onClick: () => openEdit(x) }] : [];
-    return [x.type, { text: [x.brand, x.model].filter(Boolean).join(" ") || "-", sub: [x.hc, x.serial ? "S/N " + x.serial : ""].filter(Boolean).join(" · ") || undefined },
+    return [x.type, { text: [x.brand, x.model].filter(Boolean).join(" ") || "-", sub: [x.hc, x.serial ? "S/N " + x.serial : "", x.engineNo ? "หมายเลขเครื่องยนต์ " + x.engineNo : ""].filter(Boolean).join(" · ") || undefined },
       x.asset, x.subAsset, nf0(x.lift), nf0(x.engineHours), nf0(x.craneHours), { actions: a, mobileActions: a }];
   });
   const add = canEdit ? <SecondaryButton Text="เพิ่มเครื่องมือกล" LeadingIconSwap="add-24-300-round" Size={mob ? "lg" : "md"} onClick={() => openEdit(null)} /> : undefined;

@@ -41,9 +41,9 @@ import { Metrics, RadioPick, SORT0, SortTable, nextSort, sortRows, type Sort } f
 import { downloadCsv, openPrint } from "./_lib/exportFile";
 
 /* Permission (เคาะ 10 พ.ย. 2569 · Figma 76efd87 C.14 C.15 · เจ้าของงาน "ผู้สร้างแผนเห็นเฉพาะแผนของหน่วยงานตัวเอง ยกเว้น กบค จะเห็นแผนของหน่วยงานอื่นด้วย แต่แก้ไขไม่ได้"):
-   หน่วยงาน (กกฟ.1 กกฟ.2 กรย.) เห็นเฉพาะแผนของหน่วยงานตัวเอง — การ์ดตัวเลข ตัวเลขบนแท็บ ตาราง นับตามแผนที่เห็น · แผงตัวกรองไม่มี "หน่วยงานผู้ขอเบิก" · ตัวเลือกแผนเฉพาะแผนของตัวเอง
+   หน่วยงาน (กบผ. กปส. กรย. กส.1 กส.2) เห็นเฉพาะแผนของหน่วยงานตัวเอง — การ์ดตัวเลข ตัวเลขบนแท็บ ตาราง นับตามแผนที่เห็น · แผงตัวกรองไม่มี "หน่วยงานผู้ขอเบิก" · ตัวเลือกแผนเฉพาะแผนของตัวเอง
    กบค. เห็นทุกหน่วยงาน ดูอย่างเดียว · แผงตัวกรองมี "หน่วยงานผู้ขอเบิก" */
-const DASH_ROLES = ["กบค.", "หน่วยงาน (กกฟ.1)", "หน่วยงาน (กกฟ.2)", "หน่วยงาน (กรย.)"] as const;
+const DASH_ROLES = ["กบค.", "หน่วยงาน (กบผ.)", "หน่วยงาน (กปส.)", "หน่วยงาน (กรย.)", "หน่วยงาน (กส.1)", "หน่วยงาน (กส.2)"] as const;   // ข้อ 70 เพิ่ม กส.1 กส.2
 const COLS = [sortAll(QPART_COLS), sortAll(DASH_CAR_COLS), sortAll(DASH_PROG_COLS)];
 const ALL_N = [DASH_AGG.length, DASH_CARS.length, DASH_PROG.length];
 
@@ -106,7 +106,7 @@ function PartsDash() {
     const all = exp.scope === "ทั้งหมด";
     const doc = {
       title: "รายงาน" + DASH_TITLE + " · ปีงบประมาณ " + DASH_YEAR,
-      info: [["หน่วยงานที่ออกเอกสาร", "กกฟ.1 การไฟฟ้าส่วนภูมิภาค"], ["ตัวกรอง", all || !chips.length ? "-" : chips.join(", ")], ["พิมพ์เมื่อ", new Date().toLocaleString("th-TH")], ["ผู้พิมพ์", PLAN_CREATOR]] as [string, string][],
+      info: [["หน่วยงานที่ออกเอกสาร", "กบผ. การไฟฟ้าส่วนภูมิภาค"], ["ตัวกรอง", all || !chips.length ? "-" : chips.join(", ")], ["พิมพ์เมื่อ", new Date().toLocaleString("th-TH")], ["ผู้พิมพ์", PLAN_CREATOR]] as [string, string][],
       section: DASH_TABS[tab] + " (" + (all ? allN[tab] : rows.length) + ")",
       cols: COLS[tab], rows: all ? allRows(tab) : rows, file: DASH_TITLE + "-" + DASH_TABS[tab],
     };

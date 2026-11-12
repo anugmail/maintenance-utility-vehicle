@@ -15,7 +15,7 @@ const seed = () => {
 };
 const D = (car: string, tab: number) => "/vehicles/detail/?car=" + car + "&tab=" + tab;
 const openCar = (plate: string, pre = "") => ({ at: LIST, text: pre + "กดเลขทะเบียน " + plate + " ในตาราง", mobile: pre + "ที่การ์ดของยานพาหนะ " + plate + " กดเลขทะเบียน" });
-const ROLE = "หน่วยงาน (กกฟ.1)" as const;
+const ROLE = "หน่วยงาน (กบผ.)" as const;
 
 export const VEHICLE_MAINTENANCE: GuideScenario = {
   key: "vehicle-maintenance", code: "S24", title: "ติดตามข้อมูลการบำรุงรักษารายคันและกำหนดครั้งถัดไป", who: "ผู้ดำเนินการ (ผู้ดูแลยานพาหนะเห็นเฉพาะยานพาหนะที่ดูแล)",

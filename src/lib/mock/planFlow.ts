@@ -39,19 +39,20 @@ export function useHydrated() {
   return useSyncExternalStore(noop, () => true, () => false);
 }
 /* หน่วยงานของบทบาทผู้สร้างแผน (6 พ.ย. 2569 รอบ 2: กบค. สร้างแผนได้ · แผนของหน่วยงานอื่น กบค. ดูอย่างเดียว) — ไม่ใช่ผู้สร้างแผน = undefined */
-/* 9 พ.ย. 2569 persona 3 หน่วยงาน (Figma 9d7d1a7 · ownPlans / allPlans ของ screens.js): กกฟ.1 กกฟ.2 กรย. สร้างแผนได้ หน้ารายการเห็นเฉพาะแผนของหน่วยงานตัวเอง (A.1 A.39 A.40)
+/* 9 พ.ย. 2569 persona 3 หน่วยงาน (Figma 9d7d1a7 · ownPlans / allPlans ของ screens.js): กบผ. กปส. กรย. สร้างแผนได้ หน้ารายการเห็นเฉพาะแผนของหน่วยงานตัวเอง (A.1 A.39 A.40)
    · กบค. เห็นแผนทุกหน่วยงาน (A.31) สร้างแผนของ กบค. ได้ แผนของหน่วยงานอื่นดูอย่างเดียว */
-export const UNIT_ROLES: Partial<Record<Role, string>> = { "หน่วยงาน (กกฟ.1)": "กกฟ.1", "หน่วยงาน (กกฟ.2)": "กกฟ.2", "หน่วยงาน (กรย.)": "กรย." };
+/* 12 พ.ย. 2569 ข้อ 70 (เจ้าของงาน 12 พ.ย. 2569 เลือกตามไฟล์สรุปประชุม VMS Plus (Notion "meeting 11/11/68" หัวข้อ 9)): กบผ. กปส. (เดิม กกฟ.1 กกฟ.2) + กส.1 กส.2 */
+export const UNIT_ROLES: Partial<Record<Role, string>> = { "หน่วยงาน (กบผ.)": "กบผ.", "หน่วยงาน (กปส.)": "กปส.", "หน่วยงาน (กรย.)": "กรย.", "หน่วยงาน (กส.1)": "กส.1", "หน่วยงาน (กส.2)": "กส.2" };
 export const PLAN_ROLES: readonly Role[] = [...(Object.keys(UNIT_ROLES) as Role[]), "กบค."];
 export const roleUnit = (r: Role) => UNIT_ROLES[r] ?? (r === "กบค." ? "กบค." : undefined);
 /* แผนที่บทบาทนี้เห็นในหน้ารายการ: กบค. = ทุกหน่วยงาน (allPlans) · ผู้สร้างแผนของหน่วยงาน = แผนของหน่วยงานตัวเอง (ownPlans) */
 export const visiblePlans = (r: Role, plans: Plan[]) => (r === "กบค." ? plans : plans.filter((p) => unitOf(p.mr, p.unit) === roleUnit(r)));
-/* จัดการแผนนี้ได้ (แก้ไข ลบ ตามสถานะ): ผู้สร้างแผนของหน่วยงานนั้นเท่านั้น (หน่วยงาน กกฟ.1 กกฟ.2 กรย. · กบค. = แผนของ กบค. · planRow view) */
+/* จัดการแผนนี้ได้ (แก้ไข ลบ ตามสถานะ): ผู้สร้างแผนของหน่วยงานนั้นเท่านั้น (หน่วยงาน กบผ. กปส. กรย. กส.1 กส.2 · กบค. = แผนของ กบค. · planRow view) */
 export const canManage = (r: Role, p: Plan) => { const u = roleUnit(r); return !!u && unitOf(p.mr, p.unit) === u; };
 /* ---------- สิทธิ์ต่อแผน (ตรวจสิทธิ์ 9 พ.ย. 2569 เจ้าของงาน "ทำไมหน้านี้ของ กกฟ2 เข้ามาในฐานะ กกฟ2 ก็ยังดูแผนการเดินทาง สร้างแผนการเดินทาง ไม่ได้ น่าจะเป็นเรื่อง permission") ----------
    ownsPlan = หน่วยงานของบทบาท (UNIT_ROLES · กบค. = กบค.) ตรงกับหน่วยงานเจ้าของแผน ⇒ ทำงานทุกขั้นของแผนนั้นได้ (แก้ไข ลบ ไตรมาส แผนเดินทาง งานรายคัน ส่งประวัติ รายงานผล)
    planAccess: own = เจ้าของ · view = กบค. ดูแผนของหน่วยงานอื่น (A.32 ดูอย่างเดียว) และบทบาทที่ไม่ใช่ผู้ดำเนินการ (ผู้อนุมัติ กรย. ผู้ดูแลยานพาหนะ ผู้รับจ้าง · หน้าของบทบาทนั้นคุมสิทธิ์เอง)
-   · none = หน่วยงาน (กกฟ.1 กกฟ.2 กรย.) เปิดแผนของหน่วยงานอื่นด้วย URL ⇒ กลับหน้ารายการ (แบบแผนที่ไม่มีแล้ว · ไม่แสดงข้อมูล) */
+   · none = หน่วยงาน (กบผ. กปส. กรย. กส.1 กส.2) เปิดแผนของหน่วยงานอื่นด้วย URL ⇒ กลับหน้ารายการ (แบบแผนที่ไม่มีแล้ว · ไม่แสดงข้อมูล) */
 export const ownsPlan = (r: Role, p?: Plan) => !!p && canManage(r, p);
 export type PlanAccess = "own" | "view" | "none";
 export const planAccess = (r: Role, p?: Plan): PlanAccess => (!p ? "none" : canManage(r, p) ? "own" : UNIT_ROLES[r] ? "none" : "view");
@@ -207,7 +208,7 @@ const A_DRAW: Record<number, "none"> = Object.fromEntries(FIG_A_DRAW.map((k) => 
 const A_PICKS: Record<number, number[]> = Object.fromEntries(UNIT_FLEET.filter((c) => !A_DRAW[c]).map((c) => [c, oilChanges(A_OILS[c]) ? [0, ...CAR_PICK] : [...CAR_PICK]]));
 /** จำนวนรถของแผนตัวอย่างในไตรมาส q (ใช้ในข้อความโหมดพาดู) */
 export const SAMPLE_Q_CARS = (q: number) => Object.values(A_ALL).filter((x) => x === q).length;
-export const SAMPLE_NAME = "บำรุงรักษายานพาหนะ กกฟ.1 ปีงบประมาณ 2570";   // NEW_PLAN[1]
+export const SAMPLE_NAME = "บำรุงรักษายานพาหนะ กบผ. ปีงบประมาณ 2570";   // NEW_PLAN[1]
 /* R2 ของ screens.js = ภาค 2 ทุกเขต (6 พ.ย. 2569 ไม่มีประเภทแล้ว — ประเภทรถกระเช้าเดิมไม่มีในโค้ดจริง) */
 export const R2 = { regions: [REGIONS[1]], districts: [...DISTRICTS[REGIONS[1]]], types: [] as string[] };
 /* acked (ไตรมาสที่คลังรับทราบ · S22) ไม่มีหน้าไหนอ่านแล้วหลังตัด S22 6 พ.ย. 2569 — คงไว้ให้เคสพาดู S4 (cases/parts-progress) ที่ยังส่งค่านี้ เอาออกหลังรวมงาน S4 */

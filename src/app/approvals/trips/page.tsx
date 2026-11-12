@@ -30,7 +30,7 @@ function ReviewList() {
   useSeed();
   const router = useRouter();
   const mock = useMock();
-  /* ผู้สร้างแผนเดินทาง = ชื่อในใบ (ไม่มีวงเล็บหน่วยงาน) · ใบตัวอย่างของหน่วยงานอื่น (MRZ7000002 กกฟ.2) ไม่ใช่ CREATOR_SHORT */
+  /* ผู้สร้างแผนเดินทาง = ชื่อในใบ (ไม่มีวงเล็บหน่วยงาน) · ใบตัวอย่างของหน่วยงานอื่น (MRZ7000002 กปส.) ไม่ใช่ CREATOR_SHORT */
   const creatorOf = (t: { createdBy?: string }) => t.createdBy?.replace(/ \(.*\)$/, "") ?? CREATOR_SHORT;
   const [tab, setTab] = useState(0);
   const [query, setQuery] = useState("");

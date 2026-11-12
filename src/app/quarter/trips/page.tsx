@@ -12,6 +12,8 @@
        · ไม่มีรายการ = Empty state/Data empty "ยังไม่มีรายการอะไหล่" / "ไตรมาสนี้ไม่มีอะไหล่ที่ต้องเบิก" (noParts ของอะไหล่ในแผน S2 · จอหน้าไตรมาสไม่มีแบบว่าง)
      E.16–E.20 (เพิ่ม ลด แก้ไข รถในไตรมาส 4 พ.ย. 2569 · tripList o.added o.removed · Q_EXTRA · Q_REMOVE_CONFIRM · qAddModal): popup "เพิ่มรถเข้าไตรมาส n" (TripCarPicker)
        · 11 พ.ย. 2569 เพิ่มรายคันได้เฉพาะไตรมาสที่ยังบำรุงรักษาไม่เสร็จทุกคัน (quarterFinished · เสร็จสิ้น + บำรุงรักษาไม่ได้ นับว่าเสร็จ) — เสร็จครบแล้ว ปุ่ม "เพิ่มยานพาหนะ" Disabled
+       · 12 พ.ย. 2569 (เจ้าของงาน 12 พ.ย. 2569 เลือกตามไฟล์สรุปประชุม VMS Plus (Notion "meeting 11/11/68" หัวข้อ 9) · BACKLOG ข้อ 71) ตัวเลือก = ยานพาหนะทุกคันที่ยังไม่อยู่ในแผนนี้ ไม่จำกัดภาค เขต ประเภทของแผน (รับมอบระหว่างปีเพิ่มได้ · quarterPool)
+         บรรทัดรองของ popup "ยานพาหนะที่ยังไม่อยู่ในแผนนี้ เพิ่มได้ทุกคัน รวมยานพาหนะที่รับมอบระหว่างปี" (เดิม "ยานพาหนะในขอบเขตของแผน (ภาค เขต และประเภทยานพาหนะเดียวกัน) ที่ยังไม่อยู่ในไตรมาสใด")
        · ไอคอนแก้ไข = TripCarEditModal (คันที่อยู่ในแผนเดินทางแล้ว = แก้ที่ใบนั้น) · ไอคอนลบ = ConfirmDialog "ยืนยันการเอารถออกจากไตรมาส n" · ไม่ต้องส่งอนุมัติแผนใหม่
      Section label "แผนเดินทาง (n)" + Tertiary brand button "สร้างแผนเดินทาง" → Table (TRIP_COLS ไอคอน ›) / Empty state/Data empty + Primary button "สร้างแผนเดินทาง"
        รถทุกคันอยู่ในแผนเดินทางแล้ว = ปุ่ม "สร้างแผนเดินทาง" Disabled (5 พ.ย. 2569 "สร้างแผนได้จนกว่าจะไม่เหลือรถ" · ตัด popup "รถทุกคันของไตรมาสอยู่ในแผนเดินทางแล้ว")
@@ -73,7 +75,7 @@ const TRIP_COLS: TableColumn[] = [
 ];
 
 /* ?sample=S25 (หน้า /scenarios/): ใบ T1 อนุมัติแล้ว 80-9981 ลำปาง บำรุงรักษาไม่ได้ (T1_afterCannot) · ล้างการย้ายและรถในไตรมาสที่แก้ของแผนตัวอย่าง */
-const SAMPLES: SampleMap = { S25: { role: "หน่วยงาน (กกฟ.1)", apply: () => { applySample("T1_afterCannot"); setMock((s) => ({ ...s, moves: (s.moves ?? []).filter((m) => m.planId !== "Z7000001"), qcars: Object.fromEntries(Object.entries(s.qcars ?? {}).filter(([k]) => !k.startsWith("Z7000001-"))) })); } } };
+const SAMPLES: SampleMap = { S25: { role: "หน่วยงาน (กบผ.)", apply: () => { applySample("T1_afterCannot"); setMock((s) => ({ ...s, moves: (s.moves ?? []).filter((m) => m.planId !== "Z7000001"), qcars: Object.fromEntries(Object.entries(s.qcars ?? {}).filter(([k]) => !k.startsWith("Z7000001-"))) })); } } };
 const MOVE_ICON = "swap_driving_apps_wheel-24-300-round";
 
 function TripList() {
@@ -86,7 +88,7 @@ function TripList() {
   const id = sp.get("id") ?? "Z7000001", q = Number(sp.get("q") ?? 1);
   const nowQ = "ไตรมาส " + q;
   const plan = planOf(mock, id);
-  /* ผู้ดำเนินการ = หน่วยงานเจ้าของแผน (canManage · กกฟ.1 กกฟ.2 กรย. กบค.) — 9 พ.ย. 2569 เดิมเฉพาะ กกฟ.1 ("แผนอนุมัติแล้ว แต่ไม่เจอแผนการเดินทางที่อนุมัติแล้ว") */
+  /* ผู้ดำเนินการ = หน่วยงานเจ้าของแผน (canManage · กบผ. กปส. กรย. กส.1 กส.2 กบค.) — 9 พ.ย. 2569 เดิมเฉพาะ กบผ. ("แผนอนุมัติแล้ว แต่ไม่เจอแผนการเดินทางที่อนุมัติแล้ว") */
   const kbk = !!plan && canManage(role, plan);   // อื่น (กบค. ดูแผนของหน่วยงานอื่น · A.32) = ดูอย่างเดียว ไม่มีปุ่มเพิ่ม แก้ไข สร้าง
   const denied = usePlanGate(plan);   // หน่วยงานเปิดแผนของหน่วยงานอื่น → หน้ารายการ (ตรวจสิทธิ์ 9 พ.ย. 2569)
   const trips = quarterTrips(mock, id, q);
@@ -185,7 +187,7 @@ function TripList() {
         </InputDropdownWithBadges>
       </FilterShell>
       <TripCarPicker open={adding} pool={quarterPool(mock, id, q)} nowQ={nowQ} title={"เพิ่มยานพาหนะเข้า" + nowQ}
-        sub="ยานพาหนะในขอบเขตของแผน (ภาค เขต และประเภทยานพาหนะเดียวกัน) ที่ยังไม่อยู่ในไตรมาสใด" okText={"เพิ่มเข้า" + nowQ} emptyText="ไม่มียานพาหนะที่เพิ่มเข้าไตรมาสนี้ได้"
+        sub="ยานพาหนะที่ยังไม่อยู่ในแผนนี้ เพิ่มได้ทุกคัน รวมยานพาหนะที่รับมอบระหว่างปี" okText={"เพิ่มเข้า" + nowQ} emptyText="ไม่มียานพาหนะที่เพิ่มเข้าไตรมาสนี้ได้"
         onCancel={() => setAdding(false)} onAdd={(ids) => { addQuarterCars(id, q, ids); setAdding(false); notify("เพิ่มยานพาหนะเข้า" + nowQ + " สำเร็จ"); }} />
       {/* S25 (Figma 5c47568 X.2 X.11): ดำเนินการบำรุงรักษา + ย้ายไปไตรมาสอื่น · ไตรมาส 4 ย้ายกดไม่ได้ ดำเนินการบำรุงรักษากดได้ */}
       <RowMenu anchor={menu?.anchor ?? null} items={menu ? [{ ...MAINT_ITEM, onClick: () => setMaint(menu.car) }, { Text: "ย้ายไปไตรมาสอื่น", IconSwap: MOVE_ICON, Disabled: lastQ, onClick: () => openMove(menu.car) }] : []} onClose={() => setMenu(null)} />

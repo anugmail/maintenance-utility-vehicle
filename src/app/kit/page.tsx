@@ -134,7 +134,7 @@ export default function Kit() {
       <Block name="Text input" node="Inputs (2:6)">
         {(["Default", "Filled", "Hover", "Focused", "Disabled", "Readonly", "Error", "Error Hover", "Error Focused", "Error Readonly"] as TextInputState[]).map((st) => (
           <V key={st} label={`State=${st}, Size=md`}>
-            <TextInput State={st} LabelText="ชื่อแผน" Text={st === "Default" ? "" : "บำรุงรักษายานพาหนะ กกฟ.1 ปีงบประมาณ 2570"} Placeholder="ระบุชื่อแผน" HelperText={st.startsWith("Error") ? "กรุณาระบุชื่อแผน" : undefined} className="w-[352px]" />
+            <TextInput State={st} LabelText="ชื่อแผน" Text={st === "Default" ? "" : "บำรุงรักษายานพาหนะ กบผ. ปีงบประมาณ 2570"} Placeholder="ระบุชื่อแผน" HelperText={st.startsWith("Error") ? "กรุณาระบุชื่อแผน" : undefined} className="w-[352px]" />
           </V>
         ))}
         <V label="State=Default, Size=lg · Leading icon"><TextInput Size="lg" Label={false} LeadingIconSwap="search-24-300-round" Placeholder="ค้นหาเลขที่ MR, ชื่อแผน" className="w-[352px]" /></V>
@@ -224,7 +224,7 @@ export default function Kit() {
         <div className="w-[370px]">
           <MobileTable>
             <MobileTableItem Style="Lead text" Header="เลขที่ MR" Text="MRZ7000004" />
-            <MobileTableItem Style="Text" Header="ชื่อแผน" Text="บำรุงรักษายานพาหนะ กกฟ.1 ปีงบประมาณ 2570" SupportingText="ปีงบประมาณ 2570" />
+            <MobileTableItem Style="Text" Header="ชื่อแผน" Text="บำรุงรักษายานพาหนะ กบผ. ปีงบประมาณ 2570" SupportingText="ปีงบประมาณ 2570" />
             <MobileTableItem Style="Badge" Header="สถานะ" Pill={["รออนุมัติ", "Warning"]} />
             <MobileTableItem Style="Action icons" Actions={[{ IconSwap: "more_horiz-20-400-round", label: "เมนู" }]} />
           </MobileTable>
@@ -244,7 +244,7 @@ export default function Kit() {
       </Block>
       <Block name="Page header" node="Page headers (1983:21158)">
         <V label="Breakpoint=Desktop · Actions" wide><PageHeader Breakpoint="Desktop" Title="บำรุงรักษาตามวาระ" crumbs={[{ Text: "บำรุงรักษาตามวาระ" }]} Actions={<PrimaryButton Text="สร้างแผน" LeadingIconSwap="add-24-300-round" />} /></V>
-        <V label="Breakpoint=Desktop · Badge" wide><PageHeader Breakpoint="Desktop" Title="เลขที่ MRZ7000004" Badge={["รออนุมัติ", "Brand"]} crumbs={[{ Text: "บำรุงรักษาตามวาระ", href: "/kit/" }, { Text: "บำรุงรักษายานพาหนะ กกฟ.1 ปีงบประมาณ 2570" }]} /></V>
+        <V label="Breakpoint=Desktop · Badge" wide><PageHeader Breakpoint="Desktop" Title="เลขที่ MRZ7000004" Badge={["รออนุมัติ", "Brand"]} crumbs={[{ Text: "บำรุงรักษาตามวาระ", href: "/kit/" }, { Text: "บำรุงรักษายานพาหนะ กบผ. ปีงบประมาณ 2570" }]} /></V>
         <V label="Breakpoint=Mobile · Back action · Actions"><div className="w-[370px]"><PageHeader Breakpoint="Mobile" Title="สร้างแผนบำรุงรักษา" onBack={() => undefined} Actions={<PrimaryButton Text="สร้างแผน" Size="lg" LeadingIconSwap="add-24-300-round" />} /></div></V>
       </Block>
       <Block name="Section header" node="Section headers (2011:6955)">

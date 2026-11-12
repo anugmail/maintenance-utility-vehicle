@@ -21,8 +21,8 @@ export const ACK_AT = "06/11/2569 10:05 น.";
 
 /* ACK_CARS ของ screens.js = [JOB_I, TRIP_1.sel[1], TRIP_1.sel[2]] — 82-6789 · 82-1145 ปิดงานแล้ว · 80-9981 บำรุงรักษาไม่ได้ (MOVE_I) */
 export const ACCEPTANCE_CARS = [
-  { carId: "82-6789", date: "04/11/2569", by: "นายวิชัย ทองดี (กกฟ.1)", cannot: false },
-  { carId: "82-1145", date: "05/11/2569", by: "นางสาวกนกวรรณ ใจมั่น (กกฟ.1)", cannot: false },
+  { carId: "82-6789", date: "04/11/2569", by: "นายวิชัย ทองดี (กบผ.)", cannot: false },
+  { carId: "82-1145", date: "05/11/2569", by: "นางสาวกนกวรรณ ใจมั่น (กบผ.)", cannot: false },
   { carId: "80-9981", date: "05/11/2569", by: PEOPLE.kbk, cannot: true },
 ];
 
@@ -44,7 +44,7 @@ export const accRecord = (m: MockState, tripId: string | null, carId: string | n
 export const accCarHref = (r: { trip: Pick<JobTrip, "id">; car: Pick<TripCar, "id"> }) => "/acceptance/car/?trip=" + r.trip.id + "&car=" + r.car.id;
 /** รายการงานและอะไหล่ที่ใช้จริง: แถวปิดงาน (ใช้จริง) · บำรุงรักษาไม่ได้ = จำนวนที่ใช้ไปแล้ว */
 export const workRows = (j: Job) => workItems(j);
-/** "นายวิชัย ทองดี (กกฟ.1)" → [ชื่อ, หน่วยงาน] (ช่องผู้ดำเนินการ ชื่อบน หน่วยงานบรรทัดรอง) */
+/** "นายวิชัย ทองดี (กบผ.)" → [ชื่อ, หน่วยงาน] (ช่องผู้ดำเนินการ ชื่อบน หน่วยงานบรรทัดรอง) */
 export const splitBy = (by: string): [string, string | undefined] => { const m = /^(.*) \((.*)\)$/.exec(by); return m ? [m[1], m[2]] : [by, undefined]; };
 
 /** รับทราบครบทุกคันในแผนแล้ว (ยานพาหนะทุกคันในแผนเดินทางที่อนุมัติแล้วของแผน เสร็จสิ้น/บำรุงรักษาไม่ได้ และรับทราบแล้ว) */

@@ -5,7 +5,7 @@
 import type { BadgeOutlineColor } from "@/components/vms/BadgeOutline";
 import type { PillColor } from "@/components/vms/PillOutline";
 import type { StatusState } from "@/components/vms/Status";
-import { CAND, DISTRICTS, FIG_EXTRA_IDS, PLANS, UNIT_FLEET, dCode, regionOf, type Plan } from "./data";
+import { CAND, FIG_EXTRA_IDS, PLANS, regionOf, type Plan } from "./data";
 import { setMock, type MockState } from "./store";
 
 export const NOW_Q = "ไตรมาส 1";
@@ -93,23 +93,17 @@ export function quarterCars(s: Pick<MockState, "plans" | "qcars">, planId: strin
   const added = e.added.filter((id) => !e.removed.includes(id)).map(carOf).filter((c): c is TripCar => !!c);
   return [...added, ...base.filter((c) => !e.added.includes(c.id) && !e.removed.includes(c.id))];
 }
-/** รถที่เพิ่มเข้าไตรมาสได้: รถของหน่วยงานในขอบเขตของแผน (ภาค เขต ประเภทรถ) ที่ยังไม่อยู่ในไตรมาสใด · แผนตัวอย่าง = Q_EXTRA */
+/** รถที่เพิ่มเข้าไตรมาสได้ระหว่างปี: ยานพาหนะทุกคันในระบบ (CAND) ที่ยังไม่อยู่ในแผนนี้ (ไตรมาสใดก็ตาม) — ไม่จำกัดภาค เขต ประเภทยานพาหนะของแผน
+    เจ้าของงาน 12 พ.ย. 2569 เลือกตามไฟล์สรุปประชุม VMS Plus (Notion "meeting 11/11/68" หัวข้อ 9) ให้เพิ่มยานพาหนะที่รับมอบระหว่างปีได้ (BACKLOG ข้อ 71 · เดิม 9 พ.ย. 2569 เฉพาะขอบเขตของแผน ภาค เขต ประเภท)
+    ใช้ทั้งแผนตัวอย่างและแผนจากฟอร์ม · แผนตัวอย่างของ S6 ขึ้น Q_EXTRA ของ screens.js ก่อน (ค่าเดิมของเคสพาดู) แล้วต่อด้วยคันอื่นตามลำดับ CAND */
 export function quarterPool(s: Pick<MockState, "plans" | "qcars">, planId: string, q: number): TripCar[] {
+  void q;   // ไม่ขึ้นกับไตรมาส (ยานพาหนะหนึ่งคันอยู่ได้ไตรมาสเดียวของแผน)
   const p = planOfId(s.plans, planId);
   const inAny = new Set([1, 2, 3, 4].flatMap((k) => quarterCars(s, planId, k).map((c) => c.id)));
-  if (!hasAlloc(p)) {
-    if (!p || p.mr === "MR" + PLAN_ID) return Q_EXTRA.filter((c) => !inAny.has(c.id));   // แผนตัวอย่างของ S6 = Q_EXTRA ของ screens.js
-    /* แผนตัวอย่างอื่น (9 พ.ย. 2569 ตรวจสิทธิ์): ยานพาหนะจำลองในภาคและประเภทของแผนที่ยังไม่อยู่ในแผนตัวอย่างใด (ค่าสมมติ) */
-    const taken = new Set(Object.values(SAMPLE_PLAN_Q).flatMap((m) => Object.values(m).flat().map((c) => c.id)));
-    const regions = planRegions(p), types = p.type.split(", ");
-    return CAND.filter((c) => regions.includes(regionOf(c).split(" (")[0]) && types.includes(c.type)).map((c) => carOf(candId(c.plate)))
-      .filter((c): c is TripCar => !!c && !inAny.has(c.id) && !taken.has(c.id));
-  }
-  const regions = p.regions ?? [], districts = p.districts ?? [], types = p.types ?? p.type.split(", ");
-  /* รถที่ฟอร์มเห็น (UNIT_FLEET = รถจำลองครบชุด 9 พ.ย. 2569) ในขอบเขตของแผนที่ยังไม่อยู่ในไตรมาสใด */
-  return UNIT_FLEET.map((i) => CAND[i]).filter((c) => (!types.length || types.includes(c.type)) && (!districts.length || districts.includes(dCode(c)))
-    && (!regions.length || regions.some((r) => (DISTRICTS[r] ?? []).includes(dCode(c)))))
-    .map((c) => carOf(candId(c.plate))).filter((c): c is TripCar => !!c && !inAny.has(c.id));
+  const first = !hasAlloc(p) && (!p || p.mr === "MR" + PLAN_ID) ? Q_EXTRA : [];
+  const firstIds = new Set(first.map((c) => c.id));
+  return [...first, ...CAND.map((c) => candId(c.plate)).filter((id) => !firstIds.has(id)).map(carOf)]
+    .filter((c): c is TripCar => !!c && !inAny.has(c.id));
 }
 const perQOf = (alloc: Record<number, number>) => [1, 2, 3, 4].map((q) => "ไตรมาส " + q + ": " + Object.values(alloc).filter((x) => x === q).length).join(" · ");
 function writeQuarter(planId: string, q: number, fn: (e: QuarterEdit) => QuarterEdit, allocFn?: (a: Record<number, number>) => Record<number, number>) {
@@ -175,7 +169,7 @@ export const STAFF = ["นายวิชัย ทองดี", "นางส�
 export const STAFF_INFO: Record<string, [string, string]> = { "นายวิชัย ทองดี": ["วศ.8", "081-472-1180"], "นางสาวกนกวรรณ ใจมั่น": ["ชก.6", "089-221-4407"], "นายสมชาย พูลสุข": ["ชก.5", "086-530-2291"] };
 export const staffPos = (name: string) => STAFF_INFO[name]?.[0] ?? "";
 export const staffTelOf = (t: Pick<Trip, "staffTel"> | null | undefined, name: string) => t?.staffTel?.[name] ?? STAFF_INFO[name]?.[1] ?? "";
-export const CREATOR = "นายวิชัย ทองดี (กกฟ.1)";   // CREATOR ของ screens.js (6 พ.ย. 2569 ผู้สร้าง = หน่วยงาน)
+export const CREATOR = "นายวิชัย ทองดี (กบผ.)";   // CREATOR ของ screens.js (6 พ.ย. 2569 ผู้สร้าง = หน่วยงาน)
 export const CREATOR_SHORT = "นายวิชัย ทองดี";
 export const SENT_AT = "03/11/2569", APPROVED_AT = "04/11/2569";
 /* tel = เบอร์โทรผู้รับจ้างในข้อมูลผู้รับจ้าง (ค่าสมมติ · 11 พ.ย. 2569 เจ้าของงาน "ตอนที่สร้างแผนการเดินทาง ที่ต้องใส่เบอร์ หรือดึงเบอร์ผู้รับจ้างมา" · BACKLOG ข้อ 64) */
@@ -203,11 +197,11 @@ export const TRIP_V: Trip = { ...base, id: "TV", name: "จ้างบำรุ
 export const TRIP_OTHER: Trip = { ...base, id: "TO", name: "ตรวจรถพ่วงฉีดน้ำ นครราชสีมา บุรีรัมย์", mode: "self", carIds: ["82-6789", "82-1145", "80-5738"],
   locs: {}, phones: {}, d1: "10/11/2569", d2: "12/11/2569", status: "review", staff: STAFF, listOnly: true };
 
-/* แผนเดินทางตัวอย่างของ MRZ7000002 (กกฟ.2 · อนุมัติแล้ว · ไตรมาสที่กำลังทำ = ไตรมาส 2) — 9 พ.ย. 2569 เจ้าของงาน "แผนอนุมัติแล้ว แต่ไม่เจอแผนการเดินทางที่อนุมัติแล้ว"
+/* แผนเดินทางตัวอย่างของ MRZ7000002 (กปส. · อนุมัติแล้ว · ไตรมาสที่กำลังทำ = ไตรมาส 2) — 9 พ.ย. 2569 เจ้าของงาน "แผนอนุมัติแล้ว แต่ไม่เจอแผนการเดินทางที่อนุมัติแล้ว"
    ใช้เฉพาะยานพาหนะไตรมาส 2 ของแผนนั้น (SAMPLE_PLAN_Q · รถพ่วงฉีดน้ำ ภาค 2 · 4 คัน): ใบที่ 1 อนุมัติแล้ว 2 คัน (เปิดรายละเอียดแผนเดินทาง S10 ได้) · ใบที่ 2 รออนุมัติ 2 คัน
-   ผู้สร้าง = persona กกฟ.2 (UNIT_PERSONA) · ช่วงวันในไตรมาส 2 (เม.ย. 2570) · ค่าสมมติ */
+   ผู้สร้าง = persona กปส. (UNIT_PERSONA) · ช่วงวันในไตรมาส 2 (เม.ย. 2570) · ค่าสมมติ */
 const U2_Q2 = SAMPLE_PLAN_Q["MRZ7000002"]?.[2] ?? [];
-const u2 = { planId: "Z7000002", quarter: 2, mode: "self" as const, locs: {}, phones: {}, staff: [STAFF[1], STAFF[2]], createdBy: "นายอนุชา บุญมา (กกฟ.2)", sentAt: "25/03/2570" };
+const u2 = { planId: "Z7000002", quarter: 2, mode: "self" as const, locs: {}, phones: {}, staff: [STAFF[1], STAFF[2]], createdBy: "นายอนุชา บุญมา (กปส.)", sentAt: "25/03/2570" };
 export const TRIP_U2: Trip[] = U2_Q2.length >= 4 ? [
   { ...u2, id: "T20", name: "ตรวจรถพ่วงฉีดน้ำ ภาค 2 รอบที่ 1", carIds: U2_Q2.slice(0, 2).map((c) => c.id), d1: "06/04/2570", d2: "08/04/2570", status: "approved", approvedAt: "27/03/2570" },
   { ...u2, id: "T21", name: "ตรวจรถพ่วงฉีดน้ำ ภาค 2 รอบที่ 2", carIds: U2_Q2.slice(2, 4).map((c) => c.id), d1: "20/04/2570", d2: "22/04/2570", status: "review" },

@@ -5,14 +5,14 @@
    ยังไม่มีแผน (A.2) = Empty state/Data empty "ไม่มีแผนบำรุงรักษา" + Primary "สร้างแผน" ไม่มี Table header (Admin State=Empty ของ RP & MA Job)
    มือถือ: ตารางเป็น Mobile table (1 แผน = 1 การ์ด) · ปุ่มหัวหน้าอยู่ใต้หัวข้อ · เมนู "…" เป็น bottom sheet
    เมนู "…" ตามสถานะ (S19 S20 · planMenu): ดูรายละเอียด → /detail/ · แก้ไข → /edit/ (S19) · ลบ → ยืนยันการลบแผน (S20) แล้ว toast "ลบแผนบำรุงรักษาสำเร็จ"
-   สิทธิ์: สร้าง/แก้ไข/ลบ เฉพาะหน่วยงานผู้สร้างแผน (6 พ.ย. 2569 ผู้สร้างแผน = หน่วยงาน กกฟ.1 · กกฟ.2 · กรย. · กบค. — UNITS)
-   หน่วยงาน กกฟ.1 กกฟ.2 กรย. (persona 9 พ.ย. 2569 · ownPlans ของ screens.js · A.1 A.39 A.40): เห็นเฉพาะแผนของหน่วยงานตัวเอง ไม่มีบรรทัดรองหน่วยงาน มีปุ่มสร้างแผน · ไม่มีแผนของตัวเอง = Empty state
+   สิทธิ์: สร้าง/แก้ไข/ลบ เฉพาะหน่วยงานผู้สร้างแผน (6 พ.ย. 2569 ผู้สร้างแผน = หน่วยงาน · 12 พ.ย. 2569 ข้อ 70 กบผ. · กปส. · กรย. · กบค. · กส.1 · กส.2 — UNITS)
+   หน่วยงาน กบผ. กปส. กรย. กส.1 กส.2 (persona 9 พ.ย. 2569 · ownPlans ของ screens.js · A.1 A.39 A.40): เห็นเฉพาะแผนของหน่วยงานตัวเอง ไม่มีบรรทัดรองหน่วยงาน มีปุ่มสร้างแผน · ไม่มีแผนของตัวเอง = Empty state
    กบค. (listScreen view ของ screens.js · 6 พ.ย. 2569 รอบ 2 "กบค จะทำแผนจะมีรถของ กฝช. ด้วย"): รายการแผนทุกหน่วยงาน มีปุ่มสร้างแผน · คอลัมน์ "หน่วยงานเจ้าของเรื่อง" ต่อจากเลขที่ MR (PLAN_COLS_ALL · Figma 5dfd978 · 9 พ.ย. 2569 แทนบรรทัดรองใต้เลขที่ MR)
      · แผนของ กบค. (MRZ7100001) เมนู … ตามสถานะแบบปกติ · แผนของหน่วยงานอื่น เมนูเหลือดูรายละเอียด → รายละเอียดแผนไม่มีปุ่ม (canManage)
    ผู้อนุมัติเข้ารากแล้วไปหน้าเริ่มของบทบาท (routes.md §2: /approvals/plans/ · กบค. คลัง ตัดพร้อม S22 6 พ.ย. 2569)
    แผงตัวกรอง (listScreen o.filter · 6 พ.ย. 2569 รีวิว "filter หน้ารายการแผน เขต · หน่วยงานหน้างาน กรย. 12 เขต, กกฟ. 1and2" + "กบค. อยากเห็นทุกแผน"):
      ปุ่ม "ตัวกรอง" ของ Table header เปิด FilterShell (แผงตัวกรองแบบเดียวกับฟอร์มแผน S1 · มือถือ Bottom sheet) ช่อง `Input dropdown with badges` (Optional) หลายค่า
-     เขต (12 เขตของภาค 1–4 · DISTRICTS ไม่รวมเขตของ สนง. กกฟ.1 กกฟ.2 กบร. กฝช. กบค. กบส. — Figma R93 132a652 · BACKLOG ข้อ 64ข) · หน่วยงานหน้างาน (UNITS) · กดตกลงจึงใช้ → ชิปใต้แถวค้นหา (กดเอาออกทีละตัว) + Pill จำนวนบนปุ่มตัวกรอง · ไม่ตรง = Empty state/Search not found + ล้างตัวกรอง
+     เขต (12 เขตของภาค 1–4 · DISTRICTS ไม่รวมเขตของ สนง. กบค. กรย. กบผ. กปส. กส.1 กส.2 — Figma R93 132a652 · BACKLOG ข้อ 64ข 70) · หน่วยงานหน้างาน (UNITS · 12 พ.ย. 2569 ข้อ 70 กบผ. กปส. กรย. กส.1 กส.2 กบค. กส.1 กส.2) · กดตกลงจึงใช้ → ชิปใต้แถวค้นหา (กดเอาออกทีละตัว) + Pill จำนวนบนปุ่มตัวกรอง · ไม่ตรง = Empty state/Search not found + ล้างตัวกรอง
      ตามแผงตัวกรอง "PEA Car Cost Filter" ของ UI Release#2 (แบบเดียวกับ R77 ของฟอร์มแผน) */
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -48,8 +48,8 @@ export default function PlanList() {
   const mob = useBreakpoint() === "Mobile";
   const mock = useMock();
   const role = useRole();
-  const plans = useMemo(() => visiblePlans(role, mock.plans), [role, mock.plans]);   // กกฟ.1 กกฟ.2 กรย. เห็นเฉพาะแผนของตัวเอง (ownPlans) · กบค. ทุกหน่วยงาน (allPlans · 9 พ.ย. 2569)
-  const creator = PLAN_ROLES.includes(role);   // ผู้สร้างแผน: หน่วยงาน (กกฟ.1 · กกฟ.2 · กรย.) · กบค. (6 พ.ย. 2569 รอบ 2 · 9 พ.ย. 2569)
+  const plans = useMemo(() => visiblePlans(role, mock.plans), [role, mock.plans]);   // กบผ. กปส. กรย. กส.1 กส.2 เห็นเฉพาะแผนของตัวเอง (ownPlans) · กบค. ทุกหน่วยงาน (allPlans · 9 พ.ย. 2569)
+  const creator = PLAN_ROLES.includes(role);   // ผู้สร้างแผน: หน่วยงาน (กบผ. · กปส. · กรย. · กส.1 · กส.2) · กบค. (6 พ.ย. 2569 รอบ 2 · 9 พ.ย. 2569)
   const view = role === "กบค.";              // กบค. เห็นแผนทุกหน่วยงาน (หน่วยงานเป็นบรรทัดรองของเลขที่ MR)
   const hydrated = useHydrated();
   const home = hydrated ? roleHome(role, mock) : undefined;

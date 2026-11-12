@@ -65,7 +65,7 @@ const dropChip = (f: MaFilter, v: string): MaFilter => ({
 
 /* ?sample=S24 (ของต้นแบบ) — งานรายคันชุด T1_afterClose ของ S10 (82-6789 ปิดงานแล้ว 04/11/2569 รอผลตรวจน้ำมัน) + เอกสาร Safety Inspection ตอนปิดงาน */
 const SAMPLES: SampleMap = {
-  S24: { role: "หน่วยงาน (กกฟ.1)", apply: () => { applySample("T1_afterClose"); patchJob("T1", "82-6789", (j) => ({ ...j, safety: { files: [{ name: "Safety-Inspection-82-6789.pdf", size: "1.2 MB", bar: true }] } })); } },
+  S24: { role: "หน่วยงาน (กบผ.)", apply: () => { applySample("T1_afterClose"); patchJob("T1", "82-6789", (j) => ({ ...j, safety: { files: [{ name: "Safety-Inspection-82-6789.pdf", size: "1.2 MB", bar: true }] } })); } },
 };
 
 /* maRow: ทะเบียน (ลิงก์ · ประเภท) · อายุการใช้งาน (เลขไมล์ · ชั่วโมง) · บำรุงรักษาล่าสุด (MR) · ครั้งถัดไป (วันที่ · รายการ · บรรทัดรองสถานะสี) · ผลตรวจน้ำมัน (เก็บตัวอย่าง วันที่) · ประกัน · สถานะยานพาหนะ

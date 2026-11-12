@@ -59,7 +59,7 @@ export const OIL_RESULT_OPTS = ["ผ่าน", "ไม่ผ่าน"];
 /* ---------- คน ---------- */
 export const PEOPLE = {
   staff: ["นายวิชัย ทองดี", "นางสาวกนกวรรณ ใจมั่น", "นายสมชาย พูลสุข"],   // TRIP.staff (พนักงาน กบค. ซ่อม)
-  kbk: "นายวิชัย ทองดี (กกฟ.1)",                                         // JOB_BY · ผู้สร้าง · ผู้เริ่มงาน/ผู้บันทึกของแผนจ้างที่หน่วยงานปิดงานแทนผู้รับจ้าง (S10)
+  kbk: "นายวิชัย ทองดี (กบผ.)",                                         // JOB_BY · ผู้สร้าง · ผู้เริ่มงาน/ผู้บันทึกของแผนจ้างที่หน่วยงานปิดงานแทนผู้รับจ้าง (S10)
   ownerSigner: "นายสุรชัย แก้วมณี",                                      // SIGN_OWNER
   vendor: "นายประเสริฐ ศรีสุข (ผู้รับจ้าง)",                              // HIRE_BY — ผู้เริ่มงาน ผู้บันทึก ผู้แจ้ง ผู้ส่ง ของ S23
   vendorTech: "นายประเสริฐ ศรีสุข",                                      // HIRE_TECH — ผู้ลงนามฝั่งผู้ดำเนินการของ S23 (vendorSign · ใครลงนามจริงยังไม่เคาะ)
@@ -310,7 +310,7 @@ export function filledClose(job: Job, trip: JobTrip, car: TripCar): CloseForm {
     parts: f.parts.map((r) => { const v = CLOSE_FILLED_PARTS[r.part]; return v ? { ...r, used: v[0], old: v[1], note: v[2] } : r; }),
     costs: [["นายวิชัย ทองดี", 2], ["นางสาวกนกวรรณ ใจมั่น", 2], ["นายสมชาย พูลสุข", 1]].map(([name, days]) => ({ name: String(name), perDiem: "240", lodging: "800", days: Number(days) })),
     travel: "1,210", km: "182,640", hours: "6,131", workHours: "6", workRate: "150",   // CLOSE_HOURS × CLOSE_RATE (S18 R92)
-    signers: [{ name: PEOPLE.kbk.replace(" (กกฟ.1)", ""), sig: "sample" }, { name: PEOPLE.ownerSigner, sig: "sample" }],
+    signers: [{ name: PEOPLE.kbk.replace(" (กบผ.)", ""), sig: "sample" }, { name: PEOPLE.ownerSigner, sig: "sample" }],
     docs: f.docs.map((d) => ({ ...d, sel: "มี" })),
   };
 }
@@ -570,7 +570,7 @@ export const SAMPLES = ["T1_start", "T1_afterClose", "T1_afterCannot", "TV_start
   "TV_vendor", "TV_vendorWait", "TV_vendorReported", "TV_vendorReturned", "TV_vendorReturnedCannot", "TV_vendorMid", "T1_cost"] as const;
 export type SampleName = (typeof SAMPLES)[number];
 /* บทบาทที่สลับให้ตอนเปิดชุดตัวอย่าง — ชุด S10 S12 เป็นของหน่วยงาน · ชุด TV_vendor* เป็นของผู้รับจ้าง (S23) */
-const U1: Role = "หน่วยงาน (กกฟ.1)", VD: Role = "ผู้รับจ้าง";
+const U1: Role = "หน่วยงาน (กบผ.)", VD: Role = "ผู้รับจ้าง";
 export const SAMPLE_ROLE: Record<SampleName, Role> = { T1_start: U1, T1_afterClose: U1, T1_afterCannot: U1, TV_start: U1, TV_mid: U1, T1_water: U1, T1_waterSigned: U1,
   TV_vendor: VD, TV_vendorWait: VD, TV_vendorReported: VD, TV_vendorReturned: VD, TV_vendorReturnedCannot: VD, TV_vendorMid: VD, T1_cost: U1 };
 /** ยานพาหนะรถพ่วงฉีดน้ำของชุดตัวอย่าง (WATER_CAR) · เบอร์/ผู้ดูแลในใบ = ค่าของคันแรก JOB_I ตามจอ Figma */

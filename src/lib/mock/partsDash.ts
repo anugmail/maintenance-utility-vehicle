@@ -64,7 +64,7 @@ export const DASH_PROG: ProgRow[] = [
 
 /* Metric item 4 ใบ [Text, Number, สี Featured icon] — dashMetrics() ของ screens.js (Figma 76efd87 · 10 พ.ย. 2569)
    เจ้าของงาน "ผู้สร้างแผนเห็นเฉพาะแผนของหน่วยงานตัวเอง ยกเว้น กบค จะเห็นแผนของหน่วยงานอื่นด้วย แต่แก้ไขไม่ได้"
-   ⇒ นับเฉพาะแผนที่บทบาทนั้นเห็น: unit = หน่วยงานของผู้ใช้ (กกฟ.1 กกฟ.2 กรย.) · ไม่มี = กบค. ทุกหน่วยงาน (แผน 3 · ยานพาหนะ 30 · บำรุงรักษาแล้ว 4/30 เท่าจอเดิม)
+   ⇒ นับเฉพาะแผนที่บทบาทนั้นเห็น: unit = หน่วยงานของผู้ใช้ (กบผ. กปส. กรย. กส.1 กส.2) · ไม่มี = กบค. ทุกหน่วยงาน (แผน 3 · ยานพาหนะ 30 · บำรุงรักษาแล้ว 4/30 เท่าจอเดิม)
    รายการอะไหล่ = DASH_AGG.length (จอ Figma ไม่แยกตามหน่วยงาน) */
 export const dashMine = (unit?: string) => (mr: string) => !unit || DASH_PLANS.find((p) => p.mr === mr)?.unit === unit;
 export function dashMetrics(unit?: string): [string, string, "Brand" | "Success"][] {
@@ -80,7 +80,7 @@ export const EXPORT_ALL_SUB = " รายการ ทุกแผนที่�
 /* ---------- ตัวกรอง (ปีงบประมาณ · หน่วยงานผู้ขอเบิก · เขต · แผน) ---------- */
 export interface DashFilter { year: string; units: string[]; districts: string[]; plans: string[] }
 export const NO_FILTER: DashFilter = { year: "", units: [], districts: [], plans: [] };
-/* หน่วยงานผู้ขอเบิก = UNITS ของ screens.js (กกฟ.1 กกฟ.2 กรย. กบค.) */
+/* หน่วยงานผู้ขอเบิก = UNITS ของ screens.js (กบผ. กปส. กรย. กส.1 กส.2 กบค.) */
 export const DASH_UNITS = uniq([...UNITS, "กบค."]);
 export const DASH_DISTRICTS = uniq(DASH_PLANS.flatMap((p) => p.districts));
 export const planMatch = (p: DashPlan | undefined, f: DashFilter) => !!p && (!f.year || p.year === f.year) && (!f.units.length || f.units.includes(p.unit))
