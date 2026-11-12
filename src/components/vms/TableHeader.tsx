@@ -27,6 +27,8 @@ export interface TableHeaderProps {
   onQuery?: (q: string) => void;
   /** ปุ่มตัวกรอง */
   onFilter?: () => void;
+  /** ปุ่มตัวกรอง (Action 1 swap) — false = ไม่มีปุ่มตัวกรอง เหลือช่องค้นหา + Actions (ฟอร์มแผน S1 S19 แท็บยานพาหนะในแผน · BACKLOG ข้อ 87) · ค่าเริ่ม true คงแบบเดิมของทุกหน้า */
+  FilterButton?: boolean;
   FilterText?: string;
   /** Pill outline ในปุ่มตัวกรอง = จำนวนตัวกรองที่ใช้อยู่ (ไม่ใส่ / 0 = ซ่อน) */
   FilterCount?: number | null;
@@ -38,7 +40,7 @@ export interface TableHeaderProps {
   className?: string;
 }
 
-export function TableHeader({ Breakpoint: bp, Title, Badge, query, Placeholder, onQuery, onFilter, FilterText = "ตัวกรอง", FilterCount, Filters, onRemoveFilter, Actions, className }: TableHeaderProps) {
+export function TableHeader({ Breakpoint: bp, Title, Badge, query, Placeholder, onQuery, onFilter, FilterButton = true, FilterText = "ตัวกรอง", FilterCount, Filters, onRemoveFilter, Actions, className }: TableHeaderProps) {
   const b = useBreakpoint(bp);
   const mob = b === "Mobile";
   const acts = Children.toArray(Actions).filter(Boolean);
@@ -59,9 +61,9 @@ export function TableHeader({ Breakpoint: bp, Title, Badge, query, Placeholder, 
       <div className={cx("flex", mob ? "flex-col gap-4" : "items-center justify-between gap-3")}>
         <TextInput Label={false} Size={mob ? "lg" : "md"} LeadingIconSwap="search-24-300-round" Text={query} Placeholder={Placeholder} onChange={onQuery} aria-label={Placeholder} className={mob ? "w-full" : "w-80"} />
         <div className={cx("flex", mob ? "flex-wrap gap-4 [&>*]:flex-1 [&>*]:basis-[calc(50%-8px)]" : "gap-3")}>
-          <SecondaryButton Text={FilterText} Size={mob ? "lg" : "md"} LeadingIconSwap="filter_list-24-400-round" Pill={FilterCount || null} onClick={onFilter} />
+          {FilterButton && <SecondaryButton Text={FilterText} Size={mob ? "lg" : "md"} LeadingIconSwap="filter_list-24-400-round" Pill={FilterCount || null} onClick={onFilter} />}
           {acts}
-          {mob && !acts.length && <span />}
+          {mob && (FilterButton ? !acts.length : acts.length === 1) && <span />}
         </div>
       </div>
       {chips}

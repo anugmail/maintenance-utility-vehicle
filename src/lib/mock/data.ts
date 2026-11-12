@@ -29,9 +29,6 @@ export interface Plan {
   districts?: string[];
   types?: string[];
   alloc?: Record<number, number>;   // ลำดับรถใน CAND → ไตรมาส
-  /* ยานพาหนะที่เพิ่ม/ลบรายคันในตารางแท็บทั้งหมดของฟอร์มแผน (เจ้าของงาน 12 พ.ย. 2569 · BACKLOG ข้อ 86 · planCars ของ plan.ts) */
-  extra?: number[];     // ลำดับรถใน CAND ที่เพิ่มเอง (อยู่ในตารางแม้ไม่ตรงตัวกรอง)
-  removed?: number[];   // ลำดับรถใน CAND ที่ลบออก (ไม่อยู่ในแผนนี้ แม้ตรงตัวกรอง)
   picks?: Record<number, number[]>; // ลำดับรถ → ลำดับอะไหล่ใน PARTS
   /* S21 อะไหล่ของรถ: จำนวนต่อคันที่แก้ไว้ (ไม่มี = CAR_QTY) · อะไหล่ที่ กบค. ระบุเอง (การ์ด "รายการเพิ่มเติม") */
   qty?: Record<number, Record<number, number>>;   // ลำดับรถ → ลำดับอะไหล่ → จำนวน

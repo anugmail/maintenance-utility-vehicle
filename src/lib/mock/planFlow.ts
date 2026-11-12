@@ -7,7 +7,7 @@ import type { BadgeOutlineColor } from "@/components/vms/BadgeOutline";
 import type { PillColor } from "@/components/vms/PillOutline";
 import { FIG_FLEET, CAND, DISTRICTS, LAST_OIL, NEW_PLAN_DATE, OIL_OPTS, OIL_PLAN_OPTS, OIL_SPEC, PARTS, PART_PRICE, REGIONS, RETURN_REASON, UNIT_FLEET, creatorOf, dCode, oilChanges, unitOf, type ManualPart, type Plan, type PlanStatus } from "./data";
 import { CAR_PICK } from "./data";
-import { allocScope, areaPicked, carQty, decided, inQuarter, planCars, quarterParts, type Draft } from "./plan";
+import { allocScope, carQty, decided, inQuarter, planCars, quarterParts, type Draft } from "./plan";
 import { accRows } from "./acceptance";
 import { notify, setMock, useRole, type MockState, type Role } from "./store";
 import { SAMPLE_PLAN_Q, candId, quarterCars, tripsOf } from "./trips";
@@ -98,18 +98,17 @@ export function draftFromPlan(p: Plan, st?: Pick<MockState, "plans" | "qcars">):
   const regions = p.regions ?? REGIONS.filter((r) => p.region.split(", ").map((x) => x.split(" (")[0]).includes(r.split(" (")[0]));
   if (!p.alloc || !Object.keys(p.alloc).length) {
     const s = sampleAlloc(p, st);
-    return { name: p.name, year: p.year, regions, districts: p.districts ?? [], types: p.types ?? p.type.split(", ").filter(Boolean), ...s, q: 1, editOf: p.mr, extra: p.extra ? [...p.extra] : undefined, removed: p.removed ? [...p.removed] : undefined };
+    return { name: p.name, year: p.year, regions, districts: p.districts ?? [], types: p.types ?? p.type.split(", ").filter(Boolean), ...s, q: 1, editOf: p.mr };
   }
   return {
     name: p.name, year: p.year, regions, districts: p.districts ?? [], types: p.types ?? p.type.split(", ").filter(Boolean),
     alloc: { ...(p.alloc ?? {}) }, picks: { ...(p.picks ?? {}) }, qty: p.qty ? { ...p.qty } : undefined, manual: p.manual ? { ...p.manual } : undefined,
     oils: p.oils ? { ...p.oils } : undefined, oilSpec: p.oilSpec ? { ...p.oilSpec } : undefined, draw: p.draw ? { ...p.draw } : undefined,
-    extra: p.extra ? [...p.extra] : undefined, removed: p.removed ? [...p.removed] : undefined,
     q: 1, editOf: p.mr,
   };
 }
 /* ค่าที่เทียบว่าแก้ไขแล้วหรือยัง (ไม่นับแท็บที่เปิด) */
-export const draftKey = (d: Draft) => JSON.stringify([d.name, d.year, d.regions, d.districts, d.types, d.alloc, d.picks, d.qty ?? {}, d.manual ?? {}, d.oils ?? {}, d.oilSpec ?? {}, d.draw ?? {}, d.extra ?? [], d.removed ?? []]);
+export const draftKey = (d: Draft) => JSON.stringify([d.name, d.year, d.regions, d.districts, d.types, d.alloc, d.picks, d.qty ?? {}, d.manual ?? {}, d.oils ?? {}, d.oilSpec ?? {}, d.draw ?? {}]);
 
 /* บันทึกการแก้ไข (S19): กลับเป็นรออนุมัติทุกสถานะ เลขที่ MR เดิม */
 export function planWithDraft(p: Plan, d: Draft, today: string): Plan {
@@ -119,7 +118,7 @@ export function planWithDraft(p: Plan, d: Draft, today: string): Plan {
   return {
     ...rest, name: d.name.trim(), ...allocScope(d.alloc), cars: Object.keys(d.alloc).length,
     perQ: per.map((n, i) => "ไตรมาส " + (i + 1) + ": " + n).join(" · "), status: "review", sentAt: today,
-    regions: d.regions, districts: d.districts, types: d.types, alloc: d.alloc, picks: d.picks, qty: d.qty, manual: d.manual, oils: d.oils, oilSpec: d.oilSpec, draw: d.draw, extra: d.extra, removed: d.removed,
+    regions: d.regions, districts: d.districts, types: d.types, alloc: d.alloc, picks: d.picks, qty: d.qty, manual: d.manual, oils: d.oils, oilSpec: d.oilSpec, draw: d.draw,
   };
 }
 
@@ -226,14 +225,13 @@ export function samplePlan(status: PlanStatus, acked?: number[]): Plan {
 /* อะไหล่ของแผนตัวอย่างที่กำหนดครบทุกคัน (A_PICKS · A_OILS · A_DRAW) — ฟอร์มที่กรอกครบ ส่งอนุมัติได้ (โหมดพาดู) */
 export const SAMPLE_PARTS = (): Pick<Draft, "picks" | "oils" | "draw"> => ({ picks: Object.fromEntries(Object.entries(A_PICKS).map(([i, v]) => [i, [...v]])), oils: { ...A_OILS }, draw: { ...A_DRAW } });
 /* ฟอร์มสร้างแผนของ S21 T.1: กรอกชื่อ ปี ตัวกรองครบ จัดรถทุกคันที่ฟอร์มเห็น (UNIT_FLEET) ยังไม่เลือกอะไหล่ */
-/** ปุ่มต้นแบบ "กรอกข้อมูลตัวอย่าง" ของฟอร์มแผน (S1 S19 · lib/protoForm.ts) — ชื่อแผน ปีงบประมาณ (ว่าง = ค่าแผนตัวอย่าง) · พื้นที่ (ยังไม่เลือก = R2 ภาค 2)
-    · ยานพาหนะทุกคันในตารางจัดลงไตรมาส (จัดไว้แล้วคงเดิม · ไม่จัด = ไตรมาสของแผนตัวอย่าง A_ALL) · คันที่ยังไม่กำหนดอะไหล่ = น้ำมันตามแผนตัวอย่าง + ไส้กรอง CAR_PICK ⇒ ผ่าน draftComplete */
+/** ปุ่มต้นแบบ "กรอกข้อมูลตัวอย่าง" ของฟอร์มแผน (S1 S19 · lib/protoForm.ts) — ชื่อแผน ปีงบประมาณ (ว่าง = ค่าแผนตัวอย่าง)
+    · ยังไม่มียานพาหนะในแผน = ยานพาหนะและไตรมาสของแผนตัวอย่าง (A_ALL) · มีแล้ว = คงเดิม (BACKLOG ข้อ 87 ยานพาหนะในแผน = alloc)
+    · คันที่ยังไม่กำหนดอะไหล่ = น้ำมันตามแผนตัวอย่าง + ไส้กรอง CAR_PICK ⇒ ผ่าน draftComplete */
 export function fillDraft(d: Draft): Draft {
-  const area = areaPicked(d) ? {} : { ...R2 };
-  const x: Draft = { ...d, name: d.name.trim() ? d.name : SAMPLE_NAME, year: d.year || "2570", ...area };
-  const alloc = { ...x.alloc }, picks = { ...x.picks }, oils = { ...(x.oils ?? {}) };
-  planCars(x).forEach((i, k) => {
-    if (alloc[i] == null) alloc[i] = A_ALL[i] ?? (k % 4) + 1;
+  const x: Draft = { ...d, name: d.name.trim() ? d.name : SAMPLE_NAME, year: d.year || "2570" };
+  const alloc = planCars(x).length ? { ...x.alloc } : { ...A_ALL }, picks = { ...x.picks }, oils = { ...(x.oils ?? {}) };
+  planCars({ alloc }).forEach((i) => {
     if (!decided(x, i)) { const o = oils[i] ?? A_OILS[i] ?? 0; oils[i] = o; picks[i] = oilChanges(o) ? [0, ...CAR_PICK] : [...CAR_PICK]; }
   });
   return { ...x, alloc, picks, oils, q: x.q || 1 };

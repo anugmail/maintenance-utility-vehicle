@@ -12,12 +12,28 @@
      หน้าละ 10 + Table pagination ของไลบรารี ใต้ตาราง (desktop Breakpoint=Desktop · มือถือ Breakpoint=Mobile ใต้ List with checkbox แบบตารางอื่นของรีโป) · พิมพ์ค้นหา = กลับหน้า 1
      ติ๊กหัวตาราง = เลือกทุกคันที่ตรงคำค้น (ทุกหน้า · คงพฤติกรรมเดิมก่อนแบ่งหน้า) เลือกไม่ได้ (อยู่ในแผนเดินทางอื่น) ไม่นับ · ที่ติ๊กไว้คงอยู่เมื่อเปลี่ยนหน้า/คำค้น
      ใช้ทุก popup ที่เรียก TripCarPicker: หน้าไตรมาส S6 · ฟอร์มแผน S1 S19 (R75) · ฟอร์มแผนเดินทาง S6 S9
+   ตัวกรองในตัว popup (areaOf · เฉพาะฟอร์มแผน S1 S19 · เจ้าของงาน 12 พ.ย. 2569 "หน้าจอเลือกรถ อยากให้เป็น modal ตามรูป แก้ใน flow ด้วย" · BACKLOG ข้อ 87):
+     แบบ vehPickerModal ของ Overhaul (figma-export/overhaul2-plugin/code.js) — Table header (ช่องค้นหา + ปุ่ม "ตัวกรอง" + Pill จำนวน + ชิปตัวกรองกดเอาออกได้)
+     กดตัวกรอง (desktop) = Filter panel กางใต้แถวค้นหา: Input dropdown with badges (Optional) ×3 แถวเดียว (ภาค · เขต · ประเภทยานพาหนะ · หลายค่า · placeholder "ทั้งหมด")
+       + แถวปุ่ม Tertiary brand button "ล้างตัวกรอง" ซ้าย · Secondary "ยกเลิก" + Primary "ตกลง" ขวา · ช่องไฟ 20 · ตกลง = แผงหุบ ชิปขึ้นใต้แถวค้นหา
+     มือถือ = แผงตัวกรอง bottom sheet ของเดิม (FilterShell) ซ้อนบน bottom sheet ของ popup · ค่าในแผงเป็นค่าร่าง กดตกลงจึงใช้ (แบบแผงตัวกรอง S1 เดิม · R69 ช่องเป็นอิสระต่อกัน · เขต = เขตของภาคที่เลือก)
+     ไม่มีคันตรงคำค้น/ตัวกรอง = Empty state/Search not found "ไม่พบยานพาหนะ" · ไม่ส่ง areaOf = แบบเดิม (ช่องค้นหาอย่างเดียว) ทุกหน้าอื่นไม่เปลี่ยน
    ดูบันทึกใน figma-spec/COMPOSED.md */
 import { useState } from "react";
 import { PopupModal } from "@/components/patterns/PopupModal";
+import { DropdownList } from "@/components/vms/DropdownList";
+import { DropdownListItem } from "@/components/vms/DropdownListItem";
 import { EmptyStateDataEmpty } from "@/components/vms/EmptyStateDataEmpty";
+import { EmptyStateSearchNotFound } from "@/components/vms/EmptyStateSearchNotFound";
+import { InputDropdownWithBadges } from "@/components/vms/InputDropdownWithBadges";
+import { PrimaryButton } from "@/components/vms/PrimaryButton";
+import { SecondaryButton } from "@/components/vms/SecondaryButton";
+import { TableHeader } from "@/components/vms/TableHeader";
 import { TablePagination } from "@/components/vms/TablePagination";
+import { TertiaryBrandButton } from "@/components/vms/TertiaryBrandButton";
 import { TextInput } from "@/components/vms/TextInput";
+import { DISTRICTS, REGIONS, VEHICLE_TYPES, shortRegion } from "@/lib/mock/data";
+import { FilterShell } from "@/app/vehicles/_lib/ui";
 import type { TripCar } from "@/lib/mock/trips";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { MA_HEAD, REPAIR_HEAD, histText, useMachineDates } from "@/lib/mock/vehicleHistory";
@@ -30,21 +46,58 @@ const COLS = [{ head: "ทะเบียน", width: 190 }, { head: "ยี่�
 const SEARCH = "ค้นหาทะเบียน, ยี่ห้อ/รุ่น, หน่วยงาน";
 const PER = 10;
 
-/* title / sub / okText / emptyText = popup "เพิ่มรถเข้าไตรมาส n" ของ E.1 (qAddModal() → tripCarModal(o.cars o.title o.sub o.okText)) · taken = รถที่อยู่ในแผนเดินทางอื่น (แสดงแต่เลือกไม่ได้) */
-interface PickerProps { pool: TripCar[]; taken?: Record<string, string>; nowQ: string; onAdd: (ids: string[]) => void; onCancel: () => void; title?: string; sub?: string; okText?: string; emptyText?: string; emptySub?: string }
+/* title / sub / okText / emptyText = popup "เพิ่มรถเข้าไตรมาส n" ของ E.1 (qAddModal() → tripCarModal(o.cars o.title o.sub o.okText)) · taken = รถที่อยู่ในแผนเดินทางอื่น (แสดงแต่เลือกไม่ได้)
+   areaOf = ภาค เขต ประเภทยานพาหนะของแต่ละคัน (ส่งมา = มีปุ่มตัวกรองในตัว popup · BACKLOG ข้อ 87) */
+export interface PickerArea { region: string; district: string; type: string }
+interface PickerProps { pool: TripCar[]; taken?: Record<string, string>; nowQ: string; onAdd: (ids: string[]) => void; onCancel: () => void; title?: string; sub?: string; okText?: string; emptyText?: string; emptySub?: string; areaOf?: (id: string) => PickerArea }
+type Area = { regions: string[]; districts: string[]; types: string[] };
+const NO_AREA: Area = { regions: [], districts: [], types: [] };
 export function TripCarPicker({ open, ...p }: PickerProps & { open: boolean }) {
   if (!open) return null;
   return <Picker {...p} />;
 }
 
-function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่มยานพาหนะเข้าแผนเดินทาง", sub: subText, okText = "เพิ่มเข้าแผนเดินทาง", emptyText, emptySub }: PickerProps) {
+function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่มยานพาหนะเข้าแผนเดินทาง", sub: subText, okText = "เพิ่มเข้าแผนเดินทาง", emptyText, emptySub, areaOf }: PickerProps) {
   const mob = useBreakpoint() === "Mobile";
   const [q, setQ] = useState("");
   const [page, setPage] = useState(1);
   const [ticked, setTicked] = useState<string[]>([]);
+  /* ตัวกรองในตัว popup (areaOf) — area = ที่ใช้อยู่ · fd = ค่าร่างในแผง · dd = ช่อง dropdown ที่เปิด */
+  const [area, setArea] = useState<Area>(NO_AREA);
+  const [panel, setPanel] = useState(false);
+  const [fd, setFd] = useState<Area>(NO_AREA);
+  const [dd, setDd] = useState("");
   const mDates = useMachineDates();
   const k = q.trim();
-  const shown = k ? pool.filter((c) => c.plate.includes(k) || c.model.includes(k) || c.owner.includes(k)) : pool;
+  const inArea = (c: TripCar) => {
+    if (!areaOf) return true;
+    const a = areaOf(c.id);
+    return (!area.regions.length || area.regions.includes(a.region)) && (!area.districts.length || area.districts.includes(a.district)) && (!area.types.length || area.types.includes(a.type));
+  };
+  const shown = pool.filter((c) => (!k || c.plate.includes(k) || c.model.includes(k) || c.owner.includes(k)) && inArea(c));
+  const chips = [...area.regions.map(shortRegion), ...area.districts, ...area.types];
+  const removeChip = (x: string) => {
+    const r = area.regions.find((y) => shortRegion(y) === x);
+    setArea(r ? { ...area, regions: area.regions.filter((y) => y !== r) } : area.districts.includes(x) ? { ...area, districts: area.districts.filter((y) => y !== x) } : { ...area, types: area.types.filter((y) => y !== x) });
+    setPage(1);
+  };
+  const openPanel = () => { if (panel) return closePanel(); setFd(area); setDd(""); setPanel(true); };
+  const closePanel = () => { setDd(""); setPanel(false); };
+  const applyPanel = () => { setArea(fd); setPage(1); closePanel(); };
+  const flip = (key: keyof Area, v: string) => setFd((f) => ({ ...f, [key]: f[key].includes(v) ? f[key].filter((x) => x !== v) : [...f[key], v] }));
+  const drop = (key: keyof Area) => (v: string) => setFd((f) => ({ ...f, [key]: f[key].filter((x) => x !== v) }));
+  const ddOpen = (key: string) => (v: boolean) => setDd(v ? key : dd === key ? "" : dd);
+  const dropdowns = <>
+    <InputDropdownWithBadges LabelText="ภาค" Optional values={fd.regions} Placeholder="ทั้งหมด" onRemove={drop("regions")} open={dd === "region"} onOpenChange={ddOpen("region")}>
+      <DropdownList>{REGIONS.map((r) => <DropdownListItem key={r} Text={r} State={fd.regions.includes(r) ? "Selected" : "Default"} onClick={() => flip("regions", r)} />)}</DropdownList>
+    </InputDropdownWithBadges>
+    <InputDropdownWithBadges LabelText="เขต" Optional values={fd.districts} Placeholder="ทั้งหมด" onRemove={drop("districts")} open={dd === "district"} onOpenChange={ddOpen("district")}>
+      <DropdownList>{(fd.regions.length ? fd.regions : REGIONS).flatMap((r) => DISTRICTS[r]).map((x) => <DropdownListItem key={x} Text={x} State={fd.districts.includes(x) ? "Selected" : "Default"} onClick={() => flip("districts", x)} />)}</DropdownList>
+    </InputDropdownWithBadges>
+    <InputDropdownWithBadges LabelText="ประเภทยานพาหนะ" Optional values={fd.types} Placeholder="ทั้งหมด" onRemove={drop("types")} open={dd === "type"} onOpenChange={ddOpen("type")}>
+      <DropdownList>{VEHICLE_TYPES.map((t) => <DropdownListItem key={t} Text={t} State={fd.types.includes(t) ? "Selected" : "Default"} onClick={() => flip("types", t)} />)}</DropdownList>
+    </InputDropdownWithBadges>
+  </>;
   const last = Math.max(1, Math.ceil(shown.length / PER)), pg = Math.min(page, last);
   const nTaken = pool.filter((c) => taken[c.id]).length;
   const n = ticked.length;
@@ -55,15 +108,37 @@ function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่
     return { key: c.id, text: c.plate, sub: c.owner + (inTrip ? " · " + inTrip : ""), mobileSub: (inTrip ? inTrip + " · " : "") + histText(md), disabled: !!taken[c.id], cells: [c.model, md.ma, md.repair] };
   });
 
+  const table = <CheckTable columns={COLS} rows={rows} scope={shown.map((c) => ({ key: c.id, disabled: !!taken[c.id] }))} ticked={ticked} onTicked={setTicked}
+    Pagination={<TablePagination total={shown.length} page={pg} perPage={PER} onPage={setPage} />} />;
+  /* ตัวกรองในตัว popup: Table header (ไม่มีหัวตาราง) + Filter panel (desktop) · ชิปตัวกรองซ่อนระหว่างแผงกาง (ค่าอยู่ในช่องของแผงแล้ว) */
+  const filtered = areaOf && <>
+    <TableHeader query={q} Placeholder={SEARCH} onQuery={(v) => { setQ(v); setPage(1); }} onFilter={openPanel} FilterCount={chips.length}
+      Filters={panel && !mob ? undefined : chips} onRemoveFilter={removeChip} />
+    {panel && !mob && (
+      <div className="flex flex-col gap-5">
+        <div className="grid grid-cols-3 gap-4">{dropdowns}</div>
+        <div className="flex items-center justify-between gap-3">
+          <TertiaryBrandButton Text="ล้างตัวกรอง" onClick={() => setFd(NO_AREA)} />
+          <div className="flex gap-3">
+            <SecondaryButton Text="ยกเลิก" onClick={closePanel} />
+            <PrimaryButton Text="ตกลง" onClick={applyPanel} />
+          </div>
+        </div>
+      </div>
+    )}
+    {shown.length ? table : <EmptyStateSearchNotFound Text="ไม่พบยานพาหนะ" />}
+  </>;
   const body = !pool.length
     ? (emptyText ? <EmptyStateDataEmpty Text={emptyText} SupportingText={emptySub} Graphic="vehicle" /> : <EmptyStateDataEmpty Graphic="vehicle" Text={"ยานพาหนะทุกคันของ" + nowQ + " อยู่ในแผนเดินทางแล้ว"} SupportingText="ไม่มียานพาหนะที่เพิ่มเข้าแผนเดินทางนี้ได้" />)
-    : <>{search}<CheckTable columns={COLS} rows={rows} scope={shown.map((c) => ({ key: c.id, disabled: !!taken[c.id] }))} ticked={ticked} onTicked={setTicked}
-      Pagination={<TablePagination total={shown.length} page={pg} perPage={PER} onPage={setPage} />} /></>;
+    : filtered || <>{search}{table}</>;
 
   return (
-    <PopupModal open title={title} sub={sub} width={800} ok={okText + (n ? " (" + n + ")" : "")} okDisabled={!n}
-      onCancel={onCancel} onOk={() => onAdd(pool.filter((c) => ticked.includes(c.id) && !taken[c.id]).map((c) => c.id))}>
-      {body}
-    </PopupModal>
+    <>
+      <PopupModal open title={title} sub={sub} width={800} ok={okText + (n ? " (" + n + ")" : "")} okDisabled={!n}
+        onCancel={onCancel} onOk={() => onAdd(pool.filter((c) => ticked.includes(c.id) && !taken[c.id]).map((c) => c.id))}>
+        {body}
+      </PopupModal>
+      {areaOf && mob && <FilterShell open={panel} onClose={closePanel} onClear={() => setFd(NO_AREA)} onApply={applyPanel}>{dropdowns}</FilterShell>}
+    </>
   );
 }

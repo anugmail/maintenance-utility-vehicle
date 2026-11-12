@@ -35,7 +35,7 @@ export function saveLive(p: Plan, d: Draft) {
     const per = [1, 2, 3, 4].map((q) => inQuarter(d, q).length);
     const plans = s.plans.map((x) => (x.mr !== p.mr ? x : {
       ...x, name: d.name.trim(), ...allocScope(d.alloc), cars: Object.keys(d.alloc).length, perQ: per.map((n, i) => "ไตรมาส " + (i + 1) + ": " + n).join(" · "),
-      regions: d.regions, districts: d.districts, types: d.types, alloc: d.alloc, picks: d.picks, qty: d.qty, manual: d.manual, oils: d.oils, oilSpec: d.oilSpec, draw: d.draw, extra: d.extra, removed: d.removed,
+      regions: d.regions, districts: d.districts, types: d.types, alloc: d.alloc, picks: d.picks, qty: d.qty, manual: d.manual, oils: d.oils, oilSpec: d.oilSpec, draw: d.draw,
     }));
     /* คันที่เพิ่ม/เอาออกในหน้าไตรมาส อยู่ใน alloc แล้ว ⇒ ล้าง (คงเบอร์ ผู้ดูแล สถานที่ที่แก้ไว้) */
     const qcars = Object.fromEntries(Object.entries(s.qcars ?? {}).map(([k, e]) => [k, k.startsWith(id + "-") ? { ...e, added: [], removed: [] } : e]));
