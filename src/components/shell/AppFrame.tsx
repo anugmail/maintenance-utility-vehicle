@@ -9,16 +9,16 @@
        — เจ้าของงาน 5 พ.ย. 2569 _"เอาตรงที่เป็น hambuger ออก … อันนี้บนเว็บนะ"_ (ต่างจาก R1 ของปลั๊กอินที่ให้ desktop ใช้ Tablet · COMPOSED.md)
    Mobile (402 · < 768): ไม่มี Sidebar · ปุ่ม menu ของ Header navigation Breakpoint=Mobile เปิด Sidebar navigation State=Expanded จากซ้าย ทับ Background overlay (ประกอบ — ดู figma-spec/COMPOSED.md)
      Page ขอบใน 16 ช่องไฟ 24
-   เมนูที่ Active ใน Sidebar: "พาดูทีละเรื่อง" ที่ /guide/ และหน้าเรื่อง /scenarios/guide/ ที่เปิดจากเมนูนั้น (from=menu) · "อะไหล่ของแผนที่อนุมัติแล้ว" ที่ /parts/ (S4) · หน้าอื่น "บำรุงรักษาตามวาระ"
+   เมนูที่ Active ใน Sidebar: "พาดูทีละเรื่อง" ที่ /guide/ และหน้าเรื่อง /scenarios/guide/ ที่เปิดจากเมนูนั้น (from=menu) · "อะไหล่ของแผนที่อนุมัติแล้ว" ที่ /parts/ (S4) · "แบบประเมินความพึงพอใจ" (เมนูชั้นบน) ที่ /satisfaction/ · หน้าอื่น "บำรุงรักษาตามวาระ"
    บนสุดมีแถบต้นแบบ (PrototypeBar) · toast ผ่าน ToastHost */
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { BackgroundOverlay } from "@/components/vms/BackgroundOverlay";
 import { HeaderNavigation } from "@/components/vms/HeaderNavigation";
 import { APPROVE_PLANS_LABEL, APPROVE_TRIPS_LABEL, GUIDE_LABEL, MT_LABEL, PARTS_LABEL, SAFETY_LABEL, SAT_LABEL, SIDEBAR_MENU, SidebarNavigation } from "@/components/vms/SidebarNavigation";
-import { useMock } from "@/lib/mock/store";
+import { useMock, useRole } from "@/lib/mock/store";
 import { tripsOf } from "@/lib/mock/trips";
-import { satRows } from "@/lib/mock/survey";
+import { rowsFor } from "@/lib/mock/survey";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useOutside } from "@/lib/useOutside";
 import { GuideBar } from "@/components/guide/GuideBar";
@@ -52,8 +52,11 @@ export function AppFrame({ children, bell }: { children: ReactNode; bell?: boole
   /* เมนูอนุมัติของทุกบทบาท + Badge จำนวนที่รออนุมัติ (ตัวเดียวกับรายการ S2 S7 · 9 พ.ย. 2569) */
   const mock = useMock();
   const nPlans = mock.plans.filter((p) => p.status === "review").length, nTrips = tripsOf(mock).filter((t) => t.status === "review").length;
-  const nSat = satRows(mock).filter((r) => !r.evaluated).length;   // S27 ยังไม่ได้ประเมิน (11 พ.ย. 2569)
-  const menu = SIDEBAR_MENU.map((g) => (g.items ? { ...g, items: g.items.map((s) => (s.Text === APPROVE_PLANS_LABEL && nPlans ? { ...s, badge: String(nPlans) } : s.Text === APPROVE_TRIPS_LABEL && nTrips ? { ...s, badge: String(nTrips) } : s.Text === SAT_LABEL && nSat ? { ...s, badge: String(nSat) } : s)) } : g));
+  /* แบบประเมินความพึงพอใจ (เมนูชั้นบนของตัวเอง 12 พ.ย. 2569 · BACKLOG ข้อ 75) — Badge = ยังไม่ได้ประเมินที่บทบาทนี้เห็น (ตัวเดียวกับ Badge ของแท็บ) */
+  const role = useRole();
+  const nSat = rowsFor(mock, role).filter((r) => !r.evaluated).length;
+  const menu = SIDEBAR_MENU.map((g) => (g.items ? { ...g, items: g.items.map((s) => (s.Text === APPROVE_PLANS_LABEL && nPlans ? { ...s, badge: String(nPlans) } : s.Text === APPROVE_TRIPS_LABEL && nTrips ? { ...s, badge: String(nTrips) } : s)) }
+    : g.Text === SAT_LABEL && nSat ? { ...g, badge: String(nSat) } : g));
 
   const expanded = pinned || hover;
   return (

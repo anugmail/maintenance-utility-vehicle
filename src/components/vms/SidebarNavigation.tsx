@@ -20,7 +20,7 @@ import { NavListItem } from "./NavListItem";
 import { TertiaryButton } from "./TertiaryButton";
 
 export interface SideLink { Text: string; href?: string; /** property Badge ของ Nav list item (Pill color) — จำนวนที่รอ */ badge?: string }
-export interface SideGroup { IconSwap: string; Text: string; items?: SideLink[]; href?: string }
+export interface SideGroup { IconSwap: string; Text: string; items?: SideLink[]; href?: string; /** Badge ของ Nav item ชั้นบน (Pill color) — จำนวนที่รอ */ badge?: string }
 export interface SideFooter { IconSwap: string; Text: string; SupportingText?: string; TrailingIconSwap?: string; avatar?: boolean }
 
 export const MT_LABEL = "บำรุงรักษาตามวาระ";
@@ -34,8 +34,10 @@ export const PARTS_LABEL = "อะไหล่ของแผนที่อน�
 export const SAFETY_LABEL = "การตรวจ ปจ.2";   // ชื่อบนจอ "การตรวจ ปจ.2" (เจ้าของงาน 11 พ.ย. 2569 · เดิม Safety Inspection)
 export const APPROVE_PLANS_LABEL = "แผนรออนุมัติ";
 export const APPROVE_TRIPS_LABEL = "แผนเดินทางรออนุมัติ";
-/** เมนูย่อย: ประเมินความพึงพอใจการให้บริการของ กบค. /satisfaction/ (S27 · เจ้าของงาน 11 พ.ย. 2569 "ทำเป็นอีก 1 view" · แบบเมนู "ประเมินพนักงานขับรถ" ของ VMS+ เดิมที่ประเมินผู้รับจ้างยกมา · ไม่มีใน Sidebar Navigation ของ UI Release#2 — COMPOSED.md ศ.) · Badge = จำนวนที่ยังไม่ได้ประเมิน */
-export const SAT_LABEL = "ประเมินความพึงพอใจ";
+/** เมนูชั้นบนของตัวเอง: แบบประเมินความพึงพอใจ /satisfaction/ — เจ้าของงาน 12 พ.ย. 2569 _"เรื่องการประเมินเป็นเรื่องแยกที่จะไปผูกตาม flow ต่างๆ เลยอยากแยกใว้"_ (BACKLOG ข้อ 75)
+    ไม่อยู่ใต้ "งานซ่อมและบำรุงรักษา" แล้ว (เดิม S27 เมนูย่อย 11 พ.ย. 2569) · Sidebar Navigation (277:230639) ของ UI Release#2 ไม่มีเมนูประเมิน ⇒ Nav item ชั้นบนแบบ "หน้าหลัก" "รายงาน"
+    วางก่อน "รายงาน" (ผูกได้หลาย flow: งานซ่อม · บำรุงรักษาตามวาระ · Overhaul) · ไอคอน star (ไอคอนประเมินของตารางเดิม) · Badge (Pill color) = จำนวนที่ยังไม่ได้ประเมิน · Collapsed = Nav button Indicator — COMPOSED.md ศ. */
+export const SAT_LABEL = "แบบประเมินความพึงพอใจ";
 
 export const SIDEBAR_MENU: SideGroup[] = [
   { IconSwap: "home-24-300-round", Text: "หน้าหลัก" },
@@ -43,8 +45,9 @@ export const SIDEBAR_MENU: SideGroup[] = [
   { IconSwap: "traffic_jam-24-300-round", Text: "จัดการคำขอใช้ยานพาหนะ", items: [{ Text: "ตรวจสอบและจัดการคำขอ" }, { Text: "อนุมัติใช้ยานพาหนะ" }] },
   { IconSwap: "database-24-300-round", Text: "ข้อมูลพนักงานและยานพาหนะ", items: [{ Text: "ผู้ดูแลยานพาหนะ" }, { Text: "ข้อมูลพนักงานขับยานพาหนะ" }, { Text: "ข้อมูลยานพาหนะ" }, { Text: "กลุ่มยานพาหนะ" }, { Text: "บริหารสัญญา" }] },
   { IconSwap: "ev_station", Text: "การอัดประจุไฟฟ้า", items: [{ Text: "สถานีอัดประจุไฟฟ้า" }, { Text: "อัตราค่าไฟฟ้า" }, { Text: "ค่าใช้จ่ายอัดประจุยานพาหนะ" }, { Text: "บันทึกการอัดประจุ Wall Charger" }, { Text: "ต้นทุนและค่าใช้จ่ายในการอัดประจุ" }] },
-  { IconSwap: "build", Text: "งานซ่อมและบำรุงรักษา", items: [{ Text: "ภาพรวมการซ่อมบำรุง" }, { Text: "ตารางบำรุงรักษา" }, { Text: "นัดหมายบำรุงรักษา" }, { Text: "งานซ่อม" }, { Text: "ยานพาหนะทดแทน" }, { Text: MT_LABEL, href: "/" }, { Text: PARTS_LABEL, href: "/parts/" }, { Text: SAFETY_LABEL, href: "/safety/" }, { Text: APPROVE_PLANS_LABEL, href: "/approvals/plans/" }, { Text: APPROVE_TRIPS_LABEL, href: "/approvals/trips/" }, { Text: SAT_LABEL, href: "/satisfaction/" }, { Text: GUIDE_LABEL, href: "/guide/" }] },
+  { IconSwap: "build", Text: "งานซ่อมและบำรุงรักษา", items: [{ Text: "ภาพรวมการซ่อมบำรุง" }, { Text: "ตารางบำรุงรักษา" }, { Text: "นัดหมายบำรุงรักษา" }, { Text: "งานซ่อม" }, { Text: "ยานพาหนะทดแทน" }, { Text: MT_LABEL, href: "/" }, { Text: PARTS_LABEL, href: "/parts/" }, { Text: SAFETY_LABEL, href: "/safety/" }, { Text: APPROVE_PLANS_LABEL, href: "/approvals/plans/" }, { Text: APPROVE_TRIPS_LABEL, href: "/approvals/trips/" }, { Text: GUIDE_LABEL, href: "/guide/" }] },
   { IconSwap: "e911_emergency", Text: "จัดการเหตุการณ์", items: [{ Text: "จัดการเหตุยานพาหนะเสีย" }, { Text: "จัดการเหตุอุบัติเหตุ" }] },
+  { IconSwap: "star-24-300-round", Text: SAT_LABEL, href: "/satisfaction/" },
   { IconSwap: "news", Text: "รายงาน" },
 ];
 export const SIDEBAR_FOOTER: SideFooter[] = [
@@ -84,7 +87,7 @@ export function SidebarNavigation({ State = "Collapsed", menu = SIDEBAR_MENU, fo
           <img src={asset("/pea-logo.svg")} alt="PEA" width={32} height={32} />
         </button>
         <div className="flex flex-col gap-2">
-          {menu.map((g) => <NavButton key={g.Text} IconSwap={g.IconSwap} Text={g.Text} State={holds(g) ? "Active" : "Default"} onClick={onToggle} />)}
+          {menu.map((g) => <NavButton key={g.Text} IconSwap={g.IconSwap} Text={g.Text} State={holds(g) ? "Active" : "Default"} Indicator={!!g.badge} onClick={onToggle} />)}
         </div>
         <div className="mt-auto flex flex-col gap-2">
           {footer.map((f) => <NavButton key={f.Text} IconSwap={f.avatar ? <Avatar /> : f.IconSwap} Text={f.Text} onClick={onToggle} />)}
@@ -101,7 +104,7 @@ export function SidebarNavigation({ State = "Collapsed", menu = SIDEBAR_MENU, fo
       </div>
       <div className="flex flex-col gap-2">
         {menu.map((g) => {
-          if (!g.items) return <NavItem key={g.Text} Text={g.Text} LeadingIconSwap={g.IconSwap} href={g.href} State={g.Text === active ? "Active" : "Default"} />;
+          if (!g.items) return <NavItem key={g.Text} Text={g.Text} LeadingIconSwap={g.IconSwap} href={g.href} State={g.Text === active ? "Active" : "Default"} Badge={!!g.badge} BadgeText={g.badge} />;
           const on = open.includes(g.Text);
           return (
             <div key={g.Text} className="flex flex-col gap-1">

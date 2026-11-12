@@ -6,6 +6,9 @@
    → ปิดงานแล้ว: ผลการตรวจสภาพก่อนบำรุงรักษา (Step 1 ของ S10: แบบตรวจตามประเภทยานพาหนะ + รายการตรวจ + ลงนามการตรวจสภาพอะไหล่ SignRequest ดูอย่างเดียว · สถานะรอยืนยัน/ยืนยันแล้ว 11 พ.ย. 2569) · ภาพก่อนเริ่มงาน
        · รายการงานและอะไหล่ที่ใช้จริง — แทนไฟล์ PDF แบบเดิม
        · ไม่มีการประเมินในหน้านี้แล้ว (เจ้าของงาน 11 พ.ย. 2569 "ย้ายออกจาก S13 ไปอยู่ view ใหม่" — แบบประเมินความพึงพอใจของ กบค. อยู่หน้า /satisfaction/ S27 · R94)
+       · 12 พ.ย. 2569 แบบประเมินความพึงพอใจเป็นเรื่องแยก เมนูของตัวเอง (_"เรื่องการประเมินเป็นเรื่องแยกที่จะไปผูกตาม flow ต่างๆ เลยอยากแยกใว้"_ · BACKLOG ข้อ 75)
+         ⇒ S13 ยังรับทราบอย่างเดียว · ทางเข้าการประเมิน = รับทราบแล้ว (ผู้ดูแลยานพาหนะ · ไม่ใช่คันที่บำรุงรักษาไม่ได้ · ยังไม่ได้ประเมิน) ปุ่ม "ประเมินความพึงพอใจ" แทนที่ปุ่มรับทราบ
+           → ฟอร์มประเมินของงานนี้ในเมนูแบบประเมินความพึงพอใจ (/satisfaction/form/?id=ma.<แผนเดินทาง>.<ยานพาหนะ>) · ประเมินแล้วปุ่มหาย (เสนอ · ยังไม่มีจอ Figma)
      บำรุงรักษาไม่ได้: สาเหตุที่บำรุงรักษาไม่ได้ (สาเหตุ · ผู้บันทึก · วันที่บันทึก) แทนผลงาน · ไม่มีประเมิน (เสนอ Q59)
    → ปุ่ม ย้อนกลับ + "รับทราบ" สีเขียว (AckButton) — กดได้ทันที (รับทราบอย่างเดียว · 11 พ.ย. 2569) · กดแล้วบันทึกทันที ไม่มี popup → ปุ่มหาย ป้ายรับทราบแล้ว + toast "รับทราบผลการบำรุงรักษา {ทะเบียน} แล้ว"
    กดได้เฉพาะบทบาท ผู้ดูแลยานพาหนะ (Permission S13) · บทบาทอื่นเห็นปุ่มย้อนกลับอย่างเดียว · รับทราบครบทุกคันในแผนแล้วแผนปิดงานเอง (acceptCar · S16 S17 ตัดออก Figma 6299e1d)
@@ -28,6 +31,8 @@ import { ACCEPT_SAMPLES, ACCEPT_STATUS, ACK_AT, ACK_LIST, acceptCar, accRecord, 
 import { BEFORE, INSPECT_OPTS, OIL_DEFAULT, OIL_JOB_OPTS, emptyReceive, inspectForm, tripCtrl } from "@/lib/mock/jobs";
 import { workOf } from "@/lib/mock/tripCols";
 import { notify, useMock, useRole } from "@/lib/mock/store";
+import { evalRecord, maEvalId, satFormHref } from "@/lib/mock/survey";
+import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { useSample } from "@/lib/useSample";
 import { badgeOf, ButtonRow, SignRequest } from "../../trips/_lib/ui";
 import { SLOTS } from "../../trips/job/receive/ReceivePage";
@@ -59,6 +64,7 @@ function AckResult() {
       ["น้ำมันไฮดรอลิก", OIL_JOB_OPTS[job.close?.oilChoice ?? job.oilChoice ?? OIL_DEFAULT]], ["เลขไมล์หลังทำ", job.kmAfter ?? "-"]];
   const pairs: [string, string][] = [["ทะเบียน", car.plate], ["ยี่ห้อ/รุ่น", car.model], ["ประเภทยานพาหนะ", car.type], ["หน่วยงานเจ้าของยานพาหนะ", car.owner],
     ["แผนเดินทาง", trip.name], ["เลขที่ MR", rec.mr], ["ผู้ดูแลยานพาหนะ", tripCtrl(trip, car)], ...jobPairs, ...(done ? [["รับทราบเมื่อ", job.acceptedAt ?? ACK_AT] as [string, string]] : [])];
+  const ev = evalRecord(mock, maEvalId(trip.id, car.id));   // งานนี้ในเมนูแบบประเมินความพึงพอใจ (มีเมื่อรับทราบแล้ว)
   const rcv = job.receive ?? emptyReceive(car);
   const fm = inspectForm(car, trip.planMr);
   const photos = job.photos?.length ? job.photos.map((p) => ({ alt: p.name })) : BEFORE.map((alt) => ({ alt }));
@@ -90,6 +96,7 @@ function AckResult() {
         <ButtonRow>
           <SecondaryButton Text="ย้อนกลับ" Size="lg" onClick={back} />
           {!done && keeper && <AckButton Size="lg" onClick={ack} />}
+          {done && keeper && !cannot && ev && !ev.evaluated && <PrimaryButton Text="ประเมินความพึงพอใจ" LeadingIconSwap="star-24-300-round" Size="lg" onClick={() => router.push(satFormHref(ev))} />}
         </ButtonRow>
       </div>
     </>

@@ -7,8 +7,10 @@ const sample = (q: Record<string, string>) => "/scenarios/sample/?" + new URLSea
 /* 6 พ.ย. 2569 ชื่อ S1 S6 S19 S20 S21 ตาม SCENARIOS ของ screens.js: ผู้สร้างแผน/ผู้ดำเนินการ = หน่วยงาน (เดิม กบค.)
    9 พ.ย. 2569 S1 persona 3 หน่วยงาน + กบค. (A.1 A.39 A.40 A.31 · 12 พ.ย. 2569 ข้อ 70 + กส.1 กส.2) — เปิดจาก href ด้วย กบผ. · บทบาทอื่นเลือกที่แถบต้นแบบ หรือเคสพาดูของ S1 */
 /* cut = เหตุผลที่ตัดออก (แถวที่ตัดออกไม่มี href · ดูอย่างเดียว) */
-export interface Scenario { id: string; name: string; phase: string; role: string; href?: string; cut?: string }
-export const ACTIVE_SCENARIOS = () => SCENARIOS.filter((s) => !s.cut);
+/* topic = เรื่องแยกที่ไม่ใช่บำรุงรักษาตามวาระ (หน้า /scenarios/ แยกหัวข้อของเรื่องนั้น · /guide/ ช่วงงาน = phase) — 12 พ.ย. 2569 แบบประเมินความพึงพอใจ (BACKLOG ข้อ 75) */
+export interface Scenario { id: string; name: string; phase: string; role: string; href?: string; cut?: string; topic?: string }
+export const ACTIVE_SCENARIOS = () => SCENARIOS.filter((s) => !s.cut && !s.topic);
+export const TOPIC_SCENARIOS = () => SCENARIOS.filter((s) => !s.cut && !!s.topic);
 export const CUT_SCENARIOS = () => SCENARIOS.filter((s) => !!s.cut);
 
 export const SCENARIOS: Scenario[] = [
@@ -33,13 +35,16 @@ export const SCENARIOS: Scenario[] = [
   { id: "S12", name: "ผู้ดำเนินการ บันทึกผลตรวจน้ำมันไฮดรอลิก", phase: "ตรวจรับ", role: "หน่วยงาน (กบผ.)", href: "/trips/detail/?trip=T1&sample=T1_afterClose" },
   /* 10 พ.ย. 2569 (Figma 9607c3b · R89): S13 ผู้ดูแลยานพาหนะรับทราบและประเมินรายคัน = ขั้นสุดท้าย · รับทราบครบทุกคันแล้วแผนปิดงานเอง (Figma 6299e1d) · S14–S17 ตัดออก (ท้ายรายการ) */
   { id: "S13", name: "ผู้ดูแลยานพาหนะ รับทราบผลการบำรุงรักษารายคัน", phase: "ตรวจรับ", role: "ผู้ดูแลยานพาหนะ", href: "/acceptance/?sample=S13" },
-  /* S27 (เจ้าของงาน 11 พ.ย. 2569 · บล็อก Y · R94 · เลข S26 เป็นของ Safety Inspection) — แบบประเมินความพึงพอใจของ กบค. ย้ายออกจาก S13 เป็นหน้าแยก · ?sample=S27 = T1 รับทราบครบ 82-1145 ประเมินแล้ว 82-6789 ยังไม่ได้ประเมิน */
-  { id: "S27", name: "ผู้ดูแลยานพาหนะ ประเมินความพึงพอใจการให้บริการของ กบค. รายคัน", phase: "ตรวจรับ", role: "ผู้ดูแลยานพาหนะ", href: "/satisfaction/?sample=S27" },
   /* S18 (R92 · Figma c450480 · 10 พ.ย. 2569) แท็บต้นทุนการบำรุงรักษาในหน้ารายละเอียดแผน — ชุดตัวอย่าง SEEDS.S18 */
   { id: "S18", name: "ผู้ดำเนินการ คำนวณต้นทุนการบำรุงรักษา", phase: "คำนวณต้นทุน", role: "หน่วยงาน (กบผ.)", href: sample({ seed: "S18", go: "/detail/?id=Z7000001&tab=cost" }) },
   { id: "S24", name: "ผู้ดำเนินการ ติดตามข้อมูลการบำรุงรักษารายคันและกำหนดครั้งถัดไป", phase: "หลังปิดงาน (ข้อมูลยานพาหนะ)", role: "หน่วยงาน (กบผ.) · กบค. · ผู้ดูแลยานพาหนะ", href: "/vehicles/maintenance/?sample=S24" },
   /* S26 Safety Inspection (เจ้าของงาน 11 พ.ย. 2569 "ลองสร้าง scen นี้ใน prototype ให้หน่อย เป็น scen ชื่อว่า safety inspection" + รอบ 2 "มี 2 หน้า คือหน้า list และหน้ารายละเอียด" · BACKLOG ข้อ 67 · ทำเว็บก่อน Figma) — ?sample=S26 */
   { id: "S26", name: "ผู้ดำเนินการ การตรวจ ปจ.2 (Safety Inspection) อัปโหลดเอกสารและเลือกผลรายคันจากหน้ารายการ", phase: "หลังปิดงาน (ข้อมูลยานพาหนะ)", role: "หน่วยงาน (กบผ.) · กบค. · ผู้ดูแลยานพาหนะ (ดูอย่างเดียว)", href: "/safety/?sample=S26" },
+  /* S27 (เจ้าของงาน 11 พ.ย. 2569 · บล็อก Y · R94 · เลข S26 เป็นของ Safety Inspection) — แบบประเมินความพึงพอใจ ย้ายออกจาก S13 เป็นหน้าแยก
+     12 พ.ย. 2569 เจ้าของงาน "เรื่องการประเมินเป็นเรื่องแยกที่จะไปผูกตาม flow ต่างๆ เลยอยากแยกใว้" ⇒ เรื่องแยก (topic) ไม่อยู่ในลำดับงานบำรุงรักษา · งานซ่อม บำรุงรักษาตามวาระ Overhaul (BACKLOG ข้อ 75)
+     ?sample=S27 = T1 รับทราบครบ 82-1145 ประเมินแล้ว 82-6789 ยังไม่ได้ประเมิน + งานซ่อม Overhaul แผนของ กบค. ค่าตั้งต้น */
+  { id: "S27", name: "ผู้ดูแลยานพาหนะ ประเมินความพึงพอใจงานที่ปิดแล้ว (งานซ่อม บำรุงรักษาตามวาระ Overhaul)", phase: "แบบประเมินความพึงพอใจ", role: "ผู้ดูแลยานพาหนะ · กบค. (ดูอย่างเดียว)",
+    href: "/satisfaction/?sample=S27", topic: "แบบประเมินความพึงพอใจ" },
   /* scenario ที่ตัดออก — แบบกรอบ "ตัดออกแล้ว" ของ Figma (33a990c · SCEN_CUT ของ screens.js · 8 รายการ เหลือ 17 scenario) · หน้า /scenarios/ แสดงแยกเป็นหัวข้อ "Scenario ที่ตัดออกแล้ว" ดูอย่างเดียว ไม่มีลิงก์ (href) */
   { id: "S3", name: "ผพจ. ออกเลขงานและจัดซื้ออะไหล่", phase: "ตัดออกแล้ว", role: "-", cut: "ตัดออก 2 พ.ย." },
   { id: "S5", name: "หน่วยงาน เบิกอะไหล่ผ่านระบบจองอะไหล่", phase: "ตัดออกแล้ว", role: "-", cut: "รวมเข้า S4 2 พ.ย." },

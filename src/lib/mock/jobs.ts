@@ -234,8 +234,9 @@ export interface Job {
   cannot?: CannotInfo;
   oilResult?: OilResult;
   safety?: SafetyDocs;
-  /** ผู้ดูแลยานพาหนะรับทราบผลรายคันแล้ว (S13 · acceptance.ts · 10 พ.ย. 2569 เดิม หน่วยงานยอมรับผล) · score = คะแนนความพึงพอใจ 1–5 (คันที่บำรุงรักษาไม่ได้ไม่มี) */
-  acceptedAt?: string; score?: number; survey?: { info: string[]; answers: number[]; remark?: string; at?: string; by?: string };   // survey = แบบประเมินความพึงพอใจของ กบค. (S27 หน้าประเมินความพึงพอใจ · survey.ts · R94 · 11 พ.ย. 2569) · score = คะแนนรวม (เต็ม 55)
+  /** ผู้ดูแลยานพาหนะรับทราบผลรายคันแล้ว (S13 · acceptance.ts · 10 พ.ย. 2569 เดิม หน่วยงานยอมรับผล)
+      12 พ.ย. 2569 แบบประเมินความพึงพอใจแยกเป็นเรื่องของตัวเอง (BACKLOG ข้อ 75) ⇒ ผลประเมินไม่เก็บในงานรายคันแล้ว ย้ายไป MockState.evals (survey.ts · MOCK_V 9) */
+  acceptedAt?: string;
   /** S23 ส่งตรวจงาน (รอตรวจรับ) · เหตุผลที่หน่วยงานส่งกลับแก้ไข */
   sentAt?: string; sentBy?: string; returnReason?: string;
   /** S23 หน่วยงานตรวจรับ (11 พ.ย. 2569 เจ้าของงาน "จังหวะที่ vendor ส่ง approve เจ้าหน้าที่ต้องสามารถระบุค่าใช้จ่ายของคันนั้น โดยมี 2 คือค่าจ้าง กับค่าเดินทาง")
