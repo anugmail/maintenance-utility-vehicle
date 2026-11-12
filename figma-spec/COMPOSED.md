@@ -113,7 +113,7 @@
 
 | จุด | ประกอบจาก / ที่ทำ | เหตุผล |
 |---|---|---|
-| ตารางติ๊กเลือกรถใน popup เพิ่มรถเข้าแผนเดินทาง (`app/quarter/_shared/TripCarPicker`) | Table header cell (Checkbox ที่หัวคอลัมน์แรก · Unselected/Indeterminate/Selected) + Table cell Style=Lead checkbox วางเป็นตารางเอง · มือถือ List with checkbox (หัว "ทะเบียน") | `Table` ของต้นแบบรับช่องติ๊กในแถวไม่ได้ · ตาม tripCarModal() ใน screens.js (Select vehicles ของ UI Release#2) |
+| ตารางติ๊กเลือกรถใน popup เพิ่มรถเข้าแผนเดินทาง (`app/quarter/_shared/TripCarPicker`) | Table header cell (Checkbox ที่หัวคอลัมน์แรก · Unselected/Indeterminate/Selected) + Table cell Style=Lead checkbox วางเป็นตารางเอง · มือถือ List with checkbox (หัว "ทะเบียน") | `Table` ของต้นแบบรับช่องติ๊กในแถวไม่ได้ · ตาม tripCarModal() ใน screens.js (Select vehicles ของ UI Release#2) · 12 พ.ย. 2569 ข้อ 74 (เจ้าของงาน "ป๊อบอัพ ควรมีแบ่งหน้า") หน้าละ 10 + `Table pagination` ใต้ตาราง (มือถือ Breakpoint=Mobile ใต้รายการ) · ค้นหา = กลับหน้า 1 · ติ๊กหัวตาราง = ทุกคันที่ตรงคำค้น (ทุกหน้า) · มือถือ List header item + List with checkbox item (หัวรายการผูกกับทุกคันที่ตรงคำค้น) |
 | ช่องค้นหาใน popup เพิ่มรถ | Text input ไม่มีป้าย ไอคอน search กว้าง 320 (ส่วนค้นหาของ Table header) | screens.js ซ่อน Actions (ปุ่มตัวกรอง) ของ Table header แต่ component `TableHeader` แสดงปุ่มตัวกรองเสมอ |
 | ช่องค้นหาผู้รับจ้าง / พนักงาน กบค. ซ่อม | Input dropdown (property Cursor พิมพ์ค้นได้) + Dropdown list (ชื่อ + Supporting text ประเภทรถ) · ไม่พบ = ไม่แสดงรายการ | จอ "ค้นไม่พบ" ยังไม่ออกแบบ |
 | Date picker ในฟอร์มแผนเดินทาง | Date picker Type=Dual ลอยใต้ช่องวันที่เริ่ม (desktop) · มือถือพิมพ์ วว/ดด/ปปปป ในช่อง | screens.js ไม่วาด date picker บนมือถือ · "เลือกก่อนวันนี้ไม่ได้" ยังไม่บังคับ (component ไม่มีวันต่ำสุด) |
@@ -319,7 +319,7 @@ screens.js ไม่ได้วาดปุ่มไปขั้นถัดไ
 
 | จุด | ที่ทำ | เหตุผล |
 |---|---|---|
-| popup "เพิ่มรถเข้าไตรมาส n" ในฟอร์มแผน | ใช้ `quarter/_shared/TripCarPicker` ตัวเดียวกับ popup เพิ่มรถเข้าไตรมาสของ S6 (รับ emptySub เพิ่ม) · ไม่เลือกพื้นที่ = รถทุกคันที่ยังไม่อยู่ในไตรมาสใด (ตารางยาว ไม่แบ่งหน้าใน popup) | planForm o.qAdd → tripCarModal ใน screens.js · popup ของไลบรารีไม่มี pagination |
+| popup "เพิ่มรถเข้าไตรมาส n" ในฟอร์มแผน | ใช้ `quarter/_shared/TripCarPicker` ตัวเดียวกับ popup เพิ่มรถเข้าไตรมาสของ S6 (รับ emptySub เพิ่ม) · ไม่เลือกพื้นที่ = รถทุกคันที่ยังไม่อยู่ในไตรมาสใด (12 พ.ย. 2569 ข้อ 74 แบ่งหน้าละ 10 + Table pagination · เดิมตารางยาว ไม่แบ่งหน้า) | planForm o.qAdd → tripCarModal ใน screens.js · Modal ของไลบรารีไม่มี pagination ⇒ วาง Table pagination ใต้ตารางในเนื้อหา popup (เจ้าของงาน 12 พ.ย. 2569 "ป๊อบอัพ ควรมีแบ่งหน้า") |
 
 ## น. เจ้าของงาน 6 พ.ย. 2569 (BACKLOG ข้อ 21 · สาขา `owner-6nov`)
 

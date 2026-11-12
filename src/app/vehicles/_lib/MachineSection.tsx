@@ -1,13 +1,14 @@
 "use client";
 /* ส่วน "เครื่องมือกล" ของหน้ารายละเอียดยานพาหนะ แท็บข้อมูลยานพาหนะ (S24 · BACKLOG ข้อ 68 · เจ้าของงาน 11 พ.ย. 2569 · ทำเว็บก่อน Figma)
    Section label "เครื่องมือกล (n)" + Actions Secondary button "เพิ่มเครื่องมือกล" (ไอคอน add · เฉพาะผู้แก้ได้)
-   → Table (desktop) / Mobile table: ประเภทเครื่องมือกล · ยี่ห้อ/รุ่น (บรรทัดรอง หมายเลข HC) · รหัสทรัพย์สิน · รหัสทรัพย์สินย่อย · พิกัดยก (กก.) · ชั่วโมงเครื่องยนต์ · ชั่วโมงเครน · ไอคอนแก้ไข
+   → Table (desktop) / Mobile table: ประเภทเครื่องมือกล · ยี่ห้อ/รุ่น (บรรทัดรอง หมายเลข HC) · รหัสทรัพย์สิน · รหัสทรัพย์สินย่อย · พิกัดยก (กก.) · ชั่วโมงเครื่องยนต์ · ชั่วโมงเครื่องจักร · ไอคอนแก้ไข
      ไม่มีเครื่อง = Empty state/Data empty "ยังไม่มีเครื่องมือกล"
    เพิ่ม/แก้ไข = PopupModal (Modal ของไลบรารี · มือถือ Bottom sheet · แบบ popup ของ S10 S26) ช่อง 2 คอลัมน์ (Grid · มือถือเรียงลง):
      ประเภทเครื่องมือกล (Input dropdown · บังคับ) · ยี่ห้อ · รุ่น · รหัสทรัพย์สิน 12 หลัก · รหัสทรัพย์สินย่อย 4 หลัก (บังคับ · คู่รหัสห้ามซ้ำทั้งระบบ)
-     · พิกัดยก กก. (บังคับ ยกเว้นถังฉีดน้ำ/อื่นๆ) · ชั่วโมงเครื่องยนต์ · ชั่วโมงเครน (บังคับ จำนวนเต็ม ≥ 0 · Cumulative_working_hours NOT NULL)
+     · พิกัดยก กก. (บังคับ ยกเว้นถังฉีดน้ำ/อื่นๆ) · ชั่วโมงเครื่องยนต์ · ชั่วโมงเครื่องจักร (บังคับ จำนวนเต็ม ≥ 0 · Cumulative_working_hours NOT NULL)
      · หมายเลข HC · หมายเลขประจำเครื่องจักร (Serial No.) · หมายเลขเครื่องยนต์ (ส่วนเครื่องจักร) (ถ้ามี)
      12 พ.ย. 2569 ข้อ 72 (เจ้าของงาน 12 พ.ย. 2569 เลือกตามไฟล์สรุปประชุม VMS Plus (Notion "meeting 11/11/68" หัวข้อ 9)): เพิ่มหมายเลขเครื่องยนต์ (ส่วนเครื่องจักร) ไม่บังคับ ต่อจาก Serial No. · ป้าย "หมายเลขเครื่อง (Serial No.)" → "หมายเลขประจำเครื่องจักร (Serial No.)"
+     12 พ.ย. 2569 ข้อ 73 (เจ้าของงาน 12 พ.ย. 2569 "ใช้เป็น ชั่วโมงเครื่องจักร"): ป้าย "ชั่วโมงเครน" → "ชั่วโมงเครื่องจักร" ทั้งหัวคอลัมน์ ช่องใน popup และข้อความ error · ชื่อช่องข้อมูลคง craneHours (ไม่เปลี่ยนรูปแบบข้อมูลที่เก็บ)
      ค่าที่แมปจากฐานข้อมูลได้ขึ้นเป็นค่าตั้งต้นและแก้ได้ (เจ้าของงาน "ถ้าแมปข้อมูลจากฐานข้อมูลได้ ก็เอามาแสดง แต่สามารถแก้ไขได้") · ตารางคงคอลัมน์เดิม (เต็มแล้ว) หมายเลขเครื่องยนต์อยู่บรรทัดรองของยี่ห้อ/รุ่น
      ตรวจตอนกดบันทึก: ช่องผิด = Text input State Error + Helper text · ผ่าน = toast "บันทึกเครื่องมือกลสำเร็จ"
    แก้ได้เฉพาะ กบค. (ผู้ดูแลข้อมูลยานพาหนะ ตามทะเบียนเครื่องมือกลเดิม · เสนอ — PERMISSIONS.md) · บทบาทอื่นดูอย่างเดียว */
@@ -33,7 +34,7 @@ import { MaGrid, type MaValue } from "./ui";
 export const MACHINE_EDIT_ROLES = ["กบค."] as const;
 const COLS: TableColumn[] = [
   { head: "ประเภทเครื่องมือกล", width: 150, Style: "Lead text" }, { head: "ยี่ห้อ/รุ่น" }, { head: "รหัสทรัพย์สิน", width: 150 }, { head: "รหัสทรัพย์สินย่อย", width: 140 },
-  { head: "พิกัดยก (" + LIFT_UNIT + ")", width: 120 }, { head: "ชั่วโมงเครื่องยนต์", width: 150 }, { head: "ชั่วโมงเครน", width: 130 }, { head: "", width: 64, Style: "Action icons" },
+  { head: "พิกัดยก (" + LIFT_UNIT + ")", width: 120 }, { head: "ชั่วโมงเครื่องยนต์", width: 150 }, { head: "ชั่วโมงเครื่องจักร", width: 150 }, { head: "", width: 64, Style: "Action icons" },
 ];
 
 interface Draft { type: string; brand: string; model: string; asset: string; subAsset: string; lift: string; engineHours: string; craneHours: string; hc: string; serial: string; engineNo: string }
@@ -74,7 +75,7 @@ function MachineModal({ open, carId, car, edit, list, onClose }: { open: boolean
     subAsset: !/^\d{4}$/.test(d.subAsset) ? "กรุณาระบุรหัสทรัพย์สินย่อย 4 หลัก" : dup ? "รหัสทรัพย์สิน " + d.asset + " - " + d.subAsset + " ถูกใช้แล้ว" : undefined,
     lift: needLift && (!intOk(d.lift) || toInt(d.lift) <= 0) ? "กรุณาระบุพิกัดยกเป็นตัวเลขมากกว่า 0" : !needLift && d.lift && !intOk(d.lift) ? "กรุณาระบุพิกัดยกเป็นตัวเลข" : undefined,
     engineHours: !intOk(d.engineHours) ? "กรุณาระบุชั่วโมงเครื่องยนต์เป็นจำนวนเต็มตั้งแต่ 0" : undefined,
-    craneHours: !intOk(d.craneHours) ? "กรุณาระบุชั่วโมงเครนเป็นจำนวนเต็มตั้งแต่ 0" : undefined,
+    craneHours: !intOk(d.craneHours) ? "กรุณาระบุชั่วโมงเครื่องจักรเป็นจำนวนเต็มตั้งแต่ 0" : undefined,
   };
   const bad = Object.values(err).some(Boolean);
   const save = () => {
@@ -113,7 +114,7 @@ function MachineModal({ open, carId, car, edit, list, onClose }: { open: boolean
         {f("asset", "รหัสทรัพย์สิน", { ph: "12 หลัก", max: 12 })}
         {f("subAsset", "รหัสทรัพย์สินย่อย", { ph: "4 หลัก เช่น 0001", max: 4 })}
         {f("engineHours", "ชั่วโมงเครื่องยนต์", { num: true, ph: "ชั่วโมง" })}
-        {f("craneHours", "ชั่วโมงเครน", { num: true, ph: "ชั่วโมง" })}
+        {f("craneHours", "ชั่วโมงเครื่องจักร", { num: true, ph: "ชั่วโมง" })}
         {f("hc", "หมายเลข HC", { optional: true, ph: "เช่น HC - 9001" })}
         {f("serial", "หมายเลขประจำเครื่องจักร (Serial No.)", { optional: true, ph: "ระบุหมายเลขประจำเครื่องจักร" })}
         {f("engineNo", "หมายเลขเครื่องยนต์ (ส่วนเครื่องจักร)", { optional: true, ph: "ระบุหมายเลขเครื่องยนต์ของเครื่องจักร" })}

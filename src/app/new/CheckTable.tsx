@@ -6,7 +6,10 @@
    Desktop: คอลัมน์แรก = ช่องติ๊ก + ทะเบียน (บรรทัดรอง) · ติ๊กทั้งหมดที่หัวคอลัมน์แรก นับเฉพาะแถวที่ติ๊กได้ · Pagination ใต้ตาราง
    Mobile: List with checkbox (หัว = ชื่อคอลัมน์แรก · รายการ = ทะเบียน + บรรทัดรอง) ตาม mobileCards() ใน core.js
      แถวที่ส่ง mobileActions (11 พ.ย. 2569 BACKLOG ข้อ 64 · CLAUDE.md ข้อ 14) = List with checkbox item + Mobile table item Style=Action icons ใต้รายการ (ดู แก้ไข ลบ)
-     เดิมแท็บไตรมาสของฟอร์มแผนบนมือถือไม่มีทางเข้าหน้าอะไหล่รายคัน (S21) — เจ้าของงาน "เลือกรถเข้าแผนแล้ว แต่ไม่แสดงรายการอะไหล่ให้เลือก" · figma-spec/COMPOSED.md */
+     เดิมแท็บไตรมาสของฟอร์มแผนบนมือถือไม่มีทางเข้าหน้าอะไหล่รายคัน (S21) — เจ้าของงาน "เลือกรถเข้าแผนแล้ว แต่ไม่แสดงรายการอะไหล่ให้เลือก" · figma-spec/COMPOSED.md
+   scope (12 พ.ย. 2569 · BACKLOG ข้อ 74 · เจ้าของงาน 12 พ.ย. 2569 "ป๊อบอัพ ควรมีแบ่งหน้า"): rows = แถวของหน้าที่เปิด · scope = ทุกแถวที่ตรงคำค้น (ทุกหน้า)
+     ⇒ ติ๊กหัวตาราง/หัวรายการ = เลือก/ยกเลิกทุกแถวที่ติ๊กได้ใน scope (คงพฤติกรรมเดิมของ popup TripCarPicker ก่อนแบ่งหน้า) · ไม่ส่ง = เฉพาะแถวของหน้า (ฟอร์มแผน S1 เดิม)
+     มือถือที่ส่ง scope ใช้ List header item + List with checkbox item ชุดเดียวกับ List with checkbox (หัวรายการผูกกับ scope ไม่ใช่แค่รายการของหน้า) */
 import type { ReactNode } from "react";
 import { ListHeaderItem } from "@/components/vms/ListHeaderItem";
 import { ListWithCheckbox } from "@/components/vms/ListWithCheckbox";
@@ -31,16 +34,16 @@ export interface CheckRow {
   mobileActions?: CellAction[];
 }
 
-export function CheckTable({ columns, rows, ticked, onTicked, Pagination, mobileTitle }: {
-  columns: TableColumn[]; rows: CheckRow[]; ticked: string[]; onTicked: (next: string[]) => void; Pagination?: ReactNode; mobileTitle?: string;
+export function CheckTable({ columns, rows, scope, ticked, onTicked, Pagination, mobileTitle }: {
+  columns: TableColumn[]; rows: CheckRow[]; scope?: { key: string; disabled?: boolean }[]; ticked: string[]; onTicked: (next: string[]) => void; Pagination?: ReactNode; mobileTitle?: string;
 }) {
   const mob = useBreakpoint() === "Mobile";
-  const live = rows.filter((r) => !r.disabled);
+  const live = (scope ?? rows).filter((r) => !r.disabled);
   const all = live.length > 0 && live.every((r) => ticked.includes(r.key));
   const some = live.some((r) => ticked.includes(r.key));
   const flip = (k: string, on: boolean) => onTicked(on ? [...ticked, k] : ticked.filter((x) => x !== k));
   const flipAll = () => onTicked(all ? ticked.filter((k) => !live.some((r) => r.key === k)) : [...new Set([...ticked, ...live.map((r) => r.key)])]);
-  if (mob && rows.some((r) => r.mobileActions?.length)) {
+  if (mob && (scope || rows.some((r) => r.mobileActions?.length))) {
     return (
       <div className="flex flex-col gap-5">
         <div>
