@@ -58,13 +58,16 @@ const toneNode = (v: { text: string; sub?: string; tone: DueTone }) => (
 const linkNode = (v: { text: string; href: string }) => <Link href={v.href} data-plate-link className="text-info-700 underline underline-offset-2">{v.text}</Link>;
 
 /* desktop: Table (Content = Table header cell + Table cell) + Table pagination — แบบเดียวกับ components/vms/Table */
-export function MaTable({ cols, rows, Pagination }: { cols: TableColumn[]; rows: MaValue[][]; Pagination?: ReactNode }) {
+/** sort/onSort (ไม่ส่ง = เรียงไม่ได้ ตามเดิม) — หัวคอลัมน์ที่มีชื่อมี Sort icon กดได้ แบบ SortTable ของ S4 (แดชบอร์ด S24 แบบ VMS+ 12 พ.ย. 2569) */
+export interface MaSort { col: number; dir: "Down" | "Up" }
+export function MaTable({ cols, rows, Pagination, sort, onSort }: { cols: TableColumn[]; rows: MaValue[][]; Pagination?: ReactNode; sort?: MaSort | null; onSort?: (col: number) => void }) {
   return (
     <div className="flex flex-col gap-5">
       <div className="w-full overflow-x-auto">
         <table className="w-full table-fixed border-collapse">
           <colgroup>{cols.map((c, i) => <col key={i} style={c.width ? { width: c.width } : undefined} />)}</colgroup>
-          <thead><tr>{cols.map((c, i) => <TableHeaderCell key={i} Text={c.head} HeaderText={!!c.head} />)}</tr></thead>
+          <thead><tr>{cols.map((c, i) => <TableHeaderCell key={i} Text={c.head} HeaderText={!!c.head}
+            SortIcon={onSort && c.head ? (sort?.col === i ? sort.dir : "Swap") : undefined} onSort={onSort && c.head ? () => onSort(i) : undefined} />)}</tr></thead>
           <tbody>
             {rows.map((r, ri) => (
               <tr key={ri}>
@@ -116,12 +119,12 @@ export function MaCards({ cols, rows }: { cols: TableColumn[]; rows: MaValue[][]
 }
 
 /* ตาราง + pagination ตามขนาดจอ (หน้าละ PER แถว) */
-export function MaGrid({ cols, rows, page, onPage }: { cols: TableColumn[]; rows: MaValue[][]; page: number; onPage: (p: number) => void }) {
+export function MaGrid({ cols, rows, page, onPage, sort, onSort }: { cols: TableColumn[]; rows: MaValue[][]; page: number; onPage: (p: number) => void; sort?: MaSort | null; onSort?: (col: number) => void }) {
   const mob = useBreakpoint() === "Mobile";
   const shown = rows.slice((page - 1) * PER, page * PER);
   const pg = <TablePagination total={rows.length} page={page} perPage={PER} onPage={onPage} />;
   if (mob) return <div className="flex flex-col gap-5"><MaCards cols={cols} rows={shown} />{pg}</div>;
-  return <MaTable cols={cols} rows={shown} Pagination={pg} />;
+  return <MaTable cols={cols} rows={shown} Pagination={pg} sort={sort} onSort={onSort} />;
 }
 
 /* ---------- แผงตัวกรอง (filterPanel() ใน core.js · Filter ของ Vehicle list ใน UI Release#2) ---------- */
