@@ -96,6 +96,10 @@
 | Mobile progress steps | (Component) VMS Plus | ✅ Progress steps (2:10) | 2 |
 | Step circles / 4 steps | (Component) VMS Plus | ✅ Progress steps (2:10) | 5 |
 | Metric item | (Component) VMS Plus | ✅ Metrics (2011:13829) | 2 |
+| Card item row | (Component) VMS Plus | Cards (2413:11354) | 2 |
+| Card item base | (Component) VMS Plus | Cards (2413:11354) | 6 |
+| Badge outline with indicator | (Component) VMS Plus | ✅ Badge (2:13) | 6 |
+| Indicator | (Component) VMS Plus | ✅ Badge (2:13) | 3 |
 | ReceiptChecklist | Maintain-D | Design (0:1) | 4 |
 | HandoverSignature | Maintain-D | Design (0:1) | 3 |
 | Modal Signature | Maintain-D | Design (0:1) | 2 |

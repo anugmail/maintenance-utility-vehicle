@@ -1,0 +1,182 @@
+{
+ "component": "Indicator",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
+ "page": "✅ Badge",
+ "node": "2:13",
+ "props": {
+  "Size": {
+   "type": "VARIANT",
+   "defaultValue": "sm",
+   "variantOptions": [
+    "sm",
+    "md",
+    "lg"
+   ]
+  }
+ },
+ "set": {
+  "name": "Indicator",
+  "type": "COMPONENT_SET",
+  "w": 100,
+  "h": 48,
+  "sizing": [
+   "HUG",
+   "HUG"
+  ],
+  "pl": 16,
+  "pr": 16,
+  "pt": 16,
+  "pb": 16,
+  "gap": 16,
+  "r": 5,
+  "dir": "HORIZONTAL",
+  "justify": "MIN",
+  "align": "CENTER",
+  "fill": [
+   "#FFFFFF"
+  ],
+  "stroke": [
+   "#9747FF"
+  ],
+  "sw": 1,
+  "strokeAlign": "INSIDE",
+  "vars": {
+   "fills": "Color/background/default"
+  }
+ },
+ "variants": [
+  {
+   "name": "Size=sm",
+   "type": "COMPONENT",
+   "w": 8,
+   "h": 8,
+   "sizing": [
+    "HUG",
+    "HUG"
+   ],
+   "pl": 1,
+   "pr": 1,
+   "pt": 1,
+   "pb": 1,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "justify": "MIN",
+   "align": "MIN",
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "variant": {
+    "Size": "sm"
+   },
+   "kids": [
+    {
+     "name": "Indicator",
+     "type": "ELLIPSE",
+     "w": 6,
+     "h": 6,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#079455"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/icon/success"
+     }
+    }
+   ]
+  },
+  {
+   "name": "Size=md",
+   "type": "COMPONENT",
+   "w": 12,
+   "h": 12,
+   "sizing": [
+    "HUG",
+    "HUG"
+   ],
+   "pl": 2,
+   "pr": 2,
+   "pt": 2,
+   "pb": 2,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "justify": "MIN",
+   "align": "MIN",
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "variant": {
+    "Size": "md"
+   },
+   "kids": [
+    {
+     "name": "Indicator",
+     "type": "ELLIPSE",
+     "w": 8,
+     "h": 8,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#079455"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/icon/success"
+     }
+    }
+   ]
+  },
+  {
+   "name": "Size=lg",
+   "type": "COMPONENT",
+   "w": 16,
+   "h": 16,
+   "sizing": [
+    "HUG",
+    "HUG"
+   ],
+   "pl": 3,
+   "pr": 3,
+   "pt": 3,
+   "pb": 3,
+   "r": 0,
+   "dir": "HORIZONTAL",
+   "justify": "MIN",
+   "align": "MIN",
+   "sw": 1,
+   "strokeAlign": "INSIDE",
+   "variant": {
+    "Size": "lg"
+   },
+   "kids": [
+    {
+     "name": "Indicator",
+     "type": "ELLIPSE",
+     "w": 10,
+     "h": 10,
+     "sizing": [
+      "FIXED",
+      "FIXED"
+     ],
+     "r": 0,
+     "fill": [
+      "#079455"
+     ],
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "vars": {
+      "fills": "Color/icon/success"
+     }
+    }
+   ]
+  }
+ ]
+}

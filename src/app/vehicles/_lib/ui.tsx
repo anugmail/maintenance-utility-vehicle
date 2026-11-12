@@ -96,6 +96,7 @@ export function MaCards({ cols, rows }: { cols: TableColumn[]; rows: MaValue[][]
         cols.forEach((c, ci) => {
           const v = r[ci];
           if (v && typeof v === "object" && "actions" in v) acts = v.mobileActions ?? v.actions;
+          else if (c.head && v && typeof v === "object" && "pills" in v) v.pills.forEach((p) => data.push({ head: c.head, v: { pills: [p] } }));   // หลาย Pill = แถว Badge ละใบ (แบบ MobileCards · ป้าย Overhaul ข้อ 85)
           else if (c.head) data.push({ head: c.head, v });
         });
         const a = acts as CellAction[] | null;

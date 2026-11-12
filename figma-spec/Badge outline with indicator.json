@@ -1,0 +1,783 @@
+{
+ "component": "Badge outline with indicator",
+ "source": "(Component) VMS Plus",
+ "fileKey": "VmOC07pKEsDkHZagOgcSU2",
+ "page": "✅ Badge",
+ "node": "2:13",
+ "props": {
+  "Text#1868:0": {
+   "type": "TEXT",
+   "defaultValue": "Badge"
+  },
+  "Color": {
+   "type": "VARIANT",
+   "defaultValue": "Gray",
+   "variantOptions": [
+    "Brand",
+    "Gray",
+    "Info",
+    "Success",
+    "Warning",
+    "Error"
+   ]
+  }
+ },
+ "set": {
+  "name": "Badge outline with indicator",
+  "type": "COMPONENT_SET",
+  "w": 518,
+  "h": 64,
+  "sizing": [
+   "HUG",
+   "HUG"
+  ],
+  "pl": 20,
+  "pr": 20,
+  "pt": 20,
+  "pb": 20,
+  "gap": 20,
+  "r": 5,
+  "dir": "HORIZONTAL",
+  "justify": "MIN",
+  "align": "MIN",
+  "fill": [
+   "#FFFFFF"
+  ],
+  "stroke": [
+   "#9747FF"
+  ],
+  "sw": 1,
+  "strokeAlign": "INSIDE",
+  "vars": {
+   "fills": "Color/surface/primary"
+  }
+ },
+ "variants": [
+  {
+   "name": "Color=Gray",
+   "type": "COMPONENT",
+   "w": 63,
+   "h": 24,
+   "sizing": [
+    "HUG",
+    "FIXED"
+   ],
+   "pl": 8,
+   "pr": 8,
+   "pt": 4,
+   "pb": 4,
+   "gap": 4,
+   "r": 4,
+   "dir": "HORIZONTAL",
+   "justify": "CENTER",
+   "align": "CENTER",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "sw": 1,
+   "strokeAlign": "OUTSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/100",
+    "paddingLeft": "Spacing/200",
+    "paddingTop": "Spacing/100",
+    "paddingRight": "Spacing/200",
+    "paddingBottom": "Spacing/100",
+    "topLeftRadius": "Radius/100",
+    "topRightRadius": "Radius/100",
+    "bottomLeftRadius": "Radius/100",
+    "bottomRightRadius": "Radius/100",
+    "fills": "Color/surface/primary",
+    "strokes": "Color/border/primary"
+   },
+   "variant": {
+    "Color": "Gray"
+   },
+   "kids": [
+    {
+     "name": "Indicator",
+     "type": "INSTANCE",
+     "w": 8,
+     "h": 8,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
+     "pl": 1,
+     "pr": 1,
+     "pt": 1,
+     "pb": 1,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "variant": {
+      "Size": "sm"
+     },
+     "component": "Indicator [Size=sm]",
+     "kids": [
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "w": 6,
+       "h": 6,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#667085"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/component/utility/gray/500"
+       }
+      }
+     ]
+    },
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 35,
+     "h": 18,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/secondary",
+      "letterSpacing": "IBM/Label/04/letter-spacing",
+      "fontSize": "IBM/Label/04/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Label/04/letter-spacing",
+      "fontWeight": "IBM/Label/04/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 12,
+      "lh": null,
+      "ls": -0.20000000298023224
+     },
+     "text": "Badge"
+    }
+   ]
+  },
+  {
+   "name": "Color=Brand",
+   "type": "COMPONENT",
+   "w": 63,
+   "h": 24,
+   "sizing": [
+    "HUG",
+    "FIXED"
+   ],
+   "pl": 8,
+   "pr": 8,
+   "pt": 4,
+   "pb": 4,
+   "gap": 4,
+   "r": 4,
+   "dir": "HORIZONTAL",
+   "justify": "CENTER",
+   "align": "CENTER",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "sw": 1,
+   "strokeAlign": "OUTSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/100",
+    "paddingLeft": "Spacing/200",
+    "paddingTop": "Spacing/100",
+    "paddingRight": "Spacing/200",
+    "paddingBottom": "Spacing/100",
+    "topLeftRadius": "Radius/100",
+    "topRightRadius": "Radius/100",
+    "bottomLeftRadius": "Radius/100",
+    "bottomRightRadius": "Radius/100",
+    "fills": "Color/surface/primary",
+    "strokes": "Color/border/primary"
+   },
+   "variant": {
+    "Color": "Brand"
+   },
+   "kids": [
+    {
+     "name": "Indicator",
+     "type": "INSTANCE",
+     "w": 8,
+     "h": 8,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
+     "pl": 1,
+     "pr": 1,
+     "pt": 1,
+     "pb": 1,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "variant": {
+      "Size": "sm"
+     },
+     "component": "Indicator [Size=sm]",
+     "kids": [
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "w": 6,
+       "h": 6,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#FA6BDF"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/component/utility/brand/500"
+       }
+      }
+     ]
+    },
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 35,
+     "h": 18,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/secondary",
+      "letterSpacing": "IBM/Label/04/letter-spacing",
+      "fontSize": "IBM/Label/04/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Label/04/letter-spacing",
+      "fontWeight": "IBM/Label/04/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 12,
+      "lh": null,
+      "ls": -0.20000000298023224
+     },
+     "text": "Badge"
+    }
+   ]
+  },
+  {
+   "name": "Color=Info",
+   "type": "COMPONENT",
+   "w": 63,
+   "h": 24,
+   "sizing": [
+    "HUG",
+    "FIXED"
+   ],
+   "pl": 8,
+   "pr": 8,
+   "pt": 4,
+   "pb": 4,
+   "gap": 4,
+   "r": 4,
+   "dir": "HORIZONTAL",
+   "justify": "CENTER",
+   "align": "CENTER",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "sw": 1,
+   "strokeAlign": "OUTSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/100",
+    "paddingLeft": "Spacing/200",
+    "paddingTop": "Spacing/100",
+    "paddingRight": "Spacing/200",
+    "paddingBottom": "Spacing/100",
+    "topLeftRadius": "Radius/100",
+    "topRightRadius": "Radius/100",
+    "bottomLeftRadius": "Radius/100",
+    "bottomRightRadius": "Radius/100",
+    "fills": "Color/surface/primary",
+    "strokes": "Color/border/primary"
+   },
+   "variant": {
+    "Color": "Info"
+   },
+   "kids": [
+    {
+     "name": "Indicator",
+     "type": "INSTANCE",
+     "w": 8,
+     "h": 8,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
+     "pl": 1,
+     "pr": 1,
+     "pt": 1,
+     "pb": 1,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "variant": {
+      "Size": "sm"
+     },
+     "component": "Indicator [Size=sm]",
+     "kids": [
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "w": 6,
+       "h": 6,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#6172F3"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/component/utility/info/500"
+       }
+      }
+     ]
+    },
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 35,
+     "h": 18,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/secondary",
+      "letterSpacing": "IBM/Label/04/letter-spacing",
+      "fontSize": "IBM/Label/04/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Label/04/letter-spacing",
+      "fontWeight": "IBM/Label/04/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 12,
+      "lh": null,
+      "ls": -0.20000000298023224
+     },
+     "text": "Badge"
+    }
+   ]
+  },
+  {
+   "name": "Color=Success",
+   "type": "COMPONENT",
+   "w": 63,
+   "h": 24,
+   "sizing": [
+    "HUG",
+    "FIXED"
+   ],
+   "pl": 8,
+   "pr": 8,
+   "pt": 4,
+   "pb": 4,
+   "gap": 4,
+   "r": 4,
+   "dir": "HORIZONTAL",
+   "justify": "CENTER",
+   "align": "CENTER",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "sw": 1,
+   "strokeAlign": "OUTSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/100",
+    "paddingLeft": "Spacing/200",
+    "paddingTop": "Spacing/100",
+    "paddingRight": "Spacing/200",
+    "paddingBottom": "Spacing/100",
+    "topLeftRadius": "Radius/100",
+    "topRightRadius": "Radius/100",
+    "bottomLeftRadius": "Radius/100",
+    "bottomRightRadius": "Radius/100",
+    "fills": "Color/surface/primary",
+    "strokes": "Color/border/primary"
+   },
+   "variant": {
+    "Color": "Success"
+   },
+   "kids": [
+    {
+     "name": "Indicator",
+     "type": "INSTANCE",
+     "w": 8,
+     "h": 8,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
+     "pl": 1,
+     "pr": 1,
+     "pt": 1,
+     "pb": 1,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "variant": {
+      "Size": "sm"
+     },
+     "component": "Indicator [Size=sm]",
+     "kids": [
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "w": 6,
+       "h": 6,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#17B26A"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/component/utility/success/500"
+       }
+      }
+     ]
+    },
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 35,
+     "h": 18,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/secondary",
+      "letterSpacing": "IBM/Label/04/letter-spacing",
+      "fontSize": "IBM/Label/04/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Label/04/letter-spacing",
+      "fontWeight": "IBM/Label/04/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 12,
+      "lh": null,
+      "ls": -0.20000000298023224
+     },
+     "text": "Badge"
+    }
+   ]
+  },
+  {
+   "name": "Color=Warning",
+   "type": "COMPONENT",
+   "w": 63,
+   "h": 24,
+   "sizing": [
+    "HUG",
+    "FIXED"
+   ],
+   "pl": 8,
+   "pr": 8,
+   "pt": 4,
+   "pb": 4,
+   "gap": 4,
+   "r": 4,
+   "dir": "HORIZONTAL",
+   "justify": "CENTER",
+   "align": "CENTER",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "sw": 1,
+   "strokeAlign": "OUTSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/100",
+    "paddingLeft": "Spacing/200",
+    "paddingTop": "Spacing/100",
+    "paddingRight": "Spacing/200",
+    "paddingBottom": "Spacing/100",
+    "topLeftRadius": "Radius/100",
+    "topRightRadius": "Radius/100",
+    "bottomLeftRadius": "Radius/100",
+    "bottomRightRadius": "Radius/100",
+    "fills": "Color/surface/primary",
+    "strokes": "Color/border/primary"
+   },
+   "variant": {
+    "Color": "Warning"
+   },
+   "kids": [
+    {
+     "name": "Indicator",
+     "type": "INSTANCE",
+     "w": 8,
+     "h": 8,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
+     "pl": 1,
+     "pr": 1,
+     "pt": 1,
+     "pb": 1,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "variant": {
+      "Size": "sm"
+     },
+     "component": "Indicator [Size=sm]",
+     "kids": [
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "w": 6,
+       "h": 6,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#F79009"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/component/utility/warning/500"
+       }
+      }
+     ]
+    },
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 35,
+     "h": 18,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/secondary",
+      "letterSpacing": "IBM/Label/04/letter-spacing",
+      "fontSize": "IBM/Label/04/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Label/04/letter-spacing",
+      "fontWeight": "IBM/Label/04/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 12,
+      "lh": null,
+      "ls": -0.20000000298023224
+     },
+     "text": "Badge"
+    }
+   ]
+  },
+  {
+   "name": "Color=Error",
+   "type": "COMPONENT",
+   "w": 63,
+   "h": 24,
+   "sizing": [
+    "HUG",
+    "FIXED"
+   ],
+   "pl": 8,
+   "pr": 8,
+   "pt": 4,
+   "pb": 4,
+   "gap": 4,
+   "r": 4,
+   "dir": "HORIZONTAL",
+   "justify": "CENTER",
+   "align": "CENTER",
+   "fill": [
+    "#FFFFFF"
+   ],
+   "stroke": [
+    "#D0D5DD"
+   ],
+   "sw": 1,
+   "strokeAlign": "OUTSIDE",
+   "vars": {
+    "itemSpacing": "Spacing/100",
+    "paddingLeft": "Spacing/200",
+    "paddingTop": "Spacing/100",
+    "paddingRight": "Spacing/200",
+    "paddingBottom": "Spacing/100",
+    "topLeftRadius": "Radius/100",
+    "topRightRadius": "Radius/100",
+    "bottomLeftRadius": "Radius/100",
+    "bottomRightRadius": "Radius/100",
+    "fills": "Color/surface/primary",
+    "strokes": "Color/border/primary"
+   },
+   "variant": {
+    "Color": "Error"
+   },
+   "kids": [
+    {
+     "name": "Indicator",
+     "type": "INSTANCE",
+     "w": 8,
+     "h": 8,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
+     "pl": 1,
+     "pr": 1,
+     "pt": 1,
+     "pb": 1,
+     "r": 0,
+     "dir": "HORIZONTAL",
+     "justify": "MIN",
+     "align": "MIN",
+     "sw": 1,
+     "strokeAlign": "INSIDE",
+     "variant": {
+      "Size": "sm"
+     },
+     "component": "Indicator [Size=sm]",
+     "kids": [
+      {
+       "name": "Indicator",
+       "type": "ELLIPSE",
+       "w": 6,
+       "h": 6,
+       "sizing": [
+        "FIXED",
+        "FIXED"
+       ],
+       "r": 0,
+       "fill": [
+        "#F04438"
+       ],
+       "sw": 1,
+       "strokeAlign": "INSIDE",
+       "vars": {
+        "fills": "Color/component/utility/error/500"
+       }
+      }
+     ]
+    },
+    {
+     "name": "Text",
+     "type": "TEXT",
+     "w": 35,
+     "h": 18,
+     "sizing": [
+      "HUG",
+      "HUG"
+     ],
+     "fill": [
+      "#475467"
+     ],
+     "sw": 1,
+     "strokeAlign": "OUTSIDE",
+     "vars": {
+      "fills": "Color/text/secondary",
+      "letterSpacing": "IBM/Label/04/letter-spacing",
+      "fontSize": "IBM/Label/04/font-size",
+      "fontFamily": "IBM/font-family",
+      "paragraphSpacing": "IBM/Label/04/letter-spacing",
+      "fontWeight": "IBM/Label/04/font-weight"
+     },
+     "font": {
+      "fam": "IBM Plex Sans Thai",
+      "style": "SemiBold",
+      "size": 12,
+      "lh": null,
+      "ls": -0.20000000298023224
+     },
+     "text": "Badge"
+    }
+   ]
+  }
+ ]
+}

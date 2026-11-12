@@ -91,7 +91,11 @@
   "_Step item base",
   "Mobile progress steps",
   "Step circles / 4 steps",
-  "Metric item"
+  "Metric item",
+  "Card item row",
+  "Card item base",
+  "Badge outline with indicator",
+  "Indicator"
  ],
  "maintainD": [
   "ReceiptChecklist",

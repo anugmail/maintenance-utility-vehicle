@@ -20,7 +20,11 @@ import { FormModal } from "@/components/patterns/FormModal";
 import { NotificationPanel } from "@/components/patterns/NotificationPanel";
 import { PhotoGallery } from "@/components/patterns/PhotoGallery";
 import { PopupModal } from "@/components/patterns/PopupModal";
+import { BadgeOutlineWithIndicator } from "@/components/vms/BadgeOutlineWithIndicator";
 import { BadgeOutlineWithLeadingIcon } from "@/components/vms/BadgeOutlineWithLeadingIcon";
+import { CardItemBase } from "@/components/vms/CardItemBase";
+import { CardItemRow } from "@/components/vms/CardItemRow";
+import { Indicator } from "@/components/vms/Indicator";
 import { CardFormRow } from "@/components/vms/CardFormRow";
 import { CheckboxTextCard } from "@/components/vms/CheckboxTextCard";
 import { ContentDivider } from "@/components/vms/ContentDivider";
@@ -139,6 +143,11 @@ export function KitMore() {
         {(["Text", "Text with label", "Attachment", "Big"] as const).map((t) => <V key={t} label={`_Content item base Type=${t}`}><div className="w-60"><ContentItemBase Type={t} Label="Label" Text="Item" SupportingText="Supporting text" /></div></V>)}
         <V label="Content item row Column width=Full (4 ช่อง)" wide><ContentItemRow items={KV.slice(0, 4)} /></V>
       </Block>
+      <Block name="Card item base · Card item row" node="Cards (2413:11354)">
+        {(["Text", "Text with supporting", "Text with label", "Vertical text with label"] as const).map((t) => <V key={t} label={`Card item base Type=${t}`}><div className="w-72"><CardItemBase Type={t} Label="Label" Text="Item" SupportingText="Supporting text" /></div></V>)}
+        <V label="Card item row Type=1 Row · Text with label ชิดขวา (Last usage)" wide><div className="w-[494px] max-w-full"><CardItemRow items={[{ Type: "Text with label", IconSwap: "swap_driving_apps_wheel-24-300-round", Label: "เลขไมล์", Text: "168,900 กม.", TextAlign: "Right" }]} /></div></V>
+        <V label="Card item row Type=2 Rows" wide><div className="w-72"><CardItemRow Type="2 Rows" items={[{ Text: "Item" }, { Text: "Item" }]} /></div></V>
+      </Block>
       <Block name="Card form row" node="Cards (2413:11354)">
         <V label="Width=Full" wide><CardFormRow Input1={<TextInput LabelText="เบอร์ติดต่อ" Text="081-472-3365" />} Input2={<TextInput LabelText="สถานที่บำรุงรักษา" Text="สำนักงาน กฟฉ.1 ขอนแก่น" />} /></V>
         <V label="Width=50%" wide><CardFormRow Width="50%" Input1={<TextInput LabelText="เบอร์ติดต่อ" Text="081-472-3365" />} /></V>
@@ -165,6 +174,10 @@ export function KitMore() {
         {(["Success", "Warning", "Error", "Brand", "Info"] as StatusState[]).map((s) => <V key={s} label={`Status State=${s}`}><Status State={s} /></V>)}
         <V label="_Notification item base"><div className="w-[314px]"><NotificationItemBase StatusState="Brand" Text={NOTI[0].text} SupportingText={NOTI[0].time} /></div></V>
         <V label="Notification card"><NotificationCard Badge="1 แจ้งเตือนใหม่">{NOTI.map((n, i) => <NotificationItemBase key={i} StatusState={n.state} Text={n.text} SupportingText={n.time} />)}</NotificationCard></V>
+      </Block>
+      <Block name="Badge outline with indicator · Indicator" node="Badge (2:13)">
+        {(["Gray", "Brand", "Info", "Success", "Warning", "Error"] as const).map((c) => <V key={c} label={`Color=${c}`}><BadgeOutlineWithIndicator Color={c} Text="ปกติ" /></V>)}
+        {(["sm", "md", "lg"] as const).map((z) => <V key={z} label={`Indicator Size=${z}`}><Indicator Size={z} /></V>)}
       </Block>
       <Block name="Badge outline with leading icon" node="Badge (2:13)">
         {(["Brand", "Gray", "Success", "Error", "Disabled"] as const).map((c) => <V key={c} label={`Color=${c}`}><BadgeOutlineWithLeadingIcon Color={c} Text="เลือกแล้ว" /></V>)}

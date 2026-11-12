@@ -1,26 +1,25 @@
 "use client";
 /* ส่วน "เครื่องมือกล" ของหน้ารายละเอียดยานพาหนะ แท็บข้อมูลยานพาหนะ (S24 · BACKLOG ข้อ 68 · เจ้าของงาน 11 พ.ย. 2569 · ทำเว็บก่อน Figma)
    Section label "เครื่องมือกล (n)" + Actions Secondary button "เพิ่มเครื่องมือกล" (ไอคอน add · เฉพาะผู้แก้ได้)
-   → Table (desktop) / Mobile table: ประเภทเครื่องมือกล · ยี่ห้อ/รุ่น (บรรทัดรอง หมายเลข HC) · รหัสทรัพย์สิน · รหัสทรัพย์สินย่อย · พิกัดยก (กก.) · ชั่วโมงเครื่องยนต์ · ชั่วโมงเครื่องจักร · ไอคอนแก้ไข
-     ไม่มีเครื่อง = Empty state/Data empty "ยังไม่มีเครื่องมือกล"
+   → การ์ด 1 ใบต่อเครื่อง (ข้อ 84 · 12 พ.ย. 2569 แทนตาราง Table/Mobile table เดิม · ดู MachineBody) · วางต่อจากข้อมูลการจดทะเบียน (ข้อ 83 · VehicleInfo.tsx)
    เพิ่ม/แก้ไข = PopupModal (Modal ของไลบรารี · มือถือ Bottom sheet · แบบ popup ของ S10 S26) ช่อง 2 คอลัมน์ (Grid · มือถือเรียงลง):
      ประเภทเครื่องมือกล (Input dropdown · บังคับ) · ยี่ห้อ · รุ่น · รหัสทรัพย์สิน 12 หลัก · รหัสทรัพย์สินย่อย 4 หลัก (บังคับ · คู่รหัสห้ามซ้ำทั้งระบบ)
      · พิกัดยก กก. (บังคับ ยกเว้นถังฉีดน้ำ/อื่นๆ) · ชั่วโมงเครื่องยนต์ · ชั่วโมงเครื่องจักร (บังคับ จำนวนเต็ม ≥ 0 · Cumulative_working_hours NOT NULL)
      · หมายเลข HC · หมายเลขประจำเครื่องจักร (Serial No.) · หมายเลขเครื่องยนต์ (ส่วนเครื่องจักร) (ถ้ามี)
      12 พ.ย. 2569 ข้อ 72 (เจ้าของงาน 12 พ.ย. 2569 เลือกตามไฟล์สรุปประชุม VMS Plus (Notion "meeting 11/11/68" หัวข้อ 9)): เพิ่มหมายเลขเครื่องยนต์ (ส่วนเครื่องจักร) ไม่บังคับ ต่อจาก Serial No. · ป้าย "หมายเลขเครื่อง (Serial No.)" → "หมายเลขประจำเครื่องจักร (Serial No.)"
      12 พ.ย. 2569 ข้อ 73 (เจ้าของงาน 12 พ.ย. 2569 "ใช้เป็น ชั่วโมงเครื่องจักร"): ป้าย "ชั่วโมงเครน" → "ชั่วโมงเครื่องจักร" ทั้งหัวคอลัมน์ ช่องใน popup และข้อความ error · ชื่อช่องข้อมูลคง craneHours (ไม่เปลี่ยนรูปแบบข้อมูลที่เก็บ)
-     ค่าที่แมปจากฐานข้อมูลได้ขึ้นเป็นค่าตั้งต้นและแก้ได้ (เจ้าของงาน "ถ้าแมปข้อมูลจากฐานข้อมูลได้ ก็เอามาแสดง แต่สามารถแก้ไขได้") · ตารางคงคอลัมน์เดิม (เต็มแล้ว) หมายเลขเครื่องยนต์อยู่บรรทัดรองของยี่ห้อ/รุ่น
+     ค่าที่แมปจากฐานข้อมูลได้ขึ้นเป็นค่าตั้งต้นและแก้ได้ (เจ้าของงาน "ถ้าแมปข้อมูลจากฐานข้อมูลได้ ก็เอามาแสดง แต่สามารถแก้ไขได้") · (ตารางเดิมวางหมายเลขเครื่องยนต์ในบรรทัดรอง · การ์ดข้อ 84 มีแถวของตัวเอง)
      ตรวจตอนกดบันทึก: ช่องผิด = Text input State Error + Helper text · ผ่าน = toast "บันทึกเครื่องมือกลสำเร็จ"
    แก้ได้เฉพาะ กบค. (ผู้ดูแลข้อมูลยานพาหนะ ตามทะเบียนเครื่องมือกลเดิม · เสนอ — PERMISSIONS.md) · บทบาทอื่นดูอย่างเดียว */
 import { useState } from "react";
 import { PopupModal } from "@/components/patterns/PopupModal";
 import { DropdownList } from "@/components/vms/DropdownList";
 import { DropdownListItem } from "@/components/vms/DropdownListItem";
-import { EmptyStateDataEmpty } from "@/components/vms/EmptyStateDataEmpty";
 import { InputDropdown } from "@/components/vms/InputDropdown";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { SectionLabel } from "@/components/vms/SectionLabel";
-import type { TableColumn } from "@/components/vms/Table";
+import { TertiaryBrandButton } from "@/components/vms/TertiaryBrandButton";
+import { CardItemRow } from "@/components/vms/CardItemRow";
 import { TextInput } from "@/components/vms/TextInput";
 import type { Car } from "@/lib/mock/data";
 import { LIFT_UNIT, MACHINE_TYPES, NO_LIFT, nf0, saveMachine, usedAssets, useMachines, type Machine } from "@/lib/mock/machines";
@@ -29,13 +28,8 @@ import { hasEquipment, sideCodeOf } from "@/lib/mock/vehicleTypes";
 import { useProtoForm } from "@/lib/protoForm";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { cx } from "@/lib/cx";
-import { MaGrid, type MaValue } from "./ui";
 
 export const MACHINE_EDIT_ROLES = ["กบค."] as const;
-const COLS: TableColumn[] = [
-  { head: "ประเภทเครื่องมือกล", width: 150, Style: "Lead text" }, { head: "ยี่ห้อ/รุ่น" }, { head: "รหัสทรัพย์สิน", width: 150 }, { head: "รหัสทรัพย์สินย่อย", width: 140 },
-  { head: "พิกัดยก (" + LIFT_UNIT + ")", width: 120 }, { head: "ชั่วโมงเครื่องยนต์", width: 150 }, { head: "ชั่วโมงเครื่องจักร", width: 150 }, { head: "", width: 64, Style: "Action icons" },
-];
 
 interface Draft { type: string; brand: string; model: string; asset: string; subAsset: string; lift: string; engineHours: string; craneHours: string; hc: string; serial: string; engineNo: string }
 const toDraft = (x?: Machine): Draft => ({
@@ -127,6 +121,18 @@ function MachineModal({ open, carId, car, edit, list, onClose }: { open: boolean
 export function MachineSection({ carId, car }: { carId: string; car: Car }) {
   return hasEquipment(sideCodeOf(car)) ? <MachineBody carId={carId} car={car} /> : null;
 }
+
+/* ข้อ 84 (เจ้าของงาน 12 พ.ย. 2569 _"ส่วน section ของการเพิ่มเครื่องจักร อยากให้เป็น คล้ายๆ การ์ด ในcomponent 1 การ์ด แล้วข้อมูลข้างใน ถ้ามีข้อมูลจาก api ก็แสดง
+   ถ้าไม่มี ก็ให้เป็นข้อมูลที่สามารถเพิ่มได้ และที่ แสดง ก็สามารถแก้ไขได้"_) — ตาราง → การ์ด 1 ใบต่อเครื่อง
+   การ์ดตามการ์ด "การใช้งานล่าสุด" (Last usage) ของเฟรม Vehicle info หน้า 5.2 Vehicle Management · UI Release#2:
+     กรอบ white ขอบ gray-200 รัศมี 16 ขอบใน 16 ช่องไฟ 16 · หัวการ์ด = Section label (ชื่อ ประเภท ยี่ห้อ รุ่น · Supporting text รหัสทรัพย์สิน · Primary action Tertiary brand button "แก้ไข")
+     แถว = Card item row Type=1 Row · Card item base Type=Text with label (Leading icon ปิด · Text ชิดขวาแบบ Last usage) ช่องละแถว 11 ช่องตาม popup
+   ช่องที่มีค่า (ค่าจาก vms_mas_vehicle_mechanic = ค่าตั้งต้นของ machines.ts) แสดงค่า · ช่องว่าง: กบค. = Tertiary brand button "เพิ่ม" (ไอคอน add) เปิด popup แก้ไขของเครื่องนั้น · บทบาทอื่น "-"
+     พิกัดยกของถังฉีดน้ำ/อื่นๆ (ไม่มีพิกัดยก) = "-" ไม่มีปุ่มเพิ่ม
+   ยังไม่มีเครื่อง = การ์ดว่างแบบ Fleet card Status=Empty ("ไม่มีบัตรเติมน้ำมัน" · "ยานพาหนะคันนี้ยังไม่มีบัตรเติมน้ำมัน" · Secondary button lg "เพิ่มบัตร"):
+     กล่อง gray-50 รัศมี 8 ขอบใน 12/16 · "ไม่มีเครื่องมือกล" 16 SemiBold · "ยานพาหนะคันนี้ยังไม่มีข้อมูลเครื่องมือกล" 14 gray-600 · ปุ่ม "เพิ่มเครื่องมือกล" (กบค.)
+   มีเครื่องแล้ว: ปุ่ม "เพิ่มเครื่องมือกล" ที่ Section label ของส่วน (เครื่องที่ 2 ขึ้นไป · แบบเดิม) · popup เพิ่ม/แก้ไข (MachineModal) เดิมทุกอย่าง
+   ประกอบจากชิ้นไลบรารี — COMPOSED.md ศ5. */
 function MachineBody({ carId, car }: { carId: string; car: Car }) {
   const role = useRole();
   const mob = useBreakpoint() === "Mobile";
@@ -134,20 +140,46 @@ function MachineBody({ carId, car }: { carId: string; car: Car }) {
   const canEdit = (MACHINE_EDIT_ROLES as readonly string[]).includes(role);
   const [edit, setEdit] = useState<Machine | null>(null);
   const [open, setOpen] = useState(false);
-  const [page, setPage] = useState(1);
   const openEdit = (x: Machine | null) => { setEdit(x); setOpen(true); };
-  const rows: MaValue[][] = list.map((x) => {
-    const a = canEdit ? [{ IconSwap: "edit-24-300-round", label: "แก้ไข " + x.type + " " + x.subAsset, onClick: () => openEdit(x) }] : [];
-    return [x.type, { text: [x.brand, x.model].filter(Boolean).join(" ") || "-", sub: [x.hc, x.serial ? "S/N " + x.serial : "", x.engineNo ? "หมายเลขเครื่องยนต์ " + x.engineNo : ""].filter(Boolean).join(" · ") || undefined },
-      x.asset, x.subAsset, nf0(x.lift), nf0(x.engineHours), nf0(x.craneHours), { actions: a, mobileActions: a }];
-  });
-  const add = canEdit ? <SecondaryButton Text="เพิ่มเครื่องมือกล" LeadingIconSwap="add-24-300-round" Size={mob ? "lg" : "md"} onClick={() => openEdit(null)} /> : undefined;
+  const size = mob ? "lg" : "md";
+  const add = canEdit && list.length ? <SecondaryButton Text="เพิ่มเครื่องมือกล" LeadingIconSwap="add-24-300-round" Size={size} onClick={() => openEdit(null)} /> : undefined;
   return (
-    <section className="flex flex-col gap-4">
-      <SectionLabel Title={"เครื่องมือกล (" + list.length + ")"} Actions={add} />
-      {rows.length ? <MaGrid cols={COLS} rows={rows} page={page} onPage={setPage} />
-        : <EmptyStateDataEmpty Text="ยังไม่มีเครื่องมือกล" SupportingText={canEdit ? "กดเพิ่มเครื่องมือกลเพื่อบันทึกยี่ห้อ รุ่น รหัสทรัพย์สิน และพิกัดยก" : undefined} />}
+    <section className="flex flex-col gap-2" aria-label="เครื่องมือกล" data-machine-section>
+      <SectionLabel Title={"เครื่องมือกล (" + list.length + ")"} Actions={add} className="min-h-10" />
+      {list.length ? list.map((x) => <MachineCard key={x.key} x={x} canEdit={canEdit} onEdit={() => openEdit(x)} />) : (
+        <div className="rounded-xl border border-gray-200 bg-white p-4" data-machine-empty>
+          <div className={cx("flex gap-3 rounded-md bg-gray-50 px-4 py-3", mob ? "flex-col" : "items-center")}>
+            <div className="flex min-w-0 flex-1 flex-col gap-2">
+              <p className="text-md font-semibold text-black">ไม่มีเครื่องมือกล</p>
+              <p className="text-sm text-gray-600">ยานพาหนะคันนี้ยังไม่มีข้อมูลเครื่องมือกล</p>
+            </div>
+            {canEdit && <SecondaryButton Text="เพิ่มเครื่องมือกล" LeadingIconSwap="add-24-400-round" Size="lg" onClick={() => openEdit(null)} />}
+          </div>
+        </div>
+      )}
       {canEdit && <MachineModal open={open} carId={carId} car={car} edit={edit} list={list} onClose={() => setOpen(false)} />}
     </section>
+  );
+}
+
+function MachineCard({ x, canEdit, onEdit }: { x: Machine; canEdit: boolean; onEdit: () => void }) {
+  const noLift = NO_LIFT.includes(x.type);
+  const name = [x.type, x.brand, x.model].filter(Boolean).join(" ");
+  /* [ป้าย, ค่า (ว่าง = ไม่มีข้อมูล), ไม่เกี่ยว (แสดง "-" ไม่มีปุ่มเพิ่ม)] — ลำดับเดียวกับ popup */
+  const fields: [string, string | undefined, boolean?][] = [
+    ["ประเภทเครื่องมือกล", x.type], ["ยี่ห้อ", x.brand], ["รุ่น", x.model],
+    ["พิกัดยก (" + LIFT_UNIT + ")", x.lift != null ? nf0(x.lift) : undefined, noLift],
+    ["รหัสทรัพย์สิน", x.asset], ["รหัสทรัพย์สินย่อย", x.subAsset],
+    ["ชั่วโมงเครื่องยนต์", nf0(x.engineHours)], ["ชั่วโมงเครื่องจักร", nf0(x.craneHours)],
+    ["หมายเลข HC", x.hc], ["หมายเลขประจำเครื่องจักร (Serial No.)", x.serial], ["หมายเลขเครื่องยนต์ (ส่วนเครื่องจักร)", x.engineNo],
+  ];
+  const value = ([label, v, na]: (typeof fields)[number]) => (v ? v : na || !canEdit ? "-"
+    : <TertiaryBrandButton Text="เพิ่ม" LeadingIconSwap="add-24-300-round" aria-label={"เพิ่ม" + label + " " + name} className="-my-2 -mr-2" onClick={onEdit} data-machine-add />);
+  return (
+    <div className="flex flex-col gap-4 rounded-xl border border-gray-200 bg-white p-4" data-machine-card>
+      <SectionLabel Title={name || "เครื่องมือกล"} SupportingText={"รหัสทรัพย์สิน " + x.asset + " - " + x.subAsset}
+        Actions={canEdit ? <TertiaryBrandButton Text="แก้ไข" aria-label={"แก้ไข " + name + " " + x.subAsset} className="-my-2" onClick={onEdit} data-machine-edit /> : undefined} />
+      {fields.map((f) => <CardItemRow key={f[0]} items={[{ Type: "Text with label", LeadingIcon: false, Label: f[0], Text: value(f), TextAlign: "Right" }]} />)}
+    </div>
   );
 }

@@ -410,7 +410,7 @@ screens.js ไม่ได้วาดปุ่มไปขั้นถัดไ
 | ลิงก์เลขทะเบียนในตาราง `/vehicles/maintenance/` (`MaValue { href }` ใน `vehicles/_lib/ui.tsx`) | Table cell Lead text + ข้อความลิงก์สไตล์ PlateLink (info-700 ขีดเส้นใต้) + Supporting text ประเภทยานพาหนะ · เปิดหน้ารายละเอียดในแท็บเดิม | maRow() ของ screens.js รอบ 2 (18a432e) ไม่มีคอลัมน์ปุ่ม … (Table ของไลบรารี 8 คอลัมน์) เปิดรายละเอียดด้วยลิงก์เลขทะเบียน · PlateLink กลางยังพาไป /soon/ แท็บใหม่ |
 | แผงตัวกรอง 6 ช่อง | FilterShell เดิม + Input dropdown with badges (หลายค่า: ประเภท สังกัด รายการที่ครบกำหนด) + Input dropdown (ค่าเดียว: บำรุงรักษาล่าสุด ครบกำหนดภายใน ผลตรวจน้ำมันล่าสุด) | maList o.filter ของ screens.js · ชิปค่าเดียว = "ชื่อช่อง ค่า" ตามจอ W.9 W.10 |
 | การ์ดตัวเลข 4 ใบ | `Metrics` ของแดชบอร์ด S4 (Metric item · Featured icon Error / Warning / Brand) | metricRow() + maMetrics() |
-| แท็บ Overhaul | Tab item ไม่มี onClick (กดไม่ได้) | เจ้าของงาน "มี tab แต่ไม่มี display ออกมา" |
+| ~~แท็บ Overhaul~~ | ~~Tab item ไม่มี onClick (กดไม่ได้)~~ | เอาออก 12 พ.ย. 2569 (ศ5. · BACKLOG ข้อ 85) |
 | มือถือ: ช่องป้ายในการ์ด (ประกัน · สถานะยานพาหนะ) | Mobile table item Style=Badge | MaCards เดิมไม่รองรับ pills |
 
 ## ร. ปุ่มต้นแบบ "กรอกข้อมูลตัวอย่าง" · "ล้างค่า" (เจ้าของงาน 10 พ.ย. 2569 · BACKLOG ข้อ 60)
@@ -481,7 +481,7 @@ screens.js ไม่ได้วาดปุ่มไปขั้นถัดไ
 
 | ส่วน | ประกอบจาก | เหตุผล |
 |---|---|---|
-| ส่วนเครื่องมือกล | Section label + Actions Secondary button "เพิ่มเครื่องมือกล" + Table / Mobile table (MaGrid ของ S24) + Action icons แก้ไข + Empty state/Data empty | UI Release#2 และไลบรารีไม่มีบล็อกเครื่องมือกลในรายละเอียดยานพาหนะ · ทะเบียนเครื่องมือกลเดิม (design-mock/equipment-asset-code.html ของรีโปงานซ่อม · ใช้แค่รายการช่อง) เป็นตารางต่อเครื่อง ⇒ ตารางชุดเดียวกับแท็บอื่นของหน้านี้ |
+| ~~ส่วนเครื่องมือกล แบบตาราง~~ (แทนด้วยการ์ด 12 พ.ย. 2569 · ศ5.) | ~~Section label + Actions Secondary button "เพิ่มเครื่องมือกล" + Table / Mobile table (MaGrid ของ S24) + Action icons แก้ไข + Empty state/Data empty~~ | UI Release#2 และไลบรารีไม่มีบล็อกเครื่องมือกลในรายละเอียดยานพาหนะ · ทะเบียนเครื่องมือกลเดิม (design-mock/equipment-asset-code.html ของรีโปงานซ่อม · ใช้แค่รายการช่อง) เป็นตารางต่อเครื่อง ⇒ ตารางชุดเดียวกับแท็บอื่นของหน้านี้ |
 | popup เพิ่ม/แก้ไข | PopupModal (Modal · มือถือ Bottom sheet) + Input dropdown (ประเภท) + Text input ×10 วาง 2 คอลัมน์ (12 พ.ย. 2569 ข้อ 72 เพิ่ม หมายเลขเครื่องยนต์ (ส่วนเครื่องจักร) ไม่บังคับ · เดิม ×9) | ฟอร์มสั้นในหน้าที่ดูอย่างเดียว แบบ popup ของ S10/S26 · ตรวจตอนกดบันทึก (Text input State Error + Helper text) |
 | การแสดงส่วนเครื่องมือกล (ข้อ 68ก) | ไม่มี component ใหม่ · อ่านธง hasEquipment จากตารางอ้างอิง `lib/mock/vehicleTypes.ts` ตามรหัสข้างรถ | กติกาอยู่ในข้อมูล (table reference) ไม่ฝังในหน้าจอ |
 
@@ -507,3 +507,21 @@ screens.js ไม่ได้วาดปุ่มไปขั้นถัดไ
 | popup ส่งออกของ S24 | PopupModal + Radio text card ชุดเดียวกับ S4 (`EXPORT_CARDS` · `exportFile.ts`) | สเปกให้ตาราง S24 ส่งออกได้ · คอลัมน์ = MA_COLS · ทั้งหมด = ทุกคันที่บทบาทเห็น |
 
 ตัวเลขที่คิดจากข้อมูลเดิมไม่ได้ (ตัดออก ไม่แต่งข้อมูล): S4 "ยานพาหนะในแผนที่ไม่เบิกอะไหล่" (อะไหล่รายคันมีเฉพาะ 3 คันตัวอย่างของแผน MRZ7000004) · S4 อะไหล่รายไตรมาสแยกหมวดตามยอดรวม (ยอดรวมตามรายการไม่แยกไตรมาส ⇒ ใช้อะไหล่รายคัน + ยานพาหนะในไตรมาสจากความคืบหน้าแทน) · **รอเคาะ** นิยาม "ไตรมาสปัจจุบัน" (ต้นแบบใช้ไตรมาสแรกที่ยังไม่เสร็จของแผน เพราะไม่มีวันเริ่ม/สิ้นสุดของไตรมาส) · ยังไม่มีจอ Figma ของแบบนี้ (เว็บก่อน)
+
+## ศ5. แท็บข้อมูลยานพาหนะแบบ Vehicle info ของ VMS+ · เครื่องมือกลเป็นการ์ด · แท็บใหม่ (S24 `/vehicles/detail/` · 12 พ.ย. 2569 · BACKLOG ข้อ 83 84 85)
+
+อ้างอิง: เฟรม "Vehicle info" ของหน้า 5.2 Vehicle Management · UI Release#2 (`userflow/figma-ref/vehicle-info-vms-2569-11-12.txt` · ดัมป์ `ui-release2/8-47654.json`) — component "Vehicle detail" (Type=Default) "Fleet card" "Last usage" "EV car info" เป็น component ของไฟล์ UI (หน้า Vehicle Management 11:45256) ไม่ใช่ไลบรารี ⇒ ประกอบตามโครงจากชิ้นไลบรารี
+
+| ส่วน | ประกอบจาก | เหตุผล |
+|---|---|---|
+| `vehicles/_lib/VehicleInfo.tsx` โครงแท็บ | grid 12 ช่อง 7 : 5 (= 746 / 526 ที่ 1296 ตาม Section ของ Vehicle detail) ช่องไฟ 24 · มือถือ 1 คอลัมน์ ลำดับซ้ายแล้วขวา | Vehicle detail เป็น component ของไฟล์ UI · UI Release#2 ไม่มีเฟรม Vehicle info มือถือ |
+| กล่องข้อมูล 4 ส่วน (ข้อมูลทั่วไป · การเงินและสัญญา · สังกัด · การจดทะเบียน) | Section label → ห่าง 8 → กล่อง gray-50 รัศมี 8 ขอบใน 24 ช่องไฟ 24 + Content item row (Column width Full / 50% first column) + _Content item base Text with label · มือถือ แถวละ 2 | ค่าตามเฟรม (DisplayBox ห่าง 16 · VehicleAndReporterInfo ช่องไฟแถว 16 ต่างจากเฟรมนี้ จึงไม่ใช้) · เลขที่สัญญา Text with label แบบเฟรมดูอย่างเดียวของหน้า (ไม่ใช่ Attachment) |
+| ปุ่มของ VMS+ ที่ไม่แสดง | — | หน้าบำรุงรักษาดูอย่างเดียว (แบบ R30): แก้ไข ทุกส่วน · ดูรายละเอียด · เปลี่ยนเลขทะเบียน · เปลี่ยนสังกัด · Carpool toggle · Copy action ของ Page header ปิดในเฟรมอยู่แล้ว |
+| รูปยานพาหนะ | Section label + Images Size=md Type=Empty กว้างเต็ม สัดส่วน 4:3 (526×395) | ไม่มีไฟล์ภาพ (ค.) · Indicator pagination + ปุ่มเลื่อนของ Type=Image ไม่แสดงเมื่อไม่มีภาพ |
+| ใบคู่มือจดทะเบียน | Section label + _File upload item base State=Completed (Progress bar ปิด · Delete action ปิด · Download action เปิด) ช่องไฟ 12 | ตามเฟรม · ปุ่มดาวน์โหลดขึ้น toast "ต้นแบบไม่มีไฟล์จริง" (ไม่มีไฟล์) |
+| Fleet card (บัตรเติมน้ำมัน) Status=Valid | กรอบ white ขอบ gray-200 รัศมี 16 ขอบใน 16 + Images sm 108 + กล่อง gray-50 รัศมี 8 (เลขบัตร 16 SemiBold · ใช้ได้ตั้งแต่ / ใช้ได้ถึง 12 gray-600 คั่นเส้น 12) + Badge outline with indicator Success "ปกติ" + Badge outline Gray ธนาคาร · วงเงินบัตร | ไม่มีโลโก้ธนาคาร (Avatar xs ใน Badge outline with leading instant and remove icon) และโลโก้ปั๊ม 3 ตัว (Gas stations · Avatar) — ภาพไม่มีในดัมป์ ⇒ ธนาคารเป็น Badge outline ข้อความ · ไม่แสดงโลโก้ปั๊ม |
+| Last usage (การใช้งานล่าสุด) Fuel=true | Section label + กรอบ white ขอบ gray-200 รัศมี 16 ขอบใน 16 ช่องไฟ 16 + Card item row Type=1 Row + Card item base Text with label (ไอคอน 24 brand-900 · Text ชิดขวา) | + แถว "ชั่วโมงเครื่องจักรสะสม" (ไอคอน timer · ของเรา ไม่มีในเฟรม) ต่อจากเลขไมล์ · ป้าย "สถานที่จอดรถ" → "สถานที่จอดยานพาหนะ" (R80) |
+| การรับประกัน (ท้ายแท็บ เต็มแถว) | Section label "การรับประกัน (n)" + MaGrid (Table / Mobile table) คอลัมน์เดิมของแท็บการรับประกัน + Empty state/Data empty | เจ้าของงาน _"ตัดtab การรับประกัน เดี๋ยวจะเอาข้อมูลไปใส่ในข้อมูลรถ"_ · VMS+ ไม่มีส่วนนี้ |
+| การ์ดเครื่องมือกล (`MachineSection.tsx`) | กรอบแบบ Last usage + Section label ในการ์ด (ชื่อ ประเภท ยี่ห้อ รุ่น · Supporting text รหัสทรัพย์สิน · Tertiary brand button "แก้ไข") + Card item row Type=1 Row / Card item base Text with label (Leading icon ปิด · Text ชิดขวา) 11 แถว · ช่องว่าง = Tertiary brand button "เพิ่ม" (ไอคอน add) ในช่อง Text | เจ้าของงาน _"อยากให้เป็น คล้ายๆ การ์ด ในcomponent 1 การ์ด … ถ้าไม่มี ก็ให้เป็นข้อมูลที่สามารถเพิ่มได้ และที่ แสดง ก็สามารถแก้ไขได้"_ · การ์ดที่ใกล้สุดในเฟรมเดียวกัน = Last usage · ไลบรารีไม่มีช่อง "เพิ่ม" ในการ์ด ⇒ ปุ่ม Tertiary brand (ปุ่มเดียวกับ "แก้ไข" ของ Section label ของ VMS+) |
+| การ์ดว่าง (ในกลุ่มแต่ยังไม่มีเครื่อง) | ตามโครง Fleet card Status=Empty: กรอบเดียวกัน + กล่อง gray-50 "ไม่มีเครื่องมือกล" 16 SemiBold · "ยานพาหนะคันนี้ยังไม่มีข้อมูลเครื่องมือกล" 14 gray-600 + Secondary button lg "เพิ่มเครื่องมือกล" (กบค.) | Fleet card Empty ของเฟรมเดียวกัน ("ไม่มีบัตรเติมน้ำมัน" · "เพิ่มบัตร") |
+| แท็บใหม่ ประวัติการบำรุงรักษาเครื่องจักร · ประวัติการบำรุงรักษาเครื่องยนต์ · ประวัติการซ่อมบำรุง | Tabs + Tab item 5 ช่อง · Table header ค้นหา + MaGrid · ประวัติการซ่อมบำรุง = Metric item 2 ใบ + ตารางรวม · ป้าย "Overhaul" = Pill outline Purple ต่อจาก Pill ประเภท (Table cell Style=Multiple badges · มือถือ Mobile table item Badge ละแถว) | เจ้าของงาน 12 พ.ย. 2569 · ตัวสลับ Tabs ซ้อนในแท็บประวัติเดิมเอาออก · `?tab=` เป็นชื่อแท็บ (`_lib/tabs.ts`) ที่อยู่เดิม 0–4 พาไปแท็บที่ตรง |
