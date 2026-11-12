@@ -20,6 +20,8 @@ export interface Draft {
   alloc: Record<number, number>;      // ลำดับรถใน CAND → ไตรมาส (1 คัน 1 ไตรมาส)
   picks: Record<number, number[]>;    // ลำดับรถ → ลำดับอะไหล่ใน PARTS
   q: number;                          // แท็บที่เปิด (0 = ทั้งหมด · 1–4 = ไตรมาส · แบบ A 5 พ.ย. 2569)
+  extra?: number[];                   // ยานพาหนะที่เพิ่มรายคัน (อยู่ในตารางแท็บทั้งหมดแม้ไม่ตรงตัวกรอง · BACKLOG ข้อ 86)
+  removed?: number[];                 // ยานพาหนะที่ลบรายคัน (ไม่อยู่ในแผนนี้แม้ตรงตัวกรอง · BACKLOG ข้อ 86)
   qty?: Record<number, Record<number, number>>;   // S21 จำนวนต่อคันที่แก้ไว้ (ไม่มี = CAR_QTY)
   manual?: Record<number, ManualPart[]>;          // S21 รายการเพิ่มเติม
   oils?: Record<number, number>;                  // S21 น้ำมันไฮดรอลิกรายคัน (OIL_PLAN_OPTS)
@@ -28,7 +30,7 @@ export interface Draft {
   editOf?: string;                    // S19 ฟอร์มแก้ไข: เลขที่ MR ของแผนที่แก้
 }
 export const emptyDraft = (): Draft => ({ name: "", year: "", regions: [], districts: [], types: [], alloc: {}, picks: {}, q: 0 });
-export const isDirty = (d: Draft) => !!(d.name || d.year || d.regions.length || d.districts.length || d.types.length || Object.keys(d.alloc).length);
+export const isDirty = (d: Draft) => !!(d.name || d.year || d.regions.length || d.districts.length || d.types.length || Object.keys(d.alloc).length || d.extra?.length || d.removed?.length);
 
 /* qCell — 4 ไตรมาสยาวเกินคอลัมน์ ⇒ 2 บรรทัด */
 export const qCell = (t: string) => { const q = t.split(" · "); return { text: q.slice(0, 2).join(" · "), sub: q.slice(2).join(" · ") }; };
@@ -90,15 +92,35 @@ export const inArea = (d: Pick<Draft, "regions" | "districts" | "types">, i: num
 };
 /* รถที่ฟอร์มเห็น = รถจำลองครบชุด (UNIT_FLEET = CAND · 9 พ.ย. 2569 เจ้าของงาน "ถ้าเลือกภาคแล้วต้องแสดงตามที่เลือกสิ") · ตารางแท็บทั้งหมด = ทุกคันที่ตรงภาค เขต ประเภท (ช่องว่าง = ทั้งหมด · หลายภาค = ทุกภาคที่เลือก) */
 export const carsFor = (d: Pick<Draft, "regions" | "districts" | "types">) => areaPicked(d) ? UNIT_FLEET.filter((i) => inArea(d, i)) : [];
+/* ยานพาหนะในตารางแท็บทั้งหมดของฟอร์มแผน = ที่ตรงตัวกรอง (carsFor) เอาคันที่ลบรายคันออก (removed) + คันที่เพิ่มรายคัน (extra · อยู่ต่อแม้เปลี่ยนตัวกรอง)
+   เจ้าของงาน 12 พ.ย. 2569 "อยากให้เพิ่มรถรายคันได้ และสามารถลบรถออกรายคันได้" (BACKLOG ข้อ 86) · คันที่ลบ = ไม่อยู่ในแผนนี้ ไม่ต้องจัดลงไตรมาส */
+type CarList = Pick<Draft, "regions" | "districts" | "types" | "extra" | "removed">;
+export const planCars = (d: CarList) => {
+  const out = new Set(d.removed ?? []), base = carsFor(d).filter((i) => !out.has(i)), seen = new Set(base);
+  return [...base, ...(d.extra ?? []).filter((i) => !out.has(i) && !seen.has(i))];
+};
+/* เพิ่มรายคัน: คันที่ลบไว้ = เอาออกจาก removed · คันที่ไม่ตรงตัวกรอง = เข้า extra */
+export const addCars = (d: CarList, ids: number[]): Pick<Draft, "extra" | "removed"> => {
+  const inFilter = new Set(carsFor(d)), extra = new Set(d.extra ?? []);
+  ids.filter((i) => !inFilter.has(i)).forEach((i) => extra.add(i));
+  return { extra: [...extra], removed: (d.removed ?? []).filter((i) => !ids.includes(i)) };
+};
+/* ลบรายคัน: ออกจากตาราง (extra / removed) และออกจากไตรมาสที่จัดไว้ */
+export const removeCar = (d: CarList & Pick<Draft, "alloc">, i: number): Pick<Draft, "extra" | "removed" | "alloc"> => {
+  const alloc = { ...d.alloc };
+  delete alloc[i];
+  return { extra: (d.extra ?? []).filter((x) => x !== i), removed: [...new Set([...(d.removed ?? []), i])], alloc };
+};
 /* กำหนดอะไหล่แล้ว (decided ของ planForm 6 พ.ย. 2569) = เลือกไม่เบิก หรือเบิกแล้วมีรายการ (อะไหล่จากคลังที่ไม่ใช่น้ำมัน หรือรายการที่ระบุเอง) */
 export const decided = (d: Pick<Draft, "picks" | "manual" | "draw">, i: number) =>
   d.draw?.[i] === "none" || (d.picks[i] || []).some((x) => x !== 0) || (d.manual?.[i] || []).length > 0;
 /* ปุ่มบันทึกและส่งอนุมัติ (complete ของ planForm · Figma de74711 · 9 พ.ย. 2569 ค่ำ เจ้าของงาน "ยังจัดอะใหล่ไม่เสร็จ ปุ่มอนุมัติต้อง disable" + เคาะ "ยานพาหนะในตารางต้องจัดครบ"):
    ชื่อแผน · ปีงบประมาณ · ยานพาหนะในไตรมาสอย่างน้อย 1 คัน · ยานพาหนะทุกคันในตารางแท็บทั้งหมด (carsFor = ตรงตัวกรองภาค เขต ประเภท ไม่ขึ้นกับคำค้น · ไม่เลือกตัวกรอง = ไม่มีคัน) จัดลงไตรมาสแล้ว
    · ทุกคันที่จัดกำหนดอะไหล่แล้ว (เบิกพร้อมรายการ หรือ ไม่เบิก) — ทั้งสร้างและแก้ไข · ไม่ใช่ทุกคันของหน่วยงาน (243 คัน)
+   12 พ.ย. 2569 ยานพาหนะในตาราง = planCars (ตัวกรอง − คันที่ลบรายคัน + คันที่เพิ่มรายคัน · BACKLOG ข้อ 86)
    ประวัติ: 6 พ.ย. ต้องจัดครบทุกคันของหน่วยงาน → 9 พ.ย. บ่าย (ff5f1f8) คันที่จัดกำหนดอะไหล่ครบพอ → 9 พ.ย. ค่ำ (de74711) ยานพาหนะในตารางต้องจัดครบด้วย */
 export const fleetAllocated = (d: Pick<Draft, "alloc">) => UNIT_FLEET.filter((i) => d.alloc[i] != null).length;
-export const draftComplete = (d: Draft) => !!d.name.trim() && !!d.year && Object.keys(d.alloc).length > 0 && carsFor(d).every((i) => d.alloc[i] != null) && Object.keys(d.alloc).every((i) => decided(d, Number(i)));
+export const draftComplete = (d: Draft) => !!d.name.trim() && !!d.year && Object.keys(d.alloc).length > 0 && planCars(d).every((i) => d.alloc[i] != null) && Object.keys(d.alloc).every((i) => decided(d, Number(i)));
 /* คำค้น "เลขทะเบียน, ยี่ห้อ, รุ่น" (inQuery) */
 export const matchQuery = (i: number, q: string) => !q || (CAND[i].plate + " " + CAND[i].model).includes(q);
 /* ภาค · ประเภทรถ ของรถที่จัดลงไตรมาสแล้ว (บันทึกเป็นภาค / ประเภทรถของแผน — สรุปจากรถในแผนจริง) */
@@ -124,7 +146,7 @@ export function planFromDraft(d: Draft, plans: Plan[], today: string, retired: s
     mr: nextMr(plans, d.year, retired), name: d.name.trim(), ...allocScope(d.alloc), nowQ: "ไตรมาส 1", cars: Object.keys(d.alloc).length,
     status: "review", created: today, year: d.year,
     perQ: per.map((n, i) => "ไตรมาส " + (i + 1) + ": " + n).join(" · "),
-    regions: d.regions, districts: d.districts, types: d.types, alloc: d.alloc, picks: d.picks, qty: d.qty, manual: d.manual, oils: d.oils, oilSpec: d.oilSpec, draw: d.draw,
+    regions: d.regions, districts: d.districts, types: d.types, alloc: d.alloc, picks: d.picks, qty: d.qty, manual: d.manual, oils: d.oils, oilSpec: d.oilSpec, draw: d.draw, extra: d.extra, removed: d.removed,
     ...(unit ? { unit } : {}),
   };
 }
