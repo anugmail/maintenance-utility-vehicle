@@ -1,37 +1,43 @@
 "use client";
 /* ฟอร์มแผนบำรุงรักษา planForm() ใน screens.js แบบ A (เจ้าของงานเลือก 5 พ.ย. 2569 · รีวิวทีมออกแบบ) — ใช้ร่วม S1 สร้างแผน (/new/) และ S19 แก้ไขแผน (/edit/?id=)
-   ตาม `Section header` · `Input dropdown with badges` · `Tabs` · `Table header` · `Table` · `Table cell` (Lead checkbox · Action icons) · `Empty state/Data empty` (Graphic=vehicle) · `Empty state/Search not found`
-   · `Radio text card` · `Modal header` · `Modal footer` ของไฟล์ Component + หน้า 5.2 Vehicle Management (Vehicle list · Export reports - Select vehicles) ของ UI Release#2
-   · popup เพิ่มยานพาหนะแบบ vehPickerModal ของ Overhaul (เจ้าของงาน 12 พ.ย. 2569 · BACKLOG ข้อ 87)
+   ตาม `Section header` · `Input dropdown` · `Tabs` · `Table header` · `Table header cell` (Checkbox) · `Table cell` (Lead checkbox · Badge · Action icons) · `Table pagination`
+   · `Empty state/Data empty` (Graphic=vehicle) · `Empty state/Search not found` · `Radio text card` · `Dropdown menu` · `Modal header` · `Modal footer` ของไฟล์ Component
+   + หน้า 5.2 Vehicle Management (Vehicle list · Export reports - Select vehicles) ของ UI Release#2 · popup เพิ่มยานพาหนะแบบ vehPickerModal ของ Overhaul (BACKLOG ข้อ 87 89)
+   แผน 2 ขั้น (R111 R112 · BACKLOG ข้อ 90 · เจ้าของงาน 13 พ.ย. 2569 "เลือกรถเข้ามาในแผนก่อน แล้วหลังจากนั้นเลือกรถเข้าไตรมาส จะเงื่อนไขว่า รถที่เลือกแล้วจะไม่แสดงตอนเลือกไตรมาสอื่นได้
+     และ รถในไตรมาส อยากให้ สามารถ ย้ายไปไตรมาสอื่นได้") — ขั้นที่ 1 แท็บทั้งหมด เพิ่มยานพาหนะเข้าแผน (alloc 0 = ยังไม่จัดไตรมาส) · ขั้นที่ 2 แท็บไตรมาส n จัดจากยานพาหนะในแผนที่ยังไม่จัดไตรมาส
+     (แทน BACKLOG ข้อ 87 เพิ่มเข้าไตรมาสที่เปิดอยู่ทันที · ข้อ 89 ช่อง "เพิ่มเข้าไตรมาส" ใน popup ของแท็บทั้งหมด · ข้อ 86 ไอคอนถังขยะ)
    Content ช่องไฟ 32:
      (แก้ไข) Alert — ส่งกลับแก้ไข: Error "ผู้อนุมัติส่งกลับให้แก้ไข" + เหตุผล · อนุมัติแล้ว: Warning "แผนนี้อนุมัติแล้ว"
      ข้อมูลแผน (Section header) — ชื่อแผน (Text input) · ปีงบประมาณ (สร้าง: Input dropdown · แก้ไข: Readonly)
-     ยานพาหนะในแผน (Section header + Badge "ในแผน n คัน") — เจ้าของงาน 12 พ.ย. 2569 ส่งภาพ modal "เพิ่มรถเข้า Purchase Order" ของ Overhaul + _"หน้าจอเลือกรถ อยากให้เป็น modal ตามรูป แก้ใน flow ด้วย"_
-       เคาะ: ยานพาหนะที่เลือกใน modal เข้าไตรมาสที่เปิดอยู่ทันที ไม่มีขั้นจัดลงไตรมาสแยก (BACKLOG ข้อ 87 · เดิม แผงตัวกรองภาค เขต ประเภท + ตารางยานพาหนะในพื้นที่ที่เลือก + ติ๊กแล้ว "จัดลงไตรมาส")
-       ยานพาหนะในแผน = ทุกคันที่อยู่ในไตรมาส (planCars = alloc · lib/mock/plan.ts) · Tabs ทั้งหมด n · ไตรมาส 1–4 n (Pill) · ฟอร์มสร้างใหม่เปิดที่แท็บไตรมาส 1
-       แท็บไตรมาส n: Table header (หัว "ยานพาหนะในไตรมาส n" + Badge "กำหนดอะไหล่แล้ว x/y คัน" · ค้นหา "เลขทะเบียน, ยี่ห้อ, รุ่น" ในยานพาหนะของไตรมาสนี้ · ไม่มีปุ่มตัวกรอง
-         · "กำหนดอะไหล่ (n)" (ติ๊กหลายคัน · BACKLOG ข้อ 64) · Secondary button "เพิ่มยานพาหนะ" ไอคอน + ขวาสุด) → ตารางติ๊ก Q_COLS + Table pagination
-         เมนู … (RowMenu): ดูรายละเอียด → /car-parts/view/ · แก้ไข → /car-parts/ (S21) · ย้ายไปไตรมาสอื่น → popup Radio text card ไตรมาส 1–4 (ไตรมาสปัจจุบันของคันนั้นเลือกไม่ได้) ปุ่ม "ย้ายยานพาหนะ"
-           → toast "ย้ายยานพาหนะไปไตรมาส m สำเร็จ" · ลบ → ยืนยันการลบยานพาหนะออกจากแผน → toast "ลบยานพาหนะออกจากแผนสำเร็จ" · มือถือ = ไอคอนดู แก้ไข ย้าย ลบ ใต้รายการ (CLAUDE.md ข้อ 14)
-         ไตรมาสว่าง: Empty state "ยังไม่มียานพาหนะในไตรมาสนี้" + ปุ่มหลัก "เพิ่มยานพาหนะเข้าไตรมาส n" (R75) เปิด popup เดียวกัน · ไม่ตรงคำค้น: Search not found
-       popup "เพิ่มยานพาหนะเข้าไตรมาส n" (TripCarPicker + areaOf · ตัวกรองภาค เขต ประเภทยานพาหนะในตัว popup แบบ vehPickerModal ของ Overhaul · มือถือ bottom sheet)
-         ยานพาหนะที่ยังไม่อยู่ในแผนนี้ เพิ่มได้ทุกคัน → ปุ่ม "เพิ่มเข้าไตรมาส n (k)" → อยู่แท็บเดิม ตัวเลขบนแท็บเปลี่ยน + toast "เพิ่มยานพาหนะ k คันเข้าไตรมาส n สำเร็จ"
-       แท็บทั้งหมด: ยานพาหนะทุกคันในแผน ไม่มี checkbox (Table · PICK_COLS: ทะเบียน (ยี่ห้อ/รุ่น) · ประเภทยานพาหนะ · เขต / หน่วยงาน · บำรุงรักษา/ซ่อมเครื่องจักรล่าสุด · ไตรมาส Pill · ไอคอนถังขยะ BACKLOG ข้อ 86)
-         13 พ.ย. 2569 เจ้าของงาน "อยากให้เลือกรถเข้าแผน ใช้วิธีการเดียวกับเลือกรถเข้าไตรมาส" (BACKLOG ข้อ 89) ⇒ Secondary button "เพิ่มยานพาหนะ" ไอคอน + ที่ Table header แบบแท็บไตรมาส
-           → popup เดียวกัน หัว "เพิ่มยานพาหนะเข้าแผน" + Input dropdown "เพิ่มเข้าไตรมาส" (บังคับ · แถวแรก · pickQuarter) → ปุ่ม "เพิ่มเข้าแผน (k)" Disabled จนกว่าเลือกไตรมาสและติ๊ก ≥ 1
-           → ยานพาหนะเข้าไตรมาสที่เลือก · อยู่แท็บทั้งหมดต่อ + toast "เพิ่มยานพาหนะ k คันเข้าไตรมาส n สำเร็จ" · แผนที่ดำเนินการ: ไตรมาสที่เสร็จแล้วเลือกไม่ได้ (ทุกไตรมาสเสร็จ = ปุ่ม Disabled)
-         แผนยังไม่มียานพาหนะ: Empty state "ยังไม่มียานพาหนะในแผน" / "กดเพิ่มยานพาหนะ หรือเปิดแท็บไตรมาสแล้วกดเพิ่มยานพาหนะ" + ปุ่มหลัก "เพิ่มยานพาหนะเข้าแผน" (popup เดียวกัน)
+     ยานพาหนะในแผน (Section header + Badge "ในแผน n คัน" นับทุกคันรวมที่ยังไม่จัดไตรมาส) · Tabs ทั้งหมด n · ไตรมาส 1–4 n (นับเฉพาะคันในไตรมาสนั้น) · ฟอร์มสร้างใหม่เปิดที่แท็บทั้งหมด
+       ทั้งสองแท็บ = ตารางติ๊ก CheckTable (Lead checkbox + ติ๊กทั้งหมดที่หัวคอลัมน์แรก · หน้าละ 10 + Table pagination · มือถือ List with checkbox + ไอคอนใต้รายการ CLAUDE.md ข้อ 14)
+         · Table header ค้นหา "เลขทะเบียน, ยี่ห้อ, รุ่น" ไม่มีปุ่มตัวกรอง · ติ๊กแล้วมีปุ่มรอง "กำหนดอะไหล่ (k)" (R112 · ไม่ได้ติ๊ก = ไม่มีปุ่ม ตาม planForm) · Secondary button "เพิ่มยานพาหนะ" ไอคอน + ขวาสุด
+         · กำหนดอะไหล่ (k) → หน้า S21 แบบหลายคัน /car-parts/?cars=…&q=แท็บที่เปิด (q 0 = ทุกคันในแผน) บันทึกแล้วกลับแท็บเดิม · แก้รายคันภายหลังได้จากเมนู …
+       แท็บทั้งหมด: หัว "ยานพาหนะทั้งหมดในแผน" + Badge "n คัน" · PICK_COLS ทะเบียน (ยี่ห้อ/รุ่น) · ประเภทยานพาหนะ · เขต / หน่วยงาน · บำรุงรักษา/ซ่อมเครื่องจักรล่าสุด
+           · ไตรมาส (Pill Brand "ไตรมาส n" · Pill Gray "ยังไม่จัดไตรมาส" แบบป้าย "ยังไม่มีแผนเดินทาง" ของหน้าไตรมาส S6) · อะไหล่อื่นๆ (ช่องเดียวกับแท็บไตรมาส) · ปุ่ม …
+         เมนู … (MENU): ดูรายละเอียด → /car-parts/view/ · แก้ไข → /car-parts/ (S21 q=0) · ลบ → ยืนยันการลบยานพาหนะออกจากแผน (PLAN_OUT_CONFIRM · ยังไม่จัดไตรมาส = ไม่อ้างไตรมาส)
+           → ออกจากแผน ล้างอะไหล่ของคันนั้น + toast "ลบยานพาหนะออกจากแผนสำเร็จ" · มือถือ = ไอคอนดู แก้ไข ลบ ใต้รายการ
+         เพิ่มยานพาหนะ → popup "เพิ่มยานพาหนะเข้าแผน" / "ยานพาหนะที่ยังไม่อยู่ในแผนนี้ เพิ่มได้ทุกคัน" (ไม่มีช่องเลือกไตรมาส) → "เพิ่มเข้าแผน (k)"
+           → ยังไม่จัดไตรมาส · อยู่แท็บทั้งหมด + toast "เพิ่มยานพาหนะ k คันเข้าแผนสำเร็จ" · แท็บนี้เพิ่มเข้าแผนได้เสมอ (รวมแผนที่ดำเนินการ)
+         แผนยังไม่มียานพาหนะ: Empty state "ยังไม่มียานพาหนะในแผน" / "กดเพิ่มยานพาหนะเพื่อเลือกยานพาหนะเข้าแผน แล้วจึงจัดเข้าไตรมาส" + ปุ่มหลัก "เพิ่มยานพาหนะเข้าแผน" (noCarsInPlan)
+       แท็บไตรมาส n: หัว "ยานพาหนะในไตรมาส n" + Badge "กำหนดอะไหล่แล้ว x/y คัน" · Q_COLS
+         เมนู … (Q_MENU): ดูรายละเอียด · แก้ไข · ย้ายไปไตรมาสอื่น (popup Radio text card ไตรมาส 1–4 · ไตรมาสปัจจุบันเลือกไม่ได้ · ปุ่ม "ย้ายยานพาหนะ" → toast "ย้ายยานพาหนะไปไตรมาส m สำเร็จ")
+           · เอาออกจากไตรมาส (ไอคอน remove · ไม่มี confirm · กลับเป็นยังไม่จัดไตรมาส ยังอยู่ในแผน อะไหล่คงอยู่ → toast "เอายานพาหนะออกจากไตรมาส n แล้ว") · มือถือ = ไอคอนดู แก้ไข ย้าย เอาออก
+         เพิ่มยานพาหนะ → popup "เพิ่มยานพาหนะเข้าไตรมาส n" / "ยานพาหนะในแผนที่ยังไม่จัดไตรมาส" — เฉพาะ alloc 0 (คันที่อยู่ไตรมาสอื่นไม่แสดง) → "เพิ่มเข้าไตรมาส n (k)"
+           → toast "เพิ่มยานพาหนะ k คันเข้าไตรมาส n สำเร็จ" · ไม่มีให้เลือก = "ยานพาหนะในแผนจัดเข้าไตรมาสครบแล้ว" (แผนว่าง "ยังไม่มียานพาหนะในแผน") / "เพิ่มยานพาหนะเข้าแผนที่แท็บทั้งหมดก่อน แล้วจึงจัดเข้าไตรมาส"
+         ไตรมาสว่าง: Empty state "ยังไม่มียานพาหนะในไตรมาสนี้" / "เลือกจากยานพาหนะในแผนที่ยังไม่จัดไตรมาส" + ปุ่มหลัก "เพิ่มยานพาหนะเข้าไตรมาส n" (R75 · noCarsInQ) · ไม่ตรงคำค้น: Search not found
      อะไหล่ในไตรมาส n (Section header · ไม่มีตัวเลขจำนวนชนิด 9 พ.ย. 2569) — ตั้งต้นว่าง รวมจากยานพาหนะที่จัดการแล้วทีละคัน (qAgg: น้ำมันที่เปลี่ยน ลิตรต่อคัน + อะไหล่อื่นๆ + รายการที่ระบุเอง · คันที่ไม่เบิกอะไหล่ไม่รวม)
        Table QPART_COLS (R81: ชนิด · รหัสอะไหล่ · ประเภท · จำนวน · หน่วย — ชุดเดียวกับอะไหล่ในแผน S2) ไม่มีปุ่มเพิ่มอะไหล่และไอคอนแถว / Empty state ตามแท็บ
-       แท็บ "ทั้งหมด" (เจ้าของงาน 9 พ.ย. 2569 "หน้าอะใหล่ทั้งไตรมาส ต้องรวมมาให้ด้วย ทั้งไตรมาส"): หัวข้อ "อะไหล่รวมทุกไตรมาส" = ผลรวมไตรมาส 1–4 (allQuarterRows)
-     ปุ่ม ย้อนกลับ (แก้ไข: ยกเลิก) · บันทึกและส่งอนุมัติ — Disabled จนกว่า ชื่อแผน · ปีงบประมาณ ครบ · ยานพาหนะในแผนอย่างน้อย 1 คัน · ทุกคันในแผนกำหนดอะไหล่แล้ว (เบิกพร้อมรายการ หรือ ไม่เบิก)
-       (draftComplete · 12 พ.ย. 2569 ตัดเงื่อนไข "ยานพาหนะในตารางต้องจัดครบ" ของ de74711)
+       แท็บ "ทั้งหมด" (เจ้าของงาน 9 พ.ย. 2569 "หน้าอะใหล่ทั้งไตรมาส ต้องรวมมาให้ด้วย ทั้งไตรมาส"): หัวข้อ "อะไหล่รวมทุกไตรมาส" = ทุกคันในแผนรวมคันที่ยังไม่จัดไตรมาส (allQuarterRows)
+     ปุ่ม ย้อนกลับ (แก้ไข: ยกเลิก) · บันทึกและส่งอนุมัติ — Disabled จนกว่า ชื่อแผน · ปีงบประมาณ ครบ · ยานพาหนะในแผนอย่างน้อย 1 คัน · ทุกคันจัดเข้าไตรมาสแล้ว · ทุกคันกำหนดอะไหล่แล้ว
+       (draftComplete / carsComplete · 13 พ.ย. 2569 R111 เจ้าของงาน "ต้องจัดครบก่อน และต้องระบุอะใหล่รายคันให้ครบ" · 12 พ.ย. ข้อ 87 เคยตัดเงื่อนไขจัดครบ)
    Validation: ช่องบังคับที่ออกจากช่องโดยยังว่าง (Out of focus) แสดง "กรุณาระบุชื่อแผน" / "กรุณาเลือกปีงบประมาณ"
    popup ยืนยัน: ออกจากหน้าเมื่อมีการแก้ไข · (แก้ไข) ยืนยันการแก้ไข
    แผนที่ดำเนินการแล้ว (11 พ.ย. 2569 เจ้าของงาน "แผนที่ดำเนินการแล้ว ยังสามารถแก้ไขได้" + เคาะ "เฉพาะไตรมาสที่ยังไม่เสร็จ" · "ไม่ต้อง บันทึกแล้วมีผลเลย" · BACKLOG ข้อ 64 · lib/mock/liveEdit.ts)
-     Alert Info "แผนนี้อยู่ระหว่างดำเนินการ" · แท็บไตรมาสที่เสร็จแล้ว = Alert Success "ไตรมาส n บำรุงรักษาเสร็จทุกคันแล้ว" ดูอย่างเดียว (ติ๊ก เพิ่ม ย้าย ลบ กำหนดอะไหล่ ไม่ได้ · เมนู = ดูรายละเอียด)
-     · ยานพาหนะที่ปิดงานแล้วในไตรมาสที่ยังไม่เสร็จ ล็อกแบบเดียวกัน (บรรทัดรอง "ปิดงานแล้ว") · popup ย้ายไปไตรมาสอื่น: ไตรมาสที่เสร็จแล้ว Disabled
-     · ปุ่ม "บันทึก" (คันในแผนต้องกำหนดอะไหล่ครบ) ไม่มี popup ยืนยัน → toast "บันทึกการแก้ไขแผนสำเร็จ" → หน้ารายละเอียดแผน · แผนคงสถานะดำเนินการ */
+     Alert Info "แผนนี้อยู่ระหว่างดำเนินการ" · แท็บไตรมาสที่เสร็จแล้ว = Alert Success "ไตรมาส n บำรุงรักษาเสร็จทุกคันแล้ว" ดูอย่างเดียว (ติ๊ก เพิ่ม ย้าย เอาออก กำหนดอะไหล่ ไม่ได้ · เมนู = ดูรายละเอียด)
+     · ยานพาหนะที่ปิดงานแล้วในไตรมาสที่ยังไม่เสร็จ ล็อกแบบเดียวกัน (บรรทัดรอง "ปิดงานแล้ว") ทั้งแท็บไตรมาสและแท็บทั้งหมด (ลบออกจากแผนไม่ได้) · popup ย้ายไปไตรมาสอื่น: ไตรมาสที่เสร็จแล้ว Disabled
+     · แท็บทั้งหมดเพิ่มเข้าแผนได้เสมอ · ไตรมาสที่เสร็จแล้วรับยานพาหนะเพิ่มไม่ได้ (ปุ่มเพิ่ม Disabled)
+     · ปุ่ม "บันทึก" (ชื่อแผน + เงื่อนไขยานพาหนะชุดเดียวกับส่งอนุมัติ) ไม่มี popup ยืนยัน → toast "บันทึกการแก้ไขแผนสำเร็จ" → หน้ารายละเอียดแผน · แผนคงสถานะดำเนินการ */
 import { PagedTable } from "@/app/quarter/_shared/ui";
 import { useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
@@ -58,7 +64,7 @@ import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
 import { CAND, CAR_PICK, MENU, QUARTERS, UNIT_FLEET, YEARS, type Plan } from "@/lib/mock/data";
 import { carArea } from "@/lib/mock/carArea";
-import { QPART_COLS, decided, draftComplete, emptyDraft, inQuarter, isDirty, matchQuery, planCars, planFromDraft, qpartRow, removeCar, thaiToday, type Draft } from "@/lib/mock/plan";
+import { QPART_COLS, carsComplete, decided, draftComplete, emptyDraft, inQuarter, isDirty, matchQuery, planCars, planFromDraft, qpartRow, removeCar, thaiToday, unassignedCars, type Draft } from "@/lib/mock/plan";
 import { allQuarterRows, carParam, roleUnit, draftFromPlan, draftKey, fillDraft, oilCellOf, otherCellOf, planId, planWithDraft, quarterRows } from "@/lib/mock/planFlow";
 import { useProtoForm } from "@/lib/protoForm";
 import { notify, setMock, useMock, useRole } from "@/lib/mock/store";
@@ -78,13 +84,18 @@ export const CARP_COLS: TableColumn[] = [
    ทั้งสองแท็บ (ทั้งหมด 7 คอลัมน์ · ไตรมาส 8 คอลัมน์ = เต็ม Table ของไลบรารี R25) · ไม่มีข้อมูล = "ไม่มีข้อมูล" (lib/mock/vehicleHistory.ts) · มือถือ = บรรทัดรองของรายการ
    แก้คำ 11 พ.ย. 2569 "วันที่บำรุงเครื่องจักรล่าสุด … วันที่ซ่อมเครื่องจักรล่าสุด" ⇒ หัว "บำรุงรักษาเครื่องจักรล่าสุด" "ซ่อมเครื่องจักรล่าสุด" (MA_HEAD REPAIR_HEAD) */
 const HIST_COLS: TableColumn[] = [{ head: MA_HEAD, width: 200 }, { head: REPAIR_HEAD, width: 170 }];
-/* 12 พ.ย. 2569 เจ้าของงาน "อยากให้เพิ่มรถรายคันได้ และสามารถลบรถออกรายคันได้ มี icon ถังขยะ ก็ได้" (BACKLOG ข้อ 86) ⇒ แท็บทั้งหมด ท้ายแถว = ไอคอนลบ (Action icons · Delete)
-   BACKLOG ข้อ 87 แท็บทั้งหมดไม่มี checkbox แล้ว ⇒ Table ของไลบรารี (ทะเบียน Lead text + บรรทัดรอง ยี่ห้อ/รุ่น · มือถือ Mobile table) */
-const PICK_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 230, Style: "Lead text" }, { head: "ประเภทยานพาหนะ", width: 150 }, { head: "เขต / หน่วยงานเจ้าของยานพาหนะ" }, ...HIST_COLS, { head: "ไตรมาส", width: 120, Style: "Badge" }, { head: "", width: 60, Style: "Action icons" }];
+/* แท็บทั้งหมด (R111 · BACKLOG ข้อ 90 · PICK_COLS ของ screens.js 13 พ.ย. 2569): ตารางติ๊กแบบแท็บไตรมาส (CheckTable · ทะเบียน + ช่องติ๊ก + บรรทัดรอง ยี่ห้อ/รุ่น)
+   ไตรมาส = Pill "ไตรมาส n" / "ยังไม่จัดไตรมาส" · อะไหล่อื่นๆ ช่องเดียวกับแท็บไตรมาส · ท้ายแถว = ปุ่ม … (MENU) แทนไอคอนถังขยะ (BACKLOG ข้อ 86)
+   8 คอลัมน์ = เต็ม Table ของไลบรารี R25 (Figma 6 คอลัมน์ + HIST_COLS ของเว็บ BACKLOG ข้อ 64) */
+const PICK_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 200 }, { head: "ประเภทยานพาหนะ", width: 150 }, { head: "เขต / หน่วยงานเจ้าของยานพาหนะ" }, ...HIST_COLS, { head: "ไตรมาส", width: 150, Style: "Badge" }, { head: "อะไหล่อื่นๆ", width: 130 }, { head: "", width: 60, Style: "Action icons" }];
 const Q_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 200 }, { head: "ประเภทยานพาหนะ", width: 152 }, { head: "เขต / หน่วยงานเจ้าของยานพาหนะ" }, ...HIST_COLS, { head: "น้ำมันไฮดรอลิก", width: 140 }, { head: "อะไหล่อื่นๆ", width: 130 }, { head: "", width: 60, Style: "Action icons" }];   // 6 พ.ย. 2569 ท้ายแถว = ปุ่ม … (Q_MENU) แทนไอคอนแก้ไข
 const PER = 10;
 /* เมนู "ย้ายไปไตรมาสอื่น" ของยานพาหนะในแท็บไตรมาส (BACKLOG ข้อ 87) — ไอคอนชุดเดียวกับเมนูย้ายไตรมาสของหน้าไตรมาส S25 */
 const MOVE_ITEM = { Text: "ย้ายไปไตรมาสอื่น", IconSwap: "swap_driving_apps_wheel-24-300-round" };
+/* เมนู "เอาออกจากไตรมาส" แทน "ลบ" ของแท็บไตรมาส (R111 · Q_MENU ของ screens.js · BACKLOG ข้อ 90) — ไอคอน remove ของไฟล์ Component หน้า Icons (ไอคอนยังไม่เคาะ) */
+const OUT_Q_ITEM = { Text: "เอาออกจากไตรมาส", IconSwap: "remove-24-300-round" };
+const NO_Q = "ยังไม่จัดไตรมาส";
+const ADD_PLAN_FIRST = "เพิ่มยานพาหนะเข้าแผนที่แท็บทั้งหมดก่อน แล้วจึงจัดเข้าไตรมาส";   // ADD_PLAN_FIRST ของ screens.js (popup เพิ่มยานพาหนะเข้าไตรมาสที่ไม่มีให้เลือก)
 /* S19: Alert เหนือฟอร์มแก้ไข (ALERT_RETURNED · ALERT_APPROVED) */
 const ALERT_APPROVED = ["แผนนี้อนุมัติแล้ว", "เมื่อบันทึก แผนจะกลับเป็นสถานะรออนุมัติ และต้องให้ผู้อนุมัติตรวจสอบอีกครั้ง"] as const;
 /* แผนที่ดำเนินการ (BACKLOG ข้อ 64) — ข้อความของเว็บ (Figma ตามทีหลัง) */
@@ -109,11 +120,11 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
   const [query, setQuery] = useState("");
   const [ticked, setTicked] = useState<string[]>([]);
   const [page, setPage] = useState(1);
-  const [qAdd, setQAdd] = useState(false);   // popup เพิ่มยานพาหนะเข้าไตรมาส n (BACKLOG ข้อ 87 · เดิม R75 เฉพาะไตรมาสว่าง)
+  const [qAdd, setQAdd] = useState(false);   // popup เพิ่มยานพาหนะ: แท็บทั้งหมด = เข้าแผน · แท็บไตรมาส n = เข้าไตรมาส n (R111 · BACKLOG ข้อ 90)
   const [move, setMove] = useState<{ car: number; to: number } | null>(null);   // popup ย้ายไปไตรมาสอื่น (to 0 = ยังไม่เลือก)
   const [touched, setTouched] = useState<{ name?: boolean; year?: boolean }>({});
   const [pending, setPending] = useState<Pending | null>(null);
-  const [carMenu, setCarMenu] = useState<{ car: number; anchor: MenuAnchor } | null>(null);   // เมนู … ของยานพาหนะในแท็บไตรมาส
+  const [carMenu, setCarMenu] = useState<{ car: number; anchor: MenuAnchor } | null>(null);   // เมนู … ของยานพาหนะ (แท็บทั้งหมด MENU · แท็บไตรมาส Q_MENU)
   const role = useRole();
 
   const put = (patch: Partial<Draft>) => setMock((s) => (edit ? { ...s, edit: { ...(s.edit ?? base()), ...patch } } : { ...s, draft: { ...(s.draft ?? emptyDraft()), ...patch } }));
@@ -123,7 +134,7 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
   };
   const reset = () => { setPage(1); setTicked([]); };
 
-  /* ---------- ยานพาหนะในแผน (planCars = alloc · BACKLOG ข้อ 87) ---------- */
+  /* ---------- ยานพาหนะในแผน (planCars = ทุกคีย์ของ alloc รวมคันที่ยังไม่จัดไตรมาส alloc 0 · R111 BACKLOG ข้อ 90) ---------- */
   const cars = planCars(d);
   const q = d.q;
   const inQ = (k: number) => inQuarter(d, k);
@@ -132,85 +143,104 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
   const last = Math.max(1, Math.ceil(shown.length / PER)), pg = Math.min(page, last);
   const rowsOnPage = shown.slice((pg - 1) * PER, pg * PER);
   const nTicked = ticked.length;
-  const qPill = (i: number): [string, "Brand"] => ["ไตรมาส " + d.alloc[i], "Brand"];
+  /* ไตรมาสของคันในแท็บทั้งหมด: Pill Brand "ไตรมาส n" · ยังไม่จัด = Pill Gray "ยังไม่จัดไตรมาส" (planForm R111) */
+  const qPill = (i: number): [string, "Brand" | "Gray"] => (d.alloc[i] ? ["ไตรมาส " + d.alloc[i], "Brand"] : [NO_Q, "Gray"]);
   const carQuery = (car: number) => "?id=" + (edit ? planId(plan) : "new") + "&q=" + q + "&car=" + carParam(car) + (from === "detail" ? "&from=detail" : "");
   const toS21 = (car: number) => router.push("/car-parts/" + carQuery(car));
-  /* ลบ (เมนู … ของแท็บไตรมาส · ไอคอนถังขยะของแท็บทั้งหมด) = ลบยานพาหนะคันนั้นออกจากแผน (ออกจากไตรมาส + ล้างอะไหล่ที่กำหนดไว้) · เพิ่มกลับได้จาก popup เพิ่มยานพาหนะ */
-  const outOfPlan = (car: number) => setPending({
-    spec: { danger: true, title: "ยืนยันการลบยานพาหนะออกจากแผน", sub: CAND[car].plate + " จะออกจากไตรมาส " + d.alloc[car] + " และไม่อยู่ในแผนนี้" + (live ? " รวมถึงออกจากแผนเดินทางของไตรมาสนี้เมื่อบันทึก" : "") + " เพิ่มกลับได้จากปุ่มเพิ่มยานพาหนะ", cancel: "ยกเลิก", ok: "ลบ" },
-    run: () => {
-      put(removeCar(d, car));
-      setTicked((t) => t.filter((x) => x !== String(car)));
-      notify("ลบยานพาหนะออกจากแผนสำเร็จ");
-    },
-  });
+  const untick = (car: number) => setTicked((t) => t.filter((x) => x !== String(car)));
+  /* ลบ (เมนู … ของแท็บทั้งหมด · PLAN_OUT_CONFIRM ของ screens.js) = ลบยานพาหนะคันนั้นออกจากแผน (ล้างอะไหล่ที่กำหนดไว้) · เพิ่มกลับได้จาก popup เพิ่มยานพาหนะเข้าแผน
+     ยังไม่จัดไตรมาส = ข้อความไม่อ้างไตรมาส · แผนที่ดำเนินการ + อยู่ในไตรมาส = ออกจากแผนเดินทางของไตรมาสนั้นเมื่อบันทึกด้วย (liveEdit.ts) */
+  const outOfPlan = (car: number) => {
+    const n = d.alloc[car];
+    setPending({
+      spec: { danger: true, title: "ยืนยันการลบยานพาหนะออกจากแผน", cancel: "ยกเลิก", ok: "ลบ",
+        sub: CAND[car].plate + (n ? " จะออกจากไตรมาส " + n + " และไม่อยู่ในแผนนี้" + (live ? " รวมถึงออกจากแผนเดินทางของไตรมาสนี้เมื่อบันทึก" : "") : " จะไม่อยู่ในแผนนี้") + " เพิ่มกลับได้จากปุ่มเพิ่มยานพาหนะ" },
+      run: () => {
+        put(removeCar(d, car));
+        untick(car);
+        notify("ลบยานพาหนะออกจากแผนสำเร็จ");
+      },
+    });
+  };
+  /* เอาออกจากไตรมาส (เมนู … ของแท็บไตรมาส · R111) — ไม่มี confirm · alloc 0 = ยังอยู่ในแผนแต่ยังไม่จัดไตรมาส · อะไหล่ที่กำหนดไว้คงอยู่ ⇒ กลับมาให้เลือกใน popup ของทุกไตรมาส */
+  const outOfQ = (car: number) => {
+    const n = d.alloc[car];
+    put({ alloc: { ...d.alloc, [car]: 0 } });
+    untick(car);
+    notify("เอายานพาหนะออกจากไตรมาส " + n + " แล้ว");
+  };
   /* ย้ายไปไตรมาสอื่น (popup Radio text card เดิมของ "จัดลงไตรมาส" · ทีละคันจากเมนู …) — อะไหล่ที่กำหนดไว้ย้ายไปพร้อมยานพาหนะ */
   const doMove = () => {
     if (!move?.to) return;
     put({ alloc: { ...d.alloc, [move.car]: move.to } });
-    setTicked((t) => t.filter((x) => x !== String(move.car)));
+    untick(move.car);
     notify("ย้ายยานพาหนะไปไตรมาส " + move.to + " สำเร็จ");
     setMove(null);
   };
-  /* Q_MENU ของยานพาหนะ: ดูรายละเอียด (carPartsView) · แก้ไข (S21) · ย้ายไปไตรมาสอื่น · ลบ — คันที่ล็อก (แผนที่ดำเนินการ) = ดูรายละเอียดอย่างเดียว */
+  /* เมนู … ของยานพาหนะ — แท็บทั้งหมด MENU: ดูรายละเอียด (carPartsView) · แก้ไข (S21) · ลบ (ออกจากแผน)
+     แท็บไตรมาส Q_MENU: ดูรายละเอียด · แก้ไข · ย้ายไปไตรมาสอื่น · เอาออกจากไตรมาส — คันที่ล็อก (แผนที่ดำเนินการ) = ดูรายละเอียดอย่างเดียวทั้งสองแท็บ */
   const carMenuItems = (car: number) => {
     const view = { ...MENU[0], act: () => router.push("/car-parts/view/" + carQuery(car)) };
     if (lockedCar(car)) return [view];
-    return [view, { ...MENU[1], act: () => toS21(car) }, { ...MOVE_ITEM, act: () => setMove({ car, to: 0 }) }, { ...MENU[2], act: () => outOfPlan(car) }];
+    const change = { ...MENU[1], act: () => toS21(car) };
+    return q
+      ? [view, change, { ...MOVE_ITEM, act: () => setMove({ car, to: 0 }) }, { ...OUT_Q_ITEM, act: () => outOfQ(car) }]
+      : [view, change, { ...MENU[2], act: () => outOfPlan(car) }];
   };
   const carItems = carMenu ? carMenuItems(carMenu.car).map(({ act, ...m }) => ({ ...m, onClick: act })) : [];
   const mDates = useMachineDates();
   const lockSubOf = (i: number) => (lockedCar(i) ? (locks?.closed.has(i) ? "ปิดงานแล้ว · " : "ไตรมาสบำรุงรักษาเสร็จแล้ว · ") : "");
-  /* แท็บทั้งหมด: Table (ไม่มี checkbox) · ไอคอนลบ (MENU[2]) ท้ายแถว · มือถือ Mobile table item Action icons (CLAUDE.md ข้อ 14) · คันที่ล็อกลบไม่ได้ */
-  const allRows: TableValue[][] = q ? [] : shown.map((i) => {
-    const c = CAND[i], md = mDates(c.plate);
-    const del = lockedCar(i) ? [] : [{ IconSwap: MENU[2].IconSwap, label: MENU[2].Text + " " + c.plate, onClick: () => outOfPlan(i) }];
-    return [{ text: c.plate, sub: lockSubOf(i) + c.model }, c.type, c.owner, md.ma, md.repair, { pills: [qPill(i)] }, { actions: del }];
-  });
-  const rows: CheckRow[] = !q ? [] : rowsOnPage.map((i) => {
-    const c = CAND[i], md = mDates(c.plate), hist = [md.ma, md.repair], lk = lockedCar(i), lockSub = lockSubOf(i);
-    const oil = oilCellOf(d, i), other = otherCellOf(d, i), txt = (v: typeof oil) => (typeof v === "string" ? v : v.text);
-    /* มือถือ: ไอคอนดู แก้ไข (S21) ย้าย ลบ ใต้รายการ (CLAUDE.md ข้อ 14 · BACKLOG ข้อ 64 · ข้อ 87 เพิ่มย้ายไปไตรมาสอื่น) */
+  const txt = (v: string | { text: string }) => (typeof v === "string" ? v : v.text);
+  /* แถวของทั้งสองแท็บ (CheckTable) — มือถือ: บรรทัดรองสรุปคอลัมน์ (CLAUDE.md ข้อ 11) + ไอคอนตามเมนู … ใต้รายการ (ข้อ 14 · ทั้งหมด ดู แก้ไข ลบ · ไตรมาส ดู แก้ไข ย้าย เอาออก) */
+  const rows: CheckRow[] = rowsOnPage.map((i) => {
+    const c = CAND[i], md = mDates(c.plate), hist = [md.ma, md.repair], lockSub = lockSubOf(i);
+    const other = otherCellOf(d, i);
     const mobileActions = carMenuItems(i).map((m) => ({ IconSwap: m.IconSwap, label: m.Text + " " + c.plate, onClick: m.act }));
-    return { key: String(i), text: c.plate, sub: lockSub + c.model, disabled: lk, mobileSub: lockSub + "น้ำมัน " + txt(oil) + " · อะไหล่อื่นๆ " + (typeof other === "string" ? other : other.text) + " · " + histText(md), mobileActions,
-      cells: [c.type, c.owner, ...hist, oil, other, { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู " + c.plate, onClick: (e) => setCarMenu({ car: i, anchor: anchorOf(e.currentTarget) }) }] }] };
+    const menu: TableValue = { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู " + c.plate, onClick: (e) => setCarMenu({ car: i, anchor: anchorOf(e.currentTarget) }) }] };
+    const base = { key: String(i), text: c.plate, sub: lockSub + c.model, disabled: lockedCar(i), mobileActions };
+    if (!q) return { ...base, mobileSub: lockSub + c.model + " · " + qPill(i)[0] + " · อะไหล่อื่นๆ " + txt(other) + " · " + histText(md), cells: [c.type, c.owner, ...hist, { pills: [qPill(i)] }, other, menu] };
+    const oil = oilCellOf(d, i);
+    return { ...base, mobileSub: lockSub + "น้ำมัน " + txt(oil) + " · อะไหล่อื่นๆ " + txt(other) + " · " + histText(md), cells: [c.type, c.owner, ...hist, oil, other, menu] };
   });
   /* กำหนดอะไหล่หลายคันครั้งเดียว (เจ้าของงาน 11 พ.ย. 2569 "อยากเพิ่มอะไหล่ครั้งเดียวในรถประเภทเดียวกัน" + "ทุกคันที่เลือกได้มั้ย คือต้องเลือกรถที่ต้องการเพิ่มอะไหล่" · BACKLOG ข้อ 64)
-     แท็บไตรมาส n: ติ๊กยานพาหนะ → "กำหนดอะไหล่ (n)" → หน้า S21 แบบหลายคัน (/car-parts/?cars=…) ค่าที่เลือกใช้กับทุกคันที่ติ๊ก · แก้รายคันภายหลังได้จากเมนู … ตามเดิม */
+     ติ๊กยานพาหนะ → "กำหนดอะไหล่ (n)" → หน้า S21 แบบหลายคัน (/car-parts/?cars=…) ค่าที่เลือกใช้กับทุกคันที่ติ๊ก · แก้รายคันภายหลังได้จากเมนู … ตามเดิม
+     13 พ.ย. 2569 (R112 · BACKLOG ข้อ 90) ได้ทั้งแท็บทั้งหมดและแท็บไตรมาส (q=0 = ทุกคันในแผน) · บันทึกแล้วกลับแท็บที่เปิดมา */
   const toBulk = () => router.push("/car-parts/?id=" + (edit ? planId(plan) : "new") + "&q=" + q + "&cars=" + ticked.map((x) => carParam(Number(x))).join(",") + (from === "detail" ? "&from=detail" : ""));
-  /* popup เพิ่มยานพาหนะเข้าไตรมาส n (BACKLOG ข้อ 87): ยานพาหนะทุกคันที่ยังไม่อยู่ในแผนนี้ (ทุกไตรมาส) · ตัวกรองภาค เขต ประเภทยานพาหนะอยู่ในตัว popup (areaOf = carArea)
-     แท็บทั้งหมด (BACKLOG ข้อ 89): popup เดียวกัน "เพิ่มยานพาหนะเข้าแผน" + เลือกไตรมาสใน popup (pickQuarter) → เข้าไตรมาสที่เลือก อยู่แท็บทั้งหมดต่อ */
+  /* popup เพิ่มยานพาหนะ (TripCarPicker + ตัวกรองภาค เขต ประเภทยานพาหนะในตัว popup · planCarModal ของ screens.js R111)
+     แท็บทั้งหมด = "เพิ่มยานพาหนะเข้าแผน" pool = ยานพาหนะที่ยังไม่อยู่ในแผนนี้ → alloc 0
+     แท็บไตรมาส n = "เพิ่มยานพาหนะเข้าไตรมาส n" pool = ยานพาหนะในแผนที่ยังไม่จัดไตรมาสเท่านั้น (unassignedCars · คันที่อยู่ไตรมาสอื่นไม่แสดง) → alloc n */
   const pickCar = (i: number) => { const c = CAND[i]; return { id: String(i), plate: c.plate, model: c.model, owner: c.owner, phone: "", ctrl: "" }; };
-  const addPool = qAdd ? UNIT_FLEET.filter((i) => d.alloc[i] == null).map(pickCar) : [];
-  const addToQ = (ids: string[], pickedQ?: number) => {
-    const to = q || pickedQ;
-    if (!to) return;
+  const addPool = !qAdd ? [] : (q ? unassignedCars(d) : UNIT_FLEET.filter((i) => d.alloc[i] == null)).map(pickCar);
+  const addCars = (ids: string[]) => {
     const alloc = { ...d.alloc };
-    ids.forEach((x) => { alloc[Number(x)] = to; });
+    ids.forEach((x) => { alloc[Number(x)] = q; });
     put({ alloc });
-    notify("เพิ่มยานพาหนะ " + ids.length + " คันเข้าไตรมาส " + to + " สำเร็จ");
+    notify(q ? "เพิ่มยานพาหนะ " + ids.length + " คันเข้าไตรมาส " + q + " สำเร็จ" : "เพิ่มยานพาหนะ " + ids.length + " คันเข้าแผนสำเร็จ");
     setQAdd(false);
   };
-  const canAdd = q > 0 ? !qLocked(q) : [1, 2, 3, 4].some((n) => !qLocked(n));
+  /* แผนที่ดำเนินการ: ไตรมาสที่เสร็จแล้วรับยานพาหนะเพิ่มไม่ได้ · แท็บทั้งหมดเพิ่มเข้าแผนได้เสมอ */
+  const canAdd = q > 0 ? !qLocked(q) : true;
 
   /* ---------- อะไหล่ในไตรมาส (รวมจากรถทีละคัน · ไม่มีปุ่มเพิ่ม/ไอคอนแถว — 5 พ.ย. 2569) ---------- */
   const qCars = q ? inQ(q) : [];
-  const qRows = q ? quarterRows(d, q) : allQuarterRows(d);   // แท็บทั้งหมด = รวมทุกไตรมาส (9 พ.ย. 2569)
+  const qRows = q ? quarterRows(d, q) : allQuarterRows(d);   // แท็บทั้งหมด = รวมทุกคันในแผน (9 พ.ย. 2569 · 13 พ.ย. รวมคันที่ยังไม่จัดไตรมาส R111)
 
   /* ---------- ออก / ตรวจและบันทึก ---------- */
   const back = from === "detail" && plan ? "/detail/?id=" + planId(plan) : "/";
   /* รีวิว 5 พ.ย. 2569 "ต้องกรอกข้อมูลที่ require ครบถึงจะ enable ปุ่ม" + 6 พ.ย. 2569 เจ้าของงาน "บังคับให้กรอกอะใหล่ทุกคัน ไปหน้าต่อไปไม่ได้" (แบบ ก หน้าเดียว) */
-  /* แผนที่ดำเนินการ: ชื่อแผน + ยานพาหนะในแผนอย่างน้อย 1 คัน + ทุกคันกำหนดอะไหล่แล้ว (ปีงบประมาณผูกกับแผนอยู่แล้ว) */
-  const complete = live ? !!d.name.trim() && cars.length > 0 && cars.every((i) => decided(d, i)) : draftComplete(d);
+  /* ชื่อแผน + ปีงบประมาณ + ยานพาหนะในแผนอย่างน้อย 1 คัน + ทุกคันจัดเข้าไตรมาสแล้ว + ทุกคันกำหนดอะไหล่แล้ว (R111 · BACKLOG ข้อ 90)
+     แผนที่ดำเนินการ: เงื่อนไขยานพาหนะชุดเดียวกัน (ปีงบประมาณผูกกับแผนอยู่แล้ว) */
+  const complete = live ? !!d.name.trim() && carsComplete(d) : draftComplete(d);
   /* ปุ่มต้นแบบ กรอกข้อมูลตัวอย่าง / ล้างค่า (แถบต้นแบบ · lib/protoForm.ts) — ล้างค่า = สร้าง: ฟอร์มว่าง · แก้ไข: ค่าของแผนที่บันทึกไว้ */
   const saved = edit ? draftFromPlan(plan, mock) : emptyDraft();
   useProtoForm({
-    /* แผนที่ดำเนินการ: ไม่เพิ่มยานพาหนะให้ (ไตรมาสที่เสร็จแล้วล็อก) · กำหนดอะไหล่ให้คันที่ยังไม่กำหนด (ไส้กรอง CAR_PICK · เก็บตัวอย่างน้ำมัน) */
+    /* แผนที่ดำเนินการ: ไม่เพิ่มยานพาหนะให้ (ไตรมาสที่เสร็จแล้วล็อก) · คันที่ยังไม่จัดไตรมาส = ไตรมาสแรกที่ยังไม่เสร็จ (R111) · กำหนดอะไหล่ให้คันที่ยังไม่กำหนด (ไส้กรอง CAR_PICK · เก็บตัวอย่างน้ำมัน) */
     fill: () => {
       if (live) {
-        const picks = { ...d.picks }, oils = { ...(d.oils ?? {}) };
+        const picks = { ...d.picks }, oils = { ...(d.oils ?? {}) }, alloc = { ...d.alloc }, open = [1, 2, 3, 4].find((n) => !qLocked(n));
+        cars.forEach((i) => { if (!alloc[i] && open) alloc[i] = open; });
         cars.filter((i) => !lockedCar(i) && !decided(d, i)).forEach((i) => { picks[i] = [...CAR_PICK]; oils[i] = 0; });
-        put({ name: d.name.trim() ? d.name : plan.name, picks, oils });
+        put({ name: d.name.trim() ? d.name : plan.name, alloc, picks, oils });
       } else setMock((s) => (edit ? { ...s, edit: fillDraft(d) } : { ...s, draft: fillDraft(d) }));
       setTicked([]);
     },
@@ -264,18 +294,17 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
     ? <PrimaryButton Text={text} LeadingIconSwap="add-24-300-round" Size={mob ? "lg" : "md"} onClick={() => setQAdd(true)} />
     : <SecondaryButton key="add" Text={text} LeadingIconSwap="add-24-300-round" Size={mob ? "lg" : "md"} State={canAdd ? "Default" : "Disabled"} onClick={() => canAdd && setQAdd(true)} />;
 
-  const carBody = !q
-    ? (!cars.length
-      ? <EmptyStateDataEmpty Text="ยังไม่มียานพาหนะในแผน" SupportingText="กดเพิ่มยานพาหนะ หรือเปิดแท็บไตรมาสแล้วกดเพิ่มยานพาหนะ" Graphic="vehicle"
-          Actions={canAdd ? addBtn("เพิ่มยานพาหนะเข้าแผน", true) : undefined} />
-      : allRows.length ? <PagedTable key={"all" + k} columns={PICK_COLS} rows={allRows} /> : <EmptyStateSearchNotFound />)
-    : shown.length
-      ? <CheckTable columns={Q_COLS} rows={rows} ticked={ticked} onTicked={setTicked}
-          Pagination={<TablePagination total={shown.length} page={pg} perPage={PER} onPage={setPage} />} />
-      : !k
-        ? <EmptyStateDataEmpty Text="ยังไม่มียานพาหนะในไตรมาสนี้" SupportingText="เลือกยานพาหนะที่ยังไม่อยู่ในแผนเข้าไตรมาสนี้ได้ทุกคัน" Graphic="vehicle"
+  /* ตารางติ๊กทั้งสองแท็บ (R111) · ไม่มีแถว: คำค้นไม่ตรง = Search not found · แท็บไตรมาสว่าง = noCarsInQ · แผนว่าง = noCarsInPlan */
+  const carBody = shown.length
+    ? <CheckTable key={"c" + q} columns={q ? Q_COLS : PICK_COLS} rows={rows} ticked={ticked} onTicked={setTicked}
+        Pagination={<TablePagination total={shown.length} page={pg} perPage={PER} onPage={setPage} />} />
+    : k
+      ? <EmptyStateSearchNotFound />
+      : q
+        ? <EmptyStateDataEmpty Text="ยังไม่มียานพาหนะในไตรมาสนี้" SupportingText="เลือกจากยานพาหนะในแผนที่ยังไม่จัดไตรมาส" Graphic="vehicle"
             Actions={canAdd ? addBtn("เพิ่มยานพาหนะเข้าไตรมาส " + q, true) : undefined} />
-        : <EmptyStateSearchNotFound />;
+        : <EmptyStateDataEmpty Text="ยังไม่มียานพาหนะในแผน" SupportingText="กดเพิ่มยานพาหนะเพื่อเลือกยานพาหนะเข้าแผน แล้วจึงจัดเข้าไตรมาส" Graphic="vehicle"
+            Actions={addBtn("เพิ่มยานพาหนะเข้าแผน", true)} />;
   const mq = move ? d.alloc[move.car] : 0;
 
   return (
@@ -305,10 +334,11 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
             <TabItem Text="ทั้งหมด" Badge={cars.length} Active={q === 0} onClick={() => { put({ q: 0 }); reset(); }} />
             {QUARTERS.map((_, i) => <TabItem key={i} Text={"ไตรมาส " + (i + 1)} Badge={inQ(i + 1).length} Active={q === i + 1} onClick={() => { put({ q: i + 1 }); reset(); }} />)}
           </Tabs>
-          <TableHeader Title={q ? "ยานพาหนะในไตรมาส " + q : "ยานพาหนะทั้งหมดในแผน"} Badge={q ? "กำหนดอะไหล่แล้ว " + qDone + "/" + inQ(q).length + " คัน" : shown.length + " คัน"} Placeholder="เลขทะเบียน, ยี่ห้อ, รุ่น" query={query}
+          {/* R112: ปุ่ม "กำหนดอะไหล่ (k)" ขึ้นเมื่อติ๊กแล้ว ทั้งแท็บทั้งหมดและแท็บไตรมาส (more: bulk ของ planForm) */}
+          <TableHeader Title={q ? "ยานพาหนะในไตรมาส " + q : "ยานพาหนะทั้งหมดในแผน"} Badge={q ? "กำหนดอะไหล่แล้ว " + qDone + "/" + inQ(q).length + " คัน" : cars.length + " คัน"} Placeholder="เลขทะเบียน, ยี่ห้อ, รุ่น" query={query}
             onQuery={(v) => { setQuery(v); setPage(1); }} FilterButton={false}
-            Actions={q ? [<SecondaryButton key="parts" Text={"กำหนดอะไหล่" + (nTicked ? " (" + nTicked + ")" : "")} Size={mob ? "lg" : "md"} State={nTicked ? "Default" : "Disabled"} onClick={() => nTicked && toBulk()} />, addBtn("เพิ่มยานพาหนะ")] : [addBtn("เพิ่มยานพาหนะ")]} />
-          {live && q > 0 && qLocked(q) && <Alert Color="Success" Text={"ไตรมาส " + q + " บำรุงรักษาเสร็จทุกคันแล้ว"} SupportingText="ดูอย่างเดียว เพิ่ม ย้าย ลบ หรือกำหนดอะไหล่ของยานพาหนะในไตรมาสนี้ไม่ได้" />}
+            Actions={[...(nTicked ? [<SecondaryButton key="parts" Text={"กำหนดอะไหล่ (" + nTicked + ")"} Size={mob ? "lg" : "md"} onClick={toBulk} />] : []), addBtn("เพิ่มยานพาหนะ")]} />
+          {live && q > 0 && qLocked(q) && <Alert Color="Success" Text={"ไตรมาส " + q + " บำรุงรักษาเสร็จทุกคันแล้ว"} SupportingText="ดูอย่างเดียว เพิ่ม ย้าย เอาออก หรือกำหนดอะไหล่ของยานพาหนะในไตรมาสนี้ไม่ได้" />}
           {carBody}
         </section>
 
@@ -334,10 +364,12 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
           })}
         </div>
       </PopupModal>
+      {/* planCarModal (R111): แท็บทั้งหมด = เข้าแผน · แท็บไตรมาส n = จัดเข้าไตรมาส n จากยานพาหนะในแผนที่ยังไม่จัดไตรมาส */}
       <TripCarPicker open={qAdd} pool={addPool} nowQ={"ไตรมาส " + q} title={q ? "เพิ่มยานพาหนะเข้าไตรมาส " + q : "เพิ่มยานพาหนะเข้าแผน"} okText={q ? "เพิ่มเข้าไตรมาส " + q : "เพิ่มเข้าแผน"}
-        sub="ยานพาหนะที่ยังไม่อยู่ในแผนนี้ เพิ่มได้ทุกคัน" areaOf={carArea} pickQuarter={!q} quarterOff={qLocked}
-        emptyText="ยานพาหนะทุกคันอยู่ในแผนแล้ว" emptySub="ไม่มียานพาหนะที่เพิ่มเข้าแผนนี้ได้"
-        onCancel={() => setQAdd(false)} onAdd={addToQ} />
+        sub={q ? "ยานพาหนะในแผนที่ยังไม่จัดไตรมาส" : "ยานพาหนะที่ยังไม่อยู่ในแผนนี้ เพิ่มได้ทุกคัน"} areaOf={carArea}
+        emptyText={!q ? "ยานพาหนะทุกคันอยู่ในแผนแล้ว" : cars.length ? "ยานพาหนะในแผนจัดเข้าไตรมาสครบแล้ว" : "ยังไม่มียานพาหนะในแผน"}
+        emptySub={q ? ADD_PLAN_FIRST : "ไม่มียานพาหนะที่เพิ่มเข้าแผนนี้ได้"}
+        onCancel={() => setQAdd(false)} onAdd={addCars} />
       <RowMenu anchor={carMenu?.anchor ?? null} items={carItems} onClose={() => setCarMenu(null)} />
       <ConfirmDialog spec={pending?.spec ?? null} onCancel={() => setPending(null)} onOk={() => { pending?.run(); setPending(null); }} />
     </>

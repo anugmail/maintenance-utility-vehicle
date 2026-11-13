@@ -161,10 +161,11 @@ export function quarterRows(a: Alloc, q: number): QuarterRow[] {
   return rows.concat([...man.values()]);
 }
 /* อะไหล่รวมทุกไตรมาส (แท็บ "ทั้งหมด" ของฟอร์มแผน · เจ้าของงาน 9 พ.ย. 2569 "หน้าอะใหล่ทั้งไตรมาส ต้องรวมมาให้ด้วย ทั้งไตรมาส")
-   = ผลรวมแถวของ quarterRows ไตรมาส 1–4 ตามรายการ (คีย์เดียวกัน) · รถทุกคันที่จัดลงไตรมาสแล้ว ไม่ขึ้นกับตัวกรอง/คำค้น · คันที่ไม่เบิกไม่รวม · อะไหล่จากคลังเรียงตาม PARTS แล้วตามด้วยรายการที่ระบุเอง */
+   = ผลรวมแถวของ quarterRows ไตรมาส 1–4 ตามรายการ (คีย์เดียวกัน) · รถทุกคันในแผน ไม่ขึ้นกับตัวกรอง/คำค้น · คันที่ไม่เบิกไม่รวม · อะไหล่จากคลังเรียงตาม PARTS แล้วตามด้วยรายการที่ระบุเอง
+   13 พ.ย. 2569 (R111 · BACKLOG ข้อ 90) รวมคันที่อยู่ในแผนแต่ยังไม่จัดไตรมาส (alloc 0) ด้วย — inQs ของ planForm แท็บทั้งหมด = ทุกคันในแผน · แผนที่บันทึกแล้วไม่มี alloc 0 */
 export function allQuarterRows(a: Alloc): QuarterRow[] {
   const m = new Map<string, QuarterRow>();
-  [1, 2, 3, 4].forEach((q) => quarterRows(a, q).forEach((r) => { const x = m.get(r.key); if (x) x.qty += r.qty; else m.set(r.key, { ...r }); }));
+  [0, 1, 2, 3, 4].forEach((q) => quarterRows(a, q).forEach((r) => { const x = m.get(r.key); if (x) x.qty += r.qty; else m.set(r.key, { ...r }); }));
   const rows = [...m.values()];
   return rows.filter((r) => r.pi != null).sort((x, y) => (x.pi ?? 0) - (y.pi ?? 0)).concat(rows.filter((r) => r.pi == null));
 }
@@ -227,14 +228,16 @@ export const SAMPLE_PARTS = (): Pick<Draft, "picks" | "oils" | "draw"> => ({ pic
 /* ฟอร์มสร้างแผนของ S21 T.1: กรอกชื่อ ปี ตัวกรองครบ จัดรถทุกคันที่ฟอร์มเห็น (UNIT_FLEET) ยังไม่เลือกอะไหล่ */
 /** ปุ่มต้นแบบ "กรอกข้อมูลตัวอย่าง" ของฟอร์มแผน (S1 S19 · lib/protoForm.ts) — ชื่อแผน ปีงบประมาณ (ว่าง = ค่าแผนตัวอย่าง)
     · ยังไม่มียานพาหนะในแผน = ยานพาหนะและไตรมาสของแผนตัวอย่าง (A_ALL) · มีแล้ว = คงเดิม (BACKLOG ข้อ 87 ยานพาหนะในแผน = alloc)
-    · คันที่ยังไม่กำหนดอะไหล่ = น้ำมันตามแผนตัวอย่าง + ไส้กรอง CAR_PICK ⇒ ผ่าน draftComplete */
+    · คันที่ยังไม่จัดไตรมาส (alloc 0 · R111 BACKLOG ข้อ 90) = ไตรมาสตามแผนตัวอย่าง (A_ALL · ไม่มี = ไตรมาส 1)
+    · คันที่ยังไม่กำหนดอะไหล่ = น้ำมันตามแผนตัวอย่าง + ไส้กรอง CAR_PICK ⇒ ผ่าน draftComplete · แท็บที่เปิดคงเดิม */
 export function fillDraft(d: Draft): Draft {
   const x: Draft = { ...d, name: d.name.trim() ? d.name : SAMPLE_NAME, year: d.year || "2570" };
   const alloc = planCars(x).length ? { ...x.alloc } : { ...A_ALL }, picks = { ...x.picks }, oils = { ...(x.oils ?? {}) };
   planCars({ alloc }).forEach((i) => {
+    if (!alloc[i]) alloc[i] = A_ALL[i] ?? 1;
     if (!decided(x, i)) { const o = oils[i] ?? A_OILS[i] ?? 0; oils[i] = o; picks[i] = oilChanges(o) ? [0, ...CAR_PICK] : [...CAR_PICK]; }
   });
-  return { ...x, alloc, picks, oils, q: x.q || 1 };
+  return { ...x, alloc, picks, oils };
 }
 export const sampleDraft = (): Draft => ({ name: SAMPLE_NAME, year: "2570", ...R2, alloc: { ...A_ALL }, picks: {}, q: 1 });
 

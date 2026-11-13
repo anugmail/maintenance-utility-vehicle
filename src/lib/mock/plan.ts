@@ -17,9 +17,9 @@ export interface Draft {
   regions: string[];                  // ภาค เขต ประเภท: ค่าของแผนเดิม (ตั้งแต่ BACKLOG ข้อ 87 ฟอร์มไม่ใช้กรองยานพาหนะแล้ว · ตัวกรองอยู่ใน popup เพิ่มยานพาหนะ)
   districts: string[];
   types: string[];
-  alloc: Record<number, number>;      // ลำดับรถใน CAND → ไตรมาส (1 คัน 1 ไตรมาส)
+  alloc: Record<number, number>;      // ลำดับรถใน CAND → ไตรมาส (1 คัน 1 ไตรมาส) · 0 = อยู่ในแผนแต่ยังไม่จัดไตรมาส (R111 · BACKLOG ข้อ 90)
   picks: Record<number, number[]>;    // ลำดับรถ → ลำดับอะไหล่ใน PARTS
-  q: number;                          // แท็บที่เปิด (0 = ทั้งหมด · 1–4 = ไตรมาส · แบบ A 5 พ.ย. 2569 · ฟอร์มสร้างใหม่เปิดไตรมาส 1 ตั้งแต่ 12 พ.ย. 2569 BACKLOG ข้อ 87)
+  q: number;                          // แท็บที่เปิด (0 = ทั้งหมด · 1–4 = ไตรมาส · แบบ A 5 พ.ย. 2569 · ฟอร์มสร้างใหม่เปิดแท็บทั้งหมด 13 พ.ย. 2569 R111 BACKLOG ข้อ 90 · 12 พ.ย. ข้อ 87 เคยเปิดไตรมาส 1)
   qty?: Record<number, Record<number, number>>;   // S21 จำนวนต่อคันที่แก้ไว้ (ไม่มี = CAR_QTY)
   manual?: Record<number, ManualPart[]>;          // S21 รายการเพิ่มเติม
   oils?: Record<number, number>;                  // S21 น้ำมันไฮดรอลิกรายคัน (OIL_PLAN_OPTS)
@@ -27,7 +27,7 @@ export interface Draft {
   draw?: Record<number, "none">;                  // S21 การเบิกอะไหล่ (6 พ.ย. 2569): "none" = ไม่เบิกอะไหล่
   editOf?: string;                    // S19 ฟอร์มแก้ไข: เลขที่ MR ของแผนที่แก้
 }
-export const emptyDraft = (): Draft => ({ name: "", year: "", regions: [], districts: [], types: [], alloc: {}, picks: {}, q: 1 });
+export const emptyDraft = (): Draft => ({ name: "", year: "", regions: [], districts: [], types: [], alloc: {}, picks: {}, q: 0 });
 export const isDirty = (d: Draft) => !!(d.name || d.year || d.regions.length || d.districts.length || d.types.length || Object.keys(d.alloc).length);
 
 /* qCell — 4 ไตรมาสยาวเกินคอลัมน์ ⇒ 2 บรรทัด */
@@ -90,10 +90,15 @@ export const inArea = (d: Pick<Draft, "regions" | "districts" | "types">, i: num
 };
 /* รถที่ฟอร์มเห็น = รถจำลองครบชุด (UNIT_FLEET = CAND · 9 พ.ย. 2569 เจ้าของงาน "ถ้าเลือกภาคแล้วต้องแสดงตามที่เลือกสิ") · ตารางแท็บทั้งหมด = ทุกคันที่ตรงภาค เขต ประเภท (ช่องว่าง = ทั้งหมด · หลายภาค = ทุกภาคที่เลือก) */
 export const carsFor = (d: Pick<Draft, "regions" | "districts" | "types">) => areaPicked(d) ? UNIT_FLEET.filter((i) => inArea(d, i)) : [];
-/* ยานพาหนะในแผน (เจ้าของงาน 12 พ.ย. 2569 "หน้าจอเลือกรถ อยากให้เป็น modal ตามรูป" · BACKLOG ข้อ 87) = ทุกคันที่อยู่ในไตรมาส (alloc)
-   เพิ่มจาก popup "เพิ่มยานพาหนะเข้าไตรมาส n" ของแท็บไตรมาส = เข้าไตรมาสนั้นทันที · ไม่มีสถานะ "ยังไม่จัด" แล้ว (เดิม BACKLOG ข้อ 86 planCars = ตัวกรอง − ลบรายคัน + เพิ่มรายคัน) */
+/* ยานพาหนะในแผน — แผน 2 ขั้น (R111 · BACKLOG ข้อ 90 · เจ้าของงาน 13 พ.ย. 2569 "เลือกรถเข้ามาในแผนก่อน แล้วหลังจากนั้นเลือกรถเข้าไตรมาส จะเงื่อนไขว่า รถที่เลือกแล้วจะไม่แสดงตอนเลือกไตรมาสอื่นได้
+   และ รถในไตรมาส อยากให้ สามารถ ย้ายไปไตรมาสอื่นได้") = ทุกคีย์ของ alloc รวมคันที่ยังไม่จัดไตรมาส (alloc 0)
+   ขั้นที่ 1 แท็บทั้งหมด "เพิ่มยานพาหนะเข้าแผน" → alloc 0 · ขั้นที่ 2 แท็บไตรมาส n "เพิ่มยานพาหนะเข้าไตรมาส n" เลือกได้เฉพาะ unassignedCars → alloc n
+   (12 พ.ย. 2569 BACKLOG ข้อ 87 เคยเพิ่มเข้าไตรมาสทันที ไม่มีสถานะยังไม่จัด · ข้อ 86 planCars = ตัวกรอง − ลบรายคัน + เพิ่มรายคัน) */
 export const planCars = (d: Pick<Draft, "alloc">) => Object.keys(d.alloc).map(Number);
-/* ลบยานพาหนะออกจากแผน (เมนู … ลบ ของแท็บไตรมาส · ไอคอนถังขยะของแท็บทั้งหมด): ออกจากไตรมาส + ล้างอะไหล่ที่กำหนดไว้ของคันนั้น ⇒ เพิ่มกลับจาก popup แล้วเริ่มกำหนดอะไหล่ใหม่ */
+/* ยานพาหนะในแผนที่ยังไม่จัดไตรมาส (alloc 0) — รายการเดียวที่ popup "เพิ่มยานพาหนะเข้าไตรมาส n" ให้เลือก (คันที่อยู่ไตรมาสอื่นไม่แสดง · planCarModal ของ screens.js) */
+export const unassignedCars = (d: Pick<Draft, "alloc">) => planCars(d).filter((i) => d.alloc[i] === 0);
+/* ลบยานพาหนะออกจากแผน (เมนู … ลบ ของแท็บทั้งหมด · R111 · PLAN_OUT_CONFIRM): ออกจากแผน + ล้างอะไหล่ที่กำหนดไว้ของคันนั้น ⇒ เพิ่มกลับจาก popup แล้วเริ่มกำหนดอะไหล่ใหม่
+   ต่างจาก "เอาออกจากไตรมาส" ของแท็บไตรมาส (alloc เป็น 0 · ยังอยู่ในแผน · อะไหล่คงอยู่) */
 type CarParts = Pick<Draft, "alloc" | "picks" | "qty" | "manual" | "oils" | "oilSpec" | "draw">;
 export const removeCar = (d: CarParts, i: number): CarParts => {
   const drop = <T,>(r: Record<number, T> | undefined) => { if (!r) return r; const x = { ...r }; delete x[i]; return x; };
@@ -103,11 +108,14 @@ export const removeCar = (d: CarParts, i: number): CarParts => {
 export const decided = (d: Pick<Draft, "picks" | "manual" | "draw">, i: number) =>
   d.draw?.[i] === "none" || (d.picks[i] || []).some((x) => x !== 0) || (d.manual?.[i] || []).length > 0;
 /* ปุ่มบันทึกและส่งอนุมัติ (complete ของ planForm · 9 พ.ย. 2569 ค่ำ เจ้าของงาน "ยังจัดอะใหล่ไม่เสร็จ ปุ่มอนุมัติต้อง disable"):
-   ชื่อแผน · ปีงบประมาณ · ยานพาหนะในแผนอย่างน้อย 1 คัน · ทุกคันในแผนกำหนดอะไหล่แล้ว (เบิกพร้อมรายการ หรือ ไม่เบิก) — ทั้งสร้างและแก้ไข
-   12 พ.ย. 2569 (BACKLOG ข้อ 87) ตัดเงื่อนไข "ยานพาหนะในตารางต้องจัดครบ" (de74711) — ทุกคันในแผนอยู่ในไตรมาสโดยปริยาย
-   ประวัติ: 6 พ.ย. ต้องจัดครบทุกคันของหน่วยงาน → 9 พ.ย. บ่าย (ff5f1f8) คันที่จัดกำหนดอะไหล่ครบพอ → 9 พ.ย. ค่ำ (de74711) ยานพาหนะในตารางต้องจัดครบด้วย → 12 พ.ย. ข้อ 87 เลือกผ่าน popup */
+   ชื่อแผน · ปีงบประมาณ · ยานพาหนะในแผนอย่างน้อย 1 คัน · ทุกคันในแผนจัดเข้าไตรมาสแล้ว (alloc > 0) · ทุกคันกำหนดอะไหล่แล้ว (เบิกพร้อมรายการ หรือ ไม่เบิก) — ทั้งสร้างและแก้ไข
+   13 พ.ย. 2569 (R111 · BACKLOG ข้อ 90) เจ้าของงาน "ต้องจัดครบก่อน และต้องระบุอะใหล่รายคันให้ครบ" ⇒ คันที่ยังไม่จัดไตรมาส (alloc 0) ส่งไม่ได้
+   ประวัติ: 6 พ.ย. ต้องจัดครบทุกคันของหน่วยงาน → 9 พ.ย. บ่าย (ff5f1f8) คันที่จัดกำหนดอะไหล่ครบพอ → 9 พ.ย. ค่ำ (de74711) ยานพาหนะในตารางต้องจัดครบด้วย → 12 พ.ย. ข้อ 87 เลือกผ่าน popup เข้าไตรมาสทันที
+     → 13 พ.ย. ข้อ 90 แผน 2 ขั้น ต้องจัดครบอีกครั้ง */
 export const fleetAllocated = (d: Pick<Draft, "alloc">) => UNIT_FLEET.filter((i) => d.alloc[i] != null).length;
-export const draftComplete = (d: Draft) => !!d.name.trim() && !!d.year && planCars(d).length > 0 && planCars(d).every((i) => decided(d, i));
+/** ยานพาหนะในแผนพร้อมส่ง (ใช้ทั้ง S1 S19 และแผนที่ดำเนินการ) — อย่างน้อย 1 คัน · ทุกคันอยู่ในไตรมาส · ทุกคันกำหนดอะไหล่แล้ว */
+export const carsComplete = (d: Pick<Draft, "alloc" | "picks" | "manual" | "draw">) => planCars(d).length > 0 && planCars(d).every((i) => d.alloc[i] > 0 && decided(d, i));
+export const draftComplete = (d: Draft) => !!d.name.trim() && !!d.year && carsComplete(d);
 /* คำค้น "เลขทะเบียน, ยี่ห้อ, รุ่น" (inQuery) */
 export const matchQuery = (i: number, q: string) => !q || (CAND[i].plate + " " + CAND[i].model).includes(q);
 /* ภาค · ประเภทรถ ของรถที่จัดลงไตรมาสแล้ว (บันทึกเป็นภาค / ประเภทรถของแผน — สรุปจากรถในแผนจริง) */

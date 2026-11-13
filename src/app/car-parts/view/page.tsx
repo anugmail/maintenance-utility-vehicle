@@ -7,7 +7,9 @@
    · Breadcrumbs บำรุงรักษาตามวาระ › สร้างแผน (แก้ไข: แก้ไขแผน MR …) › อะไหล่ของยานพาหนะ
    Content ช่องไฟ 32: กล่อง "ข้อมูลยานพาหนะ" (ทะเบียน · ประเภทยานพาหนะ (Figma 33a990c A.34) · ยี่ห้อ/รุ่น · หน่วยงานเจ้าของยานพาหนะ · ไตรมาส · น้ำมันไฮดรอลิก · เปลี่ยนน้ำมันครั้งล่าสุด · การเบิกอะไหล่)
      → Section label "อะไหล่อื่นๆ (n)" + Table CARP_PART_COLS 6 คอลัมน์ ไม่มีไอคอนท้ายแถว / Empty state ("ยานพาหนะคันนี้เลือกไม่เบิกอะไหล่" · "ยังไม่ได้กำหนดอะไหล่ของยานพาหนะคันนี้")
-   ข้อมูลชุดเดียวกับหน้าจัดการอะไหล่ (ฟอร์มที่กรอกค้าง mock.draft / mock.edit) · ดูอย่างเดียว ไม่มีปุ่มท้ายหน้า · มือถือ: Mobile table · ปุ่มแก้ไขใต้หัวข้อ */
+   ข้อมูลชุดเดียวกับหน้าจัดการอะไหล่ (ฟอร์มที่กรอกค้าง mock.draft / mock.edit) · ดูอย่างเดียว ไม่มีปุ่มท้ายหน้า · มือถือ: Mobile table · ปุ่มแก้ไขใต้หัวข้อ
+   แผน 2 ขั้น (R111 · BACKLOG ข้อ 90): เปิดได้ทั้งจากแท็บทั้งหมดและแท็บไตรมาส · ยานพาหนะที่อยู่ในแผนแต่ยังไม่จัดไตรมาส ช่องไตรมาส = "ยังไม่จัดไตรมาส"
+     ปุ่มแก้ไขส่ง q ของแท็บที่เปิดมาต่อ ⇒ บันทึกในหน้าจัดการอะไหล่แล้วกลับแท็บเดิม */
 import { PagedTable } from "@/app/quarter/_shared/ui";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
@@ -41,7 +43,7 @@ function CarPartsView() {
   const from = sp.get("from");
   const formHref = id === "new" ? "/new/" : "/edit/?id=" + id + (from ? "&from=" + from : "");
   const missing = !d || car < 0 || d.alloc[car] == null;
-  useEffect(() => { if (ok && missing) router.replace(formHref); }, [ok, missing, formHref, router]);   // ไม่มีฟอร์มค้าง / ยานพาหนะไม่อยู่ในไตรมาสแล้ว → กลับฟอร์ม
+  useEffect(() => { if (ok && missing) router.replace(formHref); }, [ok, missing, formHref, router]);   // ไม่มีฟอร์มค้าง / ยานพาหนะไม่อยู่ในแผนแล้ว → กลับฟอร์ม
   if (!ok || !d || missing) return null;
   if (denied) return null;
 
@@ -51,13 +53,13 @@ function CarPartsView() {
   const k = oilChoice(d, car), oc = oilCellOf(d, car);
   const oil = typeof oc === "string" ? oc : k ? oc.text + " · " + oc.sub : oc.text;
   const draw = none ? NO_DRAW : otherParts(d, car).length ? "เบิกอะไหล่" : TODO_NONE;
-  const kv: [string, string][] = [["ทะเบียน", c.plate], ["ประเภทยานพาหนะ", typeOf(c.model)], ["ยี่ห้อ/รุ่น", c.model], ["หน่วยงานเจ้าของยานพาหนะ", c.owner], ["ไตรมาส", "ไตรมาส " + q],
+  const kv: [string, string][] = [["ทะเบียน", c.plate], ["ประเภทยานพาหนะ", typeOf(c.model)], ["ยี่ห้อ/รุ่น", c.model], ["หน่วยงานเจ้าของยานพาหนะ", c.owner], ["ไตรมาส", q ? "ไตรมาส " + q : "ยังไม่จัดไตรมาส"],
     ["น้ำมันไฮดรอลิก", oil], ["เปลี่ยนน้ำมันครั้งล่าสุด", LAST_OIL[car]], ["การเบิกอะไหล่", draw]];
   const rows: TableValue[][] = none ? [] : [
     ...(d.picks[car] || []).filter((x) => x !== 0).map((x) => [PARTS[x].name, PART_BM[x][0], PART_BM[x][1], PARTS[x].code, String(carQty(d, car, x)), PARTS[x].unit]),
     ...(d.manual?.[car] ?? []).map((m) => [m.name, m.brand || "-", m.model || "-", m.code || "-", String(m.qty), m.unit || "-"]),
   ];
-  const editHref = "/car-parts/?id=" + id + "&q=" + q + "&car=" + sp.get("car") + (from ? "&from=" + from : "");
+  const editHref = "/car-parts/?id=" + id + "&q=" + (sp.get("q") ?? q) + "&car=" + sp.get("car") + (from ? "&from=" + from : "");   // แท็บที่เปิดมา (0 = ทั้งหมด)
 
   return (
     <>
