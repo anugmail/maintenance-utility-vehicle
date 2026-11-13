@@ -6,7 +6,7 @@
      · สเปก userflow/figma-ref/vmsplus-dashboard-2569-11-12/SPEC-maintenance-dashboards.md · CLAUDE.md ข้อ 18 · ชิ้นกราฟ components/dashboard/ · COMPOSED.md หัวข้อ "แดชบอร์ดแบบ VMS+")
    โครง: Page header "อะไหล่ของแผนที่อนุมัติแล้ว" (Breadcrumbs บำรุงรักษาตามวาระ · คงเดิม + บรรทัดอธิบาย + ป้ายข้อมูล ณ) → เรื่องที่ควรดู
      → แผงตัวกรองพับได้ = ช่องเดิม ปีงบประมาณ · หน่วยงานผู้ขอเบิก (กบค. เท่านั้น) · เขต · แผน (เลือกแล้วใช้ทันที) + ชิป (รวมไตรมาส/อะไหล่จากการคลิกกราฟ) → การ์ดตัวเลข 6 ใบ
-     → กราฟ (อะไหล่รายไตรมาส 3 ช่อง · อะไหล่ที่ใช้มากที่สุด · ตามหน่วยงานผู้ขอเบิก · ความคืบหน้าของแผน) คลิกแท่ง/แถว/ชิ้น = เพิ่ม/เอาตัวกรองนั้นออกทั้งหน้า
+     → กราฟ (ยานพาหนะในแผนรายไตรมาส · อะไหล่ที่ใช้มากที่สุด · ตามหน่วยงานผู้ขอเบิก / ยานพาหนะตามแผน · ความคืบหน้าของแผน · 13 พ.ย. 2569 ไฟล์ 34 ข้อ 10 ตาม Figma) คลิกแท่ง/แถว/ชิ้น = เพิ่ม/เอาตัวกรองนั้นออกทั้งหน้า
      → ตาราง: Tabs 3 แท็บเดิม (รวมตามรายการ · แยกรายคัน · ความคืบหน้าของแผน + จำนวน · ย้ายมาอยู่ท้ายหน้า) → Table header (ค้นหาตามแท็บ · ตัวกรอง = กางแผง · ส่งออก)
        → Table (ทุกคอลัมน์เรียงได้) + pagination / Empty state/Search not found + ล้างตัวกรอง → หมายเหตุแหล่งข้อมูล
    ส่งออก: popup "ส่งออกรายงาน" (Radio text card รูปแบบไฟล์ PDF / Excel · ข้อมูลที่ส่งออก ตามตัวกรองที่ใช้อยู่ / ทั้งหมด) → toast "ส่งออกไฟล์สำเร็จ" (ไฟล์: _lib/exportFile.ts)
@@ -38,11 +38,10 @@ import type { TableValue } from "@/components/vms/Table";
 import { TableHeader } from "@/components/vms/TableHeader";
 import { MENU_HOME, go, tripsHref } from "@/app/quarter/_shared/ui";
 import { longDate } from "@/app/vehicles/maintenance/dash";
-import { cx } from "@/lib/cx";
 import { PARTS, PLAN_CREATOR, YEARS } from "@/lib/mock/data";
 import { MA_TODAY } from "@/lib/mock/maintenance";
 import {
-  DASH_AGG, DASH_CARS, DASH_CAR_COLS, DASH_DISTRICTS, DASH_HINT, DASH_PLANS, DASH_PROG, DASH_PROG_COLS, DASH_TABS, DASH_TITLE, DASH_UNITS, DASH_YEAR,
+  DASH_AGG, DASH_CARS, DASH_CAR_COLS, DASH_DISTRICTS, DASH_HINT, DASH_NOPARTS, DASH_PLANS, DASH_PROG, DASH_PROG_COLS, DASH_TABS, DASH_TITLE, DASH_UNITS, DASH_YEAR,
   EXPORT_ALL_SUB, EXPORT_CARDS, NO_FILTER, QPART_COLS, QST, aggRows, carRows, dashMine, dashPlanOf, planMatch, progRows, sortAll,
   type AggRow, type CarRow, type DashFilter, type ProgRow,
 } from "@/lib/mock/partsDash";
@@ -73,6 +72,9 @@ const pickCar = (r: CarRow, k: Pick) => (!k.qs.length || k.qs.includes(r.q)) && 
 const pickProg = (r: ProgRow, k: Pick) => !k.qs.length || k.qs.includes(r[1]);
 const pickAgg = (r: AggRow, k: Pick) => !k.parts.length || k.parts.includes(r[0]);
 
+/* เรื่องที่ควรดู "ยานพาหนะในแผนที่ไม่เบิกอะไหล่" กดแล้ว = ชิปนี้ · แท็บแยกรายคันแสดงคันที่ไม่เบิก (แถวแบบ partsDash o.alert noparts) · ยอดอะไหล่เป็น 0 */
+const NP_KEY = "ไม่เบิกอะไหล่";
+const npRow = (r: { plate: string; mr: string; q: number }): TableValue[] => [r.plate, { text: r.mr, sub: dashPlanOf(r.mr)?.unit }, "ไตรมาส " + r.q, NP_KEY, "-", "-", "0", "-"];
 /* ชิปตัวกรอง = ค่าที่เลือก (ปีงบประมาณ · หน่วยงาน · เขต · เลขที่ MR) + ไตรมาส n + ชื่ออะไหล่ */
 const chipsOf = (f: DashFilter, k: Pick) => [...(f.year ? [f.year] : []), ...f.units, ...f.districts, ...f.plans, ...k.qs.map((q) => "ไตรมาส " + q), ...k.parts];
 type Multi = "units" | "districts" | "plans";
@@ -106,7 +108,7 @@ function PartsDash() {
   const scope = UNIT_ROLES[role];   // หน่วยงาน = แผนของตัวเองเท่านั้น
   const eff = (f: DashFilter): DashFilter => (scope ? { ...f, units: [scope] } : f);
   const rowsOf = (t: number, q = query, f = filter, k = pick): TableValue[][] =>
-    t === 0 ? aggRows(q, eff(f)).filter((r) => pickAgg(r, k)) : t === 1 ? carRows(q, eff(f)).filter((r) => pickCar(r, k)).map(carRow) : progRows(q, eff(f)).filter((r) => pickProg(r, k)).map(progRow);
+    t === 0 ? aggRows(q, eff(f)).filter((r) => pickAgg(r, k)) : t === 1 ? (k.parts.includes(NP_KEY) ? DASH_NOPARTS.filter((r) => planMatch(dashPlanOf(r.mr), eff(f)) && (!q.trim() || r.plate.includes(q.trim()))).map(npRow) : carRows(q, eff(f)).filter((r) => pickCar(r, k)).map(carRow)) : progRows(q, eff(f)).filter((r) => pickProg(r, k)).map(progRow);
   const rows = sortRows(rowsOf(tab), sort);
   const allRows = (t: number): TableValue[][] => (scope ? rowsOf(t, "", NO_FILTER, NO_PICK) : t === 0 ? DASH_AGG : t === 1 ? DASH_CARS.map(carRow) : DASH_PROG.map(progRow));
   const allN = scope ? [0, 1, 2].map((t) => allRows(t).length) : ALL_N;   // หน่วยงาน = นับเฉพาะแผนของตัวเอง
@@ -132,7 +134,6 @@ function PartsDash() {
   const f = eff(filter);
   const plans = DASH_PLANS.filter((p) => planMatch(p, f));
   const progBase = progRows("", f), prog = progBase.filter((r) => pickProg(r, pick));
-  const carBase = carRows("", f).filter((r) => pickCar(r, { qs: [], parts: pick.parts }));   // ไม่กรองไตรมาส (แท่งรายไตรมาสแสดงครบ 4 ไตรมาส แท่งที่เลือกเด่น)
   const agg = aggRows("", f).filter((r) => pickAgg(r, pick));
   const unitSum = (u: string) => sum(agg.filter((r) => r[4] === u).map((r) => Number(r[3])));
 
@@ -142,11 +143,12 @@ function PartsDash() {
   const mine = DASH_PROG.filter((r) => dashMine(scope)(r[0]));
   const current = [...new Set(mine.map((r) => r[0]))].map((mr) => mine.filter((r) => r[0] === mr && r[5] !== "done" && r[4] > 0).sort((a, b) => a[1] - b[1])[0]).filter((r): r is ProgRow => !!r);
   const noTrip = current.filter((r) => r[2] === 0);
-  const late = mine.filter((r) => r[5] !== "done" && mine.some((x) => x[0] === r[0] && x[1] > r[1] && x[5] !== "todo"));
+  const noParts = DASH_NOPARTS.filter((r) => dashMine(scope)(r.mr));
   const focus = (rs: ProgRow[]) => () => { putFilter({ ...NO_FILTER, plans: [...new Set(rs.map((r) => r[0]))] }); putPick({ qs: [...new Set(rs.map((r) => r[1]))], parts: [] }); pickTab(2); };
   const alerts: DashAlert[] = [
-    ...(noTrip.length ? [{ key: "notrip", tone: "warning" as const, title: "ไตรมาสปัจจุบันที่ยังไม่มีแผนเดินทาง " + noTrip.length + " ไตรมาส", text: noTrip.map((r) => r[0] + " ไตรมาส " + r[1]).join(" · ") + " — สร้างแผนเดินทางก่อนเริ่มบำรุงรักษา", onClick: focus(noTrip) }] : []),
-    ...(late.length ? [{ key: "late", tone: "warning" as const, title: "ไตรมาสที่บำรุงรักษาช้ากว่ากำหนด " + late.length + " ไตรมาส", text: "ยังไม่เสร็จแต่ไตรมาสถัดไปของแผนเริ่มแล้ว", onClick: focus(late) }] : []),
+    ...(noTrip.length ? [{ key: "notrip", tone: "warning" as const, title: "ไตรมาสปัจจุบันที่ยังไม่มีแผนเดินทาง " + noTrip.length + " ไตรมาส", text: noTrip.map((r) => r[0] + " ไตรมาส " + r[1]).join(" · ") + " — ยานพาหนะในไตรมาสยังไม่ได้จัดเข้าแผนเดินทาง", onClick: focus(noTrip) }] : []),
+    /* ไฟล์ 34 ข้อ 10 (เจ้าของงานเลือก ก): ตาม Figma partsDash — เอา "ไตรมาสที่บำรุงรักษาช้ากว่ากำหนด" ออก (ข้อมูลเดิมคำนวณไม่ได้) · เพิ่ม "ยานพาหนะในแผนที่ไม่เบิกอะไหล่" (Info · กดแล้วแท็บแยกรายคันแสดงคันนั้น แบบ C.17) */
+    ...(noParts.length ? [{ key: "noparts", tone: "info" as const, title: "ยานพาหนะในแผนที่ไม่เบิกอะไหล่ " + noParts.length + " คัน", text: noParts.map((r) => r.plate).join(" · ") + " ในแผน " + noParts[0].mr + " ไม่มีอะไหล่และไม่เปลี่ยนน้ำมันไฮดรอลิก — ตรวจว่าตั้งใจหรือยังจัดอะไหล่ไม่ครบ", onClick: () => { putFilter({ ...NO_FILTER, plans: [noParts[0].mr] }); putPick({ qs: [], parts: [NP_KEY] }); pickTab(1); } }] : []),
   ];
 
   /* ---------- การ์ดตัวเลข ---------- */
@@ -164,14 +166,9 @@ function PartsDash() {
 
   /* ---------- กราฟ ---------- */
   const qActive = (q: number) => pick.qs.includes(q);
-  const partQ = (group: string) => QS.map((q) => ({ key: String(q), label: "ไตรมาส " + q, values: [sum(carBase.filter((r) => r.q === q && PARTS[r.part].group === group).map((r) => Number(r.qty)))], active: qActive(q) }));
   const carQ = QS.map((q) => { const rs = progBase.filter((r) => r[1] === q); return { key: String(q), label: "ไตรมาส " + q, values: [sum(rs.map((r) => r[3])), sum(rs.map((r) => r[4] - r[3]))], active: qActive(q) }; });
   const onQ = (k: string) => putPick({ ...pick, qs: flipIn(pick.qs, Number(k)).sort() });
-  const minis: { title: string; unit: string; hue: Hue; groups: typeof carQ; series: { key: string; label: string; hue: Hue }[] }[] = [
-    { title: "ไส้กรอง", unit: "ชิ้น", hue: "blue", groups: partQ("ไส้กรอง"), series: [{ key: "f", label: "ไส้กรอง", hue: "blue" }] },
-    { title: "น้ำมันไฮดรอลิก", unit: "ลิตร", hue: "purple", groups: partQ("น้ำมัน"), series: [{ key: "o", label: "น้ำมันไฮดรอลิก", hue: "purple" }] },
-    { title: "ยานพาหนะในไตรมาส", unit: "คัน", hue: "green", groups: carQ, series: [{ key: "d", label: "บำรุงรักษาแล้ว", hue: "green" }, { key: "r", label: "ยังไม่บำรุงรักษา", hue: "gray" }] },
-  ];
+  const QUARTER_SERIES: { key: string; label: string; hue: Hue }[] = [{ key: "d", label: "บำรุงรักษาแล้ว", hue: "green" }, { key: "r", label: "ยังไม่บำรุงรักษา", hue: "gray" }];
   const top = [...agg].sort((a, b) => Number(b[3]) - Number(a[3])).map((r) => {
     const same = agg.filter((x) => x[4] === r[4]).map((x) => Number(x[3]));
     return { key: r[0], label: r[0], value: Number(r[3]), unit: r[4], sub: "รหัส " + r[1] + " · " + r[2] + " · % ของยอด" + r[4] + "รวม", hue: GROUP_HUE[r[2]] ?? "gray",
@@ -230,21 +227,10 @@ function PartsDash() {
         </div>
         <KpiRow items={kpis} />
         <ChartGrid>
-          <ChartCard className="lg:col-span-3" icon="bar_chart-24-300-round" title="อะไหล่รายไตรมาส" sub="อะไหล่และน้ำมันไฮดรอลิกที่ต้องใช้ และยานพาหนะในแต่ละไตรมาส"
-            source="อะไหล่จากอะไหล่รายคันของแผน (แท็บแยกรายคัน) · ยานพาหนะจากความคืบหน้าของแผน">
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-              {minis.map((m) => (
-                <div key={m.title} data-mini={m.title} className="flex min-w-0 flex-col gap-2 rounded-lg border border-gray-200 p-4">
-                  <div className="flex items-start justify-between gap-2">
-                    <span className="flex items-center gap-2 text-sm font-semibold text-gray-800">
-                      <span aria-hidden="true" className={cx("size-2.5 rounded-full", HUE[m.hue].bg)} />{m.title} <span className="font-normal text-gray-500">({m.unit})</span>
-                    </span>
-                    <span className="text-lg font-bold text-gray-900">{nf(sum(m.groups.map((g) => sum(g.values))))}</span>
-                  </div>
-                  <ColumnChart compact height="h-36" unit={m.unit} series={m.series} groups={m.groups} onPick={onQ} />
-                </div>
-              ))}
-            </div>
+          {/* ไฟล์ 34 ข้อ 10: กราฟ "ยานพาหนะในแผนรายไตรมาส" ตาม Figma partsDash (เดิม "อะไหล่รายไตรมาส" 3 ช่อง ซึ่ง Figma ตัดเพราะข้อมูลอะไหล่เป็นยอดทั้งปี) · กดแท่ง = กรองไตรมาสทั้งหน้า */}
+          <ChartCard className="lg:col-span-3" icon="calendar_month-24-300-round" title="ยานพาหนะในแผนรายไตรมาส" sub="บำรุงรักษาแล้วเทียบยังไม่บำรุงรักษา แยกตามไตรมาส"
+            source={"ข้อมูลจากแผนที่อนุมัติแล้ว ปีงบประมาณ " + (filter.year || DASH_YEAR)}>
+            <ColumnChart unit="คัน" series={QUARTER_SERIES} groups={carQ} onPick={onQ} />
           </ChartCard>
           <ChartCard className="lg:col-span-2" icon="leaderboard-24-300-round" hue="purple" title="อะไหล่ที่ใช้มากที่สุด" sub={"10 อันดับแรกตามจำนวน · แถบเทียบในหน่วยเดียวกัน · ทั้งหมด " + top.length + " รายการ"}
             source="ยอดรวมตามรายการของแผนที่ตรงตัวกรอง (ไม่แยกไตรมาส)">

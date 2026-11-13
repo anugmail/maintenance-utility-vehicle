@@ -36,13 +36,15 @@ export const DASH_PLANS: DashPlan[] = [
 ];
 const planOf = (mr: string) => DASH_PLANS.find((p) => p.mr === mr);
 
-/* รวมตามรายการ — ยอดรวมทุกแผน (ค่าสมมติ · คันที่ไม่เบิกอะไหล่ไม่รวม) + รายการที่ระบุเอง (MANUAL ของ screens.js) */
+/* รวมตามรายการ — 13 พ.ย. 2569 ไฟล์ 34 ข้อ 11 (เจ้าของงานเลือก ก): แยกยอดตามแผน หน่วยงานเห็นยอดเฉพาะแผนของตัวเอง · กบค. = ผลรวมทุกแผน (ยอดเดิม 540 60 60 54 16 + 4)
+   ค่าสมมติแบ่งตามจำนวนยานพาหนะของแผน (10 · 12 · 8 คัน) · รายการที่ระบุเอง (MANUAL ของ screens.js) อยู่ในแผน MRZ7000004 · คันที่ไม่เบิกอะไหล่ไม่รวม */
 export type AggRow = [string, string, string, string, string];
-const AGG_QTY = [540, 60, 60, 54, 16];
-export const DASH_AGG: AggRow[] = [
-  ...PARTS.map((p, i): AggRow => [p.name, p.code, p.group, String(AGG_QTY[i]), p.unit]),
-  ["ไส้กรองอากาศขนาดเล็ก", "-", "เพิ่มเอง", "4", "ชิ้น"],
-];
+const MANUAL_ROW = { name: "ไส้กรองอากาศขนาดเล็ก", code: "-", group: "เพิ่มเอง", unit: "ชิ้น" };
+const AGG_BY_PLAN: Record<string, number[]> = {   // ลำดับ = PARTS ทั้ง 5 รายการ + รายการที่ระบุเอง
+  MRZ7000004: [180, 20, 20, 18, 6, 4], MRZ7000001: [216, 24, 24, 22, 6, 0], MRZ7000002: [144, 16, 16, 14, 4, 0],
+};
+const aggOf = (mrs: string[]): AggRow[] => [...PARTS, MANUAL_ROW].map((p, i): AggRow => [p.name, p.code, p.group, String(mrs.reduce((a, mr) => a + (AGG_BY_PLAN[mr]?.[i] ?? 0), 0)), p.unit]).filter((r) => Number(r[3]) > 0);
+export const DASH_AGG: AggRow[] = aggOf(Object.keys(AGG_BY_PLAN));
 
 /* แยกรายคัน — รถ 3 คันแรกของแผน MRZ7000004 (CAND 0–2 · ไตรมาส A_ALL = 1 · น้ำมันไฮดรอลิกเมื่อ A_OILS เปลี่ยนน้ำมัน (1, 2) + ไส้กรอง CAR_PICK)
    จำนวน: น้ำมัน OIL_SPEC.litre · ไส้กรอง CAR_QTY · จอ Figma บอกยอดทั้งหมด 214 รายการ (ค่าสมมติ) แต่มีแถวตัวอย่าง 11 แถว ⇒ เว็บนับจากแถวจริง (BACKLOG ข้อ 22 หมวด ค.) */
@@ -91,8 +93,12 @@ const has = (q: string, ...s: string[]) => !q || s.some((x) => x.toLowerCase().i
 /* แถวที่ตรงคำค้นและตัวกรองของแต่ละแท็บ — รวมตามรายการเป็นยอดรวมชุดเดียว ⇒ แสดงเมื่อมีแผนที่ตรงตัวกรองอย่างน้อย 1 แผน (BACKLOG ข้อ 22 หมวด ค.) */
 export const aggRows = (query: string, f: DashFilter) => {
   const q = query.trim().toLowerCase();
-  return DASH_PLANS.some((p) => planMatch(p, f)) ? DASH_AGG.filter((r) => has(q, r[0], r[1])) : [];
+  return aggOf(DASH_PLANS.filter((p) => planMatch(p, f)).map((p) => p.mr)).filter((r) => has(q, r[0], r[1]));   // ยอดของแผนที่ตรงตัวกรอง (ข้อ 11)
 };
+/* ยานพาหนะในแผนที่ไม่เบิกอะไหล่ (เรื่องที่ควรดู · DASH_NOPARTS ของ screens.js): ไม่มีอะไหล่และไม่เปลี่ยนน้ำมันไฮดรอลิก (ไฟล์ 34 ข้อ 10 · ตาม Figma partsDash) */
+const SAMPLE = samplePlan("approved");
+export const DASH_NOPARTS: { plate: string; mr: string; q: number }[] = Object.keys(SAMPLE.alloc ?? {}).map(Number)
+  .filter((i) => !(SAMPLE.picks?.[i] ?? []).length && !SAMPLE.oils?.[i]).map((i) => ({ plate: CAND[i].plate, mr: SAMPLE.mr, q: SAMPLE.alloc?.[i] ?? 0 }));
 export const carRows = (query: string, f: DashFilter) => {
   const q = query.trim().toLowerCase();
   return DASH_CARS.filter((r) => planMatch(planOf(r.mr), { ...f, districts: [] }) && (!f.districts.length || f.districts.includes(r.district))
