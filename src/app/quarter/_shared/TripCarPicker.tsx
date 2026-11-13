@@ -14,8 +14,8 @@
      ใช้ทุก popup ที่เรียก TripCarPicker: หน้าไตรมาส S6 · ฟอร์มแผน S1 S19 (R75) · ฟอร์มแผนเดินทาง S6 S9
    ตัวกรองในตัว popup (areaOf · เฉพาะฟอร์มแผน S1 S19 · เจ้าของงาน 12 พ.ย. 2569 "หน้าจอเลือกรถ อยากให้เป็น modal ตามรูป แก้ใน flow ด้วย" · BACKLOG ข้อ 87):
      แบบ vehPickerModal ของ Overhaul (figma-export/overhaul2-plugin/code.js) — Table header (ช่องค้นหา + ปุ่ม "ตัวกรอง" + Pill จำนวน + ชิปตัวกรองกดเอาออกได้)
-     กดตัวกรอง (desktop) = Filter panel กางใต้แถวค้นหา: Input dropdown with badges (Optional) ×3 แถวเดียว (ภาค · เขต · ประเภทยานพาหนะ · หลายค่า · placeholder "ทั้งหมด")
-       + แถวปุ่ม Tertiary brand button "ล้างตัวกรอง" ซ้าย · Secondary "ยกเลิก" + Primary "ตกลง" ขวา · ช่องไฟ 20 · ตกลง = แผงหุบ ชิปขึ้นใต้แถวค้นหา
+     desktop = Filter panel กางใต้แถวค้นหาตั้งแต่เปิด popup (13 พ.ย. 2569) กดปุ่มตัวกรองเพื่อหุบ/กาง: Input dropdown with badges (Optional) ×3 แถวเดียว (ภาค · เขต · ประเภทยานพาหนะ · หลายค่า · placeholder "ทั้งหมด")
+       + แถวปุ่ม Tertiary brand button "ล้างตัวกรอง" ซ้าย · Secondary "ยกเลิก" + Primary "ตกลง" ขวา · ช่องไฟ 20 · ตกลง = ใช้ค่า แผงยังกาง · ยกเลิก = หุบ ชิปขึ้นใต้แถวค้นหา
      มือถือ = แผงตัวกรอง bottom sheet ของเดิม (FilterShell) ซ้อนบน bottom sheet ของ popup · ค่าในแผงเป็นค่าร่าง กดตกลงจึงใช้ (แบบแผงตัวกรอง S1 เดิม · R69 ช่องเป็นอิสระต่อกัน · เขต = เขตของภาคที่เลือก)
      ไม่มีคันตรงคำค้น/ตัวกรอง = Empty state/Search not found "ไม่พบยานพาหนะ" · ไม่ส่ง areaOf = แบบเดิม (ช่องค้นหาอย่างเดียว) ทุกหน้าอื่นไม่เปลี่ยน
    ดูบันทึกใน figma-spec/COMPOSED.md */
@@ -64,7 +64,10 @@ function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่
   const [ticked, setTicked] = useState<string[]>([]);
   /* ตัวกรองในตัว popup (areaOf) — area = ที่ใช้อยู่ · fd = ค่าร่างในแผง · dd = ช่อง dropdown ที่เปิด */
   const [area, setArea] = useState<Area>(NO_AREA);
-  const [panel, setPanel] = useState(false);
+  /* 13 พ.ย. 2569 เจ้าของงาน (ภาพ modal Overhaul) "ใน modal ต้องมี filter แบบ ที่ตอนเลือก filter ของเดิม" + เลือก "ช่องเดิม S1 + กางไว้ตั้งแต่เปิด"
+     ⇒ desktop แผงตัวกรองกางตั้งแต่เปิด popup (panel) · ตกลง = ใช้ค่าแล้วแผงยังกางอยู่ · ยกเลิก/กดปุ่มตัวกรอง = คืนค่าร่างแล้วหุบ · มือถือ = bottom sheet เปิดเมื่อกดปุ่มตัวกรอง (sheet) */
+  const [panel, setPanel] = useState(!!areaOf);
+  const [sheet, setSheet] = useState(false);
   const [fd, setFd] = useState<Area>(NO_AREA);
   const [dd, setDd] = useState("");
   const mDates = useMachineDates();
@@ -81,9 +84,9 @@ function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่
     setArea(r ? { ...area, regions: area.regions.filter((y) => y !== r) } : area.districts.includes(x) ? { ...area, districts: area.districts.filter((y) => y !== x) } : { ...area, types: area.types.filter((y) => y !== x) });
     setPage(1);
   };
-  const openPanel = () => { if (panel) return closePanel(); setFd(area); setDd(""); setPanel(true); };
-  const closePanel = () => { setDd(""); setPanel(false); };
-  const applyPanel = () => { setArea(fd); setPage(1); closePanel(); };
+  const openPanel = () => { if (!mob && panel) return closePanel(); setFd(area); setDd(""); if (mob) setSheet(true); else setPanel(true); };
+  const closePanel = () => { setDd(""); setFd(area); if (mob) setSheet(false); else setPanel(false); };
+  const applyPanel = () => { setArea(fd); setPage(1); setDd(""); if (mob) setSheet(false); };   // desktop แผงยังกางอยู่หลังตกลง
   const flip = (key: keyof Area, v: string) => setFd((f) => ({ ...f, [key]: f[key].includes(v) ? f[key].filter((x) => x !== v) : [...f[key], v] }));
   const drop = (key: keyof Area) => (v: string) => setFd((f) => ({ ...f, [key]: f[key].filter((x) => x !== v) }));
   const ddOpen = (key: string) => (v: boolean) => setDd(v ? key : dd === key ? "" : dd);
@@ -138,7 +141,7 @@ function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่
         onCancel={onCancel} onOk={() => onAdd(pool.filter((c) => ticked.includes(c.id) && !taken[c.id]).map((c) => c.id))}>
         {body}
       </PopupModal>
-      {areaOf && mob && <FilterShell open={panel} onClose={closePanel} onClear={() => setFd(NO_AREA)} onApply={applyPanel}>{dropdowns}</FilterShell>}
+      {areaOf && mob && <FilterShell open={sheet} onClose={closePanel} onClear={() => setFd(NO_AREA)} onApply={applyPanel}>{dropdowns}</FilterShell>}
     </>
   );
 }
