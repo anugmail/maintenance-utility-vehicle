@@ -244,7 +244,7 @@ function CarParts() {
           {bulkModels > 1 && <Alert Color="Warning" Text="ยานพาหนะที่เลือกมีหลายรุ่น" SupportingText="น้ำมันและอะไหล่ที่กำหนดในหน้านี้จะใช้กับทุกคันที่เลือก ตรวจสอบว่าใช้ได้กับทุกรุ่น" />}
           {bulkSet > 0 && <Alert Color="Warning" Text={"ยานพาหนะ " + bulkSet + " คันกำหนดอะไหล่ไว้แล้ว"} SupportingText="บันทึกแล้วน้ำมันและอะไหล่ของทุกคันที่เลือกจะเป็นชุดนี้แทนของเดิม" />}
         </> : half(
-          <InputDropdown LabelText="ยานพาหนะ" Text={open === "car" ? query : CAND[car].plate} Placeholder="เลือกยานพาหนะในไตรมาสนี้" LeadingIconSwap="search-24-300-round"
+          <InputDropdown LabelText="ยานพาหนะ" Text={open === "car" ? query : CAND[car].plate} Placeholder={q ? "เลือกยานพาหนะในไตรมาสนี้" : "เลือกยานพาหนะในแผน"} LeadingIconSwap="search-24-300-round"
             onQuery={setQuery} open={open === "car"} onOpenChange={(v) => { setOpen(v ? "car" : ""); setQuery(""); }}>
             <DropdownList>{carList.map((i) => <DropdownListItem key={i} Text={CAND[i].plate} State={i === car ? "Selected" : "Default"} onClick={() => goCar(i)} />)}</DropdownList>
           </InputDropdown>,

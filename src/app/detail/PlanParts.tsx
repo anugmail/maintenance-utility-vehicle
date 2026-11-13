@@ -36,7 +36,7 @@ export function PlanParts({ plan }: { plan: Plan }) {
         {QUARTERS.map((t, i) => <TabItem key={t} Text={t} Active={q === i + 1} onClick={() => setQ(i + 1)} />)}
       </Tabs>
       {!rows.length
-        ? <EmptyStateDataEmpty Text="ยังไม่มีรายการอะไหล่" SupportingText={q ? "ไตรมาสนี้ไม่มีอะไหล่ที่ต้องเบิก" : "จัดการอะไหล่ทีละคันจากปุ่ม … ที่แถวยานพาหนะในแท็บไตรมาส รายการจะรวมมาที่นี่"} />
+        ? <EmptyStateDataEmpty Text="ยังไม่มีรายการอะไหล่" SupportingText={q ? "ไตรมาสนี้ไม่มีอะไหล่ที่ต้องเบิก" : "แผนนี้ไม่มีอะไหล่ที่ต้องเบิก"} />
         : <PagedTable key={q} columns={QPART_COLS} rows={rows} rowKey={(_, i) => shown[i].key} />}{/* เกิน 10 รายการ = หน้าละ 10 + Table pagination (tblShort f59001e) */}
     </section>
   );

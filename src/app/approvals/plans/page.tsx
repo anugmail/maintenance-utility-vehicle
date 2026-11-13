@@ -31,7 +31,8 @@ const COLS: TableColumn[] = [
   { head: "จำนวนยานพาหนะ", width: 100 }, { head: "วันที่ส่ง", width: 120, SortIcon: "Down" }, { head: "สถานะ", width: 150, Style: "Badge" }, { head: "", width: 60, Style: "Action icons" },
 ];
 /* REVIEW_TABS — [ข้อความ, สถานะแผนในแท็บ] · ตัวเลขเฉพาะแท็บรออนุมัติ */
-const TABS: [string, PlanStatus[]][] = [["รออนุมัติ", ["review"]], ["อนุมัติแล้ว", ["approved", "active"]], ["ส่งกลับแก้ไข", ["returned"]]];
+/* 13 พ.ย. 2569 ไฟล์ 34 ข้อ 9 (เจ้าของงานเลือก ก): แท็บอนุมัติแล้วรวมแผนที่ดำเนินการและปิดงานแล้ว ป้ายบอกสถานะจริง (เดิมรวม active แต่ป้ายเป็นอนุมัติแล้วทุกแถว) */
+const TABS: [string, PlanStatus[]][] = [["รออนุมัติ", ["review"]], ["อนุมัติแล้ว", ["approved", "active", "closed"]], ["ส่งกลับแก้ไข", ["returned"]]];
 
 export default function ApprovalList() {
   const router = useRouter();
@@ -49,7 +50,7 @@ export default function ApprovalList() {
   if (!ok) return <AppFrame>{null}</AppFrame>;
   const data: TableValue[][] = rows.slice((page - 1) * PER, page * PER).map((p) => [
     p.name, p.year, { text: creatorName(p), sub: unitOf(p.mr, p.unit) }, scopeCell(p),   // reviewRow 6 พ.ย. 2569: ชื่อ + หน่วยงานบรรทัดรอง · ชื่อ = persona ของหน่วยงาน (9 พ.ย. 2569)
-    p.cars + " คัน", p.sentAt ?? p.created, { pills: [PST[tab === 1 ? "approved" : p.status]] },
+    p.cars + " คัน", p.sentAt ?? p.created, { pills: [PST[p.status]] },
     { actions: [{ IconSwap: "keyboard_arrow_right-20-400-round", label: "เปิด " + p.name, onClick: () => router.push("/approvals/plans/detail/?id=" + planId(p)) }] },
   ]);
   const pager = <TablePagination total={rows.length} page={page} perPage={PER} onPage={setPage} />;

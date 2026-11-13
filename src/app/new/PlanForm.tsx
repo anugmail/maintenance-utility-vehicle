@@ -13,7 +13,7 @@
        ทั้งสองแท็บ = ตารางติ๊ก CheckTable (Lead checkbox + ติ๊กทั้งหมดที่หัวคอลัมน์แรก · หน้าละ 10 + Table pagination · มือถือ List with checkbox + ไอคอนใต้รายการ CLAUDE.md ข้อ 14)
          · Table header ค้นหา "เลขทะเบียน, ยี่ห้อ, รุ่น" ไม่มีปุ่มตัวกรอง · ติ๊กแล้วมีปุ่มรอง "กำหนดอะไหล่ (k)" (R112 · ไม่ได้ติ๊ก = ไม่มีปุ่ม ตาม planForm) · Secondary button "เพิ่มยานพาหนะ" ไอคอน + ขวาสุด
          · กำหนดอะไหล่ (k) → หน้า S21 แบบหลายคัน /car-parts/?cars=…&q=แท็บที่เปิด (q 0 = ทุกคันในแผน) บันทึกแล้วกลับแท็บเดิม · แก้รายคันภายหลังได้จากเมนู …
-       แท็บทั้งหมด: หัว "ยานพาหนะทั้งหมดในแผน" + Badge "n คัน" · PICK_COLS ทะเบียน (ยี่ห้อ/รุ่น) · ประเภทยานพาหนะ · เขต / หน่วยงาน · บำรุงรักษา/ซ่อมเครื่องจักรล่าสุด
+       แท็บทั้งหมด: หัว "ยานพาหนะทั้งหมดในแผน" + Badge "n คัน" · PICK_COLS ทะเบียน (ยี่ห้อ/รุ่น) · ประเภทยานพาหนะ · เขต / หน่วยงาน (ไฟล์ 34 ข้อ 1 ไม่มีคอลัมน์ประวัติเครื่องจักรแล้ว)
            · ไตรมาส (Pill Brand "ไตรมาส n" · Pill Gray "ยังไม่จัดไตรมาส" แบบป้าย "ยังไม่มีแผนเดินทาง" ของหน้าไตรมาส S6) · อะไหล่อื่นๆ (ช่องเดียวกับแท็บไตรมาส) · ปุ่ม …
          เมนู … (MENU): ดูรายละเอียด → /car-parts/view/ · แก้ไข → /car-parts/ (S21 q=0) · ลบ → ยืนยันการลบยานพาหนะออกจากแผน (PLAN_OUT_CONFIRM · ยังไม่จัดไตรมาส = ไม่อ้างไตรมาส)
            → ออกจากแผน ล้างอะไหล่ของคันนั้น + toast "ลบยานพาหนะออกจากแผนสำเร็จ" · มือถือ = ไอคอนดู แก้ไข ลบ ใต้รายการ
@@ -21,7 +21,7 @@
            → ยังไม่จัดไตรมาส · อยู่แท็บทั้งหมด + toast "เพิ่มยานพาหนะ k คันเข้าแผนสำเร็จ" · แท็บนี้เพิ่มเข้าแผนได้เสมอ (รวมแผนที่ดำเนินการ)
          แผนยังไม่มียานพาหนะ: Empty state "ยังไม่มียานพาหนะในแผน" / "กดเพิ่มยานพาหนะเพื่อเลือกยานพาหนะเข้าแผน แล้วจึงจัดเข้าไตรมาส" + ปุ่มหลัก "เพิ่มยานพาหนะเข้าแผน" (noCarsInPlan)
        แท็บไตรมาส n: หัว "ยานพาหนะในไตรมาส n" + Badge "กำหนดอะไหล่แล้ว x/y คัน" · Q_COLS
-         เมนู … (Q_MENU): ดูรายละเอียด · แก้ไข · ย้ายไปไตรมาสอื่น (popup Radio text card ไตรมาส 1–4 · ไตรมาสปัจจุบันเลือกไม่ได้ · ปุ่ม "ย้ายยานพาหนะ" → toast "ย้ายยานพาหนะไปไตรมาส m สำเร็จ")
+         เมนู … (Q_MENU): ดูรายละเอียด · แก้ไข · ย้ายไปไตรมาสอื่น (popup Radio text card ไตรมาส 1–4 · ไตรมาสปัจจุบันเลือกไม่ได้ · ปุ่ม "ย้ายยานพาหนะ" → toast "ย้ายยานพาหนะ {ทะเบียน} ไปไตรมาส m สำเร็จ" · ติ๊กหลายคัน "ย้ายไตรมาส (k)" → "ย้ายยานพาหนะ k คันไปไตรมาส m สำเร็จ" ไฟล์ 34 ข้อ 4 27)
            · เอาออกจากไตรมาส (ไอคอน remove · ไม่มี confirm · กลับเป็นยังไม่จัดไตรมาส ยังอยู่ในแผน อะไหล่คงอยู่ → toast "เอายานพาหนะออกจากไตรมาส n แล้ว") · มือถือ = ไอคอนดู แก้ไข ย้าย เอาออก
          เพิ่มยานพาหนะ → popup "เพิ่มยานพาหนะเข้าไตรมาส n" / "ยานพาหนะในแผนที่ยังไม่จัดไตรมาส" — เฉพาะ alloc 0 (คันที่อยู่ไตรมาสอื่นไม่แสดง) → "เพิ่มเข้าไตรมาส n (k)"
            → toast "เพิ่มยานพาหนะ k คันเข้าไตรมาส n สำเร็จ" · ไม่มีให้เลือก = "ยานพาหนะในแผนจัดเข้าไตรมาสครบแล้ว" (แผนว่าง "ยังไม่มียานพาหนะในแผน") / "เพิ่มยานพาหนะเข้าแผนที่แท็บทั้งหมดก่อน แล้วจึงจัดเข้าไตรมาส"
@@ -70,7 +70,6 @@ import { useProtoForm } from "@/lib/protoForm";
 import { notify, setMock, useMock, useRole } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { isLive, liveLocks, saveLive } from "@/lib/mock/liveEdit";
-import { MA_HEAD, REPAIR_HEAD, histText, useMachineDates } from "@/lib/mock/vehicleHistory";
 import { CheckTable, type CheckRow } from "./CheckTable";
 import { TripCarPicker } from "@/app/quarter/_shared/TripCarPicker";
 
@@ -80,15 +79,12 @@ export const CARP_COLS: TableColumn[] = [
   { head: "น้ำมันไฮดรอลิก", width: 140 }, { head: "เปลี่ยนล่าสุด", width: 120 }, { head: "อะไหล่", width: 120 }, { head: "", width: 104, Style: "Action icons" },
 ];
 /* PICK_COLS — แท็บทั้งหมด · Q_COLS — แท็บไตรมาส n (screens.js) */
-/* 11 พ.ย. 2569 เจ้าของงาน "เพิ่มตอนเลือกรถเข้าแผน เพิ่มคอลัมน์ วันที่บำรุงล่าสุดเมื่อไร และอยากเพิ่ม วันที่ซ่อมล่าสุดด้วย" (BACKLOG ข้อ 64) ⇒ HIST_COLS ต่อจากเขต / หน่วยงาน
-   ทั้งสองแท็บ (ทั้งหมด 7 คอลัมน์ · ไตรมาส 8 คอลัมน์ = เต็ม Table ของไลบรารี R25) · ไม่มีข้อมูล = "ไม่มีข้อมูล" (lib/mock/vehicleHistory.ts) · มือถือ = บรรทัดรองของรายการ
-   แก้คำ 11 พ.ย. 2569 "วันที่บำรุงเครื่องจักรล่าสุด … วันที่ซ่อมเครื่องจักรล่าสุด" ⇒ หัว "บำรุงรักษาเครื่องจักรล่าสุด" "ซ่อมเครื่องจักรล่าสุด" (MA_HEAD REPAIR_HEAD) */
-const HIST_COLS: TableColumn[] = [{ head: MA_HEAD, width: 200 }, { head: REPAIR_HEAD, width: 170 }];
-/* แท็บทั้งหมด (R111 · BACKLOG ข้อ 90 · PICK_COLS ของ screens.js 13 พ.ย. 2569): ตารางติ๊กแบบแท็บไตรมาส (CheckTable · ทะเบียน + ช่องติ๊ก + บรรทัดรอง ยี่ห้อ/รุ่น)
-   ไตรมาส = Pill "ไตรมาส n" / "ยังไม่จัดไตรมาส" · อะไหล่อื่นๆ ช่องเดียวกับแท็บไตรมาส · ท้ายแถว = ปุ่ม … (MENU) แทนไอคอนถังขยะ (BACKLOG ข้อ 86)
-   8 คอลัมน์ = เต็ม Table ของไลบรารี R25 (Figma 6 คอลัมน์ + HIST_COLS ของเว็บ BACKLOG ข้อ 64) */
-const PICK_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 200 }, { head: "ประเภทยานพาหนะ", width: 150 }, { head: "เขต / หน่วยงานเจ้าของยานพาหนะ" }, ...HIST_COLS, { head: "ไตรมาส", width: 150, Style: "Badge" }, { head: "อะไหล่อื่นๆ", width: 130 }, { head: "", width: 60, Style: "Action icons" }];
-const Q_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 200 }, { head: "ประเภทยานพาหนะ", width: 152 }, { head: "เขต / หน่วยงานเจ้าของยานพาหนะ" }, ...HIST_COLS, { head: "น้ำมันไฮดรอลิก", width: 140 }, { head: "อะไหล่อื่นๆ", width: 130 }, { head: "", width: 60, Style: "Action icons" }];   // 6 พ.ย. 2569 ท้ายแถว = ปุ่ม … (Q_MENU) แทนไอคอนแก้ไข
+/* ไฟล์ 34 ข้อ 1 (เจ้าของงานเลือก ก 13 พ.ย. 2569): คอลัมน์ "บำรุงรักษาเครื่องจักรล่าสุด" "ซ่อมเครื่องจักรล่าสุด" มีเฉพาะในหน้าต่างเพิ่มยานพาหนะ (TripCarPicker) และ S24
+   ⇒ ตารางในฟอร์มแผนเอาออกทั้งสองแท็บ (เดิม HIST_COLS BACKLOG ข้อ 64) · คอลัมน์และความกว้างตาม PICK_COLS Q_COLS ของ screens.js (6 คอลัมน์ ≤ 8 ของ Table ไลบรารี R25)
+   แท็บทั้งหมด: ทะเบียน (ช่องติ๊ก บรรทัดรอง ยี่ห้อ/รุ่น) · ประเภทยานพาหนะ · เขต / หน่วยงาน · ไตรมาส (Pill "ไตรมาส n" / "ยังไม่จัดไตรมาส") · อะไหล่อื่นๆ · ปุ่ม … (MENU)
+   แท็บไตรมาส n: ทะเบียน · ประเภทยานพาหนะ · เขต / หน่วยงาน · น้ำมันไฮดรอลิก · อะไหล่อื่นๆ · ปุ่ม … (Q_MENU) */
+const PICK_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 260 }, { head: "ประเภทยานพาหนะ", width: 160 }, { head: "เขต / หน่วยงานเจ้าของยานพาหนะ" }, { head: "ไตรมาส", width: 170, Style: "Badge" }, { head: "อะไหล่อื่นๆ", width: 200 }, { head: "", width: 60, Style: "Action icons" }];
+const Q_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 240 }, { head: "ประเภทยานพาหนะ", width: 130 }, { head: "เขต / หน่วยงานเจ้าของยานพาหนะ" }, { head: "น้ำมันไฮดรอลิก", width: 200 }, { head: "อะไหล่อื่นๆ", width: 200 }, { head: "", width: 60, Style: "Action icons" }];   // 6 พ.ย. 2569 ท้ายแถว = ปุ่ม … (Q_MENU) แทนไอคอนแก้ไข
 const PER = 10;
 /* เมนู "ย้ายไปไตรมาสอื่น" ของยานพาหนะในแท็บไตรมาส (BACKLOG ข้อ 87) — ไอคอนชุดเดียวกับเมนูย้ายไตรมาสของหน้าไตรมาส S25 */
 const MOVE_ITEM = { Text: "ย้ายไปไตรมาสอื่น", IconSwap: "swap_driving_apps_wheel-24-300-round" };
@@ -121,7 +117,8 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
   const [ticked, setTicked] = useState<string[]>([]);
   const [page, setPage] = useState(1);
   const [qAdd, setQAdd] = useState(false);   // popup เพิ่มยานพาหนะ: แท็บทั้งหมด = เข้าแผน · แท็บไตรมาส n = เข้าไตรมาส n (R111 · BACKLOG ข้อ 90)
-  const [move, setMove] = useState<{ car: number; to: number } | null>(null);   // popup ย้ายไปไตรมาสอื่น (to 0 = ยังไม่เลือก)
+  const [move, setMove] = useState<{ cars: number[]; to: number } | null>(null);   // popup ย้ายไปไตรมาสอื่น (to 0 = ยังไม่เลือก) · cars หลายคัน = ติ๊กแล้วกด "ย้ายไตรมาส (k)" (ไฟล์ 34 ข้อ 4)
+  const [assign, setAssign] = useState<{ cars: number[]; skip: number; to: number } | null>(null);   // popup จัดเข้าไตรมาส (แท็บทั้งหมด · ติ๊กแล้วกด "จัดเข้าไตรมาส (k)" · เฉพาะคันที่ยังไม่จัดไตรมาส · skip = คันที่ติ๊กแต่อยู่ในไตรมาสแล้ว)
   const [touched, setTouched] = useState<{ name?: boolean; year?: boolean }>({});
   const [pending, setPending] = useState<Pending | null>(null);
   const [carMenu, setCarMenu] = useState<{ car: number; anchor: MenuAnchor } | null>(null);   // เมนู … ของยานพาหนะ (แท็บทั้งหมด MENU · แท็บไตรมาส Q_MENU)
@@ -169,13 +166,27 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
     untick(car);
     notify("เอายานพาหนะออกจากไตรมาส " + n + " แล้ว");
   };
-  /* ย้ายไปไตรมาสอื่น (popup Radio text card เดิมของ "จัดลงไตรมาส" · ทีละคันจากเมนู …) — อะไหล่ที่กำหนดไว้ย้ายไปพร้อมยานพาหนะ */
+  /* ย้ายไปไตรมาสอื่น (popup Radio text card เดิมของ "จัดลงไตรมาส") — อะไหล่ที่กำหนดไว้ย้ายไปพร้อมยานพาหนะ
+     ทีละคันจากเมนู … · หลายคันจากปุ่ม "ย้ายไตรมาส (k)" ของแท็บไตรมาส (ไฟล์ 34 ข้อ 4 เจ้าของงานเลือก ก 13 พ.ย. 2569)
+     toast คันเดียว "ย้ายยานพาหนะ {ทะเบียน} ไปไตรมาส m สำเร็จ" (ไฟล์ 34 ข้อ 27 · ชุดเดียวกับหน้าไตรมาส S25) · หลายคัน "ย้ายยานพาหนะ k คันไปไตรมาส m สำเร็จ" */
   const doMove = () => {
     if (!move?.to) return;
-    put({ alloc: { ...d.alloc, [move.car]: move.to } });
-    untick(move.car);
-    notify("ย้ายยานพาหนะไปไตรมาส " + move.to + " สำเร็จ");
+    const alloc = { ...d.alloc };
+    move.cars.forEach((c) => { alloc[c] = move.to; });
+    put({ alloc });
+    setTicked((t) => t.filter((x) => !move.cars.includes(Number(x))));
+    notify(move.cars.length === 1 ? "ย้ายยานพาหนะ " + CAND[move.cars[0]].plate + " ไปไตรมาส " + move.to + " สำเร็จ" : "ย้ายยานพาหนะ " + move.cars.length + " คันไปไตรมาส " + move.to + " สำเร็จ");
     setMove(null);
+  };
+  /* จัดเข้าไตรมาสหลายคัน (แท็บทั้งหมด · ไฟล์ 34 ข้อ 4) — เข้าเฉพาะคันที่ยังไม่จัดไตรมาส คันที่อยู่ในไตรมาสแล้วไม่เปลี่ยน (บอกในหน้าต่าง) · toast ชุดเดียวกับหน้าต่างเพิ่มยานพาหนะเข้าไตรมาส */
+  const doAssign = () => {
+    if (!assign?.to) return;
+    const alloc = { ...d.alloc };
+    assign.cars.forEach((c) => { alloc[c] = assign.to; });
+    put({ alloc });
+    setTicked([]);
+    notify("เพิ่มยานพาหนะ " + assign.cars.length + " คันเข้าไตรมาส " + assign.to + " สำเร็จ");
+    setAssign(null);
   };
   /* เมนู … ของยานพาหนะ — แท็บทั้งหมด MENU: ดูรายละเอียด (carPartsView) · แก้ไข (S21) · ลบ (ออกจากแผน)
      แท็บไตรมาส Q_MENU: ดูรายละเอียด · แก้ไข · ย้ายไปไตรมาสอื่น · เอาออกจากไตรมาส — คันที่ล็อก (แผนที่ดำเนินการ) = ดูรายละเอียดอย่างเดียวทั้งสองแท็บ */
@@ -184,23 +195,22 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
     if (lockedCar(car)) return [view];
     const change = { ...MENU[1], act: () => toS21(car) };
     return q
-      ? [view, change, { ...MOVE_ITEM, act: () => setMove({ car, to: 0 }) }, { ...OUT_Q_ITEM, act: () => outOfQ(car) }]
+      ? [view, change, { ...MOVE_ITEM, act: () => setMove({ cars: [car], to: 0 }) }, { ...OUT_Q_ITEM, act: () => outOfQ(car) }]
       : [view, change, { ...MENU[2], act: () => outOfPlan(car) }];
   };
   const carItems = carMenu ? carMenuItems(carMenu.car).map(({ act, ...m }) => ({ ...m, onClick: act })) : [];
-  const mDates = useMachineDates();
   const lockSubOf = (i: number) => (lockedCar(i) ? (locks?.closed.has(i) ? "ปิดงานแล้ว · " : "ไตรมาสบำรุงรักษาเสร็จแล้ว · ") : "");
   const txt = (v: string | { text: string }) => (typeof v === "string" ? v : v.text);
   /* แถวของทั้งสองแท็บ (CheckTable) — มือถือ: บรรทัดรองสรุปคอลัมน์ (CLAUDE.md ข้อ 11) + ไอคอนตามเมนู … ใต้รายการ (ข้อ 14 · ทั้งหมด ดู แก้ไข ลบ · ไตรมาส ดู แก้ไข ย้าย เอาออก) */
   const rows: CheckRow[] = rowsOnPage.map((i) => {
-    const c = CAND[i], md = mDates(c.plate), hist = [md.ma, md.repair], lockSub = lockSubOf(i);
+    const c = CAND[i], lockSub = lockSubOf(i);
     const other = otherCellOf(d, i);
     const mobileActions = carMenuItems(i).map((m) => ({ IconSwap: m.IconSwap, label: m.Text + " " + c.plate, onClick: m.act }));
     const menu: TableValue = { actions: [{ IconSwap: "more_horiz-20-400-round", label: "เมนู " + c.plate, onClick: (e) => setCarMenu({ car: i, anchor: anchorOf(e.currentTarget) }) }] };
     const base = { key: String(i), text: c.plate, sub: lockSub + c.model, disabled: lockedCar(i), mobileActions };
-    if (!q) return { ...base, mobileSub: lockSub + c.model + " · " + qPill(i)[0] + " · อะไหล่อื่นๆ " + txt(other) + " · " + histText(md), cells: [c.type, c.owner, ...hist, { pills: [qPill(i)] }, other, menu] };
+    if (!q) return { ...base, mobileSub: lockSub + c.model + " · " + qPill(i)[0] + " · อะไหล่อื่นๆ " + txt(other), cells: [c.type, c.owner, { pills: [qPill(i)] }, other, menu] };
     const oil = oilCellOf(d, i);
-    return { ...base, mobileSub: lockSub + "น้ำมัน " + txt(oil) + " · อะไหล่อื่นๆ " + txt(other) + " · " + histText(md), cells: [c.type, c.owner, ...hist, oil, other, menu] };
+    return { ...base, mobileSub: lockSub + "น้ำมัน " + txt(oil) + " · อะไหล่อื่นๆ " + txt(other), cells: [c.type, c.owner, oil, other, menu] };
   });
   /* กำหนดอะไหล่หลายคันครั้งเดียว (เจ้าของงาน 11 พ.ย. 2569 "อยากเพิ่มอะไหล่ครั้งเดียวในรถประเภทเดียวกัน" + "ทุกคันที่เลือกได้มั้ย คือต้องเลือกรถที่ต้องการเพิ่มอะไหล่" · BACKLOG ข้อ 64)
      ติ๊กยานพาหนะ → "กำหนดอะไหล่ (n)" → หน้า S21 แบบหลายคัน (/car-parts/?cars=…) ค่าที่เลือกใช้กับทุกคันที่ติ๊ก · แก้รายคันภายหลังได้จากเมนู … ตามเดิม
@@ -305,7 +315,8 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
             Actions={canAdd ? addBtn("เพิ่มยานพาหนะเข้าไตรมาส " + q, true) : undefined} />
         : <EmptyStateDataEmpty Text="ยังไม่มียานพาหนะในแผน" SupportingText="กดเพิ่มยานพาหนะเพื่อเลือกยานพาหนะเข้าแผน แล้วจึงจัดเข้าไตรมาส" Graphic="vehicle"
             Actions={addBtn("เพิ่มยานพาหนะเข้าแผน", true)} />;
-  const mq = move ? d.alloc[move.car] : 0;
+  const mq = move ? d.alloc[move.cars[0]] : 0;   // ทุกคันที่ย้ายพร้อมกันอยู่ไตรมาสเดียวกัน (แท็บไตรมาสที่เปิด)
+  const tickedIds = ticked.map(Number), unassignedTicked = tickedIds.filter((i) => !d.alloc[i]);
 
   return (
     <>
@@ -337,7 +348,11 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
           {/* R112: ปุ่ม "กำหนดอะไหล่ (k)" ขึ้นเมื่อติ๊กแล้ว ทั้งแท็บทั้งหมดและแท็บไตรมาส (more: bulk ของ planForm) */}
           <TableHeader Title={q ? "ยานพาหนะในไตรมาส " + q : "ยานพาหนะทั้งหมดในแผน"} Badge={q ? "กำหนดอะไหล่แล้ว " + qDone + "/" + inQ(q).length + " คัน" : cars.length + " คัน"} Placeholder="เลขทะเบียน, ยี่ห้อ, รุ่น" query={query}
             onQuery={(v) => { setQuery(v); setPage(1); }} FilterButton={false}
-            Actions={[...(nTicked ? [<SecondaryButton key="parts" Text={"กำหนดอะไหล่ (" + nTicked + ")"} Size={mob ? "lg" : "md"} onClick={toBulk} />] : []), addBtn("เพิ่มยานพาหนะ")]} />
+            Actions={[...(nTicked ? [<SecondaryButton key="parts" Text={"กำหนดอะไหล่ (" + nTicked + ")"} Size={mob ? "lg" : "md"} onClick={toBulk} />] : []),
+              /* ไฟล์ 34 ข้อ 4: ติ๊กหลายคัน — แท็บไตรมาส "ย้ายไตรมาส (k)" · แท็บทั้งหมด "จัดเข้าไตรมาส (k)" เมื่อมีคันที่ยังไม่จัดไตรมาส (k = คันที่ยังไม่จัด) */
+              ...(q && nTicked ? [<SecondaryButton key="move" Text={"ย้ายไตรมาส (" + nTicked + ")"} Size={mob ? "lg" : "md"} onClick={() => setMove({ cars: tickedIds, to: 0 })} />] : []),
+              ...(!q && unassignedTicked.length ? [<SecondaryButton key="assign" Text={"จัดเข้าไตรมาส (" + unassignedTicked.length + ")"} Size={mob ? "lg" : "md"} onClick={() => setAssign({ cars: unassignedTicked, skip: nTicked - unassignedTicked.length, to: 0 })} />] : []),
+              addBtn("เพิ่มยานพาหนะ")]} />
           {live && q > 0 && qLocked(q) && <Alert Color="Success" Text={"ไตรมาส " + q + " บำรุงรักษาเสร็จทุกคันแล้ว"} SupportingText="ดูอย่างเดียว เพิ่ม ย้าย เอาออก หรือกำหนดอะไหล่ของยานพาหนะในไตรมาสนี้ไม่ได้" />}
           {carBody}
         </section>
@@ -355,13 +370,27 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
         </div>
       </div>
       {/* ย้ายไปไตรมาสอื่น — popup เดิมของ "จัดลงไตรมาส" (Radio text card ไตรมาส 1–4 เรียงลง ช่องไฟ 12) หัวและปุ่มเปลี่ยน · ไตรมาสปัจจุบันของคันนั้น / ไตรมาสที่เสร็จแล้ว = Disabled */}
-      <PopupModal open={move !== null} title={"ย้ายไปไตรมาสอื่น · " + (move ? CAND[move.car].plate : "")} sub="ยานพาหนะและอะไหล่ที่กำหนดไว้ของยานพาหนะคันนี้จะย้ายไปไตรมาสที่เลือก" ok="ย้ายยานพาหนะ" okDisabled={!move?.to}
+      <PopupModal open={move !== null} title={"ย้ายไปไตรมาสอื่น · " + (move ? (move.cars.length === 1 ? CAND[move.cars[0]].plate : move.cars.length + " คัน") : "")}
+        sub={move && move.cars.length > 1 ? "ยานพาหนะ " + move.cars.length + " คันและอะไหล่ที่กำหนดไว้จะย้ายไปไตรมาสที่เลือก" : "ยานพาหนะและอะไหล่ที่กำหนดไว้ของยานพาหนะคันนี้จะย้ายไปไตรมาสที่เลือก"} ok="ย้ายยานพาหนะ" okDisabled={!move?.to}
         onCancel={() => setMove(null)} onOk={doMove}>
         <div role="radiogroup" className="flex flex-col gap-3">
           {QUARTERS.map((t, i) => {
             const n = i + 1, off = n === mq || qLocked(n);
             return <RadioTextCard key={t} Text={t} SupportingText={n === mq ? "ไตรมาสปัจจุบัน" : qLocked(n) ? "บำรุงรักษาเสร็จทุกคันแล้ว" : undefined} State={off ? "Disabled" : "Default"} Selected={move?.to === n} onClick={() => !off && move && setMove({ ...move, to: n })} />;
           })}
+        </div>
+      </PopupModal>
+      {/* จัดเข้าไตรมาส (แท็บทั้งหมด · ไฟล์ 34 ข้อ 4) — popup แบบย้ายไปไตรมาสอื่น (Radio text card ไตรมาส 1–4) · คันที่อยู่ในไตรมาสแล้วข้ามไป บอกด้วย Alert Info · ไตรมาสที่เสร็จแล้ว (แผนที่ดำเนินการ) Disabled */}
+      <PopupModal open={assign !== null} title={"จัดเข้าไตรมาส · " + (assign?.cars.length ?? 0) + " คัน"} sub="ยานพาหนะที่ยังไม่จัดไตรมาสจะเข้าไตรมาสที่เลือก พร้อมอะไหล่ที่กำหนดไว้" ok="จัดเข้าไตรมาส" okDisabled={!assign?.to}
+        onCancel={() => setAssign(null)} onOk={doAssign}>
+        <div className="flex flex-col gap-3">
+          {!!assign?.skip && <Alert Color="Info" Text={"ยานพาหนะ " + assign.skip + " คันอยู่ในไตรมาสแล้ว ไม่เปลี่ยน"} SupportingText="ย้ายไตรมาสของคันเหล่านั้นได้ที่แท็บไตรมาส" />}
+          <div role="radiogroup" className="flex flex-col gap-3">
+            {QUARTERS.map((t, i) => {
+              const n = i + 1, off = qLocked(n);
+              return <RadioTextCard key={t} Text={t} SupportingText={off ? "บำรุงรักษาเสร็จทุกคันแล้ว" : undefined} State={off ? "Disabled" : "Default"} Selected={assign?.to === n} onClick={() => !off && assign && setAssign({ ...assign, to: n })} />;
+            })}
+          </div>
         </div>
       </PopupModal>
       {/* planCarModal (R111): แท็บทั้งหมด = เข้าแผน · แท็บไตรมาส n = จัดเข้าไตรมาส n จากยานพาหนะในแผนที่ยังไม่จัดไตรมาส */}
