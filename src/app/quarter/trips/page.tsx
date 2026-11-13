@@ -116,9 +116,13 @@ function TripList() {
   const moved = new Map(movedInto(mock, id, q).map((m) => [m.carId, m]));
   const finished = quarterFinished(mock, id, q);   // 11 พ.ย. 2569 บำรุงรักษาเสร็จทุกคันแล้ว (เสร็จสิ้น + บำรุงรักษาไม่ได้) ⇒ เพิ่มยานพาหนะเข้าไตรมาสนี้ไม่ได้
   const lastQ = q >= 4;   // ไตรมาสสุดท้ายของแผน = ย้ายไม่ได้ (Disabled · ยังไม่เคาะเรื่องแผนปีถัดไป)
+  /* S25 ย้ายไปไตรมาสอื่น — 13 พ.ย. 2569 ไฟล์ 34 ข้อ 26 (เจ้าของงานเลือก ก · เดิม 10 พ.ย. "ไม่จำเป็นว่าต้องเป็นรถที่บำรุงไม่ได้"): ย้ายได้ทั้งคันที่บำรุงรักษาไม่ได้ และคันที่ยังไม่อยู่ในแผนเดินทาง
+     ย้ายได้เฉพาะไตรมาสถัดไปของแผนเดียวกัน · ไตรมาส 4 ย้ายไม่ได้ · ไม่ต้องอนุมัติใหม่ */
   const openMove = (c: TripCar) => {
-    const x = cannotTrip(mock, id, q, c.id); if (!x || lastQ) return;
-    setMoving({ car: c, tripName: x.trip.name, reason: x.reason, parts: carPlanParts(mock, id, c.id, x.trip.id) });
+    if (lastQ) return;
+    const x = cannotTrip(mock, id, q, c.id);
+    if (x) return setMoving({ car: c, tripName: x.trip.name, reason: x.reason, parts: carPlanParts(mock, id, c.id, x.trip.id) });
+    if (!tripOf(c)) setMoving({ car: c, tripName: "ยังไม่มีแผนเดินทาง", reason: "", parts: carPlanParts(mock, id, c.id) });
   };
   /* ค้นหา (ทะเบียน ยี่ห้อ รุ่น ทั้งยานพาหนะและเครื่องจักร) + ตัวกรองยี่ห้อเครื่องจักร */
   const brands = uniq(cars.map((c) => machineOf(c.model).brand).filter((b) => b !== "-")).sort();
@@ -128,6 +132,7 @@ function TripList() {
     const t = tripOf(c), cannot = t ? cannotTrip(mock, id, q, c.id) : null, from = moved.get(c.id);
     const done = !!t && t.status === "approved" && getJob(jobsOf(mock), t.id, c.id).status === "done";   // Figma E.26 (R93 132a652): ปิดงานเสร็จสิ้น = Pill เสร็จสิ้น ไม่มีไอคอน/เมนู
     const acts = [{ IconSwap: "stylus-24-300-round", label: "แก้ไข " + c.plate, onClick: () => setEditCar(c) },
+      ...(t || lastQ ? [] : [{ IconSwap: MOVE_ICON, label: "ย้ายไปไตรมาสอื่น " + c.plate, onClick: () => openMove(c) }]),   // ไฟล์ 34 ข้อ 26 คันที่ยังไม่อยู่ในแผนเดินทาง
       ...(t ? [] : [{ IconSwap: "delete-24-300-round", label: "ลบ " + c.plate, onClick: () => setDropCar(c) }])];
     /* R82 ช่องตามชุดกลาง · ยังไม่อยู่ในแผนเดินทาง = ผู้ดูแลจากข้อมูลยานพาหนะ/ค่าที่แก้ในไตรมาส (E.18) · วันดำเนินการ "—" */
     const [, type, ...rest] = tripVCells(c, t ? vTrip(t) : { phones: edits.phones, names: edits.names }, Q_DROP);
@@ -167,7 +172,7 @@ function TripList() {
             Filters={brandF} onRemoveFilter={(b) => setBrandF(brandF.filter((x) => x !== b))} />}
           {cars.length > 0 && !shownCars.length
             ? <EmptyStateSearchNotFound Actions={<SecondaryButton Text="ล้างตัวกรอง" Size={mob ? "lg" : "md"} onClick={() => { setQuery(""); setBrandF([]); }} />} />
-            : <PagedTable key={kq + brandF.join()} columns={kbk ? [...TRIP_Q_COLS, { head: "", width: 104, Style: "Action icons" }] : TRIP_Q_COLS} rows={carRows} rowKey={(r) => (r[0] as { text: string }).text} />}
+            : <PagedTable key={kq + brandF.join()} columns={kbk ? [...TRIP_Q_COLS, { head: "", width: 136, Style: "Action icons" }] : TRIP_Q_COLS} rows={carRows} rowKey={(r) => (r[0] as { text: string }).text} />}
         </Section>
         <Section>
           <SectionLabel Title={"อะไหล่ใน" + nowQ} />{/* 9 พ.ย. 2569 เจ้าของงาน "เอาเลขออกไปเลยได้ป่ะ ถ้าหมายถึงจำนวนชนิด" ⇒ หัวข้ออะไหล่รวมตามรายการไม่มีตัวเลขจำนวนชนิด */}

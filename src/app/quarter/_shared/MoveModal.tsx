@@ -36,7 +36,7 @@ export function MoveModal({ target, cur, counts, onCancel, onMove }: { target: M
     <>
       <PopupModal open={!ask} title={"ย้ายไปไตรมาสอื่น · " + car.plate} sub="ยานพาหนะและอะไหล่ตามแผนของยานพาหนะคันนี้จะย้ายไปไตรมาสที่เลือก" width={800} ok="ย้ายยานพาหนะ" okDisabled={!sel}
         onCancel={close} onOk={() => sel && setAsk(true)}>
-        <ContentItemRow perRow={mob ? 1 : 2} items={[["ทะเบียน", car.plate], ["ประเภทยานพาหนะ", typeOf(car.model)], ["หน่วยงานเจ้าของยานพาหนะ", car.owner], ["แผนเดินทาง", target.tripName], ["สาเหตุที่บำรุงรักษาไม่ได้", target.reason]]} />
+        <ContentItemRow perRow={mob ? 1 : 2} items={[["ทะเบียน", car.plate], ["ประเภทยานพาหนะ", typeOf(car.model)], ["หน่วยงานเจ้าของยานพาหนะ", car.owner], ["แผนเดินทาง", target.tripName], ...(target.reason ? [["สาเหตุที่บำรุงรักษาไม่ได้", target.reason] as [string, string]] : [])]} />
         <section className="flex flex-col gap-4">
           <SectionHeader Title="เลือกไตรมาสที่จะย้ายไป" />
           <div role="radiogroup" className="flex flex-col gap-3">
