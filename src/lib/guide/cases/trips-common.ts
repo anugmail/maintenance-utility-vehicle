@@ -30,9 +30,12 @@ export const seedJobs = (name: Parameters<typeof applySample>[0]) => () => { see
 /** รถ 80-9981 ลำปาง บำรุงรักษาไม่ได้ในไตรมาส q (2 ถึง 4) ของแผนตัวอย่าง — ย้ายรถเข้าไตรมาสนั้น + แผนเดินทางที่อนุมัติแล้วใบเดียว + งานบำรุงรักษาไม่ได้ */
 export const MOVE_CAR = "80-9981";
 export const MOVE_PLATE = "80-9981 ลำปาง";
+const MOVE_DATES: Record<number, [string, string]> = { 2: ["12/05/2570", "14/05/2570"], 3: ["12/08/2570", "14/08/2570"], 4: ["07/10/2570", "09/10/2570"] };
 export const seedCannotIn = (q: number) => () => {
   const id = "T" + (q + 6);
-  const t: Trip = { ...approved(TRIP_1), id, quarter: q, name: "ตรวจยานพาหนะ ลำปาง ไตรมาส " + q, carIds: [MOVE_CAR], locs: {}, phones: {} };
+  /* 13 พ.ย. 2569 วันเดินทางอยู่ในเดือนของไตรมาสปฏิทิน (เจ้าของงาน 6 พ.ย. 2569 "ไตรเป็นตามปีปฎิทิน") · ไตรมาส 3 4 วันเดียวกับ MOVE_T3 MOVE_T4 ของ screens.js · เดิมใช้วันของ TRIP_1 (พ.ย. 2569) */
+  const [d1, d2] = MOVE_DATES[q] ?? [TRIP_1.d1, TRIP_1.d2];
+  const t: Trip = { ...approved(TRIP_1), id, quarter: q, name: "ตรวจยานพาหนะ ลำปาง ไตรมาส " + q, carIds: [MOVE_CAR], locs: {}, phones: {}, d1, d2, works: {} };
   const job: Job = { ...newJob(id, MOVE_CAR), status: "cannot", cannot: { reason: JOB_TEXT.cannotSelf, used: WORK.map(() => 0), by: PEOPLE.kbk, at: JOB_TIMES.self.start, whileDoing: false } };
   setMock((s) => ({
     ...s, trips: [{ ...TRIP_OTHER }, t], jobs: { jobs: { [id + ":" + MOVE_CAR]: job } },

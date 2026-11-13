@@ -284,9 +284,10 @@ export function approvalNotis(t: Trip): Noti[] {
   return out;
 }
 /* แจ้งเตือนถึงผู้ดูแลยานพาหนะเมื่อผู้ดำเนินการปิดงานคันนั้น (NOTI_ACK · S13 L.6 · Figma 9607c3b) — role "owner" = บทบาท ผู้ดูแลยานพาหนะ · กดแล้วเปิดผลการบำรุงรักษาของคันนั้น */
-export const ackNoti = (t: { id: string }, c: { id: string; plate: string }, unread = true): Noti => ({
+/* 13 พ.ย. 2569 แผนจ้างดำเนินการ (mode hire) ไม่มีประเมินความพึงพอใจ (ผังเลือกแบบประเมิน R114) ⇒ ข้อความไม่มี "และประเมินความพึงพอใจ" */
+export const ackNoti = (t: { id: string; mode?: "self" | "hire" }, c: { id: string; plate: string }, unread = true): Noti => ({
   id: "ack-" + t.id + "-" + c.id, role: "owner", status: "Brand", unread, time: "5 นาทีที่แล้ว", href: "/acceptance/car/?trip=" + t.id + "&car=" + c.id,
-  text: "ปิดงานบำรุงรักษา " + c.plate + " แล้ว รอผู้ดูแลยานพาหนะรับทราบผลและประเมินความพึงพอใจ",
+  text: "ปิดงานบำรุงรักษา " + c.plate + " แล้ว รอผู้ดูแลยานพาหนะรับทราบผล" + (t.mode === "hire" ? "" : "และประเมินความพึงพอใจ"),
 });
 export function addNotis(list: Noti[]) {
   setMock((s) => { const ids = new Set(list.map((n) => n.id)); return { ...s, notis: [...list, ...notisOf(s).filter((n) => !ids.has(n.id))] }; });

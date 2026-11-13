@@ -179,6 +179,8 @@ function PartsDash() {
   });
   const unitSlices = DASH_UNITS.map((u, i) => ({ key: u, label: u, value: sum(plans.filter((p) => p.unit === u).map((p) => p.cars)), hue: hueAt(i), active: filter.units.includes(u) }))
     .filter((s) => s.value > 0 || s.active);
+  /* 13 พ.ย. 2569 หน่วยงานเห็นเฉพาะแผนของตัวเอง (เจ้าของงาน 10 พ.ย. 2569) ⇒ โดนัทของหน่วยงานแยกตามแผน "ยานพาหนะตามแผน" แบบ partsDash ของ screens.js (เดิมแยกตามหน่วยงานได้ชิ้นเดียว) · กบค. คงตามหน่วยงานผู้ขอเบิก */
+  const planSlices = plans.map((p, i) => ({ key: p.mr, label: p.mr, value: p.cars, hue: hueAt(i), active: filter.plans.includes(p.mr) })).filter((s) => s.value > 0 || s.active);
   const planBars = plans.map((p) => {
     const rs = prog.filter((r) => r[0] === p.mr);
     return { key: p.mr, label: p.mr, sub: p.name + " · " + p.unit, active: filter.plans.includes(p.mr),
@@ -248,8 +250,9 @@ function PartsDash() {
             source="ยอดรวมตามรายการของแผนที่ตรงตัวกรอง (ไม่แยกไตรมาส)">
             <BarList items={top} limit={10} onPick={(k) => putPick({ ...pick, parts: flipIn(pick.parts, k) })} />
           </ChartCard>
-          <ChartCard icon="donut_large-24-300-round" hue="green" title="ตามหน่วยงานผู้ขอเบิก" sub="ยานพาหนะในแผนแยกตามหน่วยงานเจ้าของแผน" source="หน่วยงานเจ้าของแผนที่อนุมัติแล้ว" hint={scope ? false : undefined}>
-            <Donut slices={unitSlices} unit="คัน" labelHead="หน่วยงาน" onPick={scope ? undefined : (k) => flip("units", k)} />
+          <ChartCard icon="donut_large-24-300-round" hue="green" title={scope ? "ยานพาหนะตามแผน" : "ตามหน่วยงานผู้ขอเบิก"} sub={scope ? "ยานพาหนะในแผนของ " + scope + " แยกตามแผน" : "ยานพาหนะในแผนแยกตามหน่วยงานเจ้าของแผน"} source="แผนที่อนุมัติแล้ว">
+            {scope ? <Donut slices={planSlices} unit="คัน" labelHead="แผน" onPick={(k) => flip("plans", k)} />
+              : <Donut slices={unitSlices} unit="คัน" labelHead="หน่วยงาน" onPick={(k) => flip("units", k)} />}
           </ChartCard>
           <ChartCard className="lg:col-span-3" icon="stacked_bar_chart-24-300-round" hue="orange" title="ความคืบหน้าของแผน" sub="ยานพาหนะของแต่ละแผน บำรุงรักษาแล้ว · กำลังดำเนินการ · ยังไม่เริ่ม"
             source="ความคืบหน้ารายไตรมาสของแผน (แท็บความคืบหน้าของแผน)">

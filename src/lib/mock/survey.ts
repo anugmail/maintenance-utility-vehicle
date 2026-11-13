@@ -156,10 +156,12 @@ const seeds = (): Seed[] => [
 ];
 let SEEDS: Seed[] | null = null;
 
-/* งานบำรุงรักษาตามวาระจาก S13 (ผู้ดูแลยานพาหนะรับทราบแล้ว ไม่รวมคันที่บำรุงรักษาไม่ได้) — หน่วยงานที่ให้บริการ = หน่วยงานเจ้าของแผน (ผู้ดำเนินการ) */
+/* งานบำรุงรักษาตามวาระจาก S13 (ผู้ดูแลยานพาหนะรับทราบแล้ว ไม่รวมคันที่บำรุงรักษาไม่ได้) — หน่วยงานที่ให้บริการ = หน่วยงานเจ้าของแผน (ผู้ดำเนินการ)
+   13 พ.ย. 2569 ไม่รวมแผนเดินทางจ้างดำเนินการ (mode hire) — เจ้าของงาน 13 พ.ย. 2569 "ถ้าประเมิน กรย กบค ก็จะเป็นแบบปะรเมินความพอใจ แต่ถ้าเป็น ซ่อมโดยอู่หรือศูนย์บริการ จะเป็นแบบประเมินผู้รับจ้าง"
+   ⇒ ผังเลือกแบบประเมิน (Diagram/10-การประเมินหลังปิดงาน/01 ของรีโป Maintenance-Request-Form · R114): จ้างดำเนินการ = แบบประเมินผู้รับจ้าง (ผู้ควบคุมงาน ยังไม่เคาะ · เว็บยังไม่มีฟอร์มนี้) · ปุ่มประเมินใน S13 หายตามเพราะไม่มีแถว */
 const maId = (trip: string, car: string) => "ma." + trip + "." + car;
 function maRows(m: MockState): Seed[] {
-  return accRows(m).filter((r) => r.accepted && !r.cannot).map((r) => {
+  return accRows(m).filter((r) => r.accepted && !r.cannot && r.trip.mode !== "hire").map((r) => {
     const p = m.plans.find((x) => x.mr === r.mr);
     return { id: maId(r.trip.id, r.car.id), kind: "ma" as const, no: r.mr, work: r.trip.name, plate: r.car.plate, vtype: r.car.type, owner: r.car.owner,
       caretaker: tripCtrl(r.trip, r.car), provider: unitOf(r.mr, p?.unit), closedAt: (r.job.closedAt ?? r.date).slice(0, 10),
