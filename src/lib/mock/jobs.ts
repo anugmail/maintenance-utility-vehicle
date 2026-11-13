@@ -21,7 +21,7 @@ import type { PillColor } from "@/components/vms/PillOutline";
 import { useMemo } from "react";
 import { CAND, LAST_OIL, PLANS, typeOf, type Plan } from "./data";
 import { setMock, useMock, type MockState, type Role } from "./store";
-import { APPROVED_AT, PLAN_CARS, PLAN_ID, Q_EXTRA, TRIP_1, TRIP_CARS as CARS, TRIP_V, ackNoti, addNotis, candId, tripsOf, type Trip } from "./trips";
+import { APPROVED_AT, PLAN_CARS, PLAN_ID, Q_EXTRA, TRIP_1, TRIP_CARS as CARS, TRIP_V, ackNoti, addNotis, candId, oilFailNoti, tripsOf, type Trip } from "./trips";
 
 /* ---------- เพิ่มฟิลด์ jobs ให้ MockState (store.ts) ---------- */
 declare module "./store" {
@@ -474,6 +474,7 @@ export function closeJob(t: JobTrip, carId: string, f: CloseForm, vendor = false
   }));
   const c = carOf(carId);
   if (!vendor && c) addNotis([ackNoti(t, c)]);   // S13 แจ้งผู้ดูแลยานพาหนะของคันนั้น (NOTI_ACK) · แผนจ้างของผู้รับจ้าง (S23) รอตรวจรับ — ยังไม่เคาะ
+  if (!vendor && c && oilSampled(f.oilChoice) && f.oilSel === 1) addNotis([oilFailNoti(t, c)]);   // S12 ใส่ผลตอนปิดงานเป็นไม่ผ่าน (เจ้าของงาน 13 พ.ย. 2569)
 }
 /** S10 บำรุงรักษาไม่ได้ → "บำรุงรักษาไม่ได้" ทันที ทั้งตรวจเองและแผนจ้าง (ไม่ต้องส่งตรวจ) */
 /** S23 ผู้รับจ้าง (vendor) → "แจ้งบำรุงรักษาไม่ได้" รอผู้รับจ้างส่งตรวจงาน · แก้สาเหตุ (edit) คงผู้แจ้ง/เวลาเดิม */
@@ -533,6 +534,8 @@ export function sendJob(t: JobTrip, carId: string) {
 /** S12 บันทึกผลการทดสอบ (แก้ได้ภายหลัง) */
 export function saveOilResult(t: JobTrip, carId: string, sel: OilSel, files: UploadFile[], by = PEOPLE.kbk) {
   patchJob(t.id, carId, (j) => ({ ...j, oilResult: { sampledAt: j.closedAt?.slice(0, 10) ?? "", sampledBy: j.recordedBy ?? by, ...j.oilResult, sel, files, savedAt: JOB_TIMES.self.resultSaved, savedBy: by } }));
+  const c = carOf(carId);
+  if (sel === 1 && c) addNotis([oilFailNoti(t, c)]);   // ไม่ผ่าน (รวมแก้ผลเป็นไม่ผ่าน) ⇒ แจ้งผู้ดูแลยานพาหนะ (เจ้าของงาน 13 พ.ย. 2569) · ผ่านไม่ส่ง
 }
 /** S10 บันทึกเอกสาร Safety Inspection ภายหลัง (หน้างานรายคันที่เสร็จสิ้น · แก้ได้อีก) */
 export function saveSafetyDocs(t: JobTrip, carId: string, files: UploadFile[], by = PEOPLE.kbk) {

@@ -289,6 +289,13 @@ export const ackNoti = (t: { id: string; mode?: "self" | "hire" }, c: { id: stri
   id: "ack-" + t.id + "-" + c.id, role: "owner", status: "Brand", unread, time: "5 นาทีที่แล้ว", href: "/acceptance/car/?trip=" + t.id + "&car=" + c.id,
   text: "ปิดงานบำรุงรักษา " + c.plate + " แล้ว รอผู้ดูแลยานพาหนะรับทราบผล" + (t.mode === "hire" ? "" : "และประเมินความพึงพอใจ"),
 });
+/* แจ้งเตือนผลตรวจน้ำมันไฮดรอลิกไม่ผ่าน (S12 · เจ้าของงาน 13 พ.ย. 2569 "ผลตรวจน้ำมันไม่ผ่านต้องส่งเตือนหาเจ้าของรถด้วย" · Figma NOTI_OIL_FAIL R115)
+   ผู้ดำเนินการบันทึกผล "ไม่ผ่าน" (ตอนปิดงาน หรือภายหลังที่หน้างานรายคัน รวมแก้ผลเป็นไม่ผ่าน) ⇒ ผู้ดูแลยานพาหนะของคันนั้น (role "owner") ทางกระดิ่งในระบบ · ผลผ่านไม่ส่ง
+   กดแล้วเปิดรายละเอียดยานพาหนะคันนั้น (S24) แท็บประวัติการบำรุงรักษาเครื่องจักร ที่มีคอลัมน์น้ำมันไฮดรอลิกและผลตรวจ · id เดียวต่อคันต่อใบ บันทึกไม่ผ่านซ้ำ = แทนอันเดิมขึ้นบนสุด */
+export const oilFailNoti = (t: { id: string }, c: { id: string; plate: string }, unread = true): Noti => ({
+  id: "oilfail-" + t.id + "-" + c.id, role: "owner", status: "Error", unread, time: "5 นาทีที่แล้ว", href: "/vehicles/detail/?car=" + c.id + "&tab=machine",
+  text: "ผลตรวจน้ำมันไฮดรอลิก " + c.plate + " ไม่ผ่าน",
+});
 export function addNotis(list: Noti[]) {
   setMock((s) => { const ids = new Set(list.map((n) => n.id)); return { ...s, notis: [...list, ...notisOf(s).filter((n) => !ids.has(n.id))] }; });
 }
