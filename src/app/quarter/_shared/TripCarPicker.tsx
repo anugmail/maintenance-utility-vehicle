@@ -1,6 +1,6 @@
 "use client";
 /* popup เพิ่มรถเข้าแผนเดินทาง — tripCarModal() ใน screens.js (S6 E.3 E.10 E.12 · S9 H.3) · spec S6.md P3
-   Desktop: patterns/PopupModal กว้าง 800 · หัว "เพิ่มรถเข้าแผนเดินทาง" + บรรทัดรอง (· อีก x คันอยู่ในแผนเดินทางอื่นแล้ว)
+   Desktop: patterns/PopupModal กว้าง 1140 (Modal Size=xl · 13 พ.ย. 2569 ทุกจุด · เดิม 800) · หัว "เพิ่มรถเข้าแผนเดินทาง" + บรรทัดรอง (· อีก x คันอยู่ในแผนเดินทางอื่นแล้ว)
             เนื้อหา = ช่องค้นหาของ Table header (Text input ไอคอน search ไม่มีป้าย กว้าง 320 — Table header แบบไม่มีปุ่มตัวกรอง)
                      + ตาราง Lead checkbox ประกอบจาก Table header cell (Checkbox ที่หัวคอลัมน์แรก) + Table cell Style=Lead checkbox (Table ของไลบรารีรับช่องติ๊กไม่ได้)
             รถหมด = Empty state/Data empty · ปุ่มหลัก "เพิ่มเข้าแผนเดินทาง (n)" · ติ๊ก 0 คัน = "เพิ่มเข้าแผนเดินทาง" Disabled
@@ -12,12 +12,16 @@
      หน้าละ 10 + Table pagination ของไลบรารี ใต้ตาราง (desktop Breakpoint=Desktop · มือถือ Breakpoint=Mobile ใต้ List with checkbox แบบตารางอื่นของรีโป) · พิมพ์ค้นหา = กลับหน้า 1
      ติ๊กหัวตาราง = เลือกทุกคันที่ตรงคำค้น (ทุกหน้า · คงพฤติกรรมเดิมก่อนแบ่งหน้า) เลือกไม่ได้ (อยู่ในแผนเดินทางอื่น) ไม่นับ · ที่ติ๊กไว้คงอยู่เมื่อเปลี่ยนหน้า/คำค้น
      ใช้ทุก popup ที่เรียก TripCarPicker: หน้าไตรมาส S6 · ฟอร์มแผน S1 S19 (R75) · ฟอร์มแผนเดินทาง S6 S9
-   ตัวกรองในตัว popup (areaOf · เฉพาะฟอร์มแผน S1 S19 · เจ้าของงาน 12 พ.ย. 2569 "หน้าจอเลือกรถ อยากให้เป็น modal ตามรูป แก้ใน flow ด้วย" · BACKLOG ข้อ 87):
+   ตัวกรองในตัว popup (areaOf · เจ้าของงาน 12 พ.ย. 2569 "หน้าจอเลือกรถ อยากให้เป็น modal ตามรูป แก้ใน flow ด้วย" · BACKLOG ข้อ 87):
      แบบ vehPickerModal ของ Overhaul (figma-export/overhaul2-plugin/code.js) — Table header (ช่องค้นหา + ปุ่ม "ตัวกรอง" + Pill จำนวน + ชิปตัวกรองกดเอาออกได้)
      desktop = Filter panel กางใต้แถวค้นหาตั้งแต่เปิด popup (13 พ.ย. 2569) กดปุ่มตัวกรองเพื่อหุบ/กาง: Input dropdown with badges (Optional) ×3 แถวเดียว (ภาค · เขต · ประเภทยานพาหนะ · หลายค่า · placeholder "ทั้งหมด")
        + แถวปุ่ม Tertiary brand button "ล้างตัวกรอง" ซ้าย · Secondary "ยกเลิก" + Primary "ตกลง" ขวา · ช่องไฟ 20 · ตกลง = ใช้ค่า แผงยังกาง · ยกเลิก = หุบ ชิปขึ้นใต้แถวค้นหา
      มือถือ = แผงตัวกรอง bottom sheet ของเดิม (FilterShell) ซ้อนบน bottom sheet ของ popup · ค่าในแผงเป็นค่าร่าง กดตกลงจึงใช้ (แบบแผงตัวกรอง S1 เดิม · R69 ช่องเป็นอิสระต่อกัน · เขต = เขตของภาคที่เลือก)
-     ไม่มีคันตรงคำค้น/ตัวกรอง = Empty state/Search not found "ไม่พบยานพาหนะ" · ไม่ส่ง areaOf = แบบเดิม (ช่องค้นหาอย่างเดียว) ทุกหน้าอื่นไม่เปลี่ยน
+     ไม่มีคันตรงคำค้น/ตัวกรอง = Empty state/Search not found "ไม่พบยานพาหนะ" · ไม่ส่ง areaOf = ช่องค้นหาอย่างเดียว
+   ฟอร์มเลือกยานพาหนะแบบเดียวกันทุกจุด (เจ้าของงาน 13 พ.ย. 2569 "อยากให้เลือกรถเข้าแผน ใช้วิธีการเดียวกับเลือกรถเข้าไตรมาส" + "ฟอร์มการเลือกรถอยากให้ใช้เหมือนกัน แต่ต่างกันที่ คอลัมน์ที่ต่างกัน" · BACKLOG ข้อ 89):
+     ทุกจุดส่ง areaOf = carArea (lib/mock/carArea.ts · จับคู่ด้วยทะเบียน) ⇒ หน้าไตรมาส S6 · ฟอร์มแผนเดินทาง S6 S9 ได้แผงตัวกรองชุดเดียวกับฟอร์มแผน · หัว บรรทัดรอง ปุ่ม taken ของแต่ละจุดคงเดิม
+     pickQuarter (แท็บทั้งหมดของฟอร์มแผน S1 S19 · "เพิ่มยานพาหนะเข้าแผน"): Input dropdown "เพิ่มเข้าไตรมาส" (บังคับ · placeholder "เลือกไตรมาส" · ไตรมาส 1–4 ตาม QUARTERS)
+       แถวแรกของเนื้อหา เหนือช่องค้นหา (desktop กว้างหนึ่งในสามแบบช่องในแผงตัวกรอง) · ปุ่มหลัก Disabled จนกว่าเลือกไตรมาสและติ๊ก ≥ 1 · quarterOff = ไตรมาสที่เลือกไม่ได้ (Dropdown list item State=Disabled + บรรทัดรอง)
    ดูบันทึกใน figma-spec/COMPOSED.md */
 import { useState } from "react";
 import { PopupModal } from "@/components/patterns/PopupModal";
@@ -25,6 +29,7 @@ import { DropdownList } from "@/components/vms/DropdownList";
 import { DropdownListItem } from "@/components/vms/DropdownListItem";
 import { EmptyStateDataEmpty } from "@/components/vms/EmptyStateDataEmpty";
 import { EmptyStateSearchNotFound } from "@/components/vms/EmptyStateSearchNotFound";
+import { InputDropdown } from "@/components/vms/InputDropdown";
 import { InputDropdownWithBadges } from "@/components/vms/InputDropdownWithBadges";
 import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
@@ -32,7 +37,8 @@ import { TableHeader } from "@/components/vms/TableHeader";
 import { TablePagination } from "@/components/vms/TablePagination";
 import { TertiaryBrandButton } from "@/components/vms/TertiaryBrandButton";
 import { TextInput } from "@/components/vms/TextInput";
-import { DISTRICTS, REGIONS, VEHICLE_TYPES, shortRegion } from "@/lib/mock/data";
+import { DISTRICTS, QUARTERS, REGIONS, VEHICLE_TYPES, shortRegion } from "@/lib/mock/data";
+import type { PickerArea } from "@/lib/mock/carArea";
 import { FilterShell } from "@/app/vehicles/_lib/ui";
 import type { TripCar } from "@/lib/mock/trips";
 import { useBreakpoint } from "@/lib/useBreakpoint";
@@ -47,9 +53,9 @@ const SEARCH = "ค้นหาทะเบียน, ยี่ห้อ/รุ�
 const PER = 10;
 
 /* title / sub / okText / emptyText = popup "เพิ่มรถเข้าไตรมาส n" ของ E.1 (qAddModal() → tripCarModal(o.cars o.title o.sub o.okText)) · taken = รถที่อยู่ในแผนเดินทางอื่น (แสดงแต่เลือกไม่ได้)
-   areaOf = ภาค เขต ประเภทยานพาหนะของแต่ละคัน (ส่งมา = มีปุ่มตัวกรองในตัว popup · BACKLOG ข้อ 87) */
-export interface PickerArea { region: string; district: string; type: string }
-interface PickerProps { pool: TripCar[]; taken?: Record<string, string>; nowQ: string; onAdd: (ids: string[]) => void; onCancel: () => void; title?: string; sub?: string; okText?: string; emptyText?: string; emptySub?: string; areaOf?: (id: string) => PickerArea }
+   areaOf = ภาค เขต ประเภทยานพาหนะของแต่ละคัน (ส่งมา = มีปุ่มตัวกรองในตัว popup · BACKLOG ข้อ 87 · ทุกจุดส่ง carArea ข้อ 89)
+   pickQuarter = ช่อง "เพิ่มเข้าไตรมาส" แถวแรก (แท็บทั้งหมดของฟอร์มแผน · onAdd ได้ไตรมาสที่เลือกเป็นค่าที่สอง) · quarterOff = ไตรมาสที่เลือกไม่ได้ */
+interface PickerProps { pool: TripCar[]; taken?: Record<string, string>; nowQ: string; onAdd: (ids: string[], quarter?: number) => void; onCancel: () => void; title?: string; sub?: string; okText?: string; emptyText?: string; emptySub?: string; areaOf?: (c: TripCar) => PickerArea; pickQuarter?: boolean; quarterOff?: (n: number) => boolean }
 type Area = { regions: string[]; districts: string[]; types: string[] };
 const NO_AREA: Area = { regions: [], districts: [], types: [] };
 export function TripCarPicker({ open, ...p }: PickerProps & { open: boolean }) {
@@ -57,7 +63,7 @@ export function TripCarPicker({ open, ...p }: PickerProps & { open: boolean }) {
   return <Picker {...p} />;
 }
 
-function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่มยานพาหนะเข้าแผนเดินทาง", sub: subText, okText = "เพิ่มเข้าแผนเดินทาง", emptyText, emptySub, areaOf }: PickerProps) {
+function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่มยานพาหนะเข้าแผนเดินทาง", sub: subText, okText = "เพิ่มเข้าแผนเดินทาง", emptyText, emptySub, areaOf, pickQuarter, quarterOff }: PickerProps) {
   const mob = useBreakpoint() === "Mobile";
   const [q, setQ] = useState("");
   const [page, setPage] = useState(1);
@@ -70,11 +76,12 @@ function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่
   const [sheet, setSheet] = useState(false);
   const [fd, setFd] = useState<Area>(NO_AREA);
   const [dd, setDd] = useState("");
+  const [quarter, setQuarter] = useState(0);   // pickQuarter: ไตรมาสที่เลือก (0 = ยังไม่เลือก)
   const mDates = useMachineDates();
   const k = q.trim();
   const inArea = (c: TripCar) => {
     if (!areaOf) return true;
-    const a = areaOf(c.id);
+    const a = areaOf(c);
     return (!area.regions.length || area.regions.includes(a.region)) && (!area.districts.length || area.districts.includes(a.district)) && (!area.types.length || area.types.includes(a.type));
   };
   const shown = pool.filter((c) => (!k || c.plate.includes(k) || c.model.includes(k) || c.owner.includes(k)) && inArea(c));
@@ -104,6 +111,7 @@ function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่
   const last = Math.max(1, Math.ceil(shown.length / PER)), pg = Math.min(page, last);
   const nTaken = pool.filter((c) => taken[c.id]).length;
   const n = ticked.length;
+  const needQuarter = !!pickQuarter && !quarter;
   const sub = subText ?? "ยานพาหนะทุกคันของ" + nowQ + (nTaken ? " · " + nTaken + " คันอยู่ในแผนเดินทางอื่นแล้ว เลือกไม่ได้" : "");
   const search = <TextInput Label={false} Size={mob ? "lg" : "md"} LeadingIconSwap="search-24-300-round" Text={q} Placeholder={SEARCH} onChange={(v) => { setQ(v); setPage(1); }} aria-label={SEARCH} className={mob ? "w-full" : "w-80"} />;
   const rows = shown.slice((pg - 1) * PER, pg * PER).map((c) => {
@@ -113,6 +121,18 @@ function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่
 
   const table = <CheckTable columns={COLS} rows={rows} scope={shown.map((c) => ({ key: c.id, disabled: !!taken[c.id] }))} ticked={ticked} onTicked={setTicked}
     Pagination={<TablePagination total={shown.length} page={pg} perPage={PER} onPage={setPage} />} />;
+  /* ช่องเลือกไตรมาส (pickQuarter) — Input dropdown แถวแรกของเนื้อหา · desktop กว้างหนึ่งในสาม (ช่องเดียวกับแผงตัวกรอง) */
+  const quarterRow = pickQuarter && (
+    <div className={mob ? "flex flex-col" : "grid grid-cols-3 gap-4"}>
+      <InputDropdown LabelText="เพิ่มเข้าไตรมาส" Text={quarter ? QUARTERS[quarter - 1] : ""} Placeholder="เลือกไตรมาส" open={dd === "quarter"} onOpenChange={ddOpen("quarter")}>
+        <DropdownList>{QUARTERS.map((t, i) => {
+          const no = i + 1, off = !!quarterOff?.(no);
+          return <DropdownListItem key={t} Text={t} SupportingText={off ? "บำรุงรักษาเสร็จทุกคันแล้ว" : undefined} State={off ? "Disabled" : no === quarter ? "Selected" : "Default"}
+            onClick={() => { if (off) return; setQuarter(no); setDd(""); }} />;
+        })}</DropdownList>
+      </InputDropdown>
+    </div>
+  );
   /* ตัวกรองในตัว popup: Table header (ไม่มีหัวตาราง) + Filter panel (desktop) · ชิปตัวกรองซ่อนระหว่างแผงกาง (ค่าอยู่ในช่องของแผงแล้ว) */
   const filtered = areaOf && <>
     <TableHeader query={q} Placeholder={SEARCH} onQuery={(v) => { setQ(v); setPage(1); }} onFilter={openPanel} FilterCount={chips.length}
@@ -133,12 +153,12 @@ function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่
   </>;
   const body = !pool.length
     ? (emptyText ? <EmptyStateDataEmpty Text={emptyText} SupportingText={emptySub} Graphic="vehicle" /> : <EmptyStateDataEmpty Graphic="vehicle" Text={"ยานพาหนะทุกคันของ" + nowQ + " อยู่ในแผนเดินทางแล้ว"} SupportingText="ไม่มียานพาหนะที่เพิ่มเข้าแผนเดินทางนี้ได้" />)
-    : filtered || <>{search}{table}</>;
+    : <>{quarterRow}{filtered || <>{search}{table}</>}</>;
 
   return (
     <>
-      <PopupModal open title={title} sub={sub} width={800} ok={okText + (n ? " (" + n + ")" : "")} okDisabled={!n}
-        onCancel={onCancel} onOk={() => onAdd(pool.filter((c) => ticked.includes(c.id) && !taken[c.id]).map((c) => c.id))}>
+      <PopupModal open title={title} sub={sub} width={1140} ok={okText + (n ? " (" + n + ")" : "")} okDisabled={!n || needQuarter}
+        onCancel={onCancel} onOk={() => !needQuarter && onAdd(pool.filter((c) => ticked.includes(c.id) && !taken[c.id]).map((c) => c.id), quarter || undefined)}>
         {body}
       </PopupModal>
       {areaOf && mob && <FilterShell open={sheet} onClose={closePanel} onClear={() => setFd(NO_AREA)} onApply={applyPanel}>{dropdowns}</FilterShell>}

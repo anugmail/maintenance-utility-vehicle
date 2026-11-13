@@ -23,7 +23,7 @@
      ปุ่ม ย้อนกลับ · ยืนยันการสร้างแผนเดินทาง | ส่งอนุมัติใหม่ — Disabled จนกว่าช่องบังคับครบ (รีวิว 5 พ.ย. 2569 แทน E.7 · S9 ฟอร์มเดียวกัน)
      Validation: ช่องบังคับที่ออกจากช่องโดยยังว่าง (Out of focus) — "กรุณาระบุชื่อแผนเดินทาง" · "กรุณาเลือกผู้รับจ้าง" · "กรุณาเลือกวันที่เริ่ม" · "กรุณาเลือกวันที่สิ้นสุด" · "กรุณาเลือกพนักงาน"
      Breadcrumbs บำรุงรักษาตามวาระ › <ชื่อแผน> › ไตรมาส n › สร้างแผนเดินทาง (ต่อจากหน้า "ไตรมาส n")
-   popup: TripCarPicker (เพิ่มรถ) · TripCarEditModal (แก้ไขผู้ดูแลยานพาหนะและสถานที่) · ไม่มีช่องค่าใช้จ่าย (ย้ายไปปิดงาน S10 · 3 พ.ย. 2569) */
+   popup: TripCarPicker (เพิ่มรถ · 13 พ.ย. 2569 BACKLOG ข้อ 89 ส่ง areaOf = carArea ⇒ แผงตัวกรองภาค เขต ประเภทยานพาหนะแบบ popup ของฟอร์มแผน S1 · คันในแผนเดินทางอื่นยังติ๊กไม่ได้) · TripCarEditModal (แก้ไขผู้ดูแลยานพาหนะและสถานที่) · ไม่มีช่องค่าใช้จ่าย (ย้ายไปปิดงาน S10 · 3 พ.ย. 2569) */
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Alert } from "@/components/vms/Alert";
@@ -54,6 +54,7 @@ import { useOutside } from "@/lib/useOutside";
 import { useProtoForm } from "@/lib/protoForm";
 import { TripCarEditModal, fromThai, toThai, type CarOverrides } from "./TripCarEditModal";
 import { TripCarPicker } from "./TripCarPicker";
+import { carArea } from "@/lib/mock/carArea";
 import { BtnRow, Content, DataTable, Section, quarterCrumbs, tripsHref, useBack } from "./ui";
 
 /* TRIP_CAR_COLS ของ screens.js = tripVCols() + ไอคอนแก้ไข ลบ (R82 ชุดกลาง) */
@@ -277,7 +278,7 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
           <PrimaryButton Text={edit ? "ส่งอนุมัติใหม่" : "ยืนยันการสร้างแผนเดินทาง"} Size="lg" State={kbk && valid ? "Default" : "Disabled"} onClick={submit} />
         </BtnRow>
       </Content>
-      <TripCarPicker open={picker} pool={pool} taken={taken} nowQ={nowQ} onCancel={() => setPicker(false)}
+      <TripCarPicker open={picker} pool={pool} taken={taken} nowQ={nowQ} areaOf={carArea} onCancel={() => setPicker(false)}
         onAdd={(ids) => { const e = qEditOf(mock, planId, q), pick = (o: Record<string, string>) => Object.fromEntries(ids.filter((x) => o[x]).map((x) => [x, o[x]]));
           put({ carIds: [...v.carIds, ...ids], phones: { ...v.phones, ...pick(e.phones) }, locs: { ...v.locs, ...pick(e.locs) }, names: { ...v.names, ...pick(e.names ?? {}) } }); setPicker(false); }} />
       <TripCarEditModal car={editCar} trip={over} work={editCar ? { d1: vt.d1, d2: vt.d2, value: vt.d1 ? workOf(vt, editCar.id) : ["", ""] } : undefined} onCancel={() => setEditCar(null)}

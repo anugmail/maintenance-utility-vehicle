@@ -14,6 +14,8 @@
        · 11 พ.ย. 2569 เพิ่มรายคันได้เฉพาะไตรมาสที่ยังบำรุงรักษาไม่เสร็จทุกคัน (quarterFinished · เสร็จสิ้น + บำรุงรักษาไม่ได้ นับว่าเสร็จ) — เสร็จครบแล้ว ปุ่ม "เพิ่มยานพาหนะ" Disabled
        · 12 พ.ย. 2569 (เจ้าของงาน 12 พ.ย. 2569 เลือกตามไฟล์สรุปประชุม VMS Plus (Notion "meeting 11/11/68" หัวข้อ 9) · BACKLOG ข้อ 71) ตัวเลือก = ยานพาหนะทุกคันที่ยังไม่อยู่ในแผนนี้ ไม่จำกัดภาค เขต ประเภทของแผน (รับมอบระหว่างปีเพิ่มได้ · quarterPool)
          บรรทัดรองของ popup "ยานพาหนะที่ยังไม่อยู่ในแผนนี้ เพิ่มได้ทุกคัน รวมยานพาหนะที่รับมอบระหว่างปี" (เดิม "ยานพาหนะในขอบเขตของแผน (ภาค เขต และประเภทยานพาหนะเดียวกัน) ที่ยังไม่อยู่ในไตรมาสใด")
+       · 13 พ.ย. 2569 เจ้าของงาน "ฟอร์มการเลือกรถอยากให้ใช้เหมือนกัน แต่ต่างกันที่ คอลัมน์ที่ต่างกัน" (BACKLOG ข้อ 89) ⇒ popup ส่ง areaOf = carArea — แผงตัวกรองภาค เขต ประเภทยานพาหนะกางตั้งแต่เปิด (desktop)
+         แบบ popup ของฟอร์มแผน S1 · กว้าง 1140 · หัว บรรทัดรอง คอลัมน์ ปุ่ม toast คงเดิม
        · ไอคอนแก้ไข = TripCarEditModal (คันที่อยู่ในแผนเดินทางแล้ว = แก้ที่ใบนั้น) · ไอคอนลบ = ConfirmDialog "ยืนยันการเอารถออกจากไตรมาส n" · ไม่ต้องส่งอนุมัติแผนใหม่
      Section label "แผนเดินทาง (n)" + Tertiary brand button "สร้างแผนเดินทาง" → Table (TRIP_COLS ไอคอน ›) / Empty state/Data empty + Primary button "สร้างแผนเดินทาง"
        รถทุกคันอยู่ในแผนเดินทางแล้ว = ปุ่ม "สร้างแผนเดินทาง" Disabled (5 พ.ย. 2569 "สร้างแผนได้จนกว่าจะไม่เหลือรถ" · ตัด popup "รถทุกคันของไตรมาสอยู่ในแผนเดินทางแล้ว")
@@ -61,6 +63,7 @@ import { UNIT_COL, tripVCells, tripVCols, tripWork, workOf } from "@/lib/mock/tr
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { TripCarEditModal } from "../_shared/TripCarEditModal";
 import { TripCarPicker } from "../_shared/TripCarPicker";
+import { carArea } from "@/lib/mock/carArea";
 import { Content, DataTable, PagedTable, Section, go, planDetailHref, quarterCrumbs, useBack } from "../_shared/ui";
 
 /* TRIP_Q_COLS ของ screens.js = ชุดกลาง TRIP_V_COLS (R82 · lib/mock/tripCols.ts) ไม่มีสถานที่บำรุงรักษา (สถานที่อยู่กับแผนเดินทาง) + แผนเดินทาง
@@ -187,7 +190,7 @@ function TripList() {
         </InputDropdownWithBadges>
       </FilterShell>
       <TripCarPicker open={adding} pool={quarterPool(mock, id, q)} nowQ={nowQ} title={"เพิ่มยานพาหนะเข้า" + nowQ}
-        sub="ยานพาหนะที่ยังไม่อยู่ในแผนนี้ เพิ่มได้ทุกคัน รวมยานพาหนะที่รับมอบระหว่างปี" okText={"เพิ่มเข้า" + nowQ} emptyText="ไม่มียานพาหนะที่เพิ่มเข้าไตรมาสนี้ได้"
+        sub="ยานพาหนะที่ยังไม่อยู่ในแผนนี้ เพิ่มได้ทุกคัน รวมยานพาหนะที่รับมอบระหว่างปี" okText={"เพิ่มเข้า" + nowQ} emptyText="ไม่มียานพาหนะที่เพิ่มเข้าไตรมาสนี้ได้" areaOf={carArea}
         onCancel={() => setAdding(false)} onAdd={(ids) => { addQuarterCars(id, q, ids); setAdding(false); notify("เพิ่มยานพาหนะเข้า" + nowQ + " สำเร็จ"); }} />
       {/* S25 (Figma 5c47568 X.2 X.11): ดำเนินการบำรุงรักษา + ย้ายไปไตรมาสอื่น · ไตรมาส 4 ย้ายกดไม่ได้ ดำเนินการบำรุงรักษากดได้ */}
       <RowMenu anchor={menu?.anchor ?? null} items={menu ? [{ ...MAINT_ITEM, onClick: () => setMaint(menu.car) }, { Text: "ย้ายไปไตรมาสอื่น", IconSwap: MOVE_ICON, Disabled: lastQ, onClick: () => openMove(menu.car) }] : []} onClose={() => setMenu(null)} />
