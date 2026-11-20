@@ -3,7 +3,7 @@ import type { PillColor } from "@/components/vms/PillOutline";
 import { putCloseout } from "./closeout";
 import { JOB_TEXT, PEOPLE, SEED_TRIPS, WORK, applyJobs, carOf, closedSample, getJob, jobKey, jobsOf, newJob, workItems, type Job, type JobTrip, type TripCar } from "./jobs";
 import { setMock, type MockState } from "./store";
-import { DEFAULT_NOTIS, TRIP_OTHER, ackNoti } from "./trips";
+import { DEFAULT_NOTIS, TRIP_OTHER, ackNoti, qEditOf, quarterCars } from "./trips";
 
 type Pill = readonly [label: string, tone: PillColor];
 
@@ -35,10 +35,24 @@ export const workRows = (j: Job) => workItems(j);
 export const splitBy = (by: string): [string, string | undefined] => { const m = /^(.*) \((.*)\)$/.exec(by); return m ? [m[1], m[2]] : [by, undefined]; };
 
 export function planAcked(m: MockState, planId: string) {
-  const trips = Object.values(jobsOf(m).trips).filter((t) => t.planId === planId);
-  const total = trips.reduce((n, t) => n + t.carIds.length, 0);
-  const rows = accRows(m).filter((r) => r.trip.planId === planId);
-  return total > 0 && rows.length === total && rows.every((r) => r.accepted);
+  const js = jobsOf(m), trips = Object.values(js.trips).filter((t) => t.planId === planId);
+  const cars = [1, 2, 3, 4].flatMap((q) => quarterCars(m, planId, q).map((c) => ({ q, id: c.id })));
+  const finished = (q: number, id: string) => trips.some((t) => {
+    if (t.q !== q || !t.carIds.includes(id)) return false;
+    const j = getJob(js, t.id, id);
+    return (j.status === "done" || j.status === "cannot") && !!j.acceptedAt;
+  });
+  return cars.length > 0 && cars.every(({ q, id }) => finished(q, id));
+}
+
+export function acceptLastCarSample() {
+  acceptSample(false);
+  const keep = ACCEPTANCE_CARS.map((c) => c.carId), id = "Z7000001", tq = SEED_TRIPS.T1.q;
+  applyJobs((s) => ({ ...s, jobs: Object.fromEntries(Object.entries(s.jobs).map(([k, j]) => [k, k === jobKey("T1", keep[2]) ? j : { ...j, acceptedAt: ACK_AT }])) }));
+  setMock((s) => ({ ...s, qcars: { ...s.qcars, ...Object.fromEntries([1, 2, 3, 4].map((q) => {
+    const cur = quarterCars(s, id, q).map((c) => c.id);
+    return [id + "-" + q, { ...qEditOf(s, id, q), added: q === tq ? keep : [], removed: cur.filter((x) => q !== tq || !keep.includes(x)) }];
+  })) } }));
 }
 
 export function acceptCar(r: AccRow) {
@@ -71,4 +85,5 @@ export function acceptSample(acked: boolean) {
 }
 export const ACCEPT_SAMPLES = {
   S13: { role: "ผู้ดูแลยานพาหนะ" as const, apply: () => acceptSample(false) },
+  S13_last: { role: "ผู้ดูแลยานพาหนะ" as const, apply: acceptLastCarSample },
 };
