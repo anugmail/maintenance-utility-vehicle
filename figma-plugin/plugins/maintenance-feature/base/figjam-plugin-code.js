@@ -1,0 +1,476 @@
+/* ============================================================
+   Maintain-D → FigJam board · ฝั่ง sandbox
+   ------------------------------------------------------------
+   รับ board.json + รูป (bytes) จาก ui.html แล้วสร้าง:
+     section ต่อหมวด → ในหมวดเรียงคอลัมน์ (ป้ายชื่อ + รูปซ้อนแนวตั้ง
+     สำหรับหน้าที่ถูกสไลซ์) → หมวดที่เป็นโฟลว์มีลูกศรเชื่อมตามลำดับ
+
+   รูปใน FigJam = ShapeWithText (SQUARE) เติม IMAGE fill — FigJam
+   ไม่มี rectangle/frame ให้ใช้ ส่วน text ของ shape ปล่อยว่างไว้
+   (ไม่แตะ = ไม่ต้องโหลดฟอนต์ให้มัน)
+
+   section ชนิด doc (20 ต.ค. 2569 — AC รายหน้า จาก 9-ac-board.js): บล็อกเรียงลง
+   heading/text = TextNode · table = TableNode ของ FigJam (figma.createTable
+   เซลล์แก้ทีละช่องบนบอร์ดได้) — ใช้ลงไฟล์เดียวกับบอร์ด userflow ด้วย anchor below
+
+   รันซ้ำ = ล้างของเดิมก่อน: section ชื่อตรงกับ spec · MEDIA เร่ร่อน
+   ระดับบนสุด (รูปที่เคยอัปโหลดค้างไว้) · ลูกศร/รูปที่ปลั๊กอินนี้สร้าง
+   ============================================================ */
+
+figma.showUI(__html__, { width: 420, height: 560, themeColors: true });
+
+/* ตัวบอกว่ากำลังทำขั้นไหน — ใช้ตอน error เพื่อชี้ตำแหน่งที่พังในไฟล์จริง */
+const STEP = { now: '' };
+const step = (t) => { STEP.now = t; };
+
+const ARROW = { r: 0xF8 / 255, g: 0x49 / 255, b: 0xC1 / 255 }; // ชมพู palette ของ FigJam
+
+function post(text, cls) {
+  figma.ui.postMessage({ type: 'log', text, cls });
+}
+
+/* ตรวจก่อนลงมือ: ปลั๊กอินนี้ใช้ API เฉพาะของ FigJam
+   ถ้าเปิดในไฟล์ Figma Design จะไม่มีฟังก์ชันพวกนี้ แล้วไปตายกลางทางเป็น "not a function"
+   ซึ่งอ่านไม่ออกว่าเกิดอะไรขึ้น (เจ้าของงานเจอ 15 ก.ย. 2569 — เสียเวลาไล่หาอยู่นาน)
+   ⇒ ฟ้องตั้งแต่ต้นว่าเปิดผิดชนิดไฟล์ */
+function assertFigJam() {
+  const need = ['createShapeWithText', 'createConnector', 'createSection'];
+  const missing = need.filter((fn) => typeof figma[fn] !== 'function');
+  if (!missing.length) return;
+  const kind = (figma.editorType || 'ไม่ทราบชนิด');
+  throw new Error(
+    'ไฟล์ที่เปิดอยู่ไม่ใช่ FigJam (editorType = "' + kind + '") — ปลั๊กอินนี้ต้องรันในไฟล์ FigJam เท่านั้น · ' +
+    'ฟังก์ชันที่ขาด: ' + missing.join(', ') + ' · ' +
+    'วิธีแก้: เปิดไฟล์ FigJam (ไฟล์บอร์ด) แล้วรันใหม่ — ถ้าอยากได้ผังในไฟล์ Figma design ต้องใช้ปลั๊กอิน "Maintain-D → Figma" แทน'
+  );
+}
+
+async function build(spec, images) {
+  assertFigJam();
+  const warnings = [];
+  const byteMap = new Map(images.map(i => [i.src, i.bytes]));
+
+  // ---- ล้างของเดิม ----
+  const names = new Set(spec.sections.map(s => s.name));
+  /* เก็บกวาด MEDIA ระดับบนสุดเฉพาะตอนที่ spec มี section รูปเท่านั้น
+     — บอร์ดของคนอื่น (เช่น Planning 1-2) มีรูปที่คนวางไว้เองเป็น MEDIA ระดับบนสุด
+     ถ้าล้างทุกครั้ง แค่รันผังล้วนก็ลบรูปของเขาทิ้ง (เจอ 5 ต.ค. 2569 ก่อนรันจริง) */
+  const hasImages = spec.sections.some(s => Array.isArray(s.cols));
+  let cleaned = 0;
+  if (spec.anchor === 'below') {
+    /* โหมดวางต่อใต้ของเดิม = หน้านี้มีงานคนอื่นอยู่ (19 ต.ค. 2569 — ชุด Overhaul v2 ลงหน้าที่มีข้อมูลแล้ว)
+       ⇒ ลบเฉพาะของชุดนี้เอง: section ชื่อเดียวกับใน spec + ลูกศรที่ปลายข้างใดข้างหนึ่งต่อกับของใน section นั้น
+       ไม่แตะ MEDIA · ลูกศร flow อื่น · shape ระดับบนสุดของคนอื่น */
+    const mine = figma.currentPage.children.filter(n => n.type === 'SECTION' && names.has(n.name));
+    const ids = new Set();
+    mine.forEach(sec => { ids.add(sec.id); (sec.findAll ? sec.findAll(() => true) : []).forEach(k => ids.add(k.id)); });
+    const touches = (c) => [c.connectorStart, c.connectorEnd].some(e => e && e.endpointNodeId && ids.has(e.endpointNodeId));
+    for (const n of figma.currentPage.children.slice()) {
+      if ((n.type === 'CONNECTOR' && n.name === 'flow →' && touches(n)) || mine.indexOf(n) >= 0) { n.remove(); cleaned++; }
+    }
+  } else for (const n of figma.currentPage.children.slice()) {
+    if ((n.type === 'SECTION' && names.has(n.name)) ||
+        (hasImages && n.type === 'MEDIA') ||
+        (n.type === 'CONNECTOR' && n.name === 'flow →') ||
+        (n.type === 'SHAPE_WITH_TEXT' && n.name.indexOf('shot /') === 0)) {
+      n.remove();
+      cleaned++;
+    }
+  }
+  if (cleaned) post('ล้างของเดิม ' + cleaned + ' ชิ้น');
+
+  // ---- ฟอนต์ป้ายชื่อ ----
+  let font = spec.font;
+  try { await figma.loadFontAsync(font); }
+  catch (e) {
+    warnings.push('ฟอนต์ ' + spec.font.family + ' ไม่มี → ใช้ ' + spec.fallbackFont.family);
+    font = spec.fallbackFont;
+    await figma.loadFontAsync(font);
+  }
+  // กติกา Figma: จะ "เปลี่ยน" fontName ของ text ที่มีอยู่ ต้องโหลดฟอนต์เดิมของมันก่อนด้วย
+  // — text ใน ShapeWithText/Connector เกิดมาเป็น Inter ⇒ โหลดกันไว้ทั้งสองน้ำหนัก
+  for (const f of [{ family: 'Inter', style: 'Medium' }, { family: 'Inter', style: 'Regular' }]) {
+    try { await figma.loadFontAsync(f); } catch (e) { /* ไม่มีก็ปล่อย — เจอจริงค่อยฟ้องตอนตั้งค่า */ }
+  }
+
+  const made = { sections: 0, shapes: 0, connectors: 0, stickies: 0, tables: 0, texts: 0, warnings };
+  let y = 0;
+  /* anchor: 'below' — วางต่อใต้ของที่มีอยู่บนบอร์ดแล้ว ชิดซ้ายเท่าของเดิม
+     ใช้ตอนเขียนลงบอร์ดที่มีงานคนอื่นอยู่ (ค่าเดิม = เริ่มที่ 0,0 ซึ่งจะทับของเขา) */
+  let x0 = 0;
+  if (spec.anchor === 'below') {
+    const rest = figma.currentPage.children;
+    if (rest.length) {
+      y = Math.max(...rest.map(n => n.y + n.height)) + 400;
+      x0 = Math.min(...rest.map(n => n.x));
+    }
+  }
+  const built = [];
+
+  for (const sec of spec.sections) {
+    if (sec.kind === 'diagram') {
+      y = await buildDiagram(sec, y, font, made, x0, built);
+      post('✓ ' + sec.name + ' (ผัง ' + sec.diagram.nodes.length + ' node)');
+      continue;
+    }
+    if (sec.kind === 'doc') {
+      y = await buildDoc(sec, y, font, made, x0, built);
+      post('✓ ' + sec.name + ' (' + sec.blocks.length + ' บล็อก)');
+      continue;
+    }
+    step('สร้าง section "' + sec.name + '"');
+    const s = figma.createSection();
+    s.name = sec.name;
+    s.fills = [{ type: 'SOLID', color: { r: sec.color[0] / 255, g: sec.color[1] / 255, b: sec.color[2] / 255 } }];
+
+    /* แถว Desktop / Mobile (5 พ.ย. 2569 ตามผัง R19 ของไฟล์ Figma): sec.rows = [{ label, h }] · ภาพมี im.row · ป้ายแถวซ้ายสุด */
+    const rows = sec.rows || null, ROW_GAP = 120, DEV_W = 160;
+    const rowY = (r) => 176 + (rows ? rows.slice(0, r).reduce((a, q) => a + q.h + ROW_GAP, 0) : 0);
+    let x = rows ? 80 + DEV_W + 80 : 80;
+    let maxColH = rows ? rowY(rows.length - 1) + rows[rows.length - 1].h - 176 : 0;
+    const anchors = [];
+
+    for (const col of sec.cols) {
+      step('ป้ายชื่อคอลัมน์ "' + col.label + '"');
+      const label = figma.createText();
+      label.fontName = font;
+      label.fontSize = 36;
+      label.characters = col.label;
+      s.appendChild(label);
+      label.x = x; label.y = 96;
+
+      let yy = 176;
+      let first = null;
+      let colW = 0;
+      const colShapes = [];
+      for (const im of col.images) {
+        const bytes = byteMap.get(im.src);
+        if (!bytes) throw new Error('ไม่มี bytes ของ ' + im.src);
+        step('ใส่รูป ' + im.src);
+        const image = figma.createImage(bytes);
+        const shape = figma.createShapeWithText();
+        shape.shapeType = 'SQUARE';
+        shape.name = 'shot / ' + im.src;
+        s.appendChild(shape);
+        shape.resize(im.w, im.h);
+        shape.fills = [{ type: 'IMAGE', imageHash: image.hash, scaleMode: 'FILL' }];
+        // เส้นขอบจางไว้เสมอ — ถ้า copy บอร์ดข้ามไฟล์ imageHash จะ resolve ไม่ได้ (bytes อยู่ในคลังรูป
+        // ของไฟล์ต้นทาง ไม่ตามไปด้วย) กล่องที่ไม่มีขอบจะกลายเป็นโปร่งใสสนิท มองไม่เห็นว่ามีอะไรอยู่
+        // (เจ้าของงานเจอ 15 ก.ย. 2569) ⇒ มีขอบไว้อย่างน้อยเห็นว่ากล่องยังอยู่ แค่รูปไม่มา
+        shape.strokes = [{ type: 'SOLID', color: { r: 0.816, g: 0.835, b: 0.867 } }];
+        shape.strokeWeight = 1;
+        shape.x = x; shape.y = rows ? rowY(im.row || 0) : yy;
+        yy += im.h;
+        colW = Math.max(colW, im.w);
+        if (!first) first = shape;
+        colShapes.push(shape);
+        made.shapes++;
+      }
+      anchors.push(first);
+      groupIn(s, [label].concat(colShapes), 'จอ / ' + col.label, made);
+      if (!rows) maxColH = Math.max(maxColH, yy - 176);
+      x += (colW || 1440) + 160;
+    }
+
+    if (rows) rows.forEach((q, r) => {
+      step('ป้ายแถว ' + q.label);
+      const d = figma.createShapeWithText();
+      d.shapeType = 'ROUNDED_RECTANGLE';
+      d.name = 'อุปกรณ์ / ' + q.label;
+      s.appendChild(d);
+      d.resize(DEV_W, q.h);
+      d.fills = [{ type: 'SOLID', color: { r: 0x64 / 255, g: 0x74 / 255, b: 0x8B / 255 } }];
+      d.text.fontName = font; d.text.fontSize = 32; d.text.characters = q.label;
+      d.text.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 } }];
+      d.x = 80; d.y = rowY(r);
+    });
+
+    step('ปรับขนาด section "' + sec.name + '"');
+    s.resizeWithoutConstraints(x - 160 + 80, 176 + maxColH + 80);
+    await addSectionTitle(s, sec.name, font);
+    s.x = x0; s.y = y;
+    built.push(s);
+    y += s.height + 320;
+    made.sections++;
+
+    const secConns = [];
+    if (sec.connect === 'sequence') {
+      for (let i = 0; i < anchors.length - 1; i++) {
+        if (!anchors[i] || !anchors[i + 1]) continue;
+        const c = figma.createConnector();
+        c.name = 'flow →';
+        c.connectorStart = { endpointNodeId: anchors[i].id, magnet: 'AUTO' };
+        c.connectorEnd = { endpointNodeId: anchors[i + 1].id, magnet: 'AUTO' };
+        c.connectorStartStrokeCap = 'NONE';
+        c.connectorEndStrokeCap = 'ARROW_LINES';
+        c.strokes = [{ type: 'SOLID', color: ARROW }];
+        c.strokeWeight = 3;
+        secConns.push(c);
+        made.connectors++;
+      }
+    }
+    wrapScenario(s, secConns, sec.name, made);
+    post('✓ ' + sec.name + ' (' + sec.cols.length + ' หน้าจอ)');
+  }
+
+  figma.viewport.scrollAndZoomIntoView(built.length ? built : figma.currentPage.children);
+  return made;
+}
+
+/* หัวข้อภาษาไทยในแต่ละ section (5 พ.ย. 2569 เจ้าของงาน ภาพหัว section สระลอยเพี้ยน)
+   ป้ายชื่อ section FigJam วาดด้วยฟอนต์ของโปรแกรม ปลั๊กอินเลือกไม่ได้ ⇒ ใส่ TextNode ฟอนต์ไทยตัวใหญ่ไว้บนสุดของ section
+   ดันของเดิมลงตามความสูงหัวข้อ (connector ผูกปลายกับ node อยู่แล้ว เลื่อนตามเอง) · ชื่อ section คงเดิม (รันซ้ำแทนที่ได้) */
+async function addSectionTitle(s, title, font) {
+  const H = 120;
+  for (const c of s.children) if (c.type !== 'CONNECTOR') c.y += H;
+  s.resizeWithoutConstraints(s.width, s.height + H);
+  const t = figma.createText();
+  t.fontName = font;
+  t.fontSize = 56;
+  t.characters = title;
+  t.name = 'หัวข้อ / ' + title;
+  s.appendChild(t);
+  t.x = 80; t.y = 40;
+}
+
+/* group ในแต่ละ section (5 พ.ย. 2569 เจ้าของงาน "อยากให้ group หน้าจอ ก่อน แล้วค่อย group scenario แล้วจากนั้น ก็ groupรวบ พื้นหลัง แยกไปทีละ scen ไป ตอนนี้ทุกชิ้นมันแยกออกจากกันไปหมด")
+   ชั้นใน = จอ (ป้าย + ภาพ) · ชั้นนอก = ทุกอย่างของ scenario (หัวข้อ จอ ลูกศร) อยู่ใน section ของ scenario นั้นซึ่งเป็นพื้นหลัง ⇒ ลาก/เลือกทีละ scenario ได้ทั้งก้อน
+   ลูกศรเดิมสร้างไว้บนหน้า (ไม่อยู่ใน section) ⇒ ย้ายเข้า section ก่อนรวบ · group ไม่ได้ (API รุ่นเก่า) = เตือน ไม่พัง */
+function groupIn(s, nodes, name, made) {
+  try { const g = figma.group(nodes, s); g.name = name; return g; }
+  catch (e) { made.warnings.push('group "' + name + '" ไม่ได้ — ' + e.message); return null; }
+}
+function wrapScenario(s, conns, name, made) {
+  for (const c of conns) { try { s.appendChild(c); } catch (e) { /* ลูกศรย้ายไม่ได้ ปล่อยไว้บนหน้า */ } }
+  if (s.children.length > 1) groupIn(s, [...s.children], 'scenario / ' + name, made);
+}
+
+/* ---------- section ชนิดผัง (flowchart จาก Diagram/ ผ่าน 4-figjam-diagram.js) ----------
+   node = ShapeWithText ชนิดตามผัง mermaid · เส้น = ConnectorNode ผูกปลายจริง
+   (ลาก node แล้วเส้นตามมา — แก้ผังต่อบนบอร์ดได้เลย) · เลน = shape สีอ่อนรองพื้น */
+const DIAGRAM_SHAPE = {
+  process: 'ROUNDED_RECTANGLE', decision: 'DIAMOND', stadium: 'ELLIPSE',
+  subroutine: 'SQUARE', circle: 'ELLIPSE',
+  // ชุด Template ของบอร์ด Planning 1-2 (start/End · Action · Display · Decision)
+  end: 'ELLIPSE', action: 'ELLIPSE', display: 'SQUARE'
+};
+const LANE_TINTS = [
+  { r: 0xFF / 255, g: 0xF7 / 255, b: 0xF0 / 255 },   // ส้มอ่อน (palette FigJam)
+  { r: 0xF8 / 255, g: 0xF5 / 255, b: 0xFF / 255 }    // ม่วงอ่อน
+];
+const INK = { r: 0x75 / 255, g: 0x75 / 255, b: 0x75 / 255 };
+const WHITE = { r: 1, g: 1, b: 1 };
+
+async function buildDiagram(sec, y, font, made, x0, built) {
+  const d = sec.diagram;
+  /* สไตล์ต่อ node/เส้น (ไม่ใส่ = หน้าตาเดิม): node.fill/stroke/strokeWeight/fontSize ·
+     edge.color/weight/dash/ms/me/lineType · diagram.font · diagram.stickies
+     — ใช้กับผังที่ต้องออกหน้าตาตาม Template ของบอร์ดปลายทาง */
+  if (d.font) {
+    try { await figma.loadFontAsync(d.font); font = d.font; }
+    catch (e) { made.warnings.push('ฟอนต์ผัง ' + d.font.family + ' ' + d.font.style + ' ไม่มี → ใช้ ' + font.family); }
+  }
+  const PAD = 80;
+  const s = figma.createSection();
+  s.name = sec.name;
+  s.fills = [{ type: 'SOLID', color: { r: sec.color[0] / 255, g: sec.color[1] / 255, b: sec.color[2] / 255 } }];
+
+  /* เลนก่อน — จะได้อยู่ใต้ node
+     **ล็อกพื้นหลังไว้** (เจ้าของงานสั่ง 15 ก.ย. 2569) — แถบเลนเป็นกล่องใหญ่กินพื้นที่ทั้งแถว
+     ถ้าไม่ล็อก คลิกที่ว่างในเลนแล้วลากจะกลายเป็นลากเลนทั้งแถบแทนที่จะเลือก node
+     ปลดล็อกได้เองใน Figma: คลิกขวา → Unlock (หรือ ⌘⇧L) */
+  const lock = (n) => { try { n.locked = true; } catch (e) { /* node ชนิดที่ล็อกไม่ได้ — ข้าม */ } };
+
+  d.clusters.forEach((cl, i) => {
+    const lane = figma.createShapeWithText();
+    lane.shapeType = 'SQUARE';
+    lane.name = 'lane / ' + cl.label;
+    s.appendChild(lane);
+    lane.resize(cl.w, cl.h);
+    lane.fills = [{ type: 'SOLID', color: LANE_TINTS[i % LANE_TINTS.length] }];
+    lane.strokes = [];
+    lane.x = PAD + cl.x; lane.y = PAD + cl.y;
+
+    const lt = figma.createText();
+    lt.fontName = font;
+    lt.fontSize = 30;
+    lt.characters = cl.label;
+    s.appendChild(lt);
+    lt.x = PAD + cl.x + 24; lt.y = PAD + cl.y + 14;
+
+    /* รวมแถบเลน + ชื่อเลน เป็นก้อนเดียว แล้วล็อกทั้งก้อน
+       (เจ้าของงานเลือกแบบนี้ 15 ก.ย. 2569) — ย้าย/ซ่อนทีเดียวได้ และไม่โดนลากโดยไม่ตั้งใจ
+       group ไม่ได้ก็ปล่อยเป็นสองชิ้นแล้วล็อกแยก ไม่ให้ทั้งผังพังเพราะเรื่องนี้ */
+    let g = null;
+    try { g = figma.group([lane, lt], s); } catch (e) { g = null; }
+    if (g) { g.name = 'lane / ' + cl.label; lock(g); }
+    else { lock(lane); lock(lt); }
+  });
+
+  /* หัวคอลัมน์ช่วงงาน — สเปกจาก 5-swimlane.js ส่ง `phases` มาให้ แต่เดิมปลั๊กอินไม่ได้อ่าน
+     ทำให้ผังบนบอร์ดไม่มีแกนนอนบอกว่าอยู่ช่วงไหน (เจอ 15 ก.ย. 2569) · ล็อกเหมือนพื้นหลัง */
+  (d.phases || []).forEach((ph) => {
+    const ht = figma.createText();
+    ht.fontName = font;
+    ht.fontSize = 28;
+    ht.characters = ph.label;
+    ht.name = 'phase / ' + ph.label;
+    s.appendChild(ht);
+    ht.x = PAD + ph.x; ht.y = PAD + ph.y;
+    lock(ht);
+  });
+
+  const byId = {};
+  for (const n of d.nodes) {
+    const sh = figma.createShapeWithText();
+    sh.shapeType = DIAGRAM_SHAPE[n.kind] || 'ROUNDED_RECTANGLE';
+    sh.name = n.id + ' / ' + (n.label.split('\n')[0] || n.kind);
+    s.appendChild(sh);
+    sh.resize(n.w, n.h);
+    sh.fills = [{ type: 'SOLID', color: n.fill || WHITE }];
+    sh.strokes = [{ type: 'SOLID', color: n.stroke || INK }];
+    sh.strokeWeight = n.strokeWeight || 2;
+    sh.text.fontName = font;
+    sh.text.characters = n.label;
+    sh.text.fontSize = n.fontSize || (n.kind === 'decision' ? 26 : 24);
+    sh.x = PAD + n.x; sh.y = PAD + n.y;
+    byId[n.id] = sh;
+    made.shapes++;
+  }
+
+  for (const st of (d.stickies || [])) {
+    step('sticky "' + st.text.slice(0, 20) + '"');
+    const k = figma.createSticky();
+    s.appendChild(k);
+    await figma.loadFontAsync(k.text.fontName);
+    k.text.characters = st.text;
+    if (st.color) k.fills = [{ type: 'SOLID', color: st.color }];
+    k.x = PAD + st.x; k.y = PAD + st.y;
+    made.stickies++;
+  }
+
+  s.resizeWithoutConstraints(d.w + PAD * 2, d.h + PAD * 2);
+  await addSectionTitle(s, sec.name, font);
+  s.x = x0 || 0; s.y = y;
+  if (built) built.push(s);
+  made.sections++;
+
+  const secConns = [];
+  for (const e of d.edges) {
+    if (!byId[e.from] || !byId[e.to]) continue;
+    const c = figma.createConnector();
+    secConns.push(c);
+    c.name = 'flow →';
+    c.connectorStart = { endpointNodeId: byId[e.from].id, magnet: e.ms || 'AUTO' };
+    c.connectorEnd = { endpointNodeId: byId[e.to].id, magnet: e.me || 'AUTO' };
+    if (e.lineType) c.connectorLineType = e.lineType;
+    c.connectorStartStrokeCap = 'NONE';
+    c.connectorEndStrokeCap = 'ARROW_LINES';
+    c.strokes = [{ type: 'SOLID', color: e.color || (e.style === 'thick' ? ARROW : INK) }];
+    c.strokeWeight = e.weight || (e.style === 'thick' ? 4 : 2);
+    if (e.style === 'dotted') c.dashPattern = e.dash || [8, 8];
+    if (e.label) {
+      c.text.fontName = font;
+      c.text.characters = e.label;
+    }
+    made.connectors++;
+  }
+  wrapScenario(s, secConns, sec.name, made);
+
+  return y + s.height + 320;
+}
+
+/* ---------- section ชนิดเอกสาร (AC รายหน้า — สเปกจาก 9-ac-board.js) ----------
+   บล็อกเรียงลงใน section: heading = TextNode ใหญ่ · text = TextNode กว้างคงที่ สูงตามเนื้อหา ·
+   table = TableNode ของ FigJam (เซลล์แก้ทีละช่องได้บนบอร์ด · แถวแรกพื้นเทาเป็นหัวตาราง)
+   ความสูงจริงอ่านจาก node หลังใส่ข้อความ (ค่าในสเปกเป็นแค่ค่าประมาณกันตก) */
+const HEAD_TINT = { r: 0xE9 / 255, g: 0xEA / 255, b: 0xEE / 255 };
+
+async function buildDoc(sec, y, font, made, x0, built) {
+  const PAD = sec.pad || 80, GAP = sec.gap || 40, W = sec.w || 2000;
+  if (sec.blocks.some(b => b.kind === 'table') && typeof figma.createTable !== 'function') {
+    throw new Error('FigJam ที่เปิดอยู่ไม่มี figma.createTable — สร้างตารางไม่ได้ · section "' + sec.name + '" · ' +
+      'วิธีแก้: อัปเดต FigJam (Table ใน Plugin API) หรือสร้างสเปกแบบไม่มีตาราง');
+  }
+  step('สร้าง section "' + sec.name + '"');
+  const s = figma.createSection();
+  s.name = sec.name;
+  s.fills = [{ type: 'SOLID', color: { r: sec.color[0] / 255, g: sec.color[1] / 255, b: sec.color[2] / 255 } }];
+  let yy = PAD;
+  let maxW = W;
+
+  for (const b of sec.blocks) {
+    if (b.kind === 'heading' || b.kind === 'text') {
+      step((b.kind === 'heading' ? 'หัวข้อ "' : 'กล่องข้อความ "') + b.text.slice(0, 30) + '"');
+      const t = figma.createText();
+      t.fontName = font;
+      t.fontSize = b.kind === 'heading' ? (b.size || 32) : (sec.fontText || 24);
+      t.characters = b.text;
+      t.name = (b.kind === 'heading' ? 'heading / ' : 'text / ') + b.text.split('\n')[0].slice(0, 40);
+      s.appendChild(t);
+      if (b.kind === 'text') {
+        /* กว้างคงที่ สูงตามเนื้อหา — text ของ FigJam เกิดมาเป็นกว้างตามข้อความ (ย่อหน้ายาวจะเป็นบรรทัดเดียวยาวมาก) */
+        try { t.textAutoResize = 'HEIGHT'; } catch (e) { /* รุ่นที่ไม่รองรับ — ใช้ขนาดประมาณจากสเปก */ }
+        t.resize(W, Math.max(b.h || 40, 40));
+      }
+      t.x = PAD; t.y = yy;
+      yy += Math.max(t.height || 0, b.kind === 'heading' ? Math.round(t.fontSize * 1.5) : (b.h || 40)) + GAP;
+      made.texts++;
+      continue;
+    }
+    if (b.kind === 'table') {
+      const nR = b.rows.length, nC = b.colW.length;
+      step('ตาราง ' + nR + ' แถว x ' + nC + ' คอลัมน์ "' + (b.rows[0] || []).join(' | ').slice(0, 40) + '"');
+      const tb = figma.createTable(nR, nC);
+      tb.name = 'table / ' + (b.rows[0] || []).join(' | ').slice(0, 60);
+      s.appendChild(tb);
+      b.colW.forEach((w, c) => { try { tb.resizeColumn(c, w); } catch (e) { /* รุ่นที่ไม่มี resizeColumn — ปล่อยกว้างเดิม */ } });
+      for (let r = 0; r < nR; r++) {
+        for (let c = 0; c < nC; c++) {
+          const cell = tb.cellAt(r, c);
+          if (!cell) continue;
+          /* กติกาฟอนต์ของ Figma: จะเปลี่ยน fontName ต้องโหลดฟอนต์เดิมของเซลล์ก่อน (เซลล์เกิดมาเป็น Inter) */
+          try { await figma.loadFontAsync(cell.text.fontName); } catch (e) { /* โหลดไว้แล้วตอนต้น */ }
+          cell.text.fontName = font;
+          cell.text.fontSize = sec.fontCell || 20;
+          cell.text.characters = b.rows[r][c] || '';
+          if (r === 0) { try { cell.fills = [{ type: 'SOLID', color: HEAD_TINT }]; } catch (e) { /* เซลล์รุ่นที่ใส่สีไม่ได้ */ } }
+        }
+      }
+      tb.x = PAD; tb.y = yy;
+      yy += Math.max(tb.height || 0, b.h || 0) + GAP;
+      maxW = Math.max(maxW, tb.width || b.colW.reduce((a, w) => a + w, 0));
+      made.tables++;
+      continue;
+    }
+    made.warnings.push('บล็อกชนิดไม่รู้จัก "' + b.kind + '" ใน ' + sec.name);
+  }
+
+  s.resizeWithoutConstraints(maxW + PAD * 2, yy - GAP + PAD);
+  await addSectionTitle(s, sec.name, font);
+  s.x = x0 || 0; s.y = y;
+  if (built) built.push(s);
+  made.sections++;
+  return y + s.height + 320;
+}
+
+figma.ui.onmessage = async (msg) => {
+  if (msg.type !== 'build') return;
+  try {
+    const result = await build(msg.spec, msg.images);
+    figma.ui.postMessage({ type: 'done', result });
+    figma.notify('บอร์ดเสร็จ: ' + result.sections + ' section · รูป ' + result.shapes +
+      ' · ลูกศร ' + result.connectors + (result.tables ? ' · ตาราง ' + result.tables + ' · กล่องข้อความ ' + result.texts : ''));
+  } catch (e) {
+    // ส่ง stack กลับไปด้วย — ข้อความอย่างเดียว ("not a function") บอกไม่ได้ว่าพังบรรทัดไหน
+    // และ mock ใน test-figjam-plugin.js จับไม่เจอเพราะมันนิยามเมธอดครบกว่า Figma จริง
+    // (เจ้าของงานเจอ 15 ก.ย. 2569 — เทส mock ผ่านแต่ของจริงพัง)
+    const detail = [
+      String(e && e.message ? e.message : e),
+      STEP.now ? 'ขั้นที่ทำอยู่: ' + STEP.now : '',
+      e && e.stack ? String(e.stack).split('\n').slice(0, 4).join(' ⏎ ') : ''
+    ].filter(Boolean).join(' · ');
+    figma.ui.postMessage({ type: 'error', message: detail });
+    figma.notify('สร้างบอร์ดไม่สำเร็จ — ดูรายละเอียดในหน้าต่างปลั๊กอิน', { error: true });
+  }
+};

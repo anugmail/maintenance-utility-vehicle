@@ -1,0 +1,14 @@
+{
+  "name": "figma-plugin",
+  "private": true,
+  "description": "ปลั๊กอิน Figma ของงานบำรุงรักษาตามวาระ (I AM A lnw) — แยกจากรีโปงานซ่อม",
+  "scripts": {
+    "build": "node plugins/maintenance-feature/build.js",
+    "test": "node test/update.test.js && node test/figjam.test.js && node test/plugin.test.js",
+    "test:all": "node test/update.test.js && node test/figjam.test.js && FEATURES=plan,trip,job,close,track node test/plugin.test.js",
+    "serve": "node serve.js",
+    "sync-base": "node scripts/sync-base.mjs",
+    "link-dump": "node scripts/link-dump.mjs"
+  },
+  "engines": { "node": ">=20" }
+}

@@ -1,0 +1,14 @@
+{
+  "repo": "Maintenance-Request-Form",
+  "ref": "origin/main",
+  "commit": "ee11614",
+  "date": "2026-11-13",
+  "files": {
+    "figma-export/plugin-lib/core.js": "core.js",
+    "figma-export/maintainance-plugin/screens.js": "screens.js",
+    "figma-export/maintainance-plugin/build.json": "build.json",
+    "figma-export/figjam-plugin/code.js": "figjam-plugin-code.js"
+  },
+  "note": "ลอกมาจาก figma-export/maintainance-feature-plugin/base/ ของรีโปงานซ่อม (a70bfac) 19 พ.ย. 2569 · figjam-plugin-code.js และ img/ ลอกจาก working tree ณ a70bfac",
+  "syncedAt": "2026-11-19"
+}

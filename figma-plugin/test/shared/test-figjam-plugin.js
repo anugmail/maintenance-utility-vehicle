@@ -1,0 +1,304 @@
+#!/usr/bin/env node
+/* ============================================================
+   รัน figjam-plugin/code.js บน mock ของ FigJam Plugin API
+   ตรวจ: จำนวน section/รูป/ป้าย/ลูกศรตรง board.json จริง ·
+   ลูกศรเฉพาะ section ที่ connect=sequence · รันซ้ำไม่ซ้อน (ล้างของเดิม)
+   · MEDIA เร่ร่อน (รูปอัปโหลดค้าง) ถูกเก็บกวาด
+
+   รัน:  node figma-export/test-figjam-plugin.js   (ต้องมี out/board.json · SPEC=board-overhaul2.json สำหรับไฟล์อื่น)
+   ============================================================ */
+
+const fs = require('fs');
+const path = require('path');
+const vm = require('vm');
+
+let idSeq = 1;
+
+/* จำลองกติกาฟอนต์ของ Figma: จะเขียนอะไรลง text sublayer (รวมถึงเปลี่ยน fontName)
+   ต้องโหลด "ฟอนต์ปัจจุบัน" ของมันก่อน — text ใน shape/connector เกิดมาเป็น Inter Medium
+   (บั๊กที่เจอจริงตอนรันในไฟล์: in set_fontName: Cannot write to node with unloaded font) */
+const loadedFonts = new Set();
+function textSublayer() {
+  const state = { characters: '', fontName: { family: 'Inter', style: 'Medium' }, fontSize: 12, fills: [] };
+  return new Proxy(state, {
+    set(t, k, v) {
+      const cur = t.fontName.family + ' ' + t.fontName.style;
+      if ((k === 'fontName' || k === 'characters') && !loadedFonts.has(cur)) {
+        throw new Error('in set_' + String(k) + ': Cannot write to node with unloaded font "' + cur + '"');
+      }
+      t[k] = v;
+      return true;
+    }
+  });
+}
+
+class MNode {
+  constructor(type) {
+    this.id = 'n' + (idSeq++);
+    this.type = type;
+    this.name = type;
+    this.children = [];
+    this.parent = null;
+    this.fills = [];
+    this.strokes = [];
+    this.width = 100; this.height = 100;
+    this.x = 0; this.y = 0;
+    this.strokeWeight = 1;
+    if (type === 'TEXT') { this.characters = ''; this.fontName = null; this.fontSize = 12; }
+    if (type === 'SHAPE_WITH_TEXT') {
+      this.shapeType = 'SQUARE';
+      this.text = textSublayer();          // default Inter Medium — จำลองกติกา unloaded font
+    }
+    if (type === 'STICKY') { this.text = textSublayer(); this.width = 240; this.height = 240; }
+    if (type === 'TABLE') {   // TableNode ของ FigJam (20 ต.ค. 2569 — section ชนิด doc)
+      this.numRows = 0; this.numColumns = 0; this.colW = []; this.cells = [];
+    }
+    if (type === 'CONNECTOR') {
+      this.connectorStart = null; this.connectorEnd = null;
+      this.connectorStartStrokeCap = 'NONE'; this.connectorEndStrokeCap = 'ARROW_LINES';
+      this.text = textSublayer();
+    }
+  }
+  appendChild(n) {
+    if (n.parent) n.parent.children = n.parent.children.filter(c => c !== n);
+    n.parent = this;
+    this.children.push(n);
+  }
+  remove() {
+    if (this.parent) this.parent.children = this.parent.children.filter(c => c !== this);
+    (this.children.slice()).forEach(c => c.remove());
+    this.removed = true;
+  }
+  resize(w, h) { this.width = w; this.height = h; }
+  resizeWithoutConstraints(w, h) { this.width = w; this.height = h; }
+  cellAt(r, c) { return (this.cells[r] || [])[c] || null; }
+  resizeColumn(c, w) { this.colW[c] = w; this.width = this.colW.reduce((a, b) => a + b, 0); }
+  resizeRow() {}
+  findAll(fn) { const out = []; const w = (n) => (n.children || []).forEach(c => { if (!fn || fn(c)) out.push(c); w(c); }); w(this); return out; }   // SectionNode.findAll ของจริง
+}
+
+const page = new MNode('PAGE');
+// จำลองรูปที่เคยอัปโหลดค้างไว้ 3 ใบ — ปลั๊กอินต้องเก็บกวาด (เฉพาะเมื่อ spec มี section รูป)
+// วางไว้ที่ y 0–2000 จะได้ใช้เช็ค anchor:'below' ด้วย (บอร์ดจริงมีงานคนอื่นอยู่ก่อน)
+for (let i = 0; i < 3; i++) { const m = new MNode('MEDIA'); m.y = i * 900; m.x = -500; page.appendChild(m); }
+// ลูกศร "flow →" ของ flow อื่นบนบอร์ด (ผูกกับรูปของคนอื่น) — โหมด anchor below ห้ามลบ
+const foreignA = new MNode('MEDIA'), foreignB = new MNode('MEDIA');
+const foreignConn = new MNode('CONNECTOR'); foreignConn.name = 'flow →';
+foreignConn.connectorStart = { endpointNodeId: foreignA.id }; foreignConn.connectorEnd = { endpointNodeId: foreignB.id };
+page.appendChild(foreignConn);
+
+const notifications = [];
+const figma = {
+  currentPage: page,
+  showUI() {},
+  notify(m) { notifications.push(m); },
+  ui: { postMessage(m) { figma._last = m; }, onmessage: null },
+  viewport: { scrollAndZoomIntoView() {} },
+  loadFontAsync: async (f) => {
+    if (f.family === 'ไม่มีจริง') throw new Error('no font');
+    loadedFonts.add(f.family + ' ' + f.style);
+  },
+  createSection() { const n = new MNode('SECTION'); page.appendChild(n); return n; },
+  group(nodes, parent) {
+    const g = new MNode('GROUP');
+    parent.appendChild(g);
+    nodes.forEach(n => g.appendChild(n));
+    return g;
+  },
+  createText() { const n = new MNode('TEXT'); page.appendChild(n); return n; },
+  createConnector() { const n = new MNode('CONNECTOR'); page.appendChild(n); return n; },
+  createSticky() { const n = new MNode('STICKY'); page.appendChild(n); return n; },
+  createShapeWithText() { const n = new MNode('SHAPE_WITH_TEXT'); page.appendChild(n); return n; },
+  createTable(nr, nc) {   // เซลล์เกิดมาเป็น Inter Medium เหมือน text sublayer อื่น — ต้องโหลดฟอนต์ก่อนเขียน
+    const n = new MNode('TABLE'); n.numRows = nr; n.numColumns = nc; n.colW = Array(nc).fill(160);
+    for (let r = 0; r < nr; r++) { n.cells.push([]); for (let c = 0; c < nc; c++) n.cells[r].push({ rowIndex: r, columnIndex: c, text: textSublayer(), fills: [] }); }
+    n.width = nc * 160; n.height = nr * 48; page.appendChild(n); return n;
+  },
+  createImage(bytes) {
+    if (!(bytes instanceof Uint8Array) || !bytes.length) throw new Error('bytes เพี้ยน');
+    return { hash: 'h' + (idSeq++) };
+  }
+};
+
+const code = fs.readFileSync(path.join(__dirname, 'figjam-plugin', 'code.js'), 'utf8');
+vm.runInNewContext(code, { figma, __html__: '', console });
+
+const spec = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'out', process.env.SPEC || 'board.json')   /* รีโป figma-plugin: out/ ที่รากรีโป */, 'utf8'));   // SPEC=board-overhaul2.json ทดสอบไฟล์อื่น
+const srcs = [...new Set(spec.sections.flatMap(s => (s.cols || []).flatMap(c => c.images.map(i => i.src))))];
+const images = srcs.map(src => ({ src, bytes: new Uint8Array([1, 2, 3]) }));
+
+const fail = (m) => { console.error('✗ ' + m); process.exitCode = 1; };
+const ok = (m) => console.log('✓ ' + m);
+
+(async () => {
+  await figma.ui.onmessage({ type: 'build', spec, images });
+  const res = figma._last;
+  if (!res || res.type !== 'done') return fail('build ไม่จบ: ' + JSON.stringify(res));
+  const r = res.result;
+
+  const diagSecs = spec.sections.filter(s => s.kind === 'diagram');
+  const wantShapes = spec.sections.reduce((a, s) => a + (s.cols || []).reduce((b, c) => b + c.images.length, 0), 0)
+    + diagSecs.reduce((a, s) => a + s.diagram.nodes.length, 0);
+  const wantConn = spec.sections.filter(s => s.connect === 'sequence')
+    .reduce((a, s) => a + s.cols.length - 1, 0)
+    + diagSecs.reduce((a, s) => a + s.diagram.edges.length, 0);
+
+  r.sections === spec.sections.length ? ok('section ' + r.sections) : fail('section ได้ ' + r.sections);
+  r.shapes === wantShapes ? ok('รูป ' + r.shapes) : fail('รูปได้ ' + r.shapes + ' คาด ' + wantShapes);
+  r.connectors === wantConn ? ok('ลูกศร ' + r.connectors) : fail('ลูกศรได้ ' + r.connectors + ' คาด ' + wantConn);
+
+  /* MEDIA: spec ที่มีรูป → เก็บกวาดรูปค้าง · spec ผังล้วน → ห้ามแตะ (เป็นรูปที่คนวางเองบนบอร์ด) */
+  const hasImages = spec.sections.some(s => Array.isArray(s.cols));
+  const nMedia = page.children.filter(n => n.type === 'MEDIA').length;
+  if (spec.anchor === 'below') {
+    nMedia === 3 ? ok('anchor below — ไม่แตะ MEDIA ของคนอื่น (เหลือ 3)') : fail('anchor below แต่ลบ MEDIA ไป ' + (3 - nMedia));
+    page.children.indexOf(foreignConn) >= 0 ? ok('anchor below — ลูกศรของ flow อื่นยังอยู่') : fail('anchor below ลบลูกศรของ flow อื่น');
+  } else if (hasImages) nMedia === 0 ? ok('MEDIA เร่ร่อนถูกเก็บกวาด') : fail('MEDIA ค้าง');
+  else nMedia === 3 ? ok('ผังล้วน — ไม่แตะ MEDIA ของคนอื่น (เหลือ 3)') : fail('ผังล้วนแต่ลบ MEDIA ไป ' + (3 - nMedia));
+
+  if (spec.anchor === 'below') {
+    const secs = page.children.filter(n => n.type === 'SECTION');
+    secs.every(s => s.y >= 1900 + 100 && s.x === -500)
+      ? ok('anchor below — วางใต้ของเดิม ชิดซ้ายเท่าของเดิม') : fail('anchor below วางทับของเดิม');
+  }
+
+  const wantSticky = diagSecs.reduce((a, s) => a + (s.diagram.stickies || []).length, 0);
+  if (wantSticky) {
+    const st = [];
+    page.children.filter(n => n.type === 'SECTION').forEach(s => st.push(...(function d(n, o = []) { (n.children || []).forEach(c => { o.push(c); d(c, o); }); return o; })(s).filter(c => c.type === 'STICKY')));
+    st.length === wantSticky && st.every(k => k.text.characters)
+      ? ok('sticky ' + st.length + ' ใบ มีข้อความครบ') : fail('sticky ได้ ' + st.length + ' คาด ' + wantSticky);
+  }
+
+  // ป้ายชื่อครบทุกคอลัมน์ และอยู่ใน section
+  // ชื่อเลนถูกรวมเข้า group แล้ว (15 ก.ย. 2569) ⇒ ต้องไล่ลูกลึกลงไป ไม่ใช่แค่ชั้นเดียว
+  const deep = (n, out = []) => { (n.children || []).forEach(c => { out.push(c); deep(c, out); }); return out; };
+  const labels = [];
+  page.children.filter(n => n.type === 'SECTION').forEach(s =>
+    labels.push(...deep(s).filter(c => c.type === 'TEXT')));
+  // ป้าย = ป้ายคอลัมน์ของ section รูป + ชื่อเลน + หัวคอลัมน์ช่วงงาน (phases — เพิ่ม 15 ก.ย. 2569)
+  const docSecs = spec.sections.filter(s => s.kind === 'doc');
+  const wantLabels = spec.sections.reduce((a, s) => a + (s.cols || []).length, 0)
+    + diagSecs.reduce((a, s) => a + s.diagram.clusters.length + (s.diagram.phases || []).length, 0)
+    + docSecs.reduce((a, s) => a + s.blocks.filter(b => b.kind !== 'table').length, 0)
+    + spec.sections.length;   // + หัวข้อภาษาไทยในแต่ละ section (5 พ.ย. 2569)
+  const secs = page.children.filter(n => n.type === 'SECTION' && spec.sections.some(x => x.name === n.name));
+  const top = (s) => (s.children.length === 1 && s.children[0].type === 'GROUP') ? s.children[0] : s;   // section ที่รวบเป็น group เดียวแล้ว
+  const titled = secs.filter(s => { const box = top(s); const t = box.children.find(c => c.type === 'TEXT' && c.name === 'หัวข้อ / ' + s.name);
+    return t && t.characters === s.name && box.children.every(c => c === t || c.type === 'CONNECTOR' || c.y >= t.y + 56); });
+  /* group (5 พ.ย. 2569): section รูป/ผัง = group เดียว "scenario / ชื่อ" ที่มีหัวข้อ จอ ลูกศรครบ · section รูป: จอละ group "จอ / ป้าย" = ป้าย + ภาพ */
+  const wrapSecs = secs.filter(s => { const sp = spec.sections.find(x => x.name === s.name); return sp && sp.kind !== 'doc'; });
+  const wrapped = wrapSecs.filter(s => s.children.length === 1 && s.children[0].type === 'GROUP' && s.children[0].name === 'scenario / ' + s.name);
+  wrapped.length === wrapSecs.length ? ok('รวบ scenario เป็น group เดียว ' + wrapped.length + ' section') : fail('รวบ scenario ได้ ' + wrapped.length + ' จาก ' + wrapSecs.length);
+  const looseConn = page.children.filter(n => n.type === 'CONNECTOR' && n.name === 'flow →' && n !== foreignConn);   // foreignConn = ลูกศรของ flow อื่นที่เทสวางไว้เอง
+  looseConn.length === 0 ? ok('ลูกศรอยู่ใน section ทั้งหมด') : fail('ลูกศรลอยอยู่บนหน้า ' + looseConn.length);
+  const imgSecs = spec.sections.filter(x => Array.isArray(x.cols));
+  /* แถว Desktop / Mobile (5 พ.ย. 2569): มีป้ายแถวครบ · ภาพ mobile อยู่ใต้ภาพ desktop ทุกภาพในเซกชันเดียวกัน */
+  const rowSecs = imgSecs.filter(x => x.rows);
+  if (rowSecs.length) {
+    const bad = rowSecs.filter(sp => {
+      const sec = secs.find(n => n.name === sp.name); if (!sec) return true;
+      const all = deep(sec), labs = all.filter(n => n.name && n.name.startsWith('อุปกรณ์ / '));
+      const shots = all.filter(n => n.type === 'SHAPE_WITH_TEXT' && n.name.startsWith('shot / '));
+      const mob = shots.filter(n => /-mobile\.png$/.test(n.name)), desk = shots.filter(n => !/-mobile\.png$/.test(n.name));
+      const deskBottom = Math.max(...desk.map(n => n.y + n.height));
+      return labs.length !== sp.rows.length || !mob.length || mob.some(n => n.y < deskBottom);
+    });
+    bad.length === 0 ? ok('แถว Desktop / Mobile ' + rowSecs.length + ' section · ป้ายแถวครบ · mobile อยู่ใต้ desktop') : fail('แถว Desktop / Mobile ผิด ' + bad.map(x => x.name).join(', '));
+  }
+  if (imgSecs.length) {
+    const wantG = imgSecs.reduce((a, x) => a + x.cols.length, 0);
+    const gs = secs.flatMap(s => deep(s)).filter(n => n.type === 'GROUP' && n.name.startsWith('จอ / '));
+    const goodG = gs.filter(g => g.children[0] && g.children[0].type === 'TEXT' && g.children.slice(1).length >= 1 && g.children.slice(1).every(c => c.type === 'SHAPE_WITH_TEXT'));
+    (gs.length === wantG && goodG.length === wantG) ? ok('จอละ group (ป้าย + ภาพ) ' + gs.length) : fail('group จอได้ ' + goodG.length + '/' + gs.length + ' คาด ' + wantG);
+  }
+  titled.length === secs.length ? ok('หัวข้อไทยในทุก section ' + titled.length + ' อยู่บนสุด') : fail('หัวข้อ section ได้ ' + titled.length + ' จาก ' + secs.length);
+  labels.length === wantLabels ? ok('ป้ายชื่อ ' + labels.length) : fail('ป้ายได้ ' + labels.length + ' คาด ' + wantLabels);
+
+  // node ผังทุกตัวต้องมีข้อความ + ชนิดถูกตั้ง (ไม่ค้าง SQUARE หมด)
+  if (diagSecs.length) {
+    const diagShapes = [];
+    page.children.filter(n => n.type === 'SECTION' && diagSecs.some(s => s.name === n.name))
+      .forEach(s => diagShapes.push(...deep(s).filter(c => c.type === 'SHAPE_WITH_TEXT' && !c.name.startsWith('lane /'))));
+    const noText = diagShapes.filter(sh => !sh.text.characters);
+    noText.length === 0 ? ok('node ผังมีข้อความครบ ' + diagShapes.length) : fail('node ผังไม่มีข้อความ ' + noText.length);
+    /* ชนิดรูปต้องตรงกับที่สเปกสั่ง — ไม่ใช่ "ต้องมีหลายชนิด"
+       (เกณฑ์เดิม >= 3 ชนิด ตั้งไว้ตอนมีแต่ผัง mermaid ที่มี decision diamond
+        พอมี swimlane ที่ใช้แค่ process + circle/stadium เทสก็ตกทั้งที่ถูกต้อง — เจอ 15 ก.ย. 2569) */
+    const SHAPE_OF = { process: 'ROUNDED_RECTANGLE', decision: 'DIAMOND', stadium: 'ELLIPSE',
+                       subroutine: 'SQUARE', circle: 'ELLIPSE',
+                       end: 'ELLIPSE', action: 'ELLIPSE', display: 'SQUARE' };
+    const wantKinds = new Set(diagSecs.flatMap(s => s.diagram.nodes.map(n => SHAPE_OF[n.kind] || 'ROUNDED_RECTANGLE')));
+    const gotKinds = new Set(diagShapes.map(sh => sh.shapeType));
+    const missing = [...wantKinds].filter(k => !gotKinds.has(k));
+    const extra = [...gotKinds].filter(k => !wantKinds.has(k));
+    (!missing.length && !extra.length)
+      ? ok('ชนิดรูปผังตรงสเปก (' + [...gotKinds].join(',') + ')')
+      : fail('ชนิดรูปผังไม่ตรงสเปก — ขาด: ' + (missing.join(',') || '-') + ' · เกิน: ' + (extra.join(',') || '-'));
+  }
+
+  // section ชนิด doc: ตารางครบ · ทุกเซลล์ที่สเปกมีข้อความต้องถูกเขียน (ฟอนต์โหลดก่อน) · หัวตารางมีสี · text block กว้างเท่าที่สั่ง
+  if (docSecs.length) {
+    const wantTables = docSecs.reduce((a, s) => a + s.blocks.filter(b => b.kind === 'table').length, 0);
+    const tables = [];
+    page.children.filter(n => n.type === 'SECTION' && docSecs.some(s => s.name === n.name))
+      .forEach(s => tables.push(...s.children.filter(c => c.type === 'TABLE')));
+    (r.tables === wantTables && tables.length === wantTables) ? ok('ตาราง ' + tables.length) : fail('ตารางได้ ' + tables.length + '/' + r.tables + ' คาด ' + wantTables);
+    let emptyCell = 0, cells = 0, noHead = 0;
+    docSecs.forEach(s => {
+      const sec = page.children.find(n => n.type === 'SECTION' && n.name === s.name);
+      const tbs = sec.children.filter(c => c.type === 'TABLE');
+      s.blocks.filter(b => b.kind === 'table').forEach((b, i) => {
+        const tb = tbs[i];
+        if (!tb) return;
+        if (tb.numRows !== b.rows.length || tb.numColumns !== b.colW.length) fail('ขนาดตารางไม่ตรง ' + tb.name);
+        b.rows.forEach((row, ri) => row.forEach((v, ci) => {
+          cells++;
+          const cell = tb.cellAt(ri, ci);
+          if (v && (!cell || cell.text.characters !== v)) emptyCell++;
+          if (ri === 0 && (!cell || !cell.fills.length)) noHead++;
+        }));
+      });
+    });
+    emptyCell === 0 ? ok('เซลล์มีข้อความครบ ' + cells) : fail('เซลล์ไม่ถูกเขียน ' + emptyCell);
+    noHead === 0 ? ok('หัวตารางมีสีพื้น') : fail('หัวตารางไม่มีสี ' + noHead);
+    const texts = [];
+    page.children.filter(n => n.type === 'SECTION' && docSecs.some(s => s.name === n.name))
+      .forEach(s => texts.push(...s.children.filter(c => c.type === 'TEXT' && c.name.startsWith('text /'))));
+    const wantText = docSecs.reduce((a, s) => a + s.blocks.filter(b => b.kind === 'text').length, 0);
+    const W = docSecs[0].w || 2000;
+    (texts.length === wantText && texts.every(t => t.width === W && t.characters && t.textAutoResize === 'HEIGHT'))
+      ? ok('กล่องข้อความ ' + texts.length + ' กว้าง ' + W + ' สูงตามเนื้อหา') : fail('กล่องข้อความผิด (ได้ ' + texts.length + ' คาด ' + wantText + ')');
+    const bad = [];
+    docSecs.forEach(s => { const sec = page.children.find(n => n.type === 'SECTION' && n.name === s.name); if (!sec) return;
+      const kids = sec.children.slice().sort((a, b) => a.y - b.y);
+      for (let i = 1; i < kids.length; i++) if (kids[i].y < kids[i - 1].y + kids[i - 1].height) bad.push(s.name + ' #' + i); });
+    bad.length === 0 ? ok('บล็อกใน doc ไม่ซ้อนทับกัน') : fail('บล็อกซ้อนทับ ' + bad.length + ' จุด: ' + bad.slice(0, 3).join(', '));
+  }
+
+  // section ต้องครอบลูกทุกตัว (spot check ทุก section)
+  let overflow = 0;
+  page.children.filter(n => n.type === 'SECTION').forEach(s => {
+    s.children.forEach(c => {
+      if (c.x + c.width > s.width + 0.1 || c.y + c.height > s.height + 0.1) overflow++;
+    });
+  });
+  overflow === 0 ? ok('section ครอบลูกครบ') : fail('ลูกล้น section ' + overflow + ' ชิ้น');
+
+  // ลูกศรผูกกับรูปแรกของคอลัมน์ที่ติดกันจริง
+  const conns = page.children.filter(n => n.type === 'CONNECTOR' && n.name === 'flow →' && n !== foreignConn);
+  const bad = conns.filter(c => !c.connectorStart || !c.connectorEnd ||
+    c.connectorEndStrokeCap !== 'ARROW_LINES');
+  bad.length === 0 ? ok('ลูกศรผูกปลายครบ') : fail('ลูกศรผูกไม่ครบ ' + bad.length);
+
+  // รันซ้ำ — จำนวนบน canvas ต้องเท่าเดิม (ล้างของเก่าก่อนสร้างใหม่)
+  const count1 = page.children.length;
+  await figma.ui.onmessage({ type: 'build', spec, images });
+  const res2 = figma._last;
+  res2.type === 'done' ? ok('รันซ้ำผ่าน') : fail('รันซ้ำพัง');
+  page.children.length === count1
+    ? ok('รันซ้ำไม่ซ้อน (top-level ' + count1 + ' ชิ้น)')
+    : fail('รันซ้ำงอกจาก ' + count1 + ' เป็น ' + page.children.length);
+
+  console.log(process.exitCode ? '\nมีข้อผิดพลาด' : '\nผ่านทุกข้อ');
+})();

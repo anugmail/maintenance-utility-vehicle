@@ -63,6 +63,7 @@ npm run check-wording                                        # R80 ข้อค�
 | `src/app/` | หน้าตาม scenario (`page.tsx` = รายการแผน · `new/` ฟอร์มสร้างแผน · `scenarios/` `kit/` `soon/` ของต้นแบบ · `plans/` ที่อยู่เดิมที่พาไปที่ใหม่) |
 | `src/lib/mock/` | ข้อมูลจำลอง |
 | `scripts/` | `sync-tokens.mjs` · `figma-spec.mjs` |
+| `figma-plugin/` | ปลั๊กอิน Figma **I AM A lnw** (สร้างจอ 5 Feature ลง Figma · ส่งภาพไป FigJam) สำเนาจาก liinux-cw/figma-plugin f7e6b6c (20 พ.ย. 2569) · ไม่ใช่ส่วนของเว็บ ไม่ build ด้วย Next · วิธีใช้ดู `figma-plugin/README.md` |
 | `plan.md` · `docs/code-notes/` | โน้ตของโค้ดที่ไม่อยู่ในโค้ด (ข้อ 20) · `plan.md` เป็นสารบัญ · `docs/code-notes/<โฟลเดอร์>.md` หัวข้อละ 1 ไฟล์โค้ด |
 
 <!-- BEGIN:nextjs-agent-rules -->

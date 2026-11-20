@@ -1,0 +1,6 @@
+.DS_Store
+node_modules/
+# ผลเทส ภาพจอ และสเปกบอร์ดที่ส่งไป FigJam (serve.js)
+out/
+# ดัมป์ไลบรารี Figma ของ PEA — ไม่ push (ใช้ npm run link-dump ชี้ไปที่ดัมป์ในเครื่อง)
+figma-dump/
