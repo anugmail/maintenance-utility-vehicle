@@ -62,7 +62,7 @@ function Review() {
       <div className="flex flex-col gap-8">
         {plan.status === "review" && !oh && <DecisionSection approveSub={APPROVE_SUB} returnSub={RETURN_SUB} {...dec} />}
         <PlanBody plan={plan} q={q} onQ={setQ} />
-        <PlanParts plan={plan} />
+        <PlanParts plan={plan} readonly />
         {plan.status === "review" && !oh && (
           <div className={cx("flex", mob ? "gap-4 [&>*]:flex-1 [&>*]:basis-0" : "justify-between gap-3")}>
             <SecondaryButton Text="ย้อนกลับ" Size="lg" onClick={() => router.push(LIST)} />

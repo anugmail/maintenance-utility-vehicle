@@ -1,12 +1,26 @@
 "use client";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { FeaturedIcon } from "@/components/vms/FeaturedIcon";
 import { InputLabel } from "@/components/vms/InputLabel";
 import { Rating } from "@/components/vms/Rating";
 import { SectionHeader } from "@/components/vms/SectionHeader";
 import { TextInput } from "@/components/vms/TextInput";
 import { cx } from "@/lib/cx";
-import { KIND, NO_LABEL, PROVIDER_LABEL, SAT_NOTE, SURVEY_GROUPS, SURVEY_START, groupScore, type EvalRow, type SurveyAnswers } from "@/lib/mock/survey";
+import { KIND, NO_LABEL, PROVIDER_LABEL, SAT_NOTE, SURVEY_GROUPS, SURVEY_START, groupScore, SAT_HIDDEN_ROLE, type EvalRow, type SurveyAnswers } from "@/lib/mock/survey";
+import { roleHome } from "@/lib/mock/planFlow";
+import { useMock, useRole } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
+
+export function useSatGuard() {
+  const role = useRole();
+  const mock = useMock();
+  const router = useRouter();
+  const out = role === SAT_HIDDEN_ROLE;
+  const home = out ? roleHome(role, mock) ?? "/" : "";
+  useEffect(() => { if (home) router.replace(home); }, [home, router]);
+  return out;
+}
 
 export function SurveyGroups({ answers, notes, onPick, onNote }: { answers: SurveyAnswers; notes: string[]; onPick?: (i: number, n: number) => void; onNote?: (i: number, t: string) => void }) {
   const mob = useBreakpoint() === "Mobile";

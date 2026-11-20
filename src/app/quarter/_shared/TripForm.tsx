@@ -132,6 +132,10 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
 
   const row = (kids: ReactNode, n: 2 | 3) => <div className={cx(mob ? "flex flex-col gap-4" : n === 3 ? "grid grid-cols-3 gap-6" : "grid grid-cols-2 gap-6")}>{kids}</div>;
   const range: DateRange = { start: fromThai(v.d1), end: fromThai(v.d2) };
+  const ce = (Number(planOf(mock, planId)?.year) || 0) - 543;
+  const qMin = ce > 0 ? new Date(ce, (q - 1) * 3, 1) : undefined, qMax = ce > 0 ? new Date(ce, q * 3, 0) : undefined;
+  const inQ = (d?: Date | null) => !!d && (!qMin || d >= qMin) && (!qMax || d <= qMax);
+  const qMonth = inQ(range.start) ? range.start ?? undefined : qMin;
   const dropStaff = (i: number) => {
     const keep = (a: string[]) => atLeast2(a.filter((_, j) => j !== i));
     put({ staff: keep(v.staff), tels: keep(v.tels) }); setTouched((t) => ({ ...t, staff0: false, staff1: false }));
@@ -206,7 +210,7 @@ export function TripForm({ planId, q, edit, initialMode = "self" }: { planId: st
             </>, 3)}
             {dateOpen && !mob && (
               <div className="absolute top-full left-0 z-30 mt-1">
-                <DatePicker Type="Dual" {...TH_PICKER} value={range} onCancel={() => setDateOpen(false)}
+                <DatePicker Type="Dual" {...TH_PICKER} value={range} min={qMin} max={qMax} month={qMonth} onCancel={() => setDateOpen(false)}
                   onApply={(r) => { putDates({ d1: r.start ? toThai(r.start) : "", d2: r.end ? toThai(r.end) : r.start ? toThai(r.start) : "" }); setDateOpen(false); }} />
               </div>
             )}

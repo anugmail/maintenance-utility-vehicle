@@ -46,7 +46,7 @@ export function ClosePage() {
   const router = useRouter();
   const mob = useBreakpoint() === "Mobile";
   const { trip, car, job, actor, vendor } = useTripCar();
-  const [touched, setTouched] = useState<{ km?: boolean; hours?: boolean }>({});
+  const [touched, setTouched] = useState<{ km?: boolean; hours?: boolean; wage?: boolean; travel?: boolean }>({});
   const [dateOpen, setDateOpen] = useState(false);
   const dateRef = useRef<HTMLDivElement>(null);
   const [closeDate] = useState(() => () => setDateOpen(false));
@@ -93,7 +93,9 @@ export function ClosePage() {
   const centers = [...new Set(trip.carIds.map((id) => ownerCostCenter(carOf(id)!)))];
   const days = Array.from({ length: tripDays(trip) }, (_, i) => i + 1);
   const E = (k: "km" | "hours", m: string, v: string) => (touched[k] && !v.trim() ? m : undefined);
-  const complete = signed && !!f.km.trim() && !!f.hours.trim();
+  const proxy = hire && !vendor;
+  const costOk = !proxy || (!!f.hireWage?.trim() && !!f.hireTravel?.trim());
+  const complete = signed && !!f.km.trim() && !!f.hours.trim() && costOk;
   const budget = f.budgetType ?? 0;
   const oilDate = f.oilDate ?? car.lastOil;
   const usedOfPlan = job.parts.map((p) => f.parts.find((r) => r.part === p.part && !r.added)?.used ?? 0);
@@ -181,6 +183,15 @@ export function ClosePage() {
         <div className="flex"><SecondaryButton Text="เพิ่มรายการ" LeadingIconSwap="add-24-300-round" Size={mob ? "lg" : "md"} className={mob ? "w-full" : undefined}
           onClick={() => actor && setAdd(true)} /></div>
       </Section>
+      {proxy && <Section>
+        <SectionHeader Title="ค่าใช้จ่ายของยานพาหนะคันนี้ (บาท)" />
+        <Grid>
+          <TextInput LabelText="ค่าจ้าง (บาท)" Text={f.hireWage ?? ""} Placeholder="0" inputMode="numeric" onChange={(v) => put((x) => ({ ...x, hireWage: digits(v) }))} onBlur={() => setTouched((t) => ({ ...t, wage: true }))}
+            State={touched.wage && !f.hireWage?.trim() ? "Error" : undefined} HelperText={touched.wage && !f.hireWage?.trim() ? "กรุณาระบุค่าจ้าง" : undefined} />
+          <TextInput LabelText="ค่าเดินทาง (บาท)" Text={f.hireTravel ?? ""} Placeholder="0" inputMode="numeric" onChange={(v) => put((x) => ({ ...x, hireTravel: digits(v) }))} onBlur={() => setTouched((t) => ({ ...t, travel: true }))}
+            State={touched.travel && !f.hireTravel?.trim() ? "Error" : undefined} HelperText={touched.travel && !f.hireTravel?.trim() ? "กรุณาระบุค่าเดินทาง" : undefined} />
+        </Grid>
+      </Section>}
       {!hire && <Section>
         <SectionHeader Title="ค่าใช้จ่ายของยานพาหนะคันนี้ (บาท)" Badge={f.costs.length + " คน"} />
         {f.costs.map(costRow)}

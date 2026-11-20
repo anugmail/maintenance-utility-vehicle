@@ -148,6 +148,7 @@ export interface CloseForm {
   budgetType?: number;
   oilDate?: string;
   workHours?: string; workRate?: string;
+  hireWage?: string; hireTravel?: string;
 }
 export const BUDGET_CUT = ["งบทำการ หน่วยงานต้นสังกัด", "งบทำการ หน่วยงานอื่น", "งบโครงการ (ตาม WBS)", "งบซ่อมบำรุงตามใบสั่ง (PM Order)", "อื่น ๆ"];
 export const OTHER_CC = "E301020000 กฟฉ.2 อุบลราชธานี - บริหาร";
@@ -228,6 +229,7 @@ export function filledClose(job: Job, trip: JobTrip, car: TripCar): CloseForm {
     parts: f.parts.map((r) => { const v = CLOSE_FILLED_PARTS[r.part]; return v ? { ...r, used: v[0], old: v[1], note: v[2] } : r; }),
     costs: [["นายวิชัย ทองดี", 2], ["นางสาวกนกวรรณ ใจมั่น", 2], ["นายสมชาย พูลสุข", 1]].map(([name, days]) => ({ name: String(name), perDiem: "240", lodging: "800", days: Number(days) })),
     travel: "1,210", km: "182,640", hours: "6,131", workHours: "6", workRate: "150",
+    ...(trip.mode === "hire" ? { hireWage: "4,500", hireTravel: "800" } : {}),
     signers: [{ name: PEOPLE.kbk.replace(" (กบผ.)", ""), sig: "sample" }, { name: PEOPLE.ownerSigner, sig: "sample" }],
     docs: f.docs.map((d) => ({ ...d, sel: "มี" })),
   };
@@ -358,6 +360,7 @@ export function closeJob(t: JobTrip, carId: string, f: CloseForm, vendor = false
     kmAfter: f.km + " กม.", hoursAfter: f.hours + " ชม.", oilChoice: f.oilChoice,
     oilResult: oilSampled(f.oilChoice) ? { sel: f.oilSel, files: f.oilFiles, sampledAt: at.slice(0, 10), sampledBy: by, ...(f.oilSel >= 0 ? { savedAt: at, savedBy: by } : {}) } : undefined,
     safety: { files: f.safetyFiles ?? [] },
+    ...(!vendor && t.mode === "hire" ? { hireCost: { wage: f.hireWage ?? "", travel: f.hireTravel ?? "" }, reviewedAt: at, reviewedBy: by } : {}),
   }));
   const c = carOf(carId);
   if (!vendor && c) addNotis([ackNoti(t, c)]);

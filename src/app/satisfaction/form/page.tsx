@@ -18,12 +18,13 @@ import { EVAL_AT, SAT_ALERT, SAT_CONFIRM, SAT_FAIL, SAT_LEAVE, SAT_OK, SAT_REMAR
 import { useProtoForm } from "@/lib/protoForm";
 import { useSample } from "@/lib/useSample";
 import { ButtonRow } from "../../trips/_lib/ui";
-import { SurveyGroups, jobPairs } from "../_lib/ui";
+import { SurveyGroups, jobPairs, useSatGuard } from "../_lib/ui";
 
 function SatForm() {
   const router = useRouter();
   const sp = useSearchParams();
   const pending = useSample(SAT_SAMPLES);
+  const out = useSatGuard();
   const keeper = canEvaluate(useRole());
   const mock = useMock();
   const [answers, setAnswers] = useState<SurveyAnswers>(emptyAnswers);
@@ -38,7 +39,7 @@ function SatForm() {
     fill: () => { setAnswers(sampleAnswers()); setNotes(sampleNotes()); setRemark(SAMPLE_FORM_REMARK); },
     clear: () => { setAnswers(emptyAnswers()); setNotes(emptyNotes()); setRemark(""); }, dirty } : null);
   useEffect(() => { if (r0?.evaluated && !saved.current) router.replace(satResultHref(r0)); }, [r0, router]);
-  if (pending) return null;
+  if (pending || out) return null;
   if (!r0) return <EmptyStateSearchNotFound />;
   if (r0.evaluated) return null;
   const r = r0;

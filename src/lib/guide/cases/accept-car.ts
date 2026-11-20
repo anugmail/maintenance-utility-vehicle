@@ -1,6 +1,5 @@
 "use client";
-import { ACK_AT, ACCEPT_SAMPLES } from "@/lib/mock/acceptance";
-import { patchJob } from "@/lib/mock/jobs";
+import { ACCEPT_SAMPLES } from "@/lib/mock/acceptance";
 import type { GuideScenario } from "../types";
 
 const LIST = "/acceptance/";
@@ -36,10 +35,10 @@ export const ACCEPT_CAR: GuideScenario = {
       ],
     },
     {
-      id: "acc-last-car", name: "รับทราบคันสุดท้าย แผนปิดงานเอง", about: "รับทราบครบทุกคันในแผนแล้ว แผนเปลี่ยนเป็นปิดงานแล้วเอง ไม่มีขั้นส่งประวัติหรือรายงานผล", role: ROLE, sheet: 16,
-      seed: () => { ACCEPT_SAMPLES.S13.apply(); for (const id of ["82-6789", "82-1145"]) patchJob("T1", id, (j) => ({ ...j, acceptedAt: ACK_AT })); },
+      id: "acc-last-car", name: "รับทราบคันสุดท้าย แผนปิดงานเอง", about: "แผนตัวอย่างที่ยานพาหนะทุกคันทุกไตรมาสอยู่ในแผนเดินทาง T1 รับทราบครบทุกคันแล้ว แผนเปลี่ยนเป็นปิดงานแล้วเอง ไม่มีขั้นส่งประวัติหรือรายงานผล", role: ROLE, sheet: 16,
+      seed: ACCEPT_SAMPLES.S13_last.apply,
       steps: [
-        open("80-9981 ลำปาง", " ยานพาหนะอีก 2 คันในแผนรับทราบแล้ว เหลือคันนี้คันเดียว"),
+        open("80-9981 ลำปาง", " แผน MRZ7000001 ในตัวอย่างนี้มียานพาหนะ 3 คันทั้งปี อยู่ในแผนเดินทาง T1 ทั้งหมด อีก 2 คันรับทราบแล้ว เหลือคันนี้คันเดียว"),
         { at: CAR("80-9981"), text: "กดรับทราบ" },
         { at: LIST, text: "กลับมาที่รายการ ทุกคันเป็นรับทราบแล้ว แผน MRZ7000001 เปลี่ยนเป็นปิดงานแล้วเอง ผลการบำรุงรักษาของแต่ละคันดูต่อได้ที่แดชบอร์ดการบำรุงรักษา" },
       ],

@@ -56,7 +56,7 @@ export const PLAN_COLS_ALL = [PLAN_COLS[0], { head: "หน่วยงานเ
 export const planRow = (p: Plan, menu: TableValue, view = false): TableValue[] =>
   [p.mr, ...(view ? [unitOf(p.mr, p.unit)] : []), { text: p.name, sub: "ปีงบประมาณ " + p.year }, scopeCell(p), String(p.cars), qCell(p.perQ), { pills: [PST[p.status]] }, menu];
 
-export const menuCount = (p: Plan) => (p.status === "returned" ? 3 : p.status === "approved" || p.status === "active" ? 2 : 1);
+export const menuCount = (p: Plan) => (p.status === "review" || p.status === "returned" ? 3 : p.status === "approved" || p.status === "active" ? 2 : 1);
 
 export function nextMr(plans: Plan[], year: string, retired: string[] = []) {
   const yy = year.slice(-2), pre = "MRZ" + yy;

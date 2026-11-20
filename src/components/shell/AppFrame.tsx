@@ -6,7 +6,7 @@ import { HeaderNavigation } from "@/components/vms/HeaderNavigation";
 import { APPROVE_PLANS_LABEL, APPROVE_TRIPS_LABEL, GUIDE_LABEL, MT_LABEL, PARTS_LABEL, SAFETY_LABEL, SAT_LABEL, SIDEBAR_MENU, SidebarNavigation } from "@/components/vms/SidebarNavigation";
 import { useMock, useRole } from "@/lib/mock/store";
 import { tripsOf } from "@/lib/mock/trips";
-import { rowsFor } from "@/lib/mock/survey";
+import { SAT_HIDDEN_ROLE, rowsFor } from "@/lib/mock/survey";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useOutside } from "@/lib/useOutside";
 import { GuideBar } from "@/components/guide/GuideBar";
@@ -40,7 +40,7 @@ export function AppFrame({ children, bell }: { children: ReactNode; bell?: boole
   const nPlans = mock.plans.filter((p) => p.status === "review").length, nTrips = tripsOf(mock).filter((t) => t.status === "review").length;
   const role = useRole();
   const nSat = rowsFor(mock, role).filter((r) => !r.evaluated).length;
-  const menu = SIDEBAR_MENU.map((g) => (g.items ? { ...g, items: g.items.map((s) => (s.Text === APPROVE_PLANS_LABEL && nPlans ? { ...s, badge: String(nPlans) } : s.Text === APPROVE_TRIPS_LABEL && nTrips ? { ...s, badge: String(nTrips) } : s)) }
+  const menu = SIDEBAR_MENU.filter((g) => !(g.Text === SAT_LABEL && role === SAT_HIDDEN_ROLE)).map((g) => (g.items ? { ...g, items: g.items.map((s) => (s.Text === APPROVE_PLANS_LABEL && nPlans ? { ...s, badge: String(nPlans) } : s.Text === APPROVE_TRIPS_LABEL && nTrips ? { ...s, badge: String(nTrips) } : s)) }
     : g.Text === SAT_LABEL && nSat ? { ...g, badge: String(nSat) } : g));
 
   const expanded = pinned || hover;

@@ -14,7 +14,7 @@ import { LEVEL, SAT_REMARK, SAT_SAMPLES, SAT_TITLE, SURVEY_GROUPS, SURVEY_INFO, 
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useSample } from "@/lib/useSample";
 import { ButtonRow } from "../../trips/_lib/ui";
-import { jobPairs } from "../_lib/ui";
+import { jobPairs, useSatGuard } from "../_lib/ui";
 
 const DETAIL_COLS: TableColumn[] = [{ head: "ข้อ", width: 80 }, { head: "รายการประเมิน" }, { head: "คะแนน", width: 160 }, { head: "หมายเหตุ", width: 280 }];
 const slash = (s: string) => s.replace("/", " / ");
@@ -23,9 +23,10 @@ function SatResult() {
   const router = useRouter();
   const sp = useSearchParams();
   const pending = useSample(SAT_SAMPLES);
+  const out = useSatGuard();
   const mob = useBreakpoint() === "Mobile";
   const mock = useMock();
-  if (pending) return null;
+  if (pending || out) return null;
   const r = evalRecord(mock, sp.get("id") ?? legacyId(sp.get("trip"), sp.get("car")));
   if (!r || !r.survey) return <EmptyStateSearchNotFound />;
   const s = r.survey, a = s.answers;

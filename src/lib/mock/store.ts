@@ -8,7 +8,7 @@ import type { CloseoutState, QuarterState } from "./closeout";
 export const KEY = "mt-next-v1";
 export const ROLE_KEY = "mt-next-v1:role2";
 
-export const MOCK_V = 9;
+export const MOCK_V = 10;
 
 export interface MockState {
   v: typeof MOCK_V;
