@@ -23,6 +23,7 @@ export const SURVEY_START = SURVEY_GROUPS.map((_, i) => SURVEY_GROUPS.slice(0, i
 export const LEVEL = ["", "ต้องปรับปรุงมาก", "ต้องปรับปรุง", "พอใช้", "ดี", "ดีมาก"] as const;
 
 export const SAT_TITLE = "แบบประเมินความพึงพอใจ";
+export const SAT_HIDDEN_ROLE = "ผู้รับจ้าง";
 export const SAT_TABS = ["ยังไม่ได้ประเมิน", "ประเมินแล้ว"] as const;
 export const SAT_EMPTY = ["ไม่มีรายการที่ต้องประเมิน", "งานจะเข้ามาที่นี่เมื่อปิดงานแล้ว"] as const;
 export const SAT_EMPTY_BTN = "ดูรายการที่ประเมินแล้ว";

@@ -21,6 +21,7 @@ import { EVAL_KINDS, KIND, PROVIDER_LABEL, SAT_EMPTY, SAT_EMPTY_BTN, SAT_SAMPLES
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useSample } from "@/lib/useSample";
 import { ALL, FilterShell } from "../vehicles/_lib/ui";
+import { useSatGuard } from "./_lib/ui";
 
 const PEND_COLS: TableColumn[] = [{ head: "เลขที่งาน", width: 170, Style: "Lead text" }, { head: "ประเภทงาน", width: 170, Style: "Badge" }, { head: "ทะเบียน", width: 200 }, { head: "งาน" },
   { head: PROVIDER_LABEL, width: 170 }, { head: "วันที่ปิดงาน", width: 130 }, { head: "ดำเนินการ", width: 104, Style: "Action icons" }];
@@ -39,6 +40,7 @@ function SatList() {
   const router = useRouter();
   const sp = useSearchParams();
   const pending = useSample(SAT_SAMPLES);
+  const out = useSatGuard();
   const mob = useBreakpoint() === "Mobile";
   const role = useRole();
   const keeper = canEvaluate(role);
@@ -51,7 +53,7 @@ function SatList() {
   const [panel, setPanel] = useState(false);
   const [open, setOpen] = useState("");
   const all = useMemo(() => rowsFor(mock, role), [mock, role]);
-  if (pending) return null;
+  if (pending || out) return null;
 
   const wait = all.filter((r) => !r.evaluated), done = all.filter((r) => r.evaluated);
   const base = tab ? done : wait;
