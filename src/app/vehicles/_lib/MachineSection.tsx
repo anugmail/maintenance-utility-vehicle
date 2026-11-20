@@ -80,7 +80,7 @@ function MachineModal({ open, carId, car, edit, list, onClose }: { open: boolean
       onChange={(v) => put(k)(o.num ? withSep(v) : o.max ? v.replace(/\D/g, "") : v)} />
   );
   return (
-    <PopupModal open={open} title={edit ? "แก้ไขเครื่องมือกล" : "เพิ่มเครื่องมือกล"} sub={car.plate} width={800} ok="บันทึก" onOk={save} onCancel={onClose}>
+    <PopupModal open={open} title={edit || !list.length ? "แก้ไขเครื่องมือกล" : "เพิ่มเครื่องมือกล"} sub={car.plate} width={800} ok="บันทึก" onOk={save} onCancel={onClose}>
       {mob && <p className="text-sm text-gray-600">{car.plate}</p>}
       <div className={cx(mob ? "flex flex-col gap-4" : "grid grid-cols-2 gap-x-6 gap-y-4")}>
         <InputDropdown LabelText="ประเภทเครื่องมือกล" Size={mob ? "lg" : "md"} Text={d.type} Placeholder="เลือกประเภทเครื่องมือกล" open={dd} onOpenChange={setDd}
@@ -118,40 +118,29 @@ function MachineBody({ carId, car }: { carId: string; car: Car }) {
   const add = canEdit && list.length ? <SecondaryButton Text="เพิ่มเครื่องมือกล" LeadingIconSwap="add-24-300-round" Size={size} onClick={() => openEdit(null)} /> : undefined;
   return (
     <section className="flex flex-col gap-2" aria-label="เครื่องมือกล" data-machine-section>
-      <SectionLabel Title={"เครื่องมือกล (" + list.length + ")"} Actions={add} className="min-h-10" />
-      {list.length ? list.map((x) => <MachineCard key={x.key} x={x} canEdit={canEdit} onEdit={() => openEdit(x)} />) : (
-        <div className="rounded-xl border border-gray-200 bg-white p-4" data-machine-empty>
-          <div className={cx("flex gap-3 rounded-md bg-gray-50 px-4 py-3", mob ? "flex-col" : "items-center")}>
-            <div className="flex min-w-0 flex-1 flex-col gap-2">
-              <p className="text-md font-semibold text-black">ไม่มีเครื่องมือกล</p>
-              <p className="text-sm text-gray-600">ยานพาหนะคันนี้ยังไม่มีข้อมูลเครื่องมือกล</p>
-            </div>
-            {canEdit && <SecondaryButton Text="เพิ่มเครื่องมือกล" LeadingIconSwap="add-24-400-round" Size="lg" onClick={() => openEdit(null)} />}
-          </div>
-        </div>
-      )}
+      <SectionLabel Title={list.length ? "เครื่องมือกล (" + list.length + ")" : "เครื่องมือกล"} Actions={add} className="min-h-10" />
+      {list.length ? list.map((x) => <MachineCard key={x.key} x={x} canEdit={canEdit} onEdit={() => openEdit(x)} />)
+        : <MachineCard x={null} canEdit={canEdit} onEdit={() => openEdit(null)} />}
       {canEdit && <MachineModal open={open} carId={carId} car={car} edit={edit} list={list} onClose={() => setOpen(false)} />}
     </section>
   );
 }
 
-function MachineCard({ x, canEdit, onEdit }: { x: Machine; canEdit: boolean; onEdit: () => void }) {
-  const noLift = NO_LIFT.includes(x.type);
-  const name = [x.type, x.brand, x.model].filter(Boolean).join(" ");
-  const fields: [string, string | undefined, boolean?][] = [
-    ["ประเภทเครื่องมือกล", x.type], ["ยี่ห้อ", x.brand], ["รุ่น", x.model],
-    ["พิกัดยก (" + LIFT_UNIT + ")", x.lift != null ? nf0(x.lift) : undefined, noLift],
-    ["รหัสทรัพย์สิน", x.asset], ["รหัสทรัพย์สินย่อย", x.subAsset],
-    ["ชั่วโมงเครื่องยนต์", nf0(x.engineHours)], ["ชั่วโมงเครื่องจักร", nf0(x.craneHours)],
-    ["หมายเลข HC", x.hc], ["หมายเลขประจำเครื่องจักร (Serial No.)", x.serial], ["หมายเลขเครื่องยนต์ (ส่วนเครื่องจักร)", x.engineNo],
+function MachineCard({ x, canEdit, onEdit }: { x: Machine | null; canEdit: boolean; onEdit: () => void }) {
+  const name = x ? [x.type, x.brand, x.model].filter(Boolean).join(" ") : "";
+  const fields: [string, string | undefined][] = [
+    ["ประเภทเครื่องมือกล", x?.type], ["ยี่ห้อ", x?.brand], ["รุ่น", x?.model],
+    ["พิกัดยก (" + LIFT_UNIT + ")", x?.lift != null ? nf0(x.lift) : undefined],
+    ["รหัสทรัพย์สิน", x?.asset], ["รหัสทรัพย์สินย่อย", x?.subAsset],
+    ["ชั่วโมงเครื่องยนต์", x ? nf0(x.engineHours) : undefined], ["ชั่วโมงเครื่องจักร", x ? nf0(x.craneHours) : undefined],
+    ["หมายเลข HC", x?.hc], ["หมายเลขประจำเครื่องจักร (Serial No.)", x?.serial], ["หมายเลขเครื่องยนต์ (ส่วนเครื่องจักร)", x?.engineNo],
   ];
-  const value = ([label, v, na]: (typeof fields)[number]) => (v ? v : na || !canEdit ? "-"
-    : <TertiaryBrandButton Text="เพิ่ม" LeadingIconSwap="add-24-300-round" aria-label={"เพิ่ม" + label + " " + name} className="-my-2 -mr-2" onClick={onEdit} data-machine-add />);
+  const asset = x?.asset ? x.asset + " - " + x.subAsset : "-";
   return (
-    <div className="flex flex-col gap-4 rounded-xl border border-gray-200 bg-white p-4" data-machine-card>
-      <SectionLabel Title={name || "เครื่องมือกล"} SupportingText={"รหัสทรัพย์สิน " + x.asset + " - " + x.subAsset}
-        Actions={canEdit ? <TertiaryBrandButton Text="แก้ไข" aria-label={"แก้ไข " + name + " " + x.subAsset} className="-my-2" onClick={onEdit} data-machine-edit /> : undefined} />
-      {fields.map((f) => <CardItemRow key={f[0]} items={[{ Type: "Text with label", LeadingIcon: false, Label: f[0], Text: value(f), TextAlign: "Right" }]} />)}
+    <div className="flex flex-col gap-4 rounded-xl border border-gray-200 bg-white p-4" data-machine-card={x ? "" : "blank"}>
+      <SectionLabel Title={name || "เครื่องมือกล"} SupportingText={"รหัสทรัพย์สิน " + asset}
+        Actions={canEdit ? <TertiaryBrandButton Text="แก้ไข" aria-label={"แก้ไข " + (name || "เครื่องมือกล") + (x ? " " + x.subAsset : "")} className="-my-2" onClick={onEdit} data-machine-edit /> : undefined} />
+      {fields.map((f) => <CardItemRow key={f[0]} items={[{ Type: "Text with label", LeadingIcon: false, Label: f[0], Text: f[1] || "-", TextAlign: "Right" }]} />)}
     </div>
   );
 }
