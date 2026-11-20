@@ -8,7 +8,7 @@ import type { UploadFile } from "@/components/vms/FileUpload";
 import { MA_DUE, MA_VSTAT, TODAY, addMonths, baseSafetyOf, dayOf, maCars, thaiDate, type DueStatus, type DueTone } from "./maintenance";
 import { latestUpload, safetyUploads, type SafetyCycle, type SafetyRec, type SafetyResult } from "./safetyStore";
 import { useMock, type MockState } from "./store";
-import { OWN_UNIT } from "./trips";
+import { CARETAKER, carOf } from "./trips";
 
 export const SAFETY_TITLE = "การตรวจ ปจ.2";
 export const SAFETY_HREF = "/safety/";
@@ -47,7 +47,7 @@ export function safetyCars(m: MockState, owner = false): SafetyCar[] {
   const s24 = new Map(maCars(m).map((c) => [c.car.id, c]));
   const jobFiles = new Map(Object.values(jobsOf(m).jobs).filter((j) => j.closedAt).map((j) => [j.carId + "|" + j.closedAt!.slice(0, 10), j.safety?.files ?? j.close?.safetyFiles ?? []]));
   return CAND.flatMap((car, i): SafetyCar[] => {
-    if (peaTypeOf(car) !== SAFETY_TYPE_CODE || (owner && car.owner !== OWN_UNIT)) return [];
+    if (peaTypeOf(car) !== SAFETY_TYPE_CODE || (owner && carOf(idOf(car.plate))?.ctrl !== CARETAKER)) return [];
     const id = idOf(car.plate), up = latestUpload(m, id), ma = s24.get(id);
     let base: SafetyCar["base"];
     if (ma) {

@@ -2,7 +2,7 @@
 import { useMemo } from "react";
 import { carOf, closeRows, jobsOf, oilSampled, nf, TRIP_CARS, WSTAT, type Job, type JobTrip, type OilChoice, type TripCar } from "./jobs";
 import { useMock, type MockState } from "./store";
-import { OWN_UNIT, PLAN_ID, STAFF } from "./trips";
+import { CARETAKER, PLAN_ID, STAFF } from "./trips";
 import { unitOf } from "./data";
 import { lastMaOf, lastRepairOf } from "./vehicleHistory";
 import { latestUpload } from "./safetyStore";
@@ -140,7 +140,7 @@ export function maCars(m: MockState, owner = false, unit?: string): MaCar[] {
   const all = [...SEED, ...fromJobs];
   const ids = [...new Set([...MA_CAR_IDS, ...fromJobs.map((r) => r.carId)])];
   const cars = ids.map((id) => TRIP_CARS.find((c) => c.id === id) ?? carOf(id)).filter((c): c is TripCar => !!c);
-  return cars.filter((c) => !owner || c.owner === OWN_UNIT).map((c) => maCar(c, all, TODAY, latestUpload(m, c.id)))
+  return cars.filter((c) => !owner || c.ctrl === CARETAKER).map((c) => maCar(c, all, TODAY, latestUpload(m, c.id)))
     .filter((x) => !unit || x.records.some((r) => unitOf(r.planMr) === unit) || (TRIP_CARS.some((t) => t.id === x.car.id) && unitOf("MR" + PLAN_ID) === unit))
     .sort((a, b) => (a.next ? a.next.due! : Infinity) - (b.next ? b.next.due! : Infinity) || a.car.plate.localeCompare(b.car.plate));
 }

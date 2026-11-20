@@ -5,9 +5,9 @@ import { NotificationPanel } from "@/components/patterns/NotificationPanel";
 import { setMock, useMock, useRole } from "@/lib/mock/store";
 import { notisOf, type NotiRole } from "@/lib/mock/trips";
 
-export const useViewer = (): NotiRole => (useRole() === "ผู้ดูแลยานพาหนะ" ? "owner" : "kry");
+export const useViewer = (): NotiRole => { const r = useRole(); return r === "ผู้ดูแลยานพาหนะ" ? "owner" : r === "ผู้รับจ้าง" ? "vendor" : "kry"; };
 
-export function useBell() {
+export function useBell(on = true) {
   const router = useRouter();
   const mock = useMock();
   const who = useViewer();
@@ -20,9 +20,10 @@ export function useBell() {
       const b = (e.target as Element | null)?.closest?.('header button[aria-label="การแจ้งเตือน"]');
       if (b) { e.preventDefault(); setOpen((o) => !o); }
     };
+    if (!on) return;
     document.addEventListener("click", h, true);
     return () => document.removeEventListener("click", h, true);
-  }, []);
+  }, [on]);
 
   const read = (id: string) => setMock((s) => ({ ...s, notis: notisOf(s).map((n) => (n.id === id ? { ...n, unread: false } : n)) }));
   const panel = (

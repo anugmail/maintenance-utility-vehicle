@@ -16,6 +16,7 @@ import { ACCEPT_SAMPLES, ACCEPT_STATUS, ACK_AT, ACK_LIST, acceptCar, accRecord, 
 import { BEFORE, INSPECT_OPTS, OIL_DEFAULT, OIL_JOB_OPTS, emptyReceive, inspectForm, tripCtrl } from "@/lib/mock/jobs";
 import { workOf } from "@/lib/mock/tripCols";
 import { notify, useMock, useRole } from "@/lib/mock/store";
+import { CARETAKER } from "@/lib/mock/trips";
 import { evalRecord, maEvalId, satFormHref } from "@/lib/mock/survey";
 import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { useSample } from "@/lib/useSample";
@@ -29,12 +30,13 @@ function AckResult() {
   const router = useRouter();
   const sp = useSearchParams();
   const pending = useSample(ACCEPT_SAMPLES);
-  const keeper = useRole() === "ผู้ดูแลยานพาหนะ";
+  const isKeeper = useRole() === "ผู้ดูแลยานพาหนะ";
   const mock = useMock();
   if (pending) return null;
   const rec = accRecord(mock, sp.get("trip"), sp.get("car"));
   if (!rec) return <EmptyStateSearchNotFound />;
   const { car, cannot, job, trip } = rec;
+  const keeper = isKeeper && tripCtrl(trip, car) === CARETAKER;
   const done = rec.accepted;
   const back = () => router.push("/acceptance/");
   const ack = () => {

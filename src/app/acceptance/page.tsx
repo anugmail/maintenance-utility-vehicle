@@ -8,7 +8,9 @@ import { Table, type TableColumn, type TableValue } from "@/components/vms/Table
 import { TableHeader } from "@/components/vms/TableHeader";
 import { TablePagination } from "@/components/vms/TablePagination";
 import { ACCEPT_SAMPLES, ACCEPT_STATUS, ACK_LIST, accCarHref, accRows, splitBy } from "@/lib/mock/acceptance";
-import { useMock } from "@/lib/mock/store";
+import { tripCtrl } from "@/lib/mock/jobs";
+import { useMock, useRole } from "@/lib/mock/store";
+import { CARETAKER } from "@/lib/mock/trips";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useSample } from "@/lib/useSample";
 import { useBell } from "../trips-view/_shared/Bell";
@@ -24,11 +26,12 @@ function AckList() {
   const pending = useSample(ACCEPT_SAMPLES);
   const mob = useBreakpoint() === "Mobile";
   const mock = useMock();
+  const keeper = useRole() === "ผู้ดูแลยานพาหนะ";
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   if (pending) return null;
 
-  const all = accRows(mock).map((r) => {
+  const all = accRows(mock).filter((r) => !keeper || tripCtrl(r.trip, r.car) === CARETAKER).map((r) => {
     const st = r.accepted ? ACCEPT_STATUS.ok : ACCEPT_STATUS.wait;
     const [name, unit] = splitBy(r.by);
     const row: TableValue[] = [{ text: r.car.plate, sub: r.car.type }, r.date, unit ? { text: name, sub: unit } : name, { text: r.trip.name, sub: r.mr },

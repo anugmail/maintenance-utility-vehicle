@@ -47,6 +47,12 @@ WORK_COLS2
 งานนี้ในเมนูแบบประเมินความพึงพอใจ (มีเมื่อรับทราบแล้ว)
 ```
 
+**`const keeper = isKeeper && tripCtrl(trip, car) === CARETAKER;`**
+
+```text
+ไฟล์ 34 ข้อ 13: รับทราบได้เฉพาะผู้ดูแลของคันนั้นในใบ
+```
+
 ## src/app/acceptance/page.tsx
 
 **หัวไฟล์**
@@ -65,6 +71,12 @@ S13 L.1 L.6 · หน้า ผลการบำรุงรักษารอ�
 
 ```text
 ACC_COLS
+```
+
+**`.filter((r) => !keeper || tripCtrl(r.trip, r.car) === CARETAKER)`**
+
+```text
+ไฟล์ 34 ข้อ 13: ผู้ดูแลเห็นเฉพาะคันที่ตนดูแลในใบนั้น
 ```
 
 ## src/app/acceptance/plan/page.tsx

@@ -7,7 +7,7 @@ import { PageHeader } from "@/components/vms/PageHeader";
 import { SectionLabel } from "@/components/vms/SectionLabel";
 import { mrOf, planOf } from "@/lib/mock/closeout";
 import { useMock } from "@/lib/mock/store";
-import { CREATOR, OWN_UNIT, TST, badgeOf, findTrip, tripCars, tripViewKv, vTrip } from "@/lib/mock/trips";
+import { CREATOR, KRY_AREA, TST, areaCars, badgeOf, caredCars, findTrip, tripViewKv, vTrip } from "@/lib/mock/trips";
 import { tripPartRows } from "@/lib/mock/moves";
 import { TRIP_V_COLS, tripVCells } from "@/lib/mock/tripCols";
 import { unitOf } from "@/lib/mock/data";
@@ -24,7 +24,7 @@ function TripView() {
   const [exp, setExp] = useState(false);
   if (!t) return null;
   const plan = planOf(mock, t.planId);
-  const cars = tripCars(t, own ? OWN_UNIT : undefined);
+  const cars = own ? caredCars(t) : areaCars(t);
   const rows = cars.map((c) => tripVCells(c, vTrip(t)));
   const parts = tripPartRows(mock, t, own ? (id) => cars.some((c) => c.id === id) : undefined);
   const planLabel = mrOf(t.planId) + " " + (plan?.name ?? "");
@@ -36,7 +36,7 @@ function TripView() {
       <Content>
         <VehicleAndReporterInfo Title="รายละเอียดแผนเดินทาง" pairs={kv} />
         <Section>
-          <SectionLabel Title={(own ? "ยานพาหนะของหน่วยงานในแผนเดินทาง" : "ยานพาหนะในแผนเดินทาง") + " (" + rows.length + ")"} />
+          <SectionLabel Title={(own ? "ยานพาหนะที่คุณดูแลในแผนเดินทาง" : "ยานพาหนะในเขต " + KRY_AREA + " ในแผนเดินทาง") + " (" + rows.length + ")"} />
           <DataTable columns={TRIP_V_COLS} rows={rows} />
         </Section>
         <TripPartsSection parts={parts} />

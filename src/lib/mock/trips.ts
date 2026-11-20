@@ -1,7 +1,7 @@
 import type { BadgeOutlineColor } from "@/components/vms/BadgeOutline";
 import type { PillColor } from "@/components/vms/PillOutline";
 import type { StatusState } from "@/components/vms/Status";
-import { CAND, FIG_EXTRA_IDS, PLANS, regionOf, type Plan } from "./data";
+import { CAND, FIG_EXTRA_IDS, PLANS, regionOf, unitOf, type Plan } from "./data";
 import { setMock, type MockState } from "./store";
 
 export const NOW_Q = "ไตรมาส 1";
@@ -146,7 +146,7 @@ export const TRIP_RETURN_REASON = "ช่วงวันที่ 03 ถึง 0
 
 const base = { planId: PLAN_ID, quarter: 1, createdBy: CREATOR, sentAt: SENT_AT };
 export const TRIP_1: Trip = { ...base, id: "T1", name: "ตรวจยานพาหนะ ขอนแก่น อุดรธานี ลำปาง", mode: "self", carIds: ["82-6789", "82-1145", "80-9981", "82-3302"],
-  locs: { "80-9981": "จุดรวมงาน กฟน.1 ลำปาง" }, phones: { "80-9981": "086-552-1904" }, names: { "80-9981": "นายอนุชา ศรีสุข" }, d1: "03/11/2569", d2: "07/11/2569", status: "review", staff: STAFF,
+  locs: { "80-9981": "จุดรวมงาน กฟน.1 ลำปาง" }, phones: { "80-9981": "081-472-3365" }, names: { "80-9981": "นายสมชาย แก้วมณี" }, d1: "03/11/2569", d2: "07/11/2569", status: "review", staff: STAFF,
   works: { "82-6789": ["03/11/2569", "04/11/2569"], "82-1145": ["03/11/2569", "04/11/2569"], "80-9981": ["05/11/2569", "06/11/2569"] } };
 export const TRIP_2: Trip = { ...base, id: "T2", name: "ตรวจยานพาหนะ น่าน เชียงใหม่ เชียงราย", mode: "self", carIds: ["80-5738", "81-2210", "82-7720", "80-3316", "81-6604", "80-4458"],
   locs: {}, phones: {}, d1: "17/11/2569", d2: "21/11/2569", status: "review", staff: STAFF };
@@ -210,9 +210,15 @@ export function nextTripId(all: Trip[], mode: "self" | "hire") {
   let n = 3; while (ids.has("T" + n)) n++; return "T" + n;
 }
 
-export type NotiRole = "kry" | "owner";
+export type NotiRole = "kry" | "owner" | "vendor";
 export interface Noti { id: string; role: NotiRole; status: StatusState; text: string; time: string; tripId?: string; unread: boolean; href?: string }
-export const OWN_UNIT = "กฟฉ.1 ขอนแก่น";
+export const CARETAKER = "นายสมชาย แก้วมณี";
+export const caredBy = (t: Pick<Trip, "names"> | null, c: TripCar, who = CARETAKER) => tripCtrl(t, c) === who;
+export const caredCars = (t: Trip) => tripCars(t).filter((c) => caredBy(t, c));
+export const KRY_AREA = "กฟฉ.1";
+export const areaOf = (c: Pick<TripCar, "owner">) => c.owner.split(" ")[0];
+export const areaCars = (t: Trip, area = KRY_AREA) => tripCars(t).filter((c) => areaOf(c) === area);
+export const operatorOf = (t: Pick<Trip, "mode" | "vendor" | "planId">) => (t.mode === "hire" && t.vendor ? t.vendor : unitOf("MR" + t.planId));
 export const NOTI_OLD_TEXT = "บำรุงรักษายานพาหนะ 82-3302 อุดรธานี ตามแผนเดินทางเดือนตุลาคมเสร็จแล้ว";
 export const DEFAULT_NOTIS = (): Noti[] => [
   { id: "old-kry", role: "kry", status: "Success", text: NOTI_OLD_TEXT, time: "2 วันที่แล้ว", unread: false },
@@ -220,16 +226,20 @@ export const DEFAULT_NOTIS = (): Noti[] => [
 ];
 export const notisOf = (s: MockState): Noti[] => s.notis ?? DEFAULT_NOTIS();
 export function approvalNotis(t: Trip): Noti[] {
-  const out: Noti[] = [{ id: t.id + "-kry", role: "kry", status: "Brand", tripId: t.id, unread: true, time: "10 นาทีที่แล้ว",
-    text: "แผนเดินทาง " + t.name + " อนุมัติแล้ว หน่วยงานผู้ดำเนินการจะเข้าบำรุงรักษายานพาหนะ " + t.carIds.length + " คัน ระหว่างวันที่ " + t.d1 + " ถึง " + t.d2 }];
-  const own = tripCars(t, OWN_UNIT);
+  const op = operatorOf(t), out: Noti[] = [];
+  const area = areaCars(t);
+  if (area.length) out.push({ id: t.id + "-kry", role: "kry", status: "Brand", tripId: t.id, unread: true, time: "10 นาทีที่แล้ว",
+    text: "แผนเดินทาง " + t.name + " อนุมัติแล้ว " + op + " จะเข้าบำรุงรักษายานพาหนะในเขต " + KRY_AREA + " " + area.length + " คัน ระหว่างวันที่ " + t.d1 + " ถึง " + t.d2 });
+  const own = caredCars(t);
   if (own.length) out.push({ id: t.id + "-owner", role: "owner", status: "Brand", tripId: t.id, unread: true, time: "10 นาทีที่แล้ว",
-    text: "หน่วยงานผู้ดำเนินการจะเข้าบำรุงรักษายานพาหนะที่คุณดูแล " + own.length + " คัน (" + own.map((c) => c.plate).join(", ") + ") ระหว่างวันที่ " + t.d1 + " ถึง " + t.d2 + " ที่ " + tripLoc(t, own[0]) });
+    text: op + " จะเข้าบำรุงรักษายานพาหนะที่คุณดูแล " + own.length + " คัน (" + own.map((c) => c.plate).join(", ") + ") ระหว่างวันที่ " + t.d1 + " ถึง " + t.d2 + " ที่ " + tripLoc(t, own[0]) });
+  if (t.mode === "hire") out.push({ id: t.id + "-vendor", role: "vendor", status: "Brand", tripId: t.id, unread: true, time: "10 นาทีที่แล้ว", href: "/trips/detail/?trip=" + t.id,
+    text: "แผนเดินทาง " + t.name + " อนุมัติแล้ว เริ่มงานได้ตั้งแต่ " + t.d1 });
   return out;
 }
 export const ackNoti = (t: { id: string; mode?: "self" | "hire" }, c: { id: string; plate: string }, unread = true): Noti => ({
   id: "ack-" + t.id + "-" + c.id, role: "owner", status: "Brand", unread, time: "5 นาทีที่แล้ว", href: "/acceptance/car/?trip=" + t.id + "&car=" + c.id,
-  text: "ปิดงานบำรุงรักษา " + c.plate + " แล้ว รอผู้ดูแลยานพาหนะรับทราบผล" + (t.mode === "hire" ? "" : "และประเมินความพึงพอใจ"),
+  text: "ปิดงานบำรุงรักษา " + c.plate + " แล้ว รอผู้ดูแลยานพาหนะรับทราบผล",
 });
 export const oilFailNoti = (t: { id: string }, c: { id: string; plate: string }, unread = true): Noti => ({
   id: "oilfail-" + t.id + "-" + c.id, role: "owner", status: "Error", unread, time: "5 นาทีที่แล้ว", href: "/vehicles/detail/?car=" + c.id + "&tab=machine",
