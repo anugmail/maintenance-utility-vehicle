@@ -42,8 +42,8 @@ function Detail() {
 
   const st = plan.status;
   const manage = canManage(role, plan);
-  const canDelete = manage && st === "returned";
-  const canEdit = manage && (st === "returned" || st === "approved" || st === "active");
+  const canDelete = manage && (st === "review" || st === "returned");
+  const canEdit = manage && (st === "review" || st === "returned" || st === "approved" || st === "active");
   const size = mob ? "lg" : "md";
   const id = planId(plan);
   const nowQ = Number(plan.nowQ.replace(/\D/g, "")) || 1;
@@ -78,7 +78,7 @@ function Detail() {
       {costTab ? <CostTab rows={costs} planCars={plan.cars} /> : <div className="flex flex-col gap-8">
         {st === "returned" && <Alert Color="Error" Text="ผู้อนุมัติส่งกลับให้แก้ไข" SupportingText={plan.returnReason} />}
         <PlanBody plan={plan} q={q} onQ={setQ} actions={qActions} kv={RUN.includes(st) ? runKv(plan) : undefined} />
-        <PlanParts plan={plan} />
+        <PlanParts plan={plan} readonly={!canEdit} />
       </div>}
       <ConfirmDialog spec={del ? DELETE_CONFIRM : null} onCancel={() => setDel(false)} onOk={() => { setDel(false); deletePlan(plan.mr); router.push("/"); }} />
     </>

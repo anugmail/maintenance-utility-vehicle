@@ -14,7 +14,7 @@ import { useMock } from "@/lib/mock/store";
 export const ALL_Q_LABEL = "รวมทุกไตรมาส";
 const byGroup = (rows: QPartRow[]) => rows.map(({ sub: _s, ...r }) => (void _s, r)).sort((a, b) => a.group.localeCompare(b.group, "th"));
 
-export function PlanParts({ plan }: { plan: Plan }) {
+export function PlanParts({ plan, readonly = false }: { plan: Plan; readonly?: boolean }) {
   const mock = useMock();
   const [q, setQ] = useState(0);
   const per = [1, 2, 3, 4].map((k) => byGroup(quarterPartRows(mock, planId(plan), k)));
@@ -29,7 +29,7 @@ export function PlanParts({ plan }: { plan: Plan }) {
         {QUARTERS.map((t, i) => <TabItem key={t} Text={t} Active={q === i + 1} onClick={() => setQ(i + 1)} />)}
       </Tabs>
       {!rows.length
-        ? <EmptyStateDataEmpty Text="ยังไม่มีรายการอะไหล่" SupportingText={q ? "ไตรมาสนี้ไม่มีอะไหล่ที่ต้องเบิก" : "แผนนี้ไม่มีอะไหล่ที่ต้องเบิก"} />
+        ? <EmptyStateDataEmpty Text="ยังไม่มีรายการอะไหล่" SupportingText={q ? "ไตรมาสนี้ไม่มีอะไหล่ที่ต้องเบิก" : readonly ? "แผนนี้ไม่มีอะไหล่ที่ต้องเบิก" : "จัดการอะไหล่ทีละคันจากปุ่ม … ที่แถวยานพาหนะในแท็บไตรมาส รายการจะรวมมาที่นี่"} />
         : <PagedTable key={q} columns={QPART_COLS} rows={rows} rowKey={(_, i) => shown[i].key} />}
     </section>
   );
