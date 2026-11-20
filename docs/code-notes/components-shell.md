@@ -64,12 +64,6 @@ from=menu อ่านจาก location.search หลังโหลด (useSea
   ประกอบจากชิ้นไลบรารี: Input dropdown + Dropdown list (บทบาท) · Tertiary button (ล้างข้อมูลจำลอง) · Checkbox (จำลองบันทึกไม่สำเร็จ — ให้เห็นจอ "บันทึกไม่สำเร็จ") · Tertiary brand button (ไปหน้ารายการ scenario · ไปเมนูพาดูทีละเรื่อง /guide/) — บันทึกใน figma-spec/COMPOSED.md
 ```
 
-**ท้ายบรรทัด `const oh = useOhStyle();`**
-
-```text
-สวิตช์ทดลอง "แบบ Overhaul" (lib/ohStyle.ts) — ปิด = กลับแบบเดิมทุกจุด
-```
-
 **ก่อน `const pend = pendingSigns(mock);`**
 
 ```text

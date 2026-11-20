@@ -19,14 +19,13 @@ import type { TripCar } from "@/lib/mock/trips";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { MA_HEAD, REPAIR_HEAD, histText, useMachineDates } from "@/lib/mock/vehicleHistory";
 import { CheckTable } from "@/app/new/CheckTable";
-import { useOhStyle } from "@/lib/ohStyle";
 
 const COLS = [{ head: "ทะเบียน", width: 190 }, { head: "ยี่ห้อ/รุ่น" }, { head: MA_HEAD, width: 200 }, { head: REPAIR_HEAD, width: 165 }];
 const SEARCH = "ค้นหาทะเบียน, ยี่ห้อ/รุ่น, หน่วยงาน";
 const PER = 10;
-const OH_TITLE = "เพิ่มยานพาหนะ";
+const TITLE = "เพิ่มยานพาหนะ";
 
-interface PickerProps { pool: TripCar[]; taken?: Record<string, string>; nowQ: string; onAdd: (ids: string[]) => void; onCancel: () => void; title?: string; sub?: string; okText?: string; emptyText?: string; emptySub?: string; areaOf?: (c: TripCar) => PickerArea }
+interface PickerProps { pool: TripCar[]; taken?: Record<string, string>; nowQ: string; onAdd: (ids: string[]) => void; onCancel: () => void; sub?: string; emptyText?: string; emptySub?: string; areaOf?: (c: TripCar) => PickerArea }
 type Area = { regions: string[]; districts: string[]; types: string[] };
 const NO_AREA: Area = { regions: [], districts: [], types: [] };
 export function TripCarPicker({ open, ...p }: PickerProps & { open: boolean }) {
@@ -34,14 +33,13 @@ export function TripCarPicker({ open, ...p }: PickerProps & { open: boolean }) {
   return <Picker {...p} />;
 }
 
-function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่มยานพาหนะเข้าแผนเดินทาง", sub: subText, okText = "เพิ่มเข้าแผนเดินทาง", emptyText, emptySub, areaOf }: PickerProps) {
+function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, sub: subText, emptyText, emptySub, areaOf }: PickerProps) {
   const mob = useBreakpoint() === "Mobile";
-  const oh = useOhStyle();
   const [q, setQ] = useState("");
   const [page, setPage] = useState(1);
   const [ticked, setTicked] = useState<string[]>([]);
   const [area, setArea] = useState<Area>(NO_AREA);
-  const [panel, setPanel] = useState(!!areaOf && !oh);
+  const [panel, setPanel] = useState(false);
   const [sheet, setSheet] = useState(false);
   const [fd, setFd] = useState<Area>(NO_AREA);
   const [dd, setDd] = useState("");
@@ -111,7 +109,7 @@ function Picker({ pool, taken = {}, nowQ, onAdd, onCancel, title = "เพิ่
 
   return (
     <>
-      <PopupModal open title={oh ? OH_TITLE : title} sub={sub} width={1140} ok={(oh ? OH_TITLE : okText) + (n ? " (" + n + ")" : "")} okDisabled={!n}
+      <PopupModal open title={TITLE} sub={sub} width={1140} ok={TITLE + (n ? " (" + n + ")" : "")} okDisabled={!n}
         onCancel={onCancel} onOk={() => onAdd(pool.filter((c) => ticked.includes(c.id) && !taken[c.id]).map((c) => c.id))}>
         {body}
       </PopupModal>

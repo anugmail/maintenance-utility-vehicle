@@ -158,8 +158,8 @@ function TripList() {
         </InputDropdownWithBadges>
       </FilterShell>
       {rowActs.Menu}
-      <TripCarPicker open={adding} pool={quarterPool(mock, id, q)} nowQ={nowQ} title={"เพิ่มยานพาหนะเข้า" + nowQ}
-        sub="ยานพาหนะที่ยังไม่อยู่ในแผนนี้ เพิ่มได้ทุกคัน รวมยานพาหนะที่รับมอบระหว่างปี" okText={"เพิ่มเข้า" + nowQ} emptyText="ไม่มียานพาหนะที่เพิ่มเข้าไตรมาสนี้ได้" areaOf={carArea}
+      <TripCarPicker open={adding} pool={quarterPool(mock, id, q)} nowQ={nowQ}
+        sub="ยานพาหนะที่ยังไม่อยู่ในแผนนี้ เพิ่มได้ทุกคัน รวมยานพาหนะที่รับมอบระหว่างปี" emptyText="ไม่มียานพาหนะที่เพิ่มเข้าไตรมาสนี้ได้" areaOf={carArea}
         onCancel={() => setAdding(false)} onAdd={(ids) => { addQuarterCars(id, q, ids); setAdding(false); notify("เพิ่มยานพาหนะเข้า" + nowQ + " สำเร็จ"); }} />
       <RowMenu anchor={menu?.anchor ?? null} items={menu ? [{ ...MAINT_ITEM, onClick: () => setMaint(menu.car) }, { Text: "ย้ายไปไตรมาสอื่น", IconSwap: MOVE_ICON, Disabled: lastQ, onClick: () => openMove(menu.car) }] : []} onClose={() => setMenu(null)} />
       <ConfirmDialog spec={maint ? MAINT_CONFIRM(maint.plate, q) : null} onCancel={() => setMaint(null)}

@@ -13,13 +13,11 @@ import { useProtoFormTools } from "@/lib/protoForm";
 import { PopupModal } from "@/components/patterns/PopupModal";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { confirmSign, pendingSigns } from "@/lib/mock/jobs";
-import { setOhStyle, useOhStyle } from "@/lib/ohStyle";
 
 export function PrototypeBar() {
   const role = useRole();
   const mock = useMock();
   const fail = !!mock.failSave;
-  const oh = useOhStyle();
   const pend = pendingSigns(mock);
   const [signs, setSigns] = useState(false);
   const [open, setOpen] = useState(false);
@@ -46,10 +44,6 @@ export function PrototypeBar() {
         </span>
       )}
       <label className="ml-auto flex items-center gap-2 text-xs text-gray-600">
-        <Checkbox Type={oh ? "Selected" : "Unselected"} label="แบบ Overhaul (ทดลอง)" onChange={setOhStyle} />
-        แบบ Overhaul (ทดลอง)
-      </label>
-      <label className="flex items-center gap-2 text-xs text-gray-600">
         <Checkbox Type={fail ? "Selected" : "Unselected"} label="จำลองบันทึกไม่สำเร็จ" onChange={(v) => setMock((s) => ({ ...s, failSave: v }))} />
         จำลองบันทึกไม่สำเร็จ
       </label>

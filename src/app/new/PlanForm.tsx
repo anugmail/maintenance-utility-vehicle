@@ -310,7 +310,7 @@ export function PlanForm({ mode, plan, from }: { mode: "create" | "edit"; plan?:
           </div>
         </div>
       </PopupModal>
-      <TripCarPicker open={qAdd} pool={addPool} nowQ={"ไตรมาส " + q} title={q ? "เพิ่มยานพาหนะเข้าไตรมาส " + q : "เพิ่มยานพาหนะเข้าแผน"} okText={q ? "เพิ่มเข้าไตรมาส " + q : "เพิ่มเข้าแผน"}
+      <TripCarPicker open={qAdd} pool={addPool} nowQ={"ไตรมาส " + q}
         sub={q ? "ยานพาหนะในแผนที่ยังไม่จัดไตรมาส" : "ยานพาหนะที่ยังไม่อยู่ในแผนนี้ เพิ่มได้ทุกคัน"} areaOf={carArea}
         emptyText={!q ? "ยานพาหนะทุกคันอยู่ในแผนแล้ว" : cars.length ? "ยานพาหนะในแผนจัดเข้าไตรมาสครบแล้ว" : "ยังไม่มียานพาหนะในแผน"}
         emptySub={q ? ADD_PLAN_FIRST : "ไม่มียานพาหนะที่เพิ่มเข้าแผนนี้ได้"}

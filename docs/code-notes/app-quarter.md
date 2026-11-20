@@ -104,17 +104,17 @@ popup เพิ่มรถเข้าแผนเดินทาง — tripCa
 แก้คำ 11 พ.ย. 2569 เป็นวันของเครื่องจักร (MA_HEAD REPAIR_HEAD) — popup กว้าง 800 ⇒ หน่วยงานเจ้าของยานพาหนะย้ายเป็นบรรทัดรองของทะเบียน (แบบ unitSub ของ tripVCols)
 ```
 
-**ก่อน `const OH_TITLE = "เพิ่มยานพาหนะ";`**
+**ก่อน `const TITLE = "เพิ่มยานพาหนะ";`**
 
 ```text
-สวิตช์ทดลอง "แบบ Overhaul" (lib/ohStyle.ts จุดที่ 1 2): หัวและปุ่มหลักเป็น "เพิ่มยานพาหนะ" ทุกจุด บรรทัดรองบอกขอบเขตแทน · แผงตัวกรองหุบตอนเปิด
+หัวและปุ่มหลักเป็น "เพิ่มยานพาหนะ" ทุกจุด บรรทัดรองบอกขอบเขตแทน · แผงตัวกรองหุบตอนเปิด (20 พ.ย. 2569 เจ้าของงานให้ใช้แบบ Overhaul เป็นแบบถาวร เอาสวิตช์ทดลองออก (เดิมทดลอง 19 พ.ย. 2569) · เอา prop title okText ออก)
   ตาม modal เลือกยานพาหนะของหน้าสร้างแผน Overhaul และเพิ่ม Purchase Order (ต้นแบบ vms-plus-workspace 18 พ.ย. 2569)
 ```
 
 **ก่อน `interface PickerProps { pool: TripCar[]; taken?: Record<string, string>; nowQ: string; onA`**
 
 ```text
-title / sub / okText / emptyText = popup "เพิ่มรถเข้าไตรมาส n" ของ E.1 (qAddModal() → tripCarModal(o.cars o.title o.sub o.okText)) · taken = รถที่อยู่ในแผนเดินทางอื่น (แสดงแต่เลือกไม่ได้)
+sub / emptyText = popup "เพิ่มรถเข้าไตรมาส n" ของ E.1 (qAddModal() → tripCarModal(o.cars o.title o.sub o.okText)) · taken = รถที่อยู่ในแผนเดินทางอื่น (แสดงแต่เลือกไม่ได้)
   areaOf = ภาค เขต ประเภทยานพาหนะของแต่ละคัน (ส่งมา = มีปุ่มตัวกรองในตัว popup · BACKLOG ข้อ 87 · ทุกจุดส่ง carArea ข้อ 89)
 ```
 
@@ -124,11 +124,11 @@ title / sub / okText / emptyText = popup "เพิ่มรถเข้าไ�
 ตัวกรองในตัว popup (areaOf) — area = ที่ใช้อยู่ · fd = ค่าร่างในแผง · dd = ช่อง dropdown ที่เปิด
 ```
 
-**ก่อน `const [panel, setPanel] = useState(!!areaOf && !oh);`**
+**ก่อน `const [panel, setPanel] = useState(false);`**
 
 ```text
 13 พ.ย. 2569 เจ้าของงาน (ภาพ modal Overhaul) "ใน modal ต้องมี filter แบบ ที่ตอนเลือก filter ของเดิม" + เลือก "ช่องเดิม S1 + กางไว้ตั้งแต่เปิด"
-    ⇒ desktop แผงตัวกรองกางตั้งแต่เปิด popup (panel) · ตกลง = ใช้ค่าแล้วแผงยังกางอยู่ · ยกเลิก/กดปุ่มตัวกรอง = คืนค่าร่างแล้วหุบ · มือถือ = bottom sheet เปิดเมื่อกดปุ่มตัวกรอง (sheet)
+    ⇒ desktop แผงตัวกรองกางตั้งแต่เปิด popup (panel) — 20 พ.ย. 2569 เปลี่ยนเป็นหุบตอนเปิด กดปุ่มตัวกรองแล้วกาง (แบบ Overhaul ถาวร) · ตกลง = ใช้ค่าแล้วแผงยังกางอยู่ · ยกเลิก/กดปุ่มตัวกรอง = คืนค่าร่างแล้วหุบ · มือถือ = bottom sheet เปิดเมื่อกดปุ่มตัวกรอง (sheet)
 ```
 
 **ท้ายบรรทัด `const applyPanel = () => { setArea(fd); setPage(1); setDd(""); if (mob) setSheet(false); }`**
@@ -226,7 +226,7 @@ staff = ชื่อ-สกุลรายแถว · tels = เบอร์โ
 **ท้ายบรรทัด `const rowActs = useRowActions();`**
 
 ```text
-สวิตช์ทดลอง "แบบ Overhaul" จุดที่ 4: desktop เมนู … แทนไอคอนแก้ไข ลบ
+desktop เมนู … แทนไอคอนแก้ไข ลบ (20 พ.ย. 2569 เจ้าของงานให้ใช้แบบ Overhaul เป็นแบบถาวร เอาสวิตช์ทดลองออก (เดิมทดลอง 19 พ.ย. 2569))
 ```
 
 **ก่อน `const wasOpen = useRef(false);`**
@@ -442,7 +442,7 @@ TRIP_Q_COLS ของ screens.js = ชุดกลาง TRIP_V_COLS (R82 · lib
 **ท้ายบรรทัด `const rowActs = useRowActions();`**
 
 ```text
-สวิตช์ทดลอง "แบบ Overhaul" จุดที่ 4: desktop เมนู … แทนไอคอนแก้ไข ย้าย ลบ
+desktop เมนู … แทนไอคอนแก้ไข ย้าย ลบ (20 พ.ย. 2569 เจ้าของงานให้ใช้แบบ Overhaul เป็นแบบถาวร เอาสวิตช์ทดลองออก (เดิมทดลอง 19 พ.ย. 2569))
 ```
 
 **ท้ายบรรทัด `const [maint, setMaint] = useState<TripCar | null>(null);`**

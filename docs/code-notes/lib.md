@@ -36,27 +36,6 @@ basePath ตอน build (GitHub Pages: /maintenance-utility-vehicle) — next/l
 จำไฟล์ที่ผู้ใช้เลือก (ชื่อไฟล์เป็นคีย์ · ชื่อซ้ำ = ไฟล์ล่าสุด)
 ```
 
-## src/lib/ohStyle.ts
-
-**หัวไฟล์**
-
-```text
-สวิตช์ทดลอง "แบบ Overhaul" (ของต้นแบบเท่านั้น · 19 พ.ย. 2569 เจ้าของงาน "ลองเปลี่ยนให้เหมือนกับ overhaul … ทำให้ revert ได้ด้วย")
-  เปิด = เรื่องที่ทั้งสองงานมี ทำด้วยวิธีเดียวกับต้นแบบ Overhaul (vms-plus-workspace 18 พ.ย. 2569) · ปิด = แบบเดิมของบำรุงรักษาทุกจุด
-  จุดที่เปลี่ยนตามสวิตช์ (ค้นคำว่า useOhStyle):
-    1 popup เลือกยานพาหนะ หัวและปุ่มหลัก "เพิ่มยานพาหนะ" ทุกจุด (TripCarPicker)
-    2 แผงตัวกรองใน popup หุบอยู่หลังปุ่ม "ตัวกรอง" ตอนเปิด (TripCarPicker)
-    3 ส่งกลับแก้ไข = ปุ่มที่หัวหน้า + popup ใส่เหตุผล แทนส่วนผลการพิจารณาในหน้า (approvals/_shared/Decision)
-    4 แถวยานพาหนะใช้เมนู … แทนไอคอนแก้ไข ลบ บน desktop (patterns/RowActions)
-  เลิกทดลอง = ลบไฟล์นี้กับ patterns/RowActions แล้วเอากิ่ง oh ออกจากจุดที่เรียก · เก็บค่าใน localStorage แยกคีย์ ไม่แตะข้อมูลจำลอง
-```
-
-**ท้ายบรรทัด `try { window.localStorage.setItem(OH_KEY, v ? "1" : "0"); } catch {`**
-
-```text
-ข้าม
-```
-
 ## src/lib/protoForm.ts
 
 **หัวไฟล์**
