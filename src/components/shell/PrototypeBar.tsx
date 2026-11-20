@@ -1,7 +1,4 @@
 "use client";
-/* แถบต้นแบบบนสุด (ไม่ใช่หน้าจอของระบบ — มีเฉพาะต้นแบบ) · สลับบทบาท + ล้างข้อมูลจำลอง (CLAUDE.md ข้อ 5 และ 7)
-   + ปุ่มช่วยฟอร์ม "กรอกข้อมูลตัวอย่าง" · "ล้างค่า" (เจ้าของงาน 10 พ.ย. 2569 · ของต้นแบบเท่านั้น ไม่ใส่ใน Figma) — ขึ้นเฉพาะหน้าที่มีฟอร์มลงทะเบียน (lib/protoForm.ts) · ล้างค่าเมื่อมีค่าที่กรอกไว้ = ยืนยันก่อน
-   ประกอบจากชิ้นไลบรารี: Input dropdown + Dropdown list (บทบาท) · Tertiary button (ล้างข้อมูลจำลอง) · Checkbox (จำลองบันทึกไม่สำเร็จ — ให้เห็นจอ "บันทึกไม่สำเร็จ") · Tertiary brand button (ไปหน้ารายการ scenario · ไปเมนูพาดูทีละเรื่อง /guide/) — บันทึกใน figma-spec/COMPOSED.md */
 import Link from "next/link";
 import { useState } from "react";
 import { DropdownList } from "@/components/vms/DropdownList";
@@ -16,13 +13,13 @@ import { useProtoFormTools } from "@/lib/protoForm";
 import { PopupModal } from "@/components/patterns/PopupModal";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 import { confirmSign, pendingSigns } from "@/lib/mock/jobs";
+import { setOhStyle, useOhStyle } from "@/lib/ohStyle";
 
 export function PrototypeBar() {
   const role = useRole();
   const mock = useMock();
   const fail = !!mock.failSave;
-  /* คำขอลงนาม (11 พ.ย. 2569 · ของต้นแบบ): ระบบจริงส่งแจ้งเตือนถึงผู้ลงนาม ผู้ลงนามเข้าระบบแล้วยืนยัน — ต้นแบบไม่มีบทบาทของผู้ลงนามรายคน
-     ⇒ แถบต้นแบบมีปุ่ม "คำขอลงนาม (n)" เปิดรายการที่รอยืนยัน แล้วกดยืนยันในฐานะผู้ลงนามคนนั้น */
+  const oh = useOhStyle();
   const pend = pendingSigns(mock);
   const [signs, setSigns] = useState(false);
   const [open, setOpen] = useState(false);
@@ -30,9 +27,8 @@ export function PrototypeBar() {
   const [ask, setAsk] = useState(false);
   const clear = () => { form?.ref.current?.clear(); setAsk(false); notify("ล้างค่าในฟอร์มนี้แล้ว"); };
   return (
-    <div data-proto-bar className="relative z-[55] flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-gray-200 bg-gray-50 px-4 py-1">{/* z-[55] เหนือ popup (z-50) ให้กดปุ่มกรอกข้อมูลตัวอย่างตอน popup เปิดได้ · ต่ำกว่า toast (z-[60]) */}
+    <div data-proto-bar className="relative z-[55] flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-gray-200 bg-gray-50 px-4 py-1">
       <Link href="/scenarios/" className="inline-flex items-center gap-1 text-xs font-semibold text-brand-900"><Ms name="home-20-300-round" size={16} />ต้นแบบบำรุงรักษาตามวาระ</Link>
-      {/* เมนูพาดูทีละเรื่อง (G1 · เจ้าของงาน 5 พ.ย. 2569 "อยากให้มีเมนูแยกออกมาเลย ว่า เป็นเรื่องที่แยก scen") — ของต้นแบบ อยู่ที่แถบนี้ และเป็นเมนูย่อยต่อจาก "บำรุงรักษาตามวาระ" ใน Sidebar ด้วย (เจ้าของงาน 5 พ.ย. 2569 "สร้างเป็นอีกเมนู เป็นเมนูย่อยของ บำรุงรักษาตามวาระก็ได้") */}
       <Link href="/guide/" data-guide-menu className="inline-flex items-center gap-1 text-xs font-semibold text-brand-900"><Ms name="school-20-300-round" size={16} />พาดูทีละเรื่อง</Link>
       <span className="text-xs text-gray-600">บทบาท</span>
       <InputDropdown Label={false} LabelText="บทบาท" Text={role} open={open} onOpenChange={setOpen} className="w-52">
@@ -50,6 +46,10 @@ export function PrototypeBar() {
         </span>
       )}
       <label className="ml-auto flex items-center gap-2 text-xs text-gray-600">
+        <Checkbox Type={oh ? "Selected" : "Unselected"} label="แบบ Overhaul (ทดลอง)" onChange={setOhStyle} />
+        แบบ Overhaul (ทดลอง)
+      </label>
+      <label className="flex items-center gap-2 text-xs text-gray-600">
         <Checkbox Type={fail ? "Selected" : "Unselected"} label="จำลองบันทึกไม่สำเร็จ" onChange={(v) => setMock((s) => ({ ...s, failSave: v }))} />
         จำลองบันทึกไม่สำเร็จ
       </label>

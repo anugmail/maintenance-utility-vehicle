@@ -1,13 +1,11 @@
 "use client";
-/* ผลการพิจารณา (S2 · S7) — decisionSection() ใน screens.js · ปรับ 5 พ.ย. 2569 (รีวิวทีมออกแบบ)
-   "Default จะยังไม่เลือกผลการพิจารณาให้ ต้องเลือกเอง · ย้ายตำแหน่งจากด้านล่างสุดไปไว้ด้านบนสุดให้เหมือนงานซ่อม"
-   ตาม `Section label` + `Radio text card` ×2 + `Text area` ของไฟล์ Component + Incident detail ของ Flow การซ่อม (ไฟล์ Maintain-D: Section label + Radio text card ×2 ก่อนส่วนข้อมูล)
-   ไม่มีใบที่เลือกไว้ก่อน · เลือกส่งกลับแก้ไข → Text area "เหตุผลที่ส่งกลับ" (บังคับ · ออกจากช่องโดยยังว่าง = "กรุณาระบุเหตุผลที่ส่งกลับ")
-   ok = เลือกอนุมัติ หรือ ส่งกลับ + มีเหตุผล (ปุ่ม "ยืนยันผลการพิจารณา" Disabled จนกว่า ok) */
 import { useState } from "react";
 import { RadioTextCards } from "@/components/vms/RadioTextCard";
 import { SectionLabel } from "@/components/vms/SectionLabel";
 import { TextArea } from "@/components/vms/TextArea";
+import { FormModal } from "@/components/patterns/FormModal";
+import { PrimaryButton } from "@/components/vms/PrimaryButton";
+import { TertiaryDangerButton } from "@/components/vms/TertiaryDangerButton";
 
 export type Decision = "" | "approve" | "return";
 const TEXT = { approve: "อนุมัติ", return: "ส่งกลับแก้ไข" } as const;
@@ -33,4 +31,25 @@ export function DecisionSection({ approveSub, returnSub, decision, setDecision, 
         State={err ? "Error" : undefined} HelperText={err ? "กรุณาระบุเหตุผลที่ส่งกลับ" : undefined} />}
     </section>
   );
+}
+
+export function ReviewActions({ onApprove, onReturn }: { onApprove: () => void; onReturn: () => void }) {
+  return <>
+    <TertiaryDangerButton Text={TEXT.return} onClick={onReturn} />
+    <PrimaryButton Text={TEXT.approve} onClick={onApprove} />
+  </>;
+}
+
+export function ReturnModal({ open, sub, onCancel, onOk }: { open: boolean; sub: string; onCancel: () => void; onOk: (reason: string) => void }) {
+  if (!open) return null;
+  return <ReturnForm sub={sub} onCancel={onCancel} onOk={onOk} />;
+}
+
+function ReturnForm({ sub, onCancel, onOk }: { sub: string; onCancel: () => void; onOk: (reason: string) => void }) {
+  const [reason, setReason] = useState("");
+  const [tried, setTried] = useState(false);
+  const err = tried && !reason.trim();
+  return <FormModal open danger title={TEXT.return} sub={sub} ok={TEXT.return} onCancel={onCancel}
+    fields={[{ label: "เหตุผลที่ส่งกลับ", area: true, value: reason, placeholder: "ระบุเหตุผลที่ส่งกลับ", error: err ? "กรุณาระบุเหตุผลที่ส่งกลับ" : undefined }]}
+    onField={(_, v) => setReason(v)} onOk={() => (reason.trim() ? onOk(reason.trim()) : setTried(true))} />;
 }
