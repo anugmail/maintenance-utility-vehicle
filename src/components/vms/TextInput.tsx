@@ -1,10 +1,4 @@
 "use client";
-/* Figma: "Text input" — ไฟล์ (Component) VMS Plus หน้า Inputs (node 2:6) · สเปก figma-spec/Text input.json
-   variant: State = Default | Filled | Hover | Focused | Disabled | Readonly | Error | Error Hover | Error Focused | Error Readonly · Size = md | lg
-   property: Label · Label text · Optional · Info icon · Text · Show Placeholder · Leading icon (swap) · Trailing icon (swap) · Helper · Helper text
-   ค่า: กว้างตั้งต้น 352 · ป้าย (Input label) → ช่อง ห่าง 8 · ช่อง md สูง 40 / lg 48 · ขอบใน 8/12 · ช่องไฟ 8 · รัศมี 8 · ขอบ 1 gray-300
-        Hover/Focused ขอบ brand-800 · Focused วงโฟกัส 4 brand-900 ทึบ 12% (Error Focused error-600) ตาม effect ของ Container · Error ขอบ error-500 · Disabled/Readonly พื้น gray-100 · Error Readonly ขอบ error-200
-        ตัวอักษร 16 Regular (ค่า black · placeholder gray-400) · ไอคอน 24/20 gray-500 · Helper 12 Regular gray-600 (Error error-600) */
 import { useId, type InputHTMLAttributes, type ReactNode } from "react";
 import { cx } from "@/lib/cx";
 import { InputLabel } from "./InputLabel";
@@ -15,18 +9,14 @@ export type TextInputState = "Default" | "Filled" | "Hover" | "Focused" | "Disab
 export interface TextInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "size" | "onChange" | "value"> {
   State?: TextInputState;
   Size?: "md" | "lg";
-  /** property Label (แสดงป้าย) */
   Label?: boolean;
   LabelText?: string;
   Optional?: boolean;
   InfoIcon?: boolean;
-  /** property Text = ค่าในช่อง */
   Text?: string;
-  /** ข้อความ placeholder (Figma: Text ตอน Show Placeholder) */
   Placeholder?: string;
   LeadingIconSwap?: string;
   TrailingIconSwap?: string;
-  /** property Helper text (ใส่ = เปิด Helper) */
   HelperText?: string;
   LabelButton?: ReactNode;
   onChange?: (v: string) => void;

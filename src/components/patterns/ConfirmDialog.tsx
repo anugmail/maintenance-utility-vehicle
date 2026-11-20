@@ -1,7 +1,4 @@
 "use client";
-/* popup ยืนยัน ตาม confirm() ใน core.js — ประกอบจากชิ้นไลบรารี (บันทึกใน figma-spec/COMPOSED.md)
-   Desktop: Modal Type=Centered image (ซ่อนรูป) · danger = Type=Destructive centered image with input (ซ่อน Form) ปุ่มหลัก Primary danger button · Modal header Alignment=Center + Modal footer Horizontal fill
-   Mobile: Bottom sheet (ไม่มีหัว) + Modal header Alignment=Center (ไม่มีปุ่มปิด) + Bottom sheet footer ปุ่ม Size=lg */
 import { BottomSheet } from "@/components/vms/BottomSheet";
 import { BottomSheetFooter } from "@/components/vms/BottomSheetFooter";
 import { Modal } from "@/components/vms/Modal";

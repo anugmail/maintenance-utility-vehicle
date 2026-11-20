@@ -1,15 +1,4 @@
 "use client";
-/* ตารางติ๊กเลือกรถ — tbl() + headCheck() ใน screens.js (ไม่ใช่ component ใหม่ เป็นการจัดวางชิ้นไลบรารี · figma-spec/COMPOSED.md)
-   ตาม `Table header cell` (Checkbox=True) + `Table cell` (Style=Lead checkbox · Checkbox State=Disabled แถวที่ติ๊กไม่ได้) ของไฟล์ Component
-   + หน้า 5.2 Vehicle Management "Export reports - Select vehicles" ของ UI Release#2 (Table ของไลบรารีรับช่องติ๊กไม่ได้ ⇒ วางเซลล์ไลบรารีเรียงเป็นตาราง)
-   ใช้: ฟอร์มสร้างแผน S1 (รถในพื้นที่ / รถในไตรมาส) · popup เพิ่มรถเข้าแผนเดินทาง S6 S9
-   Desktop: คอลัมน์แรก = ช่องติ๊ก + ทะเบียน (บรรทัดรอง) · ติ๊กทั้งหมดที่หัวคอลัมน์แรก นับเฉพาะแถวที่ติ๊กได้ · Pagination ใต้ตาราง
-   Mobile: List with checkbox (หัว = ชื่อคอลัมน์แรก · รายการ = ทะเบียน + บรรทัดรอง) ตาม mobileCards() ใน core.js
-     แถวที่ส่ง mobileActions (11 พ.ย. 2569 BACKLOG ข้อ 64 · CLAUDE.md ข้อ 14) = List with checkbox item + Mobile table item Style=Action icons ใต้รายการ (ดู แก้ไข ลบ)
-     เดิมแท็บไตรมาสของฟอร์มแผนบนมือถือไม่มีทางเข้าหน้าอะไหล่รายคัน (S21) — เจ้าของงาน "เลือกรถเข้าแผนแล้ว แต่ไม่แสดงรายการอะไหล่ให้เลือก" · figma-spec/COMPOSED.md
-   scope (12 พ.ย. 2569 · BACKLOG ข้อ 74 · เจ้าของงาน 12 พ.ย. 2569 "ป๊อบอัพ ควรมีแบ่งหน้า"): rows = แถวของหน้าที่เปิด · scope = ทุกแถวที่ตรงคำค้น (ทุกหน้า)
-     ⇒ ติ๊กหัวตาราง/หัวรายการ = เลือก/ยกเลิกทุกแถวที่ติ๊กได้ใน scope (คงพฤติกรรมเดิมของ popup TripCarPicker ก่อนแบ่งหน้า) · ไม่ส่ง = เฉพาะแถวของหน้า (ฟอร์มแผน S1 เดิม)
-     มือถือที่ส่ง scope ใช้ List header item + List with checkbox item ชุดเดียวกับ List with checkbox (หัวรายการผูกกับ scope ไม่ใช่แค่รายการของหน้า) */
 import type { ReactNode } from "react";
 import { ListHeaderItem } from "@/components/vms/ListHeaderItem";
 import { ListWithCheckbox } from "@/components/vms/ListWithCheckbox";
@@ -23,14 +12,10 @@ import { useBreakpoint } from "@/lib/useBreakpoint";
 
 export interface CheckRow {
   key: string;
-  /** คอลัมน์แรก: ทะเบียน + บรรทัดรอง (desktop) */
   text: string; sub?: string;
-  /** บรรทัดรองบนมือถือ (List with checkbox item) — ไม่ใส่ = sub */
   mobileSub?: string;
-  /** คอลัมน์ที่เหลือ */
   cells: TableValue[];
   disabled?: boolean;
-  /** มือถือ: ไอคอนดู แก้ไข ลบ ใต้รายการ (Mobile table item Style=Action icons) */
   mobileActions?: CellAction[];
 }
 

@@ -1,13 +1,4 @@
 "use client";
-/* Figma: "Spare Part Card Item" — ไฟล์ Maintain-D หน้า Local Component (node 8:133440) · สเปก figma-spec/Spare Part Card Item.json (CLAUDE.md ข้อ 12)
-   การ์ดอะไหล่ใน PartsInventoryPanel / RequestedPartsPanel · variant: อะไหล่ = รายการในคลัง | รายการที่เลือก | V2 รายการที่เลือก | เพิ่มอะไหล่
-   ค่า: การ์ด พื้น white ขอบ 1 รัศมี 12 ขอบใน 16 (สีขอบของไฟล์ไม่มี token → gray-200 ใกล้สุด — COMPOSED.md ข.)
-        หัว: ชื่อ 16 SemiBold black + Pill outline Info "แนะนำ" (Suggestion) ช่องไฟ 8 · บรรทัดรหัส: รหัส 14 gray-600 · "·" "1 <หน่วย>" · "|" "<ราคา> บาท" ช่องไฟ 8
-        คลัง: "<คลัง> : คงเหลือ <n> <หน่วย>" 14 gray-600 (+ "| ซื้อเพิ่ม n หน่วย" + ข้อความแจ้ง error-600 "อะไหล่ที่จัดซื้อจะใช้เวลา 30 วันทำการ" เมื่อของไม่พอ)
-        รายการในคลัง: แถวเดียว ช่องไฟ 16 · ท้าย Selecte Spare Part (Add / Checked)
-        รายการที่เลือก (V2): เรียงลง ช่องไฟ 16 · ไอคอนลบ delete 24 ท้ายหัว (สีไอคอนของไฟล์ไม่มี token → Tertiary button ไอคอนอย่างเดียว — COMPOSED.md ข.) · แถวล่าง ราคารวม 16 SemiBold gray-600 ซ้าย + Number input กว้าง 120 ขวา
-        รายการที่เลือก (V1): + "เลือกผู้จัดซื้ออะไหล่เพิ่ม" Radio text card 2 ใบ (ส่ง buyerOptions)
-        เพิ่มอะไหล่: หัว "รายการเพิ่มเติม" + ไอคอนลบ · Text input 3 ช่อง ช่องไฟ 16 · ราคารวม + Number input */
 import type { ReactNode } from "react";
 import { InputLabel } from "@/components/vms/InputLabel";
 import { NumberInput } from "@/components/vms/NumberInput";
@@ -26,19 +17,15 @@ export type SparePartCardType = "รายการในคลัง" | "รา
 export interface SparePartCardItemProps {
   อะไหล่?: SparePartCardType;
   part?: SparePart;
-  /** รายการในคลัง: เลือกแล้ว (Selecte Spare Part State=Checked) */
   picked?: boolean;
   onPick?: () => void;
-  /** รายการที่เลือก / เพิ่มอะไหล่ */
   qty?: number;
   onQty?: (n: number) => void;
   onDelete?: () => void;
-  /** จำนวนที่ต้องซื้อเพิ่ม (ของไม่พอ) */
   buyMore?: number;
   buyerOptions?: string[];
   buyer?: string | null;
   onBuyer?: (v: string) => void;
-  /** เพิ่มอะไหล่: ช่องกรอก */
   manual?: { name: string; code: string; price: string };
   onManual?: (patch: Partial<{ name: string; code: string; price: string }>) => void;
   className?: string;

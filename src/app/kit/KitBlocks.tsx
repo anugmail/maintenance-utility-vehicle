@@ -1,4 +1,3 @@
-/* ตัวช่วยจัดหน้า /kit/ (ไม่ใช่ component ของไลบรารี — หน้า kit เป็นของต้นแบบ CLAUDE.md ข้อ 12) */
 import type { ReactNode } from "react";
 import { SectionLabel } from "@/components/vms/SectionLabel";
 

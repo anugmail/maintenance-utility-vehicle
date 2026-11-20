@@ -1,9 +1,4 @@
 "use client";
-/* popup เนื้อหาอิสระ (ตาราง · อัปโหลด · รายการ) ตาม popupModal() ใน screens.js — ประกอบจากชิ้นไลบรารี (บันทึกใน figma-spec/COMPOSED.md)
-   Desktop: Background overlay + กล่อง white รัศมี 12 กว้าง 640 (หรือ 800 ตามที่จอระบุ · 1140 = Modal Size=xl ของไลบรารี สำหรับ popup เลือกยานพาหนะ TripCarPicker BACKLOG ข้อ 89) กลางจอ (ห่างขอบบนอย่างน้อย 40)
-            Modal header Alignment=Left (Title + Supporting text · ปุ่มปิด · ไม่มี Featured icon) · เนื้อหา ขอบใน 0/24/24 ช่องไฟ 24
-            Modal footer Alignment=Horizontal right: Secondary "ยกเลิก" + Primary ok (okDisabled = State Disabled)
-   Mobile: Bottom sheet (Bottom sheet header หัวเรื่อง · เนื้อหา ขอบในข้าง 16 ช่องไฟ 16 · Bottom sheet footer ปุ่ม lg) */
 import { useEffect, type ReactNode } from "react";
 import { BackgroundOverlay } from "@/components/vms/BackgroundOverlay";
 import { BottomSheet } from "@/components/vms/BottomSheet";
@@ -19,7 +14,6 @@ export interface PopupModalProps {
   open: boolean;
   title: string;
   sub?: string;
-  /** กว้าง 640 (ค่าเริ่ม) · 800 · 1140 (Modal Size=xl) */
   width?: 640 | 800 | 1140;
   children: ReactNode;
   ok?: string;
@@ -27,7 +21,6 @@ export interface PopupModalProps {
   okDisabled?: boolean;
   onOk?: () => void;
   onCancel?: () => void;
-  /** false = ไม่มีปุ่มหลัก (popup ดูอย่างเดียว) */
   showOk?: boolean;
 }
 

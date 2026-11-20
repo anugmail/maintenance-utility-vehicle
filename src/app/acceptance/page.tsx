@@ -1,11 +1,4 @@
 "use client";
-/* S13 L.1 L.6 · หน้า ผลการบำรุงรักษารอรับทราบ ของผู้ดูแลยานพาหนะ (/acceptance/) — ackList() = roleList() + ACC_COLS + accRows() ใน screens.js (Figma 9607c3b · 10 พ.ย. 2569)
-   Page header (ไม่มีปุ่มย้อนกลับ) → Section ช่องไฟ 24: Table header (ค้นหา "ค้นหาทะเบียน, แผนเดินทาง") + Table + Table pagination (= จำนวนแถว)
-   คอลัมน์ ทะเบียน (บรรทัดรอง ประเภทยานพาหนะ) · วันดำเนินการ · ผู้ดำเนินการ (บรรทัดรอง หน่วยงาน) · แผนเดินทาง (บรรทัดรอง เลขที่ MR) · สถานะ (รอรับทราบ / รับทราบแล้ว) · ›
-   แถว = งานรายคันที่เสร็จสิ้น/บำรุงรักษาไม่ได้ของแผนเดินทางที่อนุมัติแล้ว (คันที่บำรุงรักษาไม่ได้ก็รอรับทราบ Q19) · ไม่มีแถวทั้งแผนแล้ว (S14 ตัดออก)
-   กระดิ่งมีจุดแดงเมื่อมีแจ้งเตือนที่ยังไม่อ่าน (L.1) · กดกระดิ่ง = แผงแจ้งเตือน (L.6 "ปิดงานบำรุงรักษา … รอผู้ดูแลยานพาหนะรับทราบผลและประเมินความพึงพอใจ") → ผลของคันนั้น
-   ต้นแบบ: ผู้ดูแลยานพาหนะเห็นทุกคันในรายการ (ACK_CARS ของ screens.js = ยานพาหนะที่ผู้ดูแลคนนี้ดูแล · ระบบจริงกรองตามชื่อผู้ดูแลในแผนเดินทาง)
-   อ้างอิง: Table header · Table · Table pagination · Mobile table ของไฟล์ Component + หน้ารายการ (roleList) ของ UI Release#2 ผ่าน screens.js */
 import { useRouter } from "next/navigation";
 import { Suspense, useState } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";
@@ -20,7 +13,6 @@ import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useSample } from "@/lib/useSample";
 import { useBell } from "../trips-view/_shared/Bell";
 
-/* ACC_COLS */
 const COLS: TableColumn[] = [
   { head: "ทะเบียน", Style: "Lead text" }, { head: "วันดำเนินการ", width: 140 }, { head: "ผู้ดำเนินการ", width: 220 },
   { head: "แผนเดินทาง", width: 260 }, { head: "สถานะ", width: 160, Style: "Badge" }, { head: "", width: 60, Style: "Action icons" },

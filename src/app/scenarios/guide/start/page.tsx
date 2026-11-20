@@ -1,6 +1,4 @@
 "use client";
-/* หน้าของต้นแบบ (ไม่ใช่จอของระบบ): เริ่มเคสของโหมดพาดูทีละเรื่อง ?case=<รหัสเคส> — ล้างข้อมูลจำลอง ใส่ข้อมูลของเคส ตั้งบทบาท แล้วพาไปหน้าแรกของเคส
-   แบบเดียวกับ /scenarios/sample/ · ไม่มีเคสนี้ → กลับหน้ารายการ scenario */
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
 import { findCase } from "@/lib/guide/scenarios";

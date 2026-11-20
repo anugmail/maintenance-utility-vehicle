@@ -1,7 +1,4 @@
 "use client";
-/* S8 P1 · แผนเดินทางบำรุงรักษา (/trips-view/ · กรย. · หน่วยงานเจ้าของรถ) — roleList() + bell() + notiPanel() ใน screens.js · spec S8.md (G.1 G.2 G.4)
-   Page header (ไม่มีย้อนกลับ) → Section ช่องไฟ 24: Table header (ค้นหาชื่อแผนเดินทาง, ทะเบียน + ตัวกรอง) + Table (TRIP_SEEN_COLS) + pagination
-   แสดงแผนเดินทางที่อนุมัติแล้ว · หน่วยงานเจ้าของรถเห็นเฉพาะใบที่มีรถของหน่วยงาน และนับเฉพาะรถของตน · กระดิ่ง + แผงแจ้งเตือน (_shared/Bell) */
 import { useRouter } from "next/navigation";
 import { Suspense, useState } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";

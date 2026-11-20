@@ -1,16 +1,4 @@
 "use client";
-/* Figma: "Sidebar navigation" — ไฟล์ (Component) VMS Plus หน้า Sidebar navigation (node 2:2) · สเปก figma-spec/Sidebar navigation.json
-   เมนูจริงตามหน้า "Sidebar Navigation" (277:230639) ของไฟล์ (UI) VMS Plus – Release#2 (component "Sidebar" + "Nav menu") — ข้อความ ลำดับ ไอคอน ตรงตามนั้น
-   variant: State = Collapsed | Expanded
-   Collapsed: กว้าง 80 · ขอบใน 12/16 · ช่องไฟ 20 · พื้น white · เส้นขวา/ล่าง/ซ้าย 1 gray-200 · PEA logo 32 · Menu = Nav button ช่องไฟ 8 · Footer menu ชิดล่าง ช่องไฟ 8
-   Expanded: กว้าง 280 · ขอบใน 12/16 · ช่องไฟ 20 · เส้นขวา 1 gray-200 · Logo wrap สูง 40 ขอบในข้าง 4 (Brand logo + Tertiary button ไอคอน keyboard_tab)
-             Menu = Nav item ช่องไฟ 8 · กลุ่มที่มีเมนูย่อย = Nav item (ลูกศร keyboard_arrow_down / เปิดแล้ว keyboard_arrow_up) + sub items (Nav list item ช่องไฟ 4) ห่างหัวกลุ่ม 4
-             Footer menu = Nav item ช่องไฟ 8 (แถวผู้ใช้: Avatar + Show Description + ไอคอน logout)
-   เมนูย่อย "บำรุงรักษาตามวาระ" ใต้ "งานซ่อมและบำรุงรักษา" เพิ่มตามเจ้าของงาน 4 พ.ย. 2569 (ทางเข้าหน้ารายการแผน = รากเว็บ) — ดู figma-spec/COMPOSED.md
-   เมนูย่อย "พาดูทีละเรื่อง" (/guide/ · ของต้นแบบ ไม่มีจอใน Figma) ต่อจาก "บำรุงรักษาตามวาระ" เพิ่มตามเจ้าของงาน 5 พ.ย. 2569 _"สร้างเป็นอีกเมนู เป็นเมนูย่อยของ บำรุงรักษาตามวาระก็ได้"_
-     ไลบรารีมีเมนู 2 ชั้น (Nav item → Nav list item) ไม่มีชั้นที่ 3 ⇒ เป็น Nav list item ตัวถัดไปในกลุ่มเดียวกัน ไม่ย่อหน้าเพิ่ม (COMPOSED.md ท.)
-   เมนูอื่นแสดงให้เห็นแต่ไม่พาไปไหน (ต้นแบบมีเฉพาะงานบำรุงรักษาตามวาระ)
-   Avatar: พื้นม่วงอ่อน + ภาพ ไม่ผูก Variable ไม่มี token ตรง → purple-200 ใกล้สุด (COMPOSED.md ข.) · เส้นขอบตาม sws: Collapsed ขวา/ล่าง/ซ้าย 1 · Expanded ขวา 1 (Color/border/secondary = gray-200) · Brand logo ใช้ pea-logo.svg (COMPOSED.md ค.) */
 import { useState } from "react";
 import { asset } from "@/lib/basePath";
 import { cx } from "@/lib/cx";
@@ -19,24 +7,16 @@ import { NavItem } from "./NavItem";
 import { NavListItem } from "./NavListItem";
 import { TertiaryButton } from "./TertiaryButton";
 
-export interface SideLink { Text: string; href?: string; /** property Badge ของ Nav list item (Pill color) — จำนวนที่รอ */ badge?: string }
-export interface SideGroup { IconSwap: string; Text: string; items?: SideLink[]; href?: string; /** Badge ของ Nav item ชั้นบน (Pill color) — จำนวนที่รอ */ badge?: string }
+export interface SideLink { Text: string; href?: string; badge?: string }
+export interface SideGroup { IconSwap: string; Text: string; items?: SideLink[]; href?: string; badge?: string }
 export interface SideFooter { IconSwap: string; Text: string; SupportingText?: string; TrailingIconSwap?: string; avatar?: boolean }
 
 export const MT_LABEL = "บำรุงรักษาตามวาระ";
-/** เมนูย่อยของต้นแบบ: เมนูพาดูทีละเรื่อง /guide/ (ต่อจาก บำรุงรักษาตามวาระ) */
 export const GUIDE_LABEL = "พาดูทีละเรื่อง";
-/** เมนูย่อย: แดชบอร์ดอะไหล่ของแผนที่อนุมัติแล้ว /parts/ (S4 · 6 พ.ย. 2569 "เข้าจากเมนู" · ชื่อ = หัวหน้าของจอ partsDash · ไม่มีใน Sidebar Navigation ของ UI Release#2 — COMPOSED.md บ.) */
 export const PARTS_LABEL = "อะไหล่ของแผนที่อนุมัติแล้ว";
-/** เมนูย่อยอนุมัติ (9 พ.ย. 2569 เจ้าของงาน "ตอนอนุมัติให้เห็น เมนูของทุกคนไปเลย … อันนี้ในเวปนะ แต่จริงๆเงื่อนไขคือยิงเส้น upper lower ในการหาคนอนุมัติ")
-    ทุกบทบาทของต้นแบบเห็นและอนุมัติได้ · ชื่อ = หัวหน้าของจอ S2 S7 · ไม่มีใน Sidebar Navigation ของ UI Release#2 (COMPOSED.md บ.) · Badge = จำนวนที่รออนุมัติ */
-/** เมนูย่อย Safety Inspection /safety/ (S26 · เจ้าของงาน 11 พ.ย. 2569 "อยากทำหน้าลิสต์รถ เป็นอีก scen นึง … scen ชื่อว่า safety inspection" · ไม่มีใน Sidebar Navigation ของ UI Release#2 — COMPOSED.md) */
-export const SAFETY_LABEL = "การตรวจ ปจ.2";   // ชื่อบนจอ "การตรวจ ปจ.2" (เจ้าของงาน 11 พ.ย. 2569 · เดิม Safety Inspection)
+export const SAFETY_LABEL = "การตรวจ ปจ.2";
 export const APPROVE_PLANS_LABEL = "แผนรออนุมัติ";
 export const APPROVE_TRIPS_LABEL = "แผนเดินทางรออนุมัติ";
-/** เมนูชั้นบนของตัวเอง: แบบประเมินความพึงพอใจ /satisfaction/ — เจ้าของงาน 12 พ.ย. 2569 _"เรื่องการประเมินเป็นเรื่องแยกที่จะไปผูกตาม flow ต่างๆ เลยอยากแยกใว้"_ (BACKLOG ข้อ 75)
-    ไม่อยู่ใต้ "งานซ่อมและบำรุงรักษา" แล้ว (เดิม S27 เมนูย่อย 11 พ.ย. 2569) · Sidebar Navigation (277:230639) ของ UI Release#2 ไม่มีเมนูประเมิน ⇒ Nav item ชั้นบนแบบ "หน้าหลัก" "รายงาน"
-    วางก่อน "รายงาน" (ผูกได้หลาย flow: งานซ่อม · บำรุงรักษาตามวาระ · Overhaul) · ไอคอน star (ไอคอนประเมินของตารางเดิม) · Badge (Pill color) = จำนวนที่ยังไม่ได้ประเมิน · Collapsed = Nav button Indicator — COMPOSED.md ศ. */
 export const SAT_LABEL = "แบบประเมินความพึงพอใจ";
 
 export const SIDEBAR_MENU: SideGroup[] = [
@@ -57,7 +37,6 @@ export const SIDEBAR_FOOTER: SideFooter[] = [
   { IconSwap: "", Text: "นายสมคิด จงจองหอ", SupportingText: "ผู้ใช้งานทั่วไป", TrailingIconSwap: "logout-24-300-round", avatar: true },
 ];
 
-/* กลุ่มที่เปิดอยู่ จำไว้ข้ามหน้า (กรอบหน้าสร้างใหม่ทุกหน้า) — ตั้งต้นเปิดกลุ่มที่มีเมนูที่กำลังใช้ */
 let openMemo: string[] | null = null;
 
 const Avatar = () => <span aria-hidden="true" className="size-6 shrink-0 rounded-pill bg-purple-200" />;
@@ -66,9 +45,7 @@ export interface SidebarNavigationProps {
   State?: "Collapsed" | "Expanded";
   menu?: SideGroup[];
   footer?: SideFooter[];
-  /** ข้อความของเมนู (หรือเมนูย่อย) ที่เป็น Active */
   active?: string;
-  /** Tertiary button ของ Logo wrap (Expanded) · กดโลโก้/ปุ่มใดใน Collapsed = ขอขยาย */
   onToggle?: () => void;
   toggleLabel?: string;
   className?: string;

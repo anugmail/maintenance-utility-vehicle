@@ -1,9 +1,4 @@
 "use client";
-/* Figma: "Button groups pagination item" — ไฟล์ (Component) VMS Plus หน้า Pagination (node 2:15) · สเปก figma-spec/Button groups pagination item.json
-   ชิ้นซ้อนใน Table pagination
-   variant: Type = Previous | Next | Number · State = Default | Hover/Active | Focused | Disabled · property: Number
-   ค่า: 40×40 · ขอบใน 8/12 · พื้น white (Hover/Active gray-200 · Focused gray-50) · เส้นคั่นขวา gray-300 · ตัวเลข 14 Regular gray-600 (Disabled gray-400)
-        ลูกศร keyboard_arrow_left/right 20 gray-500 (Disabled gray-400) */
 import { cx } from "@/lib/cx";
 import { Ms } from "./Ms";
 

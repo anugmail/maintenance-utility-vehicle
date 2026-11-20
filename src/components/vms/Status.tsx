@@ -1,6 +1,3 @@
-/* Figma: "Status" — ไฟล์ (Component) VMS Plus หน้า Header navigation (node 2:4) · สเปก figma-spec/Status.json
-   จุดสถานะในรายการแจ้งเตือน · variant: State = Success | Warning | Error | Brand | Info
-   ค่า: วงกลม 12 · Success success-600 · Warning warning-600 · Error error-500 · Brand brand-900 · Info info-600 (hex ตรง token ทุกตัว) */
 import { cx } from "@/lib/cx";
 
 export type StatusState = "Success" | "Warning" | "Error" | "Brand" | "Info";

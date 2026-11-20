@@ -1,15 +1,4 @@
 "use client";
-/* S1 S19 · หน้า ดูอะไหล่ของยานพาหนะ (/car-parts/view/?id=new|Z7000004&q=1&car=82-6789) — carPartsView() ใน screens.js (6 พ.ย. 2569)
-   เข้าจากเมนู "…" → ดูรายละเอียด ที่แถวยานพาหนะในแท็บไตรมาส n ของฟอร์มแผน (เจ้าของงาน 6 พ.ย. 2569 "เพิ่ม ... ดูรายละเอียด แก้ไข ลบ ของรถแต่ละคัน")
-   ตาม `Page header` · `Section label` · `Table` · `Empty state/Data empty` · `Secondary button` ของไฟล์ Component + VehicleAndReporterInfo ของไฟล์ Maintain-D
-   + หน้า Detail ของ UI Release#2 (Page header มีปุ่ม "แก้ไข" แบบหน้ารายละเอียดแผน planDetail · Section label R3 + กล่องข้อมูล R12)
-   Page header "อะไหล่ของยานพาหนะ {ทะเบียน}" + Secondary button "แก้ไข" (stylus) → หน้าจัดการอะไหล่ของยานพาหนะ (S21 /car-parts/)
-   · Breadcrumbs บำรุงรักษาตามวาระ › สร้างแผน (แก้ไข: แก้ไขแผน MR …) › อะไหล่ของยานพาหนะ
-   Content ช่องไฟ 32: กล่อง "ข้อมูลยานพาหนะ" (ทะเบียน · ประเภทยานพาหนะ (Figma 33a990c A.34) · ยี่ห้อ/รุ่น · หน่วยงานเจ้าของยานพาหนะ · ไตรมาส · น้ำมันไฮดรอลิก · เปลี่ยนน้ำมันครั้งล่าสุด · การเบิกอะไหล่)
-     → Section label "อะไหล่อื่นๆ (n)" + Table CARP_PART_COLS 6 คอลัมน์ ไม่มีไอคอนท้ายแถว / Empty state ("ยานพาหนะคันนี้เลือกไม่เบิกอะไหล่" · "ยังไม่ได้กำหนดอะไหล่ของยานพาหนะคันนี้")
-   ข้อมูลชุดเดียวกับหน้าจัดการอะไหล่ (ฟอร์มที่กรอกค้าง mock.draft / mock.edit) · ดูอย่างเดียว ไม่มีปุ่มท้ายหน้า · มือถือ: Mobile table · ปุ่มแก้ไขใต้หัวข้อ
-   แผน 2 ขั้น (R111 · BACKLOG ข้อ 90): เปิดได้ทั้งจากแท็บทั้งหมดและแท็บไตรมาส · ยานพาหนะที่อยู่ในแผนแต่ยังไม่จัดไตรมาส ช่องไตรมาส = "ยังไม่จัดไตรมาส"
-     ปุ่มแก้ไขส่ง q ของแท็บที่เปิดมาต่อ ⇒ บันทึกในหน้าจัดการอะไหล่แล้วกลับแท็บเดิม */
 import { PagedTable } from "@/app/quarter/_shared/ui";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
@@ -37,13 +26,13 @@ function CarPartsView() {
   const mock = useMock();
   const id = sp.get("id") ?? "new";
   const plan = id === "new" ? undefined : findPlan(mock.plans, id);
-  const denied = usePlanGate(plan);   // หน่วยงานเปิดแผนของหน่วยงานอื่น → หน้ารายการ (ตรวจสิทธิ์ 9 พ.ย. 2569)
+  const denied = usePlanGate(plan);
   const d = id === "new" ? mock.draft : mock.edit && plan && mock.edit.editOf === plan.mr ? mock.edit : null;
   const car = carIndexOf(sp.get("car"));
   const from = sp.get("from");
   const formHref = id === "new" ? "/new/" : "/edit/?id=" + id + (from ? "&from=" + from : "");
   const missing = !d || car < 0 || d.alloc[car] == null;
-  useEffect(() => { if (ok && missing) router.replace(formHref); }, [ok, missing, formHref, router]);   // ไม่มีฟอร์มค้าง / ยานพาหนะไม่อยู่ในแผนแล้ว → กลับฟอร์ม
+  useEffect(() => { if (ok && missing) router.replace(formHref); }, [ok, missing, formHref, router]);
   if (!ok || !d || missing) return null;
   if (denied) return null;
 
@@ -59,7 +48,7 @@ function CarPartsView() {
     ...(d.picks[car] || []).filter((x) => x !== 0).map((x) => [PARTS[x].name, PART_BM[x][0], PART_BM[x][1], PARTS[x].code, String(carQty(d, car, x)), PARTS[x].unit]),
     ...(d.manual?.[car] ?? []).map((m) => [m.name, m.brand || "-", m.model || "-", m.code || "-", String(m.qty), m.unit || "-"]),
   ];
-  const editHref = "/car-parts/?id=" + id + "&q=" + (sp.get("q") ?? q) + "&car=" + sp.get("car") + (from ? "&from=" + from : "");   // แท็บที่เปิดมา (0 = ทั้งหมด)
+  const editHref = "/car-parts/?id=" + id + "&q=" + (sp.get("q") ?? q) + "&car=" + sp.get("car") + (from ? "&from=" + from : "");
 
   return (
     <>

@@ -1,22 +1,14 @@
 "use client";
-/* Figma: "Horizontal radio groups" — ไฟล์ (Component) VMS Plus หน้า Radio button (node 2:17) · สเปก figma-spec/Horizontal radio groups.json
-   ตัวเลือกสั้นๆ ไม่มีคำอธิบาย 2–4 ตัว (radioGroup() ใน core.js)
-   ค่า: Label (ไอคอนนำ crop_free ปิด · ป้าย 16 SemiBold gray-600 · info ปิด) → Container ห่าง 8 · Container สูง 40 ช่องไฟ 16
-        แต่ละตัว = Radio button + ข้อความ 16 Regular black ช่องไฟ 8 (ตัวที่เลือก 12) · Helper 12 gray-600 (มี error = error-600)
-   มือถือ: ตัวเลือกขึ้นบรรทัดใหม่ได้ (flex-wrap) */
 import { useId } from "react";
 import { cx } from "@/lib/cx";
 import { RadioDot } from "./RadioButton";
 
 export interface HorizontalRadioGroupsProps {
-  /** ข้อความป้าย (Label) */
   Label?: string;
   Optional?: boolean;
   options: string[];
-  /** ตัวที่เลือก (ข้อความ) */
   value?: string | null;
   onChange?: (v: string) => void;
-  /** property Helper — ข้อความใต้กลุ่ม */
   HelperText?: string;
   Error?: boolean;
   Disabled?: boolean;

@@ -1,8 +1,4 @@
 "use client";
-/* เรื่อง: กบค. สร้างแผนเดินทางจ้างดำเนินการ — S9 · บล็อก H ของ SCENARIOS ใน figma-export/maintainance-plugin/screens.js
-   + ตาราง Condition ของ Scenario 9 (14-บำรุงรักษา-userflow.md) · ฟอร์มเดียวกับ S6 ที่เลือกรูปแบบ "จ้างดำเนินการ" (/quarter/trips/new/)
-   ข้อมูลตั้งต้น = SEEDS.S9 (แผนเดินทาง ตรวจรถ ขอนแก่น อุดรธานี ลำปาง อนุมัติแล้ว 4 คัน · อีก 6 คันยังไม่มีแผนเดินทาง)
-   เคส: สร้างใบจ้าง (H.1–H.4 H.6 H.7) · กรอกไม่ครบ (H.5) · ชีตยืนยัน หน้า 9 */
 import { TRIP_1, TRIP_OTHER, TRIP_V, VENDORS } from "@/lib/mock/trips";
 import type { GuideScenario } from "../types";
 import { approved, NEW_TRIP, QTR, seedTrips } from "./trips-common";

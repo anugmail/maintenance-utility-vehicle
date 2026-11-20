@@ -1,9 +1,4 @@
 "use client";
-/* Figma: "Modal header" — ไฟล์ (Component) VMS Plus หน้า Modals (node 2:16) · สเปก figma-spec/Modal header.json
-   variant: Alignment = Center | Left
-   property: Title · Supporting · Supporting text · Featured icon · Close icon · Back icon · Divider (ปิด R2/R13) · Padding bottom
-   Center: ขอบใน 24 บน/ข้าง · Featured icon (Brand md 48) → ข้อความ ห่าง 16 จัดกลาง · หัวข้อ 20 SemiBold black · Supporting 16 gray-600 ห่าง 4 · ปุ่มปิดมุมขวาบน
-   Left: แถวเดียว ช่องไฟ 8 · ปุ่มย้อนกลับ · Featured icon + ข้อความ ห่าง 16 · ปุ่มปิด · Padding bottom 16 */
 import { cx } from "@/lib/cx";
 import { FeaturedIcon, type FeaturedIconColor } from "./FeaturedIcon";
 import { TertiaryButton } from "./TertiaryButton";
@@ -12,13 +7,11 @@ export interface ModalHeaderProps {
   Alignment?: "Center" | "Left";
   Title: string;
   SupportingText?: string;
-  /** property Featured icon — ใส่ชื่อไอคอนเพื่อแสดง (ค่าเริ่มไลบรารี info) */
   FeaturedIcon?: boolean;
   FeaturedIconSwap?: string;
   FeaturedIconColor?: FeaturedIconColor;
   onClose?: () => void;
   onBack?: () => void;
-  /** property Divider (Alignment=Left) — เส้นคั่นใต้หัว ห่าง 20 (ค่าเริ่มปิดตาม R2/R13 · Modal Signature / SummaryRequestedParts เปิด) */
   Divider?: boolean;
   id?: string;
 }

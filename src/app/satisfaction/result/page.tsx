@@ -1,11 +1,4 @@
 "use client";
-/* แบบประเมินความพึงพอใจ C · หน้าผลประเมิน (/satisfaction/result/?id=rp.MTD-690716-031) — เรื่องแยก เมนูของตัวเอง (BACKLOG ข้อ 75 · เดิม S27 Y.11)
-   โครง = เฟรม C ของประเมินผู้รับจ้าง (userflow/figma-ref/contractor-eval-ABC-2569-11-12.txt · resultScreen() ของ contractor-eval-plugin)
-   หน้า Detail ⇒ Section label (R5/R11) · Page header "แบบประเมินความพึงพอใจ {เลขที่งาน}" ป้าย "ประเมินแล้ว" ย้อนกลับ
-   Content ช่องไฟ 32: ข้อมูลงาน (รวมหน่วยงานที่ให้บริการ) · ข้อมูลผู้ใช้รถฯ → สรุปผลการประเมิน (คะแนนรวม x / 55 · ค่าเฉลี่ย · ผู้ประเมิน · วันที่ประเมิน · คะแนนรายด้าน · หมายเหตุ)
-     → ต่อด้าน Section label "ชื่อด้าน x / 10" + Table (ข้อ · รายการประเมิน · คะแนน "5 · ดีมาก" · หมายเหตุ "-" เมื่อไม่มี)
-   ไม่มีปุ่มพิมพ์แบบประเมิน (PDF) และไม่มีส่วนแนบแบบที่ลงนาม — แบบสำรวจตอบออนไลน์ ไม่มีผู้ลงนามฝั่งผู้ให้บริการ (เสนอ ยังไม่เคาะ)
-   อ้างอิง: Page header · Section label · Table · Mobile table ของไฟล์ Component + DisplayBox (COMPOSED.md) */
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";

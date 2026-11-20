@@ -1,8 +1,4 @@
 "use client";
-/* เรื่อง: ผู้อนุมัติ ตรวจสอบและอนุมัติแผนเดินทาง — S7 · บล็อก F ของ SCENARIOS ใน figma-export/maintainance-plugin/screens.js
-   + ตาราง Condition ของ Scenario 7 (14-บำรุงรักษา-userflow.md) · หน้า /approvals/trips/ และ /approvals/trips/detail/
-   ข้อมูลตั้งต้น = SEEDS.S7 (รออนุมัติ 3 ใบ: ตรวจรถ ขอนแก่น อุดรธานี ลำปาง · จ้างบำรุงรักษา น่าน เชียงใหม่ เชียงราย · ตรวจรถเครน นครราชสีมา บุรีรัมย์)
-   เคส: อนุมัติ (F.1–F.4) · ส่งกลับพร้อมเหตุผล (F.5 F.7 F.8) · ส่งกลับไม่ระบุเหตุผล (F.6) · ตรวจใบจ้าง · ชีตยืนยัน หน้า 10 */
 import { TRIP_1, TRIP_OTHER, TRIP_V } from "@/lib/mock/trips";
 import type { GuideCase, GuideScenario } from "../types";
 import { seedTrips } from "./trips-common";

@@ -1,11 +1,4 @@
 "use client";
-/* Figma: "Header navigation" — ไฟล์ (Component) VMS Plus หน้า Header navigation (node 2:4) · สเปก figma-spec/Header navigation.json
-   variant: Breakpoint = Desktop | Tablet | Mobile — จอ desktop ใช้ Tablet (รีวิว 19 ต.ค. 2569 ใน shell() ของ core.js) · มือถือใช้ Mobile
-   ค่า: สูง 64 · พื้น white · เส้นล่าง gray-200 · ช่องไฟ 8
-        Desktop: ขอบใน 12/32 · ขวา Nav button (search · light_mode · notifications) + Avatar 36
-        Tablet: ขอบใน 12/16 · ซ้าย Brand logo + Nav button menu · ขวาเหมือน Desktop
-        Mobile: ขอบใน 12/16 · Brand logo 40 · ปุ่ม Menu (Icon button วงกลม ขอบ gray-300 ไอคอน 20 gray-600) · Search (Text input) · Nav button notifications + menu
-   Brand logo / Avatar: ดู COMPOSED.md (โลโก้จากภาพส่งออกหน้าจอ · avatar พื้นม่วงอ่อน + ภาพ (ไม่ผูก Variable · ไม่มี token ตรง) → purple-200 ใกล้สุด) */
 import { asset } from "@/lib/basePath";
 import { cx } from "@/lib/cx";
 import { Ms } from "./Ms";
@@ -13,7 +6,6 @@ import { NavButton } from "./NavButton";
 
 export interface HeaderNavigationProps {
   Breakpoint?: "Desktop" | "Tablet" | "Mobile";
-  /** จุดแดงบนกระดิ่ง */
   bell?: boolean;
   onMenu?: () => void;
   className?: string;

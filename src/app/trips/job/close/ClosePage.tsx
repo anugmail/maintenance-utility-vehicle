@@ -1,18 +1,4 @@
 "use client";
-/* S10 Step 2 · สรุปงานก่อนปิดงาน (/trips/job/close/) — stepPage({ step: 2 }) ใน screens.js (รีวิวทีมออกแบบ 5 พ.ย. 2569 · หน้าปิดงานเดิมย้ายมาเป็นขั้นที่ 2) + S12 K.1 ผลการทดสอบ (ถ้ามี)
-   กรอบ StepFrame (แถบขั้นตอน 2/2 · ข้อมูลยานพาหนะ · การนัดหมาย · ปุ่ม "บำรุงรักษาไม่ได้" ที่หัว — คืนตามจำนวนที่ใช้ที่กรอก)
-   Section header ทุกส่วน: ข้อมูลเอกสาร · บันทึกข้อตกลงลูกค้า (kv อ่านอย่างเดียว)
-   · รายการสภาพวัสดุอะไหล่ (8 คอลัมน์ · desktop "จำนวนที่ใช้" = Number input ในช่อง R74 แบบ ReturnPart ของงานซ่อม · มือถือ การ์ดกดแก้ไข + "เพิ่มรายการ")
-   · ค่าใช้จ่ายของรถคันนี้ (บาท) (แถวละคน + "เพิ่มพนักงาน" · ค่าเดินทาง · สรุป) + งบที่ตัด (ตั้งต้น งบทำการ หน่วยงานต้นสังกัด) · ศูนย์ต้นทุน (Readonly ของหน่วยงานเจ้าของรถ · หน่วยงานอื่น = Input dropdown "ระบุศูนย์ต้นทุน") — R72 แบบ Request Repair/Budget ของงานซ่อม
-   · ผลการบำรุงรักษา (เลขไมล์ · ชั่วโมงเครื่องจักร บังคับ · error out of focus) · น้ำมันไฮดรอลิก (Radio text card 3 ใบ + "วันที่เปลี่ยนน้ำมันครั้งล่าสุด (ถ้ามี)" ปฏิทินวันเดียว R73 + ผลการทดสอบ (ถ้ามี) เมื่อเก็บตัวอย่าง)
-   · (เฉพาะรถเครน/รถกระเช้า) Safety Inspection (ถ้ามี) · SignRequest "ลงนามการส่งคืนยานพาหนะ" (11 พ.ย. 2569 เลือกชื่อ ส่งให้ลงนาม ผู้ลงนามยืนยัน) · ปิดงาน → popup วันเวลาปิดงาน · บันทึกตรวจสอบเอกสารปิดงาน (มี/ไม่มี/ไม่ต้องใช้ + "อัพโหลดเอกสาร")
-   → "ย้อนกลับ" (Step 1) · "ปิดงาน" (Disabled จนครบ: เลขไมล์ ชั่วโมงเครื่องจักร ลงนามส่งคืนครบ — R59) → "เสร็จสิ้น" → หน้ารายละเอียดแผนเดินทาง + toast "บันทึกงานบำรุงรักษาสำเร็จ"
-   แผนจ้างดำเนินการใช้หน้าเดียวกัน กบค. กรอกตามที่ผู้รับจ้างทำจริง · ใบจ้างไม่มีพนักงานในใบ ⇒ ตัวเลือกพนักงาน = พนักงาน กบค. ทั้งหมด (staffOf · COMPOSED.md)
-   แผนจ้างดำเนินการ (R87 · เจ้าของงาน 10 พ.ย. 2569 _"จะไม่มีเรื่องทั้ง section ค่าใช้จ่ายรายคัน ที่ต้องกรอก ส่วนที่สภาพวัสดุอะไหล่ ส่วนที่เป็นราคาต้องไม่แสดง"_ · stepPage o.hire / o.vendor · closeParts noPrice):
-     ทั้ง S23 ผู้รับจ้าง และ S10 I.26 หน่วยงานปิดงานแทนผู้รับจ้าง — ไม่มีส่วน "ค่าใช้จ่ายของยานพาหนะคันนี้ (บาท)" ทั้งส่วน (งบที่ตัด ศูนย์ต้นทุน ด้วย)
-     · ตาราง "รายการสภาพวัสดุอะไหล่" ไม่มีคอลัมน์ ราคาต่อหน่วย · ราคารวมที่ใช้ · ราคารวมที่คืน (CLOSE_PRICE_COLS) ทั้ง desktop และมือถือ · ส่วนอื่นคงเดิม
-   S23 ผู้รับจ้าง: ปิดงาน → "ดำเนินการบำรุงรักษาแล้ว" + toast "บันทึกงานบำรุงรักษาสำเร็จ" → หน้ารายละเอียดแผนเดินทาง · ผู้ส่งมอบฝั่งผู้ดำเนินการ = ช่างผู้รับจ้าง (vendorSign)
-     · "แก้ไขงาน" จากหน้างานที่ปิดแล้ว (ดำเนินการบำรุงรักษาแล้ว / ส่งกลับแก้ไขคันที่ปิดงานไว้) เปิดหน้านี้พร้อมค่าเดิม · "ย้อนกลับ" = หน้างานรายคัน */
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { DropdownList } from "@/components/vms/DropdownList";
@@ -46,16 +32,14 @@ import { StepFrame } from "../StepFrame";
 
 const PART_COLS: TableColumn[] = ["ชื่ออะไหล่", "ราคาต่อหน่วย", "จำนวนที่ใช้", "ราคารวมที่ใช้", "จำนวนที่คืน", "ราคารวมที่คืน", "จำนวนอะไหล่เก่า", "หมายเหตุ"]
   .map((head, i) => ({ head, width: i === 0 ? 220 : i === 7 ? undefined : 118, Style: i === 0 ? "Lead text" : "Text" }));
-const PRICE_COLS = [1, 3, 5];   // CLOSE_PRICE_COLS — แผนจ้างดำเนินการไม่แสดง (R87)
-const USED_COL = 2;             // ช่อง "จำนวนที่ใช้" (Number input บน desktop)
+const PRICE_COLS = [1, 3, 5];
+const USED_COL = 2;
 const RETURN_SLOTS = [
   { LabelText: "ผู้ส่งมอบยานพาหนะ (หน่วยงานผู้ดำเนินการ)", Placeholder: "เลือกผู้ส่งมอบยานพาหนะ (หน่วยงานผู้ดำเนินการ)" },
   { LabelText: "ผู้รับมอบยานพาหนะ (หน่วยงานเจ้าของยานพาหนะ)", Placeholder: "เลือกผู้รับมอบยานพาหนะ (หน่วยงานเจ้าของยานพาหนะ)" },
 ];
-/* วันที่แบบไทย dd/mm/ปี พ.ศ. ↔ Date (ช่องวันที่เปลี่ยนน้ำมันครั้งล่าสุด) */
 const toThai = (d: Date) => String(d.getDate()).padStart(2, "0") + "/" + String(d.getMonth() + 1).padStart(2, "0") + "/" + (d.getFullYear() + 543);
 const fromThai = (v: string) => { const m = v.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/); return m ? new Date(Number(m[3]) - 543, Number(m[2]) - 1, Number(m[1])) : null; };
-/* ตัวเลขมีจุลภาค "182,640" */
 const digits = (v: string) => { const d = v.replace(/\D/g, ""); return d ? Number(d).toLocaleString("en-US") : ""; };
 
 export function ClosePage() {
@@ -67,23 +51,19 @@ export function ClosePage() {
   const dateRef = useRef<HTMLDivElement>(null);
   const [closeDate] = useState(() => () => setDateOpen(false));
   useOutside(dateRef, dateOpen, closeDate);
-  /* S23 แก้ไขงาน: ผู้รับจ้างเปิดได้เมื่อ ดำเนินการบำรุงรักษาแล้ว / ส่งกลับแก้ไขคันที่ปิดงานไว้ */
   const editing = vendor && !!job && (job.status === "worked" || (job.status === "returned" && !job.cannot));
-  const away = !!trip && !!car && !!job && job.status !== "doing" && !editing;   // ยังไม่เริ่ม / ปิดแล้ว → หน้างานรายคัน
-  /* เปิดหน้านี้ตอนงานไม่ได้อยู่ระหว่างบำรุงรักษา → หน้างานรายคัน · ปิดงาน/บำรุงรักษาไม่ได้จากหน้านี้เอง (สถานะเปลี่ยนระหว่างอยู่หน้า) ไม่พาไปไหน ให้ปุ่มพากลับหน้าแผนเดินทาง */
+  const away = !!trip && !!car && !!job && job.status !== "doing" && !editing;
   const [awayAtOpen] = useState(() => ({ v: null as boolean | null }));
   if (awayAtOpen.v === null && trip && car && job) awayAtOpen.v = away;
   useEffect(() => { if (awayAtOpen.v && trip && car) router.replace(jobHref(trip, car.id)); }, [awayAtOpen, trip, car, router]);
   const [closing, setClosing] = useState(false);
   const [edit, setEdit] = useState<number | null>(null);
   const [add, setAdd] = useState(false);
-  const [open, setOpen] = useState("");   // ช่อง dropdown ที่เปิด
+  const [open, setOpen] = useState("");
   const [query, setQuery] = useState("");
   const result = useRef<HTMLDivElement>(null);
   const docFile = useRef<HTMLInputElement>(null);
   const [docAt, setDocAt] = useState(-1);
-  /* ปุ่มต้นแบบ (แถบต้นแบบ · lib/protoForm.ts): กรอกข้อมูลตัวอย่าง = ฟอร์มสรุปงานแบบชุดตัวอย่าง (filledClose: จำนวนที่ใช้ อะไหล่เก่า ค่าใช้จ่าย เลขไมล์ ชั่วโมง ลงนามครบ เอกสาร "มี") ⇒ ปุ่มปิดงานกดได้
-     ล้างค่า = Step 2 ของคันนี้กลับค่าเริ่มต้น (emptyClose · ร่างของงานคันอื่นไม่แตะ) */
   const blankClose = trip && car && job ? emptyClose(job, trip, car) : null;
   useProtoForm(trip && car && job && actor && !awayAtOpen.v && blankClose ? {
     fill: () => {
@@ -107,19 +87,17 @@ export function ClosePage() {
   const loc = tripLoc(trip, car);
   const start = job.startedAt ?? "";
   const staffOptions = vendor ? [PEOPLE.vendorTech] : staffOf(trip);
-  const hire = trip.mode === "hire";   // แผนจ้าง: ไม่มีค่าใช้จ่ายและราคา (R87)
+  const hire = trip.mode === "hire";
   const keep = (i: number) => !hire || !PRICE_COLS.includes(i);
   const cols = PART_COLS.filter((_, i) => keep(i));
   const centers = [...new Set(trip.carIds.map((id) => ownerCostCenter(carOf(id)!)))];
   const days = Array.from({ length: tripDays(trip) }, (_, i) => i + 1);
   const E = (k: "km" | "hours", m: string, v: string) => (touched[k] && !v.trim() ? m : undefined);
-  const complete = signed && !!f.km.trim() && !!f.hours.trim();   // R59 ปุ่มปิดงาน Disabled จนกว่าครบ
+  const complete = signed && !!f.km.trim() && !!f.hours.trim();
   const budget = f.budgetType ?? 0;
   const oilDate = f.oilDate ?? car.lastOil;
-  /* จำนวนที่ใช้ตามแถวอะไหล่ตามแผน (ส่งต่อ popup บำรุงรักษาไม่ได้ระหว่าง Step 2) */
   const usedOfPlan = job.parts.map((p) => f.parts.find((r) => r.part === p.part && !r.added)?.used ?? 0);
 
-  /* ปิดงาน → popup วันเวลาปิดงาน (11 พ.ย. 2569 · ค่าเริ่มต้น = ตอนนี้ · แก้ไขงาน = ค่าเดิม) → บันทึก */
   const submit = () => { if (actor && complete) setClosing(true); };
   const doClose = (at: string) => {
     closeJob(trip, car.id, f, vendor, at);
@@ -127,7 +105,6 @@ export function ClosePage() {
     router.push(tripHref(trip));
   };
 
-  /* ---------- popup แก้ไขอะไหล่ / เพิ่มอะไหล่ที่ใช้จริง ---------- */
   const editRow = edit != null ? rows[edit] ?? null : null;
   const openEdit = (i: number) => { if (actor && rows[i]) setEdit(i); };
   const saveEdit = (v: PartEditValue) => {
@@ -147,7 +124,6 @@ export function ClosePage() {
   });
   const usedAt = cols.findIndex((c) => c.head === PART_COLS[USED_COL].head);
 
-  /* ---------- แถวค่าใช้จ่ายรายคน ---------- */
   const costRow = (r: CostRow, i: number) => {
     const k = "staff" + i, kd = "days" + i;
     const kids = [
@@ -185,9 +161,7 @@ export function ClosePage() {
       </Section>
       <Section>
         <SectionHeader Title="รายการสภาพวัสดุอะไหล่" Badge={rows.length} />
-        {/* มือถือ: การ์ด Mobile table (ไม่มีช่องกรอก) + ไอคอนแก้ไขบนการ์ด → popup แก้ไขอะไหล่ (จำนวนที่ใช้ อะไหล่เก่า หมายเหตุ · กติกา 14) */}
         {mob ? <DataTable cols={[...cols, { head: "", Style: "Action icons" }]} rows={partRows.map((r, i) => [...r, actor ? { actions: [], mobileActions: [{ IconSwap: "stylus-24-300-round", label: "แก้ไข " + rows[i].part, onClick: () => openEdit(i) }] } : null])} /> : (
-          /* desktop: ช่อง "จำนวนที่ใช้" = Number input (R74 · ReturnPart ของงานซ่อม — Table ของไลบรารีไม่มีช่องกรอก ⇒ Table header cell + Table cell เรียงเป็นตาราง) · กดชื่ออะไหล่ = popup แก้ไขอะไหล่เก่า หมายเหตุ */
           <div className="w-full overflow-x-auto">
             <table className={cx("w-full table-fixed border-collapse", hire ? "min-w-[760px]" : "min-w-[1100px]")}>
               <colgroup>{cols.map((c, i) => <col key={i} style={{ width: i === usedAt ? 160 : c.width }} />)}</colgroup>
@@ -213,13 +187,11 @@ export function ClosePage() {
         <div className="flex"><SecondaryButton Text="เพิ่มพนักงาน" LeadingIconSwap="add-24-300-round" Size={mob ? "lg" : "md"} className={mob ? "w-full" : undefined}
           onClick={() => put((x) => ({ ...x, costs: [...x.costs, { name: null, perDiem: "", lodging: "", days: null }] }))} /></div>
         <Grid><TextInput LabelText="ค่าเดินทาง (รวมทุกคน)" Optional Text={f.travel} Placeholder="0" inputMode="numeric" onChange={(v) => put((x) => ({ ...x, travel: digits(v) }))} /></Grid>
-        {/* S18 R92 (Figma c450480): ชั่วโมงทำงาน × อัตราค่าแรง ไม่บังคับ · แถวใต้ค่าเดินทาง · แผนจ้างไม่มีส่วนนี้ */}
         <Grid>
           <TextInput LabelText="ชั่วโมงทำงาน" Optional Text={f.workHours ?? ""} Placeholder="0" inputMode="numeric" onChange={(v) => put((x) => ({ ...x, workHours: digits(v) }))} />
           <TextInput LabelText="อัตราค่าแรง (บาท/ชั่วโมง)" Optional Text={f.workRate ?? ""} Placeholder="0" inputMode="numeric" onChange={(v) => put((x) => ({ ...x, workRate: digits(v) }))} />
         </Grid>
         <KvBox pairs={[["รวมค่าเบี้ยเลี้ยง", nf(sum.perDiem) + " บาท"], ["รวมค่าที่พัก", nf(sum.lodging) + " บาท"], ["ค่าเดินทาง", nf(sum.travel) + " บาท"], ["ค่าชั่วโมงทำงาน", nf(sum.labour) + " บาท"], ["รวมค่าใช้จ่ายของยานพาหนะคันนี้", nf(sum.total) + " บาท"]]} />
-        {/* งบที่ตัด + ศูนย์ต้นทุน (R72 · Request Repair/Budget ของงานซ่อม): หน่วยงานต้นสังกัด = ศูนย์ต้นทุนของหน่วยงานเจ้าของรถ Readonly · หน่วยงานอื่น = Input dropdown "ระบุศูนย์ต้นทุน" · ประเภทอื่นยังไม่ออกแบบช่อง */}
         <Grid>
           <InputDropdown LabelText="งบที่ตัด" Text={BUDGET_CUT[budget]} Placeholder="เลือกงบที่ตัด" open={open === "cut"} onOpenChange={toggle("cut")}>
             <DropdownList>{BUDGET_CUT.map((b, k) => <DropdownListItem key={b} Text={b} State={k === budget ? "Selected" : "Default"}
@@ -247,7 +219,6 @@ export function ClosePage() {
       <Section>
         <SectionHeader Title="น้ำมันไฮดรอลิก" />
         <OilCards value={f.oilChoice} onChange={(k) => put((x) => ({ ...x, oilChoice: k }))} />
-        {/* วันที่เปลี่ยนน้ำมันครั้งล่าสุด (ถ้ามี) — R73 กรอกได้ ตั้งต้นค่าในข้อมูลรถ · desktop โฟกัสแล้วเปิด Date picker Type=Single ใต้ช่อง (แบบช่องวันที่ของ S6) */}
         <div ref={dateRef} className="relative">
           <Grid><TextInput LabelText="วันที่เปลี่ยนน้ำมันครั้งล่าสุด" Optional Text={oilDate} Placeholder="วว/ดด/ปปปป" onChange={(v) => put((x) => ({ ...x, oilDate: v }))}
             onFocus={() => !mob && setDateOpen(true)} State={dateOpen ? "Focused" : undefined} /></Grid>
@@ -265,7 +236,6 @@ export function ClosePage() {
         )}
       </Section>
       {safetyOn(car) && (
-        /* ตาม "File upload" + "Section header" ของไฟล์ Component + จอ S10 "ปิดงาน — แนบเอกสาร Safety Inspection (ถ้ามี)" (ลอกบล็อก M ของ Overhaul) */
         <Section>
           <SectionHeader Title="Safety Inspection" />
           <FileUpload LabelText="เอกสาร Safety Inspection" Optional files={f.safetyFiles ?? []} hint="PDF, PNG, or JPG (สูงสุด 10 ไฟล์)" bar accept=".pdf,.jpg,.jpeg,.png"
@@ -273,7 +243,6 @@ export function ClosePage() {
             onDelete={(i) => put((x) => ({ ...x, safetyFiles: (x.safetyFiles ?? []).filter((_, k) => k !== i) }))} />
         </Section>
       )}
-      {/* 11 พ.ย. 2569 เลือกชื่อ → ส่งให้ลงนาม → ผู้ลงนามยืนยัน (แทนวาดลายเซ็น · SignRequest) */}
       <SignRequest Title="ลงนามการส่งคืนยานพาหนะ" readonly={!actor}
         slots={RETURN_SLOTS.map((s, i) => ({ ...s, options: i === 0 ? staffOptions : [PEOPLE.ownerSigner], ...f.signers[i] }))}
         onPick={(i, name) => put((x) => ({ ...x, signers: x.signers.map((s, k) => (k === i ? (s.name === name ? s : { name, sig: null }) : s)) as CloseForm["signers"] }))}

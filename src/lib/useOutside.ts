@@ -1,5 +1,4 @@
 "use client";
-/* ปิดรายการเมื่อคลิกนอกกรอบ (Input dropdown · Dropdown menu) */
 import { useEffect, type RefObject } from "react";
 
 export function useOutside(ref: RefObject<HTMLElement | null>, active: boolean, onOutside: () => void) {

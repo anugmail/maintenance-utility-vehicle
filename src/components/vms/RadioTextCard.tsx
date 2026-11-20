@@ -1,10 +1,4 @@
 "use client";
-/* Figma: "Radio text card" — ไฟล์ (Component) VMS Plus หน้า Radio button (node 2:17) · สเปก figma-spec/Radio text card.json
-   variant: State = Default | Hover | Focused | Disabled · Selected = False | True · property: Text · Supporting · Supporting text
-   ค่า: กว้างตั้งต้น 240 (FILL ในแถว) · ขอบใน 16 · รัศมี 8 · พื้น white · ขอบ 1 gray-300 (Selected ขอบ 2 brand-900)
-        Hover/Focused ขอบ brand-800 (Focused + วงโฟกัส 4 brand-900 ทึบ 12%) · Disabled พื้น gray-50 ขอบ gray-300 ตัวอักษร gray-400
-        Content: Radio button + Text and supporting text ช่องไฟ 12 · Text 16 SemiBold black · Supporting text 14 Regular gray-600 ห่าง 4
-   ใช้แบบ radioPick() ใน core.js: desktop แถวเดียว ช่องไฟ 16 การ์ดกว้าง/สูงเท่ากัน · มือถือ เรียงลง ช่องไฟ 12 (ห่อเองด้วย RadioTextCards) */
 import type { ReactNode } from "react";
 import { cx } from "@/lib/cx";
 import { useBreakpoint, type Breakpoint } from "@/lib/useBreakpoint";
@@ -26,7 +20,6 @@ export interface RadioTextCardProps {
   Selected?: boolean;
   State?: CardState;
   onClick?: () => void;
-  /** ข้อความ 14 (ค่า override ของ instance ในการ์ด ReceiptChecklistCard / InspectionChecklistCard ไฟล์ Maintain-D) */
   compact?: boolean;
   className?: string;
 }
@@ -47,7 +40,6 @@ export function RadioTextCard({ Text, SupportingText, Selected = false, State = 
   );
 }
 
-/* แถวการ์ดตาม radioPick(): desktop แถวเดียว ช่องไฟ 16 กว้าง/สูงเท่ากัน · มือถือ เรียงลง ช่องไฟ 12 · row=true บังคับแถวเดียวบนมือถือ (คะแนน 1–5 ช่องไฟ 8 · การ์ด มี/ไม่มี) */
 export function RadioTextCards({ options, value, onChange, Breakpoint: bp, row, Disabled, className }: {
   options: { Text: string; SupportingText?: string }[]; value?: string | null; onChange?: (v: string) => void;
   Breakpoint?: Breakpoint; row?: boolean; Disabled?: boolean; className?: string;

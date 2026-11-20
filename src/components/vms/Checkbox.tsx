@@ -1,9 +1,4 @@
 "use client";
-/* Figma: "Checkbox" — ไฟล์ (Component) VMS Plus หน้า Checkbox (node 2:18) · สเปก figma-spec/Checkbox.json
-   variant: State = Default | Hover | Focused | Disabled · Type = Unselected | Selected | Indeterminate
-   ค่า: 20×20 รัศมี 4 · Unselected ขอบ 2 gray-300 · Selected/Indeterminate พื้น brand-900 ไอคอน check / check_indeterminate_small 20 white
-        Disabled พื้น gray-200 ขอบ 2 gray-300 ไอคอน gray-300
-        Hover/Focused วงโฟกัส 4 ทึบ 12% (effect ของ Surface): Unselected gray-500 · Selected/Indeterminate brand-900 */
 import { cx } from "@/lib/cx";
 import { Ms } from "./Ms";
 

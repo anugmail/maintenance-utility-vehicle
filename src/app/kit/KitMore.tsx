@@ -1,6 +1,4 @@
 "use client";
-/* หน้า /kit/ ส่วนเพิ่ม 4 พ.ย. 2569 — component ที่ scenario ที่เหลือ (S2–S24 · S11 S23 ตัดออก) ต้องใช้ · ไลบรารี (Component) VMS Plus + ไฟล์ Maintain-D + pattern ที่ประกอบ (COMPOSED.md)
-   ข้อความตัวอย่างจาก maintainance-yearly-specs/S*.md (ค่าจาก screens.js) */
 import { useState } from "react";
 import { HandoverSignature, type SignerSlot } from "@/components/maintain-d/HandoverSignature";
 import { IncidentPhotoGallery } from "@/components/maintain-d/IncidentPhotoGallery";
@@ -100,7 +98,6 @@ export function KitMore() {
   const take = chosen.reduce((a, p) => a + p.price * (qty[p.code!] ?? 1), 0);
   return (
     <>
-      {/* ---------- ไลบรารี (Component) VMS Plus ---------- */}
       <Block name="Text area" node="Inputs (2:6)">
         {(["Default", "Filled", "Focused", "Error", "Disabled", "Readonly"] as TextInputState[]).map((st) => (
           <V key={st} label={`State=${st}, Size=md`}><TextArea className="w-[352px]" LabelText="เหตุผลที่ส่งกลับ" Optional={st === "Default"} State={st} Text={st === "Default" ? "" : "ช่วงวันที่ตรงกับแผนดับไฟ"} Placeholder="ระบุเหตุผล" HelperText={st === "Error" ? "กรุณาระบุเหตุผล" : undefined} /></V>
@@ -183,7 +180,6 @@ export function KitMore() {
         {(["Brand", "Gray", "Success", "Error", "Disabled"] as const).map((c) => <V key={c} label={`Color=${c}`}><BadgeOutlineWithLeadingIcon Color={c} Text="เลือกแล้ว" /></V>)}
       </Block>
 
-      {/* ---------- ไฟล์ Maintain-D (CLAUDE.md ข้อ 12) ---------- */}
       <Block name="VehicleAndReporterInfo (Maintain-D) · กล่องแสดงข้อมูล DisplayBox (ประกอบ)" node="Maintain-D รายละเอียดงานซ่อม (175:79986) · kv() + displayBox()">
         <V label="VehicleAndReporterInfo — desktop แถวละ 4 (มือถือ = DisplayBox แถวละ 2)" wide><VehicleAndReporterInfo Title="รายละเอียดแผนเดินทาง" pairs={KV} /></V>
         <V label="DisplayBox (ประกอบจาก Section label + Content item row)" wide><DisplayBox Title="ข้อมูลแผน" pairs={KV} /></V>
@@ -227,7 +223,6 @@ export function KitMore() {
         <V label="RequestedPartsPanel State=Default"><div className="w-[560px]"><RequestedPartsPanel costs={[["เบิกจากคลัง", 0], ["ต้องจัดซื้อ", 0]]} /></div></V>
       </Block>
 
-      {/* ---------- pattern ที่ประกอบจากชิ้นไลบรารี (COMPOSED.md ก.) ---------- */}
       <Block name="Pattern: FormModal · PopupModal · NotificationPanel · Modal Signature · SummaryRequestedParts" node="formModal() · popupModal() · notiPanel() · Maintain-D">
         <V label="FormModal (Modal Type=Form)"><SecondaryButton Text="เปิด" onClick={() => setOpen("form")} /></V>
         <V label="PopupModal (เนื้อหาอิสระ 640)"><SecondaryButton Text="เปิด" onClick={() => setOpen("popup")} /></V>

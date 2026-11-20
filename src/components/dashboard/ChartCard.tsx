@@ -1,7 +1,3 @@
-/* กรอบการ์ดกราฟ + ปุ่มสลับมุมมอง + หัวแดชบอร์ด + หมายเหตุแหล่งข้อมูล — เลียนแบบ VMS+ หน้า "แดชบอร์ดยานพาหนะ" (page-vehicles.png)
-   การ์ดพื้นขาว มุมมน: หัว = ไอคอนสี + ชื่อ + บรรทัดรอง · ขวาบนปุ่มสลับ (หน่วยงาน / เขต) · ท้ายการ์ด "ข้อมูลจาก … | คลิกกราฟหรือรายการเพื่อกรองทั้งหน้า"
-   หัวแดชบอร์ด (DashHead) = กรอบไอคอนสี + ชื่อ + บรรทัดอธิบาย · ขวาบนป้าย "ข้อมูล ณ …" จุดเขียว (page-fleetcard.png)
-   ไม่ใช่ component ของไลบรารี PEA — ข้อยกเว้นเจ้าของงาน 12 พ.ย. 2569 ใช้ได้เฉพาะแดชบอร์ด S4 S24 (figma-spec/COMPOSED.md หัวข้อ "แดชบอร์ดแบบ VMS+") */
 import type { ReactNode } from "react";
 import { cx } from "@/lib/cx";
 import { Ms } from "@/components/vms/Ms";
@@ -11,9 +7,7 @@ export const PICK_HINT = "คลิกกราฟหรือรายการ
 
 export interface ChartCardProps {
   icon: string; hue?: Hue; title: string; sub?: string;
-  /** ขวาบนของหัวการ์ด (เช่น ปุ่มสลับ) */
   action?: ReactNode;
-  /** ข้อมูลจาก … */
   source: string;
   hint?: string | false;
   className?: string; children: ReactNode;
@@ -38,7 +32,6 @@ export function ChartCard({ icon, hue = "blue", title, sub, action, source, hint
   );
 }
 
-/** ปุ่มสลับมุมมอง (หน่วยงาน / เขต) */
 export function Toggle({ options, value, onChange, label }: { options: string[]; value: string; onChange: (v: string) => void; label: string }) {
   return (
     <div role="group" aria-label={label} className="inline-flex shrink-0 rounded-lg bg-gray-100 p-1">
@@ -50,7 +43,6 @@ export function Toggle({ options, value, onChange, label }: { options: string[];
   );
 }
 
-/** ป้าย "ข้อมูล ณ …" มีจุดสีเขียว */
 export function DataAsOf({ text, sub }: { text: string; sub?: string }) {
   return (
     <div className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 shadow-field">
@@ -63,7 +55,6 @@ export function DataAsOf({ text, sub }: { text: string; sub?: string }) {
   );
 }
 
-/** หัวแดชบอร์ด: กรอบไอคอนสี + ชื่อ + บรรทัดอธิบาย · ขวา ป้ายข้อมูล ณ */
 export function DashHead({ icon, title, text, asOf }: { icon: string; title: string; text: string; asOf?: ReactNode }) {
   return (
     <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
@@ -79,12 +70,10 @@ export function DashHead({ icon, title, text, asOf }: { icon: string; title: str
   );
 }
 
-/** หมายเหตุแหล่งข้อมูลท้ายหน้า (ตัวเล็กสีเทา กลางหน้า) */
 export function SourceNote({ children }: { children: ReactNode }) {
   return <p className="mx-auto max-w-3xl text-center text-xs text-gray-500">{children}</p>;
 }
 
-/** ตารางกราฟ: มือถือเรียงลง · จอกว้าง 3 คอลัมน์ (การ์ดกว้างใส่ lg:col-span-2) */
 export function ChartGrid({ children }: { children: ReactNode }) {
   return <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6">{children}</div>;
 }

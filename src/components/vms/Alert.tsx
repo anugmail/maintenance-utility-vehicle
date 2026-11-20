@@ -1,9 +1,4 @@
 "use client";
-/* Figma: "Alert" — ไฟล์ (Component) VMS Plus หน้า Alerts (node 2:11) · สเปก figma-spec/Alert.json
-   variant: Color = Brand | Success | Warning | Error | Info | Gray
-   property: Text · Supporting · Supporting text · Leading icon · Close icon
-   ค่า: ขอบใน 12 · ช่องไฟ 12 · รัศมี 8 · ขอบ 1 · หัวข้อ 16 SemiBold black · Supporting text 14 gray-600 ห่าง 4
-        ไอคอนนำ 24 ทึบ: Brand info brand-800 · Success check_circle success-600 · Warning warning_circle warning-600 · Error cancel_circle error-500 · Info info info-600 · Gray info gray-500 */
 import { cx } from "@/lib/cx";
 import { Ms } from "./Ms";
 import { TertiaryButton } from "./TertiaryButton";

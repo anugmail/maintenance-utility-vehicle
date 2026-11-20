@@ -1,8 +1,4 @@
 "use client";
-/* เรื่อง: กรย. และผู้ดูแลยานพาหนะ ได้รับแจ้งเตือนแผนเดินทาง (10 พ.ย. 2569 Figma 9607c3b เดิม หน่วยงานเจ้าของรถ) — S8 · บล็อก G ของ SCENARIOS ใน figma-export/maintainance-plugin/screens.js
-   + ตาราง Condition ของ Scenario 8 (14-บำรุงรักษา-userflow.md) · หน้า /trips-view/ กระดิ่ง + แผงแจ้งเตือน → /trips-view/detail/ ดูอย่างเดียว
-   ข้อมูลตั้งต้น = SEEDS.S8 (แผนเดินทาง ตรวจรถ ขอนแก่น อุดรธานี ลำปาง อนุมัติแล้ว + แจ้งเตือนใหม่ของ กรย. และหน่วยงาน กฟฉ.1 ขอนแก่น + แจ้งเตือนเก่าที่อ่านแล้ว)
-   เคส: กรย. (G.1–G.3) · หน่วยงานเจ้าของรถ (G.4 G.5) · ชีตยืนยัน หน้า 11 */
 import { setMock } from "@/lib/mock/store";
 import { DEFAULT_NOTIS, OWN_UNIT, TRIP_1, TRIP_OTHER, approvalNotis } from "@/lib/mock/trips";
 import type { GuideScenario } from "../types";

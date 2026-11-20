@@ -1,17 +1,4 @@
 "use client";
-/* S4 · กบค. ดูอะไหล่และความคืบหน้าของแผนที่อนุมัติแล้ว (แดชบอร์ด · /parts/) — partsDash() ใน screens.js (บล็อก C · C.1–C.13 · 6 พ.ย. 2569)
-   แทนหน้าความคืบหน้าอะไหล่รายไตรมาส (/quarter/parts/ เดิม · เทียบคงเหลือ Smart Inventory + เบิก/จอง) — เจ้าของงาน "หน้าที่จาก smart inventory จะเปลี่ยนเป็นหน้าแดชบอร์ด" · ไม่แสดงค่าจาก Smart Inventory
-   ทางเข้า: เมนูย่อย "อะไหล่ของแผนที่อนุมัติแล้ว" ใต้ งานซ่อมและบำรุงรักษา ใน Sidebar navigation (ต่อจาก บำรุงรักษาตามวาระ)
-   12 พ.ย. 2569 แดชบอร์ดแบบ VMS+ (เจ้าของงาน _"อยากให้ออกแบบเป็นสไตล์นี้ … ให้เฉพาะ dashboard ที่ทำสิ่งนี้ได้ หน้าอื่นๆ ยังคงต้องตาม component เหมือนเดิม"_
-     · สเปก userflow/figma-ref/vmsplus-dashboard-2569-11-12/SPEC-maintenance-dashboards.md · CLAUDE.md ข้อ 18 · ชิ้นกราฟ components/dashboard/ · COMPOSED.md หัวข้อ "แดชบอร์ดแบบ VMS+")
-   โครง: Page header "อะไหล่ของแผนที่อนุมัติแล้ว" (Breadcrumbs บำรุงรักษาตามวาระ · คงเดิม + บรรทัดอธิบาย + ป้ายข้อมูล ณ) → เรื่องที่ควรดู
-     → แผงตัวกรองพับได้ = ช่องเดิม ปีงบประมาณ · หน่วยงานผู้ขอเบิก (กบค. เท่านั้น) · เขต · แผน (เลือกแล้วใช้ทันที) + ชิป (รวมไตรมาส/อะไหล่จากการคลิกกราฟ) → การ์ดตัวเลข 6 ใบ
-     → กราฟ (ยานพาหนะในแผนรายไตรมาส · อะไหล่ที่ใช้มากที่สุด · ตามหน่วยงานผู้ขอเบิก / ยานพาหนะตามแผน · ความคืบหน้าของแผน · 13 พ.ย. 2569 ไฟล์ 34 ข้อ 10 ตาม Figma) คลิกแท่ง/แถว/ชิ้น = เพิ่ม/เอาตัวกรองนั้นออกทั้งหน้า
-     → ตาราง: Tabs 3 แท็บเดิม (รวมตามรายการ · แยกรายคัน · ความคืบหน้าของแผน + จำนวน · ย้ายมาอยู่ท้ายหน้า) → Table header (ค้นหาตามแท็บ · ตัวกรอง = กางแผง · ส่งออก)
-       → Table (ทุกคอลัมน์เรียงได้) + pagination / Empty state/Search not found + ล้างตัวกรอง → หมายเหตุแหล่งข้อมูล
-   ส่งออก: popup "ส่งออกรายงาน" (Radio text card รูปแบบไฟล์ PDF / Excel · ข้อมูลที่ส่งออก ตามตัวกรองที่ใช้อยู่ / ทั้งหมด) → toast "ส่งออกไฟล์สำเร็จ" (ไฟล์: _lib/exportFile.ts)
-   แท็บความคืบหน้าของแผน: แถว = 1 ไตรมาสของ 1 แผน · ปุ่ม › ไปหน้าไตรมาส n ของแผนนั้น
-   ต้นแบบ: ?sim=empty = ยังไม่มีแผนที่อนุมัติแล้ว (C.13) · ?seed=S4 = บทบาท กบค. (หน้า /scenarios/) · ข้อมูลเป็นค่าสมมติของจอ (lib/mock/partsDash.ts) ตัวเลขแดชบอร์ดคิดจากชุดเดิม */
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useRef, useState } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";
@@ -52,10 +39,7 @@ import { useBreakpoint } from "@/lib/useBreakpoint";
 import { RadioPick, SORT0, SortTable, nextSort, sortRows, type Sort } from "./_lib/ui";
 import { downloadCsv, openPrint } from "./_lib/exportFile";
 
-/* Permission (เคาะ 10 พ.ย. 2569 · Figma 76efd87 C.14 C.15 · เจ้าของงาน "ผู้สร้างแผนเห็นเฉพาะแผนของหน่วยงานตัวเอง ยกเว้น กบค จะเห็นแผนของหน่วยงานอื่นด้วย แต่แก้ไขไม่ได้"):
-   หน่วยงาน (กบผ. กปส. กรย. กส.1 กส.2) เห็นเฉพาะแผนของหน่วยงานตัวเอง — การ์ดตัวเลข กราฟ เรื่องที่ควรดู ตัวเลขบนแท็บ ตาราง นับตามแผนที่เห็น · แผงตัวกรองไม่มี "หน่วยงานผู้ขอเบิก" · ตัวเลือกแผนเฉพาะแผนของตัวเอง
-   กบค. เห็นทุกหน่วยงาน ดูอย่างเดียว · แผงตัวกรองมี "หน่วยงานผู้ขอเบิก" */
-const DASH_ROLES = ["กบค.", "หน่วยงาน (กบผ.)", "หน่วยงาน (กปส.)", "หน่วยงาน (กรย.)", "หน่วยงาน (กส.1)", "หน่วยงาน (กส.2)"] as const;   // ข้อ 70 เพิ่ม กส.1 กส.2
+const DASH_ROLES = ["กบค.", "หน่วยงาน (กบผ.)", "หน่วยงาน (กปส.)", "หน่วยงาน (กรย.)", "หน่วยงาน (กส.1)", "หน่วยงาน (กส.2)"] as const;
 const COLS = [sortAll(QPART_COLS), sortAll(DASH_CAR_COLS), sortAll(DASH_PROG_COLS)];
 const ALL_N = [DASH_AGG.length, DASH_CARS.length, DASH_PROG.length];
 const QS = [1, 2, 3, 4];
@@ -65,17 +49,14 @@ const carRow = (r: CarRow): TableValue[] => {
   return [r.plate, { text: r.mr, sub: dashPlanOf(r.mr)?.unit }, "ไตรมาส " + r.q, p.name, p.code, p.group, r.qty, p.unit];
 };
 
-/* ตัวกรองจากกราฟ: ไตรมาส (แท่งรายไตรมาส) · อะไหล่ (แถวอะไหล่ที่ใช้มากที่สุด) — ใช้กับแท็บแยกรายคัน ความคืบหน้า (ไตรมาส) และยอดรวมตามรายการ (อะไหล่) */
 interface Pick { qs: number[]; parts: string[] }
 const NO_PICK: Pick = { qs: [], parts: [] };
 const pickCar = (r: CarRow, k: Pick) => (!k.qs.length || k.qs.includes(r.q)) && (!k.parts.length || k.parts.includes(PARTS[r.part].name));
 const pickProg = (r: ProgRow, k: Pick) => !k.qs.length || k.qs.includes(r[1]);
 const pickAgg = (r: AggRow, k: Pick) => !k.parts.length || k.parts.includes(r[0]);
 
-/* เรื่องที่ควรดู "ยานพาหนะในแผนที่ไม่เบิกอะไหล่" กดแล้ว = ชิปนี้ · แท็บแยกรายคันแสดงคันที่ไม่เบิก (แถวแบบ partsDash o.alert noparts) · ยอดอะไหล่เป็น 0 */
 const NP_KEY = "ไม่เบิกอะไหล่";
 const npRow = (r: { plate: string; mr: string; q: number }): TableValue[] => [r.plate, { text: r.mr, sub: dashPlanOf(r.mr)?.unit }, "ไตรมาส " + r.q, NP_KEY, "-", "-", "0", "-"];
-/* ชิปตัวกรอง = ค่าที่เลือก (ปีงบประมาณ · หน่วยงาน · เขต · เลขที่ MR) + ไตรมาส n + ชื่ออะไหล่ */
 const chipsOf = (f: DashFilter, k: Pick) => [...(f.year ? [f.year] : []), ...f.units, ...f.districts, ...f.plans, ...k.qs.map((q) => "ไตรมาส " + q), ...k.parts];
 type Multi = "units" | "districts" | "plans";
 const flipIn = <T,>(xs: T[], v: T) => (xs.includes(v) ? xs.filter((x) => x !== v) : [...xs, v]);
@@ -105,13 +86,13 @@ function PartsDash() {
     return [{ text: r[0], sub: p?.unit }, p?.name ?? "", "ไตรมาส " + r[1], r[2] + " ใบ", r[3] + "/" + r[4] + " คัน", { pills: [QST[r[5]]] },
       go("ไปหน้าไตรมาส " + r[1] + " ของ " + r[0], () => router.push(tripsHref(id, r[1])))];
   };
-  const scope = UNIT_ROLES[role];   // หน่วยงาน = แผนของตัวเองเท่านั้น
+  const scope = UNIT_ROLES[role];
   const eff = (f: DashFilter): DashFilter => (scope ? { ...f, units: [scope] } : f);
   const rowsOf = (t: number, q = query, f = filter, k = pick): TableValue[][] =>
     t === 0 ? aggRows(q, eff(f)).filter((r) => pickAgg(r, k)) : t === 1 ? (k.parts.includes(NP_KEY) ? DASH_NOPARTS.filter((r) => planMatch(dashPlanOf(r.mr), eff(f)) && (!q.trim() || r.plate.includes(q.trim()))).map(npRow) : carRows(q, eff(f)).filter((r) => pickCar(r, k)).map(carRow)) : progRows(q, eff(f)).filter((r) => pickProg(r, k)).map(progRow);
   const rows = sortRows(rowsOf(tab), sort);
   const allRows = (t: number): TableValue[][] => (scope ? rowsOf(t, "", NO_FILTER, NO_PICK) : t === 0 ? DASH_AGG : t === 1 ? DASH_CARS.map(carRow) : DASH_PROG.map(progRow));
-  const allN = scope ? [0, 1, 2].map((t) => allRows(t).length) : ALL_N;   // หน่วยงาน = นับเฉพาะแผนของตัวเอง
+  const allN = scope ? [0, 1, 2].map((t) => allRows(t).length) : ALL_N;
   const chips = chipsOf(filter, pick);
 
   if (seeding || !ok) return null;
@@ -130,16 +111,12 @@ function PartsDash() {
   };
   const openPanel = () => { setPanel(true); setTimeout(() => panelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 0); };
 
-  /* ---------- ข้อมูลตามตัวกรอง (ทั้งหน้า) ---------- */
   const f = eff(filter);
   const plans = DASH_PLANS.filter((p) => planMatch(p, f));
   const progBase = progRows("", f), prog = progBase.filter((r) => pickProg(r, pick));
   const agg = aggRows("", f).filter((r) => pickAgg(r, pick));
   const unitSum = (u: string) => sum(agg.filter((r) => r[4] === u).map((r) => Number(r[3])));
 
-  /* ---------- เรื่องที่ควรดู (แผนที่บทบาทนี้เห็น ไม่ขึ้นกับตัวกรอง) ----------
-     ไตรมาสปัจจุบันของแผน = ไตรมาสแรกที่ยังไม่เสร็จและมียานพาหนะ (ตามสถานะในความคืบหน้าของแผน · ข้อมูลจำลองไม่มีวันเริ่ม/สิ้นสุดของไตรมาส)
-     ช้ากว่ากำหนด = ไตรมาสที่ยังไม่เสร็จ แต่ไตรมาสหลังจากนั้นของแผนเดียวกันเริ่มแล้ว · ไม่มีเรื่อง = บรรทัดเดียว */
   const mine = DASH_PROG.filter((r) => dashMine(scope)(r[0]));
   const current = [...new Set(mine.map((r) => r[0]))].map((mr) => mine.filter((r) => r[0] === mr && r[5] !== "done" && r[4] > 0).sort((a, b) => a[1] - b[1])[0]).filter((r): r is ProgRow => !!r);
   const noTrip = current.filter((r) => r[2] === 0);
@@ -147,11 +124,9 @@ function PartsDash() {
   const focus = (rs: ProgRow[]) => () => { putFilter({ ...NO_FILTER, plans: [...new Set(rs.map((r) => r[0]))] }); putPick({ qs: [...new Set(rs.map((r) => r[1]))], parts: [] }); pickTab(2); };
   const alerts: DashAlert[] = [
     ...(noTrip.length ? [{ key: "notrip", tone: "warning" as const, title: "ไตรมาสปัจจุบันที่ยังไม่มีแผนเดินทาง " + noTrip.length + " ไตรมาส", text: noTrip.map((r) => r[0] + " ไตรมาส " + r[1]).join(" · ") + " — ยานพาหนะในไตรมาสยังไม่ได้จัดเข้าแผนเดินทาง", onClick: focus(noTrip) }] : []),
-    /* ไฟล์ 34 ข้อ 10 (เจ้าของงานเลือก ก): ตาม Figma partsDash — เอา "ไตรมาสที่บำรุงรักษาช้ากว่ากำหนด" ออก (ข้อมูลเดิมคำนวณไม่ได้) · เพิ่ม "ยานพาหนะในแผนที่ไม่เบิกอะไหล่" (Info · กดแล้วแท็บแยกรายคันแสดงคันนั้น แบบ C.17) */
     ...(noParts.length ? [{ key: "noparts", tone: "info" as const, title: "ยานพาหนะในแผนที่ไม่เบิกอะไหล่ " + noParts.length + " คัน", text: noParts.map((r) => r.plate).join(" · ") + " ในแผน " + noParts[0].mr + " ไม่มีอะไหล่และไม่เปลี่ยนน้ำมันไฮดรอลิก — ตรวจว่าตั้งใจหรือยังจัดอะไหล่ไม่ครบ", onClick: () => { putFilter({ ...NO_FILTER, plans: [noParts[0].mr] }); putPick({ qs: [], parts: [NP_KEY] }); pickTab(1); } }] : []),
   ];
 
-  /* ---------- การ์ดตัวเลข ---------- */
   const carsIn = pick.qs.length ? sum(prog.map((r) => r[4])) : sum(plans.map((p) => p.cars));
   const done = sum(prog.map((r) => r[3]));
   const pcs = unitSum("ชิ้น"), litre = unitSum("ลิตร");
@@ -164,7 +139,6 @@ function PartsDash() {
     { tone: "orange" as const, icon: "trending_up-24-300-round", label: "ความคืบหน้า", value: pct(done, carsIn), sub: "บำรุงรักษาแล้ว " + nf(done) + " / " + nf(carsIn) + " คัน" },
   ];
 
-  /* ---------- กราฟ ---------- */
   const qActive = (q: number) => pick.qs.includes(q);
   const carQ = QS.map((q) => { const rs = progBase.filter((r) => r[1] === q); return { key: String(q), label: "ไตรมาส " + q, values: [sum(rs.map((r) => r[3])), sum(rs.map((r) => r[4] - r[3]))], active: qActive(q) }; });
   const onQ = (k: string) => putPick({ ...pick, qs: flipIn(pick.qs, Number(k)).sort() });
@@ -176,7 +150,6 @@ function PartsDash() {
   });
   const unitSlices = DASH_UNITS.map((u, i) => ({ key: u, label: u, value: sum(plans.filter((p) => p.unit === u).map((p) => p.cars)), hue: hueAt(i), active: filter.units.includes(u) }))
     .filter((s) => s.value > 0 || s.active);
-  /* 13 พ.ย. 2569 หน่วยงานเห็นเฉพาะแผนของตัวเอง (เจ้าของงาน 10 พ.ย. 2569) ⇒ โดนัทของหน่วยงานแยกตามแผน "ยานพาหนะตามแผน" แบบ partsDash ของ screens.js (เดิมแยกตามหน่วยงานได้ชิ้นเดียว) · กบค. คงตามหน่วยงานผู้ขอเบิก */
   const planSlices = plans.map((p, i) => ({ key: p.mr, label: p.mr, value: p.cars, hue: hueAt(i), active: filter.plans.includes(p.mr) })).filter((s) => s.value > 0 || s.active);
   const planBars = plans.map((p) => {
     const rs = prog.filter((r) => r[0] === p.mr);
@@ -227,7 +200,6 @@ function PartsDash() {
         </div>
         <KpiRow items={kpis} />
         <ChartGrid>
-          {/* ไฟล์ 34 ข้อ 10: กราฟ "ยานพาหนะในแผนรายไตรมาส" ตาม Figma partsDash (เดิม "อะไหล่รายไตรมาส" 3 ช่อง ซึ่ง Figma ตัดเพราะข้อมูลอะไหล่เป็นยอดทั้งปี) · กดแท่ง = กรองไตรมาสทั้งหน้า */}
           <ChartCard className="lg:col-span-3" icon="calendar_month-24-300-round" title="ยานพาหนะในแผนรายไตรมาส" sub="บำรุงรักษาแล้วเทียบยังไม่บำรุงรักษา แยกตามไตรมาส"
             source={"ข้อมูลจากแผนที่อนุมัติแล้ว ปีงบประมาณ " + (filter.year || DASH_YEAR)}>
             <ColumnChart unit="คัน" series={QUARTER_SERIES} groups={carQ} onPick={onQ} />

@@ -1,10 +1,4 @@
 "use client";
-/* หน้าของต้นแบบ (ไม่ใช่จอของระบบ): หน้าเรื่องของโหมดพาดูทีละเรื่อง /scenarios/guide/?s=<เรื่อง> — เปิดจากปุ่ม "ดูเคส" ในหน้า /scenarios/
-   ลูกค้าเห็นหน้านี้ตอนยืนยันงาน ⇒ ข้อความภาษาคนพูด ไม่มีรหัส scenario (lib/guide/types.ts)
-   ประกอบจากชิ้นไลบรารี (ไม่มีจอใน UI Release#2 — COMPOSED.md หัวข้อ ท.):
-     `Page header` (ชื่อเรื่อง + สิ่งที่เรื่องนี้ทำได้) → กล่องแสดงข้อมูล (patterns/DisplayBox: ผู้ใช้งาน · ชีตยืนยัน ทุกหน้าที่เคสของเรื่องใช้ casePages ของ lib/guide/scenarios.ts)
-     → `Section header` "เคสที่พาดู" + Badge จำนวนเคส → การ์ด `Mobile table` 1 เคส = 1 การ์ด (Lead text ชื่อเคส + บรรทัดรอง · จำนวนขั้น · ชีตยืนยันหน้าของเคส · Action buttons "เริ่มเคสนี้")
-     desktop การ์ดเรียง 2 คอลัมน์ (Table ของไลบรารีไม่มีช่องปุ่มข้อความ) */
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
 import { DisplayBox } from "@/components/patterns/DisplayBox";
@@ -27,7 +21,7 @@ function Guide() {
   const mob = useBreakpoint() === "Mobile";
   const g = guideOf(sp.get("s"));
   const from = sp.get("from");
-  const back = from === "menu" ? GUIDE_MENU : "/scenarios/";   // เปิดจากเมนูพาดูทีละเรื่อง = ย้อนกลับไปเมนู
+  const back = from === "menu" ? GUIDE_MENU : "/scenarios/";
   useEffect(() => { if (!g) router.replace(back); }, [g, router, back]);
   if (!g) return null;
   return (

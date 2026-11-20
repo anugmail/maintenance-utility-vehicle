@@ -1,26 +1,19 @@
-/* ข้อมูลจำลองของ S4 (ความคืบหน้าอะไหล่ของไตรมาส) และการปิดงานของแผน (S15 S16 S17 ตัดออก 10 พ.ย. 2569) — batch B
-   ยกจาก screens.js (partsProgress · partsSummary · PLAN_KV · HIST · hqRows · reportScreen) · ค่าสมมติทั้งหมด */
 import type { PillColor } from "@/components/vms/PillOutline";
 import { PARTS, creatorOf, unitOf, type Plan, type PlanStatus } from "./data";
 import { setMock, type MockState } from "./store";
 
-/* ---------- แผนในข้อมูลจำลอง (store.plans · S1) ---------- */
 export const mrOf = (id: string) => "MR" + id;
 export const planOf = (s: MockState, id: string): Plan | undefined => s.plans.find((p) => p.mr === mrOf(id));
 export function setPlanStatus(id: string, status: PlanStatus) {
   setMock((s) => ({ ...s, plans: s.plans.map((p) => (p.mr === mrOf(id) ? { ...p, status } : p)) }));
 }
-/* อนุมัติเมื่อของแผนตัวอย่าง (PLAN_KV "08/10/2569") · คีย์ = id ใน URL (เลขที่ MR ตัด "MR" · 9 พ.ย. 2569 เลขติดกันแล้ว เดิม slice(3) ของ "MR Z…" ได้ "7000001" ค่าหาย) */
 const APPROVED_AT: Record<string, string> = { Z7000001: "08/10/2569", Z7000002: "10/10/2569", Z7100003: "28/10/2569", Z7100004: "29/10/2569" };
-/* PLAN_KV — กล่องรายละเอียดแผน (9 คู่) · quarterNote = ต่อท้ายไตรมาส (หน้าแผนเดินทาง "ไตรมาส 1 (10 คัน)")
-   6 พ.ย. 2569 รีวิว S6 "ภาค เปลี่ยน หน่วยงาน" + "ย้ายประเภท มาไว้ในคอลัมม์" (PLAN_KV ของ screens.js): ภาค → หน่วยงานเจ้าของแผน · ไม่มีประเภทยานพาหนะ · ผู้สร้างแผน = CREATOR */
 export const planKv = (p: Plan, quarterNote?: string): [string, string][] => [
   ["ชื่อแผน", p.name], ["ปีงบประมาณ", p.year], ["หน่วยงาน", unitOf(p.mr, p.unit)], ["ไตรมาส", p.nowQ + (quarterNote ?? "")],
   ["จำนวนยานพาหนะ", p.cars + " คัน"], ["เลขที่ MR", p.mr], ["ผู้สร้างแผน", creatorOf(p)], ["วันที่สร้าง", p.created], ["อนุมัติเมื่อ", p.approvedAt ?? APPROVED_AT[p.mr.replace(/^MR/, "")] ?? "-"],
 ];
 
-/* ---------- S4 เบิก/จองอะไหล่ ---------- */
-export interface QuarterState { result: "none" | "short" | "ok"; /** หน้าที่กดยืนยัน (จำลองของที่รอจัดซื้อเข้าคลังเมื่อกลับมาเปิดหน้าใหม่) */ mount?: string }
+export interface QuarterState { result: "none" | "short" | "ok"; mount?: string }
 export const qKey = (id: string, q: number) => id + "-" + q;
 export const quarterOf = (s: MockState, id: string, q: number): QuarterState => s.quarter?.[qKey(id, q)] ?? { result: "none" };
 export function putQuarter(id: string, q: number, v: QuarterState) {
@@ -29,20 +22,16 @@ export function putQuarter(id: string, q: number, v: QuarterState) {
 export const WD: Record<"wait" | "reserved" | "taken" | "buy", [string, PillColor]> = {
   wait: ["รอเบิก", "Gray"], reserved: ["จองแล้ว", "Info"], taken: ["เบิกแล้ว", "Success"], buy: ["รอจัดซื้อ", "Warning"],
 };
-export const shortOf = (i: number) => Math.max(0, PARTS[i].planQty - PARTS[i].stock);   // ไส้กรองไฮดรอลิก 9 · ไส้กรองเชื้อเพลิง 3
-export const NOW_CARS = 6;   // "รถ 6 คันของไตรมาสนี้" (VEH ของ screens.js — ต่างจาก 10 คันของ S6 ตามข้อมูลตัวอย่าง)
+export const shortOf = (i: number) => Math.max(0, PARTS[i].planQty - PARTS[i].stock);
+export const NOW_CARS = 6;
 export const WH_ACK_AT = "02/11/2569";
 const WH = ["Smart Inventory", "Smart Inventory", "Smart Inventory", "คลังสำรอง", "คลังสำรอง"];
 const PRICE = [120, 680, 250, 420, 350];
 const BUYER_OF: Record<number, "Smart Inventory" | "ผพจ."> = { 1: "Smart Inventory", 4: "ผพจ." };
-/* แถวอะไหล่ที่ต้องเบิกของไตรมาส (S4) — แผนที่จัดรถรายคัน (alloc · S1/S21) = ยอดรวมจากรถทีละคันชุดเดียวกับฟอร์มแผนและหน้าคลัง S22 (quarterRows)
-   แผนตัวอย่าง (ไม่มีรถรายคัน) = PARTS ของ screens.js · pi = ลำดับใน PARTS (ไม่มี = รายการที่ระบุเอง ไม่มีคงเหลือในคลัง) · sub = บรรทัดรอง (S25 อะไหล่ของรถที่ย้ายมา) */
 export interface NeedRow { key: string; pi?: number; name: string; code: string; unit: string; qty: number; stock?: number; sub?: string }
 export const SAMPLE_NEED: NeedRow[] = PARTS.map((p, i) => ({ key: "p" + i, pi: i, name: p.name, code: p.code, unit: p.unit, qty: p.planQty, stock: p.stock }));
-/* ยอดของรถเดิมในไตรมาสอื่นของแผนตัวอย่าง (MOVE_Q2_BASE ของ screens.js · ค่าสมมติ) ตามลำดับ PARTS */
 export const SAMPLE_Q_NEED: Record<number, number[]> = { 2: [30, 6, 6, 6, 2] };
 export const lackOf = (r: NeedRow) => (r.stock == null ? 0 : Math.max(0, r.qty - r.stock));
-/* ยอดใน SummaryRequestedParts (partsSummary): เบิก = min(ตามแผน, คงเหลือ) × ราคา แยกคลัง · จัดซื้อ = ส่วนที่ขาด × ราคา แยกผู้จัดซื้อ · รายการที่ระบุเอง (ไม่มีราคาในคลัง) ไม่นับยอด */
 export function partsSummary(rows: NeedRow[] = SAMPLE_NEED) {
   const take = { "Smart Inventory": 0, "คลังสำรอง": 0 }, buy = { "Smart Inventory": 0, "ผพจ.": 0 };
   const stockRows = rows.filter((r) => r.pi != null) as (NeedRow & { pi: number })[];
@@ -56,12 +45,8 @@ export function partsSummary(rows: NeedRow[] = SAMPLE_NEED) {
   return { ok: ok.length, short: short.length, groups, totals };
 }
 
-/* ---------- ปิดงานของแผน ----------
-   10 พ.ย. 2569 S15 S16 S17 ตัดออก (Figma 9607c3b · 6299e1d · เจ้าของงาน "s16 ตัดทิ้งไม่ต้องรับทราบทั้งแผน ตอนเสร็จงานแล้ว รับทราบรายคันก็พอ" + "s17 ตัดทิ้ง")
-   ⇒ ผู้ดูแลยานพาหนะรับทราบครบทุกคันในแผน (S13) แล้วแผนปิดงานเอง (เสนอ) · closedAt = วันที่รับทราบคันสุดท้าย · ไม่มีส่งประวัติ ตรวจประวัติ รายงานผล */
 export interface CloseoutState {
   closedAt?: string;
-  /** ที่เก็บเก่า (S14–S17 ตัดออก 10 พ.ย. 2569) — ไม่ใช้แล้ว */
   accepted?: boolean; sentAt?: string; head?: "ok" | "back"; headAt?: string; headReason?: string;
 }
 export const closeoutOf = (s: MockState, id: string): CloseoutState => s.closeout?.[id] ?? {};

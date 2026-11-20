@@ -1,9 +1,3 @@
-/* Figma: "Mobile progress steps" (Collapsed=True) + "Step circles / 4 steps" — ไฟล์ (Component) VMS Plus หน้า Progress steps · สเปก figma-spec/Mobile progress steps.json · figma-spec/Step circles _ 4 steps.json
-   property: Text · Supporting · Supporting text · Stepper item swap (วง Step circles) · Collapsed=True (ใช้)
-   กรอบ ขอบใน 16 ช่องไฟ 16 พื้น white ขอบ 1 gray-300 รัศมี 8 · วง 72 (Track gray-300 Color/component/progress/track · Progress brand-900 Color/component/progress/progress)
-   ตัวเลขกลางวง "ปัจจุบัน / ทั้งหมด" 12 (ตัวเลข SemiBold black · "/" gray-400) · ข้อความขั้น 16 SemiBold black · "ถัดไป:" 12 SemiBold gray-600 + ชื่อขั้นถัดไป 12 gray-600
-   mtStepper() ใน screens.js: 2 ขั้น = วง Step=2 (ครึ่ง) / Step=4 (เต็ม) แสดง 1/2 · 2/2 · ไอคอน keyboard_arrow_down ท้าย (Collapsed — ต้นแบบไม่กางรายการขั้น)
-   วงความคืบหน้า = conic-gradient ตามสัดส่วน + วงในสีพื้น (ดัมป์ไม่มีข้อมูล arc ของ ellipse — COMPOSED.md) */
 import { cx } from "@/lib/cx";
 import { Ms } from "./Ms";
 

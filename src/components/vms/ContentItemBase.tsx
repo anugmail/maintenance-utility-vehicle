@@ -1,9 +1,3 @@
-/* Figma: "_Content item base" — ไฟล์ (Component) VMS Plus หน้า Cards (node 2413:11354) · สเปก figma-spec/_Content item base.json
-   ช่องข้อมูล 1 ช่องใน Content item row
-   variant: Type = Text | Text with label (ที่ต้นแบบใช้ · kv()) | Attachment | Big | Component swap
-   property: Leading icon (ปิดตาม kv()) · Label · Text · Supporting · Supporting text · Instance swap (Component swap)
-   ค่า: ช่องไฟ 8 · ไอคอนนำ 24 brand-900 · Text with label: Label 16 SemiBold black → Text 16 Regular black ห่าง 4
-        Text: Text 16 black + Supporting text 16 gray-600 · Attachment: Text สีลิงก์ info-700 (token ใกล้สุด — COMPOSED.md ข.) · Big: 20/20 */
 import type { ReactNode } from "react";
 import { cx } from "@/lib/cx";
 import { Ms } from "./Ms";
@@ -17,7 +11,6 @@ export interface ContentItemBaseProps {
   Text?: ReactNode;
   SupportingText?: ReactNode;
   LeadingIconSwap?: string;
-  /** Component swap — ชิ้นที่วางแทน Text (เช่น Badge outline / Pill outline) */
   InstanceSwap?: ReactNode;
   className?: string;
 }

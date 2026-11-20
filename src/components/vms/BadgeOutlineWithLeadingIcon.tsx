@@ -1,7 +1,3 @@
-/* Figma: "Badge outline with leading icon" — ไฟล์ (Component) VMS Plus หน้า Badge (node 2:13) · สเปก figma-spec/Badge outline with leading icon.json
-   variant: Color = Brand | Gray | Disabled | Success | Error · property: Text · Leading icon swap
-   ค่า: สูง 24 · ขอบใน 4/8/4/6 · ช่องไฟ 4 · รัศมี 4 · ขอบ 1 · ไอคอน 12 (Brand brand-800 · Gray gray-500) · ตัวอักษร 12 SemiBold
-   ใช้ใน Spare Part Card Item ("เลือกแล้ว" ไอคอน check) */
 import { cx } from "@/lib/cx";
 import type { BadgeOutlineColor } from "./BadgeOutline";
 import { Ms } from "./Ms";

@@ -1,10 +1,4 @@
 "use client";
-/* Figma: "_File upload base" — ไฟล์ (Component) VMS Plus หน้า File upload (node 2123:5261) · สเปก figma-spec/_File upload base.json
-   กล่องเลือก/ลากไฟล์ใน File upload
-   variant: State = Default | Hover | Focused | Disabled | Error · property: Supporting text
-   ค่า: สูง 124 · ขอบใน 16 · รัศมี 8 · พื้น white ขอบ 1 gray-300 (Hover/Focused brand-800 · Error error-500 · Disabled พื้น gray-50)
-        Featured icon Gray sm ไอคอน cloud_upload (Disabled = Color Disabled) → ข้อความ ห่าง 12 · "คลิกเพื่อเลือกไฟล์" 14 SemiBold brand-900 (Disabled gray-400)
-        + "หรือลากไฟล์มาวางบริเวณนี้" 14 gray-600 ช่องไฟ 4 · Supporting text 12 gray-600 ห่าง 4 · จัดกลาง */
 import { useRef } from "react";
 import { cx } from "@/lib/cx";
 import { FeaturedIcon } from "./FeaturedIcon";

@@ -1,9 +1,3 @@
-/* Figma: "Empty state/Data empty" — ไฟล์ (Component) VMS Plus หน้า Table (node 2:14) · สเปก figma-spec/Empty state_Data empty.json
-   ใช้แทนตารางเมื่อไม่มีข้อมูล (noCarsInQ / noParts ใน screens.js — ซ่อน Actions)
-   ค่า: ขอบในบน/ล่าง 40 · ช่องไฟ 24 · พื้น white · Content กว้าง 360 ช่องไฟ 12 · หัวข้อ 24 SemiBold black · ข้อความ 16 Regular gray-600 ห่าง 8 · Actions ช่องไฟ 16
-   ภาพ Graphic 200×200 (พื้นภาพ paint image) — ส่งออกจากดัมป์ UI Release#2 4 พ.ย. 2569 ตามบริบทที่หน้าจอจริงใช้:
-     "data" = แฟ้ม EMPTY ของ "ไม่พบข้อมูล / ไม่มีงานที่กำลังดำเนินการ" (MA Success · 58-42887)
-     "vehicle" = รถกับแว่นขยาย ของ "ไม่มียานพาหนะ" (Contract vehicle list - Empty · 1-54) — ใช้กับรายการรถที่ว่าง */
 import type { ReactNode } from "react";
 import { asset } from "@/lib/basePath";
 import { cx } from "@/lib/cx";

@@ -1,7 +1,3 @@
-/* Figma: "Indicator" — ไฟล์ (Component) VMS Plus หน้า Badge (node 2:13) · สเปก figma-spec/Indicator.json
-   จุดสถานะในป้าย (Badge outline with indicator)
-   variant: Size = sm (กรอบ 8 · จุด 6 · ขอบใน 1) | md (12 · 8 · 2) | lg (16 · 10 · 3)
-   สีจุดตาม instance ที่วาง (ตั้งต้น Color/icon/success = success-500) — ส่งคลาส bg-* ผ่าน dot */
 import { cx } from "@/lib/cx";
 
 const SIZE = { sm: ["p-px", "size-1.5"], md: ["p-0.5", "size-2"], lg: ["p-[3px]", "size-2.5"] } as const;

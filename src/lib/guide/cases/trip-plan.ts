@@ -1,23 +1,9 @@
 "use client";
-/* เรื่อง: หน่วยงาน ทำแผนเดินทางของไตรมาส (ดำเนินการเอง) — S6 · บล็อก E ของ SCENARIOS ใน figma-export/maintainance-plugin/screens.js (E.1–E.25)
-   + ตาราง Condition ของ Scenario 6 (14-บำรุงรักษา-userflow.md) · ขั้นเขียนตามที่เว็บทำจริง (หน้า "ไตรมาส 1" /quarter/trips/ · ฟอร์ม /quarter/trips/new/ · แก้ไข /quarter/trips/edit/)
-   เคสกับจอ (รหัสจอ = ลำดับในบล็อก · 9 พ.ย. 2569 ไล่ตรงกับ screens.js 8f5b642):
-     trip-entry       E.1 รายการแผน เมนู … ดูรายละเอียด · E.2 รายละเอียดแผน (อะไหล่ในแผน รวมทุกไตรมาส + ไตรมาส 1–4) · E.3 หน้าไตรมาส 1 ยังไม่มีแผนเดินทาง
-     quarter-cars     E.19 popup เพิ่มยานพาหนะเข้าไตรมาส · E.20 เพิ่มแล้ว · E.21 แก้ไขผู้ดูแลยานพาหนะและสถานที่ · E.22 ยืนยันเอาออก · E.23 เอาออกแล้ว
-     trip-create      E.4 ฟอร์มว่าง · E.5 popup เพิ่มยานพาหนะ · E.6 เพิ่มแล้ว (วันดำเนินการ "—") · E.10 เลือกช่วงวันเดินทาง · E.7 popup แก้ไขยานพาหนะ 4 ช่อง
-                      · E.8 เอาออก (soft delete) · E.9 เพิ่มอีกครั้ง · E.24 เลือกวันดำเนินการ · E.25 บันทึกแล้ว · E.12 กรอกครบ · E.13 สร้างสำเร็จ
-                      ลำดับขั้นตามลำดับที่ทำได้จริงบนจอ (ยานพาหนะก่อนช่วงวัน ⇒ เห็น E.6 วันดำเนินการ "—" แล้ว E.7 ค่าเริ่มต้นทั้งช่วง)
-     trip-incomplete  E.11 Validation ออกจากช่องโดยยังว่าง
-     trip-next        E.14 popup ใบถัดไป ยานพาหนะในแผนเดินทางอื่นเลือกไม่ได้ · E.15 แผนเดินทาง 2 ใบ ปุ่มสร้างกดไม่ได้
-     trip-returned    E.16 ถูกส่งกลับ · E.17 แก้ไขที่ถูกส่งกลับ · E.18 ส่งอนุมัติใหม่แล้ว
-     trip-unit2       (ไม่มีจอใน Figma · ข้อมูลของเว็บ) กปส. แผน MRZ7000002 อนุมัติแล้ว → ไปหน้าไตรมาส 2 → แผนเดินทางที่อนุมัติแล้ว (S10) — 9 พ.ย. 2569 เจ้าของงาน "แผนอนุมัติแล้ว แต่ไม่เจอแผนการเดินทางที่อนุมัติแล้ว"
-   ชีตยืนยัน: หน้า 8 หน้าไตรมาส · หน้า 9 ฟอร์มแผนเดินทาง */
 import { TRIP_1, TRIP_OTHER, TRIP_RETURN_REASON, TRIP_U2 } from "@/lib/mock/trips";
 import type { GuideScenario } from "../types";
 import { approved, LIST, NEW_TRIP, openPlan, PLAN_DETAIL, QTR, seedNoTrips, seedTrips } from "./trips-common";
 
 const EDIT_T1 = "/quarter/trips/edit/?trip=T1";
-/* แผนของ กปส. (MRZ7000002 อนุมัติแล้ว · ไตรมาส 2 · TRIP_U2 ของ trips.ts · 9 พ.ย. 2569) */
 const U2_DETAIL = "/detail/?id=Z7000002", U2_QTR = "/quarter/trips/?id=Z7000002&q=2", U2_TRIP = "/trips/detail/?trip=" + TRIP_U2[0].id, U2_T1 = TRIP_U2[0].name;
 const T1 = TRIP_1.name;
 

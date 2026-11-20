@@ -1,9 +1,4 @@
 "use client";
-/* Figma: "Table" — ไฟล์ (Component) VMS Plus หน้า Table (node 2:14) · สเปก figma-spec/Table.json
-   variant: Alternating fills = False | True · property: Scrollbar (ปิด) · Pagination
-   โครง: Content = คอลัมน์ละ Table header cell + Table cell ไลบรารีมี 8 คอลัมน์ × 10 แถว (กติกา TABLE_MAX ของ core.js) · ช่องไฟ Content → Pagination 20 (Alternating fills=True)
-   ใช้แบบ tbl() ใน core.js: columns [หัว, กว้าง (0 = ยืด), Style, Sort icon] · ช่อง = ข้อความ | {text, sub} | {pills} | {actions}
-   กว้างคอลัมน์ส่งเป็นตัวเลขตอนรัน → style width (ค่าที่คำนวณตอนรัน ตามกติกาข้อ 3) */
 import type { ReactNode } from "react";
 import { cx } from "@/lib/cx";
 import { TableCell, type CellAction, type TableCellStyle } from "./TableCell";
@@ -12,7 +7,6 @@ import type { PillColor } from "./PillOutline";
 
 export interface TableColumn {
   head: string;
-  /** กว้าง px · 0/ไม่ใส่ = ยืด */
   width?: number;
   Style?: TableCellStyle;
   SortIcon?: "Down" | "Up" | "Swap";
@@ -22,7 +16,7 @@ export type TableValue =
   | string | number | null | undefined
   | { text: string; sub?: string }
   | { pills: [string, PillColor][] }
-  | { actions: CellAction[]; mobileActions?: CellAction[]; mobileButtons?: ReactNode };   // mobileActions = ไอคอนดู แก้ไข ลบ ที่กางบนการ์ดมือถือแทนปุ่ม … (เจ้าของงาน 4 พ.ย. 2569) · mobileButtons = Mobile table item Style=Action buttons (S25 ปุ่ม "ย้ายไปไตรมาสอื่น" 5 พ.ย. 2569)
+  | { actions: CellAction[]; mobileActions?: CellAction[]; mobileButtons?: ReactNode };
 
 export function cellProps(v: TableValue, style?: TableCellStyle) {
   if (v && typeof v === "object" && "pills" in v) return { Style: (v.pills.length > 1 ? "Multiple badges" : "Badge") as TableCellStyle, Pills: v.pills };
@@ -35,7 +29,6 @@ export interface TableProps {
   columns: TableColumn[];
   rows: TableValue[][];
   AlternatingFills?: boolean;
-  /** property Pagination — ส่ง Table pagination มาวางใต้ตาราง */
   Pagination?: ReactNode;
   rowKey?: (row: TableValue[], i: number) => string;
   className?: string;

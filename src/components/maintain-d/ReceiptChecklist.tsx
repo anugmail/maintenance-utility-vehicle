@@ -1,11 +1,4 @@
 "use client";
-/* Figma: "ReceiptChecklist" — ไฟล์ Maintain-D หน้า Design (node 0:1) · สเปก figma-spec/ReceiptChecklist.json (CLAUDE.md ข้อ 12)
-   รายการเอกสารรับรถ (S10 รับรถเข้าบำรุงรักษา) · variant: Breakpoint = Desktop | Mobile · State = Default (ยังไม่กรอก) | Filled
-   Desktop: Section header (Title + Badge จำนวน) → ห่าง 16 → ตาราง คอลัมน์ รายการ 446 (เติมที่เหลือ) · มี 100 · ไม่มี 100 · ชำรุด 100 · ผิดรุ่น 100 · หมายเหตุ 450
-            หัวสูง 74 · มี/ไม่มี = Radio button · ชำรุด/ผิดรุ่น = Checkbox (เลือกได้เมื่อ "มี") · หมายเหตุ = Text input (placeholder "ระบุหมายเหตุ")
-            แถว "แบตเตอรี่" มี Text input ยี่ห้อ (149) + จำนวน (98) + หน่วย "ลูก" ต่อท้ายชื่อ (ช่องไฟ 8) · แถวท้าย Secondary button lg "เพิ่มรายการ" (ไอคอน add)
-   Mobile: การ์ดละรายการ (ReceiptChecklistCard State=Available/NotAvailable): Section label ชื่อ → Radio text card "มี"/"ไม่มี" 2 ใบ ช่องไฟ 16 (ข้อความ 14)
-            → มี: Input label "สภาพ" (ถ้ามี) + Checkbox text card "ชำรุด"/"ผิดรุ่น" ช่องไฟ 16 → Text area "หมายเหตุ" (ถ้ามี) · ปุ่ม "เพิ่มรายการ" lg เต็มกว้างท้ายสุด */
 import { Checkbox } from "@/components/vms/Checkbox";
 import { CheckboxTextCard } from "@/components/vms/CheckboxTextCard";
 import { InputLabel } from "@/components/vms/InputLabel";
@@ -22,23 +15,19 @@ import { ChecklistCard, TH, td } from "./_checklist";
 
 export interface ReceiptItem {
   name: string;
-  /** มี = true · ไม่มี = false · ยังไม่เลือก = null */
   has?: boolean | null;
   damaged?: boolean;
   wrongModel?: boolean;
   note?: string;
-  /** แถวแบตเตอรี่: ยี่ห้อ + จำนวน + หน่วย */
   battery?: { brand: string; qty: string; unit?: string };
 }
 
 export interface ReceiptChecklistProps {
   Title?: string;
-  /** ป้ายจำนวน (ค่าเริ่ม = จำนวนรายการ) */
   Badge?: string | number | null;
   items: ReceiptItem[];
   onChange?: (i: number, patch: Partial<ReceiptItem>) => void;
   onAdd?: () => void;
-  /** ดูอย่างเดียว (ไม่มีปุ่มเพิ่ม · ช่องอ่านอย่างเดียว) */
   readonly?: boolean;
   Breakpoint?: Breakpoint;
   className?: string;

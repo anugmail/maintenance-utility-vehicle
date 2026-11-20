@@ -1,10 +1,7 @@
 "use client";
-/* เคสที่กำลังพาดู + ขั้นปัจจุบัน — sessionStorage คีย์ mt-guide-v1 (ปิดแท็บแล้วหาย · แยกจากข้อมูลจำลอง mt-next-v1)
-   อ่าน/เขียนครอบ try/catch (โหมดส่วนตัวหรือปิดที่เก็บ = ใช้ในหน่วยความจำ) */
 import { useSyncExternalStore } from "react";
 
 export const GUIDE_KEY = "mt-guide-v1";
-/** from = "menu" เมื่อเปิดเรื่องจากเมนูพาดูทีละเรื่อง (/guide/) ⇒ ออกแล้วหน้าเรื่องย้อนกลับไปเมนู */
 export interface GuideState { case: string; step: number; from?: "menu" }
 
 let cur: GuideState | null | undefined;
@@ -31,6 +28,6 @@ export function setGuide(g: GuideState | null) {
   try {
     if (g) window.sessionStorage.setItem(GUIDE_KEY, JSON.stringify(g));
     else window.sessionStorage.removeItem(GUIDE_KEY);
-  } catch { /* ใช้ในหน่วยความจำ */ }
+  } catch { }
   subs.forEach((f) => f());
 }

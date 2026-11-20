@@ -1,7 +1,3 @@
-/* S25 · กบค. ย้ายรถที่บำรุงรักษาไม่ได้ไปไตรมาสอื่น (เจ้าของงาน 5 พ.ย. 2569 · บล็อก X · BACKLOG ข้อ 12) — moveModal / moveQuarter / partsProgress o.subs ของ screens.js
-   ที่เก็บ: MockState.moves (คีย์เดียวกับ store · mt-next-v1) — ที่เก็บเก่าไม่มีฟิลด์นี้ = ยังไม่มีการย้าย
-   ย้าย = รถออกจากไตรมาสเดิม (qcars removed) + เข้าไตรมาสใหม่ขึ้นก่อน (qcars added) · แผนที่จัดรถรายคัน (alloc) เปลี่ยนไตรมาสของรถ อะไหล่ตามแผนของรถย้ายตาม
-   แผนเดินทางเดิมยังมีรถคันนี้ (สถานะบำรุงรักษาไม่ได้) · ไม่ต้องอนุมัติใหม่ */
 import { CAND, CAR_PICK, CAR_QTY, OIL_SPEC, PARTS, QUARTERS } from "./data";
 import { WORK, getJob, jobsOf, removeTripCar, type JobTrip } from "./jobs";
 import { allocOf, quarterRows } from "./planFlow";
@@ -13,7 +9,6 @@ declare module "./store" {
   interface MockState { moves?: Move[] }
 }
 export const movesOf = (s: Pick<MockState, "moves">): Move[] => s.moves ?? [];
-/** รถที่ย้ายเข้าไตรมาส q (ล่าสุดของแต่ละคัน) */
 export const movedInto = (s: Pick<MockState, "moves">, planId: string, q: number) => {
   const last = new Map<string, Move>();
   movesOf(s).filter((m) => m.planId === planId).forEach((m) => last.set(m.carId, m));
@@ -21,7 +16,6 @@ export const movedInto = (s: Pick<MockState, "moves">, planId: string, q: number
 };
 export const qLabel = (k: number) => QUARTERS[k - 1].split(" (")[0];
 
-/** แผนเดินทางของไตรมาสที่รถคันนี้อยู่ + สถานะงาน (บำรุงรักษาไม่ได้ = ย้ายได้) */
 export function cannotTrip(s: MockState, planId: string, q: number, carId: string) {
   const t = quarterTrips(s, planId, q).find((x) => x.carIds.includes(carId) && x.status === "approved");
   if (!t) return null;
@@ -29,9 +23,6 @@ export function cannotTrip(s: MockState, planId: string, q: number, carId: strin
   return job.status === "cannot" ? { trip: t, reason: job.cannot?.reason ?? "-" } : null;
 }
 
-/** ไตรมาสบำรุงรักษาเสร็จทุกคันแล้ว — 11 พ.ย. 2569 เจ้าของงาน "ถ้าไตรมาสนั้นยังบำรุงไม่เสร็จทุกคันจะสามารถเพิ่มรถเข้ามาไตรมาสนั้นๆ ได้"
-    เสร็จ = รถอยู่ในแผนเดินทางที่อนุมัติแล้ว และงานปิดแล้ว ทั้งเสร็จสิ้นและบำรุงรักษาไม่ได้ (เคาะ "นับว่าเสร็จ") · ไตรมาสที่ยังไม่มีรถ = ยังไม่เสร็จ (เพิ่มได้)
-    เสร็จแล้ว ⇒ ปุ่ม "เพิ่มยานพาหนะ" ของหน้าไตรมาส Disabled · รถที่ "ดำเนินการบำรุงรักษา" (S25) ออกจากแผนเดินทางเดิม = ยังไม่เสร็จ */
 export function quarterFinished(s: MockState, planId: string, q: number) {
   const cars = quarterCars(s, planId, q);
   const trips = quarterTrips(s, planId, q).filter((t) => t.status === "approved");
@@ -42,9 +33,6 @@ export function quarterFinished(s: MockState, planId: string, q: number) {
   });
 }
 
-/** อะไหล่ตามแผนของรถคันนี้ (ย้ายไปด้วย): แผนที่จัดรถรายคัน = อะไหล่ที่ กบค. กำหนดให้รถ (S21) · แผนตัวอย่าง = อะไหล่ตามแผนของงานรายคัน (WORK)
-    แถวมี ชนิด · รหัสอะไหล่ · ประเภท · จำนวน · หน่วย ให้ popup ย้ายไปไตรมาสอื่นใช้ QPART_COLS (movePartRows ของ screens.js 10 พ.ย. 2569 · R81)
-    อะไหล่ของงานรายคันหาประเภทจาก PARTS ตามชื่อ (MOVE_PART_OF) · ไม่พบ = "-" */
 export interface CarPlanPart { name: string; code: string; group: string; qty: number; unit: string }
 export function carPlanParts(s: MockState, planId: string, carId: string, tripId?: string): CarPlanPart[] {
   const p = s.plans.find((x) => x.mr === "MR" + planId);
@@ -60,7 +48,6 @@ export function carPlanParts(s: MockState, planId: string, carId: string, tripId
   });
 }
 
-/** ย้ายรถ: เข้าไตรมาสใหม่ก่อน (อะไหล่ของรถไม่หาย) แล้วออกจากไตรมาสเดิม · toast "ย้ายรถ {ทะเบียน} ไปไตรมาส {k} สำเร็จ" */
 export function moveCar(planId: string, car: TripCar, from: number, to: number, tripId: string) {
   addQuarterCars(planId, to, [car.id]);
   removeQuarterCar(planId, from, car.id);
@@ -68,30 +55,20 @@ export function moveCar(planId: string, car: TripCar, from: number, to: number, 
   notify("ย้ายยานพาหนะ " + car.plate + " ไป" + qLabel(to) + " สำเร็จ");
 }
 
-/* ดำเนินการบำรุงรักษา (S25 X.11 X.12 · Figma 5c47568 · เจ้าของงาน 10 พ.ย. 2569 "s25 ตัวเลือกต้องสามารถเลือก ดำเนินการบำรุงรักษา และ ย้ายไปไตรมาสอื่น" + เคาะ "กลับเป็นรอเข้าแผนเดินทางในไตรมาสเดิม")
-   ยืนยันแล้วยานพาหนะออกจากแผนเดินทางเดิม (งานรายคัน "บำรุงรักษาไม่ได้" ของใบนั้นล้าง) → "ยังไม่มีแผนเดินทาง" ในไตรมาสเดิม · อยู่ในไตรมาสเดิม อะไหล่ตามแผนคงอยู่ · เพิ่มเข้าแผนเดินทางใบใหม่ (S6) แล้วบำรุงรักษาตามปกติ (S10) */
 export const MAINT_ITEM = { Text: "ดำเนินการบำรุงรักษา", IconSwap: "car_repair-24-300-round" } as const;
 export const MAINT_CONFIRM = (plate: string, q: number) => ({ title: "ยืนยันดำเนินการบำรุงรักษา · " + plate,
   sub: plate + " จะกลับเป็นยานพาหนะที่ยังไม่มีแผนเดินทางใน" + qLabel(q) + " เพื่อเพิ่มเข้าแผนเดินทางแล้วบำรุงรักษาตามปกติ", cancel: "ยกเลิก", ok: "ยืนยัน" });
 export function maintainCar(car: TripCar, q: number, tripId: string) {
   removeTripCar({ id: tripId } as JobTrip, car.id);
-  notify("นำ " + car.plate + " กลับมาบำรุงรักษาใน" + qLabel(q) + " แล้ว");   // MAINT_TOAST
+  notify("นำ " + car.plate + " กลับมาบำรุงรักษาใน" + qLabel(q) + " แล้ว");
 }
 
-/** บรรทัดรอง "รวม {n} {หน่วย} ของ {ทะเบียน} ที่ย้ายมา" ต่อรายการอะไหล่ (MOVE_Q2_SUBS) + อะไหล่ของรถที่ย้ายมา · ใช้ที่หัวข้ออะไหล่ในไตรมาส n ของหน้าไตรมาส (quarterPartRows) */
 export function movedParts(s: MockState, planId: string, q: number) {
   return movedInto(s, planId, q).map((m) => ({ move: m, parts: carPlanParts(s, planId, m.carId, m.tripId) }));
 }
 export const partIndex = (name: string) => PARTS.findIndex((p) => p.name === name);
 export const carsInQuarter = quarterCars;
 
-/* ---------- อะไหล่รายคัน (ค่าตั้งต้นของอะไหล่ในไตรมาส n และอะไหล่ของแผนเดินทาง · R84) ----------
-   แผนที่จัดรถรายคัน (มี alloc) = อะไหล่ที่หน่วยงานกำหนดให้คันนั้น (S21 · quarterRows ของคันเดียว · ไม่เบิก = ว่าง)
-   แผนตัวอย่าง (ไม่มี alloc · ค่าสมมติของ screens.js):
-     ยานพาหนะของไตรมาสที่กำลังทำ (TRIP_CARS) = tripParts: เปลี่ยนน้ำมัน 30 ลิตร 82-6789 81-2210 (TRIP_OIL_CARS) · ไส้กรอง 3 รายการ คันละ 2 ชิ้น 6 คันแรก (TRIP_FILTER_CARS) · ไส้กรองเชื้อเพลิง 2 ชิ้น 82-6789 80-9981 (TRIP_FUEL_CARS)
-       ⇒ รวม 10 คัน = PARTS (อะไหล่ในไตรมาส 1) และยอดทุกใบรวมกัน = อะไหล่ในไตรมาส 1 (9 พ.ย. 2569)
-     คันเดียวกันในไตรมาสอื่น (ย้ายไป S25) = อะไหล่ตามแผนของคันนั้น (WORK · MOVE_CAR_QTY)
-     รถเดิมของไตรมาส 2 = ค่าสมมติที่รวมได้ MOVE_Q2_BASE (30 · 6 · 6 · 6 · 2) · คันอื่น = ไส้กรอง CAR_PICK คันละ CAR_QTY (MOVE_Q3_OTHER ⇒ MOVE_Q3_QTY) */
 const TRIP_OIL_CARS = ["82-6789", "81-2210"], TRIP_FUEL_CARS = ["82-6789", "80-9981"];
 const TRIP_FILTER_CARS = SAMPLE_TRIP_CARS.slice(0, 6).map((c) => c.id);
 const SAMPLE_Q2_CAR: Record<string, number[]> = { "81-7702": [30, 2, 2, 2, 2], "82-5530": [0, 2, 2, 2, 0], "80-1189": [0, 2, 2, 2, 0] };
@@ -111,22 +88,15 @@ export function carParts(s: MockState, planId: string, q: number, carId: string)
     : x === 4 ? (TRIP_FUEL_CARS.includes(carId) ? CAR_QTY[4] : 0) : TRIP_FILTER_CARS.includes(carId) ? CAR_QTY[x] : 0)));
   return qtyRows(own ? WORK_QTY : SAMPLE_Q2_CAR[carId] ?? PICK_QTY);
 }
-/** รวมแถวอะไหล่หลายคันตามรายการ · อะไหล่จากคลังเรียงตาม PARTS แล้วรายการที่ระบุเอง · จำนวน 0 ไม่แสดง */
 export function sumParts(lists: QPartRow[][]): QPartRow[] {
   const m = new Map<string, QPartRow>();
   lists.flat().forEach((r) => { const x = m.get(r.key); if (x) x.qty += r.qty; else m.set(r.key, { ...r }); });
   const order = (r: QPartRow) => { const i = PARTS.findIndex((x) => x.name === r.name); return i < 0 ? PARTS.length : i; };
   return [...m.values()].filter((r) => r.qty > 0).sort((a, b) => order(a) - order(b));
 }
-/** อะไหล่ของแผนเดินทาง (R84 · tripParts) = รวมจากยานพาหนะในใบ · S8 หน่วยงานเจ้าของรถ = เฉพาะคันของหน่วยงาน (only) */
 export const tripPartRows = (s: MockState, t: { planId: string; quarter: number; carIds: string[] }, only?: (id: string) => boolean) =>
   sumParts(t.carIds.filter((id) => !only || only(id)).map((id) => carParts(s, t.planId, t.quarter, id)));
 
-/* อะไหล่ในไตรมาส n ของหน้าไตรมาส (tripList ของ screens.js 6 พ.ย. 2569 เจ้าของงาน "หน้าที่ รวมรถในไตรมาส จะเป็นรวมแยกตามรายการ ไม่ต้องมีจาก smart inventory" · แทนหน้าความคืบหน้าอะไหล่ S4 เดิม)
-   แถวรวมตามรายการ ชนิด · รหัสอะไหล่ · ประเภท · จำนวน · หน่วย (QPART_COLS R81) ไม่มีค่าจาก Smart Inventory · ดูอย่างเดียว · จำนวน 0 ไม่แสดง
-   แผนที่จัดรถรายคัน = quarterRows ชุดเดียวกับฟอร์มแผน (S1) และอะไหล่ในแผน (S2) · คันที่ไม่เบิกอะไหล่ไม่รวม
-   แผนตัวอย่าง = รวม carParts ของยานพาหนะในไตรมาส (ไตรมาส 1 = PARTS · ไตรมาส 2 หลังย้าย = MOVE_Q2_QTY · ไตรมาส 3 4 = ยอดของยานพาหนะคันนั้น MOVE_Q3_QTY / MOVE_CAR_QTY · 9 พ.ย. 2569)
-   S25 รถที่ย้ายมา = บรรทัดรองใต้ชนิด "รวม {n} {หน่วย} ของ {ทะเบียน} ที่ย้ายมา" (MOVE_Q2_SUBS) */
 export interface QPartRow { key: string; name: string; code: string; group: string; qty: number; unit: string; sub?: string }
 export function quarterPartRows(s: MockState, planId: string, q: number): QPartRow[] {
   const p = s.plans.find((x) => x.mr === "MR" + planId);

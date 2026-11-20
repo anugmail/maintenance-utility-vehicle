@@ -1,7 +1,3 @@
-/* Figma: "Dropdown list" — ไฟล์ (Component) VMS Plus หน้า Dropdowns (node 2:8) · สเปก figma-spec/Dropdown list.json
-   รายการใต้ Input dropdown / ช่องค้นหา (ตาม comboAt ใน core.js) · ลูก = Dropdown list item
-   ค่า: ขอบใน 12/8 · ช่องไฟ 8 · รัศมี 8 · พื้น white · ขอบ 1 gray-300 · สูงสุด 256 แล้วเลื่อน
-   เงา: effect DROP_SHADOW y12 blur16 spread-4 (gray-900 ทึบ 8%) = token --shadow-lg (shadow-lg-lib) */
 import type { ReactNode } from "react";
 import { cx } from "@/lib/cx";
 

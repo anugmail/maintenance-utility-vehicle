@@ -1,19 +1,4 @@
 "use client";
-/* แท็บ "ข้อมูลยานพาหนะ" ของหน้ารายละเอียดยานพาหนะ (S24 · BACKLOG ข้อ 83 · เจ้าของงาน 12 พ.ย. 2569 _"หน้าข้อมูลยานพาหนะ อยากให้อ่าน vehicle-management component แล้วเอามาแสดง"_)
-   ตามเฟรม "Vehicle info" ของหน้า 5.2 Vehicle Management · UI Release#2 (component "Vehicle detail" Type=Default · Dept=true · Carpool=false
-   · ข้อความทุกชิ้น userflow/figma-ref/vehicle-info-vms-2569-11-12.txt · ดัมป์ design-system/.figma-extract/ui-release2/8-47654.json)
-   ดูอย่างเดียว (แบบ R30) — ไม่มีปุ่ม แก้ไข ของทุก Section label · ดูรายละเอียด · เปลี่ยนเลขทะเบียน · เปลี่ยนสังกัด · Carpool toggle ของ VMS+ (งานผู้ดูแลข้อมูลยานพาหนะ ไม่ใช่งานบำรุงรักษา)
-     · ดาวน์โหลดไฟล์ใบคู่มือจดทะเบียนคงไว้ · แบบไม่มีปุ่มแก้ไขมีในเฟรม Vehicle info ของ UI Release#2 เอง (เฟรมที่ 6 ของหน้า · เลขที่สัญญาเป็น Text with label ไม่ใช่ลิงก์)
-   desktop = 2 คอลัมน์ตาม Section ของ Vehicle detail (ช่องไฟ 24): ซ้าย FILL 746 / ขวา 526 ที่ 1296 = grid 12 ช่อง 7 : 5 (746 / 526 พอดี)
-     ซ้าย: ข้อมูลทั่วไป → ข้อมูลการเงินและสัญญา → ข้อมูลสังกัดยานพาหนะ → ข้อมูลการจดทะเบียน → [เครื่องมือกล ของเรา] → (ข้อมูลยานพาหนะไฟฟ้า เฉพาะ EV · ไม่มีในกลุ่มนี้)
-     ขวา: รูปยานพาหนะ (Images md) → ใบคู่มือจดทะเบียน (_File upload item base) → บัตรเติมน้ำมัน (Fleet card) → การใช้งานล่าสุด (Last usage)
-     ใต้ 2 คอลัมน์ (เต็มแถว · ของเรา): การรับประกัน (เดิมแท็บการรับประกัน · เจ้าของงาน 12 พ.ย. 2569 _"ตัดtab การรับประกัน เดี๋ยวจะเอาข้อมูลไปใส่ในข้อมูลรถ"_ · BACKLOG ข้อ 85)
-   กล่องข้อมูล = Section label → ห่าง 8 → กล่อง gray-50 รัศมี 8 ขอบใน 24 ช่องไฟแถว 24 · แถว = Content item row (Full / 50% first column) ช่อง _Content item base Text with label
-   มือถือ: เรียง 1 คอลัมน์ ลำดับเดียวกัน · Content item row แถวละ 2 ช่อง (R12 · แบบ DisplayBox) · UI Release#2 ไม่มีเฟรม Vehicle info มือถือ
-   ป้ายของ VMS+ ที่มีคำว่า "รถ" เปลี่ยนเป็น "ยานพาหนะ" ตาม R80 (รหัสข้างรถ → รหัสข้างยานพาหนะ · ยี่ห้อรถ → ยี่ห้อยานพาหนะ · เลขตัวรถ → เลขตัวยานพาหนะ · ตำแหน่งเลขตัวรถ · สถานที่จอดรถ)
-   ช่องของเราที่ VMS+ ไม่มีที่วาง: ปีที่จดทะเบียน · อายุการใช้งาน → แถวท้ายของข้อมูลการจดทะเบียน · ชั่วโมงเครื่องจักรสะสม → แถวที่ 2 ของการ์ดการใช้งานล่าสุด
-     ผู้ดูแลยานพาหนะ + เบอร์ติดต่อ → แถว "เจ้าของยานพาหนะ" ของข้อมูลสังกัด (ช่องที่ 2 ที่ VMS+ ซ่อนไว้) · สถานะยานพาหนะ → Pill outline ใน Page header (หน้า page.tsx)
-   ประกอบจากชิ้นไลบรารี — figma-spec/COMPOSED.md หัวข้อ ศ5. */
 import type { ReactNode } from "react";
 import { ContentItemRow, type KvPair } from "@/components/vms/ContentItemRow";
 import { BadgeOutline } from "@/components/vms/BadgeOutline";
@@ -34,7 +19,6 @@ import { cx } from "@/lib/cx";
 import { MachineSection } from "./MachineSection";
 import { MaGrid } from "./ui";
 
-/** แถวของกล่อง — Full (ช่องกว้างเท่ากัน) · Half = Column width "50% first column" (ช่องแรกครึ่งแถว) */
 interface Row { items: KvPair[]; half?: boolean }
 
 function InfoBox({ Title, rows, mob }: { Title: string; rows: Row[]; mob: boolean }) {
@@ -50,10 +34,6 @@ function InfoBox({ Title, rows, mob }: { Title: string; rows: Row[]; mob: boolea
   );
 }
 
-/* Fleet card Status=Valid (UI Release#2 หน้า Vehicle Management · component ของไฟล์ UI ไม่ใช่ไลบรารี — ประกอบตามโครง):
-   กรอบ white ขอบ gray-200 รัศมี 16 ขอบใน 16 → Images sm 108 + Content พื้น gray-50 รัศมี 8 ขอบใน 12/16 ช่องไฟ 16
-   Content: เลขบัตร 16 SemiBold · ใช้ได้ตั้งแต่ | ใช้ได้ถึง 12 gray-600 (เส้นคั่น 12 gray-300) · Badges ช่องไฟ 8 = Badge outline with indicator Success "ปกติ" + ธนาคาร + วงเงินบัตร
-   ไม่มีโลโก้ธนาคาร (Avatar xs ในป้าย) และโลโก้ปั๊ม (Gas stations · Avatar xs × 3) — ภาพ ไม่มีในดัมป์ (COMPOSED.md ค.) */
 function FleetCard({ f }: { f: VehicleInfoData["fleet"] }) {
   return (
     <div className="flex gap-4 rounded-xl border border-gray-200 bg-white p-4">
@@ -69,12 +49,10 @@ function FleetCard({ f }: { f: VehicleInfoData["fleet"] }) {
   );
 }
 
-/* Last usage (Fuel=true · EV battery=false): Section label "การใช้งานล่าสุด" → ห่าง 8 → Card white ขอบ gray-200 รัศมี 16 ขอบใน 16 ช่องไฟแถว 16
-   แถว = Card item row Type=1 Row · Card item base Type=Text with label (ไอคอน 24 brand-900 · Text ชิดขวา) */
 function LastUsage({ u }: { u: VehicleInfoData["usage"] }) {
   const rows: [string, string, string][] = [
     ["swap_driving_apps_wheel-24-300-round", "เลขไมล์", u.km],
-    ["timer-24-300-round", "ชั่วโมงเครื่องจักรสะสม", u.hours],   // ของเรา (VMS+ ไม่มีแถวนี้)
+    ["timer-24-300-round", "ชั่วโมงเครื่องจักรสะสม", u.hours],
     ["local_gas_station-24-300-round-filled", "ปริมาณเชื้อเพลิง", u.fuel],
     ["local_car_wash-24-300-round", "ความสะอาด", u.clean],
     ["local_parking-24-300-round-fill", "สถานที่จอดยานพาหนะ", u.parking],
@@ -129,9 +107,8 @@ export function VehicleInfo({ c, page, onPage }: { c: MaCar; page: number; onPag
       { items: [["เลขเครื่องยนต์", v.reg.engineNo], ["ตำแหน่งเลขเครื่องยนต์", v.reg.enginePos]] },
       { half: true, items: [["ประเภทเชื้อเพลิง", v.reg.fuel]] },
       { items: [["ขนาดแรงม้า", v.reg.hp], ["จำนวนเพลา", v.reg.axles], ["จำนวนล้อ", v.reg.wheels], ["จำนวนยาง", v.reg.tires]] },
-      { items: [["ปีที่จดทะเบียน", v.reg.year], ["อายุการใช้งาน", v.reg.age]] },   // ของเรา (VMS+ ไม่มีช่องนี้)
+      { items: [["ปีที่จดทะเบียน", v.reg.year], ["อายุการใช้งาน", v.reg.age]] },
     ]} />
-    {/* เครื่องมือกล ต่อท้ายข้อมูลการจดทะเบียน (สรุปประชุม VMS Plus "เพิ่มกล่องข้อมูลส่วนใหม่ต่อท้ายจากข้อมูลการจดทะเบียน" · BACKLOG ข้อ 68 84) · เฉพาะรหัสข้างรถในกลุ่ม */}
     <MachineSection carId={car.id} car={machineCar} />
   </>;
   const right = <>

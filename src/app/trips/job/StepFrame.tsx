@@ -1,10 +1,4 @@
 "use client";
-/* S10 กรอบหน้าขั้นตอนบำรุงรักษา 2 ขั้น — stepPage() + mtStepper() ใน screens.js (รีวิวทีมออกแบบ 5 พ.ย. 2569 · R70)
-   ตาม `Page header` · `Progress steps` (Type=Horizontal · ซ่อนช่อง 3–7) · `Mobile progress steps` (Collapsed=True + Step circles 1/2 · 2/2) ของไฟล์ Component
-   + VehicleAndReporterInfo ของไฟล์ Maintain-D + หน้า Repair - กบค. ของ Flow การซ่อม (Section > Progress steps > เนื้อหาขั้น) · Check Expense Modal หน้า 5.14 - 5.15 ของ UI Release#2 (มือถือ 2 ขั้น)
-   Page header: ทะเบียน · ป้าย "อยู่ระหว่างบำรุงรักษา" · ปุ่ม Secondary "บำรุงรักษาไม่ได้" ทุกขั้น → popup สาเหตุ + อะไหล่ส่งคืน (Step 1 คืนทั้งหมด · Step 2 ตามจำนวนที่ใช้ที่กรอก)
-   ยืนยันบำรุงรักษาไม่ได้ → หน้ารายละเอียดแผนเดินทาง + toast "บันทึกบำรุงรักษาไม่ได้แล้ว" · เนื้อหา: แถบขั้นตอน → ข้อมูลยานพาหนะ → การนัดหมาย (+ เริ่มงาน ผู้เริ่มงาน) → เนื้อหาขั้น
-   S23 ผู้รับจ้าง (stepPage({ vendor }) · R87): บำรุงรักษาไม่ได้ = "แจ้งบำรุงรักษาไม่ได้" · แก้ไขงานหลังปิด (ดำเนินการบำรุงรักษาแล้ว / ส่งกลับแก้ไข) เปิด Step 2 ไม่มีปุ่ม "บำรุงรักษาไม่ได้" */
 import { useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { VehicleAndReporterInfo } from "@/components/maintain-d/VehicleAndReporterInfo";

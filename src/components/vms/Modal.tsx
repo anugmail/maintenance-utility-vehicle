@@ -1,10 +1,4 @@
 "use client";
-/* Figma: "Modal" — ไฟล์ (Component) VMS Plus หน้า Modals (node 2:16) · สเปก figma-spec/Modal.json
-   variant: Type = Centered image | Centered image with input | Destructive centered image with input | Form | Card list | Left aligned image | Centered image carousel
-            Size = md (กว้าง 500) | lg (800) | xl (1140)
-   โครง: Background overlay + กล่อง Modal (รัศมี 12 พื้น white) = Modal header + เนื้อหา (Content / Form ขอบในข้าง 24 ช่องไฟ 12) + Modal footer
-   ใช้แบบ confirm() / formModal() ใน core.js: confirm = Centered image ซ่อนรูป (Content) · ลบ = Destructive (ซ่อน Form) ปุ่มหลัก Primary danger button
-   มือถือใช้ BottomSheet แทน (กติกาข้อ 6) · ไลบรารีไม่มีเงา (ดัมป์ 4 พ.ย. 2569 ไม่มี effect ที่ Modal) — มีแค่ Background overlay */
 import { useEffect, type ReactNode } from "react";
 import { cx } from "@/lib/cx";
 import { BackgroundOverlay } from "./BackgroundOverlay";
@@ -18,11 +12,8 @@ export interface ModalProps {
   Size?: "md" | "lg" | "xl";
   open: boolean;
   onClose?: () => void;
-  /** ModalHeader */
   Header: ReactNode;
-  /** Content / Form */
   children?: ReactNode;
-  /** ModalFooter */
   Footer?: ReactNode;
   labelledBy?: string;
 }

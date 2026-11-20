@@ -1,8 +1,4 @@
 "use client";
-/* Figma: "IncidentPhotoGallery" — ไฟล์ Maintain-D หน้า รายละเอียดงานซ่อม (node 175:79986) · สเปก figma-spec/IncidentPhotoGallery.json (CLAUDE.md ข้อ 12)
-   แถวภาพ desktop ที่ photoGallery() ใน screens.js ยืมมา · มือถือ = patterns/PhotoGallery (2 ภาพ)
-   ค่า: Section label (Title) → ห่าง 8 → Gallery ช่องไฟ 16: Images Size=sm Type=Image 175×156 รัศมี 8 × สูงสุด 4 (ไม่มีปุ่ม/จุดเลื่อน)
-        + Icon button keyboard_arrow_right เมื่อมีมากกว่า 4 ภาพ (เลื่อนดูชุดถัดไป) */
 import { useState } from "react";
 import { PhotoGallery, type Photo } from "@/components/patterns/PhotoGallery";
 import { IconButton } from "@/components/vms/IconButton";

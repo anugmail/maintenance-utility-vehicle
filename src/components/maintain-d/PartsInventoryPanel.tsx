@@ -1,11 +1,4 @@
 "use client";
-/* Figma: "PartsInventoryPanel" — ไฟล์ Maintain-D หน้า Design (node 0:1) · สเปก figma-spec/PartsInventoryPanel.json (CLAUDE.md ข้อ 12)
-   คลังอะไหล่ (S21 อะไหล่ของรถ) · variant: State = Default | Not Found | API error
-   ค่า: กล่อง พื้น white ขอบ 1 gray-200 (สีไฟล์ไม่มี token — COMPOSED.md ข.) รัศมี 16 ขอบใน 16 · ด้านใน ช่องไฟ 16
-        Section header "คลังอะไหล่" + Supporting text "อะไหล่ทั้งหมดจาก Smart Inventory และ คลังสำรอง" · Text input ค้นหา (ไอคอน search) placeholder "ค้นหาชื่อหรือรหัสอะไหล่"
-        รายการ = Spare Part Card Item อะไหล่=รายการในคลัง ช่องไฟ 16 (เลื่อนในกล่อง)
-        Not Found: Empty state/Search not found "ไม่พบข้อมูล" / "เปลี่ยนคำค้นหาแล้วลองใหม่อีกครั้ง" (ขอบในบน/ล่าง 10)
-        API error: Empty state/Search not found "ไม่สามารถแสดงข้อมูลได้" / "อาจเกิดจากปัญหาการเชื่อมต่อระบบ กรุณารีเฟรชหน้าจอหรือลองใหม่อีกครั้ง" */
 import { EmptyStateSearchNotFound } from "@/components/vms/EmptyStateSearchNotFound";
 import { SectionHeader } from "@/components/vms/SectionHeader";
 import { TextInput } from "@/components/vms/TextInput";

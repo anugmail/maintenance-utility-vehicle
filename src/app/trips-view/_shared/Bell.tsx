@@ -1,9 +1,4 @@
 "use client";
-/* S8 S13 · กระดิ่ง + แผงแจ้งเตือนของ กรย. / ผู้ดูแลยานพาหนะ (S13 L.6 แจ้งเตือนปิดงาน รอรับทราบ → หน้าผลการบำรุงรักษาของคันนั้น) — bell() + notiPanel() ใน screens.js
-   กระดิ่ง = Nav button ใน Header navigation (AppFrame prop bell = จุด Indicator เมื่อมีแจ้งเตือนที่ยังไม่อ่าน)
-   AppFrame/HeaderNavigation ยังไม่มี prop กดกระดิ่ง ⇒ หน้านี้ดักคลิกปุ่ม aria-label "การแจ้งเตือน" ใน header เอง (ไม่แก้ src/components/ — รอ lead เพิ่ม prop onBell)
-   แผง = patterns/NotificationPanel (desktop Notification card ใต้หัว · มือถือ Bottom sheet) · ป้าย "<n> แจ้งเตือนใหม่"
-   กดแจ้งเตือนแผนเดินทาง → อ่านแล้ว (จุดแดงหาย) + เปิดหน้าแผนเดินทาง ดูอย่างเดียว · "ลบข้อความแจ้งเตือนทั้งหมด" = ลบแจ้งเตือนของบทบาทนี้ (ผลยังไม่กำหนดในสเปก) */
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { NotificationPanel } from "@/components/patterns/NotificationPanel";

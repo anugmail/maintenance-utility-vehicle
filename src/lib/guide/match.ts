@@ -1,4 +1,3 @@
-/* เทียบหน้าปัจจุบันกับหน้าของขั้น (GuideStep.at) — path ต้องตรง (เติม / ท้าย) · query ในแพตเทิร์นต้องมีครบ ("*" = ค่าอะไรก็ได้) · query อื่นไม่สนใจ */
 import type { GuideStep } from "./types";
 
 const slash = (p: string) => (p.endsWith("/") ? p : p + "/");

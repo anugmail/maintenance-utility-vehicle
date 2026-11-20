@@ -1,8 +1,4 @@
 "use client";
-/* Figma: "Bottom sheet header" — ไฟล์ (Component) VMS Plus หน้า Bottom sheets (node 1180:2) · สเปก figma-spec/Bottom sheet header.json
-   โครง: Drag handle (ขอบใน 18 บน/ล่าง · ขีด 32×4 รัศมี 4 gray-200) · Text and action (ขอบในข้าง 16 ช่องไฟ 4: ปุ่มย้อนกลับ · หัวข้อ 20 SemiBold black · Tertiary brand button)
-         · Divider (ปิด R2/R13) · Padding bottom 24
-   ใช้แบบ sheet() ใน core.js: ไม่มีหัวข้อ = ซ่อน Text and action */
 import { TertiaryBrandButton } from "./TertiaryBrandButton";
 import { TertiaryButton } from "./TertiaryButton";
 

@@ -1,9 +1,4 @@
 "use client";
-/* /trips/job/ — เลือกจอตามสถานะงาน (routes.md "/trips/job/ render rule") ใช้ทั้งแผนตรวจเอง (T1) และแผนจ้าง (TV) ชุดเดียวกัน
-   ยังไม่เริ่ม → JobPage (กบค. มีปุ่ม บำรุงรักษาไม่ได้ · เริ่มงาน · บทบาทอื่นดูอย่างเดียว) · แผนจ้าง = จอ I.23 (กบค. ปิดงานแทนผู้รับจ้าง)
-   อยู่ระหว่างบำรุงรักษา (กบค.) → เปิดขั้นที่ค้าง (5 พ.ย. 2569 S10 2 ขั้น: Step 1 /trips/job/receive/ · Step 2 /trips/job/close/ · หน้า "อยู่ระหว่างบำรุงรักษา" เดิมเอาออก) · บทบาทอื่นดู JobPage
-   เสร็จสิ้น → WorkDetail (+ ผลการทดสอบน้ำมัน S12) · บำรุงรักษาไม่ได้ → CannotView
-   S23 ผู้รับจ้าง (เอากลับ 10 พ.ย. 2569 R87): ดำเนินการบำรุงรักษาแล้ว · แจ้งบำรุงรักษาไม่ได้ · รอตรวจรับ · ส่งกลับแก้ไข → VendorJob (vendorJob ของ screens.js) */
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { EmptyStateSearchNotFound } from "@/components/vms/EmptyStateSearchNotFound";

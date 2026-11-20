@@ -1,10 +1,4 @@
 "use client";
-/* S18 แท็บ "ต้นทุนการบำรุงรักษา" ของหน้ารายละเอียดแผนที่อนุมัติแล้ว (R92 · Figma c450480 costBody · ไฟล์ 14 Scenario 18)
-   โครงตามหน้า 5.13 EV charging costs for each agency ของ UI Release#2 (ไม่มีกราฟ): Metric item ×4 → Section label "สรุปรายไตรมาส" + Table (ไตรมาส 1–4 + รวมทั้งแผน)
-   → Section label "ต้นทุนรายคัน (n)" + Table COST_COLS → Section label "ยานพาหนะที่บำรุงรักษาไม่ได้ (n)" + Table เดียวกัน · ดูอย่างเดียว
-   → (11 พ.ย. 2569) Section label "ยานพาหนะที่จ้างดำเนินการ (n)" + Table ทะเบียน · ศูนย์ต้นทุน · ค่าจ้าง · ค่าเดินทาง · รวม
-   ยังไม่มียานพาหนะปิดงาน = Empty state/Data empty ไม่มีปุ่ม · ข้อมูล lib/mock/cost.ts
-   อ้างอิง: Metric item · Section label · Table · Mobile table · Empty state/Data empty ของไฟล์ Component + หน้า 5.13 ของ UI Release#2 */
 import { SectionLabel } from "@/components/vms/SectionLabel";
 import { EmptyStateDataEmpty } from "@/components/vms/EmptyStateDataEmpty";
 import { Metrics } from "@/app/parts/_lib/ui";
@@ -28,7 +22,6 @@ export function CostTab({ rows, planCars }: { rows: CarCost[]; planCars: number 
         <DataTable columns={COST_COLS} rows={done.map(costRow)} />
       </section>
       {hired.length > 0 && <section className="flex flex-col gap-4">
-        {/* 11 พ.ย. 2569 แผนจ้างดำเนินการ (ค่าจ้าง ค่าเดินทาง ที่กรอกตอนตรวจรับ) — ข้อเสนอแยกหัวข้อ */}
         <SectionLabel Title={"ยานพาหนะที่จ้างดำเนินการ (" + hired.length + ")"} />
         <DataTable columns={HIRE_COST_COLS} rows={hired.map(hireCostRow)} />
       </section>}

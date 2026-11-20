@@ -1,9 +1,4 @@
 "use client";
-/* หน้า /scenarios/ ของต้นแบบ (เปิดจากลิงก์ "ต้นแบบบำรุงรักษาตามวาระ" ในแถบต้นแบบ · รากเว็บเป็นรายการแผนแบบระบบจริง): รายการ scenario ตามลำดับงาน — Page header + Table
-   10 พ.ย. 2569 (Figma 33a990c กรอบ "ตัดออกแล้ว"): scenario ที่ใช้ 17 รายการในตารางหลัก · ที่ตัดออก 8 รายการ (S3 S5 S11 S14 S15 S16 S17 S22) แยกหัวข้อ "Scenario ที่ตัดออกแล้ว"
-   ดูอย่างเดียว (scenario · ชื่อ · เหตุผล) ไม่มีปุ่มเปิด ไม่มีลิงก์เข้าหน้าที่ไม่มีแล้ว (desktop) / Mobile table (มือถือ) ของไลบรารี
-   12 พ.ย. 2569 เรื่องแยก (Scenario.topic · แบบประเมินความพึงพอใจ S27 BACKLOG ข้อ 75) อยู่หัวข้อ "เรื่องแยก: …" ต่อจากตารางหลัก ก่อน scenario ที่ตัดออก
-   ไม่ใช่จอใน Figma (เป็นสารบัญของต้นแบบ) · ดู figma-spec/COMPOSED.md */
 import { useRouter } from "next/navigation";
 import { AppFrame } from "@/components/shell/AppFrame";
 import { MobileCards } from "@/components/vms/MobileTable";
@@ -25,13 +20,11 @@ const COLS: TableColumn[] = [
   { head: "", width: 112, Style: "Action icons" },
 ];
 
-/* scenario ที่ตัดออก: ดูอย่างเดียว */
 const CUT_COLS: TableColumn[] = [{ head: "scenario", width: 110, Style: "Lead text" }, { head: "ชื่อ", Style: "Text" }, { head: "เหตุผลที่ตัดออก", width: 420 }];
 
 export default function Scenarios() {
   const router = useRouter();
   const mob = useBreakpoint() === "Mobile";
-  /* โหมดพาดูทีละเรื่อง — ปุ่ม "ดูเคส" ข้างปุ่มเปิด → หน้าเรื่อง /scenarios/guide/ */
   const guideAction = (id: string) => { const g = guideByCode(id); return g ? [{ IconSwap: "school-24-300-round", label: "ดูเคส " + id, onClick: () => router.push(scenarioHref(g.key)) }] : []; };
   const rowOf = (s: Scenario): TableValue[] => [
     s.id, s.name, s.phase, s.role,
@@ -39,7 +32,6 @@ export default function Scenarios() {
     { actions: [{ IconSwap: "quick_reference_all-24-300-round", label: "เปิด " + s.id, onClick: () => router.push(s.href ?? "/soon/?s=" + s.id) }, ...guideAction(s.id)] },
   ];
   const rows = ACTIVE_SCENARIOS().map(rowOf);
-  /* เรื่องแยก (12 พ.ย. 2569 แบบประเมินความพึงพอใจ · BACKLOG ข้อ 75) — หัวข้อต่อเรื่อง ตารางเดียวกับตารางหลัก */
   const topics = [...new Set(TOPIC_SCENARIOS().map((s) => s.topic!))].map((t) => ({ t, rows: TOPIC_SCENARIOS().filter((s) => s.topic === t).map(rowOf) }));
   const cut = CUT_SCENARIOS();
   const cutRows: TableValue[][] = cut.map((s) => [s.id, s.name, s.cut ?? "-"]);

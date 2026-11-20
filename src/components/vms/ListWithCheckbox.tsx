@@ -1,7 +1,4 @@
 "use client";
-/* Figma: "List with checkbox" — ไฟล์ (Component) VMS Plus หน้า List (node 3285:58382) · สเปก figma-spec/List with checkbox.json
-   รายการเลือกหลายตัวบนมือถือ (ตารางที่มี checkbox → List with checkbox ตาม mobileCards() ใน core.js · S6 เลือกรถเข้าแผนเดินทาง)
-   โครง: List header item (Title + ป้าย ปิด + Checkbox ทั้งหมด) → List with checkbox item × n · Vertical scrollbar ซ่อน */
 import { ListHeaderItem } from "./ListHeaderItem";
 import { ListWithCheckboxItem } from "./ListWithCheckboxItem";
 

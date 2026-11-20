@@ -1,10 +1,4 @@
 "use client";
-/* โหมดพาดู: เรื่องบันทึกผลตรวจน้ำมันไฮดรอลิก (S12 · บล็อก K ของ screens.js)
-   เคสยกจากรายการสถานะของจอใน SCENARIOS (S12) + ตาราง Condition ของ Scenario 12 ในไฟล์ userflow · ขั้นเขียนตามที่เว็บทำจริง
-   K.1 Step 2 ใส่ผลได้ (ถ้ามี) · K.2 ปิดงานโดยยังไม่มีผล ป้ายรอผลตรวจน้ำมัน · K.3 เมนู … ดูรายละเอียด · K.4–K.7 หน้างานรายคัน ส่วนผลการทดสอบ (ต้องเลือกผล) · K.8 ป้ายน้ำมันไม่ผ่าน
-   ข้อมูลตั้งต้น: ชุดตัวอย่าง T1_afterClose (82-6789 เสร็จสิ้น รอผลตรวจน้ำมัน · 82-1145 อยู่ระหว่างบำรุงรักษา Step 2 · 80-9981 บำรุงรักษาไม่ได้)
-   เคสปิดงาน: หน้าสรุปงานของ 82-1145 กรอกครบตามจอ Figma (ฟอร์มของ closedSample) ⇒ กดปิดงานได้เลย ไม่ต้องลงนามใหม่
-   หน้าชีต: 15 ใส่ผลตอนปิดงาน · 13 เพิ่มผลภายหลัง (หัวหน้างาน 5 พ.ย. 2569) */
 import { applySample, closedSample, patchJob, SEED_TRIPS, type OilChoice } from "@/lib/mock/jobs";
 import type { GuideScenario } from "../types";
 
@@ -12,7 +6,6 @@ const TRIP = "/trips/detail/?trip=T1";
 const CLOSE = "/trips/job/close/?trip=T1&car=82-1145";
 const JOB = "/trips/job/?trip=T1&car=82-6789";
 
-/** 82-1145 ค้างที่ Step 2 กรอกครบแล้ว (เลขไมล์ ชั่วโมงเครื่องจักร ลงนามส่งคืน) · น้ำมันตามที่เคสกำหนด · ผลการทดสอบยังว่าง */
 const atClose = (oil: OilChoice) => () => {
   applySample("T1_afterClose");
   const f = closedSample(SEED_TRIPS.T1, "82-1145").close!;

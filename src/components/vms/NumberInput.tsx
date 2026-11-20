@@ -1,10 +1,4 @@
 "use client";
-/* Figma: "Number input" — ไฟล์ (Component) VMS Plus หน้า Inputs (node 2:6) · สเปก figma-spec/Number input.json
-   variant: State = Filled | Hover | Focused | Disabled | Error | Error Hover | Error Focused · Size = md (40) | lg (48)
-   property: Label · Label text · Optional · Info icon · Number · Helper · Helper text
-   ค่า: ป้าย → ช่อง ห่าง 8 · ช่อง รัศมี 8 ขอบ 1 (สีตาม State เหมือน Text input — containerTone) ช่องไฟ 8 ไม่มีขอบใน
-        ปุ่มลด/เพิ่ม = Tertiary button ไอคอน remove / add 20 (Disabled ไอคอน gray-400) · ตัวเลข 16 Regular black จัดกลาง · Helper 12 gray-600 (Error error-600)
-   ใช้ใน Spare Part Card Item (กว้าง 120 ไม่มีป้าย) */
 import { useId } from "react";
 import { cx } from "@/lib/cx";
 import { InputLabel } from "./InputLabel";

@@ -1,6 +1,4 @@
 "use client";
-/* หน้า /kit/ — ชุด component ทั้งหมดใน src/components/vms ทุก variant (ป้ายเป็นชื่อ variant ของ Figma) ให้เจ้าของงานเทียบกับไฟล์ (Component) VMS Plus
-   ไม่ใช่จอของระบบ · ข้อความตัวอย่างเป็นค่าตั้งต้นของไลบรารีหรือค่าจาก screens.js */
 import { useState, type ReactNode } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";
 import { Alert, type AlertColor } from "@/components/vms/Alert";

@@ -1,20 +1,4 @@
 "use client";
-/* S23 · หน้างานรายคันของผู้รับจ้าง หลังปิดงานหรือแจ้งบำรุงรักษาไม่ได้ — vendorJob() ใน screens.js (เอากลับ 10 พ.ย. 2569 R87 · component-rules §5.35 · บล็อก V V.11–V.16 V.19–V.21)
-   เจ้าของงาน 10 พ.ย. 2569 _"scen s23 อยากปรับ ui ให้เหมือนกับ s10 แต่ว่า เงื่อนไขการมองเห็น เมนูต่างๆ ยังเป็นเหมือนเดิม"_ ⇒ โครงเดียวกับหน้างานที่ปิดแล้วของ S10 (WorkDetail / workDetail)
-   Page header (ทะเบียน · ป้ายสถานะ = Pill outline สีตามตาราง headPill · ปุ่มตามสถานะ)
-     ดำเนินการบำรุงรักษาแล้ว / แจ้งบำรุงรักษาไม่ได้ = "แก้ไขงาน" + "ส่งตรวจงาน" · รอตรวจรับ = ไม่มีปุ่ม
-     ส่งกลับแก้ไข = คันที่ปิดงานไว้ "แก้ไขงาน" · คันที่แจ้งไม่ได้ "บำรุงรักษาไม่ได้" + "เริ่มงาน" (ปุ่มกลับเป็นแบบก่อนแจ้ง)
-   → (ส่งกลับแก้ไข) Alert Error "หน่วยงานส่งกลับให้แก้ไข" + เหตุผล
-   → VehicleAndReporterInfo "ข้อมูลยานพาหนะและงาน" กล่องเดียว: ข้อมูลยานพาหนะ 6 ช่อง + (ปิดงาน) เริ่มงาน ปิดงาน ผู้บันทึก น้ำมันไฮดรอลิก เลขไมล์และชั่วโมงหลังทำ
-       / (แจ้งไม่ได้) สาเหตุที่บำรุงรักษาไม่ได้ ผู้แจ้ง แจ้งเมื่อ + (รอตรวจรับ) ส่งตรวจงานเมื่อ ผู้ส่ง
-   → (ปิดงาน) File upload "ภาพก่อนเริ่มงาน" รายการไฟล์ลบได้อัปโหลดใหม่ได้ (photoFiles · JPG, PNG · สูงสุด 10 ภาพ)
-       + Section label "รายการงานและอะไหล่ที่ใช้จริง (n)" + Secondary button "เพิ่มอะไหล่" + Table WORK_COLS2 + คอลัมน์ไอคอนแก้ไข ลบ 104
-   → Section label "อะไหล่ส่งคืน (n)" + "เพิ่มอะไหล่" + Table RET_COLS + ไอคอนแก้ไข ลบ (retTable(used, label, edit))
-   ไม่มีส่วนค่าใช้จ่ายและราคา (เจ้าของงาน 10 พ.ย. 2569 _"จะไม่มีเรื่องทั้ง section ค่าใช้จ่ายรายคัน"_)
-   popup: แก้ไขอะไหล่ (partEditModal) · เพิ่มอะไหล่ที่ใช้จริง (partAddModal) · ยืนยันการเอาอะไหล่ออก (PART_DEL_CONFIRM สีแดง) · ยืนยันส่งตรวจงาน (HIRE_SEND_CONFIRM) → toast "ส่งตรวจงานแล้ว"
-   แก้ไข ลบ เพิ่ม อะไหล่และภาพได้เมื่อสถานะ ดำเนินการบำรุงรักษาแล้ว · แจ้งบำรุงรักษาไม่ได้ · รอตรวจรับ · ส่งกลับแก้ไข (ตาราง Condition ของ Scenario 23) — เฉพาะผู้รับจ้าง · บทบาทอื่นดูอย่างเดียว
-   ตาม `Page header` `Pill outline` `Alert` `Section label` `Table` `File upload` `Secondary button` `Primary button` ของไฟล์ Component + VehicleAndReporterInfo ของไฟล์ Maintain-D
-     + หน้า `RP & MA Job` ของ UI Release#2 (Page header Job detail Badge + ปุ่มขวา · popup) */
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ConfirmDialog, type ConfirmSpec } from "@/components/patterns/ConfirmDialog";
@@ -38,7 +22,6 @@ import { useBreakpoint } from "@/lib/useBreakpoint";
 import { badgeOf, CannotPopup, DataTable, DateTimeModal, Grid, jobHref, PartAddModal, PartEditModal, RET_COLS, Section, toUpload, tripHref, useBack, useCrumbs } from "../_lib/ui";
 import { vehiclePairs } from "./JobPage";
 
-/* WORK_COLS2 (อะไหล่ที่ใช้จริง) · คอลัมน์ไอคอนแก้ไข + ลบ กว้าง 104 (EDIT_ICONS) */
 const WORK_COLS2: TableColumn[] = [{ head: "รายการงาน" }, { head: "อะไหล่ที่ใช้", width: 320 }, { head: "จำนวนตามแผน", width: 140 }, { head: "จำนวนที่ใช้จริง", width: 140 }, { head: "หน่วย", width: 110 }];
 const ICON_COL: TableColumn = { head: "", width: 104, Style: "Action icons" };
 
@@ -59,8 +42,6 @@ export function VendorJob({ trip, car, job, vendor, kbk }: { trip: JobTrip; car:
   const rows = workItems(job), work = workShown(job, rows);
   const editItem = editK == null ? null : rows.find((w) => w.k === editK) ?? null;
 
-  /* ---------- การกระทำ ---------- */
-  /* แก้ไขงาน (แจ้งไม่ได้) = แก้สาเหตุ · ส่งกลับคันที่แจ้งไม่ได้ "บำรุงรักษาไม่ได้" = แก้สาเหตุแล้วแจ้งใหม่ (ตาราง Condition S23) ⇒ ตั้งต้นด้วยสาเหตุเดิม */
   const openCannot = (edit: boolean) => { setWhy(job.cannot?.reason ?? ""); setWhyErr(false); setCannot({ edit }); };
   const saveCannot = () => {
     if (!cannot) return;
@@ -70,21 +51,17 @@ export function VendorJob({ trip, car, job, vendor, kbk }: { trip: JobTrip; car:
     setCannot(null);
   };
   const send = () => setPending({
-    spec: { title: "ยืนยันส่งตรวจงาน · " + car.plate, sub: "งานของยานพาหนะคันนี้จะส่งให้หน่วยงานตรวจรับ", cancel: "ยกเลิก", ok: "ส่งตรวจงาน" },   // HIRE_SEND_CONFIRM
+    spec: { title: "ยืนยันส่งตรวจงาน · " + car.plate, sub: "งานของยานพาหนะคันนี้จะส่งให้หน่วยงานตรวจรับ", cancel: "ยกเลิก", ok: "ส่งตรวจงาน" },
     run: () => { sendJob(trip, car.id); notify("ส่งตรวจงานแล้ว"); },
   });
   const delPart = (w: WorkItem) => setPending({
-    spec: { danger: true, title: "ยืนยันการเอาอะไหล่ออก", sub: w.part + " จะถูกเอาออกจากยานพาหนะคันนี้", cancel: "ยกเลิก", ok: "เอาออก" },   // PART_DEL_CONFIRM
+    spec: { danger: true, title: "ยืนยันการเอาอะไหล่ออก", sub: w.part + " จะถูกเอาออกจากยานพาหนะคันนี้", cancel: "ยกเลิก", ok: "เอาออก" },
     run: () => deleteJobPart(trip, car, w.k),
   });
-  const [starting, setStarting] = useState(false);   // popup วันเวลาเริ่มงาน (11 พ.ย. 2569)
+  const [starting, setStarting] = useState(false);
   const start = () => setStarting(true);
   const doStart = (at: string) => { setStarting(false); startJob(trip, car.id, planned, true, at); notify("เริ่มงานบำรุงรักษาแล้ว"); router.push(jobHref(trip, car.id, "receive/")); };
 
-  /* ---------- หน่วยงานตรวจรับ (รอตรวจรับ · 11 พ.ย. 2569) ----------
-     เจ้าของงาน "จังหวะที่ vendor ส่ง approve เจ้าหน้าที่ต้องสามารถระบุค่าใช้จ่ายของคันนั้น โดยมี 2 คือค่าจ้าง กับค่าเดินทาง โดยเป็น view เดียวกับตอนที่ vendor ส่ง approve แต่มีให้กรอกเพิ่มเติม"
-     หน้าเดียวกับที่ผู้รับจ้างส่ง + Section "ค่าใช้จ่ายของยานพาหนะคันนี้ (บาท)" Text input ค่าจ้าง · ค่าเดินทาง (บังคับเมื่อตรวจรับ · ส่งกลับแก้ไขไม่ต้องกรอก — ข้อเสนอ BACKLOG ค.)
-     ปุ่ม ส่งกลับแก้ไข (เหตุผลบังคับ · FormModal) · ตรวจรับ (ยืนยันก่อน) → เสร็จสิ้น / บำรุงรักษาไม่ได้ · ค่าใช้จ่ายรวมใน S18 */
   const review = !!kbk && !vendor && s === "wait";
   const digits = (v: string) => { const d = v.replace(/\D/g, ""); return d ? Number(d).toLocaleString("en-US") : ""; };
   const [wage, setWage] = useState(job.hireCost?.wage ?? ""), [travel, setTravel] = useState(job.hireCost?.travel ?? "");
@@ -99,7 +76,6 @@ export function VendorJob({ trip, car, job, vendor, kbk }: { trip: JobTrip; car:
     });
   };
 
-  /* ---------- ปุ่มหัวหน้า (vendorJob acts) ---------- */
   const size = mob ? "lg" : "md";
   const editWork = () => (isCannot ? openCannot(true) : router.push(jobHref(trip, car.id, "close/")));
   const actions = review ? <><SecondaryButton Text="ส่งกลับแก้ไข" Size={size} onClick={() => setBackWhy("")} /><PrimaryButton Text="ตรวจรับ" Size={size} State={costOk ? "Default" : "Disabled"} onClick={accept} /></>
@@ -108,9 +84,8 @@ export function VendorJob({ trip, car, job, vendor, kbk }: { trip: JobTrip; car:
     : s === "returned" ? (isCannot
       ? <><SecondaryButton Text="บำรุงรักษาไม่ได้" Size={size} onClick={() => openCannot(false)} /><PrimaryButton Text="เริ่มงาน" Size={size} onClick={start} /></>
       : <PrimaryButton Text="แก้ไขงาน" Size={size} onClick={editWork} />)
-    : undefined;   // รอตรวจรับ = ไม่มีปุ่ม
+    : undefined;
 
-  /* ---------- เนื้อหา ---------- */
   const jobKv: [string, string][] = isCannot
     ? [["สาเหตุที่บำรุงรักษาไม่ได้", job.cannot?.reason ?? "-"], ["ผู้แจ้ง", job.cannot?.by ?? "-"], ["แจ้งเมื่อ", job.cannot?.at ?? "-"]]
     : [["เริ่มงาน", job.startedAt ?? "-"], ["ปิดงาน", job.closedAt ?? "-"], ["ผู้บันทึก", job.recordedBy ?? "-"], ["น้ำมันไฮดรอลิก", OIL_JOB_OPTS[job.oilChoice ?? OIL_DEFAULT]],

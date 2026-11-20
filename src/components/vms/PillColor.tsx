@@ -1,12 +1,6 @@
-/* Figma: "Pill color" — ไฟล์ (Component) VMS Plus หน้า Badge (node 2:13) · สเปก figma-spec/Pill color.json
-   variant: Color = Brand | Gray | Info | Success | Warning | Error | Disabled · property: Text
-   ค่า: สูง 24 · ขอบใน 4/8 · รัศมี 9999 · ตัวอักษร 12 SemiBold
-        พื้น/ตัวอักษร: Brand brand-900/white · Gray gray-200/gray-600 · Info info-600/white · Success success-600/white · Warning warning-600/white · Error error-500/white · Disabled gray-100/gray-400
-   ใช้เป็นป้ายตัวเลขใน Nav item / Nav list item (property Badge) */
 import { cx } from "@/lib/cx";
 import type { PillColor as PillOutlineColor } from "./PillOutline";
 
-/* Pill color ไม่มี variant Purple (มีเฉพาะ Pill outline) */
 export type PillColorName = Exclude<PillOutlineColor, "Purple">;
 
 const COLOR: Record<PillColorName, string> = {

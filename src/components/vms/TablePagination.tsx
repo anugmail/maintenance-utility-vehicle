@@ -1,10 +1,4 @@
 "use client";
-/* Figma: "Table pagination" — ไฟล์ (Component) VMS Plus หน้า Pagination (node 2:15) · สเปก figma-spec/Table pagination.json
-   variant: Breakpoint = Desktop | Mobile
-   Desktop: แถวเดียว ชิดซ้าย–ขวา ช่องไฟ 24 · ซ้าย "แสดง a ถึง b จาก n รายการ" 14 black + Items per page dropdown (Input dropdown Selected กว้าง 92) ห่าง 8
-            ขวา กลุ่มปุ่ม Button groups pagination item กรอบ 1 gray-300 รัศมี 8
-   Mobile: เรียงลง จัดกลาง ช่องไฟ 16 · กลุ่มปุ่มก่อน แล้วข้อความ
-   ข้อความตาม fillPagination() ใน core.js */
 import { useBreakpoint, type Breakpoint } from "@/lib/useBreakpoint";
 import { cx } from "@/lib/cx";
 import { ButtonGroupsPaginationItem } from "./ButtonGroupsPaginationItem";
@@ -19,9 +13,6 @@ export interface TablePaginationProps {
   className?: string;
 }
 
-/* เลขหน้าไม่เกิน 5 ช่อง ตามระบบจริง getPageNumbers() ใน maintain-d-fe/src/components/ui/table/pagination-control.tsx
-   หน้าแรก + รอบหน้าปัจจุบัน + หน้าสุดท้าย · ช่องว่างเป็น "..." (ไลบรารีมีช่อง Number "..." ใน Table pagination 1 2 ... 9 10)
-   เช่น 1 2 3 ... 25 · 1 ... 9 10 11 ... 25 · 1 ... 23 24 25 (เจ้าของงาน 9 พ.ย. 2569 "pagination น่าจะแสดงผิดนะ" ตอน 243 คัน 25 หน้า) */
 export function pageNumbers(page: number, pages: number): (number | "...")[] {
   if (pages <= 5) return Array.from({ length: pages }, (_, i) => i + 1);
   let start = Math.max(2, page - 1), end = Math.min(pages - 1, page + 1);

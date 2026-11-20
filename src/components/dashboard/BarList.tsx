@@ -1,14 +1,9 @@
-/* แถบแนวนอนต่อแถว — เลียนแบบ VMS+ หน้า "แดชบอร์ดยานพาหนะ" การ์ด "ยานพาหนะตามสังกัด" และ "ประเภทยานพาหนะ" (page-vehicles.png)
-   แถว = จุดสี + ชื่อ + › · จำนวน + หน่วย · % ของทั้งหมด · แถบสี (ยาวเทียบรายการมากสุด) · บรรทัดรอง · "แสดงทั้งหมด n รายการ" เมื่อเกิน limit
-   กดแถว = เพิ่ม/เอาตัวกรองนั้นออกทั้งหน้า (aria-pressed) · StackBarList = แถบซ้อนต่อแถว (ความคืบหน้าของแผน) + คำอธิบายสีด้านบน
-   ไม่ใช่ component ของไลบรารี PEA — ข้อยกเว้นเจ้าของงาน 12 พ.ย. 2569 เฉพาะแดชบอร์ด S4 S24 · ความยาวแถบเป็นค่าที่คำนวณตอนรัน (style width) */
 import { useState } from "react";
 import { cx } from "@/lib/cx";
 import { Ms } from "@/components/vms/Ms";
 import { HUE, nf, pct, type Hue } from "./palette";
 
 export interface BarItem { key: string; label: string; value: number; unit?: string; sub?: string; hue: Hue; active?: boolean;
-  /** ค่าเทียบความยาวแถบ / % (ไม่ใส่ = เทียบทุกแถว) — ใช้เมื่อแถวต่างหน่วยกัน */
   max?: number; total?: number }
 
 const Empty = ({ text }: { text: string }) => <p className="py-6 text-center text-sm text-gray-500">{text}</p>;
@@ -49,7 +44,6 @@ export function BarList({ items, unit = "", limit = 10, onPick, empty = "ไม�
   );
 }
 
-/* ---------- แถบซ้อนต่อแถว ---------- */
 export interface StackSeries { key: string; label: string; hue: Hue }
 export interface StackItem { key: string; label: string; sub?: string; values: number[]; active?: boolean }
 

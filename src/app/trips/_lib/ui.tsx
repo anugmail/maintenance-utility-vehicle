@@ -1,10 +1,4 @@
 "use client";
-/* ชิ้นประกอบหน้าของโฟลว์งานรายคัน (/trips/*) — ไม่ใช่ component ใหม่ จัดวางชิ้นไลบรารีตามตัวช่วยของ core.js / screens.js เท่านั้น
-   ButtonRow = btnRow() · Grid = row() (มือถือเรียงลง · Spacer = ครึ่งแถว) · Section = col('Section', …, 16) · KvBox = kv()
-   DataTable = tbl() + mobileCards() (+ กดแถวเปิดรายการ) · CannotPopup = cannotModal() · OilBlock = jobOil() + oilResult()
-   PartEditModal = partEditModal() (+ ช่อง "จำนวนอะไหล่เก่า" "หมายเหตุ" ของหน้าปิดงาน) · PartAddModal = partAddModal()
-   ใช้ร่วมทั้งแผนที่ กบค. ดำเนินการเอง และแผนจ้างดำเนินการ (S10 S12 · กบค. ปิดงานแทนผู้รับจ้าง จอ I.22 I.23) — ชิ้นเดียวทั้งโฟลว์ ไม่ทำซ้ำรายหน้า
-   4 พ.ย. 2569 ตัด S23 S11 · 10 พ.ย. 2569 เอา S23 กลับ (R87): ผู้รับจ้างใช้หน้าเดียวกับ S10 ทุกหน้า ต่างที่ปุ่มและเมนู (useTripCar().vendor) */
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { DisplayBox } from "@/components/patterns/DisplayBox";
@@ -35,25 +29,19 @@ import { canManage, usePlanGate } from "@/lib/mock/planFlow";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 
 export const MENU_NAME = "บำรุงรักษาตามวาระ";
-/* BADGE_OF — สีป้ายหัวหน้า (Badge outline มี 5 สี): Info → Brand · Warning → Brand */
 export const badgeOf = ([t, c]: readonly [string, PillColor]): [string, BadgeOutlineColor] =>
   [t, c === "Info" || c === "Warning" || c === "Purple" ? "Brand" : c === "Gray" || c === "Success" || c === "Error" || c === "Brand" ? c : "Gray"];
 
 export const tripHref = (t: JobTrip) => "/trips/detail/?trip=" + t.id;
 export const jobHref = (t: JobTrip, carId: string, sub = "") => "/trips/job/" + sub + "?trip=" + t.id + "&car=" + carId;
-/* Breadcrumbs ตาม pageHead(): ชื่อเมนู + ระดับกลาง + หน้าปัจจุบัน (ไลบรารีมี 3 ช่องลิงก์ — ช่องที่ 4 ของหน้ารับรถ/ปิดงานไม่แสดงตามจอ Figma)
-   ชื่อแผน → หน้ารายละเอียดแผน /detail/ · "ไตรมาส n" → หน้าไตรมาส /quarter/trips/ (แผนจ้างก็เหมือนกัน) */
 export const planHref = (t: JobTrip) => "/detail/?id=" + t.planId;
 export const quarterTripsHref = (t: JobTrip) => "/quarter/trips/?id=" + t.planId + "&q=" + t.q;
-/* 5 พ.ย. 2569 ต่อจากหน้า "ไตรมาส n" (tripDetail crumbs [ชื่อแผน, ไตรมาส, ชื่อแผนเดินทาง] · jobPage [ไตรมาส, ชื่อแผนเดินทาง, ทะเบียน] ใน screens.js) */
 export const tripCrumbs = (t: JobTrip): Crumb[] => [{ Text: MENU_NAME, href: "/" }, { Text: t.planName || t.planMr, href: planHref(t) },
   { Text: t.quarter, href: quarterTripsHref(t) }, { Text: t.name }];
 export const jobCrumbs = (t: JobTrip, last: string): Crumb[] => [{ Text: MENU_NAME, href: "/" }, { Text: t.quarter, href: quarterTripsHref(t) },
   { Text: t.name, href: tripHref(t) }, { Text: last }];
-/** Breadcrumbs ของหน้าแผนเดินทาง / งานรายคัน (ทุกบทบาทชุดเดียวกัน) */
 export const useCrumbs = () => ({ trip: tripCrumbs, job: jobCrumbs });
 
-/* อ่าน ?trip=&car= + บทบาท */
 export function useTripCar() {
   const sp = useSearchParams();
   const s = useJobs();
@@ -62,13 +50,10 @@ export function useTripCar() {
   const carId = sp.get("car") ?? "";
   const car = trip && trip.carIds.includes(carId) ? carOf(carId) : undefined;
   const job = trip && car ? getJob(s, trip.id, car.id) : undefined;
-  /* ทำงานในหน้างานได้: กบค. ทั้งแผนตรวจเอง และแผนจ้าง (กบค. บันทึกแทนผู้รับจ้าง 4 พ.ย. 2569) · บทบาทอื่นดูอย่างเดียว */
   const plan = useMock().plans.find((x) => x.mr === trip?.planMr);
-  /* ผู้ดำเนินการ = หน่วยงานเจ้าของแผน (canManage · กบผ. กปส. กรย. กส.1 กส.2 กบค.) — 9 พ.ย. 2569 เดิมเฉพาะ กบผ. ("แผนอนุมัติแล้ว แต่ไม่เจอแผนการเดินทางที่อนุมัติแล้ว") */
   const kbk = !!plan && canManage(role, plan);
-  /* S23 ผู้รับจ้าง (R87 · 10 พ.ย. 2569): ทำงานรายคันของแผนจ้างดำเนินการ · เมนู "…" ดูรายละเอียดอย่างเดียว · อะไหล่ตามแผนดูอย่างเดียว · หลังปิดงานแก้ไข ลบ เพิ่ม อะไหล่และภาพ · ส่งตรวจงาน */
   const vendor = role === "ผู้รับจ้าง" && trip?.mode === "hire";
-  usePlanGate(plan);   // หน่วยงานเปิดแผนเดินทาง/งานรายคันของแผนหน่วยงานอื่น → หน้ารายการ
+  usePlanGate(plan);
   return { s, sp, role, trip, car, job, actor: !!trip && (kbk || vendor), kbk, vendor };
 }
 
@@ -77,12 +62,10 @@ export function useBack() {
   return (href?: string) => (href ? router.push(href) : window.history.length > 1 ? router.back() : router.push("/"));
 }
 
-/* btnRow(): desktop ปุ่มแรกชิดซ้าย ปุ่มท้ายชิดขวา (ปุ่มเดียวชิดขวา) · มือถือเต็มกว้าง แบ่งเท่ากัน */
 export function ButtonRow({ children }: { children: ReactNode }) {
   const mob = useBreakpoint() === "Mobile";
   return <div className={cx("flex", mob ? "gap-4 [&>*]:flex-1" : "justify-between gap-3 [&>*:only-child]:ml-auto")}>{children}</div>;
 }
-/* row(): ช่องกว้างเท่ากัน ช่องไฟ 24 · n = จำนวนคอลัมน์ (มากกว่าลูก = มี Spacer) · มือถือเรียงลง ช่องไฟ 16 */
 export function Grid({ n = 2, children, className }: { n?: 2 | 3; children: ReactNode; className?: string }) {
   const mob = useBreakpoint() === "Mobile";
   return <div className={cx(mob ? "flex flex-col gap-4" : n === 3 ? "grid grid-cols-3 gap-6" : "grid grid-cols-2 gap-6", className)}>{children}</div>;
@@ -90,11 +73,8 @@ export function Grid({ n = 2, children, className }: { n?: 2 | 3; children: Reac
 export function Section({ children, className }: { children: ReactNode; className?: string }) {
   return <section className={cx("flex flex-col gap-4", className)}>{children}</section>;
 }
-/* kv() ใต้ Section header (หน้า Create/Edit) */
 export const KvBox = ({ pairs }: { pairs: KvPair[] }) => <DisplayBox pairs={pairs} />;
 
-/* ตาราง: desktop Table · มือถือ Mobile table (การ์ด) · onRow = กดแถวเปิดรายการ (ยกเว้นกดปุ่มในแถว) */
-/* เกิน 10 แถว = หน้าละ 10 + Table pagination (tblShort ของ screens.js f59001e · 9 พ.ย. 2569) · onRow / rowKey ได้ลำดับในรายการทั้งหมด */
 export function DataTable({ cols, rows: all, onRow, rowKey }: { cols: TableColumn[]; rows: TableValue[][]; onRow?: (i: number) => void; rowKey?: (r: TableValue[], i: number) => string }) {
   const mob = useBreakpoint() === "Mobile";
   const [page, setPage] = useState(1);
@@ -112,7 +92,6 @@ export function DataTable({ cols, rows: all, onRow, rowKey }: { cols: TableColum
   return <div onClick={click} className={onRow ? "[&_tbody_tr]:cursor-pointer" : undefined}><Table columns={cols} rows={rows} rowKey={key} Pagination={pager} /></div>;
 }
 
-/* ---------- popup บำรุงรักษาไม่ได้ (cannotModal) — สาเหตุ + อะไหล่ส่งคืน (RET_COLS) ---------- */
 export const RET_COLS: TableColumn[] = [{ head: "ชื่ออะไหล่", Style: "Lead text" }, { head: "จำนวนตามแผน", width: 170 }, { head: "จำนวนที่ใช้", width: 170 }, { head: "จำนวนที่คืน", width: 170 }];
 export function RetTable({ parts, used }: { parts: Pick<PlanPart, "part" | "planQty" | "unit">[]; used?: number[] | null }) {
   return <DataTable cols={RET_COLS} rows={retRows(parts, used)} />;
@@ -133,7 +112,6 @@ export function CannotPopup({ open, car, parts, used, reason, error, onReason, o
   );
 }
 
-/* ---------- น้ำมันไฮดรอลิก (jobOil) + ผลการทดสอบ (oilResult) ---------- */
 export function OilCards({ value, onChange, Disabled }: { value: OilChoice; onChange?: (k: OilChoice) => void; Disabled?: boolean }) {
   return <RadioTextCards options={OIL_JOB_OPTS.map((Text) => ({ Text }))} value={OIL_JOB_OPTS[value]} Disabled={Disabled}
     onChange={(v) => onChange?.(OIL_JOB_OPTS.indexOf(v as (typeof OIL_JOB_OPTS)[number]) as OilChoice)} />;
@@ -141,7 +119,6 @@ export function OilCards({ value, onChange, Disabled }: { value: OilChoice; onCh
 export function LastOil({ car }: { car: TripCar }) {
   return <Grid><TextInput LabelText="เปลี่ยนน้ำมันครั้งล่าสุด" Text={car.lastOil} State="Readonly" readOnly /></Grid>;
 }
-/* ช่องผลการทดสอบ: Horizontal radio groups ครึ่งแถว + File upload (PDF JPG PNG สูงสุด 10 ไฟล์ แถบความคืบหน้า) */
 export function OilResultFields({ sel, files, optional, error, readonly, onSel, onFiles, onDelete }: {
   sel: OilSel; files: UploadFile[]; optional?: boolean; error?: boolean; readonly?: boolean;
   onSel?: (s: OilSel) => void; onFiles?: (f: File[]) => void; onDelete?: (i: number) => void;
@@ -159,11 +136,8 @@ export function OilResultFields({ sel, files, optional, error, readonly, onSel, 
 }
 export { oilSampled };
 
-/* ไฟล์ที่เลือก → แถวไฟล์ของ File upload (ขนาดแบบ "2.4 MB" / "420 KB") */
 export const toUpload = (f: File): UploadFile => ({ name: f.name, size: f.size >= 1e6 ? (f.size / 1048576).toFixed(1) + " MB" : Math.max(1, Math.round(f.size / 1024)) + " KB", bar: true });
 
-/* ---------- popup แก้ไขอะไหล่ (partEditModal) — รายการงาน · จำนวนตามแผน · จำนวนที่ใช้จริง · จำนวนที่คืน (= ตามแผน − ใช้จริง)
-   extra = หน้าปิดงาน (+ จำนวนอะไหล่เก่า · หมายเหตุ ตามหัวคอลัมน์ตาราง) · ใช้จริงเกินแผนไม่ได้ (แถวที่เพิ่มเองไม่มีแผน) ⇒ ปุ่ม "บันทึก" Disabled ---------- */
 export interface PartEditItem { part: string; task: string; planQty: number; unit: string; used: number; old?: number; note?: string; added?: boolean }
 export interface PartEditValue { used: number; old: number; note: string }
 const onlyDigits = (v: string) => v.replace(/\D/g, "");
@@ -194,9 +168,7 @@ function PartEditBody({ item, extra, onSave, onCancel }: { item: PartEditItem; e
   );
 }
 
-/* ---------- popup เพิ่มอะไหล่ที่ใช้จริง (partAddModal) — ชื่ออะไหล่ · รหัสอะไหล่ (ถ้ามี) · จำนวนที่ใช้จริง + หน่วย (Input dropdown)
-   ไม่มีข้อความ error ในสเปก ⇒ ปุ่ม "เพิ่ม" กดได้เมื่อกรอกครบ ---------- */
-const UNITS = ["ชิ้น", "ลิตร"];   // หน่วยของอะไหล่ในข้อมูลตัวอย่าง (PARTS)
+const UNITS = ["ชิ้น", "ลิตร"];
 const EMPTY_PART: NewPart = { name: "", code: "", qty: "", unit: "" };
 export function PartAddModal({ open, onAdd, onCancel }: { open: boolean; onAdd: (p: NewPart) => void; onCancel: () => void }) {
   const [p, setP] = useState<NewPart>(EMPTY_PART);
@@ -220,11 +192,6 @@ export function PartAddModal({ open, onAdd, onCancel }: { open: boolean; onAdd: 
   );
 }
 
-/* ---------- ลงนามแบบส่งให้ผู้ลงนามยืนยัน (11 พ.ย. 2569 · ทุกจุดลงนามของงานบำรุงรักษา: S10/S23 Step 1 · Step 2) ----------
-   เจ้าของงาน "เรื่องการลงนามจะใช้วิธีการ เลือกชื่อและให้ส่ง noti login confirm และถ้าคอนเฟิร์มแล้วก็ยืนยัน" — แทนการวาดลายเซ็น (Modal Signature)
-   ประกอบจากชิ้นไลบรารีตามโครง HandoverSignature ของไฟล์ Maintain-D (Section header → 2 กล่อง ช่องไฟ 16 · มือถือเรียงลง): Input dropdown เลือกชื่อ → Secondary button "ส่งให้ลงนาม"
-   → ส่งแล้ว Pill outline Warning "รอยืนยัน" + ส่งเมื่อ + "ส่งอีกครั้ง" · ยืนยันแล้ว Pill outline Success "ยืนยันแล้ว" + ยืนยันเมื่อ (COMPOSED.md ษ.)
-   ผู้ลงนามยืนยัน = ต้นแบบจำลองด้วยปุ่ม "คำขอลงนาม" ในแถบต้นแบบ (ไม่มีบทบาทของผู้ลงนามรายคน) */
 export interface SignSlot { LabelText: string; Placeholder: string; options: string[]; name: string | null; sig: string | null; req?: string; at?: string }
 export function SignRequest({ Title, slots, onPick, onSend, readonly }: { Title: string; slots: SignSlot[]; onPick: (i: number, name: string) => void; onSend: (i: number) => void; readonly?: boolean }) {
   const mob = useBreakpoint() === "Mobile";
@@ -256,9 +223,6 @@ export function SignRequest({ Title, slots, onPick, onSend, readonly }: { Title:
   );
 }
 
-/* ---------- popup วันเวลาเริ่มงาน / ปิดงาน (11 พ.ย. 2569 เจ้าของงาน "ตอนที่เริ่มงานอยากให้มี pop up ให้กรอกวันเวลาเริ่มงาน และตอนปิดงานอยากให้มีกรอกวันและเวลาปิดงาน โดยสามารถแก้ไขได้") ----------
-   PopupModal (Modal ของไลบรารี · มือถือ Bottom sheet) + Text input วันที่ (ไอคอน calendar_month · กดเปิด Date picker Type=Single แบบช่องวันดำเนินการเดิม) + Text input เวลา "HH:MM"
-   ไลบรารีไม่มีตัวเลือกเวลา ⇒ Text input พิมพ์เวลา (ตรวจรูปแบบ 00:00–23:59) — BACKLOG ค. · ค่าเริ่มต้น = ตอนนี้ (หรือค่าเดิมเมื่อแก้) · เก็บเป็น "dd/mm/yyyy HH:MM น." */
 export const splitAt = (s?: string): [string, string] => { const m = (s ?? "").match(/^(\d{2}\/\d{2}\/\d{4})(?:\s+(\d{1,2}:\d{2}))?/); return m ? [m[1], m[2] ?? ""] : ["", ""]; };
 const timeOk = (v: string) => /^([01]?\d|2[0-3]):[0-5]\d$/.test(v);
 export function DateTimeModal({ open, title, sub, label, value, ok, onOk, onCancel }: { open: boolean; title: string; sub?: string; label: string; value: string; ok: string; onOk: (at: string) => void; onCancel: () => void }) {

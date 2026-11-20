@@ -1,8 +1,4 @@
 "use client";
-/* แผงแจ้งเตือนใต้กระดิ่ง ตาม notiPanel() ใน screens.js (S8) — ประกอบจากชิ้นไลบรารี (บันทึกใน figma-spec/COMPOSED.md)
-   Desktop: Notification card ลอยมุมขวาบน ใต้ Header navigation (ห่างขอบขวา 24 · ใต้หัว 8) · แถว = _Notification item base (Status · Text · เวลา · ไม่มีปุ่ม)
-   Mobile: Bottom sheet หัว "แจ้งเตือน (<ป้าย>)" · การ์ดไม่มีหัว/ท้าย · ปุ่มเดียว Primary "ลบข้อความแจ้งเตือนทั้งหมด" (ไม่มีปุ่มยกเลิก)
-   กระดิ่ง = Nav button ที่มี Indicator ใน Header navigation (Indicator=true เมื่อมีแจ้งเตือนใหม่) */
 import { useEffect } from "react";
 import { BottomSheet } from "@/components/vms/BottomSheet";
 import { BottomSheetFooter } from "@/components/vms/BottomSheetFooter";
@@ -33,9 +29,7 @@ export function NotificationPanel({ open, onClose, badge, items, onClearAll }: {
   }
   return (
     <>
-      {/* คลิกนอกแผง = ปิด (ไม่มีพื้นหลังทึบตามจอ Figma) */}
       <div aria-hidden="true" className="fixed inset-0 z-40" onClick={onClose} />
-      {/* top = ใต้แถบต้นแบบ 48 + 24 (เดิม top-18) · โหมดพาดู: ใต้แถบพาดู (--guide-bottom ของ GuideBar) + 24 ไม่ทับปุ่มของแถบ */}
       <div className="fixed top-[calc(var(--guide-bottom,48px)+24px)] right-6 z-50 animate-fade-in">
         <NotificationCard Badge={badge} onFooter={onClearAll}>{rows}</NotificationCard>
       </div>

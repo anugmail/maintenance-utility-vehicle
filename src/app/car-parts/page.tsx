@@ -1,30 +1,4 @@
 "use client";
-/* S21 · หน้า จัดการอะไหล่ของรถ (/car-parts/?id=new|Z7000004&q=1&car=82-6789) — carPartsScreen() ใน screens.js (Figma เสร็จ 5 พ.ย. 2569 · BACKLOG ข้อ 11) · เฉพาะหน่วยงานผู้สร้างแผน (PLAN_ROLES)
-   เปิดจากไอคอนแก้ไขที่แถวรถในแท็บไตรมาส n ของฟอร์มแผน (S1 สร้าง · S19 แก้ไข) · บันทึกแล้วกลับแท็บไตรมาสเดิม
-   ตาม Page header · Input dropdown · Section header · Radio text card · Text input (Readonly) · Table · Empty state/Data empty · Modal Type=Form (Card form row Input 1/Input 2) ของไฟล์ Component
-   + PartsInventoryPanel ของไฟล์ Maintain-D (คลังอะไหล่ของงานซ่อม) + หน้า Spare Part Request ของ RP & MA Job ใน UI Release#2
-   Page header "จัดการอะไหล่ของรถ {ทะเบียน}" · Breadcrumbs บำรุงรักษาตามวาระ › สร้างแผน (แก้ไข: แก้ไขแผน MR …) › จัดการอะไหล่ของรถ
-   Content ช่องไฟ 32:
-     1. Input dropdown "รถ" (ครึ่งกว้างบน desktop · ไอคอน search) — รถของไตรมาสที่เปิดมาเท่านั้น (สลับคันในหน้าเดิม ที่แก้ของทุกคันค้างไว้จนบันทึก)
-     1.5 Section label "การเบิกอะไหล่" + Radio text card 2 ใบ (6 พ.ย. 2569 เจ้าของงาน "อยากเพิ่มการเบิก โดยอยากให้มีการเลือกว่า ว่าเบิกอะใหล่ หรือไม่เบิก ด้วย" · radioPick label ของ carPartsScreen)
-        "เบิกอะไหล่" (เลือกอะไหล่ที่ต้องเบิกให้รถคันนี้) / "ไม่เบิกอะไหล่" (รถคันนี้ไม่ใช้อะไหล่จากการเบิก) · ไม่มีค่าเริ่มต้น (เลือกอะไหล่ไว้แล้ว = เบิก) · ไม่เบิก = ซ่อนข้อ 3 และ 4 คันนี้ไม่รวมในอะไหล่ในไตรมาส
-     2. Section header "น้ำมันไฮดรอลิก" + Radio text card 3 ใบ (เก็บตัวอย่าง ค่าเริ่มต้น · เปลี่ยนน้ำมัน · เก็บตัวอย่างและเปลี่ยน)
-        เปลี่ยนน้ำมัน: แถว Input dropdown "เบอร์น้ำมัน" (ISO VG 32/46/68) · Text input "รหัสน้ำมัน" · "จำนวน (ลิตร)" · แถว Text input Readonly "เปลี่ยนน้ำมันครั้งล่าสุด"
-     3. (เบิกอะไหล่) PartsInventoryPanel คลังอะไหล่ (ไส้กรองและอะไหล่ ไม่รวมน้ำมันไฮดรอลิก) — กดเลือก/เอาออก
-     4. (เบิกอะไหล่) Section header "อะไหล่อื่นๆ" (Badge จำนวน) + Secondary button "ระบุอะไหล่เพิ่มเติม" → Table ชื่อ · ยี่ห้อ · รุ่น · รหัส · จำนวน · หน่วย · ไอคอนแก้ไข ลบ / Empty state
-     5. ปุ่ม ย้อนกลับ · บันทึกอะไหล่ของรถ (lg · กดได้เมื่อเลือกไม่เบิก หรือเลือกเบิกแล้วมีอะไหล่อย่างน้อย 1 รายการ) → toast "บันทึกอะไหล่ของรถ {ทะเบียน} แล้ว"
-   popup "ระบุอะไหล่เพิ่มเติม" (MANUAL_FIELDS): ชื่ออะไหล่ | ยี่ห้อ · รุ่น | รหัสอะไหล่ (ถ้ามี) · จำนวน | หน่วย · ปุ่ม ยกเลิก / เพิ่ม · มือถือ bottom sheet
-   ย้อนกลับเมื่อมีการแก้ไข → ยืนยันการออก "อะไหล่ที่แก้ไขไว้จะไม่ถูกบันทึก"
-   หลายคัน (&cars=ทะเบียน,ทะเบียน · 11 พ.ย. 2569 เจ้าของงาน "อยากเพิ่มอะไหล่ครั้งเดียวในรถประเภทเดียวกัน" + "ทุกคันที่เลือกได้มั้ย คือต้องเลือกรถที่ต้องการเพิ่มอะไหล่" · BACKLOG ข้อ 64)
-     carPartsScreen o.cars (R112 · 13 พ.ย. 2569 "ต้องระบุอะใหล่รายคันให้ครบ ... วิธีการเพิ่มอะใหล่ในรถรุ่นเดียวกัน และหลายคันได้" · BACKLOG ข้อ 90)
-     เปิดจากปุ่ม "กำหนดอะไหล่ (k)" ของแท็บทั้งหมดหรือแท็บไตรมาส n (ติ๊กยานพาหนะก่อน) · หน้าเดียวกับรายคัน: Page header "จัดการอะไหล่ของยานพาหนะ k คัน" · แทนช่องเลือกยานพาหนะด้วย
-     Section header "ยานพาหนะที่เลือก" + Badge "k คัน" + Table CARP_SEL_COLS (ทะเบียน บรรทัดรอง ยี่ห้อ/รุ่น · ประเภทยานพาหนะ · เปลี่ยนน้ำมันครั้งล่าสุด · น้ำมันไฮดรอลิก · อะไหล่อื่นๆ ที่กำหนดไว้ตอนนี้)
-     ต่อด้วย Alert Warning (ของไฟล์ Component แบบ qPartsAlert) — ยานพาหนะที่เลือกมีหลายรุ่น (ยี่ห้อ/รุ่นต่างกัน · เดิมเตือนต่างประเภท) · ยานพาหนะ m คันกำหนดอะไหล่ไว้แล้ว (บันทึก = แทนค่าเดิม)
-     · ค่าตั้งต้น = ค่าเดียวกันของทุกคัน (ต่างกัน = ยังไม่เลือก) · การเบิกอะไหล่ "…ให้ยานพาหนะที่เลือก" · ช่อง "เปลี่ยนน้ำมันครั้งล่าสุด" อยู่ในตาราง (คนละค่าต่อคัน)
-     · ปุ่ม "บันทึกอะไหล่ของยานพาหนะ k คัน" = ค่าเดียวกันลงทุกคัน → toast "บันทึกอะไหล่ของยานพาหนะ k คันแล้ว" → กลับแท็บที่เปิดมา · แก้รายคันภายหลังได้ตามเดิม
-   q (แท็บที่เปิดมา · R111 R112 BACKLOG ข้อ 90): 1–4 = ยานพาหนะของไตรมาสนั้น · 0 = ทุกคันในแผนรวมคันที่ยังไม่จัดไตรมาส (แท็บทั้งหมด · รายคันจากเมนู … และหลายคัน) · คันที่ล็อกของแผนที่ดำเนินการไม่รวม
-     บันทึกเขียน q ลงฟอร์ม ⇒ กลับมาที่แท็บเดิม
-   บันทึก (รายคันและหลายคัน) เขียนเฉพาะคันที่แก้ในหน้านี้ — 11 พ.ย. 2569 เดิมเขียนทุกคันของไตรมาส คันที่ยังไม่กำหนดกลายเป็นน้ำมัน "เก็บตัวอย่าง" ในตาราง */
 import { PagedTable } from "@/app/quarter/_shared/ui";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState, type ReactNode } from "react";
@@ -58,18 +32,12 @@ import { notify, setMock, useMock } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 import { useProtoForm } from "@/lib/protoForm";
 
-/* อะไหล่ในคลัง = ไส้กรองและอะไหล่ (PARTS 1–4 · น้ำมันไฮดรอลิกมีส่วนของตัวเอง — carWarehouse()) */
 const STOCK: SparePart[] = PARTS.map((p, i) => ({ name: p.name, code: p.code, unit: p.unit, price: PART_PRICE[i], warehouse: PART_WH[i], stock: p.stock }));
 const OTHER = PARTS.map((_, i) => i).filter((i) => i > 0);
-/* CARP_PART_COLS (ใช้ร่วมกับหน้าดูอะไหล่ของยานพาหนะ /car-parts/view/) */
 const COLS = CARP_PART_COLS;
-/* หลายคัน — ยานพาหนะที่เลือก (ค่าตอนนี้ของแต่ละคัน · ดูอย่างเดียว) · CARP_SEL_COLS ของ screens.js (R112) */
 const BULK_COLS: TableColumn[] = [{ head: "ทะเบียน", width: 260, Style: "Lead text" }, { head: "ประเภทยานพาหนะ", width: 160 }, { head: "เปลี่ยนน้ำมันครั้งล่าสุด", width: 190 }, { head: "น้ำมันไฮดรอลิก" }, { head: "อะไหล่อื่นๆ", width: 200 }];
 
-/* ที่แก้ของรถแต่ละคันในหน้านี้ (ยังไม่บันทึกลงฟอร์ม) — picks/qty = อะไหล่จากคลัง (ไม่รวมน้ำมัน) */
-/* draw: "" = ยังไม่เลือก · take = เบิกอะไหล่ · none = ไม่เบิกอะไหล่ (6 พ.ย. 2569) */
 type Draw = "" | "take" | "none";
-/* หลายคัน = "ยานพาหนะที่เลือก" แทน "ยานพาหนะคันนี้" (radioPick การเบิกอะไหล่ ของ carPartsScreen · R112) */
 const drawOpts = (who: string) => [{ Text: "เบิกอะไหล่", SupportingText: "เลือกอะไหล่ที่ต้องเบิกให้" + who }, { Text: "ไม่เบิกอะไหล่", SupportingText: who + "ไม่ใช้อะไหล่จากการเบิก" }];
 interface CarEdit { oil: number; spec: OilSpec; picks: number[]; qty: Record<number, number>; manual: ManualPart[]; draw: Draw }
 type Buffer = Record<number, CarEdit>;
@@ -82,11 +50,9 @@ const bufferOf = (d: Draft, cars: number[]): Buffer => Object.fromEntries(cars.m
     draw: d.draw?.[c] === "none" ? "none" : (d.picks[c] || []).some((x) => x !== 0) || (d.manual?.[c] ?? []).length ? "take" : "",
   }];
 }));
-/* ค่าเริ่มต้นของยานพาหนะ 1 คัน (ปุ่มต้นแบบ ล้างค่า) */
 const EMPTY_EDIT: CarEdit = { oil: 0, spec: { grade: "", code: "", litre: "" }, picks: [], qty: {}, manual: [], draw: "" };
 type Manual = { name: string; brand: string; model: string; code: string; qty: string; unit: string };
 const EMPTY_M: Manual = { name: "", brand: "", model: "", code: "", qty: "", unit: "" };
-/* แก้แถว: k = ลำดับในรายการเพิ่มเติม · pi = อะไหล่จากคลัง (แก้จำนวนได้อย่างเดียว) */
 type Editing = { kind: "new" } | { kind: "manual"; k: number } | { kind: "stock"; pi: number };
 
 function CarParts() {
@@ -97,17 +63,15 @@ function CarParts() {
   const mock = useMock();
   const id = sp.get("id") ?? "new";
   const plan = id === "new" ? undefined : findPlan(mock.plans, id);
-  const denied = usePlanGate(plan, "own");   // หน่วยงานเปิดแผนของหน่วยงานอื่น → หน้ารายการ (ตรวจสิทธิ์ 9 พ.ย. 2569)
+  const denied = usePlanGate(plan, "own");
   const d = id === "new" ? mock.draft : mock.edit && plan && mock.edit.editOf === plan.mr ? mock.edit : null;
   const qp = sp.get("q");
-  const q = qp != null && qp !== "" && !Number.isNaN(Number(qp)) ? Number(qp) : d?.q ?? 0;   // 0 = แท็บทั้งหมด (R111 · BACKLOG ข้อ 90)
-  /* แผนที่ดำเนินการ: คันที่ล็อก (ไตรมาสเสร็จแล้ว · ปิดงานแล้ว) แก้อะไหล่ไม่ได้ (liveEdit.ts · BACKLOG ข้อ 64) */
+  const q = qp != null && qp !== "" && !Number.isNaN(Number(qp)) ? Number(qp) : d?.q ?? 0;
   const locks = plan && isLive(plan) ? liveLocks(mock, plan) : null;
   const cars = d ? (q ? inQuarter(d, q) : planCars(d)).filter((i) => !locks?.locked(i)) : [];
   const formHref = id === "new" ? "/new/" : "/edit/?id=" + id + (sp.get("from") ? "&from=" + sp.get("from") : "");
   const formCrumb = plan ? "แก้ไขแผน " + plan.mr : "สร้างแผน";
 
-  /* หลายคัน = ยานพาหนะที่ติ๊กมา (อยู่ในไตรมาสนี้ · แท็บทั้งหมด = อยู่ในแผน) มากกว่า 1 คัน */
   const bulk = (sp.get("cars") ?? "").split(",").filter(Boolean).map(carIndexOf).filter((i) => cars.includes(i));
   const isBulk = bulk.length > 1;
   const [buf, setBuf] = useState<Buffer | null>(null);
@@ -121,16 +85,13 @@ function CarParts() {
   const [pending, setPending] = useState<{ spec: ConfirmSpec; run: () => void } | null>(null);
   useEffect(() => {
     if (!ok) return;
-    if (!d || !cars.length) { router.replace(formHref); return; }   // ไม่มีฟอร์มค้าง / ไตรมาส (แท็บทั้งหมด = แผน) ไม่มียานพาหนะ → กลับฟอร์ม
+    if (!d || !cars.length) { router.replace(formHref); return; }
     if (!buf) {
       const b = bufferOf(d, cars);
-      /* หลายคัน: ค่าตั้งต้น = ค่าของคันแรกเมื่อทุกคันที่เลือกกำหนดไว้เหมือนกัน · ต่างกัน = ยังไม่เลือก */
       if (isBulk && bulk.some((c) => JSON.stringify(b[c]) !== JSON.stringify(b[bulk[0]]))) b[bulk[0]] = { ...EMPTY_EDIT, spec: { ...EMPTY_EDIT.spec } };
       setBuf(b); setOrigBuf(JSON.parse(JSON.stringify(b)));
     }
   }, [ok, d, cars, buf, formHref, router, isBulk, bulk]);
-  /* ปุ่มต้นแบบ (แถบต้นแบบ · lib/protoForm.ts): กรอกข้อมูลตัวอย่าง = ยานพาหนะคันที่เปิดอยู่ เบิกอะไหล่ · เก็บตัวอย่างและเปลี่ยน (เบอร์ รหัส ลิตร) · ไส้กรอง CAR_PICK ⇒ ปุ่มบันทึกกดได้
-     ล้างค่า = คันนี้กลับเป็นยังไม่เลือก (ยังไม่บันทึกลงแผนจนกดบันทึก · คันอื่นไม่แตะ) */
   const pCar = buf ? (isBulk ? bulk[0] : cars.includes(carIndexOf(sp.get("car"))) ? carIndexOf(sp.get("car")) : cars[0]) : undefined;
   useProtoForm(ok && buf && pCar != null && !denied ? {
     fill: () => setBuf((b) => b && { ...b, [pCar]: { ...b[pCar], draw: "take", oil: 2, spec: { grade: OIL_GRADES[1] ?? OIL_GRADES[0], code: OIL_SPEC.code, litre: OIL_SPEC.litre }, picks: [...new Set([...b[pCar].picks, ...CAR_PICK])] } }),
@@ -148,7 +109,6 @@ function CarParts() {
     if (e.picks.includes(pi)) { const { [pi]: _x, ...qty } = e.qty; void _x; set({ picks: e.picks.filter((x) => x !== pi), qty }); }
     else set({ picks: [...e.picks, pi] });
   };
-  /* เลือกเปลี่ยนน้ำมัน: รหัสและจำนวนลิตรตั้งต้นตาม OIL_SPEC (จอ "เลือกเปลี่ยนน้ำมัน — ระบุเบอร์น้ำมัน รหัส จำนวนลิตร") · เบอร์ให้เลือกเอง */
   const setOil = (v: string) => {
     const k = OIL_PLAN_OPTS.indexOf(v);
     set({ oil: k, spec: oilChanges(k) ? { grade: e.spec.grade, code: e.spec.code || OIL_SPEC.code, litre: e.spec.litre || OIL_SPEC.litre } : e.spec });
@@ -159,7 +119,6 @@ function CarParts() {
   const canSave = e.draw === "none" || (e.draw === "take" && e.picks.length + e.manual.length > 0);
   const goCar = (i: number) => { setOpen(""); setQuery(""); router.replace("/car-parts/?id=" + id + "&q=" + q + "&car=" + carParam(i) + (sp.get("from") ? "&from=" + sp.get("from") : "")); };
 
-  /* popup ระบุอะไหล่เพิ่มเติม / แก้ไขแถว */
   const openNew = () => { setM(EMPTY_M); setEditing({ kind: "new" }); };
   const openManual = (k: number) => { const x = e.manual[k]; setM({ name: x.name, brand: x.brand ?? "", model: x.model ?? "", code: x.code, qty: String(x.qty), unit: x.unit ?? "" }); setEditing({ kind: "manual", k }); };
   const openStock = (pi: number) => { setM({ name: PARTS[pi].name, brand: PART_BM[pi][0], model: PART_BM[pi][1], code: PARTS[pi].code, qty: String(qtyOf(pi)), unit: PARTS[pi].unit }); setEditing({ kind: "stock", pi }); };
@@ -187,17 +146,15 @@ function CarParts() {
       const cur = s[key];
       if (!cur) return s;
       const picks = { ...cur.picks }, qty = { ...(cur.qty ?? {}) }, manual = { ...(cur.manual ?? {}) }, oils = { ...(cur.oils ?? {}) }, oilSpec = { ...(cur.oilSpec ?? {}) }, draw = { ...(cur.draw ?? {}) };
-      /* เขียนเฉพาะคันที่แก้ในหน้านี้ · หลายคัน = ค่าของหน้านี้ลงทุกคันที่เลือก */
       const out: [number, CarEdit][] = isBulk ? bulk.map((i) => [i, { ...e, manual: e.manual.map((m) => ({ ...m })), qty: { ...e.qty }, picks: [...e.picks] }])
         : Object.entries(buf).map(([c, b]): [number, CarEdit] => [Number(c), b]).filter(([i, b]) => i === car || JSON.stringify(b) !== JSON.stringify(origBuf[i]));
       out.forEach(([i, b]) => {
         const change = oilChanges(b.oil), litre = Number(b.spec.litre) || 0;
-        /* ไม่เบิกอะไหล่ = เก็บแค่น้ำมันไฮดรอลิก ไม่มีอะไหล่จากคลังและรายการเพิ่มเติม */
         const v = b.draw === "none" ? { ...b, picks: [], qty: {}, manual: [] } : b;
         if (b.draw === "none") draw[i] = "none"; else delete draw[i];
         oils[i] = v.oil;
         oilSpec[i] = v.spec;
-        picks[i] = change ? [0, ...v.picks] : v.picks;   // เปลี่ยนน้ำมัน = น้ำมันไฮดรอลิกเข้ารายการอะไหล่ (ลิตร = จำนวน)
+        picks[i] = change ? [0, ...v.picks] : v.picks;
         const q2: Record<number, number> = Object.fromEntries(Object.entries(v.qty).filter(([pi]) => v.picks.includes(Number(pi))));
         if (change) q2[0] = litre;
         qty[i] = q2;
@@ -221,7 +178,6 @@ function CarParts() {
     ...e.manual.map((x, k) => [x.name, x.brand || "-", x.model || "-", x.code || "-", String(x.qty), x.unit || "-", icons(x.name, () => openManual(k), () => set({ manual: e.manual.filter((_, j) => j !== k) }))]),
   ];
   const stockEdit = editing?.kind === "stock";
-  /* หลายคัน: ตารางยานพาหนะที่เลือก + Alert หลายรุ่น (ยี่ห้อ/รุ่นต่างกัน · R112 เดิมเตือนต่างประเภท) / กำหนดไว้แล้ว */
   const bulkModels = new Set(bulk.map((i) => CAND[i].model)).size;
   const bulkSet = bulk.filter((i) => decided(d, i)).length;
   const draws = drawOpts(isBulk ? "ยานพาหนะที่เลือก" : "ยานพาหนะคันนี้");

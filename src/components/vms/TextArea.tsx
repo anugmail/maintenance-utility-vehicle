@@ -1,9 +1,4 @@
 "use client";
-/* Figma: "Text area" — ไฟล์ (Component) VMS Plus หน้า Inputs (node 2:6) · สเปก figma-spec/Text area.json
-   variant: State = Default | Filled | Hover | Focused | Disabled | Readonly | Error | Error Hover | Error Focused | Error Readonly · Size = md
-   property: Label · Label text · Optional · Info icon · Text · Show Placeholder · Helper · Helper text · Trailing icon (ปิด)
-   ค่า: กว้างตั้งต้น 352 · ป้าย (Input label) → ช่อง ห่าง 8 · ช่องสูง 120 · ขอบใน 8/8/8/12 · รัศมี 8 · ขอบ 1 gray-300 (สีตาม State เหมือน Text input — containerTone)
-        ตัวอักษร 16 Regular (ค่า black · placeholder gray-400) · มุมขวาล่าง ไอคอน resize-right 16 (กราฟิกจาก figma-spec/svg) · Helper 12 gray-600 (Error error-600) */
 import { useId, type TextareaHTMLAttributes } from "react";
 import { asset } from "@/lib/basePath";
 import { cx } from "@/lib/cx";

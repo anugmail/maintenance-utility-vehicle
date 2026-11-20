@@ -1,8 +1,3 @@
-/* โดนัท + ตัวเลขรวมตรงกลาง + ตารางคำอธิบาย — เลียนแบบ VMS+ หน้า "แดชบอร์ดยานพาหนะ" การ์ด "สถานะยานพาหนะ" / "กลุ่มเชื้อเพลิง" (page-vehicles.png)
-   วาดด้วย inline SVG (วงกลม stroke-dasharray · ช่องไฟ 2px ระหว่างชิ้น) · ตารางคำอธิบาย = สี · ชื่อ · จำนวน · %
-   กดชิ้นโดนัทหรือแถวในตาราง = เพิ่ม/เอาตัวกรองนั้นออกทั้งหน้า · ชิ้นที่เลือกอยู่หนาขึ้น ชิ้นอื่นจางลง · ชี้ที่ชิ้น = ป้ายชื่อ (title)
-   LegendTable ใช้ร่วมกับตารางสรุปใต้กราฟแท่ง (ColumnChart)
-   ไม่ใช่ component ของไลบรารี PEA — ข้อยกเว้นเจ้าของงาน 12 พ.ย. 2569 เฉพาะแดชบอร์ด S4 S24 */
 import { cx } from "@/lib/cx";
 import { HUE, nf, pct, type Hue } from "./palette";
 
@@ -47,7 +42,6 @@ export function Donut({ slices, unit, labelHead, onPick }: { slices: Slice[]; un
 
 export interface LegendRow { key: string; hue: Hue; label: string; cells: string[]; active?: boolean }
 
-/** ตารางคำอธิบาย/ตารางสรุป: คอลัมน์แรก จุดสี + ชื่อ · คอลัมน์ตัวเลขชิดขวา · แถวรวมท้าย (foot) · กดแถว = onPick */
 export function LegendTable({ head, rows, foot, onPick }: { head: string[]; rows: LegendRow[]; foot?: string[]; onPick?: (key: string) => void }) {
   return (
     <table className="w-full border-collapse text-sm">

@@ -1,9 +1,4 @@
 "use client";
-/* Figma: "Dropdown list item" — ไฟล์ (Component) VMS Plus หน้า Dropdowns (node 2:8) · สเปก figma-spec/Dropdown list item.json
-   variant: State = Default | Hover | Selected | Selected Hover | Disabled
-   property: Text · Supporting · Supporting text · Supporting 2 · Supporting text 2 · Avatar (ปิด — สี avatar ไม่มี token ดู COMPOSED.md)
-   ค่า: สูง 40 · ขอบในซ้าย/ขวา 8 · ช่องไฟ 8 · รัศมี 4 · ข้อความ 16 Regular black (Selected brand-900 · Disabled gray-400)
-        บรรทัดรอง 12 gray-600 คั่นด้วยขีด gray-300 · Hover พื้น gray-200 · Selected มีไอคอน check 24 brand-900 ท้ายแถว */
 import { cx } from "@/lib/cx";
 import { Ms } from "./Ms";
 
