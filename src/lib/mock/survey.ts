@@ -97,9 +97,9 @@ const c1145 = carOf("82-1145"), c6789 = carOf("82-6789"), c4458 = carOf("80-4458
 const doneRec = (plate: string, by: string, owner: string, answers: number[], at: string, remark?: string): SurveyRecord =>
   ({ info: surveyInfo(plate, by, owner), answers, remark, at, by });
 const seeds = (): Seed[] => [
-  { id: "rp.MTD-691003-014", kind: "repair", no: "MTD-691003-014", work: "ระบบไฮดรอลิกกระเช้ารั่วซึม", plate: c1145?.plate ?? "82-1145 ขอนแก่น", vtype: c1145?.type ?? "-", owner: c1145?.owner ?? "-",
-    caretaker: c1145?.ctrl || "-", provider: "กบค.", closedAt: "15/10/2569",
-    pairs: [["หมายเลขงานซ่อม", "RAM000245"], ["อาการที่แจ้ง", "ระบบไฮดรอลิกกระเช้ารั่วซึม"], ["วันที่ / เวลาที่ซ่อมเสร็จ", "15/10/2569 16:30 น."]] },
+  { id: "rp.MTD-691020-007", kind: "repair", no: "MTD-691020-007", work: "ไฟส่องสว่างกระเช้าไม่ติด", plate: c1145?.plate ?? "82-1145 ขอนแก่น", vtype: c1145?.type ?? "-", owner: c1145?.owner ?? "-",
+    caretaker: c1145?.ctrl || "-", provider: "กบค.", closedAt: "22/10/2569",
+    pairs: [["หมายเลขงานซ่อม", "RAM000261"], ["อาการที่แจ้ง", "ไฟส่องสว่างกระเช้าไม่ติด"], ["วันที่ / เวลาที่ซ่อมเสร็จ", "22/10/2569 16:00 น."]] },
   { id: "oh.ORZ6900002.72-6648", kind: "oh", no: "ORZ6900002", work: "ซ่อมระบบไฮดรอลิกกระเช้า", plate: "72-6648 สงขลา", vtype: "รถกระเช้า", owner: "กฟต.3 สงขลา",
     caretaker: "นายอดิศักดิ์ ทองสุข", provider: "กบค.", closedAt: "05/10/2569",
     pairs: [["ชื่อแผน", "Overhaul ประจำปีงบ 2569 — รถกระเช้า"], ["ใบสั่งจ้างเลขที่", "PO-690201"], ["ชื่อ Purchase Order", "ซ่อมระบบไฮดรอลิกกระเช้า"], ["ยี่ห้อ/รุ่น", "HINO FG1J"]] },
