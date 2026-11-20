@@ -332,6 +332,29 @@ async function preImport(names) {
   for (let i = 0; i < jobs.length; i += 10) await Promise.all(jobs.slice(i, i + 10).map(j => j()));
   return jobs.length;
 }
+/* ชิ้นซ้อนที่ไลบรารีไม่ publish (ชื่อขึ้นต้น _ เช่น _File upload item base) นำเข้าด้วย key ไม่ได้ (20 พ.ย. 2569 ผู้ใช้เจอจอ W.6 W.19–W.27 พัง)
+   ⇒ หาจาก instance ที่ซ้อนอยู่ใน component ที่นำเข้าได้แล้ว (เช่น File upload) แล้วใช้ main component ของมัน · ไม่ต้องสแกนทั้งไฟล์ */
+const NESTED_HOST = { '_File upload item base': ['File upload', '_File upload base'] };
+async function resolveNested(names) {
+  const got = [];
+  for (const name of names) {
+    if (INDEX.has(name)) continue;
+    const hosts = (NESTED_HOST[name] || []).filter(h => INDEX.has(h));
+    for (const h of hosts) {
+      const host = INDEX.get(h);
+      let n = null;
+      try { n = host.findOne(x => x.type === 'INSTANCE' && x.name === name); } catch (e) { n = null; }
+      if (!n) continue;
+      let mc = null;
+      try { mc = await n.getMainComponentAsync(); } catch (e) { mc = null; }
+      if (!mc) continue;
+      const holder = mc.parent && mc.parent.type === 'COMPONENT_SET' ? mc.parent : mc;
+      INDEX.set(name, holder); ROUTE[name] = 'ซ้อนใน ' + h; got.push(name);
+      break;
+    }
+  }
+  return got;
+}
 let RESOLVED = false;   // หาครบแล้วในรอบเปิดปลั๊กอินนี้ ⇒ Feature ถัดไป/กดซ้ำ ไม่ต้องหาใหม่ (18 พ.ย. 2569)
 async function resolveFast() {
   if (RESOLVED) { log('ใช้ component ที่หาไว้แล้วตอนเปิดปลั๊กอินรอบนี้'); return; }
@@ -342,6 +365,8 @@ async function resolveFast() {
   t = Date.now();
   await resolveAll(lib);   // 18 พ.ย. 2569 ฐาน origin: resolveAll มีแคช pluginData (componentCache · เช็คชื่อ · โหลดทุกหน้าเฉพาะตอนจำเป็น · จำตัวที่ไม่มี) แล้ว ⇒ เลิกใช้ rcache.js ของเรา
   log('⏱ resolveAll ' + secs(t));
+  const nest = await resolveNested(Object.keys(NESTED_HOST).filter(n => NEEDED.includes(n) && !INDEX.has(n)));
+  if (nest.length) log('ชิ้นซ้อนที่นำเข้าตรงไม่ได้ หยิบจาก component ที่ซ้อนอยู่: ' + nest.join(' · '));
   t = Date.now();
   const lab = await importLabels();
   if (lab.length) log('ป้ายข้างจอจากไลบรารี: ' + lab.join(' · ') + ' ' + secs(t));

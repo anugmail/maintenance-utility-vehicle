@@ -65,7 +65,7 @@ class Node {
     for (const k of src.kids || []) this.children.push(new Node(k, this));
   }
   findOne(fn) { return this.findAll(fn)[0] || null; }
-  async getMainComponentAsync() { return this._main || null; }   // 4 พ.ย. 2569: instance ที่มาจากดัมป์ (ไม่ผ่าน makeInstance) ก็ต้องมีเมธอดนี้ เหมือน Figma จริง — ดัมป์ maintain-d รุ่นใหม่มี Progress steps เป็น instance
+  async getMainComponentAsync() { if (this._main) return this._main; const set = this._mainName && typeof SETS !== 'undefined' && SETS.get(this._mainName); if (!set) return null; if (set.type !== 'COMPONENT_SET') return set; const want = this._variant || {}; return set.children.find(c => Object.keys(want).every(k => c.variantProperties && c.variantProperties[k] === want[k])) || set.children[0] || null; }   // 20 พ.ย. 2569: instance ซ้อนในตัว component (ดัมป์) ชี้ main ได้เหมือน Figma จริง   // 4 พ.ย. 2569: instance ที่มาจากดัมป์ (ไม่ผ่าน makeInstance) ก็ต้องมีเมธอดนี้ เหมือน Figma จริง — ดัมป์ maintain-d รุ่นใหม่มี Progress steps เป็น instance
   findAll(fn) { const out = []; const w = (n) => { for (const c of n.children) { if (!fn || fn(c)) out.push(c); w(c); } }; w(this); return out; }
   findAllWithCriteria(c) { return this.findAll(n => c.types.includes(n.type)); }
   insertChild(i, c) { if (c.parent) c.parent.children = c.parent.children.filter(x => x !== c); c.parent = this; this.children.splice(i, 0, c); }
@@ -235,6 +235,7 @@ for (const m of code0.matchAll(/"([^"]+)": \["([0-9a-f]{40})", (true|false)\]/g)
 const imp = (set) => async (key) => {
   const name = BYKEY[key]; const n = name && SETS.get(name);
   if (!n) throw new Error('key ' + key + ' ไม่อยู่ในไลบรารีที่เปิดใช้');
+  if (process.env.UNPUB === '1' && /^[_.]/.test(name)) throw new Error('key ' + key + ' ไม่ได้ publish (ชื่อขึ้นต้น _ หรือ .)');   // UNPUB=1 จำลอง Figma จริง: ชิ้นซ้อนที่ไม่ publish นำเข้าด้วย key ไม่ได้ (20 พ.ย. 2569)
   if (set !== (n.type === 'COMPONENT_SET')) throw new Error('key ' + key + ' ชนิดไม่ตรง (set=' + set + ')');
   // 3 พ.ย. 2569: เดิมหาจากชื่ออย่างเดียว key ผิดก็ผ่าน (Horizontal radio groups ใส่ key ของ instance ใน UI Release#2 ที่ชี้ไลบรารีอื่น → Figma จริงนำเข้าไม่ได้)
   if (n._key && n._key !== key) throw new Error('key ' + key + ' ของ ' + name + ' ไม่ตรงกับไฟล์ Component (' + n._key + ')');
