@@ -403,6 +403,7 @@ async function buildFeature(devices, pick, happyOnly) {
    2) สเปกบอร์ดแบบ image section ที่ figjam-plugin อ่านได้ (รูปแบบ 3-figjam-board.js) แยกไฟล์ Happy flow + ราย journey (ภาพทั้งไฟล์โหลดรอบเดียว 208 ภาพหนักเกิน)
    3) ในไฟล์ FigJam เปิด "Maintain-D → FigJam board" ติ๊ก Feature แผนบำรุงรักษา (กลุ่ม "อื่น ๆ") */
 const FJ_RE = /^MF \/ (H?\d+(?:\.\d+)+) · (.+?) › (.+?) — (.+)$/;
+const FJ_LAYOUT = true;   // false = แบบเดิม (คอลัมน์ละจอ + ลูกศร ผ่าน figjam-plugin ของพี่นุ)
 const FJ_COLOR = { happy: [241, 254, 253], j: [[248, 245, 255], [245, 251, 255], [255, 251, 240], [255, 240, 250], [249, 249, 249]] };
 const fjKey = (code) => (code[0] === 'H' ? '0' : '1') + code.replace('H', '').split('.').map(x => x.padStart(3, '0')).join('.');
 function fjShots(page, devices, pick) {
@@ -449,10 +450,86 @@ function fjBoards(done, target) {   // done = ภาพที่ export แล�
   });
   return out;
 }
+/* บอร์ด FigJam จัดวางแบบหน้า Figma (ผู้ใช้สั่ง 20 พ.ย. 2569 "อยากให้ของ Figjam แสดงแบบ Figma")
+   ทุกชิ้นของชุดล่าสุดบนหน้า Feature (หัว Feature · หัวส่วน · แถบ journey · แถบขั้น · ป้าย Device · จอ) ส่งเป็นภาพพร้อมตำแหน่งจริง
+   ชิ้นที่ด้านยาวเกิน FJL_MAX (createImage ของ FigJam รับ ≤ 4096) ⇒ พื้นหลังเป็น rect แล้วไล่ลูกต่อ · แยกไฟล์ตาม pluginData mf: happy (title happy happy-*) · journey j (j · ไฟล์แรกได้ full) */
+const FJL_MAX = 4000;
+const fjlSolid = (n, key) => { const ps = (n[key] && n[key] !== figma.mixed ? n[key] : []).filter(f => f.visible !== false && f.type === 'SOLID'); return ps.length ? ps[ps.length - 1] : null; };
+const fjlRgb = (c) => [Math.round(c.r * 255), Math.round(c.g * 255), Math.round(c.b * 255)];
+function fjlRegions(page, devices, pick) {
+  const top = page.children.filter(n => n.visible !== false && ownedNode(n));
+  const titles = top.filter(n => (n.getPluginData && n.getPluginData(MF_TAG)) === 'title');
+  const y0 = titles.length ? Math.max(...titles.map(n => n.y)) : -Infinity;
+  const mobOk = devices.some(m => m), deskOk = devices.some(m => !m);
+  const js = pick && pick.length ? new Set(pick.map(i => String(+i))) : null;
+  const list = top.filter(n => n.y >= y0).sort((a, b) => a.y - b.y || a.x - b.x);
+  let last = 'title';
+  const regions = new Map();
+  for (const n of list) {
+    let tag = (n.getPluginData && n.getPluginData(MF_TAG)) || '';
+    if (!tag) tag = last; else last = tag;
+    const mob = / · mobile$/.test(n.name) || /^MF · Mobile$/.test(n.name), desk = / · desktop$/.test(n.name) || (n.type === 'FRAME' && /^MF \/ /.test(n.name) && !mob) || /^MF · Desktop$/.test(n.name);
+    if ((mob && !mobOk) || (desk && !deskOk)) continue;
+    const ji = /^happy-(\d+)$/.exec(tag) ? RegExp.$1 : /^\d+$/.test(tag) ? tag : null;
+    if (js && ji !== null && !js.has(ji)) continue;
+    const key = tag === 'title' || tag === 'happy' || /^happy-/.test(tag) ? 'happy' : tag === 'full' ? 'full' : tag;
+    if (!regions.has(key)) regions.set(key, []);
+    regions.get(key).push(n);
+  }
+  const full = regions.get('full'); regions.delete('full');
+  const jKeys = [...regions.keys()].filter(k => k !== 'happy').sort((a, b) => +a - +b);
+  if (full && jKeys.length) regions.set(jKeys[0], full.concat(regions.get(jKeys[0])));
+  return { regions, jKeys, all: list };
+}
+async function fjlFlatten(n, ox, oy, items, sendImg) {
+  const leaf = !('children' in n) || !n.children.length;
+  const b = (leaf && n.absoluteRenderBounds) || n.absoluteBoundingBox || { x: n.x, y: n.y, width: n.width, height: n.height };   // ใบ (เช่นข้อความในกล่องกว้างเต็มแถว) ใช้ขอบที่วาดจริง ภาพไม่ถูกยืด
+  const box = { x: Math.round(b.x - ox), y: Math.round(b.y - oy), w: Math.round(b.width), h: Math.round(b.height) };
+  if (box.w < 1 || box.h < 1) return;
+  if (Math.max(box.w, box.h) <= FJL_MAX || leaf) {
+    const scale = Math.min(Math.max(box.w, box.h) <= 2048 ? 2 : 1, FJL_MAX / Math.max(box.w, box.h));
+    const bytes = await n.exportAsync({ format: 'PNG', constraint: { type: 'SCALE', value: scale } });
+    items.push(Object.assign({ src: await sendImg(bytes) }, box));
+    return;
+  }
+  const fill = fjlSolid(n, 'fills'), stroke = fjlSolid(n, 'strokes');
+  if (fill || stroke) items.push(Object.assign({ rect: { color: fill ? fjlRgb(fill.color) : null, a: fill ? (fill.opacity == null ? 1 : fill.opacity) : 0, radius: typeof n.cornerRadius === 'number' ? n.cornerRadius : 0, stroke: stroke ? fjlRgb(stroke.color) : null } }, box));
+  for (const c of n.children) if (c.visible !== false) await fjlFlatten(c, ox, oy, items, sendImg);
+}
+async function exportFigJamLayout(page, devices, pick, target) {
+  const { regions, jKeys, all } = fjlRegions(page, devices, pick);
+  if (!all.length) return null;
+  const ox = Math.min(...all.map(n => n.x));
+  let seq = 0, sent = 0;
+  const files = [];
+  const sendImg = async (bytes) => { const file = 'L' + String(++seq).padStart(4, '0') + '.png'; figma.ui.postMessage({ type: 'shot', dir: FJ_DIR, file, bytes, n: seq, total: seq }); sent++; files.push(file); return 'figjam/' + FJ_DIR + '/' + file; };
+  const head = (title) => ({ version: 1, layout: 1, anchor: 'below', generatedAt: new Date().toISOString(), title, target: target || undefined });
+  const boards = [];
+  const make = async (nodes, file, title, name, color) => {
+    const oy = Math.min(...nodes.map(n => n.y)), items = [];
+    for (const n of nodes) await fjlFlatten(n, ox, oy, items, sendImg);
+    const w = Math.max(...items.map(i => i.x + i.w)), h = Math.max(...items.map(i => i.y + i.h));
+    boards.push({ file, spec: Object.assign(head(title), { sections: [{ kind: 'layout', name, color, w, h, items }] }) });
+  };
+  if (regions.has('happy')) await make(regions.get('happy'), FJ_BOARD + '-happy.json', FJ_TITLE + ' · Happy flow', FJ_TITLE + ' · Happy flow', FJ_COLOR.happy);
+  for (const k of jKeys) { const j = +k; await make(regions.get(k), FJ_BOARD + '-' + (j + 1) + '.json', FJ_TITLE + ' · ' + (j + 1) + ' ' + FEATURE[j].title, FJ_TITLE + ' · ' + (j + 1) + ' ' + FEATURE[j].title, FJ_COLOR.j[j % FJ_COLOR.j.length]); }
+  return { boards, sent };
+}
 async function exportFigJam(devices, pick) {
   errors.length = 0; const t0 = Date.now();
   const fp = await featurePage(false), page = fp && fp.page;
   if (!page) { log('ไม่พบ Page "' + FEATURE_PAGE[0] + '" — กดสร้าง feature ก่อน'); return; }
+  if (FJ_LAYOUT) {
+    const target = await tgtCurrent();
+    log('ส่งหน้า "' + page.name + '" ไป FigJam แบบจัดวางตามหน้า Figma');
+    const r = await exportFigJamLayout(page, devices, pick, target ? { name: target.name, url: target.url } : null);
+    if (!r) { log('ไม่พบชิ้นของปลั๊กอินบนหน้า "' + page.name + '"'); return; }
+    for (const b of r.boards) figma.ui.postMessage({ type: 'fj-file', path: b.file, text: JSON.stringify(b.spec), board: true });
+    figma.ui.postMessage({ type: 'fj-done', shots: r.sent, boards: r.boards.map(b => b.file) });
+    log('export แล้ว ภาพ ' + r.sent + ' ชิ้น · บอร์ด ' + r.boards.length + ' ไฟล์: ' + r.boards.map(b => b.spec.title.replace(FJ_TITLE + ' · ', '')).join(' · ') + (errors.length ? ' · ⚠ เตือน ' + errors.length + ' จุด' : '') + ' ' + secs(t0));
+    log('ขั้นต่อไป: ' + (target ? 'กด "เปิดบอร์ดปลายทาง" (' + target.name + ')' : 'เปิดบอร์ด FigJam ที่จะใช้') + ' → รันปลั๊กอินตัวนี้ในบอร์ดนั้น → กด "วางลงบอร์ดนี้"');
+    return;
+  }
   const { shots, older, skipped } = fjShots(page, devices, pick);
   if (!shots.length) { log('ไม่พบเฟรม "' + FEATURE_PREFIX + ' / …" ตามอุปกรณ์/journey ที่เลือก บนหน้า "' + page.name + '"'); return; }
   log('ส่งภาพจอ ' + shots.length + ' จอ ไปที่ out/figjam/' + FJ_DIR + '/' + (older ? ' · ข้ามชุดเก่าบนหน้า ' + older + ' จอ' : ''));

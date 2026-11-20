@@ -271,28 +271,36 @@ process.on('beforeExit', () => {
   if (process.env.DEVICES === 'desktop') [...keys].forEach(k => { if (/-m$/.test(k)) keys.delete(k); });
   const files = FJ.shots.map(m => m.file);
   if (new Set(files).size !== files.length) bad.push('ชื่อไฟล์ภาพซ้ำ');
-  if (FJ.shots.length !== keys.size) bad.push('ส่งภาพ ' + FJ.shots.length + ' ไฟล์ แต่จอบนหน้า ' + keys.size + ' จอ');
+  if (FJ.shots.length < keys.size) bad.push('ส่งภาพ ' + FJ.shots.length + ' ไฟล์ แต่จอบนหน้า ' + keys.size + ' จอ');
   if (FJ.shots.some(m => m.dir !== FDIR)) bad.push('โฟลเดอร์ภาพผิด (ต้อง ' + FDIR + ')');
   const boards = FJ.files.filter(f => f.board);
   if (!FJ.done) bad.push('ไม่มีข้อความ fj-done');
-  if (!FJ.files.some(f => /manifest\.json$/.test(f.path))) bad.push('ไม่ได้ส่ง manifest.json');
   const dir = require('path').join(ROOT, 'out', 'test-mf'); require('fs').mkdirSync(dir, { recursive: true });
-  let nImg = 0;
+  let nImg = 0, nScreens = 0;
+  const minX = [];
   for (const b of boards) {
     const spec = JSON.parse(b.text);
     if (spec.anchor !== 'below' || !spec.title || !spec.sections.length) bad.push('สเปกไม่ครบ: ' + b.path);
     if (process.env.FJ_TARGET && !(spec.target && process.env.FJ_TARGET.indexOf(spec.target.url) === 0)) bad.push('สเปกไม่มีบอร์ดปลายทางที่เลือก: ' + b.path + ' ' + JSON.stringify(spec.target));
     for (const sec of spec.sections) {
-      const codes = sec.cols.map(c => c.label.split(' · ')[0]);
-      const key = (c) => c.replace('H', '').split('.').map(x => x.padStart(3, '0')).join('.');
-      if (codes.some((c, i) => i && key(codes[i - 1]) >= key(c))) bad.push('คอลัมน์ไม่เรียงตามรหัส: ' + sec.name);
-      sec.cols.forEach(c => c.images.forEach(im => { nImg++; if (!files.includes(im.src.split('/').pop())) bad.push('สเปกอ้างภาพที่ไม่ได้ส่ง: ' + im.src); if (im.w > 4000 || im.h > 4000) bad.push('ภาพเกิน 4000: ' + im.src); }));
+      if (sec.kind !== 'layout' || !Array.isArray(sec.items) || !sec.items.length) { bad.push('ไม่ใช่สเปกจัดวางแบบหน้า Figma: ' + sec.name); continue; }
+      if (Math.min(...sec.items.map(i => i.y)) !== 0) bad.push('ชิ้นบนสุดไม่อยู่ที่ y 0: ' + sec.name);
+      minX.push(Math.min(...sec.items.map(i => i.x)));
+      sec.items.forEach(im => {
+        if (!im.src) return;
+        nImg++;
+        if (!files.includes(im.src.split('/').pop())) bad.push('สเปกอ้างภาพที่ไม่ได้ส่ง: ' + im.src);
+        if (frames.some(f => Math.round(f.width) === im.w && Math.round(f.height) === im.h)) nScreens++;
+      });
+      if (sec.items.some(i => i.x + i.w > sec.w + 1 || i.y + i.h > sec.h + 1)) bad.push('ชิ้นเกินขนาด section: ' + sec.name);
     }
     require('fs').writeFileSync(require('path').join(dir, b.path), b.text);
   }
+  if (new Set(minX).size > 1) bad.push('คอลัมน์ Device ไม่ตรงกันระหว่างบอร์ด: ' + JSON.stringify(minX));
+  if (nScreens < keys.size) bad.push('จอในสเปก ' + nScreens + ' น้อยกว่าจอบนหน้า ' + keys.size);
   if (nImg !== FJ.shots.length) bad.push('ภาพในสเปก ' + nImg + ' ไม่เท่าภาพที่ส่ง ' + FJ.shots.length);
   bad.slice(0, 15).forEach(b => console.log('⚠ FigJam ' + b));
-  console.log('ส่งไป FigJam: ภาพ ' + FJ.shots.length + ' · บอร์ด ' + boards.length + ' ไฟล์ (' + boards.map(b => b.path).join(', ') + ') · ภาพในสเปก ' + nImg + (bad.length ? ' ⚠' : ' ✓'));
+  console.log('ส่งไป FigJam (จัดวางแบบหน้า Figma): ภาพ ' + FJ.shots.length + ' · จอ ' + nScreens + ' · บอร์ด ' + boards.length + ' ไฟล์ (' + boards.map(b => b.path).join(', ') + ') · ภาพในสเปก ' + nImg + (bad.length ? ' ⚠' : ' ✓'));
   if (bad.length) process.exitCode = 1;
 });
 /* MODE=export-figjam-all (17 พ.ย. 2569): ส่งทุก Feature รอบเดียว — ทุก Feature ใน PRE_FEATURES ต้องได้ภาพในโฟลเดอร์ของตัวเอง + บอร์ดของตัวเอง · ชื่อไฟล์บอร์ดไม่ชนกัน · สเปกอ้างภาพที่ส่งจริง */
@@ -312,7 +320,7 @@ process.on('beforeExit', () => {
     console.log('  ' + id + ': ภาพ ' + (dirs[dir] || 0) + ' (' + dir + ') · บอร์ด ' + mine.length);
   }
   let nImg = 0;
-  boards.forEach(b => JSON.parse(b.text).sections.forEach(s => s.cols.forEach(c => c.images.forEach(im => { nImg++; if (!sent.has(im.src)) bad.push('สเปกอ้างภาพที่ไม่ได้ส่ง ' + im.src); }))));
+  boards.forEach(b => JSON.parse(b.text).sections.forEach(s => (s.items || []).filter(im => im.src).forEach(im => { nImg++; if (!sent.has(im.src)) bad.push('สเปกอ้างภาพที่ไม่ได้ส่ง ' + im.src); })));
   if (!FJ.allDone) bad.push('ไม่มีข้อความ fj-all-done');
   bad.slice(0, 10).forEach(b => console.log('⚠ FigJam ทุก Feature ' + b));
   console.log('ส่งทุก Feature: ' + ids.length + ' Feature · ภาพ ' + FJ.shots.length + ' · บอร์ด ' + boards.length + ' · ภาพในสเปก ' + nImg + (bad.length ? ' ⚠' : ' ✓'));

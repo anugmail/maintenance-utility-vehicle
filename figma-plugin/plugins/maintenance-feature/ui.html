@@ -538,7 +538,7 @@ $('fjReload').onclick = loadFjParts;
 async function buildSpec(file) {   // โหลดสเปก + ภาพจาก serve.js แล้วส่งให้ส่วนวางบอร์ด (ลอกวิธีจาก figjam-plugin/ui.html ของพี่นุ)
   const r0 = await fetch(SERVE + file); if (!r0.ok) throw new Error('ไม่พบ ' + file + ' (' + r0.status + ')');
   const spec = await r0.json();
-  const srcs = [...new Set(spec.sections.flatMap(s => (s.cols || []).flatMap(c => c.images.map(i => i.src))))];
+  const srcs = [...new Set(spec.sections.flatMap(s => (s.cols || []).flatMap(c => c.images.map(i => i.src)).concat((s.items || []).filter(i => i.src).map(i => i.src))))];
   logLine('— ' + spec.title + ' · ภาพ ' + srcs.length);
   const images = [];
   for (const src of srcs) {

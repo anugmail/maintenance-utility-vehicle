@@ -53,7 +53,43 @@ const tick = () => new Promise(r => setTimeout(r, 0));
   console.log(fails ? '✗ บอร์ดปลายทาง ผิด ' + fails + ' ข้อ' : 'บอร์ดปลายทาง ผ่านทุกข้อ');
   if (fails) process.exitCode = 1;
   /* วางบอร์ด: ใช้เทสของ figjam-plugin (ของพี่นุ) แต่ให้โหลด code.js ของปลั๊กอินนี้ */
-  if (process.env.SPEC) {
+  const specFile = process.env.SPEC ? path.join(__dirname, '..', 'out', process.env.SPEC) : '';
+  const layoutSpec = specFile && fs.existsSync(specFile) ? JSON.parse(fs.readFileSync(specFile, 'utf8')) : null;
+  if (layoutSpec && layoutSpec.sections.some(s => s.kind === 'layout')) {
+    /* สเปกจัดวางแบบหน้า Figma (20 พ.ย. 2569): วางทุกชิ้นตามพิกัด · วางซ้ำแทนที่ section เดิม ไม่ซ้อน · ของคนอื่นบนบอร์ดไม่ถูกแตะ */
+    console.log('— วางบอร์ด ' + process.env.SPEC + ' แบบจัดวางตามหน้า Figma');
+    const page = { children: [] };
+    const node = (type) => { const n = { type, name: '', x: 0, y: 0, width: 100, height: 100, fills: [], strokes: [], children: [], parent: null,
+      resize(w, h) { this.width = w; this.height = h; }, resizeWithoutConstraints(w, h) { this.width = w; this.height = h; },
+      appendChild(c) { if (c.parent) c.parent.children.splice(c.parent.children.indexOf(c), 1); c.parent = this; this.children.push(c); },
+      remove() { const p = this.parent; if (p) p.children.splice(p.children.indexOf(this), 1); } }; return node.attach(n); };
+    node.attach = (n) => { n.parent = page; page.children.push(n); return n; };
+    const other = node('STICKY'); other.name = 'ของคนอื่น'; other.y = -500; other.height = 200;
+    const msgs = []; let handler = null, hashes = 0;
+    const figma = { editorType: 'figjam', fileKey: '', root: { name: 'บอร์ดทดสอบ', children: [page] }, currentPage: page,
+      showUI() {}, notify() {}, createSection: () => node('SECTION'), createShapeWithText: () => node('SHAPE_WITH_TEXT'), createSticky() {}, createConnector() {},
+      createImage: (b) => { if (!(b instanceof Uint8Array)) throw new Error('bytes เพี้ยน'); return { hash: 'h' + (++hashes) }; },
+      loadFontAsync: async () => {}, clientStorage: { async getAsync() {}, async setAsync() {} },
+      ui: { postMessage: (m) => msgs.push(m), set onmessage(f) { handler = f; }, get onmessage() { return handler; } } };
+    vm.runInNewContext(code, { figma, __html__: '', console, Set, Map, Promise, Object, Array, JSON, Math, Symbol, Error, setTimeout, String, Number, RegExp });
+    await tick();
+    const srcs = [...new Set(layoutSpec.sections.flatMap(x => x.items.filter(i => i.src).map(i => i.src)))];
+    const images = srcs.map(src => ({ src, bytes: new Uint8Array([1, 2, 3]) }));
+    const run = async () => { await handler({ type: 'build', spec: layoutSpec, images }); return msgs.filter(m => m.type === 'done' || m.type === 'error').pop(); };
+    let r = await run();
+    ok(r && r.type === 'done', 'วางบอร์ดเสร็จ ' + JSON.stringify(r && (r.result || r.message)));
+    const secs = page.children.filter(n => n.type === 'SECTION');
+    const items = layoutSpec.sections.reduce((a, x) => a + x.items.length, 0);
+    ok(secs.length === layoutSpec.sections.length && secs.reduce((a, x) => a + x.children.length, 0) === items, 'section ' + secs.length + ' · ชิ้น ' + secs.reduce((a, x) => a + x.children.length, 0) + '/' + items);
+    const sec0 = layoutSpec.sections[0], s0 = secs[0];
+    ok(sec0.items.every((it, i) => s0.children[i].x === 80 + it.x && s0.children[i].y === 80 + it.y && s0.children[i].width === Math.max(1, it.w)), 'ทุกชิ้นอยู่ตามพิกัดเดิม (+ขอบ 80)');
+    ok(s0.children.filter(c => c.fills[0] && c.fills[0].type === 'IMAGE').length === sec0.items.filter(i => i.src).length, 'ภาพทุกชิ้นใส่เป็น fill แบบ IMAGE');
+    ok(s0.y >= other.y + other.height + 400 && page.children.includes(other), 'วางต่อใต้ของที่มีอยู่ ไม่แตะของคนอื่น');
+    r = await run();
+    ok(page.children.filter(n => n.type === 'SECTION').length === layoutSpec.sections.length, 'วางซ้ำแทนที่ section เดิม ไม่ซ้อน');
+    console.log(fails ? '✗ วางบอร์ด ผิด ' + fails + ' ข้อ' : 'วางบอร์ดแบบหน้า Figma ผ่านทุกข้อ');
+    if (fails) process.exitCode = 1;
+  } else if (process.env.SPEC) {
     const rf = fs.readFileSync, want = path.join(__dirname, 'shared', 'figjam-plugin', 'code.js');
     fs.readFileSync = function (p, enc) { return path.resolve(String(p)) === want ? rf.call(fs, CODE, enc) : rf.apply(fs, arguments); };
     console.log('— วางบอร์ด ' + process.env.SPEC + ' ด้วย code.js ของปลั๊กอินนี้ (เทสของ figjam-plugin)');

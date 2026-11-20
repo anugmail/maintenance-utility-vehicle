@@ -2,7 +2,7 @@
 
 ปลั๊กอิน Figma ของงานบำรุงรักษาตามวาระ แยกออกมาจากรีโปงานซ่อม (Maintenance-Request-Form) เมื่อ 19 พ.ย. 2569
 
-โฟลเดอร์นี้ในรีโป maintenance-utility-vehicle เป็นสำเนาจาก liinux-cw/figma-plugin f7e6b6c (20 พ.ย. 2569) · เปิดเทอร์มินัลที่ `figma-plugin/` ก่อนรัน `npm run …` ทุกคำสั่ง
+โฟลเดอร์นี้ในรีโป maintenance-utility-vehicle เป็นสำเนาจาก liinux-cw/figma-plugin ddcfe21 (20 พ.ย. 2569) · เปิดเทอร์มินัลที่ `figma-plugin/` ก่อนรัน `npm run …` ทุกคำสั่ง
 
 | ปลั๊กอิน | โฟลเดอร์ | ทำอะไร |
 |---|---|---|
