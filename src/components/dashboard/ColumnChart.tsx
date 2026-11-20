@@ -1,15 +1,9 @@
-/* กราฟแท่งแนวตั้ง (แท่งเดี่ยว / แท่งซ้อน) — เลียนแบบ VMS+ หน้า "แดชบอร์ดยานพาหนะ" การ์ด "อายุการใช้งานของยานพาหนะ" (page-vehicles.png)
-   และ "แนวโน้มรายเดือน" ของ "แดชบอร์ดฟลีทการ์ด" (page-fleetcard.png): แกนตั้งเส้นจางพร้อมตัวเลข · แท่งปลายมน · ป้ายใต้แท่ง · ตัวเลขรวมบนแท่ง
-   แกนเดียว (ไม่มีแกนคู่) · หลายชุดข้อมูล = แท่งซ้อน ช่องไฟ 2px + คำอธิบายสีด้านบน · ชี้ที่แท่ง = ป้ายรายละเอียด (title)
-   กดแท่ง = เพิ่ม/เอาตัวกรองนั้นออกทั้งหน้า · แท่งที่เลือกอยู่มีกรอบ แท่งอื่นจางลง · ความสูงแท่งเป็นค่าที่คำนวณตอนรัน (style height)
-   ไม่ใช่ component ของไลบรารี PEA — ข้อยกเว้นเจ้าของงาน 12 พ.ย. 2569 เฉพาะแดชบอร์ด S4 S24 */
 import { cx } from "@/lib/cx";
 import { Legend, type StackSeries } from "./BarList";
 import { HUE, nf } from "./palette";
 
 export interface ColGroup { key: string; label: string; sub?: string; values: number[]; active?: boolean }
 
-/** ขั้นแกนตั้ง 1 · 2 · 5 × 10^n ให้ได้ราว 4 ช่อง */
 function ticksOf(max: number) {
   if (max <= 0) return [0, 1];
   const raw = max / 4, p = 10 ** Math.floor(Math.log10(raw)), step = [1, 2, 5, 10].map((m) => m * p).find((s) => s >= raw) ?? raw;
@@ -19,7 +13,6 @@ function ticksOf(max: number) {
 
 export function ColumnChart({ series, groups, unit, onPick, height = "h-48", compact, scroll }: {
   series: StackSeries[]; groups: ColGroup[]; unit: string; onPick?: (key: string) => void; height?: string; compact?: boolean;
-  /** แท่งหลายเดือนบนจอแคบ: เลื่อนแนวนอนได้ (กว้างอย่างน้อย 560) ป้ายใต้แท่งไม่ถูกตัด */
   scroll?: boolean;
 }) {
   const totals = groups.map((g) => g.values.reduce((a, v) => a + v, 0));

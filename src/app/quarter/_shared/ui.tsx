@@ -1,7 +1,4 @@
 "use client";
-/* ตัวช่วยจัดวางของหน้า batch B (S4 S6 S9 S7 S8 S15 S16 S17) — ไม่ใช่ component ใหม่ เป็นการจัดวาง component ไลบรารีตาม core.js
-   BtnRow = btnRow() (desktop ปุ่มแรกซ้าย ปุ่มท้ายขวา · ปุ่มเดียวชิดขวา · มือถือเต็มแถวแบ่งเท่ากัน ช่องไฟ 16)
-   DataTable = tbl() (desktop Table · มือถือ Mobile table ผ่าน MobileCards) · Section = col('Section', …, 16) */
 import { useRouter } from "next/navigation";
 import { Children, useState, type ReactNode } from "react";
 import type { Crumb } from "@/components/vms/Breadcrumbs";
@@ -12,19 +9,14 @@ import { cx } from "@/lib/cx";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 
 export const MENU_HOME = "บำรุงรักษาตามวาระ";
-/* หน้ารายละเอียดแผน (batch A) — ทางเข้า S4 และ S15 อยู่ที่หน้านั้น · รากเว็บไม่มี /plans/ (CLAUDE.md ข้อ 10) */
 export const planDetailHref = (id: string) => "/detail/?id=" + id;
-/* หน้า "ไตรมาส n" = หน้าแผนเดินทางของไตรมาส (/quarter/trips/ · รีวิว 5 พ.ย. 2569 "หน้านี้คือหน้า ไตรมาส 1") · S4 เป็นแดชบอร์ด /parts/ แล้ว (6 พ.ย. 2569) */
 export const tripsHref = (id: string, q: number) => "/quarter/trips/?id=" + id + "&q=" + q;
 export const quarterHref = tripsHref;
-/* Breadcrumbs ใต้หน้าไตรมาส (pageHead ใน core.js · 5 พ.ย. 2569): บำรุงรักษาตามวาระ › <ชื่อแผน> › ไตรมาส n [› ต่อท้าย]
-   ชื่อแผน → หน้ารายละเอียดแผน · ไตรมาส n → หน้าไตรมาส (หน้าปัจจุบันไม่มีลิงก์) */
 export const quarterCrumbs = (id: string, planName: string, q: number, ...more: string[]): Crumb[] => [
   { Text: MENU_HOME, href: "/" }, { Text: planName || "แผน " + id, href: planDetailHref(id) },
   more.length ? { Text: "ไตรมาส " + q, href: tripsHref(id, q) } : { Text: "ไตรมาส " + q }, ...more.map((t) => ({ Text: t })),
 ];
 
-/* ย้อนกลับ = หน้าก่อนหน้า (เปิดตรงจากลิงก์ = ไปหน้าที่กำหนด) */
 export function useBack(fallback: string) {
   const router = useRouter();
   return () => (typeof window !== "undefined" && window.history.length > 1 ? router.back() : router.push(fallback));
@@ -43,8 +35,6 @@ export function Content({ children }: { children: ReactNode }) {
   return <div className="flex flex-col gap-8">{children}</div>;
 }
 
-/* pagination = จำนวนรายการที่ Table pagination บอก (ตัวแบ่งหน้าของจอเอง) · ไม่ส่ง = แบ่งหน้าเองเมื่อเกิน 10 แถว (tblShort ของ screens.js f59001e · 9 พ.ย. 2569 เจ้าของงาน
-   "รายละเอียด ควรเป็นการ จอง section แบบได้แค่ 10 รายการ และถ้าเกินจะมี pagiation มา") · perPage ตามจอ (ประวัติ 12 รายการหน้าเดียว) */
 export function DataTable({ columns, rows, pagination, perPage = 10, rowKey }: { columns: TableColumn[]; rows: TableValue[][]; pagination?: number; perPage?: number; rowKey?: (r: TableValue[], i: number) => string }) {
   const mob = useBreakpoint() === "Mobile";
   if (pagination == null) return <PagedTable columns={columns} rows={rows} rowKey={rowKey} />;
@@ -53,8 +43,6 @@ export function DataTable({ columns, rows, pagination, perPage = 10, rowKey }: {
   return <Table columns={columns} rows={rows} rowKey={rowKey} Pagination={pg} />;
 }
 
-/* ตารางที่แบ่งหน้า (หน้าละ perPage · Table pagination กดเปลี่ยนหน้าได้) — ทุกตารางที่ไม่มีตัวแบ่งหน้าของตัวเอง (tblShort ของ screens.js f59001e · Table ของไลบรารี 10 แถว R8)
-   ไม่เกิน perPage = ไม่มี Table pagination · rowKey ได้ลำดับในรายการทั้งหมด (ไม่ใช่ลำดับในหน้า) · เปลี่ยนแท็บ/ข้อมูลชุดใหม่ ให้ผู้เรียกส่ง key ใหม่ ⇒ กลับหน้า 1 */
 export function PagedTable({ columns, rows, perPage = 10, rowKey }: { columns: TableColumn[]; rows: TableValue[][]; perPage?: number; rowKey?: (r: TableValue[], i: number) => string }) {
   const mob = useBreakpoint() === "Mobile";
   const [page, setPage] = useState(1);
@@ -66,7 +54,4 @@ export function PagedTable({ columns, rows, perPage = 10, rowKey }: { columns: T
   return <Table columns={columns} rows={shown} rowKey={key} Pagination={pg} />;
 }
 
-/* ตารางยานพาหนะของแผนเดินทาง (S7 S8 เดิม TRIP_VIEW_COLS) ย้ายไปชุดกลาง TRIP_V_COLS ใน lib/mock/tripCols.ts (R82 · 9 พ.ย. 2569) */
-
-/* ช่อง "›" เปิดรายการ (GO ใน screens.js) */
 export const go = (label: string, onClick: () => void): TableValue => ({ actions: [{ IconSwap: "keyboard_arrow_right-20-400-round", label, onClick }] });

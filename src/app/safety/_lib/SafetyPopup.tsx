@@ -1,17 +1,4 @@
 "use client";
-/* S26 Safety Inspection · popup อัปโหลดเอกสารและเลือกผลบนหน้ารายการ (รอบ 4 · เจ้าของงาน 11 พ.ย. 2569 · BACKLOG ข้อ 67ง)
-   _"ไม่อยากให้ต้องเปิดหน้าใหม่ แต่เป็นหน้าลิสต์แล้วพอเลือก upload ก็แสดง pop up ให้ upload เอกสาร และมีให้เลือกผล"_ + ผล 4 ตัวเลือก "ผ่าน ไม่ผ่าน ระงับ และ ให้แก้ไข"
-   → เปลี่ยน 12 พ.ย. 2569 (BACKLOG ข้อ 69 · เจ้าของงาน 12 พ.ย. 2569 เลือกตามไฟล์สรุปประชุม VMS Plus (Notion "meeting 11/11/68" หัวข้อ 9)): ผล 3 ตัวเลือก ผ่าน ไม่ผ่าน ระงับ (ข้อบกพร่องเล็กน้อยที่ผู้ตรวจยอมให้ = ผ่าน · ไม่มีช่องหมายเหตุ) · ไฟล์ PDF อย่างเดียว ไม่มีปุ่มถ่ายรูป
-   PopupModal (Modal ของไลบรารี · มือถือ Bottom sheet · แบบ popup วันเวลาปิดงาน S10):
-     หัว "ผลการตรวจ ปจ.2" (เจ้าของงาน "modal ก็แสดงชื่อเป็นผลการตรวจ ปจ.2") · บรรทัดรอง = ทะเบียน · รหัสยานพาหนะ · ประเภทยานพาหนะ
-     → DisplayBox "ผลล่าสุด" (วันที่ตรวจ · ผล · ครบกำหนดครั้งถัดไป) + File upload readonly "เอกสารผลล่าสุด" ปุ่มดาวน์โหลด (มีไฟล์เท่านั้น)
-     → Content divider → Text input วันที่ตรวจ + Date picker Type=Single ภาษาไทย (ไม่เกินวันนี้ · ตั้งต้น 10/11/2569)
-     → Input label "วาระการตรวจ" + Radio text card ×3 3 เดือน · 6 เดือน · 12 เดือน (ข้อ 67จ · ตั้งต้น = วาระของครั้งล่าสุด หรือ 12 เดือน)
-     → Input label "ผลการตรวจ" + Radio text card ×3 ผ่าน · ไม่ผ่าน · ระงับ (ข้อ 69 · เดิม ×4 มี ให้แก้ไข)
-     → File upload "เอกสารการตรวจ ปจ.2" PDF สูงสุด 10 ไฟล์ (ชนิดอื่น = Error · ดาวน์โหลดก่อนบันทึกได้) · ข้อ 69 เอาปุ่ม "ถ่ายรูป" ของมือถือออก (เดิม PDF JPG PNG + กล้อง — COMPOSED.md ศ2.)
-     ปุ่ม ยกเลิก / บันทึก (Disabled จนมีไฟล์และผล) → toast "บันทึกผลการตรวจ ปจ.2 สำเร็จ" ปิด popup แถวในรายการเปลี่ยนทันที
-   ผู้ดูแลยานพาหนะ (readonly): หัวเดียวกัน · ผลล่าสุด + เอกสารดาวน์โหลดได้ · ไม่มีส่วนเพิ่มผล · ปุ่ม "ปิด" อย่างเดียว
-   ไม่มีตารางประวัติ (หน้ารายละเอียดเอาออกรอบ 4 · ผลครั้งก่อนๆ ยังเก็บใน MockState.safety — BACKLOG ค.) */
 import { useState } from "react";
 import { DisplayBox } from "@/components/patterns/DisplayBox";
 import { PopupModal } from "@/components/patterns/PopupModal";
@@ -35,7 +22,6 @@ import { toUpload } from "@/app/trips/_lib/ui";
 import { resultPill } from "./ui";
 
 const FILE_ERR = "กรุณาแนบเอกสารการตรวจ ปจ.2 อย่างน้อย 1 ไฟล์";
-/* ชนิดไฟล์ PDF อย่างเดียว (ข้อ 69 · เจ้าของงาน 12 พ.ย. 2569 ตามสรุปประชุม VMS Plus หัวข้อ 9 · เดิม 11 พ.ย. 2569 "ไฟล์รองรับ ไฟล์ pdf jpeg png ถ่ายรูปได้" ข้อ 67ค) — ลากวางข้ามตัวกรอง accept ได้ ⇒ ตรวจซ้ำตอนรับไฟล์ */
 const ACCEPT = ".pdf,application/pdf";
 const TYPE_ERR = "รองรับเฉพาะไฟล์ PDF";
 const okType = (f: File) => /\.pdf$/i.test(f.name) || f.type === "application/pdf";
@@ -43,7 +29,6 @@ const toThai = (d: Date) => String(d.getDate()).padStart(2, "0") + "/" + String(
 const fromThai = (v: string) => { const m = v.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/); return m ? new Date(Number(m[3]) - 543, Number(m[2]) - 1, Number(m[1])) : null; };
 const TODAY_D = fromThai(MA_TODAY)!;
 const dueText = (c: SafetyCar) => { const d = dueCell(c); return typeof d === "string" ? d : d.text + (d.sub ? " (" + d.sub + ")" : ""); };
-/** เอกสารของผลล่าสุด: ครั้งที่บันทึกจาก popup (ใหม่สุดของวันล่าสุด) หรือเอกสารตอนปิดงาน S10 */
 export function latestFiles(c: SafetyCar): UploadFile[] {
   if (!c.last) return [];
   const up = [...c.uploads].reverse().find((u) => u.date === c.last);
@@ -56,14 +41,12 @@ export function SafetyPopup({ car: c, readonly, onClose }: { car: SafetyCar | nu
   const [date, setDate] = useState(MA_TODAY);
   const [cal, setCal] = useState(false);
   const [result, setResult] = useState<SafetyResult | null>(null);
-  /* วาระการตรวจ (ข้อ 67จ) ตั้งต้น = วาระของครั้งล่าสุด หรือ 12 เดือน */
   const [cycle, setCycle] = useState<SafetyCycle | null>(12);
   const [files, setFiles] = useState<UploadFile[]>([]);
   const [touched, setTouched] = useState(false);
   const [badType, setBadType] = useState(false);
   const [seen, setSeen] = useState<string | null>(null);
   const reset = () => { setDate(MA_TODAY); setCal(false); setResult(null); setCycle(c?.cycle ?? 12); setFiles([]); setTouched(false); setBadType(false); };
-  /* เปิด popup ของคันใหม่ = ค่าเริ่ม (แบบ DateTimeModal) */
   const key = c?.id ?? null;
   if (key !== seen) { if (key) reset(); setSeen(key); }
   const take = (fs: File[]) => {
@@ -72,7 +55,6 @@ export function SafetyPopup({ car: c, readonly, onClose }: { car: SafetyCar | nu
     rememberFiles(good);
     setFiles((x) => [...x, ...good.map(toUpload)].slice(0, 10));
   };
-  /* ปุ่มต้นแบบ (แถบต้นแบบ · CLAUDE.md ข้อ 17) เมื่อ popup เปิด: กรอกข้อมูลตัวอย่าง = วันนี้ · ผ่าน · ไฟล์ 1 ไฟล์ · ล้างค่า = ค่าเริ่มของ popup */
   useProtoForm(c && !readonly ? {
     fill: () => { setDate(MA_TODAY); setResult(0); setCycle(c.cycle ?? 12); setFiles((x) => (x.length ? x : [{ name: "Safety-Inspection-" + c.id + ".pdf", size: "1.2 MB", bar: true }])); setTouched(false); setBadType(false); },
     clear: reset,
@@ -94,7 +76,6 @@ export function SafetyPopup({ car: c, readonly, onClose }: { car: SafetyCar | nu
     <PopupModal open title="ผลการตรวจ ปจ.2" sub={summary} width={640}
       ok="บันทึก" okDisabled={!canSave} onOk={save} onCancel={onClose} showOk={!readonly} cancel={readonly ? "ปิด" : "ยกเลิก"}>
       <div className="flex flex-col gap-4">
-        {/* มือถือ: Bottom sheet header ไม่มี Supporting text ⇒ บรรทัดยานพาหนะ (14 gray-600 แบบ Supporting text ของ Modal header) อยู่บนสุดของเนื้อหา */}
         {mob && <p className="text-sm text-gray-600">{summary}</p>}
         <DisplayBox Title="ผลล่าสุด" perRow={2} pairs={[["วันที่ตรวจ", c.last ?? "-"], ["วาระการตรวจ", c.cycle ? cycleText(c.cycle) : "-"], ["ผล", resultPill(c)[0]], ["ครบกำหนดครั้งถัดไป", dueText(c)]]} />
         {lf.length > 0 && <FileUpload LabelText="เอกสารผลล่าสุด" readonly bar files={lf} onDownload={(i) => downloadFile(lf[i].name)} />}
@@ -103,7 +84,6 @@ export function SafetyPopup({ car: c, readonly, onClose }: { car: SafetyCar | nu
           <TextInput LabelText="วันที่ตรวจ" LeadingIconSwap="calendar_month-24-300-round" Text={date} Placeholder="วว/ดด/ปปปป" readOnly State={cal ? "Focused" : "Filled"} onClick={() => setCal(true)} />
           {cal && <div className="flex"><DatePicker Type="Single" {...TH_PICKER} max={TODAY_D} today={TODAY_D} value={{ start: fromThai(date) ?? TODAY_D, end: fromThai(date) ?? TODAY_D }} month={fromThai(date) ?? TODAY_D}
             onCancel={() => setCal(false)} onApply={(r) => { if (r.start) setDate(toThai(r.start)); setCal(false); }} /></div>}
-          {/* วาระการตรวจ = Radio text card ×3 แบบเดียวกับผลการตรวจด้านล่าง (ข้อ 67จ · ตัวเลือกน้อย เห็นครบโดยไม่ต้องเปิด dropdown) */}
           <div className="flex flex-col gap-2">
             <InputLabel LabelText="วาระการตรวจ" />
             <RadioTextCards row options={SAFETY_CYCLES.map((n) => ({ Text: cycleText(n) }))} value={cycle == null ? null : cycleText(cycle)}

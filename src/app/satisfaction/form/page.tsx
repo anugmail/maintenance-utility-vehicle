@@ -1,18 +1,4 @@
 "use client";
-/* แบบประเมินความพึงพอใจ B · ฟอร์มประเมิน 1 งาน (/satisfaction/form/?id=ma.T1.82-6789) — เรื่องแยก เมนูของตัวเอง (BACKLOG ข้อ 75 · เดิม S27 Y.4–Y.10)
-   โครง = เฟรม B ของประเมินผู้รับจ้าง (userflow/figma-ref/contractor-eval-ABC-2569-11-12.txt · evalForm() ของ contractor-eval-plugin) · เนื้อหา = แบบสำรวจ XCHO
-   หน้า Create ⇒ Section header (R3) · Page header "แบบประเมินความพึงพอใจ {เลขที่งาน}" ย้อนกลับ · Breadcrumbs แบบประเมินความพึงพอใจ › เลขที่งาน
-   Content ช่องไฟ 32:
-     ข้อมูลงาน (ประเภทงาน · เลขที่งาน · ทะเบียน · ประเภทยานพาหนะ · ช่องตามประเภทงาน · วันที่ปิดงาน · หน่วยงานที่ให้บริการ (ระบบเติม อ่านอย่างเดียว) · วันที่ประเมิน · ผู้ประเมิน)
-     · ข้อมูลผู้ใช้รถฯ (5 ช่องตามแบบสำรวจ เติมให้ อ่านอย่างเดียว · กล่องแสดงข้อมูล)
-     → Alert Info "ให้คะแนนทุกข้อ 1 ถึง 5 ดาว" + สเกล 1–5 (ข้อความที่เจ้าของงานกำหนด 12 พ.ย. 2569) → 4 ด้าน (หัวด้าน Featured icon + Section header Badge "x/10" · ข้อ = Input label + Rating + หมายเหตุข้อ n ไม่บังคับ)
-     → หมายเหตุ/ข้อเสนอแนะเพิ่มเติม (Text area ไม่บังคับ) → สรุปคะแนน (ให้คะแนนแล้ว n / 11 ข้อ · คะแนนรวม x / 55 · ค่าเฉลี่ย · ผลระดับ "รอเคาะเกณฑ์")
-     → ยกเลิก / บันทึกการประเมิน (Disabled จนครบ 11 ข้อ)
-   บันทึก → popup "ยืนยันการประเมิน" (บันทึกแล้วแก้ไขไม่ได้) → สำเร็จ toast "ประเมินความพึงพอใจสำเร็จ ({เลขที่งาน})" → รายการแท็บประเมินแล้ว
-     · ไม่สำเร็จ (แถบต้นแบบ "จำลองบันทึกไม่สำเร็จ") toast Error "บันทึกการประเมินไม่สำเร็จ กรุณาลองใหม่อีกครั้ง" อยู่หน้าเดิม ค่าที่กรอกไม่หาย
-   ยกเลิก/ย้อนกลับระหว่างกรอก → popup "ยืนยันการออก" (ข้อมูลที่กรอกไว้จะไม่ถูกบันทึก · ปิด / ออก) · ยังไม่กรอก = ออกทันที · ผู้ประเมิน = ผู้ดูแลยานพาหนะ (บทบาทอื่นอ่านอย่างเดียว ไม่มีปุ่มบันทึก)
-   ประเมินแล้ว → พาไปหน้าดูผล · ที่อยู่เดิม ?trip=&car= (S27) อ่านต่อได้
-   อ้างอิง: Page header · Section header · Alert · Featured icon · Input label · Rating · Text input · Text area · Primary/Secondary button ของไฟล์ Component + ConfirmDialog · DisplayBox (COMPOSED.md) */
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";
@@ -44,11 +30,10 @@ function SatForm() {
   const [notes, setNotes] = useState<string[]>(emptyNotes);
   const [remark, setRemark] = useState("");
   const [dlg, setDlg] = useState<"save" | "leave" | null>(null);
-  const saved = useRef(false);   // เพิ่งบันทึก ⇒ ไปรายการแท็บประเมินแล้ว (ไม่พาไปหน้าดูผล)
+  const saved = useRef(false);
   const id = sp.get("id") ?? legacyId(sp.get("trip"), sp.get("car"));
   const r0 = pending ? undefined : evalRecord(mock, id);
   const dirty = answers.some((x) => x != null) || notes.some((x) => !!x.trim()) || !!remark.trim();
-  /* ปุ่มต้นแบบ (แถบต้นแบบ · lib/protoForm.ts): กรอกข้อมูลตัวอย่าง = ครบ 11 ข้อ + หมายเหตุข้อ 8 + หมายเหตุท้ายฟอร์ม ⇒ บันทึกการประเมินกดได้ · ล้างค่า = ว่างทั้งฟอร์ม */
   useProtoForm(keeper && r0 && !r0.evaluated ? {
     fill: () => { setAnswers(sampleAnswers()); setNotes(sampleNotes()); setRemark(SAMPLE_FORM_REMARK); },
     clear: () => { setAnswers(emptyAnswers()); setNotes(emptyNotes()); setRemark(""); }, dirty } : null);
@@ -65,7 +50,7 @@ function SatForm() {
     if (dlg === "leave") { setDlg(null); leave(); return; }
     if (!surveyDone(answers)) return;
     setDlg(null);
-    if (mock.failSave) { notify(SAT_FAIL, "Error"); return; }   // จอ "บันทึกไม่สำเร็จ" (B.5) — อยู่หน้าเดิม
+    if (mock.failSave) { notify(SAT_FAIL, "Error"); return; }
     saved.current = true;
     saveSurvey(r, answers, notes, remark);
     notify(SAT_OK(r.no));

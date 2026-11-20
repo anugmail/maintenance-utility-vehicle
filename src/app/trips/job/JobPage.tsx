@@ -1,15 +1,4 @@
 "use client";
-/* S10 P2 · งานรายคัน ยังไม่เริ่ม — jobPage() ใน screens.js · แผนจ้างดำเนินการ = jobPage({ hire: true }) (กบค. ปิดงานแทนผู้รับจ้าง 4 พ.ย. 2569)
-   Page header (ทะเบียน · ป้ายสถานะงาน · ปุ่ม "บำรุงรักษาไม่ได้" + "เริ่มงาน") — กดเริ่มงาน = อยู่ระหว่างบำรุงรักษาทันที + toast "เริ่มงานบำรุงรักษาแล้ว" → Step 1 (5 พ.ย. 2569)
-   (อยู่ระหว่างบำรุงรักษา: กบค. เข้าขั้นที่ค้างจาก JobView · หน้านี้แบบอยู่ระหว่างบำรุงรักษาเหลือไว้ให้บทบาทอื่นดูอย่างเดียว)
-   → VehicleAndReporterInfo "ข้อมูลยานพาหนะ" (6) · "การนัดหมาย" (+ เริ่มงาน ผู้เริ่มงาน เมื่ออยู่ระหว่างบำรุงรักษา · แผนจ้าง: ผู้รับจ้าง ช่วงวันทำงาน แทนช่วงวันเดินทาง)
-   → (อยู่ระหว่างบำรุงรักษา) IncidentPhotoGallery "ภาพก่อนเริ่มงาน (n)" · Section header "น้ำมันไฮดรอลิก" + Radio text card 3 ใบ + เปลี่ยนน้ำมันครั้งล่าสุด
-   → Section label "รายการงานและอะไหล่ตามแผน (n)" + Secondary button "เพิ่มอะไหล่" + Table JOB_COLS (ไอคอนแก้ไข → popup แก้ไขอะไหล่ · ลบ → ยืนยันเอาอะไหล่ออก · เพิ่ม → popup เพิ่มอะไหล่ที่ใช้จริง — BACKLOG ข้อ 4)
-     (เก็บเป็นร่างของหน้าปิดงาน — workItems() ใน lib/mock/jobs.ts) · แผนจ้างมีปุ่ม ตาราง ไอคอนชุดเดียวกัน กบค. เป็นผู้กด
-   popup "บำรุงรักษาไม่ได้ · <ทะเบียน>" (cannotModal) → ยืนยัน → กลับหน้ารายละเอียดแผนเดินทาง + toast "บันทึกบำรุงรักษาไม่ได้แล้ว"
-   S23 ผู้รับจ้าง (jobPage({ vendor }) · R87 · V.3): ปุ่มหัวเหมือนกัน (บำรุงรักษาไม่ได้ · เริ่มงาน) · อะไหล่ตามแผนดูอย่างเดียว ไม่มีปุ่ม "เพิ่มอะไหล่" ไม่มีคอลัมน์ไอคอน (JOB_COLS 4 คอลัมน์)
-     · ผู้เริ่มงาน = ผู้รับจ้าง (HIRE_BY) · บำรุงรักษาไม่ได้ = สถานะ "แจ้งบำรุงรักษาไม่ได้" รอส่งตรวจงาน
-     · ส่งกลับแก้ไขคันที่แจ้งไม่ได้ไว้ (V.21) ปุ่มกลับเป็นแบบนี้ — VendorJob */
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ConfirmDialog } from "@/components/patterns/ConfirmDialog";
@@ -32,21 +21,16 @@ import { badgeOf, CannotPopup, DataTable, DateTimeModal, useCrumbs, jobHref, Las
 
 const JOB_COLS: TableColumn[] = [{ head: "รายการงาน" }, { head: "อะไหล่ตามแผน", width: 320 }, { head: "จำนวนตามแผน", width: 140 }, { head: "หน่วย", width: 110 }, { head: "", width: 104, Style: "Action icons" }];
 
-/* กล่อง "ข้อมูลยานพาหนะ" (6 คู่) — เลขไมล์/ชั่วโมงเครื่องจักรสะสมเป็นค่าคงที่ของจอ Figma (ค่าเดียวทั้งตรวจเองและใบจ้าง) */
 export const vehiclePairs = (t: JobTrip, c: TripCar): [string, string][] => {
   const [km, hr] = ODOMETER;
   return [["ทะเบียน", c.plate], ["ยี่ห้อ/รุ่น", c.model], ["ประเภท", c.type], ["หน่วยงานเจ้าของยานพาหนะ", c.owner], ["เลขไมล์สะสม", km], ["ชั่วโมงเครื่องจักรสะสม", hr]];
 };
-/* กล่อง "การนัดหมาย" — ตรวจเอง: แผนเดินทาง ช่วงวันเดินทาง · จ้าง: แผนเดินทาง ผู้รับจ้าง ช่วงวันทำงาน · + สถานที่ เบอร์ติดต่อ ผู้ดูแลยานพาหนะ (+ เริ่มงาน ผู้เริ่มงาน = กบค. ทั้งสองแบบ)
-   9 พ.ย. 2569 เบอร์ก่อนชื่อผู้ดูแล ตามคอลัมน์เบอร์ติดต่อ (jobBoxes · Figma c28dd82) */
-/* + "วันดำเนินการ" ของคันนี้ต่อจากช่วงวันเดินทาง/ช่วงวันทำงาน (R83 · jobBoxes ของ screens.js Figma 5963d05 · 9 พ.ย. 2569 ค่ำ เจ้าของงาน "ในรายคันอยากให้เห็นว่าแต่ละคันจะดำเนินการเมื่อไร") */
 export const appointmentPairs = (t: JobTrip, c: TripCar, j?: Job): [string, string][] => [
   ...((t.mode === "hire" ? [["แผนเดินทาง", t.name], ["ผู้รับจ้าง", t.vendor ?? "-"], ["ช่วงวันทำงาน", tripRange(t)]] : [["แผนเดินทาง", t.name], ["ช่วงวันเดินทาง", tripRange(t)]]) as [string, string][]),
   ["วันดำเนินการ", tripWork({ d1: t.d1, d2: t.d2, works: t.works }, c.id)],
-  ["สถานที่บำรุงรักษา", tripLoc(t, c)], ["เบอร์ติดต่อ", tripPhone(t, c)], ["ผู้ดูแลยานพาหนะ", tripCtrl(t, c)],   // jobBoxes 9 พ.ย. 2569
+  ["สถานที่บำรุงรักษา", tripLoc(t, c)], ["เบอร์ติดต่อ", tripPhone(t, c)], ["ผู้ดูแลยานพาหนะ", tripCtrl(t, c)],
   ...((j?.status === "doing" ? [["เริ่มงาน", j.startedAt ?? "-"], ["ผู้เริ่มงาน", j.startedBy ?? "-"]] : []) as [string, string][]),
 ];
-/* ใช้ไปแล้วตอนแจ้งบำรุงรักษาไม่ได้ระหว่างบำรุงรักษา — ตัวอย่างจอ I.16 (CANNOT_USED: น้ำมัน 30 ไส้กรองไฮดรอลิก 2) · ยังไม่เริ่ม = 0 */
 const usedWhileDoing = (parts: PlanPart[]) => parts.map((p) => (p.part === WORK[0].part ? 30 : p.part === WORK[1].part ? 2 : 0));
 
 export function JobPage({ trip, car, job, actor, vendor = false }: { trip: JobTrip; car: TripCar; job: Job; actor: boolean; vendor?: boolean }) {
@@ -61,14 +45,10 @@ export function JobPage({ trip, car, job, actor, vendor = false }: { trip: JobTr
   const [del, setDel] = useState<{ part: string; k: number } | null>(null);
   const [editK, setEditK] = useState<number | null>(null);
   const [adding, setAdding] = useState(false);
-  const [starting, setStarting] = useState(false);   // popup วันเวลาเริ่มงาน (11 พ.ย. 2569)
+  const [starting, setStarting] = useState(false);
 
-  /* อะไหล่ตามแผน: กบค. เพิ่ม แก้ไข ลบ ได้ตอนยังไม่เริ่ม/อยู่ระหว่างบำรุงรักษา (แผนจ้างด้วย) · บทบาทอื่นดูอย่างเดียว */
   const editParts = actor && !vendor;
   const oil = job.oilChoice ?? OIL_DEFAULT;
-  /* แก้ไข = popup แก้ไขอะไหล่ (partEditModal) · เพิ่ม = popup เพิ่มอะไหล่ที่ใช้จริง (partAddModal) · ลบ = ยืนยันการเอาอะไหล่ออก (PART_DEL_CONFIRM)
-     ค่าที่แก้เก็บเป็นร่างของหน้าปิดงาน (workItems) ⇒ เป็นค่าตั้งต้นของตาราง "รายการสภาพวัสดุอะไหล่" ตอนปิดงาน (BACKLOG ข้อ 4) · ยังไม่เริ่ม = ตามแผน (เปลี่ยนน้ำมัน) */
-  /* ยังไม่เริ่ม: แถวงานตามน้ำมันที่วางแผนไว้ (S21 · plannedOil) · อยู่ระหว่างบำรุงรักษา (บทบาทอื่นดู): ตามที่เลือกหน้างาน */
   const planned = plannedOil(useMock().plans, trip.planId, car.id);
   const work = editParts ? workShown(doing ? job : { ...job, oilChoice: job.oilChoice ?? planned }) : workShown({ ...job, close: undefined, oilChoice: doing ? oil : planned });
   const cols = editParts ? JOB_COLS : JOB_COLS.slice(0, 4);
@@ -123,7 +103,6 @@ export function JobPage({ trip, car, job, actor, vendor = false }: { trip: JobTr
       <PartEditModal item={editItem && { ...editItem, used: editItem.usedQty }} onCancel={() => setEditK(null)}
         onSave={(v) => { if (editItem) editPartUsed(trip, car, editItem.k, v.used); setEditK(null); }} />
       <PartAddModal open={adding} onCancel={() => setAdding(false)} onAdd={(p) => { addJobPart(trip, car, p); setAdding(false); }} />
-      {/* เริ่มงาน → popup วันเวลาเริ่มงาน ค่าเริ่มต้น = ตอนนี้ (11 พ.ย. 2569 เจ้าของงาน "ตอนที่เริ่มงานอยากให้มี pop up ให้กรอกวันเวลาเริ่มงาน") → Step 1 แก้ได้อีก */}
       <DateTimeModal open={starting} title={"เริ่มงาน · " + car.plate} sub="ระบุวันและเวลาที่เริ่มงานบำรุงรักษาของยานพาหนะคันนี้ แก้ไขได้ที่ขั้นตรวจสภาพก่อนบำรุงรักษา" label="เริ่มงาน"
         value={thaiNow()} ok="เริ่มงาน" onCancel={() => setStarting(false)}
         onOk={(at) => { setStarting(false); startJob(trip, car.id, planned, vendor, at); notify("เริ่มงานบำรุงรักษาแล้ว"); router.push(jobHref(trip, car.id, "receive/")); }} />

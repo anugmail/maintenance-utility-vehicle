@@ -1,9 +1,4 @@
 "use client";
-/* Figma: "VehicleAndReporterInfo" — ไฟล์ Maintain-D หน้า รายละเอียดงานซ่อม (node 175:79986) · สเปก figma-spec/VehicleAndReporterInfo.json (CLAUDE.md ข้อ 12)
-   กล่องแสดงข้อมูล desktop ที่ vehicleInfo() ใน screens.js ยืมมา · มือถือ = patterns/DisplayBox (แถวละ 2) ตามปลั๊กอิน
-   ค่า: Section label (Title · ไม่มี Supporting/Actions) → ห่าง 8 → Content พื้น gray-50 รัศมี 8 ขอบใน 24 ช่องไฟแถว 16
-        แถว = Content item row Column width=Full ช่องไฟ 16 · ช่อง = _Content item base Type="Text with label" ไม่มีไอคอน (Label 16 SemiBold · Text 16 Regular black)
-        แถวละ 4 ช่อง (ช่องที่ 2–4 เปิดตามจำนวน · Item 2/3/4) · BudgetSource ในกล่องซ่อนตาม vehicleInfo() */
 import { DisplayBox, chunk } from "@/components/patterns/DisplayBox";
 import { ContentItemRow, type KvPair } from "@/components/vms/ContentItemRow";
 import { SectionLabel } from "@/components/vms/SectionLabel";

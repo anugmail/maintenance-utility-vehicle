@@ -1,6 +1,4 @@
 "use client";
-/* Breakpoint ของไลบรารี: Desktop / Mobile — จอกว้างน้อยกว่า 768 ใช้แบบ Mobile (กติกา core.js "ใช้กับจอ < 768 (รวม tablet)")
-   component ที่มี variant Breakpoint ใช้ค่านี้เมื่อไม่ได้ส่ง prop Breakpoint มาเอง */
 import { useSyncExternalStore } from "react";
 
 export type Breakpoint = "Desktop" | "Mobile";

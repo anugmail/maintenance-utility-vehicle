@@ -1,10 +1,4 @@
 "use client";
-/* Figma: "Rating" — ไฟล์ (Component) VMS Plus หน้า Rating (node 107:2628) · สเปก figma-spec/Rating.json + figma-spec/_Rating star base.json
-   variant: Point = 0 | 0.5 | 1 | … | 5 · ลูก = "_Rating star base" ×5 (Fill = Full | Half | Empty · State = Default | Hover)
-   ค่า: แถวแนวนอน กว้าง 240 สูง 48 ไม่มีช่องไฟ · ดาวละ 48×48 ไอคอน star-48-300-round-fill
-        Full = Color/component/utility/warning/500 (= token warning-600) · Empty = Color/icon/tertiary (= token gray-300) · Hover สีเดียวกับ Default
-   ใช้แบบฟอร์มประเมินผู้รับจ้าง (contractor-eval-plugin question()): Input label แล้ว Rating ใต้ข้อความ · ดาวเริ่มว่าง (Point=0)
-   onChange = กดดาวที่ n ⇒ Point=n · ไม่ส่ง onChange = แสดงผลอย่างเดียว · Point ครึ่งดวงแสดงได้ (Half) แต่การกดให้ค่าเต็มดวง */
 import { cx } from "@/lib/cx";
 import { Ms } from "./Ms";
 

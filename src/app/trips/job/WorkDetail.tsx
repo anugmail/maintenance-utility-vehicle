@@ -1,13 +1,4 @@
 "use client";
-/* S10 P6 · งานรายคัน เสร็จสิ้น (ดู) — workDetail() ใน screens.js + S12 ส่วน "ผลการทดสอบน้ำมันไฮดรอลิก" (4 พ.ย. 2569 ทางเดียวที่บันทึกผลหลังปิดงาน)
-   Page header (ทะเบียน · ป้าย "เสร็จสิ้น" · ไม่มีปุ่ม) → VehicleAndReporterInfo "ข้อมูลยานพาหนะและงาน" (14) → IncidentPhotoGallery "ภาพก่อนเริ่มงาน (n)" (ไม่มีภาพตอนจบงาน)
-   → Section label "รายการงานและอะไหล่ที่ใช้จริง (n)" + Table WORK_COLS2 → Section label "ค่าใช้จ่ายของรถคันนี้ (บาท)" + Table + กล่องสรุป
-   → (เฉพาะคันที่เก็บตัวอย่าง) Section label "ผลการทดสอบน้ำมันไฮดรอลิก": Horizontal radio groups ผ่าน/ไม่ผ่าน (ครึ่งแถว) + File upload + กล่อง เก็บตัวอย่างเมื่อ / บันทึกผลเมื่อ
-     + ปุ่ม "บันทึกผลการทดสอบ" (ต้องเลือกผล "กรุณาเลือกผลการทดสอบ" · บันทึกแล้วแก้ได้อีก · toast "บันทึกผลการทดสอบน้ำมันไฮดรอลิกสำเร็จ") — บันทึกได้เฉพาะ กบค.
-   → (เฉพาะรถเครน/รถกระเช้า 4 พ.ย. 2569) Section label "Safety Inspection": File upload "เอกสาร Safety Inspection" (ไฟล์จากหน้าปิดงาน) + กล่อง บันทึกเอกสารเมื่อ
-     + ปุ่ม "บันทึกเอกสาร Safety Inspection" (toast "บันทึกเอกสาร Safety Inspection สำเร็จ") — ตาม "File upload" "Section label" "Primary button" ของไฟล์ Component
-     + จอ S10 "หน้างานรายคัน — เพิ่มเอกสาร Safety Inspection ภายหลัง" / "บันทึกเอกสาร Safety Inspection สำเร็จ" · บันทึกได้เฉพาะ กบค. บทบาทอื่นดูรายการไฟล์อย่างเดียว
-   แผนจ้างดำเนินการ (R87 · 10 พ.ย. 2569): Step 2 ไม่มีส่วนค่าใช้จ่าย ⇒ หน้านี้ไม่แสดงส่วน "ค่าใช้จ่ายของยานพาหนะคันนี้ (บาท)" (ไม่มีข้อมูลที่กรอก · แบบหน้างานที่ปิดแล้วของผู้รับจ้าง vendorJob · ยังไม่เคาะสำหรับ S10 I.26 — BACKLOG ค.) */
 import { useEffect, useState } from "react";
 import { IncidentPhotoGallery } from "@/components/maintain-d/IncidentPhotoGallery";
 import { VehicleAndReporterInfo } from "@/components/maintain-d/VehicleAndReporterInfo";
@@ -53,7 +44,6 @@ export function WorkDetail({ trip, car, job, kbk }: { trip: JobTrip; car: TripCa
   const costs = f.costs.filter((r) => r.name).map((r) => [r.name!, nf(Number(r.perDiem.replace(/\D/g, "")) || 0), nf(Number(r.lodging.replace(/\D/g, "")) || 0), String(r.days ?? 0), nf(personSum(r))]);
   const sum = costSummary(f);
   const photos = job.photos ?? [];
-  /* ปุ่มต้นแบบ S12 (แถบต้นแบบ · lib/protoForm.ts): กรอกข้อมูลตัวอย่าง = ผลการทดสอบ "ผ่าน" + ไฟล์ผลตรวจ 1 ไฟล์ · ล้างค่า = ยังไม่เลือก ไม่มีไฟล์ (ผลที่บันทึกไว้แล้วเปลี่ยนเมื่อกดบันทึกเท่านั้น) */
   useProtoForm(kbk && oilSampled(oil) ? {
     fill: () => { setSel(0); setFiles((x) => (x.length ? x : [{ name: "ผลตรวจน้ำมันไฮดรอลิก-" + car.plate.split(" ")[0] + ".pdf", size: "320 KB", bar: true }])); setErr(false); },
     clear: () => { setSel(-1); setFiles([]); setErr(false); },
@@ -78,7 +68,6 @@ export function WorkDetail({ trip, car, job, kbk }: { trip: JobTrip; car: TripCa
         <SectionLabel Title={"รายการงานและอะไหล่ที่ใช้จริง (" + work.length + ")"} />
         <DataTable cols={WORK_COLS2} rows={work} />
       </Section>
-      {/* แผนจ้าง: ค่าจ้าง ค่าเดินทาง ที่หน่วยงานกรอกตอนตรวจรับ (S23 · 11 พ.ย. 2569) */}
       {trip.mode === "hire" && job.hireCost && <Section>
         <SectionLabel Title="ค่าใช้จ่ายของยานพาหนะคันนี้ (บาท)" />
         <KvBox pairs={[["ค่าจ้าง", job.hireCost.wage + " บาท"], ["ค่าเดินทาง", job.hireCost.travel + " บาท"], ["รวม", nf(num(job.hireCost.wage) + num(job.hireCost.travel)) + " บาท"],

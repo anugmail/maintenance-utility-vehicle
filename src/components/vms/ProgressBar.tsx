@@ -1,7 +1,3 @@
-/* Figma: "Progress bar" — ไฟล์ (Component) VMS Plus หน้า Progress bar (node 2843:13902) · สเปก figma-spec/Progress bar.json
-   variant: Label = Right (ที่ต้นแบบใช้) | Top left · Progress = 0%…100% (ต้นแบบรับตัวเลขใดก็ได้ 0–100) · Size = md · property: Percentage
-   ค่า: Label=Right: แถบ + ตัวเลข ช่องไฟ 8 · แถบสูง 8 รัศมี 9999 · ราง gray-300 · แถบ brand-900 · ตัวเลข 14 Regular gray-600 ชิดขวา กว้าง 40
-   ในรายการไฟล์ (_File upload item base State=Completed) แถบ 100% เป็นสีเขียว success-500 → Color="Success" */
 import { cx } from "@/lib/cx";
 
 export function ProgressBar({ Progress, Percentage = true, Color = "Brand", className }: { Progress: number; Percentage?: boolean; Color?: "Brand" | "Success"; className?: string }) {

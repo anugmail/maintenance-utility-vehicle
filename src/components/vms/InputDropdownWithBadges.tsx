@@ -1,10 +1,4 @@
 "use client";
-/* Figma: "Input dropdown with badges" — ไฟล์ (Component) VMS Plus หน้า Dropdowns (node 2:8) · สเปก figma-spec/Input dropdown with badges.json
-   เลือกได้หลายค่า ค่าที่เลือกเป็นชิป Badge outline with remove icon (Color=Gray) ในช่อง
-   variant: State = Default | Selected | Hover | Focused | Disabled | Error | Error Hover | Error Focused · Size = md
-   property: Label · Label text · Optional · Info icon · Text · Leading icon (swap) · Helper · Helper text
-   ค่า: ช่องเหมือน Input dropdown (40 · ขอบใน 8/12 · รัศมี 8) · ชิปห่าง 8 · Selected แสดง 4 ชิป · Focused 2 ชิป + ช่องพิมพ์ (Text)
-        ค่าเกินจำนวนชิป → ชิปสุดท้ายเป็น "+n" (ตาม multiDropdown ใน core.js) */
 import { useCallback, useRef, type ReactNode } from "react";
 import { cx } from "@/lib/cx";
 import { useOutside } from "@/lib/useOutside";
@@ -21,9 +15,7 @@ export interface InputDropdownWithBadgesProps {
   LabelText?: string;
   Optional?: boolean;
   InfoIcon?: boolean;
-  /** ค่าที่เลือก = ชิป */
   values: string[];
-  /** ข้อความเมื่อยังไม่เลือก (property Text ตอนว่าง) */
   Placeholder?: string;
   LeadingIconSwap?: string;
   HelperText?: string;

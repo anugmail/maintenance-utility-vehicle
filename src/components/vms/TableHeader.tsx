@@ -1,12 +1,4 @@
 "use client";
-/* Figma: "Table header" — ไฟล์ (Component) VMS Plus หน้า Table headers (node 2096:36080) · สเปก figma-spec/Table header.json
-   variant: Breakpoint = Desktop | Mobile
-   property: Table title · Badge · Supporting text · Actions · Filters · More actions · Divider (ปิดตามกติกา R2/R13)
-   ใช้แบบ tableHeader() ใน core.js: ช่องค้นหา (Text input ไม่มีป้าย ไอคอน search) + ปุ่ม "ตัวกรอง" (Secondary button ไอคอน filter_list + Pill outline Brand = จำนวนตัวกรอง) · ชิปตัวกรอง Brand
-   Table title (5 พ.ย. 2569 ฟอร์มสร้างแผนแบบ A): Front Section = Line 4×24 brand-900 + Text 20 SemiBold black + Badge outline Gray ช่องไฟ 12 · ห่างแถวค้นหา 20
-   Actions: ปุ่มต่อจาก "ตัวกรอง" (Secondary button ช่องที่ 2–4 · Primary button ท้ายสุด ตามดัมป์) — Actions = ปุ่มที่ส่งมา
-   Desktop: ค้นหากว้าง 320 ซ้าย · ปุ่มขวา ช่องไฟ 12 · แถวชิปห่าง 20 ช่องไฟ 12
-   Mobile: เรียงลง ช่องไฟ 16 · ช่องค้นหา Size=lg เต็มแถว · ปุ่ม Size=lg ครึ่งแถว (ช่องที่ 2 = ปุ่มแรกของ Actions แบบ Request list ของ 5.10 Vehicle In Use (EV) · tableHeader() o.primary) */
 import { Children, type ReactNode } from "react";
 import { useBreakpoint, type Breakpoint } from "@/lib/useBreakpoint";
 import { cx } from "@/lib/cx";
@@ -17,25 +9,17 @@ import { TextInput } from "./TextInput";
 
 export interface TableHeaderProps {
   Breakpoint?: Breakpoint;
-  /** property Table title + Title (ไม่ใส่ = ปิด) */
   Title?: string;
-  /** property Badge — ข้อความใน Badge outline Gray ข้างหัวตาราง */
   Badge?: string | number | null;
-  /** คำค้น (property Text ของ Text input) */
   query?: string;
   Placeholder?: string;
   onQuery?: (q: string) => void;
-  /** ปุ่มตัวกรอง */
   onFilter?: () => void;
-  /** ปุ่มตัวกรอง (Action 1 swap) — false = ไม่มีปุ่มตัวกรอง เหลือช่องค้นหา + Actions (ฟอร์มแผน S1 S19 แท็บยานพาหนะในแผน · BACKLOG ข้อ 87) · ค่าเริ่ม true คงแบบเดิมของทุกหน้า */
   FilterButton?: boolean;
   FilterText?: string;
-  /** Pill outline ในปุ่มตัวกรอง = จำนวนตัวกรองที่ใช้อยู่ (ไม่ใส่ / 0 = ซ่อน) */
   FilterCount?: number | null;
-  /** property Filters — ชิปตัวกรองที่ใช้อยู่ */
   Filters?: string[];
   onRemoveFilter?: (f: string) => void;
-  /** ปุ่มต่อจาก "ตัวกรอง" (Secondary / Primary button ของไลบรารี) — ส่งขนาดตาม Breakpoint เอง (Mobile lg) */
   Actions?: ReactNode;
   className?: string;
 }

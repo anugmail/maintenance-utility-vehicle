@@ -1,18 +1,13 @@
 "use client";
-/* S8 S13 · กระดิ่ง + แผงแจ้งเตือนของ กรย. / ผู้ดูแลยานพาหนะ (S13 L.6 แจ้งเตือนปิดงาน รอรับทราบ → หน้าผลการบำรุงรักษาของคันนั้น) — bell() + notiPanel() ใน screens.js
-   กระดิ่ง = Nav button ใน Header navigation (AppFrame prop bell = จุด Indicator เมื่อมีแจ้งเตือนที่ยังไม่อ่าน)
-   AppFrame/HeaderNavigation ยังไม่มี prop กดกระดิ่ง ⇒ หน้านี้ดักคลิกปุ่ม aria-label "การแจ้งเตือน" ใน header เอง (ไม่แก้ src/components/ — รอ lead เพิ่ม prop onBell)
-   แผง = patterns/NotificationPanel (desktop Notification card ใต้หัว · มือถือ Bottom sheet) · ป้าย "<n> แจ้งเตือนใหม่"
-   กดแจ้งเตือนแผนเดินทาง → อ่านแล้ว (จุดแดงหาย) + เปิดหน้าแผนเดินทาง ดูอย่างเดียว · "ลบข้อความแจ้งเตือนทั้งหมด" = ลบแจ้งเตือนของบทบาทนี้ (ผลยังไม่กำหนดในสเปก) */
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { NotificationPanel } from "@/components/patterns/NotificationPanel";
 import { setMock, useMock, useRole } from "@/lib/mock/store";
 import { notisOf, type NotiRole } from "@/lib/mock/trips";
 
-export const useViewer = (): NotiRole => (useRole() === "ผู้ดูแลยานพาหนะ" ? "owner" : "kry");
+export const useViewer = (): NotiRole => { const r = useRole(); return r === "ผู้ดูแลยานพาหนะ" ? "owner" : r === "ผู้รับจ้าง" ? "vendor" : "kry"; };
 
-export function useBell() {
+export function useBell(on = true) {
   const router = useRouter();
   const mock = useMock();
   const who = useViewer();
@@ -25,9 +20,10 @@ export function useBell() {
       const b = (e.target as Element | null)?.closest?.('header button[aria-label="การแจ้งเตือน"]');
       if (b) { e.preventDefault(); setOpen((o) => !o); }
     };
+    if (!on) return;
     document.addEventListener("click", h, true);
     return () => document.removeEventListener("click", h, true);
-  }, []);
+  }, [on]);
 
   const read = (id: string) => setMock((s) => ({ ...s, notis: notisOf(s).map((n) => (n.id === id ? { ...n, unread: false } : n)) }));
   const panel = (

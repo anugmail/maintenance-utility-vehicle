@@ -1,11 +1,4 @@
 "use client";
-/* S18 ต้นทุนการบำรุงรักษา (R92 · Figma c450480 · ไฟล์ 14 Scenario 18 · เจ้าของงานเคาะ 10 พ.ย. 2569) — คำนวณจากงานรายคันจริง (jobs.ts) ของแผน
-   นับเฉพาะแผนเดินทางที่หน่วยงานดำเนินการเอง (mode self · แผนจ้างไม่แสดง) · คันที่ "เสร็จสิ้น" = ต้นทุนรายคัน · "บำรุงรักษาไม่ได้" = แยกหัวข้อ
-   ค่าอะไหล่ = ราคาต่อหน่วย × จำนวนที่ใช้จริงตอนปิดงาน (ไม่รวมที่คืน · รวมอะไหล่ที่เพิ่มหน้างาน) · บำรุงรักษาไม่ได้ = จำนวนที่ใช้ไปแล้วจาก popup บำรุงรักษาไม่ได้
-   ค่าเบี้ยเลี้ยง ค่าที่พัก ค่าเดินทาง ศูนย์ต้นทุน = ที่กรอกรายคันตอนปิดงาน S10 · ค่าชั่วโมงทำงาน = ชั่วโมง × อัตรา (ไม่กรอก = "-")
-   เฉลี่ยต่อคัน = ต้นทุนรวม ÷ ยานพาหนะที่มีต้นทุน (รวมคันที่บำรุงรักษาไม่ได้ · เสนอ) · เงินแสดง "63,560 บาท"
-   11 พ.ย. 2569 แผนจ้างดำเนินการรวมด้วย (เจ้าของงาน "รวมใน S18 ด้วย"): คันที่หน่วยงานตรวจรับแล้ว ค่าจ้าง + ค่าเดินทาง · การ์ดตัวเลขและสรุปรายไตรมาสนับด้วย
-     (สรุปรายไตรมาส: ค่าเดินทางรวมในช่องค่าเดินทาง · ค่าจ้างไม่มีช่องของตัวเอง (Table 8 คอลัมน์) รวมอยู่ในรวม (บาท) — BACKLOG ค.) · ไม่รวมค่าอะไหล่ที่หน่วยงานจ่ายให้ผู้รับจ้าง (หน้างานผู้รับจ้างไม่มีราคา — BACKLOG ค.) */
 import type { TableColumn, TableValue } from "@/components/vms/Table";
 import { QUARTERS, type Plan } from "./data";
 import { carOf, closeRows, costSummary, getJob, jobsOf, nf, num, ownerCostCenter } from "./jobs";
@@ -13,7 +6,6 @@ import type { MockState } from "./store";
 
 export interface CarCost {
   carId: string; plate: string; q: number; date: string; cannot: boolean; cc: string;
-  /** แผนจ้างดำเนินการ (11 พ.ย. 2569 เจ้าของงาน "รวมใน S18 ด้วย"): ค่าจ้าง + ค่าเดินทาง ที่หน่วยงานกรอกตอนตรวจรับ · คอลัมน์อื่น 0 */
   hire?: boolean; wage?: number;
   parts: number; perDiem: number; hours: number; rate: number; labour: number; lodging: number; travel: number; total: number;
 }
@@ -51,7 +43,6 @@ export const QCOST_COLS: TableColumn[] = [
   { head: "ไตรมาส", Style: "Lead text" }, { head: "ยานพาหนะ (คัน)", width: 160 }, { head: "ค่าอะไหล่", width: 110 }, { head: "ค่าเบี้ยเลี้ยง", width: 120 },
   { head: "ค่าชั่วโมงทำงาน", width: 150 }, { head: "ค่าที่พัก", width: 110 }, { head: "ค่าเดินทาง", width: 110 }, { head: "รวม (บาท)", width: 120 },
 ];
-/* ยานพาหนะที่จ้างดำเนินการ (11 พ.ย. 2569 · ข้อเสนอ: แยกหัวข้อ เพราะ Table ต้นทุนรายคันเต็ม 8 คอลัมน์ R25) */
 export const HIRE_COST_COLS: TableColumn[] = [
   { head: "ทะเบียน", width: 210, Style: "Lead text" }, { head: "ศูนย์ต้นทุน" }, { head: "ค่าจ้าง", width: 140 }, { head: "ค่าเดินทาง", width: 140 }, { head: "รวม (บาท)", width: 140 },
 ];
@@ -59,7 +50,6 @@ export const hireCostRow = (r: CarCost): TableValue[] => {
   const [code, ...unit] = r.cc.split(" ");
   return [{ text: r.plate, sub: "ไตรมาส " + r.q + " · " + (r.cannot ? "บำรุงรักษาไม่ได้" : "ตรวจรับ " + r.date) }, { text: code, sub: unit.join(" ") }, nf(r.wage ?? 0), nf(r.travel), nf(r.total)];
 };
-/** แถวต้นทุนรายคัน (costRow ของ screens.js) */
 export const costRow = (r: CarCost): TableValue[] => {
   const [code, ...unit] = r.cc.split(" ");
   return [{ text: r.plate, sub: "ไตรมาส " + r.q + " · " + (r.cannot ? "บำรุงรักษาไม่ได้" : "ปิดงาน " + r.date) }, { text: code, sub: unit.join(" ") }, nf(r.parts), nf(r.perDiem),
@@ -67,12 +57,10 @@ export const costRow = (r: CarCost): TableValue[] => {
 };
 const sums = (rs: CarCost[]) => [rs.reduce((a, r) => a + r.parts, 0), rs.reduce((a, r) => a + r.perDiem, 0), rs.reduce((a, r) => a + r.labour, 0),
   rs.reduce((a, r) => a + r.lodging, 0), rs.reduce((a, r) => a + r.travel, 0), rs.reduce((a, r) => a + r.total, 0)];
-/** สรุปรายไตรมาส (QCOST_ROWS): ไตรมาส 1–4 + รวมทั้งแผน · ยานพาหนะ (คัน) = คันที่มีต้นทุน */
 export const quarterCostRows = (rs: CarCost[]): TableValue[][] => [
   ...QUARTERS.map((q, k) => { const x = rs.filter((r) => r.q === k + 1); return [q, String(x.length), ...sums(x).map(nf)]; }),
   ["รวมทั้งแผน", String(rs.length), ...sums(rs).map(nf)],
 ];
-/** การ์ดตัวเลข 4 ใบ (costMetrics) */
 export function costMetrics(rs: CarCost[], planCars: number): [string, string, "Brand" | "Success" | "Warning"][] {
   const tot = rs.reduce((a, r) => a + r.total, 0);
   return [["ต้นทุนรวมของแผน", baht(tot), "Brand"], ["เฉลี่ยต่อคัน", baht(rs.length ? Math.round(tot / rs.length) : 0), "Brand"],

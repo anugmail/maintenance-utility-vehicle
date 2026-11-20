@@ -1,9 +1,4 @@
 "use client";
-/* ชิ้นประกอบของ S24 (/vehicles/*) — ไม่ใช่ component ใหม่ จัดวางชิ้นไลบรารีตาม maList() / maDetail() / filterPanel() / tbl() + toneText() ของปลั๊กอิน Figma
-   ที่มาการออกแบบ: Vehicle list + Filter + Vehicle detail ของหน้า "Vehicle Management" ใน UI Release#2 · Table · Table header cell · Table cell · Mobile table · Mobile table item
-   · Background overlay · Featured icon · Tertiary button · Tertiary brand button · Secondary button · Primary button · Input dropdown · Dropdown list ของไฟล์ Component (ดู figma-spec/COMPOSED.md หัวข้อ ซ.)
-   MaTable / MaCards = Table / MobileCards ที่ช่อง { text, sub, tone } ทำบรรทัดรอง (Supporting text) เป็นสีเตือน/แดงได้ (Table cell ของต้นแบบมี Supporting text สี gray-600 อย่างเดียว)
-   FilterPanel = แผงตัวกรองด้านข้าง (Side panel header / Side panel footer ของไลบรารียังไม่มีในต้นแบบ — ประกอบตามค่าในดัมป์) · มือถือ Bottom sheet */
 import Link from "next/link";
 import { useEffect, useState, type ReactNode } from "react";
 import { BottomSheet } from "@/components/vms/BottomSheet";
@@ -29,16 +24,13 @@ import { useRoleGuard, UNIT_ROLES } from "@/lib/mock/planFlow";
 import { useRole } from "@/lib/mock/store";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 
-/* หน้าเมนู Vehicle Management ของระบบ (pageHead o.root ของ maList / maDetail) */
 export const VEHICLE_ROOT = "ยานพาหนะ";
 export const LIST_TITLE = "ข้อมูลยานพาหนะ";
 export const LIST_HREF = "/vehicles/maintenance/";
 export const detailHref = (carId: string, tab?: number) => "/vehicles/detail/?car=" + carId + (tab != null ? "&tab=" + tab : "");
 export const PER = 10;
 
-/* Permission ของ Scenario 24: กบค. เห็นทุกคัน · ผู้ดูแลยานพาหนะ เห็นเฉพาะยานพาหนะที่ดูแล (ต้นแบบ = หน่วยงานตัวอย่าง OWN_UNIT) · บทบาทอื่นกลับราก (useRoleGuard) */
-/* 9 พ.ย. 2569 ตรวจสิทธิ์: หน่วยงานผู้ดำเนินการทุกหน่วยงาน (กบผ. กปส. กรย. กส.1 กส.2) เห็นเฉพาะยานพาหนะในแผนของตัวเอง (unit) · กบค. ทุกคัน · เดิมเฉพาะ กบผ. */
-export const MA_ROLES = ["หน่วยงาน (กบผ.)", "หน่วยงาน (กปส.)", "หน่วยงาน (กรย.)", "หน่วยงาน (กส.1)", "หน่วยงาน (กส.2)", "กบค.", "ผู้ดูแลยานพาหนะ"] as const;   // ข้อ 70 เพิ่ม กส.1 กส.2
+export const MA_ROLES = ["หน่วยงาน (กบผ.)", "หน่วยงาน (กปส.)", "หน่วยงาน (กรย.)", "หน่วยงาน (กส.1)", "หน่วยงาน (กส.2)", "กบค.", "ผู้ดูแลยานพาหนะ"] as const;
 export function useMaAccess() {
   const ok = useRoleGuard(MA_ROLES);
   const role = useRole();
@@ -46,8 +38,6 @@ export function useMaAccess() {
   return { ok, owner, unit: UNIT_ROLES[role] };
 }
 
-/* ---------- ช่องตาราง: { text, sub, tone } = บรรทัดรองสีตามสถานะ (toneText() ใน core.js) ---------- */
-/* { text, sub, href } = เลขทะเบียนเป็นลิงก์เปิดหน้ารายละเอียดยานพาหนะ (S24 รอบ 2 18a432e · ไม่มีคอลัมน์ปุ่ม … · สไตล์ลิงก์ชุดเดียวกับ PlateLink: info-700 ขีดเส้นใต้) */
 export type MaValue = TableValue | { text: string; sub?: string; tone?: DueTone } | { text: string; sub?: string; href: string };
 const TONE: Record<DueTone, string> = { warning: "text-warning-600", error: "text-error-600" };
 const isTone = (v: MaValue): v is { text: string; sub?: string; tone: DueTone } => !!v && typeof v === "object" && "tone" in v && !!v.tone;
@@ -57,8 +47,6 @@ const toneNode = (v: { text: string; sub?: string; tone: DueTone }) => (
 );
 const linkNode = (v: { text: string; href: string }) => <Link href={v.href} data-plate-link className="text-info-700 underline underline-offset-2">{v.text}</Link>;
 
-/* desktop: Table (Content = Table header cell + Table cell) + Table pagination — แบบเดียวกับ components/vms/Table */
-/** sort/onSort (ไม่ส่ง = เรียงไม่ได้ ตามเดิม) — หัวคอลัมน์ที่มีชื่อมี Sort icon กดได้ แบบ SortTable ของ S4 (แดชบอร์ด S24 แบบ VMS+ 12 พ.ย. 2569) */
 export interface MaSort { col: number; dir: "Down" | "Up" }
 export function MaTable({ cols, rows, Pagination, sort, onSort }: { cols: TableColumn[]; rows: MaValue[][]; Pagination?: ReactNode; sort?: MaSort | null; onSort?: (col: number) => void }) {
   return (
@@ -86,7 +74,6 @@ export function MaTable({ cols, rows, Pagination, sort, onSort }: { cols: TableC
   );
 }
 
-/* มือถือ: Mobile table + Mobile table item ตาม mobileCards() — แถวแรก Lead text · { text, sub } → Supporting text (กติกาข้อ 11) · ปุ่ม → แถวท้าย Action icons (mobileActions · กติกาข้อ 14) */
 export function MaCards({ cols, rows }: { cols: TableColumn[]; rows: MaValue[][] }) {
   return (
     <div className="flex flex-col gap-3">
@@ -96,7 +83,7 @@ export function MaCards({ cols, rows }: { cols: TableColumn[]; rows: MaValue[][]
         cols.forEach((c, ci) => {
           const v = r[ci];
           if (v && typeof v === "object" && "actions" in v) acts = v.mobileActions ?? v.actions;
-          else if (c.head && v && typeof v === "object" && "pills" in v) v.pills.forEach((p) => data.push({ head: c.head, v: { pills: [p] } }));   // หลาย Pill = แถว Badge ละใบ (แบบ MobileCards · ป้าย Overhaul ข้อ 85)
+          else if (c.head && v && typeof v === "object" && "pills" in v) v.pills.forEach((p) => data.push({ head: c.head, v: { pills: [p] } }));
           else if (c.head) data.push({ head: c.head, v });
         });
         const a = acts as CellAction[] | null;
@@ -119,7 +106,6 @@ export function MaCards({ cols, rows }: { cols: TableColumn[]; rows: MaValue[][]
   );
 }
 
-/* ตาราง + pagination ตามขนาดจอ (หน้าละ PER แถว) */
 export function MaGrid({ cols, rows, page, onPage, sort, onSort }: { cols: TableColumn[]; rows: MaValue[][]; page: number; onPage: (p: number) => void; sort?: MaSort | null; onSort?: (col: number) => void }) {
   const mob = useBreakpoint() === "Mobile";
   const shown = rows.slice((page - 1) * PER, page * PER);
@@ -128,7 +114,6 @@ export function MaGrid({ cols, rows, page, onPage, sort, onSort }: { cols: Table
   return <MaTable cols={cols} rows={shown} Pagination={pg} sort={sort} onSort={onSort} />;
 }
 
-/* ---------- แผงตัวกรอง (filterPanel() ใน core.js · Filter ของ Vehicle list ใน UI Release#2) ---------- */
 export interface FilterField { label: string; options: string[] }
 export const ALL = "ทั้งหมด";
 
@@ -143,7 +128,6 @@ function Select({ f, value, onChange, mob }: { f: FilterField; value: string; on
   );
 }
 
-/** value = ค่าที่ใช้อยู่ (ทั้งหมด = ไม่กรอง) · ตกลง → onApply(ค่าใหม่) · ยกเลิก/ปิด → onClose (ไม่เปลี่ยน) · ล้างตัวกรอง = ทุกช่องกลับเป็น ทั้งหมด (กดตกลงเพื่อใช้) */
 export function FilterPanel({ open, fields, value, onApply, onClose }: { open: boolean; fields: FilterField[]; value: string[]; onApply: (v: string[]) => void; onClose: () => void }) {
   const mob = useBreakpoint() === "Mobile";
   const [draft, setDraft] = useState(value);
@@ -155,7 +139,6 @@ export function FilterPanel({ open, fields, value, onApply, onClose }: { open: b
   );
 }
 
-/** กรอบแผงตัวกรอง (desktop Side panel ชิดขวา · มือถือ Bottom sheet) — เนื้อหาช่องส่งเป็น children · ใช้ร่วม FilterPanel และฟอร์มสร้างแผน (ภาค เขต ประเภทรถ หลายค่า) */
 export function FilterShell({ open, onClose, onClear, onApply, children }: { open: boolean; onClose: () => void; onClear: () => void; onApply: () => void; children: ReactNode }) {
   const mob = useBreakpoint() === "Mobile";
   useEffect(() => {
@@ -177,7 +160,6 @@ export function FilterShell({ open, onClose, onClear, onApply, children }: { ope
     <>
       <BackgroundOverlay onClick={onClose} />
       <div role="dialog" aria-modal="true" aria-labelledby="ma-filter-title" className="fixed inset-y-0 right-0 z-50 flex w-[480px] max-w-full flex-col gap-6 bg-white">
-        {/* Side panel header: ขอบใน 24 ช่องไฟ 16 เส้นล่าง gray-300 · Featured icon Gray md filter_list · หัวข้อ 20 SemiBold black · Supporting text 14 gray-600 · ปุ่มปิด (Tabs ปิด) */}
         <div className="relative flex flex-col gap-4 border-b border-gray-300 p-6">
           <div className="flex items-center gap-4 pr-10">
             <FeaturedIcon Color="Gray" IconSwap="filter_list-24-400-round" />
@@ -189,7 +171,6 @@ export function FilterShell({ open, onClose, onClear, onApply, children }: { ope
           <div className="absolute top-4 right-4"><TertiaryButton LeadingIconSwap="close-24-300-round" ButtonText={false} aria-label="ปิด" onClick={onClose} /></div>
         </div>
         <div className="flex flex-1 flex-col gap-6 overflow-y-auto px-6">{children}</div>
-        {/* Side panel footer: ขอบใน 16/24 ช่องไฟ 12 เส้นบน gray-300 · Tertiary brand button ซ้าย · Secondary + Primary ขวา */}
         <div className="flex items-center justify-between gap-3 border-t border-gray-300 px-6 py-4">
           <TertiaryBrandButton Text="ล้างตัวกรอง" onClick={onClear} />
           <div className="flex gap-3">

@@ -1,11 +1,4 @@
 #!/usr/bin/env node
-/* ดึงสเปกรายตัวของ component ที่ต้นแบบใช้ จากดัมป์ไฟล์ Figma 2 แหล่ง (CLAUDE.md ข้อ 12)
-   - components.json "components" → ไลบรารี "(Component) VMS Plus" (VmOC07pKEsDkHZagOgcSU2) · ดัมป์ slug `component`
-   - components.json "maintainD"  → ไฟล์ Figma งานซ่อม "Maintain-D" · ดัมป์ slug `maintain-d`
-   ต้นทาง: Maintenance-Request-Form/design-system/.figma-extract/<slug>/*.json (ดัมป์ด้วยปลั๊กอิน figma-export/dump-plugin · รอบ 4 พ.ย. 2569
-   มี vars effects paint sws strokeAlign justify sizing visible opacity ระยะ/จัดแนวตัวอักษร และ svg ของ component กราฟิก)
-   ผลลัพธ์: figma-spec/<ชื่อ component>.json (ทุก variant) + figma-spec/svg/<ชื่อ>.svg (กราฟิก · สำเนาที่ public/figma-svg/) + figma-spec/INDEX.md
-   รัน: npm run figma-spec [-- <โฟลเดอร์ดัมป์ component> [<โฟลเดอร์ดัมป์ maintain-d>]] · component React ทุกตัวต้องอ้างค่าจากไฟล์เหล่านี้ */
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -19,19 +12,18 @@ const SOURCES = [
 ];
 const OUT = path.join(ROOT, "figma-spec");
 const SVG_DIR = path.join(OUT, "svg");
-const SVG_PUBLIC = path.join(ROOT, "public", "figma-svg");   // สำเนาให้หน้าเว็บโหลดได้ (asset("/figma-svg/<ชื่อ>.svg"))
+const SVG_PUBLIC = path.join(ROOT, "public", "figma-svg");
 fs.rmSync(SVG_DIR, { recursive: true, force: true });
 fs.rmSync(SVG_PUBLIC, { recursive: true, force: true });
 const safe = (s) => s.replace(/[\/\\:*?"<>|]/g, "_");
 
-/* เก็บเฉพาะค่าที่ใช้ทำ UI · svg ของ component กราฟิก (ปลายสุด) เขียนแยกเป็นไฟล์ ไม่ฝังใน json */
 const KEEP = ["name", "type", "visible", "opacity", "w", "h", "sizing", "pl", "pr", "pt", "pb", "gap", "r", "dir", "justify", "align",
   "fill", "paint", "stroke", "sw", "sws", "strokeAlign", "effects", "vars", "font", "text", "variant"];
 function slim(n, d, ctx) {
   const o = {};
   for (const k of KEEP) if (n[k] !== undefined) o[k] = n[k];
   if (n.component) o.component = n.component.name + (n.component.variant ? " [" + n.component.variant + "]" : "");
-  if (n.svg && !(n.kids || []).some((k) => k.svg)) {   // ปลายสุดเท่านั้น
+  if (n.svg && !(n.kids || []).some((k) => k.svg)) {
     const base = safe(ctx.component + (n.type === "COMPONENT" && n.name !== ctx.component ? "--" + n.name : ""));
     const file = (ctx.used.has(base) ? base + "-" + ctx.used.size : base) + ".svg";
     ctx.used.add(base);
@@ -41,7 +33,7 @@ function slim(n, d, ctx) {
     fs.writeFileSync(path.join(SVG_PUBLIC, file), n.svg);
     o.svg = "svg/" + file;
   }
-  if (n.kids && d < ctx.depth && !(ctx.skipHidden && n.visible === false)) o.kids = n.kids.map((k) => slim(k, d + 1, ctx));   // Maintain-D: ชั้นที่ซ่อนไม่เก็บลูก (แผงใหญ่)
+  if (n.kids && d < ctx.depth && !(ctx.skipHidden && n.visible === false)) o.kids = n.kids.map((k) => slim(k, d + 1, ctx));
   return o;
 }
 
@@ -52,7 +44,7 @@ for (const src of SOURCES) {
   const pagesJ = JSON.parse(fs.readFileSync(path.join(src.dir, "00-pages.json"), "utf8"));
   const pages = Array.isArray(pagesJ) ? pagesJ : pagesJ.pages || [];
   const pageName = (f) => { const id = f.replace(".json", "").replace("-", ":"); const p = pages.find((x) => (x.id || x.node) === id); return p ? p.name.replace(/^\s*↳\s*/, "").trim() : id; };
-  const want = new Set(src.want), hits = new Map();   // ชื่อ → { set, file } · COMPONENT_SET มาก่อน COMPONENT · อ่านแต่ละหน้าครั้งเดียว
+  const want = new Set(src.want), hits = new Map();
   for (const f of files) {
     const j = JSON.parse(fs.readFileSync(path.join(src.dir, f), "utf8"));
     const take = (s) => {
@@ -61,7 +53,6 @@ for (const src of SOURCES) {
       if (!prev || (prev.set.type === "COMPONENT" && s.type === "COMPONENT_SET")) hits.set(s.name, { set: s, file: f });
     };
     for (const s of j.sets || []) take(s);
-    // component ที่วางอยู่ในกรอบ (FRAME/SECTION) ของหน้า เช่น ไอคอน resize-right ในกรอบ "Icon" ของหน้า Icons — ใช้เมื่อไม่มีตัวบนสุดชื่อเดียวกัน
     const inFrames = (n, d) => { for (const k of n.kids || []) { if (k.type === "COMPONENT" || k.type === "COMPONENT_SET") { if (!hits.has(k.name)) take(k); } else if (d < 3 && (k.type === "FRAME" || k.type === "SECTION")) inFrames(k, d + 1); } };
     for (const s of j.sets || []) if (s.type === "FRAME" || s.type === "SECTION") inFrames(s, 0);
   }

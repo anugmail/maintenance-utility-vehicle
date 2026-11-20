@@ -1,15 +1,9 @@
 "use client";
-/* Figma: "Tab item" — ไฟล์ (Component) VMS Plus หน้า Tabs (node 2:9) · สเปก figma-spec/Tab item.json
-   variant: State = Default | Hover | Focused · Active = True | False · property: Text · Badge (Pill outline Color=Brand)
-   ค่า: สูง 48 · ขอบใน 12/24 · ช่องไฟ 8 · ข้อความ 14 SemiBold (Active black · ไม่ Active gray-600) · Hover พื้น gray-200 · Focused gray-50
-        เส้น (sws [บน,ขวา,ล่าง,ซ้าย]): ไม่ Active [0,0,1,0] Color/border/primary = gray-300 · Active [0,0,2,0] Variable Color/component/utility/brand/900 = brand-900
-        (สีในดัมป์เป็นค่าของโหมดในไฟล์ Component — ยึดชื่อ Variable) */
 import { cx } from "@/lib/cx";
 import { PillOutline } from "./PillOutline";
 
 export interface TabItemProps {
   Text: string;
-  /** property Badge — ตัวเลขในป้าย (ไม่ใส่ = ปิด) */
   Badge?: string | number | null;
   Active?: boolean;
   State?: "Default" | "Hover" | "Focused";

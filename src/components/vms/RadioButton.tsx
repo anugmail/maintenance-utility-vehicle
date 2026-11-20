@@ -1,17 +1,11 @@
 "use client";
-/* Figma: "Radio button" — ไฟล์ (Component) VMS Plus หน้า Radio button (node 2:17) · สเปก figma-spec/Radio button.json
-   variant: State = Default | Hover | Focused | Disabled · Selected = True | False
-   ค่า: วงกลม 20 · ไม่เลือก ขอบ 2 gray-300 · เลือก พื้น brand-900 จุดกลาง 8 white · Disabled พื้น gray-200 ขอบ 2 gray-300 (จุด gray-300)
-        Hover/Focused วงโฟกัส 4 ทึบ 12% (effect ของ Surface): ไม่เลือก gray-500 · เลือก brand-900 */
 import { cx } from "@/lib/cx";
 
 export interface RadioButtonProps {
   Selected?: boolean;
   State?: "Default" | "Hover" | "Focused" | "Disabled";
   onChange?: () => void;
-  /** ป้ายสำหรับโปรแกรมอ่านจอ (เมื่อไม่มีข้อความข้างๆ) */
   label?: string;
-  /** true = แสดงเฉยๆ (อยู่ในการ์ด/แถวที่กดได้ทั้งแถว) */
   bare?: boolean;
   className?: string;
 }

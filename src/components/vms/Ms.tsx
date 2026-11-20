@@ -1,9 +1,5 @@
-/* ไอคอน Material Symbols Rounded — ไลบรารี (Component) VMS Plus ใช้ไอคอนชุดนี้ทั้งหมด ชื่อแบบ "search-24-300-round" / "check_circle-20-300-round-fill"
-   ไม่ใช่ component ของไลบรารี (เป็นตัวแสดงไอคอนที่ทุก component ใช้ร่วม) · name รับได้ทั้งชื่อ Figma และชื่อ Material ตรงๆ
-   size = กรอบไอคอนตามที่ instance วางใน component (เช่นในปุ่มเป็น 20 แม้ชื่อเป็น -24-) */
 import { cx } from "@/lib/cx";
 
-/* ชื่อในไฟล์ Figma ที่ฟอนต์ Material Symbols ไม่มี → ชื่อที่หน้าตาเดียวกัน */
 const ALIAS: Record<string, string> = { warning_circle: "error", cancel_circle: "cancel" };
 
 export function parseIcon(name: string): { glyph: string; weight: number; fill: boolean } {

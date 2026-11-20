@@ -1,10 +1,4 @@
 "use client";
-/* Figma: "_File upload item base" — ไฟล์ (Component) VMS Plus หน้า File upload (node 2123:5261) · สเปก figma-spec/_File upload item base.json
-   แถวไฟล์ในคิวของ File upload
-   variant: State = In progress | Completed | Error · property: File name · File size · Progress bar · Actions · Download action · Delete action
-   ค่า: ขอบใน 16 · รัศมี 8 · พื้น white ขอบ 1 gray-300 (Error error-500) · _File icon + ชื่อไฟล์ ช่องไฟ 12 · ชื่อ 14 SemiBold gray-600 · ขนาด 12 gray-600 (Error ข้อความ error-600)
-        Actions = Tertiary button ไอคอน 40: Completed download + delete · In progress close · Error restart_alt + close
-        Progress bar Label=Right ห่าง 4: In progress brand-900 n% · Completed success-500 100% */
 import { cx } from "@/lib/cx";
 import { FileIcon, fileIconType } from "./FileIcon";
 import { ProgressBar } from "./ProgressBar";
@@ -15,11 +9,8 @@ export type FileItemState = "In progress" | "Completed" | "Error";
 export interface FileUploadItemBaseProps {
   State?: FileItemState;
   FileName: string;
-  /** property File size (Error = ข้อความผิดพลาด) */
   FileSize?: string;
-  /** In progress: เปอร์เซ็นต์ (ค่าเริ่ม 40) */
   Progress?: number;
-  /** property Progress bar — Completed แสดงแถบ 100% เมื่อ true */
   ProgressBar?: boolean;
   DownloadAction?: boolean;
   DeleteAction?: boolean;

@@ -1,9 +1,4 @@
 "use client";
-/* แสดง Notification (toast) ที่สั่งด้วย notify() ใน lib/mock/store — ปิดเองหลัง 4 วินาที หรือกดปิด
-   ตำแหน่ง (เจ้าของงานยืนยัน 5 พ.ย. 2569 R60 "toast ต้องแสดงด้านมุมบนขวามือเสมอเลย"): มุมบนขวาเสมอทั้ง desktop และมือถือ ไม่อยู่กลาง ไม่อยู่ล่าง
-   โหมดพาดู (ของต้นแบบ): ขยับลงใต้แถบพาดูด้วย --guide-bottom ที่ GuideBar ตั้ง · ไม่มีแถบ = ตำแหน่งเดิม
-   notify() ใน core.js — Desktop: Notification วางชิดขอบบนขวา ขอบนอกบน 24 ขวา 24 · Mobile: จัดการ์ดบนขวา ขอบ 16
-   ชั้นสูงกว่าแถบต้นแบบและ Header navigation (z-[60]) — ไม่ถูกแถบบนบัง · กำหนดที่นี่ที่เดียว (Notification floating=false) */
 import { useEffect } from "react";
 import { Notification } from "@/components/vms/Notification";
 import { clearToast, useToast } from "@/lib/mock/store";

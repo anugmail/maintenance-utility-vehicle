@@ -1,7 +1,4 @@
 "use client";
-/* ประกอบจากชิ้นไลบรารี (ไม่มี component "Bottom sheet" ที่ใส่เนื้อหาได้ — ไลบรารีล็อกเนื้อหาตายตัว) ตาม sheet() / menuAt() ใน core.js
-   = Background overlay + แผ่นพื้น white มุมบน 24 + Bottom sheet header + เนื้อหา (ขอบในข้าง 16 ช่องไฟ 16) + Bottom sheet footer
-   บันทึกใน figma-spec/COMPOSED.md · ใช้แทน Modal / Dropdown menu บนมือถือ (กติกาข้อ 6) */
 import { useEffect, type ReactNode } from "react";
 import { cx } from "@/lib/cx";
 import { BackgroundOverlay } from "./BackgroundOverlay";
@@ -14,9 +11,7 @@ export interface BottomSheetProps {
   ActionText?: string;
   onAction?: () => void;
   children?: ReactNode;
-  /** BottomSheetFooter */
   Footer?: ReactNode;
-  /** เนื้อหาชิดขอบ (เมนู / Modal header) */
   flush?: boolean;
   labelledBy?: string;
 }

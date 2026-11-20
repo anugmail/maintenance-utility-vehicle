@@ -1,7 +1,3 @@
-/* Figma: "Badge outline" — ไฟล์ (Component) VMS Plus หน้า Badge (node 2:13) · สเปก figma-spec/Badge outline.json
-   ใช้ซ้อนใน Page header / Section header (ป้ายจำนวน/สถานะข้างหัวข้อ)
-   variant: Color = Brand | Gray | Disabled | Success | Error · property: Text
-   ค่า: สูง 24 · ขอบใน 4/8 · รัศมี 4 · ขอบ 1 · ตัวอักษร 12 SemiBold */
 import { cx } from "@/lib/cx";
 
 export type BadgeOutlineColor = "Brand" | "Gray" | "Disabled" | "Success" | "Error";

@@ -1,8 +1,4 @@
 "use client";
-/* กล่องแสดงข้อมูล (key-value) ตาม kv() + displayBox() ใน core.js — ประกอบจากชิ้นไลบรารี (บันทึกใน figma-spec/COMPOSED.md)
-   Section label (ชื่อกล่อง) → ห่าง 16 → กล่อง พื้น gray-50 (Variable Color/surface/secondary-subtle) รัศมี 8 ขอบใน 24 ช่องไฟแถว 24
-   แถว = Content item row (Column width=Full) · ช่อง = _Content item base Type="Text with label" ไม่มีไอคอน · desktop แถวละ 4 · มือถือ แถวละ 2
-   desktop ของจอ Figma อาจใช้ VehicleAndReporterInfo (ไฟล์ Maintain-D) แทน — ดู components/maintain-d/VehicleAndReporterInfo */
 import type { ReactNode } from "react";
 import { ContentItemRow, type KvPair } from "@/components/vms/ContentItemRow";
 import { SectionLabel } from "@/components/vms/SectionLabel";

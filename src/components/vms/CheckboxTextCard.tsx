@@ -1,9 +1,4 @@
 "use client";
-/* Figma: "Checkbox text card" — ไฟล์ (Component) VMS Plus หน้า Checkbox (node 2:18) · สเปก figma-spec/Checkbox text card.json
-   variant: State = Default | Hover | Focused | Disabled · Selected = False | True · property: Text · Supporting · Supporting text
-   ค่า: กว้างตั้งต้น 240 · ขอบใน 16 · รัศมี 8 · พื้น white · ขอบ 1 gray-200 (Selected ขอบ 2 brand-900) · Hover/Focused ขอบ brand-800 (Focused + วงโฟกัส)
-        Disabled พื้น gray-50 ขอบ gray-300 · Content: Checkbox + ข้อความ ช่องไฟ 12 · Text 14 SemiBold black · Supporting text 14 Regular gray-600 ห่าง 4
-   ใช้ที่ S10 การ์ดเอกสารรับรถบนมือถือ ("ชำรุด" / "ผิดรุ่น") */
 import type { ReactNode } from "react";
 import { cx } from "@/lib/cx";
 import { Ms } from "./Ms";

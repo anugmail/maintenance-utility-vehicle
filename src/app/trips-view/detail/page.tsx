@@ -1,8 +1,4 @@
 "use client";
-/* S8 P2 · แผนเดินทาง ดูอย่างเดียว (/trips-view/detail/?trip=T1 · กรย. · หน่วยงานเจ้าของรถ) — tripView() ใน screens.js · spec S8.md (G.3 G.5)
-   Page header ชื่อแผนเดินทาง + Badge "อนุมัติแล้ว" (ย้อนกลับ) + Secondary button "ส่งออก" (R84 · ส่งออกไม่แก้ข้อมูล ฝั่งดูอย่างเดียวก็มี)
-   → รายละเอียดแผนเดินทาง (7 คู่) + Section label "ยานพาหนะในแผนเดินทาง (n)" | "ยานพาหนะของหน่วยงานในแผนเดินทาง (n)" + Table ชุดกลาง TRIP_V_COLS 7 คอลัมน์ (R82)
-   → Section label "อะไหล่ของแผนเดินทาง" (ไม่มีตัวเลขจำนวนชนิด 9 พ.ย. 2569) (R84 · หน่วยงานเจ้าของรถรวมเฉพาะยานพาหนะของตน) · หน่วยงานเจ้าของรถเห็นเฉพาะรถของหน่วยงาน */
 import { useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";
@@ -11,7 +7,7 @@ import { PageHeader } from "@/components/vms/PageHeader";
 import { SectionLabel } from "@/components/vms/SectionLabel";
 import { mrOf, planOf } from "@/lib/mock/closeout";
 import { useMock } from "@/lib/mock/store";
-import { CREATOR, OWN_UNIT, TST, badgeOf, findTrip, tripCars, tripViewKv, vTrip } from "@/lib/mock/trips";
+import { CREATOR, KRY_AREA, TST, areaCars, badgeOf, caredCars, findTrip, tripViewKv, vTrip } from "@/lib/mock/trips";
 import { tripPartRows } from "@/lib/mock/moves";
 import { TRIP_V_COLS, tripVCells } from "@/lib/mock/tripCols";
 import { unitOf } from "@/lib/mock/data";
@@ -26,9 +22,9 @@ function TripView() {
   const back = useBack("/trips-view/");
   const t = findTrip(mock, sp.get("trip"));
   const [exp, setExp] = useState(false);
-  if (!t) return null;   // ก่อนอ่าน localStorage / ไม่มีใบนี้
+  if (!t) return null;
   const plan = planOf(mock, t.planId);
-  const cars = tripCars(t, own ? OWN_UNIT : undefined);
+  const cars = own ? caredCars(t) : areaCars(t);
   const rows = cars.map((c) => tripVCells(c, vTrip(t)));
   const parts = tripPartRows(mock, t, own ? (id) => cars.some((c) => c.id === id) : undefined);
   const planLabel = mrOf(t.planId) + " " + (plan?.name ?? "");
@@ -40,7 +36,7 @@ function TripView() {
       <Content>
         <VehicleAndReporterInfo Title="รายละเอียดแผนเดินทาง" pairs={kv} />
         <Section>
-          <SectionLabel Title={(own ? "ยานพาหนะของหน่วยงานในแผนเดินทาง" : "ยานพาหนะในแผนเดินทาง") + " (" + rows.length + ")"} />
+          <SectionLabel Title={(own ? "ยานพาหนะที่คุณดูแลในแผนเดินทาง" : "ยานพาหนะในเขต " + KRY_AREA + " ในแผนเดินทาง") + " (" + rows.length + ")"} />
           <DataTable columns={TRIP_V_COLS} rows={rows} />
         </Section>
         <TripPartsSection parts={parts} />

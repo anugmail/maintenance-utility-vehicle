@@ -1,9 +1,12 @@
 "use client";
-/* /trips/detail/?trip=T1 — รายละเอียดแผนเดินทาง (สถานะงานรายคัน) S10 S12 (ตรวจเองและแผนจ้าง) · ส่งออก static: อ่าน query ใน Suspense */
 import { Suspense } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";
+import { useBell } from "@/app/trips-view/_shared/Bell";
+import { useRole } from "@/lib/mock/store";
 import { TripDetail } from "./TripDetail";
 
 export default function Page() {
-  return <AppFrame><Suspense><TripDetail /></Suspense></AppFrame>;
+  const vendor = useRole() === "ผู้รับจ้าง";
+  const { bell, panel } = useBell(vendor);
+  return <AppFrame bell={vendor ? bell : undefined}><Suspense><TripDetail /></Suspense>{vendor && panel}</AppFrame>;
 }

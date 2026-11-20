@@ -1,7 +1,4 @@
 "use client";
-/* S8 P1 · แผนเดินทางบำรุงรักษา (/trips-view/ · กรย. · หน่วยงานเจ้าของรถ) — roleList() + bell() + notiPanel() ใน screens.js · spec S8.md (G.1 G.2 G.4)
-   Page header (ไม่มีย้อนกลับ) → Section ช่องไฟ 24: Table header (ค้นหาชื่อแผนเดินทาง, ทะเบียน + ตัวกรอง) + Table (TRIP_SEEN_COLS) + pagination
-   แสดงแผนเดินทางที่อนุมัติแล้ว · หน่วยงานเจ้าของรถเห็นเฉพาะใบที่มีรถของหน่วยงาน และนับเฉพาะรถของตน · กระดิ่ง + แผงแจ้งเตือน (_shared/Bell) */
 import { useRouter } from "next/navigation";
 import { Suspense, useState } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";
@@ -11,7 +8,7 @@ import { TableHeader } from "@/components/vms/TableHeader";
 import { mrOf } from "@/lib/mock/closeout";
 import { useSeed } from "@/lib/mock/seedB";
 import { useMock } from "@/lib/mock/store";
-import { OWN_UNIT, TST, tripCars, tripRange, tripsOf } from "@/lib/mock/trips";
+import { TST, areaCars, caredCars, tripRange, tripsOf } from "@/lib/mock/trips";
 import { DataTable, MENU_HOME, Section, go } from "../quarter/_shared/ui";
 import { useBell, useViewer } from "./_shared/Bell";
 
@@ -28,7 +25,7 @@ function SeenList() {
   const [query, setQuery] = useState("");
   const k = query.trim();
   const trips = tripsOf(mock).filter((t) => t.status === "approved")
-    .map((t) => ({ t, cars: tripCars(t, who === "owner" ? OWN_UNIT : undefined) }))
+    .map((t) => ({ t, cars: who === "owner" ? caredCars(t) : areaCars(t) }))
     .filter(({ t, cars }) => cars.length > 0 && (!k || t.name.includes(k) || cars.some((c) => c.plate.includes(k))));
   const rows = trips.map(({ t, cars }) => [{ text: t.name, sub: mrOf(t.planId) + " · ไตรมาส " + t.quarter }, tripRange(t), String(cars.length), { pills: [TST.approved] },
     go("เปิด " + t.name, () => router.push("/trips-view/detail/?trip=" + t.id))]);

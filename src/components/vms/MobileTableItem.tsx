@@ -1,10 +1,4 @@
 "use client";
-/* Figma: "Mobile table item" — ไฟล์ (Component) VMS Plus หน้า Table (node 2:14) · สเปก figma-spec/Mobile table item.json
-   แถวในการ์ด Mobile table
-   variant: Style = Text | Lead text | Badge | Action icons | Action buttons (Avatar · Lead avatar ไม่ใช้)
-   property: Header · Text · Supporting · Supporting text · View · Edit · Print · Delete
-   ค่า: Text/Lead text/Badge: ขอบใน 8/12 ช่องไฟ 8 เส้นล่าง 1 (sws [0,0,1,0]) Color/border/secondary = gray-200 (การ์ดที่ไม่มีแถว Action ไม่ใส่เส้นแถวท้าย — COMPOSED.md จ.) · หัว 14 SemiBold black ครึ่งซ้าย · ค่า 14 (Lead text Medium) ชิดขวา + Supporting text 12 gray-600
-        Action icons/Action buttons ไม่มีเส้น (sws มีแต่ไม่มีสีเส้น) · Action icons: ขอบใน 12 ช่องไฟ 4 Tertiary button ไอคอน 40 · Action buttons: ขอบใน 16/12 ช่องไฟ 12 Secondary button Size=lg */
 import type { ReactNode } from "react";
 import { cx } from "@/lib/cx";
 import { PillOutline, type PillColor } from "./PillOutline";
@@ -21,7 +15,6 @@ export interface MobileTableItemProps {
   SupportingText?: string;
   Pill?: [string, PillColor];
   Actions?: CellAction[];
-  /** Action buttons — ปุ่ม Secondary button Size=lg */
   Buttons?: ReactNode;
   last?: boolean;
 }

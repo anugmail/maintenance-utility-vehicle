@@ -1,19 +1,4 @@
 "use client";
-/* S24 W.1–W.5 W.8–W.10 · หน้า ข้อมูลยานพาหนะ แท็บ "การบำรุงรักษา" = แดชบอร์ดการบำรุงรักษารายคัน (/vehicles/maintenance/) — maList() ใน screens.js
-   Figma d6ce03a (R90) + 18a432e (รอบ 2 · 10 พ.ย. 2569): เจ้าของงาน "ตั้งใจอยากให้หน้านี้เป็นหน้า dashboard ที่สามารถกรองสิ่งต่างๆที่ต้องการ …"
-     + "หน้าของ list อยากแสดงรายละเอียดอื่นๆ ตัวอย่างเช่นพวกอายุการใช้งาน หรืออะไรที่เกี่ยวข้องกับการบำรุงรักษา"
-   12 พ.ย. 2569 แดชบอร์ดแบบ VMS+ (เจ้าของงาน _"อยากให้ออกแบบเป็นสไตล์นี้ … ให้เฉพาะ dashboard ที่ทำสิ่งนี้ได้ หน้าอื่นๆ ยังคงต้องตาม component เหมือนเดิม"_
-     · สเปก userflow/figma-ref/vmsplus-dashboard-2569-11-12/SPEC-maintenance-dashboards.md · CLAUDE.md ข้อ 18 · ชิ้นกราฟ components/dashboard/ · COMPOSED.md หัวข้อ "แดชบอร์ดแบบ VMS+")
-   โครง: Page header "ข้อมูลยานพาหนะ" (Breadcrumbs ยานพาหนะ · คงเดิม) → Tabs (ยานพาหนะ · การบำรุงรักษา + ป้ายจำนวนคันที่ใกล้ครบ/ครบกำหนด · คงเดิม)
-     → หัวแดชบอร์ด (ไอคอน · "แดชบอร์ดการบำรุงรักษา" · ข้อมูล ณ MA_TODAY) → เรื่องที่ควรดู (กดแล้วกรองทั้งหน้า)
-     → แผงตัวกรองพับได้ = ช่องตัวกรองเดิม 7 ช่อง (เลือกแล้วใช้ทันที) + ชิปตัวกรองที่เลือก (รวมที่มาจากการคลิกกราฟ) → การ์ดตัวเลข 6 ใบ
-     → กราฟ 6 ใบ (สังกัด หน่วยงาน/เขต · สถานะกำหนด · กำหนด 12 เดือน · ผลตรวจน้ำมัน · ประเภท · อายุการใช้งาน) คลิกแถบ/ชิ้น/แท่ง = เพิ่ม/เอาตัวกรองนั้นออกทั้งหน้า
-     → รายการยานพาหนะ: Table header (ค้นหา "เลขทะเบียน, ยี่ห้อ, รุ่น" ใช้กับตารางอย่างเดียว · ปุ่มตัวกรอง = กางแผงตัวกรอง · ส่งออก) + Table 8 คอลัมน์ MA_COLS (เรียงได้ทุกคอลัมน์)
-       + pagination / Empty state/Search not found + ล้างตัวกรอง → หมายเหตุแหล่งข้อมูล
-   MA_COLS: คอลัมน์สุดท้าย "ครบกำหนดเปลี่ยนน้ำมันไฮดรอลิก" แทน "ผู้ดูแลยานพาหนะ" (เจ้าของงาน 11 พ.ย. 2569 · BACKLOG ข้อ 65) = เปลี่ยนล่าสุด + 3 ปี + บรรทัดรองสีสถานะ MA_DUE
-   ตัวกรอง 7 ช่อง: ประเภทยานพาหนะ · สังกัดยานพาหนะ · บำรุงรักษาล่าสุด · ครบกำหนดภายใน · รายการที่ครบกำหนด · ผลตรวจน้ำมันล่าสุด · ครบกำหนดเปลี่ยนน้ำมันไฮดรอลิก (11 พ.ย. 2569)
-     + ตัวกรองจากกราฟ (เขต · สถานะกำหนด · เดือนที่ครบกำหนด · กลุ่มอายุ) ขึ้นเป็นชิปอย่างเดียว · ผลตรวจน้ำมันเพิ่มตัวเลือก "ยังไม่ตรวจ" (ชิ้นโดนัท)
-   แท็บ "ยานพาหนะ" เป็นของระบบ Vehicle Management (ไม่พาไปไหน) · ข้อมูล lib/mock/maintenance.ts (ตัวเลขคิดใน ./dash.ts) · ?sample=S24 = ชุดตัวอย่างของหน้า /scenarios/ */
 import { Suspense, useMemo, useRef, useState } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";
 import { PopupModal } from "@/components/patterns/PopupModal";
@@ -54,18 +39,15 @@ import {
   oilChangeThisYear, sortCars, zoneOf,
 } from "./dash";
 
-/* MA_COLS (18a432e) */
-/* 11 พ.ย. 2569: ช่องสุดท้าย ผู้ดูแลยานพาหนะ (190) → ครบกำหนดเปลี่ยนน้ำมันไฮดรอลิก 240 ให้หัวคอลัมน์ไม่ถูกตัด · ทะเบียน 160 · บำรุงรักษาล่าสุด 130 · ประกัน 130 · สถานะยานพาหนะ 140 (เดิม 200 · 140 · 150 · 150) ให้หัวทุกช่องไม่ถูกตัด */
 const MA_COLS: TableColumn[] = [
   { head: "ทะเบียน", width: 160, Style: "Lead text" }, { head: "อายุการใช้งาน", width: 170 }, { head: "บำรุงรักษาล่าสุด", width: 130 }, { head: "ครั้งถัดไป" },
   { head: "ผลตรวจน้ำมันล่าสุด", width: 160 }, { head: "ประกัน", width: 130, Style: "Badge" }, { head: "สถานะยานพาหนะ", width: 140, Style: "Badge" }, { head: "ครบกำหนดเปลี่ยนน้ำมันไฮดรอลิก", width: 240 },
 ];
 const MA_TABS = ["ยานพาหนะ", "การบำรุงรักษา"];
 const TITLE = "แดชบอร์ดการบำรุงรักษา";
-const NOT_TESTED = "ยังไม่ตรวจ";   // ผลตรวจน้ำมัน: ยังไม่มีผล (ชิ้นโดนัท "ยังไม่ตรวจ")
+const NOT_TESTED = "ยังไม่ตรวจ";
 const OIL_OPTS = [...MA_OIL_OPTS, NOT_TESTED];
 
-/* ตัวกรอง: 7 ช่องเดิม + ตัวกรองจากกราฟ (zones เขต · due สถานะกำหนด · months เดือนที่ครบกำหนด · ages กลุ่มอายุ) */
 interface MaFilter { types: string[]; units: string[]; last: string; within: string; items: string[]; oil: string; oilDue: string; zones: string[]; due: string[]; months: string[]; ages: string[] }
 const NONE: MaFilter = { types: [], units: [], last: ALL, within: ALL, items: [], oil: ALL, oilDue: ALL, zones: [], due: [], months: [], ages: [] };
 type Multi = "types" | "units" | "items" | "zones" | "due" | "months" | "ages";
@@ -80,7 +62,6 @@ const match = (c: MaCar, f: MaFilter) =>
   && (!f.items.length || itemMatch(c, f.items)) && (f.oil === ALL || (f.oil === NOT_TESTED ? !c.result : c.result === f.oil)) && (f.oilDue === ALL || oilDueMatch(c, f.oilDue))
   && (!f.zones.length || f.zones.includes(zoneOf(c))) && (!f.due.length || f.due.includes(dueOf(c)))
   && (!f.months.length || f.months.some((m) => monthMatch(c, m))) && (!f.ages.length || f.ages.includes(ageGroup(c)));
-/* ชิป: หลายค่า = ค่าที่เลือก · ค่าเดียว = "ชื่อช่อง ค่า" (W.9 W.10 "บำรุงรักษาล่าสุด เกิน 12 เดือน" "ครบกำหนดภายใน 3 เดือน") · จากกราฟ = "เขต …" "สถานะ …" "กำหนดบำรุงรักษา …" "อายุการใช้งาน …" */
 const chipOf = (s: (typeof SINGLE)[number], v: string) => s.label + " " + (s.label.endsWith("ภายใน") ? v.replace(/^ภายใน /, "") : v);
 const CHART_CHIP: Record<"zones" | "due" | "months" | "ages", (v: string) => string> = {
   zones: (v) => "เขต " + v, due: (v) => "สถานะ " + v, months: (v) => "กำหนดบำรุงรักษา " + monthLabel(v), ages: (v) => "อายุการใช้งาน " + v,
@@ -92,13 +73,10 @@ function chipList(f: MaFilter): { text: string; drop: () => MaFilter }[] {
     ...multi("items"), ...chart("zones"), ...chart("due"), ...chart("months"), ...chart("ages")];
 }
 
-/* ?sample=S24 (ของต้นแบบ) — งานรายคันชุด T1_afterClose ของ S10 (82-6789 ปิดงานแล้ว 04/11/2569 รอผลตรวจน้ำมัน) + เอกสาร Safety Inspection ตอนปิดงาน */
 const SAMPLES: SampleMap = {
   S24: { role: "หน่วยงาน (กบผ.)", apply: () => { applySample("T1_afterClose"); patchJob("T1", "82-6789", (j) => ({ ...j, safety: { files: [{ name: "Safety-Inspection-82-6789.pdf", size: "1.2 MB", bar: true }] } })); } },
 };
 
-/* maRow: ทะเบียน (ลิงก์ · ประเภท) · อายุการใช้งาน (เลขไมล์ · ชั่วโมง) · บำรุงรักษาล่าสุด (MR) · ครั้งถัดไป (วันที่ · รายการ · บรรทัดรองสถานะสี) · ผลตรวจน้ำมัน (เก็บตัวอย่าง วันที่) · ประกัน · สถานะยานพาหนะ
-   · ครบกำหนดเปลี่ยนน้ำมันไฮดรอลิก (วันที่ · บรรทัดรองสถานะสี · ไม่มีข้อมูล = "-") */
 const maRow = (c: MaCar): MaValue[] => {
   const l = c.latest, st = c.next?.status, o = oilChangeOf(c), ost = o?.status;
   return [
@@ -111,7 +89,6 @@ const maRow = (c: MaCar): MaValue[] => {
     o?.due != null ? { text: thaiDate(o.due), sub: ost ? MA_DUE[ost][0] : undefined, tone: ost ? MA_DUE[ost][1] : undefined } : "-",
   ];
 };
-/* ไฟล์ส่งออก: ช่องลิงก์/สีเป็นข้อความ + บรรทัดรอง */
 const exportRow = (c: MaCar): TableValue[] => maRow(c).map((v) => (v && typeof v === "object" && "text" in v ? { text: v.text, sub: v.sub } : (v as TableValue)));
 
 const count = <T,>(xs: T[], f: (x: T) => boolean) => xs.filter(f).length;
@@ -135,10 +112,9 @@ function MaList() {
   const panelRef = useRef<HTMLDivElement>(null);
 
   const owners = useMemo(() => [...new Set(cars.map((c) => c.car.owner))], [cars]);
-  /* ลำดับสีตามหมวด = ลำดับจากข้อมูลทั้งหมดก่อนกรอง (สียึดตัวรายการ) */
   const ownerOrder = useMemo(() => [...groupBy(cars, (c) => c.car.owner)].sort((a, b) => b[1].length - a[1].length).map((x) => x[0]), [cars]);
   const zoneOrder = useMemo(() => [...groupBy(cars, zoneOf)].sort((a, b) => b[1].length - a[1].length).map((x) => x[0]), [cars]);
-  const fc = useMemo(() => cars.filter((c) => match(c, filter)), [cars, filter]);   // ทั้งหน้า (การ์ด กราฟ ตาราง)
+  const fc = useMemo(() => cars.filter((c) => match(c, filter)), [cars, filter]);
   const shown = useMemo(() => {
     const q = query.trim().toLowerCase();
     return sortCars(fc.filter((c) => !q || [c.car.plate, c.car.model].some((s) => s.toLowerCase().includes(q))), sort);
@@ -165,7 +141,6 @@ function MaList() {
     </InputDropdown>
   );
 
-  /* ---------- เรื่องที่ควรดู (นับจากยานพาหนะทั้งหมดที่เห็นได้ ไม่ขึ้นกับตัวกรอง) ---------- */
   const nOver = count(cars, (c) => c.next?.status === "over"), nOil = count(cars, (c) => oilDueMatch(c, MA_WITHIN_OPTS[1]));
   const nFail = count(cars, (c) => c.result === "ไม่ผ่าน"), nNone = count(cars, (c) => !c.latest);
   const alerts: DashAlert[] = ([
@@ -176,7 +151,6 @@ function MaList() {
   ].filter(Boolean) as { key: string; tone: "warning" | "info"; title: string; text: string; k: Single; v: string }[])
     .map(({ k, v, ...a }) => ({ ...a, active: filter[k] === v, onClick: () => setOne(k, v) }));
 
-  /* ---------- การ์ดตัวเลข ---------- */
   const n = fc.length, filtered = chips.length > 0;
   const nYear = count(fc, maintainedThisYear), nNear = count(fc, (c) => c.next?.status === "near"), nLate = count(fc, (c) => c.next?.status === "over"), nOilYear = count(fc, oilChangeThisYear);
   const kpis = [
@@ -188,7 +162,6 @@ function MaList() {
     { tone: "navy" as const, icon: "history-24-300-round", label: "อายุการใช้งานเฉลี่ย", value: avgAge(fc), unit: "ปี", sub: "นับจากปีที่จดทะเบียนถึงปี " + YEAR },
   ];
 
-  /* ---------- กราฟ ---------- */
   const dueN = (cs: MaCar[]) => count(cs, isDue);
   const byOwner = [...groupBy(fc, byZone ? zoneOf : (c) => c.car.owner)].sort((a, b) => b[1].length - a[1].length).map(([k, cs]) => ({
     key: k, label: k, value: cs.length, hue: hueOf(byZone ? zoneOrder : ownerOrder, k),
@@ -204,7 +177,6 @@ function MaList() {
   const ageCounts = AGE_GROUPS.map((g) => count(fc, (c) => ageGroup(c) === g));
   const ageGroups = AGE_GROUPS.map((g, i) => ({ key: g, label: g, values: [ageCounts[i]], active: filter.ages.includes(g) })).filter((g, i) => ageCounts[i] > 0 || g.key !== AGE_GROUPS[5] || g.active);
 
-  /* ---------- ส่งออก (popup แบบ S4 · ตามตัวกรองและคำค้นที่ใช้อยู่ / ทั้งหมด) ---------- */
   const doExport = () => {
     if (!exp) return;
     const all = exp.scope === "ทั้งหมด";

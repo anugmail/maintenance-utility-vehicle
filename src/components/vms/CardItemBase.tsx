@@ -1,10 +1,3 @@
-/* Figma: "Card item base" — ไฟล์ (Component) VMS Plus หน้า Cards (node 2413:11354) · สเปก figma-spec/Card item base.json
-   ช่องข้อมูล 1 ช่องของ Card item row (การ์ด "การใช้งานล่าสุด" ของหน้า 5.2 Vehicle Management · UI Release#2)
-   variant: Type = Text | Text with supporting | Text with component | Text with label | Text with label and component | Vertical text with label
-   property: Leading icon (เปิด/ปิด) · Icon swap (ไอคอน 24) · Label · Text · Supporting · Supporting text · Instance swap (ชิ้นที่วางในช่อง component)
-   ค่า: แถวเดียว ช่องไฟ 8 จัดกลางแนวตั้ง · ไอคอน 24 brand-900 · Label 14 SemiBold black · Text 14 Regular black · Supporting text 14 gray-600
-        Text with label: Label กับ Text กว้างเท่ากัน (FILL) · Vertical text with label: Label บน Text ล่าง ห่าง 4 (ไอคอนชิดบน)
-   TextAlign="Right" = ค่าที่ instance ใน "Last usage" ของ UI Release#2 ตั้ง (Text ชิดขวา) */
 import type { ReactNode } from "react";
 import { cx } from "@/lib/cx";
 import { Ms } from "./Ms";

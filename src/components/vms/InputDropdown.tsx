@@ -1,11 +1,4 @@
 "use client";
-/* Figma: "Input dropdown" — ไฟล์ (Component) VMS Plus หน้า Dropdowns (node 2:8) · สเปก figma-spec/Input dropdown.json
-   variant: State = Default | Selected | Hover | Focused | Disabled | Error | Error Hover | Error Focused · Size = md | lg
-   property: Label · Label text · Optional · Info icon · Text · Placeholder · Leading icon (swap) · Supporting · Supporting text · Helper · Helper text
-   ค่า: เหมือน Text input (ป้าย → ช่อง 8 · ช่อง 40/48 · ขอบใน 8/12 · รัศมี 8) · ลูกศร keyboard_arrow_down 20 gray-500 (Focused = keyboard_arrow_up)
-        Selected/Focused ค่า 16 black · Default placeholder gray-400 · Supporting text 16 gray-600 ต่อท้ายค่า
-   property Cursor = ช่องพิมพ์ค้นได้ (ส่ง onQuery) — ใช้กับช่อง "เลือกรถ" แบบ carPick() ใน screens.js (Text = คำค้น · Leading icon search)
-   รายการที่เปิด (Dropdown list) ส่งเป็น children — วางใต้ช่อง ห่าง 4 กว้างเท่าช่อง (ตาม comboAt ใน core.js) */
 import { useCallback, useRef, type ReactNode } from "react";
 import { cx } from "@/lib/cx";
 import { useOutside } from "@/lib/useOutside";
@@ -22,19 +15,14 @@ export interface InputDropdownProps {
   LabelText?: string;
   Optional?: boolean;
   InfoIcon?: boolean;
-  /** ค่าที่เลือก (property Text) */
   Text?: string;
-  /** ข้อความเมื่อยังไม่เลือก */
   Placeholder?: string;
   LeadingIconSwap?: string;
   SupportingText?: string;
   HelperText?: string;
-  /** รายการเปิดอยู่ (State=Focused) */
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
-  /** property Cursor — ส่งเมื่อช่องพิมพ์ค้นได้ (Text = คำค้น) */
   onQuery?: (q: string) => void;
-  /** Dropdown list ที่แสดงเมื่อเปิด */
   children?: ReactNode;
   className?: string;
 }

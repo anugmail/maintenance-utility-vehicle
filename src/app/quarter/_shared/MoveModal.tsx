@@ -1,12 +1,4 @@
 "use client";
-/* S25 popup "ย้ายไปไตรมาสอื่น · {ทะเบียน}" + ยืนยัน — moveModal() / MOVE_CONFIRM ใน screens.js (5 พ.ย. 2569 · BACKLOG ข้อ 12)
-   ตาม `Modal header` · `Content item row` · `Section header` · `Radio text card` (State=Disabled) · `Table` · `Modal footer` ของไฟล์ Component
-   + popup บำรุงรักษาไม่ได้ (S10) / popup จัดลงไตรมาส (S1) ของ screens.js · มือถือ bottom sheet (popupModal)
-   ข้อมูลรถ (ทะเบียน · ประเภทยานพาหนะ · หน่วยงานเจ้าของรถ · แผนเดินทาง · สาเหตุที่บำรุงรักษาไม่ได้) → "เลือกไตรมาสที่จะย้ายไป" Radio text card ไตรมาส 1–4 เรียงลง
-   (ก่อนหน้า = Disabled "ไตรมาสก่อนหน้า" · ปัจจุบัน = Disabled "ไตรมาสปัจจุบัน" · ถัดไป = "รถในไตรมาส n คัน") → "อะไหล่ตามแผนที่ย้ายไปด้วย" (Badge n) Table
-   10 พ.ย. 2569 (Figma 94e0414 · component-rules §5.28 "ตามจอที่ผ่านมา"): + ประเภทยานพาหนะต่อจากทะเบียน (R82) · ตารางอะไหล่ใช้ QPART_COLS ชนิด · รหัสอะไหล่ · ประเภท · จำนวน · หน่วย
-     ชุดเดียวกับอะไหล่ในไตรมาส n ที่รับยอดนี้ไป (R81 · movePartRows · เดิม MOVE_PART_COLS 3 คอลัมน์ อะไหล่ตามแผน จำนวนตามแผน หน่วย)
-   ปุ่ม ยกเลิก · ย้ายรถ (Disabled จนกว่าเลือก) → ConfirmDialog "ยืนยันการย้ายรถไปไตรมาส k" (ไม่ใช่ปุ่มอันตราย) → onMove(k) */
 import { useState } from "react";
 import { ConfirmDialog } from "@/components/patterns/ConfirmDialog";
 import { PopupModal } from "@/components/patterns/PopupModal";
@@ -27,7 +19,6 @@ export function MoveModal({ target, cur, counts, onCancel, onMove }: { target: M
   const mob = useBreakpoint() === "Mobile";
   const [sel, setSel] = useState(0);
   const [ask, setAsk] = useState(false);
-  /* ปุ่มต้นแบบ S25 (แถบต้นแบบ · lib/protoForm.ts) ตอน popup เปิด: กรอกข้อมูลตัวอย่าง = ไตรมาสถัดไป ⇒ ปุ่มย้ายยานพาหนะกดได้ · ล้างค่า = ยังไม่เลือก */
   useProtoForm(target && !ask && cur < 4 ? { fill: () => setSel(cur + 1), clear: () => setSel(0), dirty: sel !== 0 } : null);
   if (!target) return null;
   const { car } = target;

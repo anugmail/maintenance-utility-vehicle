@@ -1,23 +1,13 @@
-/* ข้อมูลยานพาหนะแบบหน้า "Vehicle info" ของ VMS+ (UI Release#2 หน้า 5.2 Vehicle Management · BACKLOG ข้อ 83)
-   เจ้าของงาน 12 พ.ย. 2569 _"หน้าข้อมูลยานพาหนะ อยากให้อ่าน vehicle-management component แล้วเอามาแสดง"_
-   ค่าเดิมของต้นแบบคงเดิมทุกค่า (ทะเบียน · ยี่ห้อ/รุ่น · ประเภทยานพาหนะ · หน่วยงานเจ้าของยานพาหนะ · ผู้ดูแลยานพาหนะ · เบอร์ติดต่อ · ปีที่จดทะเบียน · อายุการใช้งาน
-   · เลขไมล์สะสม · ชั่วโมงเครื่องจักรสะสม · สถานะยานพาหนะ — อ่านจาก TripCar / MaCar ของ maintenance.ts) · ช่องที่ข้อมูลจำลองไม่มี = ค่าสมมติคำนวณจากเลขทะเบียน
-   (ได้ค่าเดิมทุกครั้ง แบบ helper อื่นใน lib/mock) · ค่าตัวอย่างของ VMS+ (3ขพ 6153 กรุงเทพมหานคร) เป็นรถเก๋งเช่า ⇒ ค่าของเราเป็นยานพาหนะกระเช้าของ กฟภ. ที่ซื้อเอง
-   ข้อความที่เป็นข้อมูลจาก API ของ VMS+ (หมวดหมู่ "รถบรรทุกขนาดใหญ่" · ลักษณะการใช้งาน "รถส่วนกลาง" · ประเภทตามกรมการขนส่งทางบก "รถยนต์บรรทุกส่วนบุคคล (รย.3)")
-   คงคำว่า "รถ" ตาม R80 (ALLOW ใน scripts/check-wording.mjs) · ป้ายช่องบนจอเปลี่ยนเป็น "ยานพาหนะ" (vehicles/_lib/VehicleInfo.tsx)
-   + ประวัติการบำรุงรักษาเครื่องยนต์ (แท็บใหม่ · เจ้าของงาน 12 พ.ย. 2569 · BACKLOG ข้อ 85) = เช็คระยะของแชสซีที่ศูนย์บริการยี่ห้อ ค่าสมมติทั้งหมด (ระบบจริงยังไม่มีที่เก็บ — BACKLOG ค.) */
 import { machineOf } from "./data";
 import { MA_REPAIRS, MA_CAR, addMonths, dayOf, machineHistoryOf, thaiDate, TODAY, type HistRow, type MaCar } from "./maintenance";
 import { sideCodeOf } from "./vehicleTypes";
 
 const pad = (n: number, w: number) => String(n).padStart(w, "0");
 const idOf = (plate: string) => plate.split(" ")[0];
-/** เลขทะเบียน 6 หลัก (ชุดเดียวกับรหัสทรัพย์สินของ machines.ts: 500000 + 6 หลัก · ย่อย 0000 = ตัวยานพาหนะ) */
 const digits = (plate: string) => idOf(plate).replace(/\D/g, "").padStart(6, "0").slice(-6);
 const money = (n: number) => n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const nf = (n: number) => n.toLocaleString("en-US");
 
-/* สเปกแชสซีตามรุ่น (ค่าสมมติ) — [แรงม้า, เพลา, ล้อ, ยาง, ราคา, ขึ้นต้นเลขตัว, ขึ้นต้นเลขเครื่องยนต์] */
 const CHASSIS: Record<string, [number, number, number, number, number, string, string]> = {
   "Isuzu FRR": [190, 2, 6, 6, 2_850_000, "MP1FRR34", "4HK1-"], "Isuzu FTR": [240, 2, 6, 6, 3_450_000, "MP1FTR34", "6HK1-"],
   "Hino FC": [175, 2, 6, 6, 3_200_000, "JHHFC9JL", "J05E-"], "Hino FG": [230, 2, 6, 6, 3_900_000, "JHHFG8JL", "J08E-"], "Hino FM": [260, 3, 10, 10, 4_600_000, "JHHFM2PL", "J08E-"],
@@ -33,14 +23,13 @@ export interface VehicleInfoData {
   usage: { km: string; hours: string; fuel: string; clean: string; parking: string };
 }
 
-/** ข้อมูลทุกส่วนของแท็บข้อมูลยานพาหนะ — c = ยานพาหนะของ S24 (maintenance.ts) · age = ageText(c) */
 export function vehicleInfoOf(c: MaCar, age: string): VehicleInfoData {
   const car = c.car, d = digits(car.plate), n = Number(d);
   const { vehicle } = machineOf(car.model);
   const [brand, ...rest] = car.model.split(" ");
   const spec = CHASSIS[vehicle] ?? [180, 2, 6, 6, 3_000_000, "MP1XXX34", "ENG-"];
-  const dist = car.owner.split(" ")[0];                      // กฟน.2 · กบค.
-  const prefix = dist.startsWith("กฟ") ? dist.slice(2) : dist; // น.2 · กบค.
+  const dist = car.owner.split(" ")[0];
+  const prefix = dist.startsWith("กฟ") ? dist.slice(2) : dist;
   const reg = /^[นฉกต]\./.test(prefix) ? ({ น: "N", ฉ: "E", ก: "C", ต: "S" } as Record<string, string>)[prefix[0]] : "A";
   const regNo = Number(prefix.replace(/\D/g, "")) || 0;
   const year = c.year ?? 2560;
@@ -69,8 +58,6 @@ export function vehicleInfoOf(c: MaCar, age: string): VehicleInfoData {
   };
 }
 
-/* ---------- ประวัติการบำรุงรักษาเครื่องยนต์ (เช็คระยะแชสซี · ค่าสมมติ) ----------
-   ทุก 6 เดือนย้อนจากวันนี้ของต้นแบบ · จำนวนครั้ง = อายุการใช้งาน (สูงสุด 4) · เลขไมล์ลดครั้งละ 10,000 จากเลขไมล์สะสม */
 export interface EngineRecord { no: string; date: string; center: string; work: string; km: string; cost: string }
 const ENGINE_WORK = ["เปลี่ยนน้ำมันเครื่อง · ไส้กรองน้ำมันเครื่อง", "เปลี่ยนน้ำมันเครื่อง · ไส้กรองน้ำมันเครื่อง · ไส้กรองน้ำมันเชื้อเพลิง"];
 export function engineHistoryOf(c: MaCar): EngineRecord[] {
@@ -88,11 +75,6 @@ export function engineHistoryOf(c: MaCar): EngineRecord[] {
   });
 }
 
-/* ---------- ประวัติการซ่อมบำรุง (แท็บ · เจ้าของงาน 12 พ.ย. 2569 _"ประวัติการซ่อมบำรุงจะแสดงทั้งการซ่อมและบำรุง … tab overhaul ก็เอาออก ให้เป็นส่วนหนึ่งของประวัติการซ่อมบำรุง
-   โดยมีแทกว่าเป็นการ overhaul ถ้าการซ่อมนั้นผ่านการ overhaul มา"_) ----------
-   = งานซ่อมเครื่องจักร + Overhaul + บันทึกบำรุงรักษาเครื่องจักร (machineHistoryOf · ชุดเดิมของมุมมองซ่อมเครื่องจักร)
-   + งานซ่อมตัวยานพาหนะ (RP-2568-0877 กันชนหน้า ที่เดิมอยู่แค่แท็บการรับประกัน) + บำรุงรักษาเครื่องยนต์ · เรียงวันที่ปิดงานใหม่สุดก่อน
-   engine = มาจากประวัติเครื่องยนต์ (บรรทัดรอง "บำรุงรักษาเครื่องยนต์") */
 export interface ServiceRow extends HistRow { engine?: boolean }
 export function serviceHistoryOf(c: MaCar): { rows: ServiceRow[]; lastMa?: string; lastRepair?: string } {
   const h = machineHistoryOf(c);

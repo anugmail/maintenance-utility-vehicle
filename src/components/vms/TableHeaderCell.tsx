@@ -1,7 +1,4 @@
 "use client";
-/* Figma: "Table header cell" — ไฟล์ (Component) VMS Plus หน้า Table (node 2:14) · สเปก figma-spec/Table header cell.json
-   variant: Checkbox = False | True · property: Header text · Text · Sort icon
-   ค่า: สูง 44 · ขอบใน 12/16 · ช่องไฟ 8 · พื้น gray-100 · ข้อความ 14 SemiBold black · Sort icon 20 */
 import { cx } from "@/lib/cx";
 import { Checkbox, type CheckboxType } from "./Checkbox";
 import { SortIcon } from "./SortIcon";
@@ -9,7 +6,6 @@ import { SortIcon } from "./SortIcon";
 export interface TableHeaderCellProps {
   Text?: string;
   HeaderText?: boolean;
-  /** property Sort icon — ใส่ทิศ = แสดง */
   SortIcon?: "Down" | "Up" | "Swap";
   Checkbox?: boolean;
   checkType?: CheckboxType;

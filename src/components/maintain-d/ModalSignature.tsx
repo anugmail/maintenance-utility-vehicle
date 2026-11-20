@@ -1,11 +1,4 @@
 "use client";
-/* Figma: "Modal Signature" — ไฟล์ Maintain-D หน้า Design (node 0:1) · สเปก figma-spec/Modal Signature.json (CLAUDE.md ข้อ 12)
-   popup เซ็นลงนาม · variant: State = Default (ยังไม่เซ็น — ปุ่มบันทึก Disabled) | Filled (เซ็นแล้ว)
-   ค่า: Background overlay + Modal กว้าง 607 รัศมี 12 · Modal header Alignment=Left (Title · ปุ่มปิด · เส้นคั่น Content divider) 
-        Form ขอบในข้าง 24 ช่องไฟ 16: กล่องข้อมูล พื้น gray-50 รัศมี 8 ขอบใน 8/16 = _Content item base Text with label (ผู้ลงนาม: ชื่อ)
-        + ช่องเซ็น = Container ของ Text area สูง 249 (ขอบ 1 gray-300 รัศมี 8) วาดลายเซ็นได้ · ปุ่มล้าง close 24 มุมขวาบน
-        Modal footer Alignment=Horizontal right (เส้นคั่นบน): Secondary "ปิด" + Primary "บันทึก"
-   มือถือ: ไฟล์ไม่มีแบบมือถือ → Bottom sheet + เนื้อหาเดียวกัน + Bottom sheet footer (COMPOSED.md ก.) */
 import { useEffect, useRef, useState } from "react";
 import { BackgroundOverlay } from "@/components/vms/BackgroundOverlay";
 import { BottomSheet } from "@/components/vms/BottomSheet";
@@ -21,9 +14,7 @@ import { useBreakpoint } from "@/lib/useBreakpoint";
 export interface ModalSignatureProps {
   open: boolean;
   Title?: string;
-  /** ป้ายและชื่อผู้ลงนามในกล่องข้อมูล เช่น ["ผู้ส่งมอบรถ", "นายสุรชัย แก้วมณี"] */
   signer: [string, string];
-  /** ลายเซ็นเดิม (data URL) — State=Filled */
   value?: string | null;
   onSave?: (dataUrl: string) => void;
   onClose?: () => void;

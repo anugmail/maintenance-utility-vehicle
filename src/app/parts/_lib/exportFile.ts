@@ -1,7 +1,3 @@
-/* ส่งออกไฟล์ของแดชบอร์ด S4 (popup ส่งออก · R32) — ต้นแบบสร้างไฟล์ฝั่งเบราว์เซอร์ ไม่มีเซิร์ฟเวอร์
-   Excel → ไฟล์ .csv (UTF-8 BOM เปิดใน Excel ได้ภาษาไทย) ของแท็บที่เปิดอยู่ · การ์ดบอก ".xlsx แยกชีตตามหัวข้อ" ตามจอ — ต้นแบบยังทำ .xlsx หลายชีตไม่ได้ (BACKLOG ข้อ 22 หมวด ค.)
-   PDF → เปิดหน้าพิมพ์ในแท็บใหม่ (หัวเอกสาร DOC_HEAD + ตารางของแท็บ ตาม dashPdf) แล้วเรียกพิมพ์ ⇒ ผู้ใช้เลือก "บันทึกเป็น PDF" เอง
-   หน้าตาไฟล์ไม่ใช่จอของระบบ (เฟรม "ไฟล์ PDF" / "ไฟล์ Excel" ของ Figma เป็นภาพประกอบ) — ไม่มี component ไม่มีสี */
 import type { TableColumn, TableValue } from "@/components/vms/Table";
 
 export interface ExportDoc { title: string; info: [string, string][]; section: string; cols: TableColumn[]; rows: TableValue[][]; file: string }
@@ -13,7 +9,6 @@ const cellText = (v: TableValue): string => {
   if ("text" in v) return v.sub ? v.text + " (" + v.sub + ")" : v.text;
   return "";
 };
-/* คอลัมน์ในไฟล์ = คอลัมน์บนจอ ตัดช่องไม่มีหัว (ปุ่ม ›) */
 const table = (d: ExportDoc) => {
   const keep = d.cols.map((c, i) => (c.head ? i : -1)).filter((i) => i >= 0);
   return { head: keep.map((i) => d.cols[i].head), body: d.rows.map((r) => keep.map((i) => cellText(r[i]))) };
@@ -49,9 +44,6 @@ export function openPrint(d: ExportDoc) {
   return true;
 }
 
-/* ---------- เอกสารหลายหน้า / หลายชีต (ส่งออกแผนเดินทาง R84 · tripPdf / tripXls ของ screens.js) ----------
-   PDF: หน้าละหัวเอกสาร (heading + info) แล้วตามด้วยหัวข้อของหน้านั้น ขึ้นหน้าใหม่ทุกหน้า (A4 · หน้าพิมพ์ของเบราว์เซอร์)
-   Excel: ต้นแบบทำ .xlsx หลายชีตไม่ได้ ⇒ .csv ไฟล์เดียว ชีตต่อกันลงมา คั่นด้วยชื่อชีต (BACKLOG หมวด ค.) */
 export interface DocSection { title: string; cols?: TableColumn[]; rows?: TableValue[][]; pairs?: [string, string][] }
 export interface DocPage { heading: string; info: [string, string][]; sections: DocSection[] }
 const secTable = (s: DocSection) => table({ title: "", info: [], section: "", cols: s.cols ?? [], rows: s.rows ?? [], file: "" });

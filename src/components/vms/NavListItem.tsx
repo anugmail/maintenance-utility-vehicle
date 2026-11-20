@@ -1,9 +1,4 @@
 "use client";
-/* Figma: "Nav list item" — ไฟล์ (Component) VMS Plus หน้า Sidebar navigation (node 2:2) · สเปก figma-spec/Nav list item.json
-   เมนูย่อยใต้หัวกลุ่ม (Nav item) ใน "sub items" ของ Nav menu หน้า "Sidebar Navigation" (277:230639) ของ UI Release#2
-   variant: State = Default | Hover | Active | Focused | Disabled · property: Text · Badge (Pill color)
-   ค่า: กว้างเต็ม (248) สูง 40 · ขอบใน 8 / ซ้าย 40 / ขวา 16 · ช่องไฟ 4 · รัศมี 8 · พื้น white (Hover/Active gray-200 · Focused gray-50)
-        Text 14 Regular black (Active brand-900 · Disabled gray-400) · Pill color Brand (Disabled = Color Disabled) */
 import Link from "next/link";
 import { cx } from "@/lib/cx";
 import { navBg, type NavState } from "./NavItem";
@@ -12,7 +7,6 @@ import { PillColor } from "./PillColor";
 export interface NavListItemProps {
   Text: string;
   State?: NavState;
-  /** property Badge — แสดง Pill color */
   Badge?: boolean;
   BadgeText?: string;
   href?: string;

@@ -1,7 +1,4 @@
 "use client";
-/* Figma: "PartRequestStepPanel" — ไฟล์ Maintain-D หน้า Design (node 0:1) · สเปก figma-spec/PartRequestStepPanel.json (CLAUDE.md ข้อ 12)
-   แผงเลือกอะไหล่ 2 ฝั่ง (S21 desktop): PartsInventoryPanel (กว้าง 421) | RequestedPartsPanel (เติมที่เหลือ) ช่องไฟ 16
-   มือถือ: ไฟล์ไม่มีแบบมือถือ → เรียงลง (คลังอะไหล่บน · อะไหล่ที่เลือกล่าง) ช่องไฟ 16 (COMPOSED.md ก.) */
 import type { ReactNode } from "react";
 import { cx } from "@/lib/cx";
 import { useBreakpoint, type Breakpoint } from "@/lib/useBreakpoint";

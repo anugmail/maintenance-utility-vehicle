@@ -1,7 +1,3 @@
-/* การ์ดตัวเลขสีไล่เฉด — เลียนแบบการ์ดแถวบนของ VMS+ หน้า "แดชบอร์ดยานพาหนะ" (vmsplus.pea.co.th/dashboard · page-vehicles.png)
-   และ "แดชบอร์ดฟลีทการ์ด" (page-fleetcard.png): ไอคอน + ชื่อ · ตัวเลขใหญ่ + หน่วย · บรรทัดรอง · วงกลมโปร่งมุมขวาบน
-   ไม่ใช่ component ของไลบรารี PEA — ข้อยกเว้นเจ้าของงาน 12 พ.ย. 2569 ใช้ได้เฉพาะแดชบอร์ด S4 S24 (figma-spec/COMPOSED.md หัวข้อ "แดชบอร์ดแบบ VMS+")
-   สีไล่เฉดจาก token 2 ขั้นของสีเดียวกัน (เช่น info-600 → info-700) · ตัวอักษรขาวบนพื้นเข้ม */
 import { cx } from "@/lib/cx";
 import { Ms } from "@/components/vms/Ms";
 
@@ -32,7 +28,6 @@ export function KpiCard({ tone, icon, label, value, unit, sub }: KpiCardProps) {
   );
 }
 
-/** แถวการ์ด: มือถือ 2 ใบต่อแถว · แท็บเล็ต 3 · จอกว้าง 6 ใบแถวเดียว */
 export function KpiRow({ items }: { items: KpiCardProps[] }) {
   return <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6 xl:gap-4">{items.map((k) => <KpiCard key={k.label} {...k} />)}</div>;
 }

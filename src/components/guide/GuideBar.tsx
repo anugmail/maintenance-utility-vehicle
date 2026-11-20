@@ -1,16 +1,4 @@
 "use client";
-/* แถบพาดูทีละเรื่อง (ของต้นแบบเท่านั้น — แสดงเมื่อเริ่มเคสจากหน้า /scenarios/guide/ · ไม่ใช่จอของระบบ)
-   ไม่มีจอ/ชิ้นนี้ในไฟล์ Component และ UI Release#2 (ค้น Onboard Tour Guide Banner Coach ไม่พบ · Progress steps เป็นขั้นของฟอร์ม ไม่ใช่แถบนำทาง)
-   ⇒ ประกอบจากชิ้นไลบรารี: `Alert` (Color=Brand ขั้นปกติ · Color=Warning หน้าอยู่นอกเรื่อง) + `Primary button` `Secondary button` `Tertiary button`
-   ของไฟล์ Component — จดใน figma-spec/COMPOSED.md หัวข้อ ด.
-   วาง: ใต้แถบต้นแบบ หัวคอลัมน์เนื้อหา (เหนือ Header navigation) · sticky บนสุดตอนเลื่อนหน้า z-20 (ต่ำกว่า Sidebar 30 · dropdown 40 · popup/bottom sheet 50 ⇒ ไม่ทับปุ่มของหน้า)
-     ไม่เลื่อนหน้าแล้วอยู่ในโฟลว์ปกติ (ไม่ลอยทับเนื้อหา) · ตั้ง scroll-padding-top ของหน้าเท่าความสูงแถบ ⇒ ช่องที่เลื่อนมาหาไม่ไปอยู่ใต้แถบ
-   Desktop: Alert "กำลังดู: <เคส>" + "ขั้นที่ i จาก n: <สิ่งที่ให้ทำ>" · ปุ่ม ก่อนหน้า (Secondary) ถัดไป (Primary) เริ่มเคสใหม่ ออก (Tertiary)
-   Mobile (402): 1 บรรทัด "i/n <สิ่งที่ให้ทำ>" ตัดท้าย + ปุ่มไอคอน ก่อนหน้า ถัดไป ดูคำอธิบายเต็ม · กางแล้วเห็นข้อความเต็มและปุ่ม เริ่มเคสใหม่ ออก
-   หน้าปัจจุบันเทียบกับหน้าของขั้น (match.ts):
-     ตรงขั้นนี้ = ปกติ · ตรงขั้นอื่นของเคส = ปกติ + ปุ่ม "ไปหน้าของขั้นนี้" · ไม่ตรงขั้นไหนเลย = "หน้านี้อยู่นอกเรื่องที่กำลังดู" + "กลับไปหน้าของขั้นนี้"
-     ไม่บล็อกการไปหน้าอื่น · เปลี่ยนหน้าแล้วหน้าใหม่ไม่ตรงขั้นนี้แต่ตรงขั้นถัดไป = เลื่อนไปขั้นถัดไปเอง (ลูกค้ากดปุ่มจริงที่พาไปหน้าใหม่)
-   ออก = ล้างโหมด แล้วกลับหน้าเรื่อง (เปิดมาจากเมนู /guide/ = หน้าเรื่องย้อนกลับไปเมนู) · เริ่มเคสใหม่ = เริ่มเคสเดิมจากขั้นแรกด้วยข้อมูลชุดเดิม */
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { Alert } from "@/components/vms/Alert";
@@ -24,7 +12,6 @@ import { setGuide, useGuide } from "@/lib/guide/session";
 import { scenarioHref, startHref } from "@/lib/guide/start";
 import { useBreakpoint } from "@/lib/useBreakpoint";
 
-/* หน้าล่าสุดที่แถบเห็น — ระดับไฟล์ เพราะทุกหน้าสร้าง AppFrame (และแถบ) ใหม่ตอนเปลี่ยนหน้า ⇒ เลื่อนขั้นเองเฉพาะตอนหน้าเปลี่ยนจริง ไม่ใช่ตอนกดก่อนหน้า */
 let lastUrl: string | null = null;
 
 export function GuideBar() {
@@ -43,9 +30,7 @@ function Bar() {
   const steps = found?.c.steps ?? [];
   const i = g ? Math.min(g.step, Math.max(0, steps.length - 1)) : 0;
 
-  /* เคสในที่เก็บไม่มีแล้ว (เปลี่ยนรายการเคส) → ล้างโหมด */
   useEffect(() => { if (g && !found) setGuide(null); }, [g, found]);
-  /* หน้าเปลี่ยน → ไม่ตรงขั้นนี้แต่ตรงขั้นถัดไป = เลื่อนขั้น */
   useEffect(() => {
     const url = path + "?" + search;
     if (url === lastUrl) return;
@@ -54,11 +39,9 @@ function Bar() {
     const next = steps[i + 1];
     if (next && !matchAt(steps[i].at, path, search) && matchAt(next.at, path, search)) setGuide({ case: g.case, step: i + 1 });
   }, [path, search, g, found, steps, i]);
-  /* ช่องที่เลื่อนมาหา (focus / scrollIntoView) ไม่ไปอยู่ใต้แถบ — ค่าที่คำนวณตอนรัน */
   useEffect(() => {
     const el = box.current;
     if (!el) return;
-    /* --guide-bottom = ขอบล่างของแถบบนจอ ⇒ ToastHost (มุมบนขวา R60) ขยับลงใต้แถบ ไม่บังปุ่มปิดของ toast */
     const root = document.documentElement.style;
     const set = () => { root.scrollPaddingTop = el.offsetHeight + "px"; root.setProperty("--guide-bottom", Math.max(0, Math.round(el.getBoundingClientRect().bottom)) + "px"); };
     set();

@@ -1,10 +1,4 @@
 "use client";
-/* Figma: "_Dropdown menu item" — ไฟล์ (Component) VMS Plus หน้า Dropdowns (node 2:8) · สเปก figma-spec/_Dropdown menu item.json
-   ชิ้นซ้อนใน Dropdown menu
-   variant: Type = Shortcut | Badge · State = Default | Hover | Focused | Disabled · Divider = False | True
-   property: Text · Icon (swap) · Shortcut (ปิด) · Badge
-   ค่า: สูง 40 · ขอบนอกซ้าย/ขวา 4 · Content ขอบใน 8/12 รัศมี 8 · ไอคอน 16 + ข้อความ 14 Medium black ห่าง 8
-        Hover พื้น gray-100 · Focused พื้น gray-50 · Divider=True สูง 9 เส้น 1 gray-200 */
 import { cx } from "@/lib/cx";
 import { Ms } from "./Ms";
 

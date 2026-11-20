@@ -1,10 +1,4 @@
 "use client";
-/* Figma: "InspectionChecklist" — ไฟล์ Maintain-D หน้า Design (node 0:1) · สเปก figma-spec/InspectionChecklist.json (CLAUDE.md ข้อ 12)
-   ตรวจสภาพรถ (S10 รับรถ / ปิดงาน) · variant: Breakpoint = Desktop | Mobile · State = Default | Filled · property: AfterRepair (ปิดงาน)
-   ค่าเริ่มหัวข้อของไฟล์ "รายละเอียดการตรวจสภาพก่อนซ่อม" · หัวกลุ่ม "การตรวจสอบสภาพซ่อมจากสาเหตุส่งซ่อม" — S10 ปิดงานส่ง Title "ตรวจสภาพรถปิดงาน"
-   Desktop: Section header (Title + Badge) → ตาราง 2 ส่วนเท่ากัน: รายการ (หัวสูง 88 = 2 ชั้น) | MA table section: หัวกลุ่ม 44 + ปกติ 100 · ต้องแก้ไข 100 · หมายเหตุ 448 (44)
-            แถว 56 พื้นสลับ · ปกติ/ต้องแก้ไข = Radio button · หมายเหตุ = Text input "ระบุหมายเหตุ" · แถวท้าย Secondary button lg "เพิ่มรายการ"
-   Mobile: การ์ดละรายการ (InspectionChecklistCard): Section label ชื่อ → Radio text card "ปกติ"/"ต้องแก้ไข" (ข้อความ 14) → Text area "หมายเหตุ" (ถ้ามี) · "เพิ่มรายการ" lg เต็มกว้าง */
 import { RadioButton } from "@/components/vms/RadioButton";
 import { RadioTextCard } from "@/components/vms/RadioTextCard";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
@@ -16,7 +10,7 @@ import { cx } from "@/lib/cx";
 import { useBreakpoint, type Breakpoint } from "@/lib/useBreakpoint";
 import { ChecklistCard, TH, td } from "./_checklist";
 
-export interface InspectionItem { name: string; /** ปกติ = true · ต้องแก้ไข = false · ยังไม่เลือก = null */ ok?: boolean | null; note?: string }
+export interface InspectionItem { name: string; ok?: boolean | null; note?: string }
 
 export interface InspectionChecklistProps {
   Title?: string;

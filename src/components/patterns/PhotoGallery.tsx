@@ -1,7 +1,4 @@
 "use client";
-/* แถวภาพ (library fallback ของ IncidentPhotoGallery) ตาม photoGallery() ใน screens.js — ประกอบจากชิ้นไลบรารี (บันทึกใน figma-spec/COMPOSED.md)
-   Section label (ชื่อ "(n)") → ห่าง 16 → Images Size=sm Type=Image ช่องไฟ 16 ไม่มีปุ่ม/จุดเลื่อน · desktop สูงสุด 4 ภาพ · มือถือ 2 ภาพ
-   ต้นแบบไม่มีไฟล์ภาพจริง → ไม่ส่ง src = ช่องภาพ Type=Empty ของไลบรารี */
 import { Images } from "@/components/vms/Images";
 import { SectionLabel } from "@/components/vms/SectionLabel";
 import { cx } from "@/lib/cx";

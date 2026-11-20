@@ -1,6 +1,4 @@
 "use client";
-/* ?sample=<ชื่อ> จากหน้า /scenarios/ (ของต้นแบบเท่านั้น) → ใส่ข้อมูลตั้งต้นของ scenario + สลับบทบาท ครั้งเดียว แล้วเอา sample ออกจาก URL (คงพารามิเตอร์อื่น)
-   คืน true ระหว่างรอใส่ข้อมูล (หน้าไม่ต้องวาดค่าเก่าก่อน) · map ต้องเป็นค่าคงที่ระดับไฟล์ */
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { setRole, type Role } from "@/lib/mock/store";

@@ -1,17 +1,4 @@
 "use client";
-/* แบบประเมินความพึงพอใจ A · หน้ารายการ (/satisfaction/) — เรื่องแยกจากบำรุงรักษา เมนูของตัวเองใน Sidebar (BACKLOG ข้อ 75 · เดิม S27 Y.1–Y.3)
-   เจ้าของงาน 12 พ.ย. 2569 _"เรื่องการประเมินเป็นเรื่องแยกที่จะไปผูกตาม flow ต่างๆ เลยอยากแยกใว้"_ · โครง = เฟรม A ของประเมินผู้รับจ้าง (userflow/figma-ref/contractor-eval-ABC-2569-11-12.txt)
-   1 แถว = งาน 1 งานของยานพาหนะ 1 คันที่ปิดงานแล้ว (งานซ่อม · บำรุงรักษาตามวาระ · Overhaul) — lib/mock/survey.ts
-   Page header "แบบประเมินความพึงพอใจ" (ไม่มีย้อนกลับ) → Section ช่องไฟ 24: Tabs "ยังไม่ได้ประเมิน" (Badge จำนวน) · "ประเมินแล้ว"
-     → Table header (ค้นหา "ค้นหาเลขที่งาน, ทะเบียน" + ปุ่ม "ตัวกรอง" · ชิปตัวกรอง) → Table + Table pagination (หน้าละ 10)
-   ยังไม่ได้ประเมิน: เลขที่งาน · ประเภทงาน (Pill) · ทะเบียน (ประเภทยานพาหนะ) · งาน · หน่วยงานที่ให้บริการ · วันที่ปิดงาน · ดำเนินการ (ไอคอนดาว → ฟอร์มประเมิน · เฉพาะผู้ดูแลยานพาหนะ)
-   ประเมินแล้ว: เลขที่งาน · ประเภทงาน · ทะเบียน · หน่วยงานที่ให้บริการ · วันที่ประเมิน · ผู้ประเมิน · คะแนน (เต็ม 55) "46 / 55 · เฉลี่ย 4.18" · ไอคอนดูผล (ตาราง 8 คอลัมน์ของไลบรารี)
-   ไม่มีรายการ = Empty state/Data empty "ไม่มีรายการที่ต้องประเมิน" / "งานจะเข้ามาที่นี่เมื่อปิดงานแล้ว" + ปุ่ม "ดูรายการที่ประเมินแล้ว" · ค้นหา/กรองไม่เจอ = Empty state/Search not found + ล้างตัวกรอง
-   ตัวกรอง (FilterShell ชุดเดียวกับ S24 S26 · Side panel / มือถือ Bottom sheet): ประเภทงาน · หน่วยงานที่ให้บริการ (หลายค่า)
-   มือถือ = Mobile table · ไอคอนท้ายการ์ดกางออก (CLAUDE.md ข้อ 14)
-   บทบาท: ผู้ดูแลยานพาหนะ ประเมินได้ · กบค. เห็นเฉพาะการประเมินที่ประเมิน กบค. ดูอย่างเดียว · บทบาทอื่นดูอย่างเดียว (PERMISSIONS.md)
-   ?tab=1 เปิดแท็บประเมินแล้ว (หลังบันทึกสำเร็จ) · อ้างอิง: Tabs · Tab item · Table header · Table · Table pagination · Mobile table · Empty state/Data empty · Empty state/Search not found
-   ของไฟล์ Component + เฟรม A (ประเมินผู้รับจ้าง) และ listScreen() ของ contractor-eval-plugin */
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useMemo, useState } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";
@@ -103,7 +90,7 @@ function SatList() {
       <section className="flex flex-col gap-6">
         <Tabs>{SAT_TABS.map((t, i) => <TabItem key={t} Text={t} Badge={i === 0 ? wait.length : null} Active={tab === i} onClick={() => go(i)} />)}</Tabs>
         {!base.length ? (
-          tab ? <EmptyStateDataEmpty Text="ยังไม่มีรายการที่ประเมินแล้ว" />   /* แท็บประเมินแล้วว่าง (เสนอ · เฟรม A ไม่มีจอนี้) */
+          tab ? <EmptyStateDataEmpty Text="ยังไม่มีรายการที่ประเมินแล้ว" />
           : <EmptyStateDataEmpty Text={SAT_EMPTY[0]} SupportingText={SAT_EMPTY[1]} Actions={<SecondaryButton Text={SAT_EMPTY_BTN} Size={mob ? "lg" : "md"} onClick={() => go(1)} />} />
         ) : (
           <>

@@ -1,10 +1,4 @@
 "use client";
-/* S7 P1 · อนุมัติแผนเดินทาง (/approvals/trips/ · ทุกบทบาทของต้นแบบ ข้อ 46) — tripReviewList() + roleList() ใน screens.js · spec S7.md (F.1 F.8 F.9 F.10)
-   Page header "อนุมัติแผนเดินทาง" (ไม่มีย้อนกลับ) → Section ช่องไฟ 24: Tabs → Table header (ค้นหาชื่อแผนเดินทาง, ผู้สร้าง + ตัวกรอง) + Table (TRIP_REVIEW_COLS) + Table pagination = จำนวนแถว
-   แท็บ (R88 · component-rules §5.36 · เจ้าของงาน 10 พ.ย. 2569) = REVIEW_TABS ของ screens.js ตาม `Tabs` + `Tab item` ของไฟล์ Component:
-     รออนุมัติ (ตัวเลข = จำนวนใบที่รอ ไม่ขึ้นกับคำค้น) · อนุมัติแล้ว (TRIP_OK) · ส่งกลับแก้ไข (TRIP_RET) ไม่มีตัวเลข
-     ส่งกลับแล้ว (F.8) ใบนั้นออกจากแท็บรออนุมัติ ตัวเลขลด ไปอยู่แท็บส่งกลับแก้ไขจนกว่าจะส่งใหม่
-   ตัวกรอง: แผงยังไม่ออกแบบ (ไม่เปิดอะไร) */
 import { useRouter } from "next/navigation";
 import { Suspense, useState } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";
@@ -23,14 +17,12 @@ const TRIP_REVIEW_COLS: TableColumn[] = [
   { head: "ชื่อแผนเดินทาง", Style: "Lead text" }, { head: "ช่วงวันเดินทาง", width: 220 }, { head: "ยานพาหนะ (คัน)", width: 100 }, { head: "ผู้สร้าง", width: 180 },
   { head: "วันที่ส่ง", width: 120, SortIcon: "Down" }, { head: "สถานะ", width: 150, Style: "Badge" }, { head: "", width: 60, Style: "Action icons" },
 ];
-/* REVIEW_TABS — [ข้อความ, สถานะใบในแท็บ] · ตัวเลขเฉพาะแท็บรออนุมัติ */
 const TABS: [string, TripStatus][] = [["รออนุมัติ", "review"], ["อนุมัติแล้ว", "approved"], ["ส่งกลับแก้ไข", "returned"]];
 
 function ReviewList() {
   useSeed();
   const router = useRouter();
   const mock = useMock();
-  /* ผู้สร้างแผนเดินทาง = ชื่อในใบ (ไม่มีวงเล็บหน่วยงาน) · ใบตัวอย่างของหน่วยงานอื่น (MRZ7000002 กปส.) ไม่ใช่ CREATOR_SHORT */
   const creatorOf = (t: { createdBy?: string }) => t.createdBy?.replace(/ \(.*\)$/, "") ?? CREATOR_SHORT;
   const [tab, setTab] = useState(0);
   const [query, setQuery] = useState("");

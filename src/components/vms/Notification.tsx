@@ -1,12 +1,4 @@
 "use client";
-/* Figma: "Notification" — ไฟล์ (Component) VMS Plus หน้า Notifications (node 1873:44383) · สเปก figma-spec/Notification.json
-   toast มุมล่างขวา (ตาม notify() ใน core.js: วางชิดขวาล่างของจอ · ปิด Supporting text และ Actions)
-   variant: Type = Default | Success | Warning | Error | Info · Breakpoint = Desktop (กล่องกว้าง 400 · ขอบนอกบน/ขวา 24) | Mobile (กว้างเต็มลบขอบ 16)
-   property: Text · Supporting text · Actions
-   ค่า: ขอบใน 16 · ช่องไฟ 16 · รัศมี 12 · พื้น gray-950 · ขอบ 1 gray-dark-600 · ไอคอนทึบ 24 (Success/Default check_circle success-600 · Warning warning_circle warning-600 · Error cancel_circle error-500 · Info info info-600)
-        เงา effect DROP_SHADOW y12 blur16 spread-4 (gray-900 ทึบ 8%) = token --shadow-lg (shadow-lg-lib)
-        กรอบนอก (520×240) มีพื้น gradient ดำ 10% → 0% แต่ดัมป์ไม่บอกทิศ → ยังไม่ทำ (COMPOSED.md ข.)
-        หัวข้อ 16 SemiBold gray-dark-50 · Supporting 14 gray-dark-300 · ปุ่มปิด Tertiary button gray-dark-300 */
 import { cx } from "@/lib/cx";
 import { useBreakpoint, type Breakpoint } from "@/lib/useBreakpoint";
 import { Ms } from "./Ms";
@@ -27,7 +19,6 @@ export interface NotificationProps {
   Text: string;
   SupportingText?: string;
   onClose?: () => void;
-  /** true = วางลอยมุมจอ (toast) · false = แสดงในที่ (หน้า kit) */
   floating?: boolean;
 }
 

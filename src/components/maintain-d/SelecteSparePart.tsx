@@ -1,7 +1,4 @@
 "use client";
-/* Figma: "Selecte Spare Part" — ไฟล์ Maintain-D หน้า Local Component (node 8:133440) · สเปก figma-spec/Selecte Spare Part.json (ชื่อตามไฟล์ — สะกด "Selecte") (CLAUDE.md ข้อ 12)
-   ปุ่มเลือกอะไหล่ท้ายการ์ด Spare Part Card Item · variant: State = Add | Checked | Text
-   ค่า: Add = Secondary button md ไอคอน add 20 อย่างเดียว 44×44 · Checked = Primary button md ไอคอน check 20 · Text = ราคารวม 16 SemiBold gray-600 */
 import { PrimaryButton } from "@/components/vms/PrimaryButton";
 import { SecondaryButton } from "@/components/vms/SecondaryButton";
 

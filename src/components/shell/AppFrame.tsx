@@ -1,16 +1,4 @@
 "use client";
-/* กรอบหน้าแบบจอ Figma (shell() ใน core.js) + เมนูแบบระบบจริง (เจ้าของงาน 4 พ.ย. 2569 "เป็นเมนูจาก sidebar กด แล้ว expand ออกมา")
-   Desktop (≥ 768): Sidebar navigation ซ้าย ตั้งต้น State=Collapsed (80)
-     · ชี้เมาส์ที่ Sidebar = State=Expanded (280) ลอยทับเนื้อหา · เลื่อนเมาส์ออก = กลับ Collapsed
-     · กดโลโก้หรือปุ่มใน Collapsed / กดปุ่ม keyboard_tab ใน Logo wrap = ค้าง Expanded ไว้ (ลอยทับเหมือนกัน ไม่ดันเนื้อหา
-       ⇒ เนื้อหาวางตามจอ Figma ที่ Sidebar กว้าง 80 เสมอ) · ย่อด้วยปุ่ม keyboard_tab อีกครั้ง · คลิกนอก Sidebar · Esc
-     · Sidebar ติดขอบบนตอนเลื่อนหน้า (สูงเท่าจอ เลื่อนในตัวเองเมื่อเมนูยาวกว่าจอ)
-     Header navigation Breakpoint=Desktop (ไม่มีโลโก้และปุ่ม hamburger · ขอบใน 12/32 · ปุ่มขวาอย่างเดียว) + Page ขอบใน 32 ช่องไฟ 32
-       — เจ้าของงาน 5 พ.ย. 2569 _"เอาตรงที่เป็น hambuger ออก … อันนี้บนเว็บนะ"_ (ต่างจาก R1 ของปลั๊กอินที่ให้ desktop ใช้ Tablet · COMPOSED.md)
-   Mobile (402 · < 768): ไม่มี Sidebar · ปุ่ม menu ของ Header navigation Breakpoint=Mobile เปิด Sidebar navigation State=Expanded จากซ้าย ทับ Background overlay (ประกอบ — ดู figma-spec/COMPOSED.md)
-     Page ขอบใน 16 ช่องไฟ 24
-   เมนูที่ Active ใน Sidebar: "พาดูทีละเรื่อง" ที่ /guide/ และหน้าเรื่อง /scenarios/guide/ ที่เปิดจากเมนูนั้น (from=menu) · "อะไหล่ของแผนที่อนุมัติแล้ว" ที่ /parts/ (S4) · "แบบประเมินความพึงพอใจ" (เมนูชั้นบน) ที่ /satisfaction/ · หน้าอื่น "บำรุงรักษาตามวาระ"
-   บนสุดมีแถบต้นแบบ (PrototypeBar) · toast ผ่าน ToastHost */
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { BackgroundOverlay } from "@/components/vms/BackgroundOverlay";
@@ -43,16 +31,13 @@ export function AppFrame({ children, bell }: { children: ReactNode; bell?: boole
   }, [drawer, pinned, unpin]);
   useEffect(() => { if (!mob) setDrawer(false); }, [mob]);
 
-  /* from=menu อ่านจาก location.search หลังโหลด (useSearchParams ต้องมี Suspense ครอบทุกหน้า) */
   const path = (usePathname() || "/").replace(/\/$/, "");
   const [fromMenu, setFromMenu] = useState(false);
   useEffect(() => { setFromMenu(new URLSearchParams(window.location.search).get("from") === "menu"); }, [path]);
   const sideActive = path === "/guide" || (path.startsWith("/scenarios/guide") && fromMenu) ? GUIDE_LABEL : path === "/parts" ? PARTS_LABEL : path.startsWith("/safety") ? SAFETY_LABEL
     : path.startsWith("/approvals/plans") ? APPROVE_PLANS_LABEL : path.startsWith("/approvals/trips") ? APPROVE_TRIPS_LABEL : path.startsWith("/satisfaction") ? SAT_LABEL : MT_LABEL;
-  /* เมนูอนุมัติของทุกบทบาท + Badge จำนวนที่รออนุมัติ (ตัวเดียวกับรายการ S2 S7 · 9 พ.ย. 2569) */
   const mock = useMock();
   const nPlans = mock.plans.filter((p) => p.status === "review").length, nTrips = tripsOf(mock).filter((t) => t.status === "review").length;
-  /* แบบประเมินความพึงพอใจ (เมนูชั้นบนของตัวเอง 12 พ.ย. 2569 · BACKLOG ข้อ 75) — Badge = ยังไม่ได้ประเมินที่บทบาทนี้เห็น (ตัวเดียวกับ Badge ของแท็บ) */
   const role = useRole();
   const nSat = rowsFor(mock, role).filter((r) => !r.evaluated).length;
   const menu = SIDEBAR_MENU.map((g) => (g.items ? { ...g, items: g.items.map((s) => (s.Text === APPROVE_PLANS_LABEL && nPlans ? { ...s, badge: String(nPlans) } : s.Text === APPROVE_TRIPS_LABEL && nTrips ? { ...s, badge: String(nTrips) } : s)) }
@@ -70,7 +55,7 @@ export function AppFrame({ children, bell }: { children: ReactNode; bell?: boole
           </div>
         )}
         <div className="flex min-w-0 flex-1 flex-col">
-          <GuideBar />{/* โหมดพาดูทีละเรื่อง (ของต้นแบบ · components/guide/GuideBar) */}
+          <GuideBar />
           <HeaderNavigation Breakpoint={mob ? "Mobile" : "Desktop"} bell={bell} onMenu={mob ? () => setDrawer(true) : undefined} />
           <main className={mob ? "flex flex-col gap-6 p-4" : "flex flex-col gap-8 p-8"}>{children}</main>
         </div>

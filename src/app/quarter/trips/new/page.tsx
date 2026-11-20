@@ -1,5 +1,4 @@
 "use client";
-/* S6 E.2–E.8 E.10 E.12 · S9 H.1–H.6 — สร้างแผนเดินทาง (/quarter/trips/new/?id=Z7000001&q=1 · ?mode=hire เปิดแบบจ้างดำเนินการ) — ฟอร์มอยู่ที่ quarter/_shared/TripForm */
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";

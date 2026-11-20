@@ -1,15 +1,4 @@
 "use client";
-/* popup แก้ไขยานพาหนะในแผนเดินทาง — tripCarEdit() ใน screens.js (S6 E.5 E.24 E.25 · S9 · S10 เมนูแก้ไข)
-   = patterns/FormModal (Modal Type=Form md · มือถือ Bottom sheet) · ปุ่ม ยกเลิก / บันทึก · ไม่มี toast
-   ยานพาหนะยังไม่อยู่ในแผนเดินทาง (หน้าไตรมาส · ไม่ส่ง work) = 3 ช่องเดิม หัว "แก้ไขผู้ดูแลยานพาหนะและสถานที่ · {ทะเบียน}" ("เบอร์ติดต่อ" · "ผู้ดูแลยานพาหนะ" · "สถานที่บำรุงรักษา")
-   9 พ.ย. 2569 (Figma c28dd82 · R79) ทั้งสองแบบเรียงเบอร์ติดต่อก่อนผู้ดูแลยานพาหนะ ตามคอลัมน์ "เบอร์ติดต่อ" (เบอร์บรรทัดบน ชื่อบรรทัดรอง)
-   ยานพาหนะอยู่ในแผนเดินทาง / ฟอร์มแผนเดินทาง (ส่ง work · R83 · 6 พ.ย. 2569 รีวิว S6 "เพิ่มการเลือกวันดำเนิน จาก icon แก้ไข ได้ด้วย"
-   + "โดยเลือกได้ไม่เกิน range ของแผนที่กำหนดมาเท่านั้น" + "เลือกซ้ำวันกันได้ เลือกเป็นช่วงวัน") = หัว "แก้ไขยานพาหนะในแผนเดินทาง · {ทะเบียน}" Card form row 3 แถว:
-     แถว 1 เบอร์ติดต่อ | ผู้ดูแลยานพาหนะ (Input 1 + Input 2) · แถว 2 สถานที่บำรุงรักษา · แถว 3 วันดำเนินการ (Text input ไอคอน calendar_month "วว/ดด/ปปปป - วว/ดด/ปปปป")
-     กดช่อง = Date picker Type=Single ใต้ช่อง (ภาษาไทยตาม TH_PICKER · ปุ่ม ปิด / ตกลง · ไม่มีปุ่มวันนี้) เลือกเป็นช่วง (Selected day + Day in range) · วันนอกช่วงวันเดินทาง (แผนจ้าง ช่วงวันทำงาน) = Disabled กดไม่ได้
-     เลือกวันเดียวได้ · หลายคันซ้ำวันได้ · ไม่บังคับ (ค่าเริ่มต้นทั้งช่วง) · ช่วงวันในฟอร์มยังไม่เลือก = ช่องกดไม่ได้ (State Disabled)
-     ปฏิทินวางใต้ช่องในเนื้อหาของ popup (Modal ของไลบรารีเลื่อนเนื้อหา overlay ทับขอบไม่ได้) · มือถือ: Figma ยังไม่มีจอ ⇒ ปฏิทินใต้ช่องใน Bottom sheet (COMPOSED.md หัวข้อ ผ.)
-   บันทึก: ค่าเท่าค่าตั้งต้น (ผู้ควบคุมรถ · เบอร์ผู้ควบคุมรถ · "สำนักงาน <หน่วยงาน>" · ทั้งช่วงวันเดินทาง) = ไม่นับว่าแก้ */
 import { useState } from "react";
 import { FormModal } from "@/components/patterns/FormModal";
 import { CardFormRow } from "@/components/vms/CardFormRow";
@@ -20,10 +9,8 @@ import { tripCtrl, tripLoc, tripPhone, type Trip, type TripCar } from "@/lib/moc
 import { useBreakpoint } from "@/lib/useBreakpoint";
 
 export type CarOverrides = Pick<Trip, "locs" | "phones" | "names">;
-/** ช่วงวันของใบ (d1 d2) + วันดำเนินการปัจจุบันของคันนี้ · ส่งมา = popup แบบแผนเดินทาง (มีช่องวันดำเนินการ) */
 export interface WorkEdit { d1: string; d2: string; value: [string, string] }
 
-/* วันที่แบบไทย dd/mm/ปี พ.ศ. ↔ Date */
 export const toThai = (d: Date) => String(d.getDate()).padStart(2, "0") + "/" + String(d.getMonth() + 1).padStart(2, "0") + "/" + (d.getFullYear() + 543);
 export const fromThai = (s: string) => { const m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/); return m ? new Date(Number(m[3]) - 543, Number(m[2]) - 1, Number(m[1])) : null; };
 
@@ -34,7 +21,6 @@ export function applyCarEdit(t: CarOverrides, c: TripCar, name: string, phone: s
   if (loc.trim() && loc.trim() !== "สำนักงาน " + c.owner) locs[c.id] = loc.trim(); else delete locs[c.id];
   return { names, phones, locs };
 }
-/** วันดำเนินการที่บันทึก: ทั้งช่วงของใบ = ไม่นับว่าแก้ (null) */
 export const workEdited = (w: WorkEdit, v: [string, string]) => (v[0] === w.d1 && v[1] === w.d2 ? null : v);
 
 export interface TripCarEditProps { car: TripCar | null; trip: CarOverrides; work?: WorkEdit; onSave: (next: CarOverrides, work?: [string, string] | null) => void; onCancel: () => void }

@@ -1,8 +1,3 @@
-/* Figma: "Badge outline with indicator" — ไฟล์ (Component) VMS Plus หน้า Badge (node 2:13) · สเปก figma-spec/Badge outline with indicator.json
-   ป้ายสถานะแบบมีจุดนำ (Fleet card ของหน้า 5.2 Vehicle Management · UI Release#2 ใช้ Color=Success "ปกติ" / Color=Error "หมดอายุ")
-   variant: Color = Gray | Brand | Info | Success | Warning | Error · property: Text
-   ค่า: สูง 24 · ขอบใน 4/8 · ช่องไฟ 4 · รัศมี 4 · พื้น white ขอบ 1 gray-300 ทุกสี · ตัวอักษร 12 SemiBold gray-600 (Color/text/secondary)
-        Indicator Size=sm สีจุด Color/component/utility/<สี>/500: gray-500 · brand-500 · info-600 · success-600 · warning-600 · error-500 (token ที่ค่าตรงกับ utility 500 ของไลบรารี) */
 import { cx } from "@/lib/cx";
 import { Indicator } from "./Indicator";
 

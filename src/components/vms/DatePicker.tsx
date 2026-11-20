@@ -1,15 +1,4 @@
 "use client";
-/* Figma: "Date picker" — ไฟล์ (Component) VMS Plus หน้า Date picker (node 855:376) · สเปก figma-spec/Date picker.json + _Date picker calendar + _Date picker calendar item base
-   variant: Type = Dual (ช่วงวัน · S6 ช่วงวันเดินทาง) | Single (Month/Year ต้นแบบไม่ใช้) · property: Time picker (ปิดตาม screens.js)
-   ค่า: กล่อง รัศมี 16 พื้น white ขอบ 1 gray-300 ไม่มีเงา · Calendar กว้าง 312 ขอบใน 16 ช่องไฟ 12
-        Header: Tertiary button ‹ · เดือน (Tertiary button 14 SemiBold black) · Tertiary button › (Dual: ปฏิทินซ้ายปิด › ปฏิทินขวาปิด ‹)
-        _Date picker calendar 280×280 = 7 คอลัมน์ × แถวละ 40 (แถวแรกชื่อวัน 14 SemiBold)
-        _Date picker calendar item base 40×40 รัศมี 9999 ตัวเลข 14 Regular: Day (Hover พื้น gray-200) · Today พื้น gray-100 ตัวอักษร brand-900
-          · Day in range พื้น gray-100 + connector ซ้าย/ขวา gray-100 (แถบต่อเนื่อง) · Selected day พื้น brand-900 ตัวอักษร white (Hover brand-800) · Disabled ตัวอักษร gray-400 (วันนอกเดือน)
-        _Date picker footer: ขอบใน 16 เส้นบน gray-300 · Tertiary brand button (ล้าง) ซ้าย · Secondary + Primary button md ขวา ช่องไฟ 12
-   ข้อความตั้งต้นตามไลบรารี (Mo–Su · "Dec 2024" · Clear / Cancel / Apply) · ส่ง prop เพื่อเปลี่ยนได้ (COMPOSED.md ง.) · ClearText="" = ซ่อนปุ่มล้าง (Tertiary brand button ซ่อนตาม thaiDatePicker() ใน screens.js 5 พ.ย. 2569)
-   9 พ.ย. 2569 (R83 วันดำเนินการ · rangeDays() ใน screens.js): min / max = วันนอกช่วงเป็น _Date picker calendar item base State=Disabled กดไม่ได้
-     · range = Type=Single แต่เลือกเป็นช่วง (Selected day + Day in range แบบ Dual) · Today={false} = ไม่ทำเครื่องหมายวันนี้ (rangeDays ไม่มี Today) — พฤติกรรมเพิ่ม หน้าตาตามไลบรารีเดิม */
 import { useState } from "react";
 import { cx } from "@/lib/cx";
 import { PrimaryButton } from "./PrimaryButton";
@@ -27,7 +16,6 @@ const libMonth = (y: number, m: number) => new Date(y, m, 1).toLocaleString("en-
 export interface DatePickerProps {
   Type?: "Dual" | "Single";
   value?: DateRange;
-  /** เดือนแรกที่แสดง (ค่าเริ่ม = เดือนของวันเริ่ม หรือวันนี้) */
   month?: Date;
   today?: Date;
   onApply?: (v: DateRange) => void;
@@ -35,12 +23,9 @@ export interface DatePickerProps {
   weekdays?: string[];
   monthLabel?: (year: number, month: number) => string;
   ClearText?: string;
-  /** วันแรก/วันสุดท้ายที่เลือกได้ (นอกช่วง = State Disabled) */
   min?: Date;
   max?: Date;
-  /** Type=Single เลือกเป็นช่วงวัน */
   range?: boolean;
-  /** ทำเครื่องหมายวันนี้ (Type Today) */
   Today?: boolean;
   CancelText?: string;
   ApplyText?: string;
@@ -84,7 +69,7 @@ function Calendar({ year, month, sel, today, min, max, weekdays, label, prev, ne
   year: number; month: number; sel: DateRange; today?: Date; min?: Date; max?: Date; weekdays: string[]; label: string; prev?: () => void; next?: () => void; onPick: (d: Date) => void;
 }) {
   const start = new Date(year, month, 1);
-  const lead = (start.getDay() + 6) % 7;   // จันทร์เป็นวันแรก (Mo–Su ตามไลบรารี)
+  const lead = (start.getDay() + 6) % 7;
   const days = Array.from({ length: 42 }, (_, i) => new Date(year, month, 1 - lead + i));
   const rows = days[35].getMonth() !== month ? days.slice(0, 35) : days;
   const s = sel.start, e = sel.end;
@@ -98,7 +83,7 @@ function Calendar({ year, month, sel, today, min, max, weekdays, label, prev, ne
       <div className="grid w-70 grid-cols-7">
         {weekdays.map((w) => <span key={w} className="flex size-10 items-center justify-center text-sm font-semibold text-black">{w}</span>)}
         {rows.map((d) => {
-          const off = (!!min && dayKey(d) < dayKey(min)) || (!!max && dayKey(d) > dayKey(max));   // นอกช่วงที่เลือกได้ = Disabled
+          const off = (!!min && dayKey(d) < dayKey(min)) || (!!max && dayKey(d) > dayKey(max));
           const out = d.getMonth() !== month || off;
           const isS = sameDay(d, s), isE = sameDay(d, e);
           const inRange = !!s && !!e && dayKey(d) > dayKey(s) && dayKey(d) < dayKey(e);

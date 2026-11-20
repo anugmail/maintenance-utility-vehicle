@@ -1,7 +1,3 @@
-/* Figma: "Pill outline" — ไฟล์ (Component) VMS Plus หน้า Badge (node 2:13) · สเปก figma-spec/Pill outline.json
-   variant: Color = Brand | Gray | Info | Success | Warning | Error | Disabled | Purple (purple-50 / purple-200 / purple-700 ตาม Variable Color/component/utility/purple/*)
-   property: Text
-   ค่า: สูง 24 · ขอบใน 4/8 · รัศมี 9999 · ขอบ 1 · ตัวอักษร 12 SemiBold */
 import { cx } from "@/lib/cx";
 
 export type PillColor = "Brand" | "Gray" | "Info" | "Success" | "Warning" | "Error" | "Disabled" | "Purple";

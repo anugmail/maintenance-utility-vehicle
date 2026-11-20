@@ -1,12 +1,4 @@
 "use client";
-/* Figma: "Nav item" — ไฟล์ (Component) VMS Plus หน้า Sidebar navigation (node 2:2) · สเปก figma-spec/Nav item.json
-   แถวเมนูของ Sidebar navigation State=Expanded (หัวกลุ่มที่มีลูกศรก็ใช้ตัวนี้ ตาม Nav menu ในหน้า "Sidebar Navigation" 277:230639 ของ UI Release#2)
-   variant: State = Default | Hover | Active | Focused | Disabled
-   property: Text · Leading icon / Leading icon swap · Trailing icon / Trailing icon swap · Badge (Pill color) · Show Description / Supporting text
-   ค่า: กว้างเต็ม (248) สูง 40 · ขอบใน 8 · ช่องไฟ 8 · รัศมี 8 · พื้น white (Hover/Active gray-200 · Focused gray-50)
-        ไอคอนหน้า 24 gray-500 (Active brand-900 · Disabled gray-400) · Text 14 SemiBold black (Active brand-900 · Disabled gray-400)
-        Supporting text 12 gray-600 (Disabled gray-400) · Pill color Brand (Disabled = Color Disabled) · ไอคอนท้าย 20 gray-500 (Disabled gray-400)
-   Leading icon swap รับชื่อไอคอน หรือ element (แถวผู้ใช้ใน Footer menu สลับเป็น Avatar) */
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { cx } from "@/lib/cx";
@@ -22,15 +14,12 @@ export interface NavItemProps {
   LeadingIconSwap?: string | ReactNode;
   TrailingIcon?: boolean;
   TrailingIconSwap?: string;
-  /** property Badge — แสดง Pill color */
   Badge?: boolean;
-  /** ข้อความใน Pill color */
   BadgeText?: string;
   ShowDescription?: boolean;
   SupportingText?: string;
   href?: string;
   onClick?: () => void;
-  /** หัวกลุ่ม: กลุ่มเปิดอยู่ไหม (aria-expanded) */
   expanded?: boolean;
 }
 

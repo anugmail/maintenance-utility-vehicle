@@ -1,7 +1,3 @@
-/* Figma: "Featured icon" — ไฟล์ (Component) VMS Plus หน้า Featured icon (node 2861:54686) · สเปก figma-spec/Featured icon.json
-   variant: Color = Gray | Info | Success | Warning | Error | Brand | Disabled | Purple · Size = md (48) | sm (36)
-   Purple: พื้น purple-50 · ไอคอน md purple-700 · sm purple-600 (Variable Color/component/utility/purple/700 · /600)
-   property: Icon swap (ค่าเริ่ม info-24-300-round) · วงกลม · ไอคอน 24 */
 import { cx } from "@/lib/cx";
 import { Ms } from "./Ms";
 

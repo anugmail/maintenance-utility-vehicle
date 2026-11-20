@@ -1,5 +1,4 @@
 "use client";
-/* ที่พักชั่วคราวของ scenario ที่ยังไม่ทำ — Empty state/Data empty ของไลบรารี (S21 ทำแล้วที่ /car-parts/ — เอาปุ่ม "ใส่อะไหล่ตัวอย่าง" ออกแล้ว) */
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { AppFrame } from "@/components/shell/AppFrame";

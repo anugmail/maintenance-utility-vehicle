@@ -1,5 +1,3 @@
-/* สร้างจาก tokens.css ด้วย scripts/sync-tokens.mjs — ห้ามแก้มือ
-   utility เช่น bg-brand-900 = var(--brand-900) · ล้าง palette/ขนาด/รัศมี/เงาตั้งต้นของ Tailwind ทิ้ง ใช้ได้เฉพาะค่าจาก token */
 @theme inline {
   --color-*: initial;
   --color-white: #fff;
@@ -83,17 +81,14 @@
   --color-primary-500: var(--primary-500);
   --color-primary-50: var(--primary-50);
   --color-primary-25: var(--primary-25);
-  /* ชื่อเชิงความหมายตั้งใหม่ กัน var อ้างตัวเอง: ink = --color-text-* · line = --color-border-primary */
   --color-ink: var(--color-text-primary);
   --color-ink-2: var(--color-text-secondary);
   --color-ink-3: var(--color-text-tertiary);
   --color-line: var(--color-border-primary);
   --color-disabled-bg: var(--color-bg-disabled);
   --color-disabled-fg: var(--color-fg-disabled);
-  /* พื้นหลังทึบของ Background overlay (Variable Color/background/overlay · #000000 40%) — bg-overlay */
   --color-overlay: var(--overlay);
 
-  /* ตัวอักษร: สเกล 12/14/16 ของไลบรารี + หัวข้อ */
   --text-*: initial;
   --text-xs: var(--fs-text-xs);
   --text-xs--line-height: 18px;
@@ -110,7 +105,6 @@
   --text-title-m: 22px;
   --text-title-m--line-height: 32px;
 
-  /* รัศมี */
   --radius-*: initial;
   --radius-xs: var(--rounded-xs);
   --radius-sm: var(--rounded-sm);
@@ -120,13 +114,11 @@
   --radius-pill: var(--r-pill);
   --radius-sheet: 24px;
 
-  /* เงา (ตั้งชื่อใหม่ กันชน --shadow-xs ของ tokens) */
   --shadow-*: initial;
   --shadow-field: var(--shadow-xs);
   --shadow-float: var(--shadow-pop);
   --shadow-shell: var(--shadow-app);
-  --shadow-lg-lib: var(--shadow-lg);   /* ไลบรารี Dropdown menu · Dropdown list · Notification (y12 blur16 spread-4 #10182814) */
-  /* วงโฟกัสของไลบรารี (effect DROP_SHADOW spread 4 ไม่เบลอ ทึบ 12%): brand-900 · gray-500 (ปุ่มรอง Checkbox/Radio ไม่เลือก) · error-600 — token v0.74 */
+  --shadow-lg-lib: var(--shadow-lg);
   --shadow-ring: 0 0 0 4px var(--focus-ring);
   --shadow-ring-gray: 0 0 0 4px var(--focus-ring-gray);
   --shadow-ring-error: 0 0 0 4px var(--focus-ring-error);

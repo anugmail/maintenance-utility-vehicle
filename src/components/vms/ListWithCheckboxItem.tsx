@@ -1,8 +1,4 @@
 "use client";
-/* Figma: "List with checkbox item" — ไฟล์ (Component) VMS Plus หน้า List (node 3285:58382) · สเปก figma-spec/List with checkbox item.json
-   variant: State = Default | Hover | Selected | Selected Hover | Disabled · property: Text · Supporting · Supporting text · Supporting 2 · Supporting text 2 · Avatar (ปิดตาม mobileCards())
-   ค่า: ขอบใน 8/16 · ช่องไฟ 16 · พื้น white (Hover gray-100) · เส้นล่าง 1 gray-200 (sws [0,0,1,0])
-        Text 16 Regular black (Selected brand-900 · Disabled gray-400) · Supporting 12 gray-600 ช่องไฟ 4 · Checkbox ชิดขวา */
 import { cx } from "@/lib/cx";
 import { Checkbox } from "./Checkbox";
 import { linkPlate } from "@/components/patterns/PlateLink";

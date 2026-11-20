@@ -1,11 +1,4 @@
 "use client";
-/* Figma: "SummaryRequestedParts" — ไฟล์ Maintain-D หน้า Design (node 0:1) · สเปก figma-spec/SummaryRequestedParts.json (CLAUDE.md ข้อ 12)
-   popup สรุปรายการเบิก/จองอะไหล่ (S4) · ค่าเริ่มหัวข้อของไฟล์ "สรุปรายการอะไหล่" — S4 ส่ง Title "สรุปรายการเบิก/จองอะไหล่"
-   ค่า: Background overlay + Modal กว้าง 500 รัศมี 12 · Modal header Alignment=Left (Title · ปุ่มปิด · เส้นคั่น) · Form ขอบในข้าง 24 ช่องไฟ 24
-        กลุ่ม = Section label (ชื่อกลุ่ม) → ห่าง 8 → กล่อง พื้น gray-50 รัศมี 8 ขอบใน 24 ช่องไฟ 16: หัวย่อย 14 SemiBold gray-600 → แถว "<ชื่อ> x<n>" / "<ราคา> บาท" 14 gray-600 ช่องไฟ 8 · คั่นหัวย่อยด้วย Content divider
-        รวม = Section header "รวมค่าอะไหล่" + แถว 14 gray-600 / 14 SemiBold ช่องไฟ 8 + "รวม" (SemiBold)
-        Modal footer Alignment=Horizontal right (เส้นคั่นบน): Secondary + Primary (ค่าเริ่มไฟล์ "ปิด" / "ยืนยัน")
-   มือถือ: ไฟล์ไม่มีแบบมือถือ — S4 ใช้ ConfirmDialog (library fallback) · ถ้าเปิดบนมือถือ = Bottom sheet + เนื้อหาเดียวกัน (COMPOSED.md ก.) */
 import { Fragment, type ReactNode } from "react";
 import { BackgroundOverlay } from "@/components/vms/BackgroundOverlay";
 import { BottomSheet } from "@/components/vms/BottomSheet";

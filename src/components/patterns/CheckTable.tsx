@@ -1,11 +1,4 @@
 "use client";
-/* ตารางรายการตรวจ (ประกอบจากชิ้นไลบรารี · ข้อ 13) — checkTable() + checkCard() + radioCell() + noteCell() ใน screens.js (แบบสำรองของ ReceiptChecklist / InspectionChecklist)
-   ใช้ที่ S10 Step 1 "รายการตรวจสภาพ" แบบตรวจสภาพตามประเภทยานพาหนะ (R86 · 9 พ.ย. 2569 · inspectStep() ใน screens.js)
-   InspectionChecklist ของไฟล์ Maintain-D มี 25 แถวตายตัว + ส่วนสาเหตุส่งซ่อม (instance เพิ่มแถวไม่ได้) ⇒ จอ Figma ประกอบตารางเอง ที่นี่ประกอบตามนั้น (COMPOSED.md หัวข้อ พ.)
-   Desktop: Section header (Title + Badge จำนวน) → ห่าง 16 → ตาราง Table header cell + Table cell วางเป็นคอลัมน์ (ค่าเดียวกับ _checklist ของ ReceiptChecklist / InspectionChecklist)
-            คอลัมน์ รายการ (ยืด) · ตัวเลือกละ 100 (Radio button) · หมายเหตุ 448 (Text input ไม่มีป้าย "ระบุหมายเหตุ") · แถวท้าย Secondary button md "เพิ่มรายการ" (ไอคอน add)
-   Mobile: การ์ดละรายการ (กรอบ/พื้นของ Mobile table มุม 12): Section label ชื่อรายการ → Radio text card ตัวเลือกละใบ ช่องไฟ 16 · ปุ่ม "เพิ่มรายการ" lg เต็มกว้างท้ายสุด
-            (checkCard ของ inspectStep ไม่มีช่องหมายเหตุ — ตามจอ Figma) */
 import { ChecklistCard, TH, td } from "@/components/maintain-d/_checklist";
 import { RadioButton } from "@/components/vms/RadioButton";
 import { RadioTextCard } from "@/components/vms/RadioTextCard";
@@ -18,16 +11,13 @@ import { useBreakpoint, type Breakpoint } from "@/lib/useBreakpoint";
 
 export interface CheckRow {
   name: string;
-  /** ตัวเลือกที่เลือก (ลำดับใน options) · ยังไม่เลือก = null */
   sel: number | null;
   note: string;
 }
 
 export interface CheckTableProps {
   Title: string;
-  /** ป้ายจำนวน (ค่าเริ่ม = จำนวนรายการ) */
   Badge?: string | number | null;
-  /** หัวคอลัมน์ตัวเลือก เช่น ["ปกติ", "แก้ไข"] */
   options: string[];
   items: CheckRow[];
   onChange?: (i: number, patch: Partial<CheckRow>) => void;
@@ -37,7 +27,6 @@ export interface CheckTableProps {
   className?: string;
 }
 
-/* ชื่อรายการมีเลขลำดับนำหน้า "1. น้ำมันไฮดรอลิก" ตาม inspectStep() */
 const label = (it: CheckRow, i: number) => i + 1 + ". " + it.name;
 
 export function CheckTable({ Title, Badge, options, items, onChange, onAdd, readonly, Breakpoint: bp, className }: CheckTableProps) {

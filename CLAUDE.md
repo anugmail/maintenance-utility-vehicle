@@ -8,7 +8,7 @@
 2. **component อ้างอิงไฟล์ Figma เท่านั้น** — ไลบรารี **(Component) VMS Plus** (`VmOC07pKEsDkHZagOgcSU2`) + หน้าจอจริง **(UI) VMS Plus – Release#2** (`fYD1yA1uzWsJSjHlcWKMNe`)
    - **ไม่อ้างต้นแบบ HTML** (โฟลเดอร์ `mock/` `design-mock/` `maintainance-yearly/` ของรีโปงานซ่อม และ `components.css`) ไม่ก๊อปคลาส/ค่า/โครงจากที่นั่น
    - ค่าทุกตัว (กว้าง สูง padding gap รัศมี สี ขอบ ฟอนต์) ยกจาก `figma-spec/<ชื่อ component>.json` ที่ดึงจากดัมป์ไฟล์ Component ด้วย `npm run figma-spec`
-   - ไฟล์ component React 1 ไฟล์ = 1 component ของไลบรารี **ชื่อเดียวกับใน Figma** หัวไฟล์เขียนว่ามาจาก component ไหน หน้าไหน (node) และ variant/property ที่รองรับ
+   - ไฟล์ component React 1 ไฟล์ = 1 component ของไลบรารี **ชื่อเดียวกับใน Figma** · มาจาก component ไหน หน้าไหน (node) และ variant/property ที่รองรับ จดใน `docs/code-notes/components-vms.md` ใต้หัวข้อชื่อไฟล์ ไม่เขียนเป็น comment หัวไฟล์ (ข้อ 20)
    - prop ของ component ใช้ชื่อ variant/property ของ Figma (เช่น `Size="md"` `Color="Success"` `State`) ไม่ตั้งชื่อเอง
    - component ที่ไลบรารีไม่มี → หยุด ถามเจ้าของงานก่อน ห้ามออกแบบเอง · ต้องประกอบจากชิ้นไลบรารีให้จดไว้ใน `figma-spec/COMPOSED.md` พร้อมเหตุผล
 3. **สีและ token:** มาจาก `src/styles/tokens.css` (ก๊อปจาก design system ด้วย `npm run sync-tokens`) · Tailwind theme สร้างจาก token (`src/styles/theme.css`) palette ตั้งต้นของ Tailwind ถูกล้างทิ้ง · ห้าม hex ในไฟล์ `.tsx` · ห้าม `style=` ยกเว้นค่าที่คำนวณตอนรัน
@@ -38,6 +38,7 @@
 17. **ปุ่มต้นแบบ "กรอกข้อมูลตัวอย่าง" · "ล้างค่า"** (เจ้าของงาน 10 พ.ย. 2569) — หน้า/ขั้นที่มีฟอร์มต้องเรียก `useProtoForm({ fill, clear, dirty })` (`src/lib/protoForm.ts`) · fill กรอกค่าที่ผ่านเงื่อนไขของหน้า (ปุ่มหลักกดได้) · clear กลับค่าเริ่มต้นของฟอร์มนั้นเท่านั้น · ปุ่มอยู่ในแถบต้นแบบเท่านั้น ไม่ใส่ในแถวปุ่มของหน้า ไม่ใส่ใน Figma
 18. **แดชบอร์ดแบบ VMS+ เฉพาะ S4 S24** (เจ้าของงาน 12 พ.ย. 2569 _"อยากให้ออกแบบเป็นสไตล์นี้ เฉยๆ วิธีการวิชชัลข้อมูล หรือวิธีการแสดงข้อมูล โดยไม่ต้องตรง component ของ pea ให้เฉพาะ dashboard ที่ทำสิ่งนี้ได้ หน้าอื่นๆ ยังคงต้องตาม component เหมือนเดิม"_) — เฉพาะหน้าแดชบอร์ด S24 (`/vehicles/maintenance/`) และ S4 (`/parts/`) ใช้หน้าตาแบบ vmsplus.pea.co.th/dashboard ได้ (การ์ดตัวเลขสีไล่เฉด · เรื่องที่ควรดู · แผงตัวกรองพับได้ · กราฟ ชิ้นอยู่ `src/components/dashboard/`) แม้ไลบรารีไม่มี · ยังต้องสีจาก token · ข้อมูลชุดเดิมของหน้า · กรอบหน้า ตาราง ช่องกรอก popup เป็น component เดิม · หน้าอื่นทั้งหมดยังต้องเป็น component ตามข้อ 12 · จดชิ้นใหม่ใน `figma-spec/COMPOSED.md` หัวข้อ "แดชบอร์ดแบบ VMS+"
 19. **แก้ต้นแบบแล้วต้องอัปเดตหน้าสรุปและการ์ด FLO** (เจ้าของงาน 19 พ.ย. 2569 _"ถ้ามีการแก้ไขใน prototype ต้องอัพเดทที่ flo ด้วย"_) — แก้แล้วทำให้ journey หน้า case toast สิทธิ์ หรือสถานะเปลี่ยน ต้องทำตามหัวข้อ "แก้ต้นแบบบำรุงรักษา → อัปเดตหน้าสรุปและการ์ด FLO ในงานเดียวกัน" ใน `CLAUDE.md` ของรีโป Maintenance-Request-Form ก่อนบอกว่าเสร็จ: แก้เอกสาร Feature ไฟล์ 40–44 · publish ทับ artifact https://claude.ai/artifact/ApmsruZ1AgACrtvQG1FoFn · อัปเดตการ์ด [MTD-212](https://flo.odt.co.th/products/205/items/212) พร้อม comment ว่าแก้อะไร · แก้เฉพาะหน้าตาที่ไม่กระทบเรื่องเหล่านี้ และงานทดลองที่ยังไม่ commit ไม่ต้องทำ
+20. **โค้ดไม่มี comment** (เจ้าของงาน 19 พ.ย. 2569 _"code ที่เป็น comment แบบนี้ไม่ต้องเอาใว้เลย เอาออกให้หมด จดใว้แค่ใน plan.md หรือที่อื่น ที่ไม่อยู่ใน code"_) — ไฟล์ `.ts` `.tsx` `.mjs` `.css` ไม่เขียน comment ทั้งหัวไฟล์ ระหว่างบรรทัด ท้ายบรรทัด และ `{/* */}` ใน JSX · โน้ตของหน้า (scenario ที่ทำ · ที่มาของ component · เหตุผลของเงื่อนไข · ประวัติการแก้ · คำพูดเจ้าของงาน) จดใน `docs/code-notes/<โฟลเดอร์>.md` ใต้หัวข้อชื่อไฟล์โค้ด สารบัญอยู่ `plan.md` · ยกเว้นคำสั่งที่เครื่องมืออ่าน (`eslint-disable-next-line` · `@ts-expect-error`) · `src/styles/tokens.css` `theme.css` ถูกตัด comment ตอน `npm run sync-tokens`
 
 ## ตรวจก่อนบอกว่าเสร็จ
 
@@ -62,6 +63,7 @@ npm run check-wording                                        # R80 ข้อค�
 | `src/app/` | หน้าตาม scenario (`page.tsx` = รายการแผน · `new/` ฟอร์มสร้างแผน · `scenarios/` `kit/` `soon/` ของต้นแบบ · `plans/` ที่อยู่เดิมที่พาไปที่ใหม่) |
 | `src/lib/mock/` | ข้อมูลจำลอง |
 | `scripts/` | `sync-tokens.mjs` · `figma-spec.mjs` |
+| `plan.md` · `docs/code-notes/` | โน้ตของโค้ดที่ไม่อยู่ในโค้ด (ข้อ 20) · `plan.md` เป็นสารบัญ · `docs/code-notes/<โฟลเดอร์>.md` หัวข้อละ 1 ไฟล์โค้ด |
 
 <!-- BEGIN:nextjs-agent-rules -->
 
