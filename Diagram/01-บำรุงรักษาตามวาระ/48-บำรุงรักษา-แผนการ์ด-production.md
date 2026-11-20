@@ -71,20 +71,149 @@
 
 **คอลัมน์**: Backlog → Ready → Doing → Review (MR) → UAT → Done · Doing ไม่เกิน 2 ใบต่อคน
 
-## 4. รอบ 0: พื้นฐาน (Epic ใหม่ "บำรุงรักษา: พื้นฐาน")
+## 4. รอบ 0: พื้นฐาน (Epic ใหม่ "[บำรุงรักษาตามวาระ] รอบ 0 พื้นฐาน")
 
-| รหัส | การ์ด | ทำ | หยิบจาก / แบบที่ลอก | เสร็จเมื่อ |
-|---|---|---|---|---|
-| R0-1 | BE: rebase branch ขึ้น main | push `8b506ce` ก่อน · rebase `feat/maintenance-r0-r1` บน main · เปลี่ยนเลข SQL pack 016–019 เป็น 026–029 + rollback · เวลาของ migration ให้หลัง migration ล่าสุดของ main · `router.Setup(ctx, …)` · regenerate swagger · รวม `er.md` | `scripts/sql/` · `docs/schema/pea-overhaul-sql-pack.md` (ลำดับ) · `cmd/server/router/router.go` `registerMaintenance` | `make lint test e2e check-migrations` ผ่าน · MR เปิด |
-| R0-2 | BE: ให้โดเมน maintenance ผ่านกติกา | ย้าย `funcs.Result` ใน port ใหม่เป็น `(T, error)` · เพิ่มแพ็กเกจ `domain/maintenance/adapter*` ใน `inner-layers` ของ `.golangci.yml` · ตรวจ role ใน handler เขียนทุกตัว (ตอนนี้ตรวจแค่หน่วยงาน) · `handler_write_permission_test.go` ของ maintenance | แบบ: `domain/overhaul/adapter/http/handler_write_permission_test.go` · `access_control.go` · `requireOverhaulPlanWriteAccess` (handler.go:305) | sweep test ครอบทุก route ที่ไม่ใช่ GET · 401/403 test |
-| R0-3 | FE: rebase branch ขึ้น main + กันข้ามโดเมน | commit/ทิ้งไฟล์ค้าง · rebase · เพิ่มกฎใน `eslint.config.mjs` ห้าม `domains/maintenance` import repair/overhaul (ตอนนี้ไม่มี) | กฎ repair↔overhaul ใน `eslint.config.mjs` | `pnpm lint type-check test build` ผ่าน |
-| R0-4 | Decision: บทบาทและแหล่งข้อมูล | ตอบ: ผู้ดูแลยานพาหนะมาจาก `vms_mas_vehicle_department.vehicle_user_emp_id` หรือ `vms_mas_vehicle_authorized_user` · กรย. เขตไหนดูจาก `dept_sap`/`dept_upper` อย่างไร · ผู้รับจ้าง login อย่างไร (มีบัญชีใน VMS+ ไหม) · กบค. ระบุจาก role หรือ dept | `db-schema/map-06-การมองเห็นรถ-ตามผังหน่วยงาน.md` · `Maintenance-Request/VMS-Plus-ตาราง-Permission.md` (ยังไม่มีบทบาท กบค. กรย.) | ทุกข้อมีคำตอบในการ์ด |
-| R0-5 | BE+FE: สิทธิ์บำรุงรักษา | ตาม R0-4: resolver ว่าผู้ใช้เป็นบทบาทไหนในบำรุงรักษา (กองผู้สร้างแผน 6 กอง · กบค. · ผู้อนุมัติ · กรย. · ผู้ดูแลยานพาหนะ · ผู้รับจ้าง) · BE ส่ง `can_edit can_delete can_review` ต่อรายการ (มีบางส่วน) · FE ใช้ `utils/plan-access.ts` ขยายเป็นทุกหน้า | BE: `domain/shared/actor/http/actor_resolver.go` (`ResolveActorContext` `TokenHasRole`) · role ใน `domain/platform/auth/dto/vms_profile.go` · FE: `useProfile()` `src/domains/identity/profile.ts` · แบบ `overhaul/utils/overhaul-permissions.ts` | ตาราง Permission ไฟล์ 14 หัวข้อ 1 ผ่านทุกช่อง (e2e personas เพิ่มบทบาทใหม่ใน `e2e/harness/personas.go`) |
-| R0-6 | BE: ข้อมูลหน่วยงาน | ค่า `dept_sap_short` จริงของ 5 กองที่ยังเป็น TODO ใน `domain/maintenance/domain/unit.go` · mapping เขต → `dept_sap` (UC-MT-05.2 ตอนนี้ว่าง) | `vms_mas_department` / `local_mas_department` (`dept_sap` `dept_upper` `dept_short`) | seed migration + test |
-| R0-7 | BE: แจ้งเตือนของบำรุงรักษา | `NotifyType "maintenance"` ใน `domain/shared/notify/links.go` (deep link) · seed template ใน `vms_mas_notification_template` · เรียก `notify.Service.Send/SendInBackground` | แบบ: `migrations/20261117120000_seed_overhaul_notification_templates.sql` · `domain/overhaul/usecase/service_selected_approver.go` | ส่งได้จริงบน dev · unit test |
-| R0-8 | FE: กระดิ่งแจ้งเตือน (ของกลาง) | ปุ่มกระดิ่งใน `src/components/layout/header.tsx` ตอนนี้เป็นปุ่มนิ่ง · ทำแผงรายการ อ่านแล้ว กดไปหน้า | API แจ้งเตือนของ VMS+ main (`getMainApiConfig`) · ตาราง `vms_trn_notifications` | ใช้ร่วมได้ทุกโมดูล · test ของ utils |
-| R0-9 | Spike: Smart Inventory | API ที่มี (`GetMasterMatWiSto`) ค้นทีละรหัส ใช้ดูยอดและราคาได้ แต่ไม่มีค้นรายการ · ตอนนี้ BE ใช้ catalog จำลอง | `Maintenance-Request/API_Spec_GetMasterMatWiSto.txt` · `docs/repair/smart-inventory-api-contract.md` · `domain/parts/port` | สรุปว่าจะได้รายการอะไหล่จากไหน และใช้ร่วมกับงานซ่อมอย่างไร |
-| R0-10 | FE: ตามแบบ Overhaul ถาวร | ปุ่ม "ส่งกลับแก้ไข"/"อนุมัติ" ที่หัวหน้า + popup เหตุผล (S2 S7) · popup เลือกยานพาหนะหัว "เพิ่มยานพาหนะ" แผงตัวกรองหุบ · แถวยานพาหนะ desktop เป็นเมนู "…" | `@ui/modal/reason-modal/reason-modal.tsx` · ต้นแบบ `src/app/approvals/_shared/Decision.tsx` · Figma R117 | ตรงจอ B.2 B.5–B.7 F.2 F.5–F.7 |
+> ร่างการ์ดเต็ม 20 พ.ย. 2569 · ยังไม่ลง FLO · ตรวจแล้วว่าไฟล์และฟังก์ชันที่อ้างมีอยู่จริง (BE main `97daab2` · branch `feat/maintenance-r0-r1` ที่ `~/Documents/repo-maintainD/`)
+> ลำดับ: R0-1 R0-3 R0-4 เริ่มพร้อมกัน → R0-2 ต่อ R0-1 → R0-5 R0-6 รอคำตอบ R0-4 → R0-7 แล้ว R0-8 → R0-9 R0-10 ทำคู่ได้เลย · ขนาดเป็นค่าประมาณ dev ปรับได้
+
+### R0-1 · BE: rebase งานบำรุงรักษาขึ้น main
+**ชนิด** Task · **รีโป** BE · **ขนาด** 2–3 วัน · **ขึ้นกับ** —
+
+**ทำ**
+1. push `8b506ce` ที่ค้างอยู่ แล้ว rebase `feat/maintenance-r0-r1` บน `origin/main`
+2. SQL pack ของงานนี้ 016–019 เปลี่ยนเป็น 026–029 ทั้งไฟล์หลักและ `_rollback.sql` (main ถึง 025)
+3. migration ของงานนี้ทุกไฟล์มีเวลาหลัง migration ล่าสุดของ main · ห้ามแก้ไฟล์ migration ที่อยู่ใน main แล้ว
+4. `registerMaintenance` ให้เข้ากับ `router.Setup(ctx, …)` ของ main
+5. รวม `docs/schema/er.md` (ส่วน `pm_*`) และ `make swagger` ใหม่
+
+**หยิบจาก** `scripts/sql/README.md` · `docs/schema/pea-overhaul-sql-pack.md` (ลำดับส่ง PEA) · `cmd/server/router/router.go`
+
+**ห้าม** แก้ migration ของ main (`make check-migrations` ตีกลับ) · `--no-verify` · push main
+
+**เสร็จเมื่อ** `make lint` `make test` `make e2e` `make check-migrations` ผ่าน · e2e เดิมของบำรุงรักษาผ่านครบ (`e2e/maintenance_test.go` `maintenance_trip_test.go` `maintenance_unit_test.go`) · เปิด MR ให้คนรีวิว
+
+### R0-2 · BE: ให้โดเมน maintenance ผ่านกติกาของรีโป
+**ชนิด** Task · **รีโป** BE · **ขนาด** 2–3 วัน · **ขึ้นกับ** R0-1
+
+**ทำ**
+1. port และ usecase ใหม่ใน `domain/maintenance/` ที่คืน `funcs.Result` เปลี่ยนเป็น `(T, error)`
+2. เพิ่ม `domain/maintenance/adapter` และ `adapter/http` ใน `inner-layers` ของ `.golangci.yml`
+3. handler POST/PUT/DELETE ทุกตัวตรวจ actor **และ role** (ตอนนี้ตรวจแค่หน่วยงานผ่าน `requireActor` ของตัวเอง)
+4. `domain/maintenance/adapter/http/handler_write_permission_test.go` ไล่ทุก route ที่ไม่ใช่ GET มีขั้นต่ำจำนวน route
+5. ข้อความ commit ของ branch เป็น Conventional Commits (lefthook บังคับ)
+
+**แบบที่ลอก** `domain/overhaul/adapter/http/handler_write_permission_test.go` · `access_control.go` · `requireOverhaulPlanWriteAccess` (`handler.go:305`) · `ResolveActorContext` `TokenHasRole` (`domain/shared/actor/http/actor_resolver.go:146 177`)
+
+**ห้าม** exclusion ใน `.golangci.yml` หรือ sweep test · maintenance import repair/overhaul (vendor ร่วมผ่าน bridge ที่ `adapter/` แบบ `adapter/pmvendor/bridge.go`)
+
+**เสร็จเมื่อ** `golangci-lint run ./...` และ `make test` ผ่าน · route เขียนทุกตัวมี test 401 และ 403
+
+### R0-3 · FE: rebase งานบำรุงรักษาขึ้น main และกันข้ามโดเมน
+**ชนิด** Task · **รีโป** FE · **ขนาด** 1–2 วัน · **ขึ้นกับ** —
+
+**ทำ**
+1. ไฟล์ค้าง (`CLAUDE.md` · `docs/backlog/maintenance/create-and-submit-plan/01-input.md` · `AI-EDITING.md`) เจ้าของเคาะว่า commit หรือทิ้ง
+2. rebase `feat/maintenance-r0-r1` บน main
+3. กฎใน `eslint.config.mjs` ห้าม `src/domains/maintenance/**` import `@domains/repair` `@domains/overhaul` (แบบกฎ repair↔overhaul ที่มีอยู่)
+4. ตรวจว่าเมนูยังซ่อนด้วย `NEXT_PUBLIC_FEATURE_PM` (`use-maintenance-enabled` · `MaintenanceGate`)
+
+**ห้าม** ลด coverage · `*.test.tsx`
+
+**เสร็จเมื่อ** `pnpm lint` `pnpm type-check` `pnpm test` `pnpm build` ผ่าน · เปิด MR
+
+### R0-4 · Decision: บทบาทของบำรุงรักษามาจากข้อมูลไหน
+**ชนิด** Decision · **ใครตอบ** เจ้าของงาน + ทีม VMS+ main · **บล็อก** R0-5 R2-1 R3-7 R3-10
+
+ตอนนี้ role ใน JWT (`domain/platform/auth/dto/vms_profile.go`) มีแค่ vehicle-user · admin-* · approval-* ไม่มีบทบาทของงานนี้
+
+| # | คำถาม | ตัวเลือกที่เห็น |
+|---|---|---|
+| 1 | กองผู้สร้างแผน (6 กองของ สนง.) ตัดสินจากอะไร | `dept_sap_short` ของผู้ใช้ (โค้ดทำแบบนี้ แต่ยืนยันค่าแล้วแค่ กบค.) · หรือ role ใหม่ |
+| 2 | กบค. (เห็นทุกหน่วยงาน · แก้เครื่องมือกล) | หน่วยงาน กบค. · role admin-super · หรือ role ใหม่ |
+| 3 | ผู้อนุมัติแผนและแผนเดินทาง | สายบังคับบัญชาจาก `hr.Client.GetEmpManager` (ทำแล้วใน `hr_gateway.go`) · อนุมัติชั้นเดียวไหม (ด.18) |
+| 4 | กรย. ที่รับแจ้งเตือนตามเขต | `dept_sap`/`dept_upper` ของผังหน่วยงาน (`db-schema/map-06`) เทียบเขตของยานพาหนะ `vehicle_owner_dept_sap` |
+| 5 | ผู้ดูแลยานพาหนะ | `vms_mas_vehicle_department.vehicle_user_emp_id` · `vms_mas_vehicle_authorized_user` · หรือชื่อที่ผู้ดำเนินการแก้ในแผนเดินทาง (ต้นแบบใช้แบบนี้) |
+| 6 | ผู้รับจ้างเข้าระบบอย่างไร | บัญชีใน VMS+ · บัญชีแยก · หรือไม่เข้าระบบ หน่วยงานบันทึกแทน |
+
+**หยิบจาก** ไฟล์ 14 หัวข้อ 1 · `Maintenance-Request/VMS-Plus-ตาราง-Permission.md` · `VMS-Plus-Permission-Role-3-ระยะ.md`
+
+**เสร็จเมื่อ** ทุกข้อมีคำตอบใน comment · ตาราง Permission ไฟล์ 14 แก้ตามแล้ว
+
+### R0-5 · BE+FE: สิทธิ์ของบำรุงรักษา
+**ชนิด** Story (2 Task) · **ขนาด** BE 3 วัน · FE 2 วัน · **ขึ้นกับ** R0-2 R0-4
+
+**ทำ (BE)**
+1. resolver ว่าผู้ใช้เป็นบทบาทไหนของงานนี้ตามคำตอบ R0-4 (`domain/maintenance/adapter/http/access_control.go` แบบ overhaul)
+2. ทุกรายการส่ง `can_edit` `can_delete` `can_review` (มีบางส่วนแล้ว)
+3. persona ใหม่ใน `e2e/harness/personas.go` + e2e ตามตาราง Permission
+
+**ทำ (FE)**
+1. ขยาย `src/domains/maintenance/utils/plan-access.ts` ให้ครอบทุกหน้า ใช้ `useProfile()` (`src/domains/identity/profile.ts`) + `can_*` จาก BE · มี test ของ utils
+
+**แบบที่ลอก** `src/domains/overhaul/utils/overhaul-permissions.ts` · `overhaul/components/kobk-only-guard.tsx`
+
+**ห้าม** ซ่อนปุ่มฝั่ง FE อย่างเดียวโดย BE ไม่ตรวจ
+
+**เสร็จเมื่อ** ทุกช่องในตาราง Permission ไฟล์ 14 มี e2e ครอบ · FE coverage ถึงเกณฑ์
+
+### R0-6 · BE: ข้อมูลหน่วยงานและเขต
+**ชนิด** Task · **รีโป** BE · **ขนาด** 1–2 วัน · **ขึ้นกับ** R0-1 · R0-4 ข้อ 1 4
+
+**ทำ**
+1. `dept_sap_short` จริงของ 5 กองที่ยังเป็น TODO ใน `domain/maintenance/domain/unit.go` (ยืนยันแล้วแค่ กบค.)
+2. mapping เขต → `dept_sap` ให้ตัวกรองภาค/เขตของแผน (UC-MT-05.2 ตอนนี้ว่าง)
+3. seed migration + SQL pack + rollback
+
+**หยิบจาก** `vms_mas_department` / `local_mas_department` (`dept_sap` `dept_upper` `dept_short`) · `db-schema/map-06-การมองเห็นรถ-ตามผังหน่วยงาน.md` · seed เดิม 019 (`pm_unit_group_seed`)
+
+**ห้าม** อ่านข้อมูลจริงจาก UAT/PROD (AGENTS.md) ขอค่าจากเจ้าของข้อมูล
+
+**เสร็จเมื่อ** unit test ของ mapping · ตัวกรองบน dev คืนแผนถูกเขต
+
+### R0-7 · BE: แจ้งเตือนของบำรุงรักษา
+**ชนิด** Task · **รีโป** BE · **ขนาด** 2 วัน · **ขึ้นกับ** R0-1 · Decision ด.19 (e-mail / push ด้วยไหม)
+
+**ทำ**
+1. `NotifyType` ของ maintenance ใน `domain/shared/notify/links.go` (กดแล้วไปหน้าที่ถูก)
+2. seed template ลง `vms_mas_notification_template`: อนุมัติแผนเดินทาง (กรย. · ผู้ดูแลยานพาหนะ · ผู้รับจ้าง) · ปิดงานรอรับทราบ · ผลตรวจน้ำมันไม่ผ่าน
+3. ฟังก์ชันส่งใน usecase ผ่าน `notify.Service.Send` / `SendInBackground`
+
+**หยิบจาก** `domain/shared/notify/service.go` · `adapter/vmsnotify` · ข้อความต้นแบบ `approvalNotis` `ackNoti` `oilFailNoti` (`maintenance-utility-vehicle/src/lib/mock/trips.ts`)
+
+**แบบที่ลอก** `migrations/20261117120000_seed_overhaul_notification_templates.sql` · `domain/overhaul/usecase/service_selected_approver.go`
+
+**เสร็จเมื่อ** unit test ว่าใครได้ข้อความไหน · ส่งได้จริงบน dev
+
+### R0-8 · FE: กระดิ่งแจ้งเตือน (ใช้ร่วมทุกโมดูล)
+**ชนิด** Task · **รีโป** FE · **ขนาด** 2–3 วัน · **ขึ้นกับ** R0-7 · Decision: อ่านรายการจาก VMS+ main (`getMainApiConfig`) หรือ maintain-d-be
+
+**ทำ**
+1. ปุ่มกระดิ่งใน `src/components/layout/header.tsx` (ตอนนี้ปุ่มนิ่ง มีจุดแดง ไม่มี handler) เปิดแผงรายการ · นับที่ยังไม่อ่าน · กดแล้วไปหน้าที่ลิงก์และทำเครื่องหมายอ่านแล้ว
+2. service ที่ `src/services/` (ใช้ร่วม ไม่อยู่ใน domain)
+3. หน้าตาตามจอแผงแจ้งเตือน Figma (G.2 G.4 G.7 L.4) · มือถือ bottom sheet (`@ui/bottom-sheet.tsx`)
+
+**เสร็จเมื่อ** test ของ utils · ใช้ได้ทั้ง desktop และมือถือ · งานซ่อมและ Overhaul ไม่พัง
+
+### R0-9 · Spike: รายการอะไหล่จาก Smart Inventory
+**ชนิด** Spike · **ขนาด** จำกัด 2 วัน · **บล็อก** R1-2 R3-4
+
+**คำถาม** `GetMasterMatWiSto` ค้นทีละรหัส ได้ยอดและราคา ไม่มีค้นรายการ · BE ใช้รายการจำลอง (`NewMemoryCatalogProvider`) · รายการอะไหล่สำหรับเลือกในแผนจะได้จากไหน · ใช้แหล่งเดียวกับงานซ่อมได้ไหม
+
+**หยิบจาก** `Maintenance-Request/API_Spec_GetMasterMatWiSto.txt` · `docs/repair/smart-inventory-api-contract.md` · `domain/parts/port` (`CheckPartsStock` `ResolveCatalogPartSnapshot`)
+
+**เสร็จเมื่อ** ข้อสรุปในการ์ด: API · ฟิลด์ · ข้อจำกัด · วิธีเชื่อม (ผ่าน bridge ที่ `adapter/` เพราะ maintenance ห้าม import parts)
+
+### R0-10 · FE: ปรับตามแบบ Overhaul ถาวร
+**ชนิด** Task · **รีโป** FE · **ขนาด** 2 วัน · **ขึ้นกับ** R0-3
+
+**ทำ**
+1. หน้าตรวจสอบแผนและแผนเดินทาง (`plan-detail/review-section` · `trip-review-page.tsx`): เอาส่วนผลการพิจารณาออก · ปุ่ม "ส่งกลับแก้ไข" + "อนุมัติ" ที่หัวหน้า · ส่งกลับเปิดหน้าต่างเหตุผลบังคับ · อนุมัติยังมีหน้าต่างยืนยัน
+2. popup เลือกยานพาหนะ (`vehicle-picker`): หัวและปุ่ม "เพิ่มยานพาหนะ (k)" · แผงตัวกรองหุบตอนเปิด
+3. แถวยานพาหนะ desktop เป็นเมนู "…" · มือถือคงไอคอนบนการ์ด
+
+**หยิบจาก** `@ui/modal/reason-modal/reason-modal.tsx` · ต้นแบบ `src/app/approvals/_shared/Decision.tsx` `src/app/quarter/_shared/TripCarPicker.tsx` · Figma B.2 B.5–B.7 F.2 F.5–F.7 (R117)
+
+**เสร็จเมื่อ** ตรงจอทั้ง desktop และมือถือ · ข้อความตรงตัว · test ของ utils ผ่าน
 
 ## 5. รอบ 1: แผนบำรุงรักษา (Feature 1 · ส่วนใหญ่ทำแล้วบน branch)
 
