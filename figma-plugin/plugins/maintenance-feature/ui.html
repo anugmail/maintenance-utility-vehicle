@@ -96,6 +96,7 @@
   .frow:hover{background:var(--hover)}
   .frow .t{display:flex;flex-direction:column;min-width:0}
   .frow .t .m{color:var(--text2)}
+  .frow .t .m.warn{color:var(--danger)}
   .nw{white-space:nowrap}   /* ตัดบรรทัดได้เฉพาะที่ · ไม่ตัดกลางวลี */
   .frow .n{text-align:right;font-variant-numeric:tabular-nums}
   .frow .n small{display:block;color:var(--text2);font-size:11px}
@@ -161,11 +162,11 @@
   </nav>
   <div class="body">
     <div class="pane" id="pBuild">
-      <div class="sec">
+      <div class="sec" id="secFeat">
         <div class="row"><span class="lbl grow">Feature</span><span class="muted" id="featSel"></span><button id="featAll" class="link brand">เลือกทั้งหมด</button></div>
         <div id="featList" class="flist"></div>
       </div>
-      <div class="sec">
+      <div class="sec" id="secDev">
         <span class="lbl">อุปกรณ์</span>
         <div class="seg">
           <label><input type="radio" name="dev" value="both" checked><span>ทั้งคู่</span></label>
@@ -173,7 +174,7 @@
           <label><input type="radio" name="dev" value="mobile"><span>Mobile</span></label>
         </div>
       </div>
-      <div class="sec">
+      <div class="sec" id="secRun">
         <div class="total" id="total"></div>
         <button id="all" class="btn primary full">สร้าง Feature ที่เลือก</button>
         <button id="happy" class="btn secondary full">สร้างเฉพาะ Happy flow</button>
@@ -232,9 +233,10 @@
         <div class="dd"><select id="tgt"></select><svg width="16" height="16" viewBox="0 0 16 16"><path d="M10.4751 7.47486c.1953-.19526.1953-.51184 0-.70711-.1953-.19526-.51184-.19526-.7071 0L8.00023 8.53552 6.23246 6.76775c-.19526-.19526-.51184-.19526-.70711 0-.19526.19527-.19526.51185 0 .70711l2.12133 2.12132.35355.35355.35355-.35355z"/></svg></div>
         <div class="row"><input type="text" id="tgtUrl" class="grow" placeholder="วางลิงก์บอร์ด FigJam"><button id="tgtAdd" class="btn secondary">เพิ่ม</button></div>
       </div>
+      <div id="sendSlot"></div>
       <div class="sec">
-        <button id="figjamAll" class="btn primary full">ส่งทุก Feature ไป FigJam</button>
-        <div class="row"><button id="figjam" class="btn secondary grow">ส่ง Feature ที่เลือก</button><button id="openTgt" class="btn secondary grow" disabled>เปิดบอร์ดปลายทาง</button></div>
+        <button id="figjam" class="btn primary full">ส่ง Feature ที่เลือกไป FigJam</button>
+        <div class="row"><button id="figjamAll" class="btn secondary grow">ส่งทุก Feature ที่สร้างแล้ว</button><button id="openTgt" class="btn secondary grow" disabled>เปิดบอร์ดปลายทาง</button></div>
         <span class="muted">ต้องเปิด <code>node figma-export/serve.js</code> ก่อน · <button class="link brand" data-help="hDesign">วิธีใช้</button></span>
       </div>
     </div>
@@ -270,14 +272,15 @@
       <ol class="steps2">
         <li><span>ติ๊ก <b>Feature</b> (หลายตัวได้ หรือ<b>เลือกทั้งหมด</b>) และเลือก<b>อุปกรณ์</b></span></li>
         <li><span>จะเอาบาง journey กดลูกศร <b>›</b> ท้ายแถว Feature แล้วติ๊กเฉพาะ journey ที่ต้องการ</span></li>
-        <li><span>กด <b>สร้าง</b> หรือแท็บส่งไป FigJam กด <b>ส่ง Feature ที่เลือก</b> (ใช้ journey ที่ติ๊กเหมือนกัน)</span></li>
+        <li><span>กด <b>สร้าง</b> (แท็บส่งไป FigJam ใช้รายการ Feature ชุดเดียวกัน ติ๊กที่ไหนก็เห็นทั้งสองแท็บ)</span></li>
         <li><span>รอแถบด้านล่างขึ้น <b>เสร็จ</b> จอจะอยู่ใน <b>Page</b> ของ Feature นั้น (ดูชื่อใต้ชื่อ Feature · เปิดได้จากแถบ Pages ทางซ้ายของ Figma · ยังไม่มีปลั๊กอินสร้างให้)</span></li>
       </ol></div>
     <div class="sec"><span class="lbl">ส่งไป FigJam</span>
       <ol class="steps2">
         <li><span>เปิด <code>node figma-export/serve.js</code> ในเทอร์มินัล</span></li>
         <li><span>แท็บ <b>ส่งไป FigJam</b> วางลิงก์บอร์ด กด <b>เพิ่ม</b> (ครั้งแรกครั้งเดียว)</span></li>
-        <li><span>กด <b>ส่งทุก Feature ไป FigJam</b> แล้วกด <b>เปิดบอร์ดปลายทาง</b></span></li>
+        <li><span>ติ๊ก <b>Feature</b> ที่จะส่ง (กด <b>›</b> เลือกบาง journey ได้) และเลือก<b>อุปกรณ์</b> · Feature ที่ยังไม่ได้สร้างจอจะขึ้นว่า <b>ยังไม่ได้สร้างจอ</b> และถูกข้าม</span></li>
+        <li><span>กด <b>ส่ง Feature ที่เลือกไป FigJam</b> (หรือ <b>ส่งทุก Feature ที่สร้างแล้ว</b>) แล้วกด <b>เปิดบอร์ดปลายทาง</b></span></li>
         <li><span>ในบอร์ด รัน I AM A lnw กด <b>วางลงบอร์ดนี้</b></span></li>
       </ol></div>
     <div class="sec"><span class="lbl">อัปเดต / ลบ</span>
@@ -363,7 +366,13 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') document.que
 document.querySelectorAll('.tab').forEach(t => { t.onclick = () => {
   document.querySelectorAll('.tab').forEach(x => x.setAttribute('aria-selected', String(x === t)));
   document.querySelectorAll('#design .pane').forEach(p => { p.hidden = p.id !== t.dataset.pane; });
+  if (!t.dataset.pane) return;
+  SEND = t.dataset.pane === 'pSend';
+  if (SEND) { $('sendSlot').append($('secFeat'), $('secDev')); post({ type: 'built-check' }); }
+  else { $('pBuild').insertBefore($('secDev'), $('secRun')); $('pBuild').insertBefore($('secFeat'), $('secDev')); }
+  if (FEATS.length) drawFeatures();
 }; });
+let SEND = false, BUILT = null;
 
 /* ===== ฝั่งไฟล์ Figma ===== */
 const dev = () => document.querySelector('input[name=dev]:checked').value;
@@ -387,7 +396,8 @@ function drawFeatures() {
       '<label class="frow"><input type="checkbox" class="fchk" value="' + f.id + '"' + (s.size === n ? ' checked' : '') + '>' +
       '<span class="t"><b>' + esc(f.title) + '</b>' +
         '<span class="m">' + [part ? 'เลือก ' + s.size + '/' + n + ' journey' : n + ' journey', 'Happy flow ' + (part ? hp + '/' : '') + (f.happy || 0) + ' เฟรม', 'ทุกเคส ' + (part ? frames + '/' : '') + (f.cases || 0) + ' เฟรม'].map(x => '<span class="nw">' + x + '</span>').join(' · ') + '</span>' +
-        '<span class="m" title="ชื่อ Page ในแถบ Pages ทางซ้ายของ Figma · ยังไม่มีปลั๊กอินสร้างให้">สร้างจอลง Page “' + esc(f.page) + '”</span></span>' +
+        (BUILT && !BUILT.includes(f.id) ? '<span class="m warn">ยังไม่ได้สร้างจอ' + (SEND ? ' — ส่งไม่ได้ ข้ามตอนส่ง' : '') + '</span>' : '') +
+        '<span class="m" title="ชื่อ Page ในแถบ Pages ทางซ้ายของ Figma · ยังไม่มีปลั๊กอินสร้างให้">' + (SEND ? 'ส่งจาก' : 'สร้างจอลง') + ' Page “' + esc(f.page) + '”</span></span>' +
       '<button class="iconbtn exp" title="เลือก journey">' + CHEV_R + '</button></label>' +
       '<div class="jlist"><div class="jrow jhead"><span></span><span>journey · เฟรมต่ออุปกรณ์</span><span class="n">Happy</span><span class="n">ทุกเคส</span></div>' + f.journeys.map((t, k) => '<label class="jrow"><input type="checkbox" class="jchk" data-k="' + k + '"' + (s.has(k) ? ' checked' : '') + '><span>' + esc(t.replace(/ \((.*)\)$/, '')) + '</span><span class="n">' + jh(k) + '</span><span class="n">' + jc(k) + '</span></label>').join('') + '</div></div>';
   }).join('');
@@ -416,11 +426,15 @@ function drawSel() {
   $('featAll').textContent = all ? 'ล้าง' : 'เลือกทั้งหมด';
   const part = Object.keys(picksOf()).length;
   $('all').textContent = !s.length ? 'เลือก Feature ก่อน' : 'สร้าง ' + (s.length > 1 ? s.length + ' Feature' : 'Feature ที่เลือก') + (part ? ' (บาง journey)' : '');
-  $('all').disabled = $('happy').disabled = $('figjam').disabled = $('updCheck').disabled = !s.length;
+  $('all').disabled = $('happy').disabled = $('updCheck').disabled = !s.length;
+  const fs = sendF(), skipN = s.length - fs.length;
+  $('figjam').disabled = !fs.length;
+  $('figjam').textContent = !s.length ? 'เลือก Feature ก่อน' : !fs.length ? 'Feature ที่เลือกยังไม่ได้สร้างจอ' : 'ส่ง ' + (fs.length > 1 ? fs.length + ' Feature' : (FEATS.find(f => f.id === fs[0]) || {}).title) + (Object.keys(picksOf()).some(id => fs.includes(id)) ? ' (บาง journey)' : '') + ' ไป FigJam' + (skipN ? ' · ข้าม ' + skipN : '');
   $('updSel').textContent = s.length ? (s.length > 2 ? s.length + ' Feature' : s.map(id => (FEATS.find(f => f.id === id) || {}).title).join(' · ')) + (part ? ' (บาง journey)' : '') + ' · ' + ({ both: 'Desktop + Mobile', desktop: 'Desktop', mobile: 'Mobile' })[dev()] : 'ยังไม่ได้ติ๊ก';
   $('delCheck').disabled = !s.length || !document.querySelector('.delPart:checked');
 }
 $('featAll').onclick = () => { const all = FEATS.every(f => PICK[f.id].size === f.journeys.length); FEATS.forEach(f => { PICK[f.id] = new Set(all ? [] : f.journeys.map((_, k) => k)); }); drawFeatures(); };
+const sendF = () => selF().filter(id => !BUILT || BUILT.includes(id));
 const fNames = () => { const s = selF(); return s.length > 1 ? s.length + ' Feature' : ((FEATS.find(f => f.id === s[0]) || {}).title || ''); };
 const send = (type, extra, text) => { const s = selF(); pending = nRun = Math.max(1, s.length); start(text || 'กำลังทำงาน…'); post(Object.assign({ type, devices: dev(), feature: s[0] || feat(), features: s, picks: picksOf() }, extra || {})); };
 $('all').onclick = () => send('build', null, 'เริ่มสร้าง ' + fNames() + ' …');
@@ -488,7 +502,9 @@ async function fjStart(type, extra) {
   try { const r = await fetch(SERVE + 'boards.json'); if (!r.ok) throw new Error(r.status); }
   catch (e) { logLine('✗ ต่อ serve.js ไม่ได้ — เปิด  node figma-export/serve.js  ในเทอร์มินัลก่อน แล้วกดใหม่'); return; }
   fjOk = 0; fjErr = 0;
-  post(Object.assign({ type, devices: dev(), feature: feat(), features: selF(), picks: picksOf() }, extra || {}));
+  const fs = sendF(), skip = selF().filter(id => !fs.includes(id));
+  if (type === 'export-figjam' && skip.length) logLine('· ข้าม Feature ที่ยังไม่ได้สร้างจอ: ' + skip.map(id => (FEATS.find(f => f.id === id) || {}).title || id).join(' · '));
+  post(Object.assign({ type, devices: dev(), feature: fs[0] || feat(), features: fs, picks: picksOf() }, extra || {}));
 }
 $('figjam').onclick = () => fjStart('export-figjam');
 $('figjamAll').onclick = () => fjStart('export-figjam-all');
@@ -571,6 +587,7 @@ onmessage = (e) => {
   if (m.type === 'fj-mode') { $('design').hidden = true; $('fj').hidden = false; fjInfo = { file: m.file, key: m.key }; drawFj(); loadFjParts(); }
   if (m.type === 'fj-targets') { targets = m.list || []; sel = m.sel; drawTargets(); if (!$('fj').hidden) drawFj(); }
   if (m.type === 'features') { FEATS = m.list || []; drawFeatures(); }
+  if (m.type === 'built') { BUILT = m.ids || []; if (FEATS.length) drawFeatures(); }
   if (m.type === 'mf-confirm') { busy = false; progress(0, 0); showCfm(m); }
   if (m.type === 'fj-all-done') logLine(m.sent.length ? '— ส่งครบทุก Feature ที่มีจอ (' + m.sent.length + ')' + (m.skip.length ? ' · ยังไม่มีจอ: ' + m.skip.join(' · ') : '') : '✗ ยังไม่มี Feature ไหนสร้างจอ — กดสร้างก่อน');
   if (m.type === 'journeys' && !FEATS.length) $('pick').innerHTML = m.items.map((t, i) => '<label class="chk"><input type="checkbox" value="' + i + '"><span>' + esc(t) + '</span></label>').join('');

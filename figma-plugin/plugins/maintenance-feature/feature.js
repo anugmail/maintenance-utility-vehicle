@@ -743,11 +743,18 @@ async function exportAll(devices) {
   log('ส่งแล้ว ' + sent.length + ' Feature: ' + (sent.join(' · ') || '-') + (skip.length ? ' · ยังไม่มีจอ (ข้าม): ' + skip.join(' · ') : ''));
   figma.ui.postMessage({ type: 'fj-all-done', sent, skip });
 }
+/* Feature ไหนมีจอแล้ว (20 พ.ย. 2569) — แท็บส่งไป FigJam ขึ้นป้าย "ยังไม่ได้สร้างจอ" และข้ามตอนส่ง */
+async function builtIds() {
+  const ids = [];
+  for (const f of MF_FEATURES) { useFeature(f.id); const fp = await featurePage(false); if (fp && fp.page.children.some(n => n.type === 'FRAME' && n.name.indexOf(FEATURE_PREFIX + ' / ') === 0)) ids.push(f.id); }
+  return ids;
+}
 const featureList = () => MF_FEATURES.map(f => { useFeature(f.id); return { id: f.id, title: f.title, page: f.page[0], cases: featureCount(FEATURE), happy: happyCount(FEATURE), jcases: FEATURE.map(j => featureCount([j])), jhappy: FEATURE.map((j, i) => (HAPPY[i] || []).length), journeys: FEATURE.map((j, i) => (i + 1) + ' ' + j.title + ' (' + j.pages.length + ' หน้า · ' + featureCount([j]) + ' เฟรม)') }; });
 
 /* แทนตัวรับคำสั่งของ screens.js (ตัวที่ประกาศทีหลังมีผล) · msg.feature = Feature ที่เลือกในหน้าต่าง (ไม่ส่งมา = ตัวที่ใช้อยู่ · เริ่มต้น plan) */
 figma.ui.onmessage = async (msg) => {
   try {
+    if (msg.type === 'built-check') { figma.ui.postMessage({ type: 'built', ids: await builtIds() }); return; }
     if (await tgtHandle(msg)) return;   // เลือก / เพิ่ม / ลบบอร์ดปลายทาง · เปิดลิงก์ (targets.js)
     if (await updHandle(msg)) return;   // แท็บอัปเดต / ลบ (update.js · 18 พ.ย. 2569)
     /* msg.features = หลาย Feature ที่ติ๊ก (17 พ.ย. 2569) ⇒ ทำทีละ Feature ตามลำดับ · journey ที่ติ๊ก (pick) ใช้เฉพาะตอนเลือก Feature เดียว */
@@ -773,6 +780,7 @@ figma.ui.onmessage = async (msg) => {
     if (run) {
       if (multi) { log(''); log((fail.length ? '⚠ ' : '') + 'ทำครบ ' + ok.length + '/' + ids.length + ' Feature' + (fail.length ? ' · พัง: ' + fail.join(' · ') : '') + ' · Page: ' + ids.map(id => (MF_FEATURES.find(f => f.id === id) || { page: ['?'] }).page[0]).join(' · ')); }
       figma.ui.postMessage({ type: 'build-all-done', ok, fail, total: ids.length });
+      if (/^build/.test(msg.type)) figma.ui.postMessage({ type: 'built', ids: await builtIds() });
     }
     if (msg.type === 'export-figjam-all') await exportAll(devices);   // ส่งทุก Feature (17 พ.ย. 2569)
     if (msg.type === 'check') { log('— เช็ค component (ไม่สร้างอะไร) —'); await resolveAll(NEEDED, true); log(deviceSetInfo()); }
