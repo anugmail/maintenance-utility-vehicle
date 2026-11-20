@@ -20,6 +20,7 @@ import { OIL_RESULT } from "./cases/oil-result";
 import { ACCEPT_CAR } from "./cases/accept-car";
 import { VEHICLE_MAINTENANCE } from "./cases/vehicle-maintenance";
 import { SAFETY_INSPECTION } from "./cases/safety-inspection";
+import { MACHINE } from "./cases/machine";
 import { SATISFACTION } from "./cases/satisfaction";
 
 export const SHEET_PAGE: Record<string, number> = {
@@ -330,6 +331,7 @@ export const GUIDES: GuideScenario[] = [
   OIL_RESULT,
   ACCEPT_CAR,
   VEHICLE_MAINTENANCE,
+  MACHINE,
   SAFETY_INSPECTION,
   SATISFACTION,
 ];
